@@ -1,8 +1,11 @@
 # n2server
 Next.js + Nestjs 기반의 통합서버 
 
-# 관련 문서
-[n2server](https://github.com/ByunMooYoung/n2server)
+## 관련 문서
+* [n2server 매뉴얼](https://github.com/ByunMooYoung/n2server)
+* [front-end 매뉴얼](https://github.com/ByunMooYoung/n2server/front-end)
+* [back-end 매뉴얼](https://github.com/ByunMooYoung/n2server/back-end)
+* [models 매뉴얼](https://github.com/ByunMooYoung/n2server/models)
 
 ## 구성
 n2server는 다음과 같이 3종의 모듈로 구성된다.
