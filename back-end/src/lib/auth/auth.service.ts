@@ -1,8 +1,8 @@
 import { BadRequestException, Body, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthTokenInfo, SignUpInfoForOwner, SignUpInfoForWorker, UserInfo } from 'src/models/auth.entity';
+import { AuthTokenInfo, SignUpInfo, UserInfo } from 'src/models/auth.entity';
 import { Company } from 'src/models/company.entity';
-import { User } from 'src/models/user.entity';
+import { User, UserAuthority } from 'src/models/user.entity';
 import { CompaniesService } from 'src/modules/companies/companies.service';
 import { UsersService } from 'src/modules/users/users.service';
 
@@ -14,61 +14,52 @@ export class AuthService {
     private jwtService: JwtService,
   ) { }
 
-  async signUpForOwner(signUpInfo: SignUpInfoForOwner): Promise<SignUpInfoForOwner> {
+  async signUp(signUpInfo: SignUpInfo): Promise<SignUpInfo> {
 
     let company: Company;
     let user: User;
 
+    console.log(signUpInfo);
+
     try {
-      // 신규 사업자 등록
-      company = await this.companiesService.create(signUpInfo.company);
-      if (!company) {
-        throw new BadRequestException();
+      // 업체 정보 등록 및 조회
+      if (signUpInfo.user.auth == UserAuthority.OWNER) {
+        // 신규 사업자 등록
+        company = await this.companiesService.create(signUpInfo.company);
+        if (!company) {
+          throw new BadRequestException();
+        }
+        // 업주 정보에 업체의 ID 주입
+        signUpInfo.user.comID = company._id;
+      } else if (signUpInfo.user.auth == UserAuthority.WORKER) {
+        console.log(signUpInfo.user);
+        // 해당 사업자 검색
+        company = await this.companiesService.findById(signUpInfo.user.comID);
+        if (!company) {
+          throw new BadRequestException();
+        }
       }
 
-      // 신규 사용자 등록
-      signUpInfo.user.comID = company._id;
       user = await this.usersService.create(signUpInfo.user);
-      if (!user) {
-        throw new BadRequestException();
-      }
+      if (!user) throw new BadRequestException();
     } catch (err) {
-      if (company) {
+      console.log(err);
+      if (signUpInfo.user.auth == UserAuthority.OWNER && company) {
         this.companiesService.remove(company._id);
       }
       throw new BadRequestException();
     }
 
-    const newSignUpInfo: SignUpInfoForOwner = {
+    const newSignUpInfo: SignUpInfo = {
       company,
       user
     }
 
     return newSignUpInfo;
+
   }
 
-  async signUpForWorker(signUpInfo: SignUpInfoForWorker): Promise<SignUpInfoForOwner> {
 
-    // 업체 ID 부재시 에러 발생
-    if (!signUpInfo.user.comID) throw new BadRequestException();
-
-    // 해당 업체 부재시 에러 발생
-    const company = await this.companiesService.findById(signUpInfo.user.comID);
-    if (!company) {
-      console.log("그런 회사 없음");
-      throw new BadRequestException();
-    }
-
-    const user = await this.usersService.create(signUpInfo.user);
-    if (!user) throw new BadRequestException();
-
-    const newSignUpInfo: SignUpInfoForOwner = {
-      company,
-      user
-    }
-
-    return newSignUpInfo;
-  }
 
   /**
    * 로그인 정보를 통해 사용자를 검증하고 토큰 반환
