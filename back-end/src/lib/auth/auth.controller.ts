@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, UseGuards, Res, Request, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Res, Request, UsePipes, ValidationPipe, BadRequestException } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Sign } from 'crypto';
 import { Response } from 'express';
-import { AuthTokenInfo, SignUpInfoForOwner, SignUpInfoForWorker, UserInfo } from 'src/models/auth.entity';
+import { AuthTokenInfo, SignUpInfo, UserInfo } from 'src/models/auth.entity';
+import { UserAuthority } from 'src/models/user.entity';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 
@@ -11,19 +12,34 @@ import { JwtAuthGuard } from './guard/jwt-auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
-  @ApiOperation({ summary: "사업자의 회원 가입" })
-  @ApiBody({ description: "회원 가입에 필요한 정보 정보", type: SignUpInfoForOwner })
-  @Post('signup/owner')
+  @ApiOperation({ summary: "회원 가입", description: "업주 가입시에만 Company 데이터를 채워서 존송함" })
+  @ApiBody({ description: "회원 가입에 필요한 정보 정보", type: SignUpInfo })
+  @Post('signup')
   async signUpForOwner(
-    @Body() signUpInfo: SignUpInfoForOwner,
-    @Res({ passthrough: true }) res: Response): Promise<SignUpInfoForOwner> {
+    @Body() signUpInfo: SignUpInfo,
+    @Res({ passthrough: true }) res: Response): Promise<SignUpInfo> {
 
-    const signInfo: SignUpInfoForOwner = await this.authService.signUpForOwner(signUpInfo);
-    this.injectToken(signInfo, res);
-    return signInfo;
+    // 데이터 유효성 검증
+    if (signUpInfo.user.auth == UserAuthority.OWNER) {
+      if (!signUpInfo.company || signUpInfo.user.comID) {
+        // 업주가 업체정보를 포함하지 않으면 에러 발생
+        throw new BadRequestException();
+      }
+    } else if (signUpInfo.user.auth == UserAuthority.WORKER) {
+      // 직원이 업체정보를 포함하면 에러 발생
+      if (signUpInfo.company || !signUpInfo.user.comID) {
+        throw new BadRequestException();
+      }
+    } else {
+      throw new BadRequestException();
+    }
+
+    const newSignInfo: SignUpInfo = await this.authService.signUp(signUpInfo);
+    this.injectToken(newSignInfo, res);
+    return newSignInfo;
   }
 
-  private injectToken(signUpInfo: SignUpInfoForOwner, @Res({ passthrough: true }) res: Response) {
+  private injectToken(signUpInfo: SignUpInfo, @Res({ passthrough: true }) res: Response) {
     const authToken: AuthTokenInfo = {
       cID: signUpInfo.company._id,
       cName: signUpInfo.company.name,
@@ -35,20 +51,7 @@ export class AuthController {
     res.cookie(process.env.TK_NAME, token);
   }
 
-  @ApiOperation({ summary: "직원의 회원 가입" })
-  @ApiBody({ description: "회원 가입에 필요한 정보 정보", type: SignUpInfoForWorker })
-  @Post('signup/worker')
-  async signUpForWorker(
-    @Body() signUpInfo: SignUpInfoForWorker,
-    @Res({ passthrough: true }) res: Response): Promise<SignUpInfoForWorker> {
-    console.log(signUpInfo);
-    const signInfoForOwner: SignUpInfoForOwner = await this.authService.signUpForWorker(signUpInfo);
-    this.injectToken(signInfoForOwner, res);
-    const signInfoForWorker: SignUpInfoForWorker = {
-      user: signInfoForOwner.user
-    }
-    return signInfoForOwner
-  }
+
 
   /**
    * 사용자 로그인 시도

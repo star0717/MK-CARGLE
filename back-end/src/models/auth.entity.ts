@@ -1,34 +1,23 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsObject, IsString, ValidateNested } from "class-validator";
+import { IsObject, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Company } from "./company.entity";
 import { User } from "./user.entity";
 
-
-
 /**
- * 사업자 회원가입용 DTO
+ * 회원 가입 정보용 DTO
  */
-export class SignUpInfoForOwner {
-    @ApiProperty({ description: "회원 가입에 사용할 업체 정보" })
+export class SignUpInfo {
+    @ApiProperty({ description: "회원 가입에 사용할 사용자 정보" })
+    @IsOptional()
+    @ValidateNested()
+    @Type(() => User)
+    public user: User;
+
+    @ApiProperty({ description: "회원 가입에 사용할 업체 정보 (오너 가입시에만 사용)" })
     @ValidateNested()
     @Type(() => Company)
     public company: Company;
-
-    @ApiProperty({ description: "회원 가입에 사용할 사용자 정보" })
-    @ValidateNested()
-    @Type(() => User)
-    public user: User;
-}
-
-/**
- * 직원 회원가입용 DTO
- */
-export class SignUpInfoForWorker {
-    @ApiProperty({ description: "회원 가입에 사용할 사용자 정보" })
-    @ValidateNested()
-    @Type(() => User)
-    public user: User;
 }
 
 /**
