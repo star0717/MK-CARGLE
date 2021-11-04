@@ -23,4 +23,4 @@ npm run start
 ```
 
 ## API 문서 이용방법
-back-end 서버에서 제공하는 api와 데이터 모델을 확인하기 위한 swagger 문서는 [http:localhost:3001/api](http:localhost:3001/api){: target="_blank"}에서 확인할 수 있다.
+back-end 서버에서 제공하는 api와 데이터 모델을 확인하기 위한 swagger 문서는 <a href="http:localhost:3001/api" target="_blank">http:localhost:3001/api</a> 에서 확인할 수 있다.
