@@ -1,28 +1,60 @@
 import { HYDRATE } from "next-redux-wrapper";
-import { UserInfo, actionTypesUser, ActionsUser } from "../interfaces";
+import {
+  UserState,
+  // UserInfo,
+  // User,
+  // Company,
+  actionTypesUser,
+  ActionsUser,
+} from "../interfaces";
+import { UserInfo } from "../../../models/dist/auth.entity";
+import { User } from "../../../models/dist/user.entity";
+import { Company } from "../../../models/dist/company.entity";
 
-export const initialState: UserInfo = {
-  id: "",
-  password: "",
-  email: "",
-  address: "",
+export const initialState: UserState = {
+  loginInfo: <UserInfo>{
+    id: "",
+    pwd: "",
+  },
+  user: <User>{
+    email: "",
+    password: "",
+    auth: "worker",
+    name: "",
+    comID: "",
+    hpNumber: 0,
+    approval: false,
+  },
+  company: <Company>{
+    name: "",
+    comRegNum: 0,
+    mbRegNum: 0,
+    mbTypeNum: 0,
+    ownerName: "",
+    busType: "",
+    busItem: "",
+    phoneNum: 0,
+    faxNum: 0,
+    address: "",
+    approval: false,
+  },
 };
 
 interface HydratePayload {
-  user: UserInfo;
+  userAll: UserState;
 }
 
-const user = (
+const userAll = (
   state = initialState,
   action: ActionsUser | { type: typeof HYDRATE; payload: HydratePayload }
-): UserInfo => {
+): UserState => {
   switch (action.type) {
     //이게 뭘 뜻하는거지??
     case HYDRATE:
-      return { ...state, ...action.payload.user };
+      return { ...state, ...action.payload.userAll };
 
     // 로그인 기능
-    case actionTypesUser.USER_LOGIN:
+    case actionTypesUser.USER_SIGNIN:
       return {
         ...state,
       };
@@ -32,4 +64,4 @@ const user = (
   }
 };
 
-export default user;
+export default userAll;

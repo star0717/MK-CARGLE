@@ -1,10 +1,10 @@
 import { combineReducers, Reducer, AnyAction } from "redux";
 import { RootStateInterface } from "../interfaces/RootState";
-import user from "./user.reducer";
+import userAll from "./user.reducer";
 
 const rootReducer: Reducer<RootStateInterface, AnyAction> =
   combineReducers<RootStateInterface>({
-    user,
+    userAll,
   });
 
 export default rootReducer;

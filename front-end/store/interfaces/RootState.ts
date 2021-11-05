@@ -1,5 +1,5 @@
-import { UserInfo } from "./index";
+import { UserState } from "./index";
 
 export interface RootStateInterface {
-  user: UserInfo;
+  userAll: UserState;
 }
