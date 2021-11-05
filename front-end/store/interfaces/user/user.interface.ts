@@ -33,7 +33,7 @@ import { Company } from "../../../../models/dist/company.entity";
 // }
 
 export interface UserState {
-  loginInfo: UserInfo;
+  signInInfo: UserInfo;
   user: User;
   company: Company;
 }

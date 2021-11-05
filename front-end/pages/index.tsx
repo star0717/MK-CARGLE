@@ -1,10 +1,15 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Footer from "../src/components/layout/footer";
-import Header from "../src/components/layout/header";
-import SignIn from "../src/components/page/signin";
+import Footer from "../src/components/layout/Footer";
+import Header from "../src/components/layout/Header";
+import SignIn from "../src/components/page/Index/SignIn";
 
-const Home: NextPage = () => {
+interface SignInProps {
+  saveId: string;
+  saveCheck: boolean;
+}
+
+const Home: NextPage<SignInProps> = (props) => {
   return (
     <div>
       <Head>
@@ -16,7 +21,7 @@ const Home: NextPage = () => {
         style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       >
         <Header />
-        <SignIn />
+        <SignIn {...props} />
         <Footer />
       </div>
     </div>
@@ -24,3 +29,25 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // 토큰 확인 - 있을 경우, 메인 화면으로 리디렉트
+  if (context.req.cookies.token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  // 쿠키 확인 - 아이디 저장, props로 전달(있을 경우 : 쿠키 / 없을 경우 : "")
+  const saveId = context.req.cookies.saveId ? context.req.cookies.saveId : ""; // 저장된 아이디(id)
+  const saveCheck = context.req.cookies.saveId ? true : false; // 저장 여부(boolean)
+
+  return {
+    props: {
+      saveId,
+      saveCheck,
+    },
+  };
+};

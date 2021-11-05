@@ -12,8 +12,10 @@ import configuration from './config/configuration';
       cache: true,
       load: [configuration],
     }),
-    // TypegooseModule.forRoot("mongodb://" + process.env.DB_HOST + "/" + process.env.DB_NAME),
-    TypegooseModule.forRoot('mongodb://test:test1234@54.178.58.215:9003/admin'),
+    TypegooseModule.forRoot(
+      'mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME,
+    ),
+    // TypegooseModule.forRoot('mongodb://test:test1234@54.178.58.215:9003/admin'),
     ModulesModule,
     AuthModule,
   ],

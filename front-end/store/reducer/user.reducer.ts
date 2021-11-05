@@ -12,7 +12,7 @@ import { User } from "../../../models/dist/user.entity";
 import { Company } from "../../../models/dist/company.entity";
 
 export const initialState: UserState = {
-  loginInfo: <UserInfo>{
+  signInInfo: <UserInfo>{
     id: "",
     pwd: "",
   },
@@ -52,6 +52,13 @@ const userAll = (
     //이게 뭘 뜻하는거지??
     case HYDRATE:
       return { ...state, ...action.payload.userAll };
+
+    // onChange 기능
+    case actionTypesUser.USER_INPUT:
+      return {
+        ...state,
+        [action.data[0]]: action.data[1],
+      };
 
     // 로그인 기능
     case actionTypesUser.USER_SIGNIN:
