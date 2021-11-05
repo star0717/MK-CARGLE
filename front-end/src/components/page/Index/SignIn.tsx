@@ -1,7 +1,14 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
 
 const SignIn: NextPage = () => {
+  const router = useRouter();
+
+  const [saveID,setSaveId] = useState(false);
+  const [keepLogin,setKeppLogin] = useState(false);
+
+
   return (
     <div
       style={{
@@ -33,7 +40,9 @@ const SignIn: NextPage = () => {
           </h3>
           <p>등록된 회원정보가 기억나지 않으십니까?</p>
           <p style={{ fontWeight: "bold" }}>이메일 및 패스워드 찾기 &#62;</p>
-          <button>회원가입</button>
+          <button
+            onClick={()=>{router.push('/view/SignUp')}}
+          >회원가입</button>
         </div>
         <div style={{ width: "50%", padding: "40px", textAlign: "center" }}>
           <h3>로그인</h3>
@@ -51,7 +60,7 @@ const SignIn: NextPage = () => {
               />
             </div>
             <div
-              style={{
+                style={{
                 display: "flex",
                 marginTop: "10px",
                 justifyContent: "space-between",
@@ -60,11 +69,17 @@ const SignIn: NextPage = () => {
             >
               <div>
                 <span>아이디 저장</span>
-                <input type="checkbox"></input>
+                <input
+                  type="checkbox"
+                  onChange={(e)=>{setSaveId(!e.target.checked)}}
+                ></input>
               </div>
               <div>
                 <span>로그인 상태 유지</span>
-                <input type="checkbox"></input>
+                <input
+                  type="checkbox"
+                  onChange={(e)=> {setKeppLogin(!e.target.checked)}}
+                ></input>
               </div>
             </div>
             <button>완료</button>
