@@ -2,24 +2,26 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Footer from "../../src/components/layout/Footer";
 import Header from "../../src/components/layout/Header";
+<<<<<<< HEAD
 import SignUp from "../../src/components/page/SignUp"
+=======
+import SignUp from "../../src/components/page/SignUp";
+>>>>>>> d57637e9e4a0551fb10389f5ce7f27e5d6138562
 
 interface ViewProps {
-  cate : any
+  cate: any;
 }
 
-
-
 const Componentitem: NextPage<any> = (cate) => {
-  console.log(cate)
-  const main = cate[0]
-  const sub = cate[1] ? cate[1] : ""
+  console.log(cate);
+  const main = cate[0];
+  const sub = cate[1] ? cate[1] : "";
 
-  switch(main) {
-    case "SignUp" :
-      return (<SignUp />)
-    default :
-      return (<SignUp />)
+  switch (main) {
+    case "SignUp":
+      return <SignUp />;
+    default:
+      return <SignUp />;
   }
   // switch(main) {
   //   case "SignUp" :
@@ -27,9 +29,9 @@ const Componentitem: NextPage<any> = (cate) => {
   //   default :
   //     return (<SignUp />)
   // }
-}
+};
 
-const View: NextPage<ViewProps> = ({cate}) => {
+const View: NextPage<ViewProps> = ({ cate }) => {
   // console.log(cate)
   return (
     <div>
@@ -51,13 +53,23 @@ const View: NextPage<ViewProps> = ({cate}) => {
 
 export default View;
 
-export const getServerSideProps:GetServerSideProps = async (context) => { // SSR
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // 토큰 확인 - 없을 경우, 로그인 화면으로 리디렉트
+  if (!context.req.cookies.token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  // SSR
   const cate = context.query;
   // console.log(cate);
   // console.log(context.req.headers['user-agent']?.indexOf('Mobi'));
   return {
-      props: {
-          cate
-      }
-  }
-}
+    props: {
+      cate,
+    },
+  };
+};

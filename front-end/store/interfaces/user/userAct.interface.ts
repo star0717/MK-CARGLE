@@ -1,10 +1,16 @@
 export enum actionTypesUser {
-  USER_LOGIN = "USER_LOGIN",
+  USER_INPUT = "USER_INPUT",
+  USER_SIGNIN = "USER_SIGNIN",
 }
 
-export type ActionsUser = UserLogin;
+export type ActionsUser = UserSignIn | UserInput;
 
-export interface UserLogin {
-  type: actionTypesUser.USER_LOGIN;
+export interface UserInput {
+  type: actionTypesUser.USER_INPUT;
+  data: any;
+}
+
+export interface UserSignIn {
+  type: actionTypesUser.USER_SIGNIN;
   payload: any;
 }
