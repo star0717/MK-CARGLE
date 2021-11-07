@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
-import Footer from "../../src/components/layout/footer";
-import Header from "../../src/components/layout/header";
+import Footer from "../../src/components/layout/Footer";
+import Header from "../../src/components/layout/Header";
 import SignUp from "../../src/components/page/SignUp"
 
 interface ViewProps {
