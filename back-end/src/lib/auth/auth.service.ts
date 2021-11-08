@@ -1,4 +1,9 @@
-import { BadRequestException, Body, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthTokenInfo, SignUpInfo, UserInfo } from 'src/models/auth.entity';
 import { Company } from 'src/models/company.entity';
@@ -12,10 +17,9 @@ export class AuthService {
     private usersService: UsersService,
     private companiesService: CompaniesService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(signUpInfo: SignUpInfo): Promise<SignUpInfo> {
-
     let company: Company;
     let user: User;
 
@@ -52,14 +56,11 @@ export class AuthService {
 
     const newSignUpInfo: SignUpInfo = {
       company,
-      user
-    }
+      user,
+    };
 
     return newSignUpInfo;
-
   }
-
-
 
   /**
    * 로그인 정보를 통해 사용자를 검증하고 토큰 반환
@@ -67,7 +68,7 @@ export class AuthService {
    * @returns 성공시: 토큰, 실패시: UnauthorizedException 발생
    */
   async validateUserInfo(userInfo: UserInfo): Promise<any> {
-    console.log("validateUser in AuthService");
+    console.log('validateUser in AuthService');
 
     // 사용자가 DB에 존재하는지 확인
     const user = await this.usersService.findUserBySignInInfo(userInfo);
@@ -86,8 +87,8 @@ export class AuthService {
       cID: company._id,
       cName: company.name,
       uID: user._id,
-      uName: user.name
-    }
+      uName: user.name,
+    };
 
     console.log(authToken);
     return this.genJwtToken(authToken);
