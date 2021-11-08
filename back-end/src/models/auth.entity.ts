@@ -9,12 +9,12 @@ import { User } from "./user.entity";
  */
 export class SignUpInfo {
     @ApiProperty({ description: "회원 가입에 사용할 사용자 정보" })
-    @IsOptional()
     @ValidateNested()
     @Type(() => User)
     public user: User;
 
     @ApiProperty({ description: "회원 가입에 사용할 업체 정보 (오너 가입시에만 사용)" })
+    @IsOptional()
     @ValidateNested()
     @Type(() => Company)
     public company: Company;

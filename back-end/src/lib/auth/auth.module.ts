@@ -8,7 +8,8 @@ import { JwtStrategy } from './strategy/jwt.strategy';
 import configuration from "src/config/configuration"
 import { ConfigModule } from '@nestjs/config';
 import { CompaniesModule } from 'src/modules/companies/companies.module';
-
+import { HttpModule } from "@nestjs/axios";
+import { CommonModule } from '../common/common.module';
 
 @Module({
   imports: [
@@ -20,6 +21,8 @@ import { CompaniesModule } from 'src/modules/companies/companies.module';
       secret: `${configuration().token.key}`,
       signOptions: { expiresIn: '1d' },
     }),
+    HttpModule,
+    CommonModule
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

@@ -19,11 +19,6 @@ export enum UserAuthority {
 /**
  * 사용자 모델 스키마
  */
-// @pre<User>('save', function () {
-//     const hash = hashSync(this.password, saltRounds);
-//     this.password = hash;
-// })
-
 export class User extends BaseEntity {
 
     @ApiProperty({ description: "메일주소", default: "example@mkcl.co.kr" })

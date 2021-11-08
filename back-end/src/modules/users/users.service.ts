@@ -34,4 +34,12 @@ export class UsersService extends BaseService<User>{
     } else
       return null;
   }
+
+  async findUserByEmail(email: string): Promise<User> {
+    return await this.model.findOne({ email });
+  }
+
+  async findUserByHpNumber(hpNumber: number): Promise<User> {
+    return await this.model.findOne({ hpNumber });
+  }
 }
