@@ -31,11 +31,13 @@ export class CommonService {
         }
     }
 
+
     /**
      * 파일 시스템에 파일 저장
-     * @param file 
-     * @param path 
-     * @param name 
+     * @param file 저장할 파일
+     * @param path 저장 경로
+     * @param name 저장할 파일명
+     * @returns 저장한 파일명
      */
     async storeFile(file: Express.Multer.File, path: string, name: string) {
         writeFileSync(path + name, file.buffer);
