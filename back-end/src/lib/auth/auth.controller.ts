@@ -94,7 +94,7 @@ export class AuthController {
   @ApiOperation({ summary: "사업자번호 유효성 검증" })
   @ApiParam({ name: "id", description: "검증할 사업자번호" })
   @ApiResponse({ description: "사업자번호 존재여부(유효여부)", type: Boolean })
-  @Get('bus-number/validate/:id')
+  @Get('validate/bus-number/:id')
   async busNumValidate(
     @Param('id') bugNum: String): Promise<Observable<boolean>> {
     bugNum = bugNum.replace(/-/g, '',);
