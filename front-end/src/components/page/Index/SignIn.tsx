@@ -54,7 +54,7 @@ const SignIn: NextPage<any> = (props) => {
           } else {
             Cookies.remove("saveId");
           }
-          router.push("/view/Main");
+          router.push("/view/main");
         },
         (err) => {
           // 입력 값이 계정과 다를 경우 에러
@@ -109,7 +109,7 @@ const SignIn: NextPage<any> = (props) => {
           </div>
           <button
             onClick={() => {
-              router.push("/view/SignUp");
+              router.push("/view/signp");
             }}
           >
             회원가입
