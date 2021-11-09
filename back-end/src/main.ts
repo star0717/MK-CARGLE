@@ -20,8 +20,6 @@ async function bootstrap() {
     transform: true, // 클라이언트에서 값을 받자마자 타입을 정의한대로 자동 형변환을 합니다.
   }))
 
-  console.log(env.fileStorage.root);
-
   // 파일 스토리지 설정
   if (!existsSync(env.fileStorage.root)) mkdirSync(env.fileStorage.root);
   if (!existsSync(env.fileStorage.root + env.fileStorage.crn_path)) mkdirSync(env.fileStorage.root + env.fileStorage.crn_path);

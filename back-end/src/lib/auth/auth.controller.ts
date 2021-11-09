@@ -181,8 +181,12 @@ export class AuthController {
     const token_info: AuthTokenInfo = req.user;
     const company = await this.companiesService.findById(token_info.cID);
     const extension = file.originalname.substr(file.originalname.lastIndexOf('.'));
-    const fileName = company.comRegNum.toString() + extension;
-    const newFileName = await this.commonService.storeFile(file, getCrnPath(), fileName);
+    const path = getCrnPath();
+    let fileName = company.comRegNum.toString();
+    const oldFiles = await this.commonService.getFileNames(path, fileName);
+    await this.commonService.deleteFiles(path, oldFiles);
+    fileName = fileName + extension;
+    const newFileName = await this.commonService.storeFile(file, path, fileName);
     return newFileName;
   }
 
@@ -207,29 +211,43 @@ export class AuthController {
     const token_info: AuthTokenInfo = req.user;
     const company = await this.companiesService.findById(token_info.cID);
     const extension = file.originalname.substr(file.originalname.lastIndexOf('.'));
-    const fileName = company.comRegNum.toString() + extension;
-    const newFileName = await this.commonService.storeFile(file, getMrnPath(), fileName);
+    const path = getMrnPath();
+    let fileName = company.mbRegNum.toString();
+    const oldFiles = await this.commonService.getFileNames(path, fileName);
+    await this.commonService.deleteFiles(path, oldFiles);
+    fileName = fileName + extension;
+    const newFileName = await this.commonService.storeFile(file, path, fileName);
     return newFileName;
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: "업로드된 정비업등록증 파일명 반환" })
-  @Get('file-name/man-reg-doc')
-  async getMrFileName(@Request() req) {
+  @ApiOperation({ summary: "업로드된 사업자등록증 파일명 반환" })
+  @ApiResponse({ description: "성공: 파일명, 실패: null" })
+  @Get('file-name/com-reg-docc')
+  async getCrFileName(@Request() req) {
     const token_info: AuthTokenInfo = req.user;
     const company = await this.companiesService.findById(token_info.cID);
     const fileName = company.comRegNum.toString();
 
-    // const filesList =
-    //   readdirSync(getMrnPath(), (err:any, files:any) => files.filter((e) => path.extname(e).toLowerCase() === '.txt'));
+    const fileList = await this.commonService.getFileNames(getCrnPath(), fileName);
 
-    // let fileList = readdirSync(getMrnPath());
-    // fileList = fileList.filter((file) => {
-    //   if (file.startsWith(fileName))
-    //     return file;
-    // })
+    if (fileList.length > 0) {
+      return fileList[0];
+    } else
+      return null;
+  }
 
-    const fileList = await this.commonService.getFileNames(getMrnPath(), "1");
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "업로드된 정비업등록증 파일명 반환" })
+  @ApiResponse({ description: "성공: 파일명, 실패: null" })
+  @Get('file-name/man-reg-doc')
+  async getMrFileName(@Request() req) {
+    const token_info: AuthTokenInfo = req.user;
+    const company = await this.companiesService.findById(token_info.cID);
+    const fileName = company.mbRegNum.toString();
+
+    const fileList = await this.commonService.getFileNames(getMrnPath(), fileName);
+
     if (fileList.length > 0) {
       return fileList[0];
     } else
