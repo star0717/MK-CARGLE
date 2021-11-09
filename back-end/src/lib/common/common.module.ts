@@ -3,22 +3,27 @@ import { CommonService } from './common.service';
 import { CommonController } from './common.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { ConfigModule } from '@nestjs/config';
+import configuration from "src/config/configuration"
+
+
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     MailerModule.forRoot({
       transport: {
-        host: "smtp.gmail.com",
-        port: 465,
-        ignoreTLS: true,
-        secure: true,
+        host: configuration().mailerModule.transport.host,
+        port: parseInt(configuration().mailerModule.transport.port),
+        ignoreTLS: configuration().mailerModule.transport.ignoreTLS as unknown as boolean,
+        secure: configuration().mailerModule.transport.secure as unknown as boolean,
         auth: {
-          user: "mk.manager2020",
-          pass: "dulgqdptljilucvd",
-        }
+          user: configuration().mailerModule.transport.auth.user,
+          pass: configuration().mailerModule.transport.auth.pass,
+        },
       },
       defaults: {
-        from: '"시스템 관리자" <mk.manager2020@gmail.com>'
+        from: configuration().mailerModule.defaults.from
       },
       template: {
         dir: __dirname + '/templates',
