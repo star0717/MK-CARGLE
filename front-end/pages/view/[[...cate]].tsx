@@ -3,19 +3,27 @@ import Head from "next/head";
 import Footer from "../../src/components/layout/Footer";
 import Header from "../../src/components/layout/Header";
 import SignUp from "../../src/components/page/SignUp";
+<<<<<<< HEAD
+=======
+import Main from "../../src/components/page/Main";
+>>>>>>> 5e3654369879e1d2c0c7c194c8cc08f114f2d24c
 
 interface ViewProps {
   cate: any;
 }
 
-const Componentitem: NextPage<any> = (cate) => {
-  console.log(cate);
+const Componentitem: NextPage<any> = (props) => {
+  console.log(props);
+  const cate = props.cate;
   const main = cate[0];
   const sub = cate[1] ? cate[1] : "";
+  // console.log("메인 : ", main);
 
   switch (main) {
     case "SignUp":
       return <SignUp />;
+    case "Main":
+      return <Main />;
     default:
       return <SignUp />;
   }
@@ -50,8 +58,9 @@ const View: NextPage<ViewProps> = ({ cate }) => {
 export default View;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log("쿼리 : ", context.query.cate);
   // 토큰 확인 - 없을 경우, 로그인 화면으로 리디렉트
-  if (!context.req.cookies.token) {
+  if (!context.req.cookies.mk_token && context.query.cate != "SignUp") {
     return {
       redirect: {
         permanent: false,

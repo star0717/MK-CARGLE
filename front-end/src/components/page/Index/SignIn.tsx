@@ -47,7 +47,6 @@ const SignIn: NextPage<any> = (props) => {
       // 아이디, 비밀번호 정상 입력 시
       dispatch(signInUserAction(inputSignIn)).then(
         (res: any) => {
-          alert("로그인 성공!");
           // 아이디 저장할 경우 쿠키로 저장
           if (saveId) {
             Cookies.set("saveId", inputSignIn.id, { expires: 1 });
@@ -55,7 +54,7 @@ const SignIn: NextPage<any> = (props) => {
           } else {
             Cookies.remove("saveId");
           }
-          // router.push("/vies/main");
+          router.push("/view/Main");
         },
         (err) => {
           // 입력 값이 계정과 다를 경우 에러

@@ -53,7 +53,7 @@ const userAll = (
     case HYDRATE:
       return { ...state, ...action.payload.userAll };
 
-    // onChange 기능
+    // 입력값 onChange 기능
     case actionTypesUser.USER_INPUT:
       return {
         ...state,
@@ -62,6 +62,12 @@ const userAll = (
 
     // 로그인 기능
     case actionTypesUser.USER_SIGNIN:
+      return {
+        ...state,
+      };
+
+    // 로그아웃 기능
+    case actionTypesUser.USER_SIGNOUT:
       return {
         ...state,
       };

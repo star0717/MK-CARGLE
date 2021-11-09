@@ -32,11 +32,11 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // 토큰 확인 - 있을 경우, 메인 화면으로 리디렉트
-  if (context.req.cookies.token) {
+  if (context.req.cookies.mk_token) {
     return {
       redirect: {
         permanent: false,
-        destination: "/",
+        destination: "/view/Main",
       },
     };
   }
