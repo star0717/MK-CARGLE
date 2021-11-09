@@ -2,14 +2,14 @@ import type { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
-import Body from "./Body";
-import { useSelector } from "react-redux";
+import { useInterval } from "react-use";
+import { useDispatch, useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { UserState } from "../../../../store/interfaces";
 import { User } from "../../../../../models/dist/user.entity";
 import { Company } from "../../../../../models/dist/company.entity";
 import { basicRegEx, formRegEx } from "../../../validation/regEx";
+import { emailSendAction } from "../../../../store/action/user.action";
 
 // verticalAlign: "middle",
 // alignItems: "center",
@@ -28,6 +28,7 @@ interface SignUpInfo {
 }
 
 const SignUp: NextPage = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
 
   // 이메일 종류
@@ -57,6 +58,7 @@ const SignUp: NextPage = () => {
   const [emailDomain, setEmailDomain] = useState(""); // 이메일 도메인
   const [emailReadOnly, setEmailReadOnly] = useState(false); // 이메일 input readonly
   const [emailSend, setEmailSend] = useState(false); // 이메일 인증 전송여부
+  const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
   const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
   const [authNum, setAuthNum] = useState(""); // 인증번호 input
 
@@ -98,7 +100,11 @@ const SignUp: NextPage = () => {
   const onInputCompanyHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
   };
-  // 비밀번호 확인
+  // 인증번호 input
+  const onAuthNumHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAuthNum(e.target.value);
+  };
+  // 비밀번호 확인 input
   const onPwdCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordCheck(e.target.value);
   };
@@ -112,7 +118,15 @@ const SignUp: NextPage = () => {
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (inputUser.email.length !== 0) {
       if (formRegEx.EMAIL.test(inputUser.email)) {
-        dispatch;
+        dispatch(emailSendAction(inputUser.email)).then((res: any) => {
+          if (res.payload) {
+            alert("인증번호가 전송되었습니다.");
+            setEmailSend(true);
+            setTimer(300);
+          } else {
+            alert("이미 존재하는 이메일입니다.");
+          }
+        });
       } else {
         alert("이메일 형식에 맞게 입력하세요.");
       }
@@ -120,6 +134,18 @@ const SignUp: NextPage = () => {
       alert("이메일을 입력해주세요.");
     }
   };
+
+  // 인증번호 타이머
+  useInterval(() => {
+    setTimer(timer - 60);
+  }, 60 * 1000);
+
+  // 인증번호 만료 시 emailSend state 변경
+  useEffect(() => {
+    if (timer === 0) {
+      setEmailSend(false);
+    }
+  }, [timer]);
 
   // 사업자 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
@@ -460,10 +486,28 @@ const SignUp: NextPage = () => {
                         </div>
                         <div style={{ padding: "1px 2px" }}>
                           <button type="button" onClick={onEmailSendHandler}>
-                            인증
+                            {emailSend ? "인증번호 재전송" : "인증번호 전송"}
                           </button>
                         </div>
                       </div>
+                      {emailSend ? (
+                        <div>
+                          <div>
+                            <input
+                              type="text"
+                              value={authNum}
+                              {...register("authNum", {
+                                onChange: (e) => {
+                                  onAuthNumHandler(e);
+                                },
+                              })}
+                            />
+                          </div>
+                          <div>
+                            <button type="button">인증</button>
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
                     {/* 비밀번호 */}
                     <div>

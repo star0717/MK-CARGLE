@@ -4,26 +4,24 @@ import { CommonController } from './common.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ConfigModule } from '@nestjs/config';
-import configuration from "src/config/configuration"
-
-
+import env_config from "src/config/configuration"
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     MailerModule.forRoot({
       transport: {
-        host: configuration().mailerModule.transport.host,
-        port: parseInt(configuration().mailerModule.transport.port),
-        ignoreTLS: configuration().mailerModule.transport.ignoreTLS as unknown as boolean,
-        secure: configuration().mailerModule.transport.secure as unknown as boolean,
+        host: env_config().mailerModule.transport.host,
+        port: parseInt(env_config().mailerModule.transport.port),
+        ignoreTLS: env_config().mailerModule.transport.ignoreTLS as unknown as boolean,
+        secure: env_config().mailerModule.transport.secure as unknown as boolean,
         auth: {
-          user: configuration().mailerModule.transport.auth.user,
-          pass: configuration().mailerModule.transport.auth.pass,
+          user: env_config().mailerModule.transport.auth.user,
+          pass: env_config().mailerModule.transport.auth.pass,
         },
       },
       defaults: {
-        from: configuration().mailerModule.defaults.from
+        from: env_config().mailerModule.defaults.from
       },
       template: {
         dir: __dirname + '/templates',

@@ -72,6 +72,12 @@ const userAll = (
         ...state,
       };
 
+    // 이메일 인증번호 전송 기능
+    case actionTypesUser.USER_EMAIL_SEND:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

@@ -21,7 +21,7 @@ export enum UserAuthority {
  */
 export class User extends BaseEntity {
 
-    @ApiProperty({ description: "메일주소", default: "example@mkcl.co.kr" })
+    @ApiProperty({ description: "메일주소", default: "example@mklc.co.kr" })
     @IsOptional()
     @IsEmail()
     @prop({
