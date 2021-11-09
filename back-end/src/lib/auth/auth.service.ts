@@ -17,7 +17,7 @@ export class AuthService {
     private usersService: UsersService,
     private companiesService: CompaniesService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signUp(signUpInfo: SignUpInfo): Promise<SignUpInfo> {
     let company: Company;
@@ -26,7 +26,7 @@ export class AuthService {
     console.log(signUpInfo);
 
     try {
-      // 업체 정보 등록 및 조회
+      // 업체 가입인 경우
       if (signUpInfo.user.auth == UserAuthority.OWNER) {
         // 신규 사업자 등록
         company = await this.companiesService.create(signUpInfo.company);
@@ -35,7 +35,9 @@ export class AuthService {
         }
         // 업주 정보에 업체의 ID 주입
         signUpInfo.user.comID = company._id;
-      } else if (signUpInfo.user.auth == UserAuthority.WORKER) {
+      }
+      // 직원 가입인 경우
+      else if (signUpInfo.user.auth == UserAuthority.WORKER) {
         console.log(signUpInfo.user);
         // 해당 사업자 검색
         company = await this.companiesService.findById(signUpInfo.user.comID);
@@ -46,6 +48,11 @@ export class AuthService {
 
       user = await this.usersService.create(signUpInfo.user);
       if (!user) throw new BadRequestException();
+
+      // 업체 가입인 경우 사업자의 대표자명에 사용자명 주입
+      if (signUpInfo.user.auth == UserAuthority.OWNER) {
+        company = await this.companiesService.update(company._id, { ownerName: user.name });
+      }
     } catch (err) {
       console.log(err);
       if (signUpInfo.user.auth == UserAuthority.OWNER && company) {
@@ -55,8 +62,8 @@ export class AuthService {
     }
 
     const newSignUpInfo: SignUpInfo = {
-      company,
       user,
+      company,
     };
 
     return newSignUpInfo;

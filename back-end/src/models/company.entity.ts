@@ -47,7 +47,7 @@ export class Company extends BaseEntity {
     @IsString()
     @prop({
         unique: false,
-        required: [true, "대표명은 필수 항목입니다."],
+        required: [false, "대표명은 필수 항목입니다."],
         trim: true,
     })
     public ownerName: string;

@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, UseGuards, Res, Request, BadRequestException, Param } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, UseGuards, Res, Request, BadRequestException, Param, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthTokenInfo, SignUpInfo, UserInfo } from 'src/models/auth.entity';
 import { UserAuthority } from 'src/models/user.entity';
@@ -7,19 +7,31 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { HttpService } from "@nestjs/axios";
 import { map, Observable } from 'rxjs';
-import configuration from "src/config/configuration";
+import config, { getCrnPath, getMrnPath } from "src/config/configuration";
 import { CommonService } from '../common/common.service';
 import { randomInt } from 'crypto';
 import { hashSync } from "bcrypt";
+import { docFileInterceptor } from 'src/config/multer.option';
+import { CompaniesService } from 'src/modules/companies/companies.service';
+import { existsSync, readdirSync, } from 'fs';
+import path from 'path';
 
 @ApiTags("인증 API")
 @Controller('auth')
 export class AuthController {
+
+  private readonly env_config = config();
+
+
   constructor(
     private readonly authService: AuthService,
     private readonly httpService: HttpService,
     private readonly commonService: CommonService,
-  ) { }
+    private readonly companiesService: CompaniesService,
+    // private readonly config = configuration(),
+  ) {
+
+  }
 
   @ApiOperation({ summary: "회원 가입", description: "업주 가입시에만 Company 데이터를 채워서 전송함" })
   @ApiBody({ description: "회원 가입에 필요한 정보 정보", type: SignUpInfo })
@@ -94,12 +106,12 @@ export class AuthController {
   @ApiOperation({ summary: "사업자번호 유효성 검증" })
   @ApiParam({ name: "id", description: "검증할 사업자번호" })
   @ApiResponse({ description: "사업자번호 존재여부(유효여부)", type: Boolean })
-  @Get('validate/bus-number/:id')
+  @Get('validate/com-reg-number/:id')
   async busNumValidate(
     @Param('id') bugNum: String): Promise<Observable<boolean>> {
     bugNum = bugNum.replace(/-/g, '',);
-    const apiKey = configuration().busNumValidation.api_key;
-    const apiUrl = configuration().busNumValidation.url + apiKey;
+    const apiKey = this.env_config.busNumValidation.api_key;
+    const apiUrl = this.env_config.busNumValidation.url + apiKey;
     const postData = {
       "b_no": [
         bugNum
@@ -126,6 +138,7 @@ export class AuthController {
       return false; //사용자가 존재하면 false 반환
     } else {
       const authCode: number = randomInt(1111, 9999);
+      console.log(authCode);
       const strAuthCode = hashSync(String(authCode), 10);
       this.commonService.sendMail(email, "이메일 인증 요청 메일", '4자리 인증 코드 : ' + `<b> ${authCode}</b>`);
       const expireDate = new Date(Date.now() + 1000 * 60 * 5);
@@ -145,5 +158,81 @@ export class AuthController {
     } else {
       return true;  //사용자가 존재하지 않으면 true 반환
     }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "사업자 등록증 업로드." })
+  @ApiConsumes("multipart/form-data")
+  @ApiBody({
+    description: "image/jpeg|image/png|application/pdf 타입의 사업자 등록증 파일",
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(docFileInterceptor)
+  @Post('upload/com-reg-doc')
+  async uploadCrFile(@Request() req, @UploadedFile() file: Express.Multer.File): Promise<string> {
+    const token_info: AuthTokenInfo = req.user;
+    const company = await this.companiesService.findById(token_info.cID);
+    const extension = file.originalname.substr(file.originalname.lastIndexOf('.'));
+    const fileName = company.comRegNum.toString() + extension;
+    const newFileName = await this.commonService.storeFile(file, getCrnPath(), fileName);
+    return newFileName;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "정비업 등록증 업로드." })
+  @ApiConsumes("multipart/form-data")
+  @ApiBody({
+    description: "image/jpeg|image/png|application/pdf 타입의 정비업 등록증 파일",
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(docFileInterceptor)
+  @Post('upload/man-reg-doc')
+  async uploadMrFile(@Request() req, @UploadedFile() file: Express.Multer.File): Promise<string> {
+    const token_info: AuthTokenInfo = req.user;
+    const company = await this.companiesService.findById(token_info.cID);
+    const extension = file.originalname.substr(file.originalname.lastIndexOf('.'));
+    const fileName = company.comRegNum.toString() + extension;
+    const newFileName = await this.commonService.storeFile(file, getMrnPath(), fileName);
+    return newFileName;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "업로드된 정비업등록증 파일명 반환" })
+  @Get('file-name/man-reg-doc')
+  async getMrFileName(@Request() req) {
+    const token_info: AuthTokenInfo = req.user;
+    const company = await this.companiesService.findById(token_info.cID);
+    const fileName = company.comRegNum.toString();
+
+    // const filesList =
+    //   readdirSync(getMrnPath(), (err:any, files:any) => files.filter((e) => path.extname(e).toLowerCase() === '.txt'));
+
+    // let fileList = readdirSync(getMrnPath());
+    // fileList = fileList.filter((file) => {
+    //   if (file.startsWith(fileName))
+    //     return file;
+    // })
+
+    const fileList = await this.commonService.getFileNames(getMrnPath(), "1");
+    if (fileList.length > 0) {
+      return fileList[0];
+    } else
+      return null;
   }
 }
