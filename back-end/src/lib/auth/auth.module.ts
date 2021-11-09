@@ -5,20 +5,20 @@ import { UsersModule } from 'src/modules/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategy/jwt.strategy';
-import configuration from "src/config/configuration"
 import { ConfigModule } from '@nestjs/config';
+import config from "src/config/configuration";
 import { CompaniesModule } from 'src/modules/companies/companies.module';
 import { HttpModule } from "@nestjs/axios";
 import { CommonModule } from '../common/common.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: [configuration] }),
+    ConfigModule.forRoot({ load: [config] }),
     UsersModule,
     CompaniesModule,
     PassportModule,
     JwtModule.register({
-      secret: `${configuration().token.key}`,
+      secret: `${config().token.key}`,
       signOptions: { expiresIn: '1d' },
     }),
     HttpModule,
