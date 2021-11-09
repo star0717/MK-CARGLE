@@ -2,11 +2,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Footer from "../../src/components/layout/Footer";
 import Header from "../../src/components/layout/Header";
-<<<<<<< HEAD
-import SignUp from "../../src/components/page/SignUp"
-=======
 import SignUp from "../../src/components/page/SignUp";
->>>>>>> d57637e9e4a0551fb10389f5ce7f27e5d6138562
 
 interface ViewProps {
   cate: any;
