@@ -4,7 +4,7 @@ import { actionTypesUser } from "../interfaces";
 // 로그인 action
 export async function signInUserAction(dataToSubmit: any) {
   const req = await axios
-    .post("/api/auth/signin", dataToSubmit)
+    .post(`/api/auth/signin`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_SIGNIN,
@@ -15,10 +15,20 @@ export async function signInUserAction(dataToSubmit: any) {
 // 로그아웃 action
 export async function signOutUserAction() {
   const req = await axios
-    .get("/api/auth/signout")
+    .get(`/api/auth/signout`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_SIGNOUT,
+    payload: req,
+  };
+}
+
+export async function emailSendAction(dataToSubmit: string) {
+  const req = await axios
+    .get(`/api/auth/validate/email/${dataToSubmit}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.USER_EMAIL_SEND,
     payload: req,
   };
 }

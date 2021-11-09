@@ -21,8 +21,8 @@ const SignIn: NextPage<any> = (props) => {
   // input 값을 위한 state
   // 가져온 signIn 값과 props의 id 값을 input state의 초기값으로 세팅
   const [inputSignIn, setInputSignIn] = useState({
+    ...signInInfo,
     id: props.saveId,
-    pwd: signInInfo.pwd,
   });
 
   // 아이디 저장 체크 여부를 위한 state
@@ -61,7 +61,6 @@ const SignIn: NextPage<any> = (props) => {
           // Nest에서 전송해주는 status code에 맞게 핸들링
           if (err.response.status === 401) {
             alert("아이디 / 비밀번호를 확인해주세요.");
-            setInputSignIn(initialState.signInInfo); // 입력값 초기화
           }
         }
       );
