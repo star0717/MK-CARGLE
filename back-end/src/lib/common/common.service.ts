@@ -1,7 +1,8 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { writeFileSync } from 'fs';
+import { readdirSync, writeFileSync } from 'fs';
 import { Address } from 'nodemailer/lib/mailer';
+import { getMrnPath } from 'src/config/configuration';
 
 @Injectable()
 export class CommonService {
@@ -42,5 +43,20 @@ export class CommonService {
     async storeFile(file: Express.Multer.File, path: string, name: string) {
         writeFileSync(path + name, file.buffer);
         return name;
+    }
+
+    /**
+     * startname으로 시작되는 파일명을 가지는 모든 파일명을 반환
+     * @param path 파일 검색 경로
+     * @param startname 검색할 파일명
+     * @returns 배열타입의 검색된 파일명들
+     */
+    async getFileNames(path: string, startname: string) {
+        let fileList = readdirSync(path);
+        fileList = fileList.filter((file) => {
+            if (file.startsWith(startname))
+                return file;
+        })
+        return fileList;
     }
 }
