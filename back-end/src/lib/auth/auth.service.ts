@@ -92,15 +92,23 @@ export class AuthService {
 
     console.log(authToken);
     return this.genJwtToken(authToken);
-
-    // // 토큰에 구성
-    // const token_payload = { user };
-
-    // // 토큰 생성 후 반환
-    // return this.jwtService.sign(token_payload);
   }
 
+  /**
+   * 사용자 인증토큰 발급
+   * @param authToken 토큰을 발급할 사용자의 정보
+   * @returns 발급된 인증 토큰
+   */
   genJwtToken(authToken: AuthTokenInfo) {
     return this.jwtService.sign(authToken);
   }
+
+  async findUserByEmail(email: string): Promise<User> {
+    return await this.usersService.findUserByEmail(email);
+  }
+
+  async findUserByHpNumber(hpNumber: number): Promise<User> {
+    return await this.usersService.findUserByHpNumber(hpNumber);
+  }
+
 }

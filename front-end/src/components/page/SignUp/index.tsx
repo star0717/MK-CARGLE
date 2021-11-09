@@ -7,6 +7,8 @@ import Body from "./Body";
 import { useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { UserState } from "../../../../store/interfaces";
+import { User } from "../../../../../models/dist/user.entity";
+import { Company } from "../../../../../models/dist/company.entity";
 
 // verticalAlign: "middle",
 // alignItems: "center",
@@ -14,14 +16,20 @@ import { UserState } from "../../../../store/interfaces";
 
 // react-hook-form을 사용하는 form에서 받을 데이터 타입 정의
 // 이용약관 form
-interface termData {
+interface TermData {
   mkTerm: Boolean;
   privacyTerm: Boolean;
+}
+
+interface SignUpInfo {
+  user: User;
+  company: Company;
 }
 
 const SignUp: NextPage = () => {
   const router = useRouter();
 
+  // 이메일 종류
   const emailItem = [
     { key: 1, value: "", text: "직접 입력" },
     { key: 2, value: "google.com", text: "Google" },
@@ -34,8 +42,8 @@ const SignUp: NextPage = () => {
     (state: RootStateInterface): UserState => state.userAll
   );
 
-  const [inputUser, setInputUser] = useState(user);
-  const [inputCompany, setInputCompany] = useState(company);
+  const [inputUser, setInputUser] = useState(user); // 사용자 정보
+  const [inputCompany, setInputCompany] = useState(company); // 업체 정보
 
   const [isCompany, setIsCompany] = useState<boolean>(true); // 사업자일 경우 true
   const [stepNumber, setStepNumber] = useState<number>(1); // 스텝 숫자
@@ -43,7 +51,9 @@ const SignUp: NextPage = () => {
 
   const [mkTerm, setMkTerm] = useState(false); // 엠케이 이용약관 체크여부
   const [privacyTerm, setPrivacyTerm] = useState(false); // 개인정보 동의 체크여부
-  const [emailKind, setEmailKind] = useState(""); // 이메일 종류 선택
+
+  const [emailAddress, setEmailAdderess] = useState(""); // 이메일 주소
+  const [emailDomain, setEmailDomain] = useState(""); // 이메일 도메인
   const [emailReadOnly, setEmailReadOnly] = useState(false); // 이메일 input readonly
   const [emailSend, setEmailSend] = useState(false); // 이메일 인증 전송여부
   const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
@@ -57,11 +67,25 @@ const SignUp: NextPage = () => {
   } = useForm();
 
   // 이용약관 form submit handler
-  const agreeTermHandler: SubmitHandler<termData> = (data) => {
+  const agreeTermHandler: SubmitHandler<TermData> = (data) => {
     setStepNumber(stepNumber + 1);
   };
 
-  // input 값 입력 시 텍스트 변환을 위한 handler
+  // 이메일 종류에 따라 state를 통해 값 변경 및 readonly 변경
+  const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    e.target.value === "" ? setEmailReadOnly(false) : setEmailReadOnly(true); // 이메일 직접입력 외에는 readonly true
+    setEmailDomain(e.target.value);
+  };
+
+  // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
+  const onEmailAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 이메일 주소
+    setEmailAdderess(e.target.value);
+  };
+  const onEmailDomainHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 이메일 도메인
+    setEmailDomain(e.target.value);
+  };
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputUser({ ...inputUser, [e.target.name]: e.target.value });
   };
@@ -69,28 +93,19 @@ const SignUp: NextPage = () => {
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
   };
 
-  // 이메일 종류에 따라 state를 통해 값 변경 및 readonly 변경
-  const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.target.value === "" ? setEmailReadOnly(false) : setEmailReadOnly(true); // 이메일 직접입력 외에는 readonly true
-    setEmailKind(e.target.value);
-  };
-  console.log(emailKind);
-
-  // useEffect(() => {
-  //   if(emailKind === "") {
-
-  //   }
-  //   else {
-
-  //   }
-  // }, [emailKind]);
+  // 이메일 Address, Domain 입력 시 이메일 state 변경
+  useEffect(() => {
+    setInputUser({ ...inputUser, email: `${emailAddress}@${emailDomain}` });
+  }, [emailAddress, emailDomain]);
 
   // 사업자 회원가입 form submit handler
-  const onSignUpCompanyHandler = () => {};
+  const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = () => {};
 
   console.log(isCompany);
-  console.log("유저 : ", user);
-  console.log("업체 : ", company);
+  console.log("어드 : ", emailAddress);
+  console.log("도메인: ", emailDomain);
+  console.log("유저 : ", inputUser);
+  console.log("업체 : ", inputCompany);
 
   return (
     <div
@@ -323,24 +338,36 @@ const SignUp: NextPage = () => {
                     margin: "10px",
                   }}
                 >
-                  <form onSubmit={onSignUpCompanyHandler}>
+                  <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
                     <div>*아이디(이메일 형식으로 입력해주세요)</div>
                     <div>
                       <input
                         type="text"
-                        name="email1"
-                        value={email1}
-                        onChange={onEmailFirstHandler}
+                        // name="emailAddress"
+                        value={emailAddress}
+                        // onChange={onEmailAddressHandler}
+                        {...register("emailAddress", {
+                          onChange: (e) => {
+                            onEmailAddressHandler(e);
+                          },
+                          required: true,
+                        })}
                       />
                       <span> @ </span>
                       <input
                         type="text"
-                        name="email2"
-                        value={emailKind === "" ? email2 : emailKind}
-                        onChange={onEmailSecondHandler}
+                        // name="emailDomain"
+                        value={emailDomain}
+                        // onChange={onEmailDomainHandler}
                         readOnly={emailReadOnly}
+                        {...register("emailDomain", {
+                          onChange: (e) => {
+                            onEmailDomainHandler(e);
+                          },
+                          required: true,
+                        })}
                       />
-                      <select onChange={onEmailKindHandler} value={emailKind}>
+                      <select onChange={onEmailKindHandler}>
                         {emailItem.map((item: any, index: Number) => (
                           <option key={item.key} value={item.value}>
                             {item.text}
@@ -355,7 +382,12 @@ const SignUp: NextPage = () => {
                     </div>
                     <div>*비밀번호</div>
                     <div>
-                      <input type="password" />
+                      <input
+                        type="password"
+                        name="password"
+                        value={inputUser.password}
+                        onChange={onInputUserHandler}
+                      />
                     </div>
                     <div style={{ fontSize: "7px" }}>
                       8~16자 영문,숫자,특수문자를 사용하세요.(조건에 부합하면 이

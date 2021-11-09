@@ -3,6 +3,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { ConfigModule } from '@nestjs/config';
 import { ModulesModule } from './modules/modules.module';
 import { AuthModule } from './lib/auth/auth.module';
+import { CommonModule } from './lib/common/common.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -18,6 +19,7 @@ import configuration from './config/configuration';
     // TypegooseModule.forRoot('mongodb://test:test1234@54.178.58.215:9003/admin'),
     ModulesModule,
     AuthModule,
+    CommonModule,
   ],
 })
 export class AppModule {}
