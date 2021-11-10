@@ -10,6 +10,7 @@ interface SignInProps {
 }
 
 const Home: NextPage<SignInProps> = (props) => {
+  const headerProps = {cate : [""]};
   return (
     <div>
       <Head>
@@ -20,7 +21,7 @@ const Home: NextPage<SignInProps> = (props) => {
       <div
         style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       >
-        <Header />
+        <Header {...headerProps}/>
         <SignIn {...props} />
         <Footer />
       </div>
@@ -36,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/view/Main",
+        destination: "/view/main",
       },
     };
   }

@@ -17,8 +17,10 @@ const Componentitem: NextPage<any> = (props) => {
   const sub = cate[1] ? cate[1] : "";
   // console.log("메인 : ", main);
 
+  console.log("cate:",cate)
+
   switch (main) {
-    case "signUp":
+    case "signup":
       return <SignUp />;
     case "main":
       return <Main />;
