@@ -3,7 +3,7 @@ import { useRouter } from "next/dist/client/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { hashSync } from "bcrypt";
+import { compareSync } from "bcrypt";
 import { useInterval } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
@@ -161,7 +161,7 @@ const SignUp: NextPage = () => {
     const hashAuth = Cookies.get("mk_amtn");
     console.log(hashAuth);
     // if (hashAuth) {
-    //   if (hashSync(authNum, hashAuth)) {
+    //   if (compareSync(authNum, hashAuth)) {
     //     alert("인증되었습니다.");
     //   } else {
     //     alert("인증번호가 일치하지 않습니다.");
