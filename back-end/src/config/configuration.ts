@@ -1,9 +1,12 @@
-
 export default () => (
     {
         db: {
-            host: process.env.TK_KEY,
+            host: process.env.DB_HOST,
+            port: process.env.DB_PORT,
             name: process.env.DB_NAME,
+            use_auth: process.env.DB_USE_AUTH,
+            id: process.env.DB_ID,
+            pwd: process.env.DB_PWD,
         },
         token: {
             key: process.env.TK_KEY,
