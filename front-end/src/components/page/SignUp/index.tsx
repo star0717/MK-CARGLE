@@ -2,13 +2,16 @@ import type { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
-import Body from "./Body";
-import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { hashSync } from "bcrypt";
+import { useInterval } from "react-use";
+import { useDispatch, useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { UserState } from "../../../../store/interfaces";
 import { User } from "../../../../../models/dist/user.entity";
 import { Company } from "../../../../../models/dist/company.entity";
+import { basicRegEx, formRegEx } from "../../../validation/regEx";
+import { emailSendAction } from "../../../../store/action/user.action";
 
 // verticalAlign: "middle",
 // alignItems: "center",
@@ -27,6 +30,7 @@ interface SignUpInfo {
 }
 
 const SignUp: NextPage = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
 
   // 이메일 종류
@@ -56,15 +60,19 @@ const SignUp: NextPage = () => {
   const [emailDomain, setEmailDomain] = useState(""); // 이메일 도메인
   const [emailReadOnly, setEmailReadOnly] = useState(false); // 이메일 input readonly
   const [emailSend, setEmailSend] = useState(false); // 이메일 인증 전송여부
+  const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
   const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
   const [authNum, setAuthNum] = useState(""); // 인증번호 input
+
+  const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
 
   // react-hook-form 사용을 위한 선언
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ criteriaMode: "all" });
 
   // 이용약관 form submit handler
   const agreeTermHandler: SubmitHandler<TermData> = (data) => {
@@ -78,19 +86,29 @@ const SignUp: NextPage = () => {
   };
 
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
+  // 이메일 주소
   const onEmailAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 이메일 주소
     setEmailAdderess(e.target.value);
   };
+  // 이메일 도메인
   const onEmailDomainHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 이메일 도메인
     setEmailDomain(e.target.value);
   };
+  // 사용자 정보
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputUser({ ...inputUser, [e.target.name]: e.target.value });
   };
+  // 업체 정보
   const onInputCompanyHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
+  };
+  // 인증번호 input
+  const onAuthNumHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAuthNum(e.target.value);
+  };
+  // 비밀번호 확인 input
+  const onPwdCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordCheck(e.target.value);
   };
 
   // 이메일 Address, Domain 입력 시 이메일 state 변경
@@ -98,8 +116,63 @@ const SignUp: NextPage = () => {
     setInputUser({ ...inputUser, email: `${emailAddress}@${emailDomain}` });
   }, [emailAddress, emailDomain]);
 
+  // 이메일 인증번호 전송 handler
+  const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (inputUser.email.length !== 0) {
+      if (formRegEx.EMAIL.test(inputUser.email)) {
+        dispatch(emailSendAction(inputUser.email)).then((res: any) => {
+          if (res.payload) {
+            alert("인증번호가 전송되었습니다.");
+            setEmailSend(true);
+            setTimer(300);
+          } else {
+            alert("이미 존재하는 이메일입니다.");
+          }
+        });
+      } else {
+        alert("이메일 형식에 맞게 입력하세요.");
+      }
+    } else {
+      alert("이메일을 입력해주세요.");
+    }
+  };
+
+  // 인증번호 타이머
+  useInterval(
+    () => {
+      setTimer(timer - 1);
+      console.log(timer);
+    },
+    emailSend ? 1000 : null
+  );
+
+  // 인증번호 만료 시 emailSend state 변경
+  useEffect(() => {
+    if (timer === 0) {
+      if (!Cookies.get("mk_amtn") && emailSend) {
+        alert("인증번호가 만료되었습니다.");
+        setEmailSend(false);
+      }
+    }
+  }, [timer]);
+
+  // 인증번호 체크
+  const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const hashAuth = Cookies.get("mk_amtn");
+    console.log(hashAuth);
+    // if (hashAuth) {
+    //   if (hashSync(authNum, hashAuth)) {
+    //     alert("인증되었습니다.");
+    //   } else {
+    //     alert("인증번호가 일치하지 않습니다.");
+    //   }
+    // }
+  };
+
   // 사업자 회원가입 form submit handler
-  const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = () => {};
+  const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
+    setStepNumber(stepNumber + 1);
+  };
 
   console.log(isCompany);
   console.log("어드 : ", emailAddress);
@@ -280,7 +353,7 @@ const SignUp: NextPage = () => {
                     />
                     {errors.mkTerm && (
                       <p style={{ margin: "0", fontSize: "8px", color: "red" }}>
-                        필수사항입니다11.
+                        필수사항입니다.
                       </p>
                     )}
                   </div>
@@ -339,124 +412,581 @@ const SignUp: NextPage = () => {
                   }}
                 >
                   <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
-                    <div>*아이디(이메일 형식으로 입력해주세요)</div>
+                    {/* 아이디 */}
                     <div>
-                      <input
-                        type="text"
-                        // name="emailAddress"
-                        value={emailAddress}
-                        // onChange={onEmailAddressHandler}
-                        {...register("emailAddress", {
-                          onChange: (e) => {
-                            onEmailAddressHandler(e);
-                          },
-                          required: true,
-                        })}
-                      />
-                      <span> @ </span>
-                      <input
-                        type="text"
-                        // name="emailDomain"
-                        value={emailDomain}
-                        // onChange={onEmailDomainHandler}
-                        readOnly={emailReadOnly}
-                        {...register("emailDomain", {
-                          onChange: (e) => {
-                            onEmailDomainHandler(e);
-                          },
-                          required: true,
-                        })}
-                      />
-                      <select onChange={onEmailKindHandler}>
-                        {emailItem.map((item: any, index: Number) => (
-                          <option key={item.key} value={item.value}>
-                            {item.text}
-                          </option>
-                        ))}
-                      </select>
-                      <input type="button" value="인증" />
+                      <div>*아이디(이메일 형식으로 입력해주세요.)</div>
+                      <div
+                        style={{
+                          backgroundColor: "skyblue",
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <div style={{ backgroundColor: "cyan" }}>
+                          <input
+                            type="text"
+                            value={emailAddress}
+                            placeholder="이메일을 입력해주세요."
+                            {...register("emailAddress", {
+                              onChange: (e) => {
+                                onEmailAddressHandler(e);
+                              },
+                              required: true,
+                              pattern: formRegEx.EMAIL_ADDRESS,
+                            })}
+                          />
+                          {errors.emailAddress?.type === "required" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              필수 입력사항입니다.
+                            </p>
+                          )}
+                          {errors.emailAddress?.type === "pattern" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              형식에 맞게 입력하세요.
+                            </p>
+                          )}
+                        </div>
+                        <div style={{ backgroundColor: "yellowgreen" }}>@</div>
+                        <div style={{ backgroundColor: "greenyellow" }}>
+                          <input
+                            type="text"
+                            value={emailDomain}
+                            placeholder="주소 선택"
+                            readOnly={emailReadOnly}
+                            {...register("emailDomain", {
+                              onChange: (e) => {
+                                onEmailDomainHandler(e);
+                              },
+                              required: true,
+                              pattern: formRegEx.EMAIL_DOMAIN,
+                            })}
+                          />
+                          {errors.emailDomain?.type === "required" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              필수 입력사항입니다.
+                            </p>
+                          )}
+                          {errors.emailDomain?.type === "pattern" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              형식에 맞게 입력하세요.
+                            </p>
+                          )}
+                        </div>
+                        <div style={{ padding: "1px 2px" }}>
+                          <select onChange={onEmailKindHandler}>
+                            {emailItem.map((item: any, index: Number) => (
+                              <option key={item.key} value={item.value}>
+                                {item.text}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div style={{ padding: "1px 2px" }}>
+                          <button type="button" onClick={onEmailSendHandler}>
+                            {emailSend ? "인증번호 재전송" : "인증번호 전송"}
+                          </button>
+                        </div>
+                      </div>
+                      {emailSend ? (
+                        <div style={{ display: "flex" }}>
+                          <div>
+                            <input
+                              type="text"
+                              value={authNum}
+                              {...register("authNum", {
+                                onChange: (e) => {
+                                  onAuthNumHandler(e);
+                                },
+                              })}
+                            />
+                          </div>
+                          <div>
+                            <button
+                              type="button"
+                              onClick={onAuthNumCheckHandler}
+                            >
+                              인증
+                            </button>
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
-                    <div style={{ fontSize: "7px" }}>
-                      등록되지 않은 이메일일 경우 인증번호 전송 / 이미 등록된
-                      이메일일 경우 이미 등록된 이메일입니다 메세지 표시
-                    </div>
-                    <div>*비밀번호</div>
+                    {/* 비밀번호 */}
                     <div>
-                      <input
-                        type="password"
-                        name="password"
-                        value={inputUser.password}
-                        onChange={onInputUserHandler}
-                      />
+                      <div>*비밀번호</div>
+                      <div>
+                        <input
+                          type="password"
+                          value={inputUser.password}
+                          placeholder="로그인 시 사용할 비밀번호를 입력해주세요."
+                          {...register("password", {
+                            onChange: (e) => {
+                              onInputUserHandler(e);
+                            },
+                            required: true,
+                            pattern: formRegEx.PASSWORD,
+                          })}
+                        />
+                        {errors.password?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                        {errors.password?.type === "pattern" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            8~16자 영문, 숫자, 특수문자를 사용하세요.
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <div style={{ fontSize: "7px" }}>
-                      8~16자 영문,숫자,특수문자를 사용하세요.(조건에 부합하면 이
-                      텍스트 사라짐)
-                    </div>
-                    <div>*비밀번호 확인</div>
+                    {/* 비밀번호확인 */}
                     <div>
-                      <input type="password" />
+                      <div>*비밀번호 확인</div>
+                      <div>
+                        <input
+                          type="password"
+                          value={passwordCheck}
+                          placeholder="비밀번호 확인을 위해 다시 입력해주세요."
+                          {...register("passwordCheck", {
+                            onChange: (e) => {
+                              onPwdCheckHandler(e);
+                            },
+                            required: true,
+                            validate: (value) =>
+                              value === watch("password", ""),
+                          })}
+                        />
+                        {errors.passwordCheck?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                        {errors.passwordCheck?.type === "validate" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            비밀번호가 일치하지 않습니다.
+                          </p>
+                        )}
+                        {watch("passwordCheck", "") !== "" &&
+                          errors.passwordCheck?.type !== "validate" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "green",
+                              }}
+                            >
+                              비밀번호가 일치합니다.
+                            </p>
+                          )}
+                      </div>
                     </div>
-                    <div style={{ fontSize: "7px" }}>
-                      비밀번호가 일치합니다.
-                    </div>
-                    <div style={{ fontSize: "7px" }}>
-                      비밀번호가 일치하지 않습니다.
-                    </div>
-                    <div>*사업자 등록번호</div>
+                    {/* 사업자등록번호 */}
                     <div>
-                      <input type="text" />
-                      <input type="button" value="인증" />
+                      <div>*사업자 등록번호</div>
+                      <div
+                        style={{
+                          backgroundColor: "skyblue",
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <div>
+                          <input
+                            type="text"
+                            value={inputCompany?.comRegNum}
+                            placeholder="사업자 등록번호를 입력해주세요."
+                            {...register("comRegNum", {
+                              onChange: (e) => {
+                                onInputCompanyHandler(e);
+                              },
+                              required: true,
+                              pattern: formRegEx.COMPANY_NUM,
+                            })}
+                          />
+                          {errors.comRegNum?.type === "required" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              필수 입력사항입니다.
+                            </p>
+                          )}
+                          {errors.comRegNum?.type === "pattern" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              형식에 맞게 입력하세요.
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <button type="button">인증</button>
+                        </div>
+                      </div>
                     </div>
-                    <div style={{ fontSize: "7px" }}>
-                      사업자등록번호를 인증해주세요
-                    </div>
-                    <div style={{ fontSize: "7px" }}>
-                      사업자등록번호를 인증이 완료되었습니다.
-                    </div>
+                    {/* 정비업 등록번호 & 정비업종 */}
                     <div style={{ display: "flex" }}>
-                      <div style={{ width: "50%" }}>*정비업 등록번호</div>
-                      <div style={{ width: "50%" }}>*정비업종</div>
+                      {/* 정비업등록번호 */}
+                      <div style={{ width: "50%" }}>
+                        <div>*정비업 등록번호</div>
+                        <input
+                          type="text"
+                          value={inputCompany.mbRegNum}
+                          placeholder="정비업 등록번호를 입력해주세요."
+                          {...register("mbRegNum", {
+                            onChange: (e) => {
+                              onInputCompanyHandler(e);
+                            },
+                            required: true,
+                            pattern: formRegEx.MB_NUM,
+                          })}
+                        />
+                        {errors.mbRegNum?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                        {errors.mbRegNum?.type === "pattern" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            형식에 맞게 입력하세요.
+                          </p>
+                        )}
+                      </div>
+                      {/* 정비업종 */}
+                      <div style={{ width: "50%" }}>
+                        <div>*정비업종</div>
+                        <select
+                          {...register("mbTypeNum", {
+                            onChange: (e) => {
+                              onInputCompanyHandler(e);
+                            },
+                            required: true,
+                          })}
+                        >
+                          <option value="">정비업종 선택</option>
+                          <option value="1급">자동차종합정비업</option>
+                        </select>
+                        {errors.mbTypeNum?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 선택사항입니다.
+                          </p>
+                        )}
+                      </div>
                     </div>
+                    {/* 상호명 & 대표자명 */}
                     <div style={{ display: "flex" }}>
-                      <input type="text" style={{ width: "50%" }} />
-                      <select style={{ width: "50%" }}>
-                        <option value="">정비업종 선택</option>
-                        <option value="1급">자동차종합정비업</option>
-                      </select>
+                      {/* 상호명 */}
+                      <div style={{ width: "50%" }}>
+                        <div>*상호명</div>
+                        <input
+                          type="text"
+                          value={inputCompany.name}
+                          placeholder="상호명을 입력해주세요."
+                          {...register("name", {
+                            onChange: (e) => {
+                              onInputCompanyHandler(e);
+                            },
+                            required: true,
+                          })}
+                        />
+                        {errors.name?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                      </div>
+                      {/* 대표자명 */}
+                      <div style={{ width: "50%" }}>
+                        <div>*대표자명</div>
+                        <input
+                          type="text"
+                          value={inputCompany.ownerName}
+                          placeholder="대표자명을 입력해주세요."
+                          {...register("ownerName", {
+                            onChange: (e) => {
+                              onInputCompanyHandler(e);
+                            },
+                            required: true,
+                          })}
+                        />
+                        {errors.ownerName?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                      </div>
                     </div>
+                    {/* 업태 & 업종 */}
                     <div style={{ display: "flex" }}>
-                      <div style={{ width: "50%" }}>*상호명</div>
-                      <div style={{ width: "50%" }}>*대표자명</div>
+                      {/* 업태 */}
+                      <div style={{ width: "50%" }}>
+                        <div>*업태</div>
+                        <input
+                          type="text"
+                          value={inputCompany.busType}
+                          placeholder="업태를 입력해주세요."
+                          {...register("busType", {
+                            onChange: (e) => {
+                              onInputCompanyHandler(e);
+                            },
+                            required: true,
+                          })}
+                        />
+                        {errors.busType?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                      </div>
+                      {/* 업종 */}
+                      <div style={{ width: "50%" }}>
+                        <div>*업종</div>
+                        <input
+                          type="text"
+                          value={inputCompany.busItem}
+                          placeholder="업종을 입력해주세요."
+                          {...register("busItem", {
+                            onChange: (e) => {
+                              onInputCompanyHandler(e);
+                            },
+                            required: true,
+                          })}
+                        />
+                        {errors.busItem?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                      </div>
                     </div>
+                    {/* 대표자 휴대폰번호 & 사업자 전화번호 & 사업자 팩스번호 */}
                     <div style={{ display: "flex" }}>
-                      <input type="text" style={{ width: "50%" }} />
-                      <input type="text" style={{ width: "50%" }} />
+                      {/* 대표자 휴대폰번호 */}
+                      <div style={{ width: "32%" }}>
+                        <div>*대표 휴대폰번호</div>
+                        <input
+                          type="text"
+                          value={inputUser.hpNumber}
+                          placeholder="(- 제외)"
+                          {...register("hpNumber", {
+                            onChange: (e) => {
+                              onInputUserHandler(e);
+                            },
+                            required: true,
+                            pattern: formRegEx.HP_NUM,
+                          })}
+                        />
+                        {errors.hpNumber?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                        {errors.hpNumber?.type === "pattern" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            형식에 맞게 입력하세요.
+                          </p>
+                        )}
+                      </div>
+                      {/* 사업자 전화번호 */}
+                      <div style={{ width: "32%" }}>
+                        <div>*업체 전화번호</div>
+                        <input
+                          type="text"
+                          value={inputCompany.phoneNum}
+                          placeholder="(- 제외, 지역번호 포함)"
+                          {...register("phoneNum", {
+                            onChange: (e) => {
+                              onInputCompanyHandler(e);
+                            },
+                            required: true,
+                            pattern: formRegEx.PH_NUM,
+                          })}
+                        />
+                        {errors.phoneNum?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                        {errors.phoneNum?.type === "pattern" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            형식에 맞게 입력하세요.
+                          </p>
+                        )}
+                      </div>
+                      {/* 사업자 팩스번호 */}
+                      <div style={{ width: "32%" }}>
+                        <div>업체 팩스번호(선택)</div>
+                        <input
+                          type="text"
+                          value={inputCompany.faxNum}
+                          placeholder="(- 제외)"
+                          {...register("faxNum", {
+                            onChange: (e) => {
+                              onInputCompanyHandler(e);
+                            },
+                            required: true,
+                            pattern: basicRegEx.NUM,
+                          })}
+                        />
+                        {errors.faxNum?.type === "required" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                        {errors.faxNum?.type === "pattern" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            형식에 맞게 입력하세요.
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <div style={{ display: "flex" }}>
-                      <div style={{ width: "50%" }}>*업태</div>
-                      <div style={{ width: "50%" }}>*업종</div>
-                    </div>
-                    <div style={{ display: "flex" }}>
-                      <input type="text" style={{ width: "50%" }} />
-                      <input type="text" style={{ width: "50%" }} />
-                    </div>
-                    <div style={{ display: "flex" }}>
-                      <div style={{ width: "50%" }}>*전화번호</div>
-                      <div style={{ width: "50%" }}>*팩스번호(선택)</div>
-                    </div>
-                    <div style={{ display: "flex" }}>
-                      <input type="text" style={{ width: "50%" }} />
-                      <input type="text" style={{ width: "50%" }} />
-                    </div>
-                    <div>*사업자 주소</div>
-                    <div style={{ display: "flex" }}>
-                      <input type="text" style={{ width: "85%" }} />
-                      <input
-                        type="button"
-                        style={{ width: "15%" }}
-                        value="주소검색"
-                      />
+                    {/* 업체 주소 */}
+                    <div>
+                      <div>*사업자 주소</div>
+                      <div style={{ display: "flex" }}>
+                        <input type="text" style={{ width: "85%" }} />
+                        <input
+                          type="button"
+                          style={{ width: "15%" }}
+                          value="주소검색"
+                          placeholder="주소를 입력해주세요."
+                        />
+                      </div>
                     </div>
                     <div style={{ textAlign: "center" }}>
                       <button
@@ -466,13 +996,7 @@ const SignUp: NextPage = () => {
                       >
                         이전
                       </button>
-                      <button
-                        onClick={(e) => {
-                          setStepNumber(stepNumber + 1);
-                        }}
-                      >
-                        다음
-                      </button>
+                      <button type="submit">다음</button>
                     </div>
                   </form>
                 </div>

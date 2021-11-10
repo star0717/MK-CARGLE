@@ -21,8 +21,8 @@ const SignIn: NextPage<any> = (props) => {
   // input 값을 위한 state
   // 가져온 signIn 값과 props의 id 값을 input state의 초기값으로 세팅
   const [inputSignIn, setInputSignIn] = useState({
+    ...signInInfo,
     id: props.saveId,
-    pwd: signInInfo.pwd,
   });
 
   // 아이디 저장 체크 여부를 위한 state
@@ -49,6 +49,7 @@ const SignIn: NextPage<any> = (props) => {
         (res: any) => {
           // 아이디 저장할 경우 쿠키로 저장
           if (saveId) {
+            // const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
             Cookies.set("saveId", inputSignIn.id, { expires: 1 });
             // 아이디 저장안할 경우 쿠키 삭제(이미 생성 후 안할 경우 쿠키는 남아있기 때문에 삭제 진행)
           } else {
@@ -61,7 +62,6 @@ const SignIn: NextPage<any> = (props) => {
           // Nest에서 전송해주는 status code에 맞게 핸들링
           if (err.response.status === 401) {
             alert("아이디 / 비밀번호를 확인해주세요.");
-            setInputSignIn(initialState.signInInfo); // 입력값 초기화
           }
         }
       );

@@ -30,4 +30,4 @@ console.log(dbInfo);
     CommonModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
