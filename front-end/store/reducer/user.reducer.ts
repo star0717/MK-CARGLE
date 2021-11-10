@@ -78,6 +78,18 @@ const userAll = (
         ...state,
       };
 
+    // 이메일 인증번호 체크 기능
+    case actionTypesUser.USER_AUTHNUM_CHECK:
+      return {
+        ...state,
+      };
+
+    // 사업자번호 유효성 검사 기능
+    case actionTypesUser.USER_COMPANY_CHECK:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

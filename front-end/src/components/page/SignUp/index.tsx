@@ -3,7 +3,7 @@ import { useRouter } from "next/dist/client/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { compareSync } from "bcrypt";
+import DaumPostcode from "react-daum-postcode";
 import { useInterval } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
@@ -11,7 +11,10 @@ import { UserState } from "../../../../store/interfaces";
 import { User } from "../../../../../models/dist/user.entity";
 import { Company } from "../../../../../models/dist/company.entity";
 import { basicRegEx, formRegEx } from "../../../validation/regEx";
-import { emailSendAction } from "../../../../store/action/user.action";
+import {
+  companyCheckAction,
+  emailSendAction,
+} from "../../../../store/action/user.action";
 
 // verticalAlign: "middle",
 // alignItems: "center",
@@ -63,6 +66,9 @@ const SignUp: NextPage = () => {
   const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
   const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
   const [authNum, setAuthNum] = useState(""); // 인증번호 input
+  const [addressMain, setAddressMain] = useState(""); // 주소(메인)
+  const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
+  const [addressApi, setAddressApi] = useState(false); // 주소 api toggle
 
   const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
 
@@ -86,14 +92,6 @@ const SignUp: NextPage = () => {
   };
 
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
-  // 이메일 주소
-  const onEmailAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailAdderess(e.target.value);
-  };
-  // 이메일 도메인
-  const onEmailDomainHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailDomain(e.target.value);
-  };
   // 사용자 정보
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputUser({ ...inputUser, [e.target.name]: e.target.value });
@@ -102,18 +100,12 @@ const SignUp: NextPage = () => {
   const onInputCompanyHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
   };
-  // 인증번호 input
-  const onAuthNumHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAuthNum(e.target.value);
-  };
-  // 비밀번호 확인 input
-  const onPwdCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordCheck(e.target.value);
-  };
 
   // 이메일 Address, Domain 입력 시 이메일 state 변경
   useEffect(() => {
-    setInputUser({ ...inputUser, email: `${emailAddress}@${emailDomain}` });
+    if (emailAddress != "" || emailDomain != "") {
+      setInputUser({ ...inputUser, email: `${emailAddress}@${emailDomain}` });
+    }
   }, [emailAddress, emailDomain]);
 
   // 이메일 인증번호 전송 handler
@@ -149,29 +141,72 @@ const SignUp: NextPage = () => {
   // 인증번호 만료 시 emailSend state 변경
   useEffect(() => {
     if (timer === 0) {
-      if (!Cookies.get("mk_amtn") && emailSend) {
+      if (!Cookies.get("mk_amtn") && emailSend && !authNumCheck) {
         alert("인증번호가 만료되었습니다.");
         setEmailSend(false);
       }
     }
   }, [timer]);
 
-  // 인증번호 체크
+  // 인증번호 검사 handler
   const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const hashAuth = Cookies.get("mk_amtn");
     console.log(hashAuth);
-    // if (hashAuth) {
-    //   if (compareSync(authNum, hashAuth)) {
-    //     alert("인증되었습니다.");
-    //   } else {
-    //     alert("인증번호가 일치하지 않습니다.");
-    //   }
-    // }
+    if (hashAuth) {
+    }
   };
+
+  // 사업자번호 유효성 검사 handler
+  const onComRegNumCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (inputCompany.comRegNum) {
+      dispatch(companyCheckAction(inputCompany.comRegNum)).then((res: any) => {
+        if (res.payload) {
+          alert("사업자등록번호 인증이 완료되었습니다.");
+        } else {
+          alert("유효하지 않은 사업자등록번호입니다.");
+        }
+      });
+    } else {
+      alert("사업자 번호를 입력하세요.");
+    }
+  };
+
+  // 주소 검색 api handler
+  const addressHandler = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    setAddressMain(fullAddress);
+    setAddressApi(false);
+  };
+
+  // 주소 - 메인주소, 상세주소 입력 시 inputCompany.address state 변경
+  useEffect(() => {
+    if (addressDetail != "") {
+      setInputCompany({
+        ...inputCompany,
+        address: addressMain + ", " + addressDetail,
+      });
+    } else {
+      setInputCompany({ ...inputCompany, address: addressMain });
+    }
+  }, [addressMain, addressDetail]);
 
   // 사업자 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
-    setStepNumber(stepNumber + 1);
+    console.log(data);
+    // setStepNumber(stepNumber + 1);
   };
 
   console.log(isCompany);
@@ -179,6 +214,7 @@ const SignUp: NextPage = () => {
   console.log("도메인: ", emailDomain);
   console.log("유저 : ", inputUser);
   console.log("업체 : ", inputCompany);
+  console.log("에러 : ", errors.addressMain);
 
   return (
     <div
@@ -419,7 +455,7 @@ const SignUp: NextPage = () => {
                         style={{
                           backgroundColor: "skyblue",
                           display: "flex",
-                          justifyContent: "flex-start",
+                          justifyContent: "space-between",
                           alignItems: "flex-start",
                         }}
                       >
@@ -430,7 +466,7 @@ const SignUp: NextPage = () => {
                             placeholder="이메일을 입력해주세요."
                             {...register("emailAddress", {
                               onChange: (e) => {
-                                onEmailAddressHandler(e);
+                                setEmailAdderess(e.target.value);
                               },
                               required: true,
                               pattern: formRegEx.EMAIL_ADDRESS,
@@ -468,7 +504,7 @@ const SignUp: NextPage = () => {
                             readOnly={emailReadOnly}
                             {...register("emailDomain", {
                               onChange: (e) => {
-                                onEmailDomainHandler(e);
+                                setEmailDomain(e.target.value);
                               },
                               required: true,
                               pattern: formRegEx.EMAIL_DOMAIN,
@@ -498,7 +534,13 @@ const SignUp: NextPage = () => {
                           )}
                         </div>
                         <div style={{ padding: "1px 2px" }}>
-                          <select onChange={onEmailKindHandler}>
+                          <select
+                            {...register("emailSelect", {
+                              onChange: (e) => {
+                                onEmailKindHandler(e);
+                              },
+                            })}
+                          >
                             {emailItem.map((item: any, index: Number) => (
                               <option key={item.key} value={item.value}>
                                 {item.text}
@@ -520,7 +562,7 @@ const SignUp: NextPage = () => {
                               value={authNum}
                               {...register("authNum", {
                                 onChange: (e) => {
-                                  onAuthNumHandler(e);
+                                  setAuthNum(e.target.value);
                                 },
                               })}
                             />
@@ -541,6 +583,7 @@ const SignUp: NextPage = () => {
                       <div>*비밀번호</div>
                       <div>
                         <input
+                          style={{ width: "100%" }}
                           type="password"
                           value={inputUser.password}
                           placeholder="로그인 시 사용할 비밀번호를 입력해주세요."
@@ -581,12 +624,13 @@ const SignUp: NextPage = () => {
                       <div>*비밀번호 확인</div>
                       <div>
                         <input
+                          style={{ width: "100%" }}
                           type="password"
                           value={passwordCheck}
                           placeholder="비밀번호 확인을 위해 다시 입력해주세요."
                           {...register("passwordCheck", {
                             onChange: (e) => {
-                              onPwdCheckHandler(e);
+                              setPasswordCheck(e.target.value);
                             },
                             required: true,
                             validate: (value) =>
@@ -636,12 +680,13 @@ const SignUp: NextPage = () => {
                         style={{
                           backgroundColor: "skyblue",
                           display: "flex",
-                          justifyContent: "flex-start",
+                          justifyContent: "space-between",
                           alignItems: "flex-start",
                         }}
                       >
-                        <div>
+                        <div style={{ width: "80%" }}>
                           <input
+                            style={{ width: "100%" }}
                             type="text"
                             value={inputCompany?.comRegNum}
                             placeholder="사업자 등록번호를 입력해주세요."
@@ -677,16 +722,24 @@ const SignUp: NextPage = () => {
                           )}
                         </div>
                         <div>
-                          <button type="button">인증</button>
+                          <button type="button" onClick={onComRegNumCheck}>
+                            인증
+                          </button>
                         </div>
                       </div>
                     </div>
                     {/* 정비업 등록번호 & 정비업종 */}
-                    <div style={{ display: "flex" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       {/* 정비업등록번호 */}
-                      <div style={{ width: "50%" }}>
+                      <div style={{ width: "49%" }}>
                         <div>*정비업 등록번호</div>
                         <input
+                          style={{ width: "100%" }}
                           type="text"
                           value={inputCompany.mbRegNum}
                           placeholder="정비업 등록번호를 입력해주세요."
@@ -722,9 +775,10 @@ const SignUp: NextPage = () => {
                         )}
                       </div>
                       {/* 정비업종 */}
-                      <div style={{ width: "50%" }}>
+                      <div style={{ width: "49%" }}>
                         <div>*정비업종</div>
                         <select
+                          style={{ width: "100%" }}
                           {...register("mbTypeNum", {
                             onChange: (e) => {
                               onInputCompanyHandler(e);
@@ -749,11 +803,17 @@ const SignUp: NextPage = () => {
                       </div>
                     </div>
                     {/* 상호명 & 대표자명 */}
-                    <div style={{ display: "flex" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       {/* 상호명 */}
-                      <div style={{ width: "50%" }}>
+                      <div style={{ width: "49%" }}>
                         <div>*상호명</div>
                         <input
+                          style={{ width: "100%" }}
                           type="text"
                           value={inputCompany.name}
                           placeholder="상호명을 입력해주세요."
@@ -777,9 +837,10 @@ const SignUp: NextPage = () => {
                         )}
                       </div>
                       {/* 대표자명 */}
-                      <div style={{ width: "50%" }}>
+                      <div style={{ width: "49%" }}>
                         <div>*대표자명</div>
                         <input
+                          style={{ width: "100%" }}
                           type="text"
                           value={inputCompany.ownerName}
                           placeholder="대표자명을 입력해주세요."
@@ -804,11 +865,17 @@ const SignUp: NextPage = () => {
                       </div>
                     </div>
                     {/* 업태 & 업종 */}
-                    <div style={{ display: "flex" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       {/* 업태 */}
-                      <div style={{ width: "50%" }}>
+                      <div style={{ width: "49%" }}>
                         <div>*업태</div>
                         <input
+                          style={{ width: "100%" }}
                           type="text"
                           value={inputCompany.busType}
                           placeholder="업태를 입력해주세요."
@@ -832,9 +899,10 @@ const SignUp: NextPage = () => {
                         )}
                       </div>
                       {/* 업종 */}
-                      <div style={{ width: "50%" }}>
+                      <div style={{ width: "49%" }}>
                         <div>*업종</div>
                         <input
+                          style={{ width: "100%" }}
                           type="text"
                           value={inputCompany.busItem}
                           placeholder="업종을 입력해주세요."
@@ -859,11 +927,17 @@ const SignUp: NextPage = () => {
                       </div>
                     </div>
                     {/* 대표자 휴대폰번호 & 사업자 전화번호 & 사업자 팩스번호 */}
-                    <div style={{ display: "flex" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       {/* 대표자 휴대폰번호 */}
                       <div style={{ width: "32%" }}>
                         <div>*대표 휴대폰번호</div>
                         <input
+                          style={{ width: "100%" }}
                           type="text"
                           value={inputUser.hpNumber}
                           placeholder="(- 제외)"
@@ -902,6 +976,7 @@ const SignUp: NextPage = () => {
                       <div style={{ width: "32%" }}>
                         <div>*업체 전화번호</div>
                         <input
+                          style={{ width: "100%" }}
                           type="text"
                           value={inputCompany.phoneNum}
                           placeholder="(- 제외, 지역번호 포함)"
@@ -940,6 +1015,7 @@ const SignUp: NextPage = () => {
                       <div style={{ width: "32%" }}>
                         <div>업체 팩스번호(선택)</div>
                         <input
+                          style={{ width: "100%" }}
                           type="text"
                           value={inputCompany.faxNum}
                           placeholder="(- 제외)"
@@ -978,14 +1054,67 @@ const SignUp: NextPage = () => {
                     {/* 업체 주소 */}
                     <div>
                       <div>*사업자 주소</div>
-                      <div style={{ display: "flex" }}>
-                        <input type="text" style={{ width: "85%" }} />
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div style={{ width: "80%" }}>
+                          <input
+                            style={{ width: "100%" }}
+                            type="text"
+                            placeholder="주소를 입력해주세요."
+                            value={addressMain}
+                            readOnly
+                            {...register("addressMain", {
+                              validate: (value) => {
+                                value = addressMain;
+                                return value === "" ? false : true;
+                              },
+                            })}
+                          />
+                          {errors.addressMain?.type === "validate" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              필수 입력사항입니다.
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              setAddressApi(!addressApi);
+                            }}
+                          >
+                            주소 검색
+                          </button>
+                        </div>
+                      </div>
+                      <div>
                         <input
-                          type="button"
-                          style={{ width: "15%" }}
-                          value="주소검색"
-                          placeholder="주소를 입력해주세요."
+                          style={{ width: "100%" }}
+                          type="text"
+                          placeholder="상세 주소"
+                          value={addressDetail}
+                          readOnly={addressMain ? false : true}
+                          {...register("addressDetail", {
+                            onChange: (e) => {
+                              setAddressDetail(e.target.value);
+                            },
+                          })}
                         />
+                      </div>
+                      <div>
+                        {addressApi ? (
+                          <DaumPostcode onComplete={addressHandler} />
+                        ) : null}
                       </div>
                     </div>
                     <div style={{ textAlign: "center" }}>
