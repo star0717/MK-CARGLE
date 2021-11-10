@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { hashSync } from "bcrypt";
 import { useInterval } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
@@ -136,16 +138,36 @@ const SignUp: NextPage = () => {
   };
 
   // 인증번호 타이머
-  useInterval(() => {
-    setTimer(timer - 60);
-  }, 60 * 1000);
+  useInterval(
+    () => {
+      setTimer(timer - 1);
+      console.log(timer);
+    },
+    emailSend ? 1000 : null
+  );
 
   // 인증번호 만료 시 emailSend state 변경
   useEffect(() => {
     if (timer === 0) {
-      setEmailSend(false);
+      if (!Cookies.get("mk_amtn") && emailSend) {
+        alert("인증번호가 만료되었습니다.");
+        setEmailSend(false);
+      }
     }
   }, [timer]);
+
+  // 인증번호 체크
+  const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const hashAuth = Cookies.get("mk_amtn");
+    console.log(hashAuth);
+    // if (hashAuth) {
+    //   if (hashSync(authNum, hashAuth)) {
+    //     alert("인증되었습니다.");
+    //   } else {
+    //     alert("인증번호가 일치하지 않습니다.");
+    //   }
+    // }
+  };
 
   // 사업자 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
@@ -491,7 +513,7 @@ const SignUp: NextPage = () => {
                         </div>
                       </div>
                       {emailSend ? (
-                        <div>
+                        <div style={{ display: "flex" }}>
                           <div>
                             <input
                               type="text"
@@ -504,7 +526,12 @@ const SignUp: NextPage = () => {
                             />
                           </div>
                           <div>
-                            <button type="button">인증</button>
+                            <button
+                              type="button"
+                              onClick={onAuthNumCheckHandler}
+                            >
+                              인증
+                            </button>
                           </div>
                         </div>
                       ) : null}

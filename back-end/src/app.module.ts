@@ -22,4 +22,4 @@ import configuration from './config/configuration';
     CommonModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

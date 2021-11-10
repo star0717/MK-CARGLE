@@ -49,6 +49,7 @@ const SignIn: NextPage<any> = (props) => {
         (res: any) => {
           // 아이디 저장할 경우 쿠키로 저장
           if (saveId) {
+            // const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
             Cookies.set("saveId", inputSignIn.id, { expires: 1 });
             // 아이디 저장안할 경우 쿠키 삭제(이미 생성 후 안할 경우 쿠키는 남아있기 때문에 삭제 진행)
           } else {

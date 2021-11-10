@@ -13,6 +13,8 @@ import { randomInt } from 'crypto';
 import { hashSync } from "bcrypt";
 import { docFileInterceptor } from 'src/config/multer.option';
 import { CompaniesService } from 'src/modules/companies/companies.service';
+import { existsSync, readdirSync, } from 'fs';
+import path from 'path';
 
 @ApiTags("인증 API")
 @Controller('auth')
@@ -108,8 +110,6 @@ export class AuthController {
   async busNumValidate(
     @Param('id') bugNum: String): Promise<Observable<boolean>> {
     bugNum = bugNum.replace(/-/g, '',);
-    // const apiKey = configuration().busNumValidation.api_key;
-    // const apiUrl = configuration().busNumValidation.url + apiKey;
     const apiKey = this.env_config.busNumValidation.api_key;
     const apiUrl = this.env_config.busNumValidation.url + apiKey;
     const postData = {
@@ -138,6 +138,7 @@ export class AuthController {
       return false; //사용자가 존재하면 false 반환
     } else {
       const authCode: number = randomInt(1111, 9999);
+      console.log(authCode);
       const strAuthCode = hashSync(String(authCode), 10);
       this.commonService.sendMail(email, "이메일 인증 요청 메일", '4자리 인증 코드 : ' + `<b> ${authCode}</b>`);
       const expireDate = new Date(Date.now() + 1000 * 60 * 5);
@@ -209,5 +210,29 @@ export class AuthController {
     const fileName = company.comRegNum.toString() + extension;
     const newFileName = await this.commonService.storeFile(file, getMrnPath(), fileName);
     return newFileName;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "업로드된 정비업등록증 파일명 반환" })
+  @Get('file-name/man-reg-doc')
+  async getMrFileName(@Request() req) {
+    const token_info: AuthTokenInfo = req.user;
+    const company = await this.companiesService.findById(token_info.cID);
+    const fileName = company.comRegNum.toString();
+
+    // const filesList =
+    //   readdirSync(getMrnPath(), (err:any, files:any) => files.filter((e) => path.extname(e).toLowerCase() === '.txt'));
+
+    // let fileList = readdirSync(getMrnPath());
+    // fileList = fileList.filter((file) => {
+    //   if (file.startsWith(fileName))
+    //     return file;
+    // })
+
+    const fileList = await this.commonService.getFileNames(getMrnPath(), "1");
+    if (fileList.length > 0) {
+      return fileList[0];
+    } else
+      return null;
   }
 }
