@@ -109,7 +109,7 @@ const SignIn: NextPage<any> = (props) => {
           </div>
           <button
             onClick={() => {
-              router.push("/view/signp");
+              router.push("/view/signup");
             }}
           >
             회원가입
