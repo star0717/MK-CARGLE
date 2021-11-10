@@ -1,8 +1,8 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { readdirSync, writeFileSync } from 'fs';
+import { readdirSync, rmSync, writeFileSync, } from 'fs';
 import { Address } from 'nodemailer/lib/mailer';
-import { getMrnPath } from 'src/config/configuration';
+
 
 @Injectable()
 export class CommonService {
@@ -53,10 +53,16 @@ export class CommonService {
      */
     async getFileNames(path: string, startname: string) {
         let fileList = readdirSync(path);
-        fileList = fileList.filter((file) => {
-            if (file.startsWith(startname))
-                return file;
-        })
+        console.log(fileList);
+        fileList = fileList.filter((file) => file.startsWith(startname))
+        console.log(fileList);
         return fileList;
+    }
+
+    async deleteFiles(path: string, fileList: string[]) {
+        fileList.forEach((file) => {
+            console.log(file);
+            rmSync(path + file);
+        })
     }
 }

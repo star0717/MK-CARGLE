@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # .env
 .env
+
+# 업로드된 파일 저장소
+/storage
