@@ -41,7 +41,7 @@ export class UsersService extends BaseService<User> {
     return await this.model.findOne({ email });
   }
 
-  async findUserByHpNumber(hpNumber: number): Promise<User> {
+  async findUserByHpNumber(hpNumber: string): Promise<User> {
     return await this.model.findOne({ hpNumber });
   }
 }

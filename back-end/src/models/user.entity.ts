@@ -65,7 +65,7 @@ export class User extends BaseEntity {
     })
     public name: string;
 
-    @ApiProperty({ description: "업체의 ObjectID", default: "6182713d37f2762e4db14b53" })
+    @ApiProperty({ description: "업체의 ObjectID", required: false })
     @IsOptional()
     @IsMongoId()
     @prop({
@@ -77,14 +77,15 @@ export class User extends BaseEntity {
 
     @ApiProperty({ description: "핸드폰번호" })
     @IsOptional()
-    @IsNumber()
+    @IsString()
     @prop({
         unique: true,
         required: [true, "핸드폰번호는 필수 항목입니다."],
+        trim: true,
     })
-    public hpNumber: number;
+    public hpNumber: string;
 
-    @ApiProperty({ description: "승인여부", default: false })
+    @ApiProperty({ description: "승인여부", default: false, required: false })
     @IsOptional()
     @IsBoolean()
     @prop({

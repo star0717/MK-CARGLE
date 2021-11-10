@@ -163,7 +163,7 @@ export class AuthController {
   @ApiResponse({ description: "전화번호 유효여부. 가입가능: true, 가입불가: false", type: Boolean })
   @Get('validate/phone/:id')
   async phoneValidate(@Param('id') hpNumber: string): Promise<boolean> {
-    const user = await this.authService.findUserByHpNumber(+hpNumber);
+    const user = await this.authService.findUserByHpNumber(hpNumber);
     if (user) {
       return false; //사용자가 존재하면 false 반환
     } else {
