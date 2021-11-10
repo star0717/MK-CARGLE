@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser'
 import { existsSync, mkdirSync } from 'fs';
-import config from "src/config/configuration";
+import config from "./config/configuration";
 
 async function bootstrap() {
 
