@@ -34,8 +34,11 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# .env
-.env
+# 추가된 내용
 
-# 업로드된 파일 저장소
+# 파일들
+.env
+package-lock.json
+
+# 디렉토리들
 /storage
