@@ -10,6 +10,7 @@
   "dependencies": {
     "@types/redux-logger": "^3.0.9",
     "@types/redux-promise": "^0.5.29",
+    "@types/styled-components": "^5.1.15",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "js-cookie": "^3.0.1",
@@ -24,7 +25,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.6.0",
-    "redux-thunk": "^2.4.0"
+    "redux-thunk": "^2.4.0",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
