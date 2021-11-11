@@ -9,8 +9,8 @@ import { useInterval } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { UserState } from "../../../../store/interfaces";
-import { User } from "../../../../../models/dist/user.entity";
-import { Company } from "../../../../../models/dist/company.entity";
+import { User } from "../../../models/user.entity";
+import { Company } from "../../../models/company.entity";
 import { basicRegEx, formRegEx } from "../../../validation/regEx";
 import {
   authNumCheckAction,
@@ -18,11 +18,6 @@ import {
   emailSendAction,
   signUpUserAction,
 } from "../../../../store/action/user.action";
-import Post from "../../common/react-daum-post";
-
-// verticalAlign: "middle",
-// alignItems: "center",
-// textAlign: "center"
 
 // react-hook-form을 사용하는 form에서 받을 데이터 타입 정의
 // 이용약관 form
@@ -33,7 +28,6 @@ interface TermData {
 
 interface SignUpInfo {
   user: User;
-  
   company: Company;
 }
 
@@ -67,7 +61,7 @@ const SignUp: NextPage = () => {
 
   const [isCompany, setIsCompany] = useState<boolean>(true); // 사업자일 경우 true
   const [stepNumber, setStepNumber] = useState<number>(1); // 스텝 숫자
-  const [direct, setDirect] = useState<boolean>(false);
+  // const [direct, setDirect] = useState<boolean>(false);
 
   const [mkTerm, setMkTerm] = useState(false); // 엠케이 이용약관 체크여부
   const [privacyTerm, setPrivacyTerm] = useState(false); // 개인정보 동의 체크여부
@@ -100,6 +94,13 @@ const SignUp: NextPage = () => {
     setModalOpen(false);
   };
 
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
+
   // 이용약관 form submit handler
   const agreeTermHandler: SubmitHandler<TermData> = (data) => {
     setStepNumber(stepNumber + 1);
@@ -122,18 +123,19 @@ const SignUp: NextPage = () => {
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
   };
 
-  // 이메일 Address, Domain 입력 시 이메일 state 변경
-  useEffect(() => {
-    if (emailAddress != "" || emailDomain != "") {
-      setInputUser({ ...inputUser, email: `${emailAddress}@${emailDomain}` });
-    }
-  }, [emailAddress, emailDomain]);
+  // // 이메일 Address, Domain 입력 시 이메일 state 변경
+  // useEffect(() => {
+  //   if (emailAddress != "" || emailDomain != "") {
+  //     setInputUser({ ...inputUser, email: `${emailAddress}@${emailDomain}` });
+  //   }
+  // }, [emailAddress, emailDomain]);
 
   // 이메일 인증번호 전송 handler
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (inputUser.email.length !== 0) {
-      if (formRegEx.EMAIL.test(inputUser.email)) {
-        dispatch(emailSendAction(inputUser.email)).then((res: any) => {
+    const email = `${emailAddress}@${emailDomain}`;
+    if (email.length !== 0) {
+      if (formRegEx.EMAIL.test(email)) {
+        dispatch(emailSendAction(email)).then((res: any) => {
           if (res.payload) {
             alert("인증번호가 전송되었습니다.");
             setEmailSend(true);
@@ -221,17 +223,17 @@ const SignUp: NextPage = () => {
     setModalOpen(false);
   };
 
-  // 주소 - 메인주소, 상세주소 입력 시 inputCompany.address state 변경
-  useEffect(() => {
-    if (addressDetail != "") {
-      setInputCompany({
-        ...inputCompany,
-        address: addressMain + ", " + addressDetail,
-      });
-    } else {
-      setInputCompany({ ...inputCompany, address: addressMain });
-    }
-  }, [addressMain, addressDetail]);
+  // // 주소 - 메인주소, 상세주소 입력 시 inputCompany.address state 변경
+  // useEffect(() => {
+  //   if (addressDetail != "") {
+  //     setInputCompany({
+  //       ...inputCompany,
+  //       address: addressMain + ", " + addressDetail,
+  //     });
+  //   } else {
+  //     setInputCompany({ ...inputCompany, address: addressMain });
+  //   }
+  // }, [addressMain, addressDetail]);
 
   // 사업자 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
@@ -242,22 +244,36 @@ const SignUp: NextPage = () => {
     } else {
       console.log("@@@", inputUser);
       console.log("###", inputCompany);
-      setInputUser({
-        ...inputUser,
-        auth: UserAuthority.OWNER,
-        name: inputCompany.ownerName,
-      });
-      console.log("$$$", UserAuthority.OWNER);
+      console.log("$$$", user.auth);
+
       dispatch(
         signUpUserAction({
-          user: inputUser,
-          company: inputCompany,
+          user: {
+            ...inputUser,
+            name: inputCompany.ownerName,
+            email: `${emailAddress}@${emailDomain}`,
+          },
+          company: {
+            ...inputCompany,
+            address:
+              addressDetail !== ""
+                ? `${addressMain}, ${addressDetail}`
+                : addressMain,
+          },
         })
-      ).then((res: any) => {
-        console.log(res);
-      });
+      ).then(
+        (res: any) => {
+          setStepNumber(stepNumber + 1);
+        },
+        (err) => {
+          if (err.response.status === 400) {
+            alert("회원가입에 실패했습니다.");
+            setAuthNumCheck(false);
+            setCompanyCheck(false);
+          }
+        }
+      );
     }
-    // setStepNumber(stepNumber + 1);
   };
 
   console.log(isCompany);
@@ -391,7 +407,7 @@ const SignUp: NextPage = () => {
                   }}
                   onClick={() => {
                     setStepNumber(2);
-                    setIsCompany(true);
+                    setInputUser({ ...inputUser, auth: UserAuthority.OWNER });
                   }}
                 ></div>
 
@@ -405,7 +421,7 @@ const SignUp: NextPage = () => {
                   }}
                   onClick={() => {
                     setStepNumber(2);
-                    setIsCompany(false);
+                    setInputUser({ ...inputUser, auth: UserAuthority.WORKER });
                   }}
                 ></div>
               </div>
@@ -514,6 +530,7 @@ const SignUp: NextPage = () => {
                           <input
                             type="text"
                             value={emailAddress}
+                            readOnly={authNumCheck}
                             placeholder="이메일을 입력해주세요."
                             {...register("emailAddress", {
                               onChange: (e) => {
@@ -552,7 +569,7 @@ const SignUp: NextPage = () => {
                             type="text"
                             value={emailDomain}
                             placeholder="주소 선택"
-                            readOnly={emailReadOnly}
+                            readOnly={emailReadOnly || authNumCheck}
                             {...register("emailDomain", {
                               onChange: (e) => {
                                 setEmailDomain(e.target.value);
@@ -586,6 +603,7 @@ const SignUp: NextPage = () => {
                         </div>
                         <div style={{ padding: "1px 2px" }}>
                           <select
+                            disabled={authNumCheck}
                             {...register("emailSelect", {
                               onChange: (e) => {
                                 onEmailKindHandler(e);
@@ -755,6 +773,7 @@ const SignUp: NextPage = () => {
                             style={{ width: "100%" }}
                             type="text"
                             value={inputCompany?.comRegNum}
+                            readOnly={companyCheck}
                             placeholder="사업자 등록번호를 입력해주세요."
                             {...register("comRegNum", {
                               onChange: (e) => {
@@ -1188,12 +1207,36 @@ const SignUp: NextPage = () => {
                         <Modal
                           isOpen={modalOpen}
                           onRequestClose={() => setModalOpen(false)}
+                          style={{
+                            overlay: {
+                              position: "fixed",
+                              zIndex: 1020,
+                              top: 0,
+                              left: 0,
+                              width: "100vw",
+                              height: "100vh",
+                              background: "rgba(255, 255, 255, 0.75)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            },
+                            content: {
+                              background: "white",
+                              width: "45rem",
+                              maxWidth: "calc(100vw - 2rem)",
+                              maxHeight: "calc(100vh - 2rem)",
+                              overflowY: "auto",
+                              position: "relative",
+                              border: "1px solid #ccc",
+                              borderRadius: "0.3rem",
+                              inset: 0,
+                            },
+                          }}
                         >
-                          {/* <DaumPostcode
+                          <DaumPostcode
                             onComplete={addressHandler}
-                            style={{ height: "700px" }}
-                          /> */}
-                          <Post {...setAddressMain} {...setModalOpen}></Post>
+                            style={{ height: "500px" }}
+                          />
                         </Modal>
                       </div>
                     </div>

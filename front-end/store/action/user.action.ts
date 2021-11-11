@@ -25,6 +25,7 @@ export async function signOutUserAction() {
 
 // 회원가입 action
 export async function signUpUserAction(dataToSubmit: any) {
+  console.log("액션&*&*&", dataToSubmit);
   const req = await axios
     .post(`/api/auth/signup`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -57,7 +58,7 @@ export async function authNumCheckAction(dataToSubmit: string) {
 }
 
 // 사업자번호 유효성 검사 action
-export async function companyCheckAction(dataToSubmit: number) {
+export async function companyCheckAction(dataToSubmit: string) {
   const req = await axios
     .get(`/api/auth/validate/com-reg-number/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);

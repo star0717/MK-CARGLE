@@ -7,9 +7,9 @@ import {
   actionTypesUser,
   ActionsUser,
 } from "../interfaces";
-import { UserInfo } from "../../../models/dist/auth.entity";
-import { User } from "../../../models/dist/user.entity";
-import { Company } from "../../../models/dist/company.entity";
+import { UserInfo } from "../../src/models/auth.entity";
+import { User } from "../../src/models/user.entity";
+import { Company } from "../../src/models/company.entity";
 
 export const initialState: UserState = {
   signInInfo: <UserInfo>{
@@ -22,19 +22,19 @@ export const initialState: UserState = {
     // auth: "worker",
     // name: "",
     // comID: "",
-    // hpNumber: 0,
+    // hpNumber: "",
     // approval: false,
   },
   company: <Company>{
     // name: "",
-    // comRegNum: 0,
-    // mbRegNum: 0,
-    // mbTypeNum: 0,
+    // comRegNum: "",
+    // mbRegNum: "",
+    // mbTypeNum: "",
     // ownerName: "",
     // busType: "",
     // busItem: "",
-    // phoneNum: 0,
-    // faxNum: 0,
+    // phoneNum: "",
+    // faxNum: "",
     // address: "",
     // approval: false,
   },

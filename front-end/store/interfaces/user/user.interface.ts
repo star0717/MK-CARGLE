@@ -1,7 +1,6 @@
-import { UserInfo } from "../../../../models/dist/auth.entity";
-import { User } from "../../../../models/dist/user.entity";
-import { Company } from "../../../../models/dist/company.entity";
-// import { UserAuthority } from "../../../../models/dist/user.entity";
+import { UserInfo } from "../../../src/models/auth.entity";
+import { User } from "../../../src/models/user.entity";
+import { Company } from "../../../src/models/company.entity";
 
 // export interface UserInfo {
 //   id: string;
