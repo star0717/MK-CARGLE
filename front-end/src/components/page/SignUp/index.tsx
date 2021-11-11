@@ -32,6 +32,7 @@ interface TermData {
 
 interface SignUpInfo {
   user: User;
+  
   company: Company;
 }
 
