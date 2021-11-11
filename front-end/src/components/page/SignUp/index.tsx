@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
 import Cookies from "js-cookie";
 import DaumPostcode from "react-daum-postcode";
 import { useInterval } from "react-use";
@@ -34,6 +35,8 @@ interface SignUpInfo {
   user: User;
   company: Company;
 }
+
+Modal.setAppElement("body");
 
 const SignUp: NextPage = () => {
   enum UserAuthority {
@@ -78,7 +81,7 @@ const SignUp: NextPage = () => {
   const [companyCheck, setCompanyCheck] = useState(false);
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
-  const [addressApi, setAddressApi] = useState(false); // 주소 api toggle
+  const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
 
   const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
 
@@ -90,6 +93,11 @@ const SignUp: NextPage = () => {
     setValue,
     formState: { errors },
   } = useForm({ criteriaMode: "all" });
+
+  // modal 창 닫기 기능
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   // 이용약관 form submit handler
   const agreeTermHandler: SubmitHandler<TermData> = (data) => {
@@ -192,25 +200,25 @@ const SignUp: NextPage = () => {
     }
   };
 
-  // // 주소 검색 api handler
-  // const addressHandler = (data: any) => {
-  //   let fullAddress = data.address;
-  //   let extraAddress = "";
+  // 주소 검색 api handler
+  const addressHandler = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = "";
 
-  //   if (data.addressType === "R") {
-  //     if (data.bname !== "") {
-  //       extraAddress += data.bname;
-  //     }
-  //     if (data.buildingName !== "") {
-  //       extraAddress +=
-  //         extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-  //     }
-  //     fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-  //   }
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
 
-  //   setAddressMain(fullAddress);
-  //   setAddressApi(false);
-  // };
+    setAddressMain(fullAddress);
+    setModalOpen(false);
+  };
 
   // 주소 - 메인주소, 상세주소 입력 시 inputCompany.address state 변경
   useEffect(() => {
@@ -1151,14 +1159,11 @@ const SignUp: NextPage = () => {
                           <button
                             type="button"
                             onClick={(e) => {
-                              setAddressApi(!addressApi);
+                              setModalOpen(!modalOpen);
                             }}
                           >
                             주소 검색
                           </button>
-                          {/* {
-                            addressApi && <Post addressMain={addressMain} setAddressMain={setAddressMain}></Post>
-                          } */}
                         </div>
                       </div>
                       <div>
@@ -1175,11 +1180,21 @@ const SignUp: NextPage = () => {
                           })}
                         />
                       </div>
-                      {/* <div>
-                        {addressApi ? (
+                      <div>
+                        {/* {addressApi ? (
                           <DaumPostcode onComplete={addressHandler} />
-                        ) : null}
-                      </div> */}
+                        ) : null} */}
+                        <Modal
+                          isOpen={modalOpen}
+                          onRequestClose={() => setModalOpen(false)}
+                        >
+                          {/* <DaumPostcode
+                            onComplete={addressHandler}
+                            style={{ height: "700px" }}
+                          /> */}
+                          <Post {...setAddressMain} {...setModalOpen}></Post>
+                        </Modal>
+                      </div>
                     </div>
                     <div style={{ textAlign: "center" }}>
                       <button

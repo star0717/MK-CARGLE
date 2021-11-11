@@ -2,9 +2,18 @@ import type { NextPage } from "next";
 import React from "react";
 import DaumPostcode from "react-daum-postcode";
 
-const Post: NextPage = (props: any) => {
-  const addressMain = props.addressMain;
+const Post: NextPage<any> = (props) => {
   const setAddressMain = props.setAddressMain;
+  const setModalOpen = props.setModalOpen;
+
+  const postCodeStyle = {
+    display: "block",
+    position: "absolute",
+    top: "50px",
+    zIndex: "100",
+    padding: "7px",
+  };
+
   // 주소 검색 api handler
   const addressHandler = (data: any) => {
     let fullAddress = data.address;
@@ -22,12 +31,16 @@ const Post: NextPage = (props: any) => {
     }
 
     setAddressMain(fullAddress);
-    //   setAddressApi(false);
+    setModalOpen(false);
   };
 
   return (
     <>
-      <DaumPostcode autoClose onComplete={addressHandler} />
+      <DaumPostcode
+        autoClose
+        onComplete={addressHandler}
+        style={{ height: "500px" }}
+      />
     </>
   );
 };
