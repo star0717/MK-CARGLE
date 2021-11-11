@@ -139,7 +139,7 @@ const SignIn: NextPage<any> = (props) => {
                 <input
                   type="password"
                   name="pwd"
-                  value={inputSignIn.pwd}
+                  value={inputSignIn.pwd || ""}
                   onChange={onInputHandler}
                   style={{ width: "100%" }}
                 />
@@ -164,16 +164,6 @@ const SignIn: NextPage<any> = (props) => {
                     checked={saveId}
                   ></input>
                 </div>
-                {/* 로그인 상태 유지 */}
-                {/* <div>
-                  <span>로그인 상태 유지</span>
-                  <input
-                    type="checkbox"
-                    onChange={(e) => {
-                      setKeepSignIn(e.target.checked);
-                    }}
-                  ></input>
-                </div> */}
               </div>
               {/* 로그인 버튼 */}
               <button type="submit">로그인</button>
