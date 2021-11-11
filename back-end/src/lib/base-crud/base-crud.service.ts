@@ -78,12 +78,10 @@ export class BaseService<T extends BaseEntity> {
     // 갱신 시점 주입
     doc.updatedAt = new Date(Date.now());
 
-    // const newDoc: any = doc;
     return await this.model.findByIdAndUpdate(id, doc as any, { new: true });
   }
 
   async remove(id: string): Promise<DeleteResult> {
-    // return await this.model.findByIdAndRemove(id);
     return await this.model.findById(id).deleteOne();
   }
 }

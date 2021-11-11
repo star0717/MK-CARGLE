@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, UseGuards, Res, Request, BadRequestException, Param, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { AuthTokenInfo, SignUpInfo, UserInfo } from 'src/models/auth.entity';
+import { AuthTokenInfo, HelpChangePWD, HelpFindEmail, HelpFindPWD, SignUpInfo, UserInfo } from 'src/models/auth.entity';
 import { UserAuthority } from 'src/models/user.entity';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
@@ -9,10 +9,11 @@ import { HttpService } from "@nestjs/axios";
 import { map, Observable } from 'rxjs';
 import config, { getCrnPath, getMrnPath } from "src/config/configuration";
 import { CommonService } from '../common/common.service';
-import { randomInt } from 'crypto';
+import { randomBytes, randomFill, randomInt, randomUUID } from 'crypto';
 import { compare, hashSync } from "bcrypt";
 import { docFileInterceptor } from 'src/config/multer.option';
 import { CompaniesService } from 'src/modules/companies/companies.service';
+import { UsersService } from 'src/modules/users/users.service';
 
 @ApiTags("인증 API")
 @Controller('auth')
@@ -26,12 +27,12 @@ export class AuthController {
     private readonly httpService: HttpService,
     private readonly commonService: CommonService,
     private readonly companiesService: CompaniesService,
-    // private readonly config = configuration(),
+    private readonly usersService: UsersService,
   ) {
 
   }
 
-  @ApiOperation({ summary: "회원 가입", description: "업주 가입시에만 Company 데이터를 채워서 전송함" })
+  @ApiOperation({ summary: "회원 가입", description: "비밀번호는 8자 이상, 16자 이하. 업주 가입시에만 Company 데이터를 채워서 전송함" })
   @ApiBody({ description: "회원 가입에 필요한 정보 정보", type: SignUpInfo })
   @Post('signup')
   async signUpForOwner(
@@ -236,7 +237,7 @@ export class AuthController {
   @ApiOperation({ summary: "업로드된 사업자등록증 파일명 반환" })
   @ApiResponse({ description: "성공: 파일명, 실패: null" })
   @Get('file-name/com-reg-docc')
-  async getCrFileName(@Request() req) {
+  async getCrFileName(@Request() req): Promise<string> | null {
     const token_info: AuthTokenInfo = req.user;
     const company = await this.companiesService.findById(token_info.cID);
     const fileName = company.comRegNum.toString();
@@ -253,7 +254,7 @@ export class AuthController {
   @ApiOperation({ summary: "업로드된 정비업등록증 파일명 반환" })
   @ApiResponse({ description: "성공: 파일명, 실패: null" })
   @Get('file-name/man-reg-doc')
-  async getMrFileName(@Request() req) {
+  async getMrFileName(@Request() req): Promise<string> | null {
     const token_info: AuthTokenInfo = req.user;
     const company = await this.companiesService.findById(token_info.cID);
     const fileName = company.mbRegNum.toString();
@@ -266,5 +267,64 @@ export class AuthController {
       return null;
   }
 
+  @ApiOperation({ summary: "이메일 주소 찾기" })
+  @ApiBody({ description: "사용자명과 핸드폰번호", type: HelpFindEmail })
+  @ApiResponse({ description: "성공: 메일주소, 실패: null" })
+  @Post('help/email')
+  async helpFineEmail(@Body() data: HelpFindEmail): Promise<string> | null {
+    console.log(data);
+    const user = await this.usersService.findUserByHpNumber(data.hpNumber);
 
+    console.log(user);
+    // 검색된 사용자가 없거나 사용자명이 입력값과 다를 경우 null 반환
+    if (!user || user.name != data.name) return null;
+
+    // 메일 주소의 일부를 마스킹하여 반환
+    const email = user.email
+    var len = email.split('@')[0].length - 5;
+    return email.replace(new RegExp('.(?=.{0,' + len + '}@)', 'g'), '*');
+  }
+
+  @ApiOperation({ summary: "패스워드 찾기" })
+  @ApiBody({ description: "사용자명과 핸드폰번호 그리고 이메일 주소", type: HelpFindPWD })
+  @ApiResponse({ description: "성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송" })
+  @Post('help/pwd')
+  async helpFinePWD(@Body() data: HelpFindPWD): Promise<boolean> {
+    const user = await this.usersService.findUserByHpNumber(data.hpNumber);
+
+    // 검색된 사용자가 없거나 사용자명이 입력값과 다를 경우 null 반환
+    if (!user || user.name != data.name || user.email != data.email) return false;
+
+    // 비밀번호를 변경하여 메일 전송
+    const newPWD = randomUUID();
+    console.log(newPWD);
+    const newPWD2 = Math.random().toString(36).substr(2, 11);
+    console.log(newPWD2);
+    return true
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "패스워드 변경" })
+  @ApiBody({ description: "사용자명과 핸드폰번호 그리고 이메일 주소", type: HelpFindPWD })
+  @ApiResponse({ description: "성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송" })
+  @Post('update/password')
+  async UpdateUserPassword(@Request() req, @Body() data: HelpChangePWD): Promise<boolean> {
+    const token: AuthTokenInfo = req.user;
+
+    if (token.uID != data._id) return false;
+
+    // 사용자 조회(패스워드는 제외됨)
+    var user = await this.usersService.findById(data._id);
+
+    // 사용자 조회(패스워드까지 포함)
+    const userInfo: UserInfo = {
+      id: user.email,
+      pwd: data._id
+    }
+    user = await this.usersService.findUserBySignInInfo(userInfo);
+
+    user = await this.usersService.update(user._id, { password: data.newPWD });
+    if (user) return true;
+    else return false;
+  }
 }

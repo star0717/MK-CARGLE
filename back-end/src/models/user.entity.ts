@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { prop } from "@typegoose/typegoose"
-import { IsBoolean, IsEmail, IsEnum, IsNumber, IsOptional, IsString, IsMongoId } from 'class-validator';
+import { IsBoolean, IsEmail, IsEnum, IsNumber, IsOptional, IsString, IsMongoId, MinLength, MaxLength } from 'class-validator';
 import { BaseEntity } from "./base.entity";
 import { hashSync } from "bcrypt"
 const saltRounds = 10;
@@ -34,6 +34,8 @@ export class User extends BaseEntity {
     @ApiProperty({ description: "비밀번호. 매뉴얼 로그인에서 사용(소셜로그인에서 사용 안함)" })
     @IsOptional()
     @IsString()
+    @MinLength(8)
+    @MaxLength(16)
     @prop({
         unique: false,
         required: true,

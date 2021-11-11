@@ -58,3 +58,36 @@ export class AuthTokenInfo {
     @IsString()
     public cName: string;
 }
+
+/**
+ * 이메일 주소 찾기에 사용될 데이터 모델
+ */
+export class HelpFindEmail {
+    @ApiProperty({ description: "사용자명" })
+    @IsString()
+    public name: string;
+
+    @ApiProperty({ description: "핸드폰번호" })
+    @IsString()
+    public hpNumber: string;
+}
+
+export class HelpFindPWD extends HelpFindEmail {
+    @ApiProperty({ description: "이메일 주소" })
+    @IsString()
+    public email: string;
+}
+
+export class HelpChangePWD {
+    @ApiProperty({ description: "사용자의 ObjectID" })
+    @IsString()
+    public _id: string;
+
+    @ApiProperty({ description: "기존 비밀번호" })
+    @IsString()
+    public oldPWD: string;
+
+    @ApiProperty({ description: "신규 비밀번호" })
+    @IsString()
+    public newPWD: string;
+}
