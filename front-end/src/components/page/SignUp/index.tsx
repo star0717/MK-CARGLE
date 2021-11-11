@@ -46,7 +46,7 @@ const SignUp: NextPage = () => {
   // 이메일 종류
   const emailItem = [
     { key: 1, value: "", text: "직접 입력" },
-    { key: 2, value: "google.com", text: "Google" },
+    { key: 2, value: "gmail.com", text: "Gmail" },
     { key: 3, value: "naver.com", text: "Naver" },
     { key: 4, value: "daum.net", text: "Daum" },
   ];
@@ -86,6 +86,8 @@ const SignUp: NextPage = () => {
     handleSubmit,
     watch,
     setValue,
+    getValues,
+    setError,
     formState: { errors },
   } = useForm({ criteriaMode: "all" });
 
@@ -110,7 +112,6 @@ const SignUp: NextPage = () => {
   const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.target.value === "" ? setEmailReadOnly(false) : setEmailReadOnly(true); // 이메일 직접입력 외에는 readonly true
     setEmailDomain(e.target.value);
-    setValue("emailDomain", e.target.value);
   };
 
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
@@ -123,13 +124,6 @@ const SignUp: NextPage = () => {
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
   };
 
-  // // 이메일 Address, Domain 입력 시 이메일 state 변경
-  // useEffect(() => {
-  //   if (emailAddress != "" || emailDomain != "") {
-  //     setInputUser({ ...inputUser, email: `${emailAddress}@${emailDomain}` });
-  //   }
-  // }, [emailAddress, emailDomain]);
-
   // 이메일 인증번호 전송 handler
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const email = `${emailAddress}@${emailDomain}`;
@@ -141,14 +135,13 @@ const SignUp: NextPage = () => {
             setEmailSend(true);
             setTimer(300);
           } else {
-            alert("이미 존재하는 이메일입니다.");
+            setError("emailAddress", {
+              type: "emailExist",
+              message: "이미 등록된 이메일입니다.",
+            });
           }
         });
-      } else {
-        alert("이메일 형식에 맞게 입력하세요.");
       }
-    } else {
-      alert("이메일을 입력해주세요.");
     }
   };
 
@@ -192,14 +185,18 @@ const SignUp: NextPage = () => {
     if (inputCompany.comRegNum) {
       dispatch(companyCheckAction(inputCompany.comRegNum)).then((res: any) => {
         if (res.payload) {
-          alert("사업자등록번호 인증이 완료되었습니다.");
+          setError("comRegNum", {
+            type: "comCheckTrue",
+            message: "사업자등록번호 인증이 완료되었습니다.",
+          });
           setCompanyCheck(true);
         } else {
-          alert("유효하지 않은 사업자등록번호입니다.");
+          setError("comRegNum", {
+            type: "comCheckFalse",
+            message: "유효하지 않은 사업자등록번호입니다.",
+          });
         }
       });
-    } else {
-      alert("사업자 번호를 입력하세요.");
     }
   };
 
@@ -222,18 +219,6 @@ const SignUp: NextPage = () => {
     setAddressMain(fullAddress);
     setModalOpen(false);
   };
-
-  // // 주소 - 메인주소, 상세주소 입력 시 inputCompany.address state 변경
-  // useEffect(() => {
-  //   if (addressDetail != "") {
-  //     setInputCompany({
-  //       ...inputCompany,
-  //       address: addressMain + ", " + addressDetail,
-  //     });
-  //   } else {
-  //     setInputCompany({ ...inputCompany, address: addressMain });
-  //   }
-  // }, [addressMain, addressDetail]);
 
   // 사업자 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
@@ -277,11 +262,6 @@ const SignUp: NextPage = () => {
   };
 
   console.log(isCompany);
-  console.log("어드 : ", emailAddress);
-  console.log("도메인: ", emailDomain);
-  console.log("유저 : ", inputUser);
-  console.log("업체 : ", inputCompany);
-  console.log("에러 : ", errors.addressMain);
 
   return (
     <div
@@ -408,6 +388,7 @@ const SignUp: NextPage = () => {
                   onClick={() => {
                     setStepNumber(2);
                     setInputUser({ ...inputUser, auth: UserAuthority.OWNER });
+                    setIsCompany(true);
                   }}
                 ></div>
 
@@ -422,6 +403,7 @@ const SignUp: NextPage = () => {
                   onClick={() => {
                     setStepNumber(2);
                     setInputUser({ ...inputUser, auth: UserAuthority.WORKER });
+                    setIsCompany(false);
                   }}
                 ></div>
               </div>
@@ -540,28 +522,6 @@ const SignUp: NextPage = () => {
                               pattern: formRegEx.EMAIL_ADDRESS,
                             })}
                           />
-                          {errors.emailAddress?.type === "required" && (
-                            <p
-                              style={{
-                                margin: "0",
-                                fontSize: "8px",
-                                color: "red",
-                              }}
-                            >
-                              필수 입력사항입니다.
-                            </p>
-                          )}
-                          {errors.emailAddress?.type === "pattern" && (
-                            <p
-                              style={{
-                                margin: "0",
-                                fontSize: "8px",
-                                color: "red",
-                              }}
-                            >
-                              형식에 맞게 입력하세요.
-                            </p>
-                          )}
                         </div>
                         <div style={{ backgroundColor: "yellowgreen" }}>@</div>
                         <div style={{ backgroundColor: "greenyellow" }}>
@@ -578,28 +538,6 @@ const SignUp: NextPage = () => {
                               pattern: formRegEx.EMAIL_DOMAIN,
                             })}
                           />
-                          {errors.emailDomain?.type === "required" && (
-                            <p
-                              style={{
-                                margin: "0",
-                                fontSize: "8px",
-                                color: "red",
-                              }}
-                            >
-                              필수 입력사항입니다.
-                            </p>
-                          )}
-                          {errors.emailDomain?.type === "pattern" && (
-                            <p
-                              style={{
-                                margin: "0",
-                                fontSize: "8px",
-                                color: "red",
-                              }}
-                            >
-                              형식에 맞게 입력하세요.
-                            </p>
-                          )}
                         </div>
                         <div style={{ padding: "1px 2px" }}>
                           <select
@@ -658,10 +596,50 @@ const SignUp: NextPage = () => {
                             color: "green",
                           }}
                         >
-                          인증완료
+                          이메일 인증이 완료되었습니다.
                         </p>
                       ) : null}
+                      <div>
+                        {(errors.emailAddress?.type === "required" ||
+                          errors.emailDomain?.type === "required") && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                        {((errors.emailAddress?.type === "pattern" &&
+                          errors.emailAddress?.type !== "required") ||
+                          (errors.emailDomain?.type === "pattern" &&
+                            errors.emailDomain?.type === "required")) && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            형식에 맞게 입력하세요.
+                          </p>
+                        )}
+                        {errors.emailAddress?.type === "emailExist" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            {errors.emailAddress.message}
+                          </p>
+                        )}
+                      </div>
                     </div>
+
                     {/* 비밀번호 */}
                     <div>
                       <div>*비밀번호</div>
@@ -803,6 +781,28 @@ const SignUp: NextPage = () => {
                               }}
                             >
                               형식에 맞게 입력하세요.
+                            </p>
+                          )}
+                          {errors.comRegNum?.type === "comCheckFalse" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              {errors.comRegNum.message}
+                            </p>
+                          )}
+                          {errors.comRegNum?.type === "comCheckTrue" && (
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "green",
+                              }}
+                            >
+                              {errors.comRegNum.message}
                             </p>
                           )}
                         </div>
@@ -962,7 +962,7 @@ const SignUp: NextPage = () => {
                     >
                       {/* 업태 */}
                       <div style={{ width: "49%" }}>
-                        <div>*업태</div>
+                        <div>업태</div>
                         <input
                           style={{ width: "100%" }}
                           type="text"
@@ -972,24 +972,12 @@ const SignUp: NextPage = () => {
                             onChange: (e) => {
                               onInputCompanyHandler(e);
                             },
-                            required: true,
                           })}
                         />
-                        {errors.busType?.type === "required" && (
-                          <p
-                            style={{
-                              margin: "0",
-                              fontSize: "8px",
-                              color: "red",
-                            }}
-                          >
-                            필수 입력사항입니다.
-                          </p>
-                        )}
                       </div>
                       {/* 업종 */}
                       <div style={{ width: "49%" }}>
-                        <div>*업종</div>
+                        <div>업종</div>
                         <input
                           style={{ width: "100%" }}
                           type="text"
@@ -999,20 +987,8 @@ const SignUp: NextPage = () => {
                             onChange: (e) => {
                               onInputCompanyHandler(e);
                             },
-                            required: true,
                           })}
                         />
-                        {errors.busItem?.type === "required" && (
-                          <p
-                            style={{
-                              margin: "0",
-                              fontSize: "8px",
-                              color: "red",
-                            }}
-                          >
-                            필수 입력사항입니다.
-                          </p>
-                        )}
                       </div>
                     </div>
                     {/* 대표자 휴대폰번호 & 사업자 전화번호 & 사업자 팩스번호 */}
