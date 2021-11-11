@@ -117,6 +117,7 @@ export class AuthController {
     }
     return this.httpService.post(apiUrl, postData)
       .pipe(map(response => {
+        console.log(response.data);
         const res = response.data;
         if (res["match_cnt"] == 1) {
           return true;
