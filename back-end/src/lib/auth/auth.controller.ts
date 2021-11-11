@@ -10,11 +10,9 @@ import { map, Observable } from 'rxjs';
 import config, { getCrnPath, getMrnPath } from "src/config/configuration";
 import { CommonService } from '../common/common.service';
 import { randomInt } from 'crypto';
-import { hashSync } from "bcrypt";
+import { compare, hashSync } from "bcrypt";
 import { docFileInterceptor } from 'src/config/multer.option';
 import { CompaniesService } from 'src/modules/companies/companies.service';
-import { existsSync, readdirSync, } from 'fs';
-import path from 'path';
 
 @ApiTags("인증 API")
 @Controller('auth')
@@ -138,13 +136,26 @@ export class AuthController {
       return false; //사용자가 존재하면 false 반환
     } else {
       const authCode: number = randomInt(1111, 9999);
-      console.log(authCode);
       const strAuthCode = hashSync(String(authCode), 10);
+
+      //테스트 목적(향 후 삭제)
+      console.log(authCode);
+      console.log(strAuthCode);
+
       this.commonService.sendMail(email, "이메일 인증 요청 메일", '4자리 인증 코드 : ' + `<b> ${authCode}</b>`);
       const expireDate = new Date(Date.now() + 1000 * 60 * 5);
       res.cookie(process.env.AUTH_EMAIL_TK_NAME, strAuthCode, { expires: expireDate });
       return true;  //사용자가 존재하지 않으면 true 반환
     }
+  }
+
+  @ApiOperation({ summary: "암호문과 평문이 동일한지 검증함" })
+  @ApiResponse({ description: "검증결과", type: Boolean })
+  @Get('validate/crypto-text/:id')
+  async compareCryptoText(@Request() req, @Param('id') painText: string): Promise<boolean> {
+    const cryptoText: string = req.cookies[this.env_config.authMailTokenName];
+    if (!cryptoText) throw new BadRequestException();
+    return await compare(painText, cryptoText);
   }
 
   @ApiOperation({ summary: "가입자 전화번호 유효성 검증" })
@@ -253,4 +264,6 @@ export class AuthController {
     } else
       return null;
   }
+
+
 }

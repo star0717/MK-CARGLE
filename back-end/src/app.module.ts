@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypegooseModule } from 'nestjs-typegoose';
 import { ConfigModule } from '@nestjs/config';
 import { ModulesModule } from './modules/modules.module';
 import { AuthModule } from './lib/auth/auth.module';
 import { CommonModule } from './lib/common/common.module';
 import configuration from './config/configuration';
+import { TypegooseModule } from 'nestjs-typegoose';
 
 const dbInfo = (process.env.DB_USE_AUTH)
   ? 'mongodb://' + process.env.DB_ID + ":" + process.env.DB_PWD + "@"
@@ -30,4 +30,4 @@ console.log(dbInfo);
     CommonModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

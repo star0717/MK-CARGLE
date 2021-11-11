@@ -16,6 +16,7 @@ export default () => (
             api_key: process.env.BUSNUM_API_KEY,
             url: process.env.BUSNUM_URL,
         },
+        authMailTokenName: process.env.AUTH_EMAIL_TK_NAME,
         mailerModule: {
             transport: {
                 host: process.env.MAIL_HOST,

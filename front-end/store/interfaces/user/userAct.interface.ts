@@ -1,6 +1,7 @@
 export enum actionTypesUser {
   // USER_INPUT = "USER_INPUT",
   USER_SIGNIN = "USER_SIGNIN",
+  USER_SIGNUP = "USER_SIGNUP",
   USER_SIGNOUT = "USER_SIGNOUT",
   USER_EMAIL_SEND = "USER_EMAIL_SEND",
   USER_AUTHNUM_CHECK = "USER_AUTHNUM_CHECK",
@@ -9,6 +10,7 @@ export enum actionTypesUser {
 
 export type ActionsUser =
   | UserSignIn
+  | UserSignUp
   | UserSignOut
   | UserEmailSend
   | UserAuthNumCheck
@@ -29,6 +31,12 @@ export interface UserSignIn {
 // 로그아웃
 export interface UserSignOut {
   type: actionTypesUser.USER_SIGNOUT;
+  payload: any;
+}
+
+// 회원가입
+export interface UserSignUp {
+  type: actionTypesUser.USER_SIGNUP;
   payload: any;
 }
 

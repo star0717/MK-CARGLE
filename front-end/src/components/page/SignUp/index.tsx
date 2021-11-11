@@ -12,9 +12,12 @@ import { User } from "../../../../../models/dist/user.entity";
 import { Company } from "../../../../../models/dist/company.entity";
 import { basicRegEx, formRegEx } from "../../../validation/regEx";
 import {
+  authNumCheckAction,
   companyCheckAction,
   emailSendAction,
+  signUpUserAction,
 } from "../../../../store/action/user.action";
+import Post from "../../common/react-daum-post";
 
 // verticalAlign: "middle",
 // alignItems: "center",
@@ -33,6 +36,12 @@ interface SignUpInfo {
 }
 
 const SignUp: NextPage = () => {
+  enum UserAuthority {
+    ADMIN = "admin",
+    OWNER = "owner",
+    WORKER = "worker",
+  }
+
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -66,6 +75,7 @@ const SignUp: NextPage = () => {
   const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
   const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
   const [authNum, setAuthNum] = useState(""); // 인증번호 input
+  const [companyCheck, setCompanyCheck] = useState(false);
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [addressApi, setAddressApi] = useState(false); // 주소 api toggle
@@ -77,6 +87,7 @@ const SignUp: NextPage = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({ criteriaMode: "all" });
 
@@ -89,6 +100,7 @@ const SignUp: NextPage = () => {
   const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.target.value === "" ? setEmailReadOnly(false) : setEmailReadOnly(true); // 이메일 직접입력 외에는 readonly true
     setEmailDomain(e.target.value);
+    setValue("emailDomain", e.target.value);
   };
 
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
@@ -150,9 +162,17 @@ const SignUp: NextPage = () => {
 
   // 인증번호 검사 handler
   const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const hashAuth = Cookies.get("mk_amtn");
-    console.log(hashAuth);
-    if (hashAuth) {
+    if (authNum) {
+      dispatch(authNumCheckAction(authNum)).then((res: any) => {
+        if (res.payload) {
+          alert("인증되었습니다.");
+          setAuthNumCheck(true);
+          setTimer(0);
+          setEmailSend(false);
+        } else {
+          alert("인증번호가 일치하지 않습니다.");
+        }
+      });
     }
   };
 
@@ -162,6 +182,7 @@ const SignUp: NextPage = () => {
       dispatch(companyCheckAction(inputCompany.comRegNum)).then((res: any) => {
         if (res.payload) {
           alert("사업자등록번호 인증이 완료되었습니다.");
+          setCompanyCheck(true);
         } else {
           alert("유효하지 않은 사업자등록번호입니다.");
         }
@@ -171,25 +192,25 @@ const SignUp: NextPage = () => {
     }
   };
 
-  // 주소 검색 api handler
-  const addressHandler = (data: any) => {
-    let fullAddress = data.address;
-    let extraAddress = "";
+  // // 주소 검색 api handler
+  // const addressHandler = (data: any) => {
+  //   let fullAddress = data.address;
+  //   let extraAddress = "";
 
-    if (data.addressType === "R") {
-      if (data.bname !== "") {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== "") {
-        extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-      }
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-    }
+  //   if (data.addressType === "R") {
+  //     if (data.bname !== "") {
+  //       extraAddress += data.bname;
+  //     }
+  //     if (data.buildingName !== "") {
+  //       extraAddress +=
+  //         extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+  //     }
+  //     fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+  //   }
 
-    setAddressMain(fullAddress);
-    setAddressApi(false);
-  };
+  //   setAddressMain(fullAddress);
+  //   setAddressApi(false);
+  // };
 
   // 주소 - 메인주소, 상세주소 입력 시 inputCompany.address state 변경
   useEffect(() => {
@@ -205,7 +226,28 @@ const SignUp: NextPage = () => {
 
   // 사업자 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
-    console.log(data);
+    if (!authNumCheck) {
+      alert("이메일 인증을 해주세요.");
+    } else if (!companyCheck) {
+      alert("사업자 등록번호 인증을 해주세요.");
+    } else {
+      console.log("@@@", inputUser);
+      console.log("###", inputCompany);
+      setInputUser({
+        ...inputUser,
+        auth: UserAuthority.OWNER,
+        name: inputCompany.ownerName,
+      });
+      console.log("$$$", UserAuthority.OWNER);
+      dispatch(
+        signUpUserAction({
+          user: inputUser,
+          company: inputCompany,
+        })
+      ).then((res: any) => {
+        console.log(res);
+      });
+    }
     // setStepNumber(stepNumber + 1);
   };
 
@@ -549,7 +591,11 @@ const SignUp: NextPage = () => {
                           </select>
                         </div>
                         <div style={{ padding: "1px 2px" }}>
-                          <button type="button" onClick={onEmailSendHandler}>
+                          <button
+                            type="button"
+                            onClick={onEmailSendHandler}
+                            disabled={authNumCheck}
+                          >
                             {emailSend ? "인증번호 재전송" : "인증번호 전송"}
                           </button>
                         </div>
@@ -576,6 +622,17 @@ const SignUp: NextPage = () => {
                             </button>
                           </div>
                         </div>
+                      ) : null}
+                      {authNumCheck ? (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "green",
+                          }}
+                        >
+                          인증완료
+                        </p>
                       ) : null}
                     </div>
                     {/* 비밀번호 */}
@@ -722,7 +779,11 @@ const SignUp: NextPage = () => {
                           )}
                         </div>
                         <div>
-                          <button type="button" onClick={onComRegNumCheck}>
+                          <button
+                            type="button"
+                            onClick={onComRegNumCheck}
+                            disabled={companyCheck}
+                          >
                             인증
                           </button>
                         </div>
@@ -1095,6 +1156,9 @@ const SignUp: NextPage = () => {
                           >
                             주소 검색
                           </button>
+                          {/* {
+                            addressApi && <Post addressMain={addressMain} setAddressMain={setAddressMain}></Post>
+                          } */}
                         </div>
                       </div>
                       <div>
@@ -1111,11 +1175,11 @@ const SignUp: NextPage = () => {
                           })}
                         />
                       </div>
-                      <div>
+                      {/* <div>
                         {addressApi ? (
                           <DaumPostcode onComplete={addressHandler} />
                         ) : null}
-                      </div>
+                      </div> */}
                     </div>
                     <div style={{ textAlign: "center" }}>
                       <button

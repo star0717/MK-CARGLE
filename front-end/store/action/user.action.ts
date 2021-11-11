@@ -23,6 +23,17 @@ export async function signOutUserAction() {
   };
 }
 
+// 회원가입 action
+export async function signUpUserAction(dataToSubmit: any) {
+  const req = await axios
+    .post(`/api/auth/signup`, dataToSubmit)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.USER_SIGNUP,
+    payload: req,
+  };
+}
+
 // 이메일 인증번호 전송 action
 export async function emailSendAction(dataToSubmit: string) {
   const req = await axios
@@ -37,7 +48,7 @@ export async function emailSendAction(dataToSubmit: string) {
 // 인증번호 검사 action
 export async function authNumCheckAction(dataToSubmit: string) {
   const req = await axios
-    .get(`/api/`)
+    .get(`/api/auth/validate/crypto-text/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_AUTHNUM_CHECK,
