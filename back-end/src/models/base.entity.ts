@@ -46,7 +46,9 @@ export class BaseEntity extends TypegooseModule {
 }
 
 export class PaginateOptions {
+    // 페이지당 출력될 문서의 수의 기봅값
     static defaultTakeNumber = 30;
+    // 페이지장 출력될 문서의 최대 수
     static maxTakeNumber = 100;
 
     @ApiProperty({ description: "요청 페이지", default: 1, required: false })
@@ -87,6 +89,7 @@ export class PaginateOptions {
     }
 }
 
+// 페이지번호 검증
 export function getValidPageNumber(params: TransformFnParams) {
     if (params.value <= 0) {
         params.value = 1;
@@ -94,6 +97,7 @@ export function getValidPageNumber(params: TransformFnParams) {
     return params.value;
 }
 
+// 페이지당 출력 문서 수 검증
 export function getValidTakeNumber(params: TransformFnParams) {
 
     if (params.value <= 0) {
