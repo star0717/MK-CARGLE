@@ -9,7 +9,7 @@ import { useInterval } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { UserState } from "../../../../store/interfaces";
-import { User } from "../../../models/user.entity";
+import { User, UserAuthority } from "../../../models/user.entity";
 import { Company } from "../../../models/company.entity";
 import { basicRegEx, formRegEx } from "../../../validation/regEx";
 import {
@@ -34,11 +34,11 @@ interface SignUpInfo {
 Modal.setAppElement("body");
 
 const SignUp: NextPage = () => {
-  enum UserAuthority {
-    ADMIN = "admin",
-    OWNER = "owner",
-    WORKER = "worker",
-  }
+  // enum UserAuthority {
+  //   ADMIN = "admin",
+  //   OWNER = "owner",
+  //   WORKER = "worker",
+  // }
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -602,30 +602,30 @@ const SignUp: NextPage = () => {
                       <div>
                         {(errors.emailAddress?.type === "required" ||
                           errors.emailDomain?.type === "required") && (
-                          <p
-                            style={{
-                              margin: "0",
-                              fontSize: "8px",
-                              color: "red",
-                            }}
-                          >
-                            필수 입력사항입니다.
-                          </p>
-                        )}
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              필수 입력사항입니다.
+                            </p>
+                          )}
                         {((errors.emailAddress?.type === "pattern" &&
                           errors.emailAddress?.type !== "required") ||
                           (errors.emailDomain?.type === "pattern" &&
                             errors.emailDomain?.type === "required")) && (
-                          <p
-                            style={{
-                              margin: "0",
-                              fontSize: "8px",
-                              color: "red",
-                            }}
-                          >
-                            형식에 맞게 입력하세요.
-                          </p>
-                        )}
+                            <p
+                              style={{
+                                margin: "0",
+                                fontSize: "8px",
+                                color: "red",
+                              }}
+                            >
+                              형식에 맞게 입력하세요.
+                            </p>
+                          )}
                         {errors.emailAddress?.type === "emailExist" && (
                           <p
                             style={{
