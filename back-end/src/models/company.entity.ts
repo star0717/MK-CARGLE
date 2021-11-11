@@ -17,30 +17,33 @@ export class Company extends BaseEntity {
 
     @ApiProperty({ description: "사업자등록번호" })
     @IsOptional()
-    @IsNumber()
+    @IsString()
     @prop({
         unique: true,
         required: [true, "사업자등록번호는 필수 항목입니다."],
+        trim: true,
     })
-    public comRegNum: number;
+    public comRegNum: string;
 
     @ApiProperty({ description: "정비업등록번호" })
     @IsOptional()
-    @IsNumber()
+    @IsString()
     @prop({
         unique: true,
         required: [true, "정비업등록번호는 필수 항목입니다."],
+        trim: true,
     })
-    public mbRegNum: number;
+    public mbRegNum: string;
 
-    @ApiProperty({ description: "정비업종" })
+    @ApiProperty({ description: "정비업종", required: false })
     @IsOptional()
-    @IsNumber()
+    @IsString()
     @prop({
         unique: false,
-        required: [true, "정비업종은 필수 항목입니다."],
+        required: [false, "정비업종은 필수 항목입니다."],
+        trim: true,
     })
-    public mbTypeNum: number;
+    public mbTypeNum: string;
 
     @ApiProperty({ description: "대표명" })
     @IsOptional()
@@ -52,23 +55,23 @@ export class Company extends BaseEntity {
     })
     public ownerName: string;
 
-    @ApiProperty({ description: "업태" })
+    @ApiProperty({ description: "업태", required: false })
     @IsOptional()
     @IsString()
     @prop({
         unique: false,
-        required: [true, "업태는 필수 항목입니다."],
+        required: [false, "업태는 필수 항목입니다."],
         default: "정비업",
         trim: true,
     })
     public busType: string;
 
-    @ApiProperty({ description: "업종" })
+    @ApiProperty({ description: "업종", required: false })
     @IsOptional()
     @IsString()
     @prop({
         unique: false,
-        required: [true, "업종은 필수 항목입니다."],
+        required: [false, "업종은 필수 항목입니다."],
         default: "차량수리",
         trim: true,
     })
@@ -76,21 +79,21 @@ export class Company extends BaseEntity {
 
     @ApiProperty({ description: "전화번호" })
     @IsOptional()
-    @IsNumber()
+    @IsString()
     @prop({
         unique: true,
         required: [true, "전화번호는 필수 항목입니다."],
     })
-    public phoneNum: number;
+    public phoneNum: string;
 
     @ApiProperty({ description: "팩스번호" })
     @IsOptional()
-    @IsNumber()
+    @IsString()
     @prop({
         unique: true,
         required: [false, "팩스번호는 필수 항목입니다."],
     })
-    public faxNum: number;
+    public faxNum: string;
 
     @ApiProperty({ description: "사업장 주소" })
     @IsOptional()
@@ -98,10 +101,11 @@ export class Company extends BaseEntity {
     @prop({
         unique: false,
         required: [true, "사업장 주소는 필수 항목입니다."],
+        trim: true,
     })
     public address: string;
 
-    @ApiProperty({ description: "승인여부", default: false })
+    @ApiProperty({ description: "승인여부", default: false, required: false })
     @IsOptional()
     @prop({
         unique: false,
