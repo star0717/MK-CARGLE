@@ -25,12 +25,13 @@ export class UsersService extends BaseService<User> {
     };
 
     // 비밀번호 비교를 위해 패스워드까지 조회
-    const user = await this.model.findOne(searchOption).select('+password');
+    const user: User = await this.model.findOne(searchOption).select('+password');
     if (!user) {
       throw new UnauthorizedException();
     }
     // 비밀번호 확인
     const result = compareSync(userInfo.pwd, user.password);
+    console.log(user);
 
     if (result) {
       return user;
