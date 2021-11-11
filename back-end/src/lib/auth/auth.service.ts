@@ -114,7 +114,7 @@ export class AuthService {
     return await this.usersService.findUserByEmail(email);
   }
 
-  async findUserByHpNumber(hpNumber: number): Promise<User> {
+  async findUserByHpNumber(hpNumber: string): Promise<User> {
     return await this.usersService.findUserByHpNumber(hpNumber);
   }
 

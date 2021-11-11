@@ -102,3 +102,8 @@ dist
 
 # TernJS port file
 .tern-port
+
+# 파일들
+package-lock.json
+
+# 디렉토리들

@@ -35,3 +35,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# 파일들
+package-lock.json
+
+# 디렉토리들
+/src/models
