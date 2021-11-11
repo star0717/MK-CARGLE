@@ -8,6 +8,18 @@ import { UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { initialState } from "../../../../store/reducer/user.reducer";
 import { signInUserAction } from "../../../../store/action/user.action";
+import styled from "styled-components"
+
+//SCSS
+const ComponentMainBody = styled.div`
+  width: 100%;
+  height: 600px;
+  background-image: url("../../images/background2.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 
 const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
@@ -69,16 +81,7 @@ const SignIn: NextPage<any> = (props) => {
   };
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "600px",
-        backgroundImage: `url("../../images/background2.png")`,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <ComponentMainBody>
       {/* 중앙 화면 */}
       <div
         style={{
@@ -171,7 +174,7 @@ const SignIn: NextPage<any> = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </ComponentMainBody>
   );
 };
 
