@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { prop } from "@typegoose/typegoose"
-import { IsBoolean, IsEmail, IsEnum, IsNumber, IsOptional, IsString, IsMongoId, MinLength, MaxLength } from 'class-validator';
+import { IsBoolean, IsEmail, IsEnum, IsNumber, IsOptional, IsString, IsMongoId, MinLength, MaxLength, IsDateString } from 'class-validator';
 import { BaseEntity } from "./base.entity";
 import { hashSync } from "bcrypt"
 const saltRounds = 10;
@@ -86,6 +86,26 @@ export class User extends BaseEntity {
         trim: true,
     })
     public hpNumber: string;
+
+    @ApiProperty({ description: "자택 주소", required: false })
+    @IsOptional()
+    @IsString()
+    @prop({
+        unique: false,
+        required: [false, "자택 주소는 필수 항목입니다."],
+        trim: true,
+    })
+    public address: string;
+
+    @ApiProperty({ description: "입사일", required: false })
+    @IsOptional()
+    @IsDateString()
+    @prop({
+        unique: false,
+        required: [false, "입사일 주소는 필수 항목입니다."],
+        trim: true,
+    })
+    public joinDate: Date;
 
     @ApiProperty({ description: "승인여부", default: false, required: false })
     @IsOptional()

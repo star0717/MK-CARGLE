@@ -17,5 +17,7 @@ export declare class User extends BaseEntity {
     name: string;
     comID: string;
     hpNumber: string;
+    address: string;
+    joinDate: Date;
     approval: boolean;
 }
