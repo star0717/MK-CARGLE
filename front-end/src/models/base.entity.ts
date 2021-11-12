@@ -1,7 +1,7 @@
 /**
  * DB의 스키마로 사용할 모든 데이터 모델 클래스에 상속되는 기본 클래스
  */
-export declare class BaseEntity extends TypegooseModule {
+export declare class BaseEntity {
     /**
      * 데이터 모델 개발법
      * 단일 클래스를 Schema, CreateDto, UpdateDto용으로 혼용하는 것을 목적으로 함
@@ -36,9 +36,7 @@ export declare class PaginateOptions {
     useRegSearch: boolean;
     getQuery(): string;
 }
-export declare function getValidPageNumber(params: TransformFnParams): any;
-export declare function getValidTakeNumber(params: TransformFnParams): any;
-export declare function strToBoolean(params: TransformFnParams): boolean;
+
 export declare class PaginateResult<T> {
     docs: T[];
     totalDocs: number;
