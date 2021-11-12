@@ -13,8 +13,8 @@ import { Company } from "../../src/models/company.entity";
 
 export const initialState: UserState = {
   signInInfo: <UserInfo>{
-    // id: "",
-    // pwd: "",
+    id: "",
+    pwd: "",
   },
   user: <User>{
     // email: "",

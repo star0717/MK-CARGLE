@@ -3,12 +3,15 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/dist/client/router";
 import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { initialState } from "../../../../store/reducer/user.reducer";
 import { signInUserAction } from "../../../../store/action/user.action";
-import styled from "styled-components"
+import styled from "styled-components";
+import { UserInfo } from "../../../models/auth.entity";
+import { formRegEx } from "../../../validation/regEx";
 
 //SCSS
 const ComponentMainBody = styled.div`
@@ -18,12 +21,19 @@ const ComponentMainBody = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
-
+`;
 
 const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  // react-hook-form 사용을 위한 선언
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all" });
 
   // redux store에서 signIn 정보만 가져옴
   const { signInInfo } = useSelector(
@@ -47,37 +57,31 @@ const SignIn: NextPage<any> = (props) => {
   };
 
   // 로그인 시 handler
-  const onSignInHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (inputSignIn.id === "") {
-      // 아이디 미입력 시
-      alert("아이디를 입력해주세요.");
-    } else if (inputSignIn.pwd === "") {
-      // 비밀번호 미입력 시
-      alert("비밀번호를 입력해주세요.");
-    } else {
-      // 아이디, 비밀번호 정상 입력 시
-      dispatch(signInUserAction(inputSignIn)).then(
-        (res: any) => {
-          // 아이디 저장할 경우 쿠키로 저장
-          if (saveId) {
-            // const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
-            Cookies.set("saveId", inputSignIn.id, { expires: 1 });
-            // 아이디 저장안할 경우 쿠키 삭제(이미 생성 후 안할 경우 쿠키는 남아있기 때문에 삭제 진행)
-          } else {
-            Cookies.remove("saveId");
-          }
-          router.push("/view/main");
-        },
-        (err) => {
-          // 입력 값이 계정과 다를 경우 에러
-          // Nest에서 전송해주는 status code에 맞게 핸들링
-          if (err.response.status === 401) {
-            alert("아이디 / 비밀번호를 확인해주세요.");
-          }
+  const onSignInHandler: SubmitHandler<UserInfo> = (data) => {
+    // 아이디, 비밀번호 정상 입력 시
+    dispatch(signInUserAction(inputSignIn)).then(
+      (res: any) => {
+        // 아이디 저장할 경우 쿠키로 저장
+        if (saveId) {
+          // const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
+          Cookies.set("saveId", inputSignIn.id, { expires: 1 });
+          // 아이디 저장안할 경우 쿠키 삭제(이미 생성 후 안할 경우 쿠키는 남아있기 때문에 삭제 진행)
+        } else {
+          Cookies.remove("saveId");
         }
-      );
-    }
+        router.push("/view/main");
+      },
+      (err) => {
+        // 입력 값이 계정과 다를 경우 에러
+        // Nest에서 전송해주는 status code에 맞게 핸들링
+        if (err.response.status === 401) {
+          setError("id", {
+            type: "signInFail",
+            message: "아이디 또는 비밀번호가 잘못 입력되었습니다.",
+          });
+        }
+      }
+    );
   };
 
   return (
@@ -120,19 +124,24 @@ const SignIn: NextPage<any> = (props) => {
         </div>
 
         {/* 중앙 화면 우측  */}
-        <div style={{ width: "50%", padding: "40px", textAlign: "center" }}>
+        <div style={{ width: "50%", padding: "40px" }}>
           <h3>로그인</h3>
           <div>
             {/* 로그인 입력 form */}
-            <form onSubmit={onSignInHandler}>
+            <form onSubmit={handleSubmit(onSignInHandler)}>
               {/* 이메일 input */}
               <div style={{ textAlign: "left" }}>
                 <p>이메일</p>
                 <input
                   type="email"
-                  name="id"
                   value={inputSignIn.id}
-                  onChange={onInputHandler}
+                  {...register("id", {
+                    onChange: (e) => {
+                      onInputHandler(e);
+                    },
+                    required: true,
+                    pattern: formRegEx.EMAIL,
+                  })}
                   style={{ width: "100%" }}
                 />
               </div>
@@ -141,12 +150,64 @@ const SignIn: NextPage<any> = (props) => {
                 <p>비밀번호</p>
                 <input
                   type="password"
-                  name="pwd"
-                  value={inputSignIn.pwd || ""}
-                  onChange={onInputHandler}
+                  value={inputSignIn.pwd}
+                  {...register("pwd", {
+                    onChange: (e) => {
+                      onInputHandler(e);
+                    },
+                    required: true,
+                  })}
                   style={{ width: "100%" }}
                 />
               </div>
+              {/* 에러 div */}
+              {errors.id?.type === "required" && (
+                <p
+                  style={{
+                    margin: "0",
+                    fontSize: "8px",
+                    color: "red",
+                  }}
+                >
+                  아이디를 입력해주세요.
+                </p>
+              )}
+              {errors.id?.type !== "required" &&
+                errors.pwd?.type === "required" && (
+                  <p
+                    style={{
+                      margin: "0",
+                      fontSize: "8px",
+                      color: "red",
+                    }}
+                  >
+                    비밀번호를 입력해주세요.
+                  </p>
+                )}
+              {errors.id?.type !== "required" &&
+                errors.pwd?.type !== "required" &&
+                errors.id?.type === "pattern" && (
+                  <p
+                    style={{
+                      margin: "0",
+                      fontSize: "8px",
+                      color: "red",
+                    }}
+                  >
+                    이메일 형식에 맞게 입력하세요.
+                  </p>
+                )}
+              {errors.id?.type === "signInFail" && (
+                <p
+                  style={{
+                    margin: "0",
+                    fontSize: "8px",
+                    color: "red",
+                  }}
+                >
+                  {errors.id.message}
+                </p>
+              )}
               {/* 체크박스 div */}
               <div
                 style={{

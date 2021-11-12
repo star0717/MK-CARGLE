@@ -114,6 +114,17 @@ const SignUp: NextPage = () => {
     setEmailDomain(e.target.value);
   };
 
+  // // 컴포넌트 구분 후 적용 테스트
+  // // 이메일 error 생성(react-hook-form에서 지원하는 require는 onChange만 인식함)
+  // useEffect(() => {
+  //   if (emailAddress === "" || emailDomain === "") {
+  //     setError("emailAddress", {
+  //       type: "emailNull",
+  //       message: "필수 입력사항입니다.",
+  //     });
+  //   }
+  // }, [emailAddress, emailDomain]);
+
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
   // 사용자 정보
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -149,7 +160,6 @@ const SignUp: NextPage = () => {
   useInterval(
     () => {
       setTimer(timer - 1);
-      console.log(timer);
     },
     emailSend ? 1000 : null
   );
@@ -390,7 +400,9 @@ const SignUp: NextPage = () => {
                     setInputUser({ ...inputUser, auth: UserAuthority.OWNER });
                     setIsCompany(true);
                   }}
-                ></div>
+                >
+                  사업자
+                </div>
 
                 {/* 직원 회원가입 버튼 */}
                 <div
@@ -405,7 +417,9 @@ const SignUp: NextPage = () => {
                     setInputUser({ ...inputUser, auth: UserAuthority.WORKER });
                     setIsCompany(false);
                   }}
-                ></div>
+                >
+                  직원
+                </div>
               </div>
             ) : stepNumber === 2 ? ( //step이 2일 때 (약관동의화면 : 사업자, 직원 상관 없음)
               <div
@@ -602,30 +616,30 @@ const SignUp: NextPage = () => {
                       <div>
                         {(errors.emailAddress?.type === "required" ||
                           errors.emailDomain?.type === "required") && (
-                            <p
-                              style={{
-                                margin: "0",
-                                fontSize: "8px",
-                                color: "red",
-                              }}
-                            >
-                              필수 입력사항입니다.
-                            </p>
-                          )}
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
                         {((errors.emailAddress?.type === "pattern" &&
                           errors.emailAddress?.type !== "required") ||
                           (errors.emailDomain?.type === "pattern" &&
                             errors.emailDomain?.type === "required")) && (
-                            <p
-                              style={{
-                                margin: "0",
-                                fontSize: "8px",
-                                color: "red",
-                              }}
-                            >
-                              형식에 맞게 입력하세요.
-                            </p>
-                          )}
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            형식에 맞게 입력하세요.
+                          </p>
+                        )}
                         {errors.emailAddress?.type === "emailExist" && (
                           <p
                             style={{
@@ -1177,9 +1191,6 @@ const SignUp: NextPage = () => {
                         />
                       </div>
                       <div>
-                        {/* {addressApi ? (
-                          <DaumPostcode onComplete={addressHandler} />
-                        ) : null} */}
                         <Modal
                           isOpen={modalOpen}
                           onRequestClose={() => setModalOpen(false)}
@@ -1238,60 +1249,425 @@ const SignUp: NextPage = () => {
                     margin: "10px",
                   }}
                 >
-                  <div>*사업자 등록번호</div>
-                  <div style={{ display: "flex" }}>
-                    <input type="text" style={{ width: "85%" }} />
-                    <input
-                      type="button"
-                      style={{ width: "15%" }}
-                      value="주소검색"
-                    />
-                  </div>
-                  <div>*아이디(이메일 형식으로 입력해주세요)</div>
+                  {/* 사업자 등록번호 */}
                   <div>
-                    <input type="text" />
-                    <input type="button" value="인증" />
+                    <div>*사업자 등록번호</div>
+                    <div style={{ display: "flex" }}>
+                      <input type="text" style={{ width: "85%" }} />
+                      <input
+                        type="button"
+                        style={{ width: "15%" }}
+                        value="검색"
+                      />
+                    </div>
                   </div>
-                  <div style={{ fontSize: "7px" }}>
-                    등록되지 않은 이메일일 경우 인증번호 전송 / 이미 등록된
-                    이메일일 경우 이미 등록된 이메일입니다 메세지 표시
-                  </div>
-                  <div>*비밀번호</div>
+                  {/* 아이디(이메일) */}
                   <div>
-                    <input type="password" />
+                    <div>*아이디(이메일 형식으로 입력해주세요.)</div>
+                    <div
+                      style={{
+                        backgroundColor: "skyblue",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <div style={{ backgroundColor: "cyan" }}>
+                        <input
+                          type="text"
+                          value={emailAddress}
+                          readOnly={authNumCheck}
+                          placeholder="이메일을 입력해주세요."
+                          {...register("emailAddress", {
+                            onChange: (e) => {
+                              setEmailAdderess(e.target.value);
+                            },
+                            required: true,
+                            pattern: formRegEx.EMAIL_ADDRESS,
+                          })}
+                        />
+                      </div>
+                      <div style={{ backgroundColor: "yellowgreen" }}>@</div>
+                      <div style={{ backgroundColor: "greenyellow" }}>
+                        <input
+                          type="text"
+                          value={emailDomain}
+                          placeholder="주소 선택"
+                          readOnly={emailReadOnly || authNumCheck}
+                          {...register("emailDomain", {
+                            onChange: (e) => {
+                              setEmailDomain(e.target.value);
+                            },
+                            required: true,
+                            pattern: formRegEx.EMAIL_DOMAIN,
+                          })}
+                        />
+                      </div>
+                      <div style={{ padding: "1px 2px" }}>
+                        <select
+                          disabled={authNumCheck}
+                          {...register("emailSelect", {
+                            onChange: (e) => {
+                              onEmailKindHandler(e);
+                            },
+                          })}
+                        >
+                          {emailItem.map((item: any, index: Number) => (
+                            <option key={item.key} value={item.value}>
+                              {item.text}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div style={{ padding: "1px 2px" }}>
+                        <button
+                          type="button"
+                          onClick={onEmailSendHandler}
+                          disabled={authNumCheck}
+                        >
+                          {emailSend ? "인증번호 재전송" : "인증번호 전송"}
+                        </button>
+                      </div>
+                    </div>
+                    {emailSend ? (
+                      <div style={{ display: "flex" }}>
+                        <div>
+                          <input
+                            type="text"
+                            value={authNum}
+                            {...register("authNum", {
+                              onChange: (e) => {
+                                setAuthNum(e.target.value);
+                              },
+                            })}
+                          />
+                        </div>
+                        <div>
+                          <button type="button" onClick={onAuthNumCheckHandler}>
+                            인증
+                          </button>
+                        </div>
+                      </div>
+                    ) : null}
+                    {authNumCheck ? (
+                      <p
+                        style={{
+                          margin: "0",
+                          fontSize: "8px",
+                          color: "green",
+                        }}
+                      >
+                        이메일 인증이 완료되었습니다.
+                      </p>
+                    ) : null}
+                    <div>
+                      {(errors.emailAddress?.type === "required" ||
+                        errors.emailDomain?.type === "required") && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          필수 입력사항입니다.
+                        </p>
+                      )}
+                      {((errors.emailAddress?.type === "pattern" &&
+                        errors.emailAddress?.type !== "required") ||
+                        (errors.emailDomain?.type === "pattern" &&
+                          errors.emailDomain?.type === "required")) && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          형식에 맞게 입력하세요.
+                        </p>
+                      )}
+                      {errors.emailAddress?.type === "emailExist" && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          {errors.emailAddress.message}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <div style={{ fontSize: "7px" }}>
-                    8~16자 영문,숫자,특수문자를 사용하세요.(조건에 부합하면 이
-                    텍스트 사라짐)
-                  </div>
-                  <div>*비밀번호 확인</div>
+                  {/* 비밀번호 */}
                   <div>
-                    <input type="password" />
+                    <div>*비밀번호</div>
+                    <div>
+                      <input
+                        style={{ width: "100%" }}
+                        type="password"
+                        value={inputUser.password}
+                        placeholder="로그인 시 사용할 비밀번호를 입력해주세요."
+                        {...register("password", {
+                          onChange: (e) => {
+                            onInputUserHandler(e);
+                          },
+                          required: true,
+                          pattern: formRegEx.PASSWORD,
+                        })}
+                      />
+                      {errors.password?.type === "required" && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          필수 입력사항입니다.
+                        </p>
+                      )}
+                      {errors.password?.type === "pattern" && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          8~16자 영문, 숫자, 특수문자를 사용하세요.
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <div style={{ fontSize: "7px" }}>비밀번호가 일치합니다.</div>
-                  <div style={{ fontSize: "7px" }}>
-                    비밀번호가 일치하지 않습니다.
-                  </div>
-                  <div style={{ display: "flex" }}>
-                    <div style={{ width: "50%" }}>*성명</div>
-                    <div style={{ width: "50%" }}>*휴대전화번호</div>
-                  </div>
-                  <div style={{ display: "flex" }}>
-                    <input type="text" style={{ width: "50%" }} />
-                    <input type="text" style={{ width: "50%" }} />
-                  </div>
-                  <div>*자택주소(선택)</div>
-                  <div style={{ display: "flex" }}>
-                    <input type="text" style={{ width: "85%" }} />
-                    <input
-                      type="button"
-                      style={{ width: "15%" }}
-                      value="주소검색"
-                    />
-                  </div>
-                  <div>입사일자(선택)</div>
+                  {/* 비밀번호확인 */}
                   <div>
-                    <input type="date" />
+                    <div>*비밀번호 확인</div>
+                    <div>
+                      <input
+                        style={{ width: "100%" }}
+                        type="password"
+                        value={passwordCheck}
+                        placeholder="비밀번호 확인을 위해 다시 입력해주세요."
+                        {...register("passwordCheck", {
+                          onChange: (e) => {
+                            setPasswordCheck(e.target.value);
+                          },
+                          required: true,
+                          validate: (value) => value === watch("password", ""),
+                        })}
+                      />
+                      {errors.passwordCheck?.type === "required" && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          필수 입력사항입니다.
+                        </p>
+                      )}
+                      {errors.passwordCheck?.type === "validate" && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          비밀번호가 일치하지 않습니다.
+                        </p>
+                      )}
+                      {watch("passwordCheck", "") !== "" &&
+                        errors.passwordCheck?.type !== "validate" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "green",
+                            }}
+                          >
+                            비밀번호가 일치합니다.
+                          </p>
+                        )}
+                    </div>
+                  </div>
+                  {/* 성명 & 휴대폰번호 */}
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    {/* 성명 */}
+                    <div style={{ width: "49%" }}>
+                      <div>*성명</div>
+                      <input
+                        style={{ width: "100%" }}
+                        type="text"
+                        value={inputUser.name}
+                        placeholder="성명을 입력해주세요."
+                        {...register("name", {
+                          onChange: (e) => {
+                            onInputUserHandler(e);
+                          },
+                          required: true,
+                        })}
+                      />
+                      {errors.ownerName?.type === "required" && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          필수 입력사항입니다.
+                        </p>
+                      )}
+                    </div>
+                    {/* 휴대폰번호 */}
+                    <div style={{ width: "49%" }}>
+                      <div>*휴대폰번호</div>
+                      <input
+                        style={{ width: "100%" }}
+                        type="text"
+                        value={inputUser.hpNumber}
+                        placeholder="(- 제외)"
+                        {...register("hpNumber", {
+                          onChange: (e) => {
+                            onInputUserHandler(e);
+                          },
+                          required: true,
+                          pattern: formRegEx.HP_NUM,
+                        })}
+                      />
+                      {errors.hpNumber?.type === "required" && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          필수 입력사항입니다.
+                        </p>
+                      )}
+                      {errors.hpNumber?.type === "pattern" && (
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "8px",
+                            color: "red",
+                          }}
+                        >
+                          형식에 맞게 입력하세요.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  {/* 자택주소 */}
+                  <div>
+                    <div>자택주소(선택)</div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div style={{ width: "80%" }}>
+                        <input
+                          style={{ width: "100%" }}
+                          type="text"
+                          placeholder="주소를 입력해주세요."
+                          value={addressMain}
+                          readOnly
+                          {...register("addressMain", {
+                            validate: (value) => {
+                              value = addressMain;
+                              return value === "" ? false : true;
+                            },
+                          })}
+                        />
+                        {errors.addressMain?.type === "validate" && (
+                          <p
+                            style={{
+                              margin: "0",
+                              fontSize: "8px",
+                              color: "red",
+                            }}
+                          >
+                            필수 입력사항입니다.
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            setModalOpen(!modalOpen);
+                          }}
+                        >
+                          주소 검색
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <input
+                        style={{ width: "100%" }}
+                        type="text"
+                        placeholder="상세 주소"
+                        value={addressDetail}
+                        readOnly={addressMain ? false : true}
+                        {...register("addressDetail", {
+                          onChange: (e) => {
+                            setAddressDetail(e.target.value);
+                          },
+                        })}
+                      />
+                    </div>
+                    <div>
+                      <Modal
+                        isOpen={modalOpen}
+                        onRequestClose={() => setModalOpen(false)}
+                        style={{
+                          overlay: {
+                            position: "fixed",
+                            zIndex: 1020,
+                            top: 0,
+                            left: 0,
+                            width: "100vw",
+                            height: "100vh",
+                            background: "rgba(255, 255, 255, 0.75)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          },
+                          content: {
+                            background: "white",
+                            width: "45rem",
+                            maxWidth: "calc(100vw - 2rem)",
+                            maxHeight: "calc(100vh - 2rem)",
+                            overflowY: "auto",
+                            position: "relative",
+                            border: "1px solid #ccc",
+                            borderRadius: "0.3rem",
+                            inset: 0,
+                          },
+                        }}
+                      >
+                        <DaumPostcode
+                          onComplete={addressHandler}
+                          style={{ height: "500px" }}
+                        />
+                      </Modal>
+                    </div>
+                  </div>
+                  {/* 입사일자 */}
+                  <div>
+                    <div>입사일자(선택)</div>
+                    <div>
+                      <input type="date" />
+                    </div>
                   </div>
                   <div style={{ textAlign: "center" }}>
                     <button
@@ -1301,13 +1677,7 @@ const SignUp: NextPage = () => {
                     >
                       이전
                     </button>
-                    <button
-                      onClick={(e) => {
-                        setStepNumber(stepNumber + 1);
-                      }}
-                    >
-                      다음
-                    </button>
+                    <button type="submit">다음</button>
                   </div>
                 </div>
               )
