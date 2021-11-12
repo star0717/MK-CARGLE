@@ -296,19 +296,22 @@ export class AuthController {
     if (!user || user.name != data.name || user.email != data.email) return false;
 
     // 비밀번호를 변경하여 메일 전송
-    const newPWD = randomUUID();
-    console.log(newPWD);
-    const newPWD2 = Math.random().toString(36).substr(2, 11);
-    console.log(newPWD2);
+    const password = Math.random().toString(36).substr(2, 11);
+    await this.usersService.update(user._id, { password });
+    this.commonService.sendMail(user.email, "임시 비밀번호 전송", '4자리 인증 코드 : ' + `<b> ${password}</b>`);
+    console.log(password);
     return true
   }
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "패스워드 변경" })
-  @ApiBody({ description: "사용자명과 핸드폰번호 그리고 이메일 주소", type: HelpFindPWD })
+  @ApiBody({ description: "사용자명과 핸드폰번호 그리고 이메일 주소", type: HelpChangePWD })
   @ApiResponse({ description: "성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송" })
   @Post('update/password')
   async UpdateUserPassword(@Request() req, @Body() data: HelpChangePWD): Promise<boolean> {
+
+    console.log(data);
+
     const token: AuthTokenInfo = req.user;
 
     if (token.uID != data._id) return false;
@@ -319,7 +322,7 @@ export class AuthController {
     // 사용자 조회(패스워드까지 포함)
     const userInfo: UserInfo = {
       id: user.email,
-      pwd: data._id
+      pwd: data.oldPWD
     }
     user = await this.usersService.findUserBySignInInfo(userInfo);
 
