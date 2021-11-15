@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, UseGuards, Res, Request, BadRequestException, Param, UseInterceptors, UploadedFile } from '@nestjs/common';
-import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags, PartialType } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthTokenInfo, HelpChangePWD, HelpFindEmail, HelpFindPWD, SignUpInfo, UserInfo } from 'src/models/auth.entity';
 import { UserAuthority } from 'src/models/user.entity';
@@ -14,6 +14,7 @@ import { compare, hashSync } from "bcrypt";
 import { docFileInterceptor } from 'src/config/multer.option';
 import { CompaniesService } from 'src/modules/companies/companies.service';
 import { UsersService } from 'src/modules/users/users.service';
+import { Company } from 'src/models/company.entity';
 
 @ApiTags("인증 API")
 @Controller('auth')
@@ -101,6 +102,24 @@ export class AuthController {
   async signOut(@Res({ passthrough: true }) res: Response) {
     res.clearCookie(process.env.TK_NAME);
   }
+
+
+  @ApiOperation({ summary: '사업자번호로 사업자 조회' })
+  @ApiParam({ name: "id", description: "조회할 사업자번호" })
+  @ApiResponse({ description: "사업자정보", type: Company || null })
+  @Get('find/company/:id')
+  async findCompanyByComRegNum(@Param('id') bugNum: string): Promise<Partial<Company>> {
+    const company = await this.companiesService.findCompanyByComRegNum(bugNum);
+    if (!company) return null;
+    // 일부만 반환
+    const resCompany: Partial<Company> = {
+      name: company.name,
+      address: company.address,
+      ownerName: company.ownerName,
+    }
+    return resCompany;
+  }
+
 
   @ApiOperation({ summary: "사업자번호 유효성 검증" })
   @ApiParam({ name: "id", description: "검증할 사업자번호" })

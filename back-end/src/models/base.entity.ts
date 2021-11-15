@@ -51,13 +51,23 @@ export class PaginateOptions {
     // 페이지장 출력될 문서의 최대 수
     static maxTakeNumber = 100;
 
-    @ApiProperty({ description: "요청 페이지", default: 1, required: false })
-    @IsNotEmpty()
+    @ApiProperty({
+        description: "요청 페이지",
+        default: 1,
+        required: false
+    })
+    @IsOptional()
     @Type(() => Number)
     @Transform(getValidPageNumber)
     page?: number = 1;
 
-    @ApiProperty({ description: "페이지당 결과 수, 1 ~ 100 사이의 정수", default: 30, minimum: 1, maximum: 100, required: false })
+    @ApiProperty({
+        description: "페이지당 결과 수, 1 ~ 100 사이의 정수",
+        default: 30,
+        minimum: 1,
+        maximum: 100,
+        required: false
+    })
     @IsOptional()
     @Type(() => Number)
     @Transform(getValidTakeNumber)
@@ -72,7 +82,7 @@ export class PaginateOptions {
     searchKeyword: string;
 
     @ApiProperty({ description: "검색어 포함 정규식 사용 여부", default: false, required: false })
-    @IsNotEmpty()
+    @IsOptional()
     @Transform(strToBoolean)
     useRegSearch: boolean = false;
 

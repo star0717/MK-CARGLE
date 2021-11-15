@@ -10,4 +10,7 @@ export class CompaniesService extends BaseService<Company> {
         super(model);
     }
 
+    async findCompanyByComRegNum(comRegNum: string): Promise<Company> {
+        return await this.model.findOne({ comRegNum });
+    }
 }
