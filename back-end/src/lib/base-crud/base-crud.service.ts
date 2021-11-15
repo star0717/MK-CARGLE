@@ -43,9 +43,10 @@ export class BaseService<T extends BaseEntity> {
   }
 
   async findByOptions(pOptions: PaginateOptions): Promise<PaginateResult<T>> {
-
+    console.log("in service");
     console.log(pOptions);
     console.log(pOptions.getQuery());
+    console.log("end");
     let searchOption = {};
     if (pOptions.searchField && pOptions.searchKeyword) {
       if (pOptions.useRegSearch === true) {

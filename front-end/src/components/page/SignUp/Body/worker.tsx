@@ -59,7 +59,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const [companyId, setCompanyId] = useState(""); // 사업자번호 검색 후 가져온 objectID
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
-  const [joinDate, setJoinDate] = useState(new Date()); // 가입 일자
+  const [joinDate, setJoinDate] = useState(null); // 가입 일자
   const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
 
   const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
@@ -88,18 +88,22 @@ const WorkerSignUp: NextPage<any> = (props) => {
   // 사업자 검색 handler
   const onComFindHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (formRegEx.COMPANY_NUM.test(inputUser.comID)) {
-      console.log("여기");
-      // dispatch(companyFindAction(inputUser.comID)).then((res: any) => {
-      //   console.log(res);
-      //   alert()
-      // });
-      if (window.confirm("ㅇㅇㅇ")) {
-      } else {
-      }
-    } else {
-      setError("comID", {
-        type: "comIDError",
-        message: "형식에 맞게 입력하세요.",
+      dispatch(companyFindAction(inputUser.comID)).then((res: any) => {
+        if (res.payload) {
+          if (
+            window.confirm(
+              `업체 정보를 확인하세요.\n - 업체명 : ${res.payload.name}\n - 대표명 : ${res.payload.ownerName}`
+            )
+          ) {
+            setCompanyCheck(true);
+            // setCompanyId();
+          } else {
+            setInputUser({ ...inputUser, comID: "" });
+          }
+        } else {
+          alert("가입된 업체가 없습니다.");
+          setInputUser({ ...inputUser, comID: "" });
+        }
       });
     }
   };
@@ -210,7 +214,12 @@ const WorkerSignUp: NextPage<any> = (props) => {
             ...inputUser,
             email: `${emailAddress}@${emailDomain}`,
             auth: userAuth,
+            address:
+              addressMain && addressDetail !== ""
+                ? `${addressMain}, ${addressDetail}`
+                : addressMain,
           },
+          company: {},
         })
       ).then(
         (res: any) => {
@@ -257,7 +266,11 @@ const WorkerSignUp: NextPage<any> = (props) => {
                   pattern: formRegEx.COMPANY_NUM,
                 })}
               />
-              <button type="button" onClick={onComFindHandler}>
+              <button
+                type="button"
+                onClick={onComFindHandler}
+                disabled={companyCheck}
+              >
                 검색
               </button>
             </div>
@@ -695,7 +708,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
           <div>입사일자(선택)</div>
           <div>
             <DatePicker
-              onChange={(date: Date) => setJoinDate(date)}
+              selected={joinDate}
+              onChange={(date: any) => setJoinDate(date)}
               placeholderText="YYYY-MM-DD"
             />
           </div>

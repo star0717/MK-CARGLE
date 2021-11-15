@@ -113,11 +113,6 @@ const OwnerSignUp: NextPage<any> = (props) => {
           });
         }
       });
-    } else {
-      setError("emailAddress", {
-        type: "emailError",
-        message: "형식에 맞게 입력하세요.",
-      });
     }
   };
 
