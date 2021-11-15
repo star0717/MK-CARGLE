@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { prop } from "@typegoose/typegoose"
 import { Type, Transform, TransformFnParams } from "class-transformer";
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { isBoolean, IsBoolean, IsBooleanString, IsNotEmpty, isNumber, IsNumberString, IsOptional } from 'class-validator';
 import { TypegooseModule } from "nestjs-typegoose";
+
 
 /**
  * DB의 스키마로 사용할 모든 데이터 모델 클래스에 상속되는 기본 클래스
@@ -45,11 +46,15 @@ export class BaseEntity extends TypegooseModule {
     __v: number;
 }
 
+// 페이지당 출력될 문서의 수의 기봅값
+const defTakeNum: number = 30;
+// 페이지장 출력될 문서의 최소 수
+const minTakeNum: number = 1;
+// 페이지장 출력될 문서의 최대 수
+const maxTakeNum: number = 100;
+
+
 export class PaginateOptions {
-    // 페이지당 출력될 문서의 수의 기봅값
-    static defaultTakeNumber = 30;
-    // 페이지장 출력될 문서의 최대 수
-    static maxTakeNumber = 100;
 
     @ApiProperty({
         description: "요청 페이지",
@@ -57,21 +62,22 @@ export class PaginateOptions {
         required: false
     })
     @IsOptional()
-    @Type(() => Number)
+    // @IsNumberString()
     @Transform(getValidPageNumber)
+    @Type(() => Number)
     page?: number = 1;
 
     @ApiProperty({
         description: "페이지당 결과 수, 1 ~ 100 사이의 정수",
-        default: 30,
-        minimum: 1,
-        maximum: 100,
+        default: defTakeNum,
+        minimum: minTakeNum,
+        maximum: maxTakeNum,
         required: false
     })
     @IsOptional()
     @Type(() => Number)
     @Transform(getValidTakeNumber)
-    readonly take: number = PaginateOptions.defaultTakeNumber;
+    take: number = defTakeNum;
 
     @ApiProperty({ description: "검색 조건 필드", required: false })
     @IsOptional()
@@ -81,15 +87,22 @@ export class PaginateOptions {
     @IsOptional()
     searchKeyword: string;
 
-    @ApiProperty({ description: "검색어 포함 정규식 사용 여부", default: false, required: false })
+    @ApiProperty({
+        description: "검색어 포함 정규식 사용 여부",
+        default: false,
+        required: false
+    })
     @IsOptional()
+    // @IsBoolean()
+    // @IsBooleanString()
+    // @Type(() => Boolean)
     @Transform(strToBoolean)
     useRegSearch: boolean = false;
 
     getQuery() {
         console.log(this.useRegSearch);
         let query = "?page=" + this.page;
-        if (this.searchField || this.searchKeyword) {
+        if (this.searchField && this.searchKeyword) {
             query = query + "&searchField=" + this.searchField + "&searchKeyword=" + this.searchKeyword;
             if (this.useRegSearch == true) {
                 query = query + "&useRegSearch=" + this.useRegSearch
@@ -101,6 +114,10 @@ export class PaginateOptions {
 
 // 페이지번호 검증
 export function getValidPageNumber(params: TransformFnParams) {
+    console.log("getValidPageNumber");
+    if (!isNumber(params.value)) {
+        params.value = 1;
+    }
     if (params.value <= 0) {
         params.value = 1;
     }
@@ -109,18 +126,21 @@ export function getValidPageNumber(params: TransformFnParams) {
 
 // 페이지당 출력 문서 수 검증
 export function getValidTakeNumber(params: TransformFnParams) {
+    console.log("getValidTakeNumber");
 
     if (params.value <= 0) {
-        params.value = PaginateOptions.defaultTakeNumber;
+        params.value = defTakeNum;
     }
-    else if (params.value > PaginateOptions.maxTakeNumber) {
-        params.value = PaginateOptions.maxTakeNumber;
+    else if (params.value > maxTakeNum) {
+        params.value = maxTakeNum;
     }
     return params.value;
 }
 
 export function strToBoolean(params: TransformFnParams) {
-    if (params.value == "true") {
+    console.log("strToBoolean");
+    console.log("=> " + params.value)
+    if (params.value == true) {
         return true;
     } else {
         return false;
