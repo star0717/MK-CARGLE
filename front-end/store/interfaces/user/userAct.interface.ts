@@ -1,5 +1,4 @@
 export enum actionTypesUser {
-  // USER_INPUT = "USER_INPUT",
   USER_SIGNIN = "USER_SIGNIN",
   USER_SIGNUP = "USER_SIGNUP",
   USER_SIGNOUT = "USER_SIGNOUT",
@@ -7,6 +6,8 @@ export enum actionTypesUser {
   USER_AUTHNUM_CHECK = "USER_AUTHNUM_CHECK",
   USER_COMPANY_CHECK = "USER_COMPANY_CHECK",
   USER_COMPANY_FIND = "USER_COMPANY_FIND",
+  COM_FILE_UPLOAD = "COM_FILE_UPLOAD",
+  MAN_FILE_UPLOAD = "MAN_FILE_UPLOAD",
 }
 
 export type ActionsUser =
@@ -16,7 +17,9 @@ export type ActionsUser =
   | UserEmailSend
   | UserAuthNumCheck
   | UserCompanyCheck
-  | UserCompanyFind;
+  | UserCompanyFind
+  | ComFileUpload
+  | ManFileUpload;
 
 // 로그인
 export interface UserSignIn {
@@ -57,5 +60,17 @@ export interface UserCompanyCheck {
 // 사업자번호 검색
 export interface UserCompanyFind {
   type: actionTypesUser.USER_COMPANY_FIND;
+  payload: any;
+}
+
+// 사업자등록증 업로드
+export interface ComFileUpload {
+  type: actionTypesUser.COM_FILE_UPLOAD;
+  payload: any;
+}
+
+// 정비업등록증 업로드
+export interface ManFileUpload {
+  type: actionTypesUser.MAN_FILE_UPLOAD;
   payload: any;
 }

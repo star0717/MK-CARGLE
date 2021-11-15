@@ -129,6 +129,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
     if (timer === 0) {
       if (!Cookies.get("mk_amtn") && emailSend && !authNumCheck) {
         alert("인증번호가 만료되었습니다.");
+        setAuthNum("");
         setEmailSend(false);
       }
     }
@@ -143,8 +144,11 @@ const OwnerSignUp: NextPage<any> = (props) => {
           setAuthNumCheck(true);
           setTimer(0);
           setEmailSend(false);
+          setAuthNum("");
+          Cookies.remove("mk_amtn");
         } else {
           alert("인증번호가 일치하지 않습니다.");
+          setAuthNum("");
         }
       });
     }

@@ -55,8 +55,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
   const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
   const [authNum, setAuthNum] = useState(""); // 인증번호 input
+  const [companyNum, setCompanyNum] = useState(""); // 사업자번호 input
   const [companyCheck, setCompanyCheck] = useState(false); // 사업자번호 검색 여부
-  const [companyId, setCompanyId] = useState(""); // 사업자번호 검색 후 가져온 objectID
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [joinDate, setJoinDate] = useState(null); // 가입 일자
@@ -87,8 +87,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
 
   // 사업자 검색 handler
   const onComFindHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (formRegEx.COMPANY_NUM.test(inputUser.comID)) {
-      dispatch(companyFindAction(inputUser.comID)).then((res: any) => {
+    if (formRegEx.COMPANY_NUM.test(companyNum)) {
+      dispatch(companyFindAction(companyNum)).then((res: any) => {
         if (res.payload) {
           if (
             window.confirm(
@@ -96,13 +96,13 @@ const WorkerSignUp: NextPage<any> = (props) => {
             )
           ) {
             setCompanyCheck(true);
-            // setCompanyId();
+            setInputUser({ ...inputUser, comID: res.payload._id });
           } else {
-            setInputUser({ ...inputUser, comID: "" });
+            setCompanyNum("");
           }
         } else {
           alert("가입된 업체가 없습니다.");
-          setInputUser({ ...inputUser, comID: "" });
+          setCompanyNum("");
         }
       });
     }
@@ -157,6 +157,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
     if (timer === 0) {
       if (!Cookies.get("mk_amtn") && emailSend && !authNumCheck) {
         alert("인증번호가 만료되었습니다.");
+        setAuthNum("");
         setEmailSend(false);
       }
     }
@@ -171,6 +172,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
           setAuthNumCheck(true);
           setTimer(0);
           setEmailSend(false);
+          setAuthNum("");
+          Cookies.remove("mk_amtn");
         } else {
           alert("인증번호가 일치하지 않습니다.");
         }
@@ -198,12 +201,33 @@ const WorkerSignUp: NextPage<any> = (props) => {
     setModalOpen(false);
   };
 
+  // 주소, 가입일자는 선택사항이므로 입력이 될 때만 state에 넣어줌
+  // 회원가입이 진행될 때 넣어줘도 되지만, 이 경우에는 필드가 생성되고 그 안에 빈 값("", null)이 들어감
+  // 현재는 다른 필드처럼 값이 없으면 아예 생성되지 않게 하기 위해서 만듬
+  useEffect(() => {
+    if (addressMain !== "") {
+      setInputUser({
+        ...inputUser,
+        address:
+          addressDetail !== ""
+            ? `${addressMain}, ${addressDetail}`
+            : addressMain,
+      });
+    }
+    if (joinDate !== null) {
+      setInputUser({
+        ...inputUser,
+        joinDate: joinDate,
+      });
+    }
+  }, [addressMain, addressDetail, joinDate]);
+
   // 직원(worker) 회원가입 form submit handler
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
-    if (!authNumCheck) {
+    if (!companyCheck) {
+      alert("소속된 업체를 검색하세요.");
+    } else if (!authNumCheck) {
       alert("이메일 인증을 해주세요.");
-    } else if (!companyCheck) {
-      alert("사업자 등록번호 인증을 해주세요.");
     } else {
       console.log("@@@", inputUser);
       console.log("$$$", user.auth);
@@ -214,12 +238,12 @@ const WorkerSignUp: NextPage<any> = (props) => {
             ...inputUser,
             email: `${emailAddress}@${emailDomain}`,
             auth: userAuth,
-            address:
-              addressMain && addressDetail !== ""
-                ? `${addressMain}, ${addressDetail}`
-                : addressMain,
+            // address:
+            //   addressMain && addressDetail !== ""
+            //     ? `${addressMain}, ${addressDetail}`
+            //     : addressMain,
+            // joinDate: joinDate && joinDate,
           },
-          company: {},
         })
       ).then(
         (res: any) => {
@@ -257,10 +281,11 @@ const WorkerSignUp: NextPage<any> = (props) => {
               <input
                 style={{ width: "85%" }}
                 type="text"
-                value={inputUser.comID}
-                {...register("comID", {
+                value={companyNum}
+                readOnly={companyCheck}
+                {...register("companyNum", {
                   onChange: (e) => {
-                    onInputUserHandler(e);
+                    setCompanyNum(e.target.value);
                   },
                   required: true,
                   pattern: formRegEx.COMPANY_NUM,
@@ -275,7 +300,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
               </button>
             </div>
           </div>
-          {errors.comID?.type === "required" && (
+          {errors.companyNum?.type === "required" && (
             <p
               style={{
                 margin: "0",
@@ -286,18 +311,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
               필수 입력사항입니다.
             </p>
           )}
-          {errors.comID?.type === "pattern" && (
-            <p
-              style={{
-                margin: "0",
-                fontSize: "8px",
-                color: "red",
-              }}
-            >
-              형식에 맞게 입력하세요.
-            </p>
-          )}
-          {errors.comID?.type === "comIDError" && (
+          {errors.companyNum?.type === "pattern" && (
             <p
               style={{
                 margin: "0",

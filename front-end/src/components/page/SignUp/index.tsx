@@ -21,6 +21,7 @@ import WorkerSignUp from "./Body/worker";
 import OwnerSignUp from "./Body/owner";
 import TermSignUp from "./Body/term";
 import { SignUpInfo } from "../../../models/auth.entity";
+import OwnerUpload from "../Test";
 
 // modal setting
 Modal.setAppElement("body");
@@ -230,80 +231,7 @@ const SignUp: NextPage = () => {
               )
             ) : stepNumber === 4 ? (
               isCompany === true ? ( // step 4, 사업자일 때(서류제출)
-                <div
-                  style={{
-                    width: "95%",
-                    height: "400px",
-                    backgroundColor: "mintcream",
-                    margin: "10px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "40%",
-                      backgroundColor: "peru",
-                    }}
-                  >
-                    <div style={{ display: "flex" }}>
-                      <div style={{ width: "50%" }}>*성명</div>
-                      <div style={{ width: "50%" }}>*휴대전화번호</div>
-                    </div>
-                    <div style={{ display: "flex" }}>
-                      <input type="text" style={{ width: "50%" }} />
-                      <input type="text" style={{ width: "50%" }} />
-                    </div>
-                    <div style={{ display: "flex" }}>
-                      <div style={{ width: "50%" }}>
-                        <input
-                          type="button"
-                          style={{ width: "20%" }}
-                          value="파일선택"
-                        />
-                      </div>
-                      <div style={{ width: "50%" }}>
-                        <input
-                          type="button"
-                          style={{ width: "20%" }}
-                          value="파일선택"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "30%",
-                      backgroundColor: "orange",
-                    }}
-                  >
-                    <div style={{ textAlign: "center" }}>
-                      <button
-                        onClick={(e) => {
-                          setStepNumber(stepNumber - 1);
-                        }}
-                      >
-                        다음에하기
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          setStepNumber(stepNumber + 1);
-                        }}
-                      >
-                        제출하기
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "30%",
-                      backgroundColor: "yellow",
-                    }}
-                  >
-                    {/* 물음표 이모티콘, 메세지 삽입 */}
-                  </div>
-                </div>
+                <OwnerUpload {...SignUpProps} />
               ) : (
                 <div
                   style={{
