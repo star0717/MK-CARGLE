@@ -116,6 +116,7 @@ export class AuthController {
       name: company.name,
       address: company.address,
       ownerName: company.ownerName,
+      _id: company._id
     }
     return resCompany;
   }
