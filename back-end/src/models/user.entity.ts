@@ -103,7 +103,6 @@ export class User extends BaseEntity {
     @prop({
         unique: false,
         required: [false, "입사일 주소는 필수 항목입니다."],
-        trim: true,
     })
     public joinDate: Date;
 

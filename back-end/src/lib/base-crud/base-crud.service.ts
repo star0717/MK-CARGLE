@@ -1,5 +1,5 @@
-import { Injectable, Type } from "@nestjs/common";
-import { Model } from 'mongoose';
+import { BadRequestException, Injectable, Type } from "@nestjs/common";
+import { Model, Schema } from 'mongoose';
 import { BaseEntity, DeleteResult, PaginateOptions, PaginateResult } from "src/models/base.entity";
 
 /* 확장 서비스 클래스용 패키지 - 아래의 내용을 확장 클래스에 주입
@@ -15,10 +15,23 @@ export class BaseService<T extends BaseEntity> {
       super(model);
   }
   */
+  private modelKeys: string[];
 
   constructor(
-    readonly model: Model<T>
-  ) { };
+    readonly model: Model<T>,
+  ) {
+    const schema = model.prototype.schema.paths;
+    this.modelKeys = Object.keys(schema);
+  };
+
+  /**
+   * 데이터 모델 클래스에 해당 key 필드가 존재하는지 유무 반환
+   * @param key 검색할 key
+   * @returns 존재 유무
+   */
+  isContainedKey(key: string): boolean {
+    return this.modelKeys.includes(key);
+  }
 
   async create(doc: T): Promise<T> {
 
@@ -45,8 +58,14 @@ export class BaseService<T extends BaseEntity> {
   async findByOptions(pOptions: PaginateOptions): Promise<PaginateResult<T>> {
     console.log("in service");
     console.log(pOptions);
+
     let searchOption = {};
     if (pOptions.searchField && pOptions.searchKeyword) {
+
+      if (!this.isContainedKey(pOptions.searchField)) {
+        throw new BadRequestException();
+      }
+
       if (pOptions.useRegSearch === true) {
         searchOption[pOptions.searchField] = { $regex: pOptions.searchKeyword, $options: '$i' };
       } else {
