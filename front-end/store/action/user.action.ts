@@ -67,3 +67,14 @@ export async function companyCheckAction(dataToSubmit: string) {
     payload: req,
   };
 }
+
+// 사업자번호 검색 action
+export async function companyFindAction(dataToSubmit: string) {
+  const req = await axios
+    .get(`/companies/${dataToSubmit}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.USER_COMPANY_CHECK,
+    payload: req,
+  };
+}

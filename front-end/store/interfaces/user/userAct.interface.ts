@@ -6,6 +6,7 @@ export enum actionTypesUser {
   USER_EMAIL_SEND = "USER_EMAIL_SEND",
   USER_AUTHNUM_CHECK = "USER_AUTHNUM_CHECK",
   USER_COMPANY_CHECK = "USER_COMPANY_CHECK",
+  USER_COMPANY_FIND = "USER_COMPANY_FIND",
 }
 
 export type ActionsUser =
@@ -14,13 +15,8 @@ export type ActionsUser =
   | UserSignOut
   | UserEmailSend
   | UserAuthNumCheck
-  | UserCompanyCheck;
-
-// // 입력값 onChange
-// export interface UserInput {
-//   type: actionTypesUser.USER_INPUT;
-//   data: any;
-// }
+  | UserCompanyCheck
+  | UserCompanyFind;
 
 // 로그인
 export interface UserSignIn {
@@ -55,5 +51,11 @@ export interface UserAuthNumCheck {
 // 사업자번호 유효성 검사
 export interface UserCompanyCheck {
   type: actionTypesUser.USER_COMPANY_CHECK;
+  payload: any;
+}
+
+// 사업자번호 검색
+export interface UserCompanyFind {
+  type: actionTypesUser.USER_COMPANY_FIND;
   payload: any;
 }

@@ -7,11 +7,14 @@ import Cookies from "js-cookie";
 import DaumPostcode from "react-daum-postcode";
 import { useInterval } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { RootStateInterface } from "../../../../../store/interfaces/RootState";
 import { UserState } from "../../../../../store/interfaces";
 import { formRegEx } from "../../../../validation/regEx";
 import {
   authNumCheckAction,
+  companyFindAction,
   emailSendAction,
   signUpUserAction,
 } from "../../../../../store/action/user.action";
@@ -28,6 +31,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
   // props 재정의
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
+  const userAuth = props.userAuth;
 
   // 이메일 종류
   const emailItem = [
@@ -51,9 +55,11 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
   const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
   const [authNum, setAuthNum] = useState(""); // 인증번호 input
-  const [companyCheck, setCompanyCheck] = useState(false);
+  const [companyCheck, setCompanyCheck] = useState(false); // 사업자번호 검색 여부
+  const [companyId, setCompanyId] = useState(""); // 사업자번호 검색 후 가져온 objectID
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
+  const [joinDate, setJoinDate] = useState(new Date()); // 가입 일자
   const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
 
   const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
@@ -79,6 +85,25 @@ const WorkerSignUp: NextPage<any> = (props) => {
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
 
+  // 사업자 검색 handler
+  const onComFindHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (formRegEx.COMPANY_NUM.test(inputUser.comID)) {
+      console.log("여기");
+      // dispatch(companyFindAction(inputUser.comID)).then((res: any) => {
+      //   console.log(res);
+      //   alert()
+      // });
+      if (window.confirm("ㅇㅇㅇ")) {
+      } else {
+      }
+    } else {
+      setError("comID", {
+        type: "comIDError",
+        message: "형식에 맞게 입력하세요.",
+      });
+    }
+  };
+
   // 이메일 종류에 따라 state를 통해 값 변경 및 readonly 변경
   const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.target.value === "" ? setEmailReadOnly(false) : setEmailReadOnly(true); // 이메일 직접입력 외에는 readonly true
@@ -94,21 +119,24 @@ const WorkerSignUp: NextPage<any> = (props) => {
   // 이메일 인증번호 전송 handler
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const email = `${emailAddress}@${emailDomain}`;
-    if (email.length !== 0) {
-      if (formRegEx.EMAIL.test(email)) {
-        dispatch(emailSendAction(email)).then((res: any) => {
-          if (res.payload) {
-            alert("인증번호가 전송되었습니다.");
-            setEmailSend(true);
-            setTimer(300);
-          } else {
-            setError("emailAddress", {
-              type: "emailExist",
-              message: "이미 등록된 이메일입니다.",
-            });
-          }
-        });
-      }
+    if (formRegEx.EMAIL.test(email)) {
+      dispatch(emailSendAction(email)).then((res: any) => {
+        if (res.payload) {
+          alert("인증번호가 전송되었습니다.");
+          setEmailSend(true);
+          setTimer(300);
+        } else {
+          setError("emailAddress", {
+            type: "emailExist",
+            message: "이미 등록된 이메일입니다.",
+          });
+        }
+      });
+    } else {
+      setError("emailAddress", {
+        type: "emailError",
+        message: "형식에 맞게 입력하세요.",
+      });
     }
   };
 
@@ -181,6 +209,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
           user: {
             ...inputUser,
             email: `${emailAddress}@${emailDomain}`,
+            auth: userAuth,
           },
         })
       ).then(
@@ -198,7 +227,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
     }
   };
 
-  console.log("!유저! : ", user);
+  console.log("!유저! : ", inputUser);
+  console.log("$$날짜 : ", joinDate);
 
   return (
     <div
@@ -214,7 +244,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
         <div>
           <div>
             <div>*사업자 등록번호</div>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <input
                 style={{ width: "85%" }}
                 type="text"
@@ -227,7 +257,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                   pattern: formRegEx.COMPANY_NUM,
                 })}
               />
-              <button type="button" style={{ width: "15%" }}>
+              <button type="button" onClick={onComFindHandler}>
                 검색
               </button>
             </div>
@@ -244,6 +274,17 @@ const WorkerSignUp: NextPage<any> = (props) => {
             </p>
           )}
           {errors.comID?.type === "pattern" && (
+            <p
+              style={{
+                margin: "0",
+                fontSize: "8px",
+                color: "red",
+              }}
+            >
+              형식에 맞게 입력하세요.
+            </p>
+          )}
+          {errors.comID?.type === "comIDError" && (
             <p
               style={{
                 margin: "0",
@@ -381,6 +422,17 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 형식에 맞게 입력하세요.
               </p>
             )}
+            {errors.emailAddress?.type === "emailError" && (
+              <p
+                style={{
+                  margin: "0",
+                  fontSize: "8px",
+                  color: "red",
+                }}
+              >
+                {errors.emailAddress.message}
+              </p>
+            )}
             {errors.emailAddress?.type === "emailExist" && (
               <p
                 style={{
@@ -505,7 +557,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 required: true,
               })}
             />
-            {errors.ownerName?.type === "required" && (
+            {errors.name?.type === "required" && (
               <p
                 style={{
                   margin: "0",
@@ -573,24 +625,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 placeholder="주소를 입력해주세요."
                 value={addressMain}
                 readOnly
-                {...register("addressMain", {
-                  validate: (value) => {
-                    value = addressMain;
-                    return value === "" ? false : true;
-                  },
-                })}
+                {...register("addressMain")}
               />
-              {errors.addressMain?.type === "validate" && (
-                <p
-                  style={{
-                    margin: "0",
-                    fontSize: "8px",
-                    color: "red",
-                  }}
-                >
-                  필수 입력사항입니다.
-                </p>
-              )}
             </div>
             <div>
               <button
@@ -658,7 +694,10 @@ const WorkerSignUp: NextPage<any> = (props) => {
         <div>
           <div>입사일자(선택)</div>
           <div>
-            <input type="date" />
+            <DatePicker
+              onChange={(date: Date) => setJoinDate(date)}
+              placeholderText="YYYY-MM-DD"
+            />
           </div>
         </div>
         <div style={{ textAlign: "center" }}>

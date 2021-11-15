@@ -98,6 +98,12 @@ const userAll = (
         ...state,
       };
 
+    // 사업자번호 검색 기능
+    case actionTypesUser.USER_COMPANY_FIND:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }
