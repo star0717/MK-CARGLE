@@ -13,8 +13,8 @@ import { Company } from "../../src/models/company.entity";
 
 export const initialState: UserState = {
   signInInfo: <UserInfo>{
-    // id: "",
-    // pwd: "",
+    id: "",
+    pwd: "",
   },
   user: <User>{
     // email: "",
@@ -23,6 +23,8 @@ export const initialState: UserState = {
     // name: "",
     // comID: "",
     // hpNumber: "",
+    // address: "",
+    // joinDate: 0,
     // approval: false,
   },
   company: <Company>{

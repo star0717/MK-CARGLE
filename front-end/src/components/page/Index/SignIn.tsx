@@ -8,7 +8,7 @@ import { UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { initialState } from "../../../../store/reducer/user.reducer";
 import { signInUserAction } from "../../../../store/action/user.action";
-import styled from "styled-components"
+import styled from "styled-components";
 
 //SCSS
 const ComponentMainBody = styled.div`
@@ -18,8 +18,7 @@ const ComponentMainBody = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
-
+`;
 
 const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
