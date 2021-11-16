@@ -74,7 +74,7 @@ export class AuthService {
    * @param userInfo 로그인에 사용할 사용자 정보
    * @returns 성공시: 토큰, 실패시: UnauthorizedException 발생
    */
-  async validateUserInfo(userInfo: UserInfo): Promise<any> {
+  async signIn(userInfo: UserInfo): Promise<SignUpInfo> {
     console.log('validateUser in AuthService');
 
     // 사용자가 DB에 존재하는지 확인
@@ -90,15 +90,12 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const authToken: AuthTokenInfo = {
-      cID: company._id,
-      cName: company.name,
-      uID: user._id,
-      uName: user.name,
+    const newSignUpInfo: SignUpInfo = {
+      user,
+      company,
     };
 
-    console.log(authToken);
-    return this.genJwtToken(authToken);
+    return newSignUpInfo;
   }
 
   /**

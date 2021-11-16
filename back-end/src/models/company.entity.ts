@@ -1,7 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString } from "class-validator";
 import { BaseEntity } from "./base.entity";
 import { prop } from "@typegoose/typegoose"
+
+export enum CompanyApproval {
+    BEFORE = 'before',  // 심사 전. 회원가입 후 서류 제출 완료 전
+    ING = 'ing',        // 심사 중. 회원가입 및 서류 제출 완료 
+    DONE = 'done'       // 승인완료
+}
 
 export class Company extends BaseEntity {
 
@@ -105,12 +111,12 @@ export class Company extends BaseEntity {
     })
     public address: string;
 
-    @ApiProperty({ description: "승인여부", default: false, required: false })
+    @ApiProperty({ description: "승인여부", default: CompanyApproval.BEFORE, required: false })
     @IsOptional()
     @prop({
         unique: false,
         required: true,
-        default: false,
+        default: CompanyApproval.BEFORE,
     })
-    public approval: boolean;
+    public approval: CompanyApproval = CompanyApproval.BEFORE;
 }

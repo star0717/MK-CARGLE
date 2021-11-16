@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, UseGuards, Res, Request, BadRequestException, Param, UseInterceptors, UploadedFile } from '@nestjs/common';
-import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags, PartialType } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, UseGuards, Res, Request, BadRequestException, Param, UseInterceptors, UploadedFile, NotAcceptableException } from '@nestjs/common';
+import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthTokenInfo, HelpChangePWD, HelpFindEmail, HelpFindPWD, SignUpInfo, UserInfo } from 'src/models/auth.entity';
 import { UserAuthority } from 'src/models/user.entity';
@@ -9,7 +9,7 @@ import { HttpService } from "@nestjs/axios";
 import { map, Observable } from 'rxjs';
 import config, { getCrnPath, getMrnPath } from "src/config/configuration";
 import { CommonService } from '../common/common.service';
-import { randomBytes, randomFill, randomInt, randomUUID } from 'crypto';
+import { randomInt } from 'crypto';
 import { compare, hashSync } from "bcrypt";
 import { docFileInterceptor } from 'src/config/multer.option';
 import { CompaniesService } from 'src/modules/companies/companies.service';
@@ -36,9 +36,9 @@ export class AuthController {
   @ApiOperation({ summary: "회원 가입", description: "비밀번호는 8자 이상, 16자 이하. 업주 가입시에만 Company 데이터를 채워서 전송함" })
   @ApiBody({ description: "회원 가입에 필요한 정보 정보", type: SignUpInfo })
   @Post('signup')
-  async signUpForOwner(
+  async signUp(
     @Body() signUpInfo: SignUpInfo,
-    @Res({ passthrough: true }) res: Response): Promise<SignUpInfo> {
+    @Res({ passthrough: true }) res: Response) {
 
     // 데이터 유효성 검증
     if (signUpInfo.user.auth == UserAuthority.OWNER) {
@@ -57,19 +57,7 @@ export class AuthController {
 
     const newSignInfo: SignUpInfo = await this.authService.signUp(signUpInfo);
     this.injectToken(newSignInfo, res);
-    return newSignInfo;
-  }
-
-  private injectToken(signUpInfo: SignUpInfo, @Res({ passthrough: true }) res: Response) {
-    const authToken: AuthTokenInfo = {
-      cID: signUpInfo.company._id,
-      cName: signUpInfo.company.name,
-      uID: signUpInfo.user._id,
-      uName: signUpInfo.user.name
-    }
-
-    const token = this.authService.genJwtToken(authToken);
-    res.cookie(process.env.TK_NAME, token);
+    return;
   }
 
   /**
@@ -83,10 +71,47 @@ export class AuthController {
   @Post('signin')
   async signIn(@Body() userInfo: UserInfo, @Res({ passthrough: true }) res: Response) {
     console.log(userInfo);
-    const token = await this.authService.validateUserInfo(userInfo);
-    res.cookie(process.env.TK_NAME, token);
+    const newSignInfo: SignUpInfo = await this.authService.signIn(userInfo);
+    this.injectToken(newSignInfo, res);
     return;
   }
+
+  /**
+   * 토큰을 생성하여 쿠키에 주입
+   * @param signUpInfo 토큰에 주입될 사용자와 사업체의 정보
+   * @param res 토큰을 주입할 응답
+   */
+  private injectToken(signUpInfo: SignUpInfo, @Res({ passthrough: true }) res: Response) {
+    const authToken: AuthTokenInfo = {
+      cID: signUpInfo.company._id,
+      cName: signUpInfo.company.name,
+      cApproval: signUpInfo.company.approval,
+      uID: signUpInfo.user._id,
+      uName: signUpInfo.user.name,
+      uAuth: signUpInfo.user.auth,
+      uApproval: signUpInfo.user.approval
+    }
+    const token = this.authService.genJwtToken(authToken);
+    res.cookie(process.env.TK_NAME, token);
+  }
+
+  /**
+   * 토큰을 갱신해서 재주입. 권한이나 인증 정보가 변경되었을 때 사용
+   * @param authToken 현재 토큰 정보
+   * @param res 토큰을 주입할 응답
+   */
+  private async reInjectToken(authToken: AuthTokenInfo, @Res({ passthrough: true }) res: Response) {
+    const company = await this.companiesService.findById(authToken.cID);
+    if (!company) throw new NotAcceptableException();
+    const user = await this.usersService.findById(authToken.uID);
+    if (!user) throw new NotAcceptableException();
+    const newSignUpInfo: SignUpInfo = {
+      user,
+      company,
+    };
+    this.injectToken(newSignUpInfo, res);
+  }
+
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: `프로필 확인 (토큰 정보 확인)` })
