@@ -5,7 +5,13 @@ import { useDispatch } from "react-redux";
 import {
   comFileUploadAction,
   manFileUploadAction,
+  signOutUserAction,
 } from "../../../../store/action/user.action";
+
+const fileInit = {
+  comFile: "",
+  manFile: "",
+};
 
 const OwnerUpload: NextPage<any> = (props) => {
   const dispatch = useDispatch();
@@ -17,15 +23,11 @@ const OwnerUpload: NextPage<any> = (props) => {
   const userAuth = props.userAuth;
 
   // 업로드할 파일 state
-  const [file, setFile] = useState({
-    comFile: "",
-    manFile: "",
-  });
+  const [file, setFile] = useState(fileInit);
   // 업로드할 파일명 state
-  const [fileName, setFileName] = useState({
-    comFile: "",
-    manFile: "",
-  });
+  const [fileName, setFileName] = useState(fileInit);
+
+  // const [upload, setUpload] = useState(false); // 파일 두개 업로드 여부
 
   // 파일 선택 시 파일명 state 변경
   const onFileSelectHandler = (e: any) => {
@@ -33,20 +35,43 @@ const OwnerUpload: NextPage<any> = (props) => {
     setFileName({ ...fileName, [e.target.name]: e.target.files[0].name });
   };
 
-  console.log("파일 : ", file.comFile);
-  console.log("이름 : ", fileName.comFile);
+  // 다음에 하기(logout 같은 기능) handler
+  const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(signOutUserAction()).then((res: any) => {
+      router.push("/");
+    });
+  };
 
+  // 파일 업로드 handler
   const onFileUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fileArray = new FormData();
-    fileArray.append("comFile", file.comFile);
-    // fileArray.append("manFile", fileName.manFile);
-    dispatch(comFileUploadAction(fileArray)).then((res: any) => {
-      console.log(res);
-    });
-    // dispatch(manFileUploadAction()).then((res: any) => {
-    //   console.log(res);
-    // });
+    const comFormData = new FormData();
+    const manFormData = new FormData();
+    comFormData.append("file", file.comFile); // NestJs의 fileinterceptor의 name과 일치해야 됨
+    manFormData.append("file", file.manFile);
+    dispatch(comFileUploadAction(comFormData)).then(
+      (res: any) => {
+        dispatch(manFileUploadAction(manFormData)).then(
+          (res: any) => {
+            setStepNumber(stepNumber + 1);
+          },
+          (err) => {
+            if (err.response.status === 400 || 500) {
+              alert("정비업 등록증을 확인해주세요.");
+              setFile(fileInit);
+              setFileName(fileInit);
+            }
+          }
+        );
+      },
+      (err) => {
+        if (err.response.status === 400 || 500) {
+          alert("사업자 등록증을 확인해주세요.");
+          setFile(fileInit);
+          setFileName(fileInit);
+        }
+      }
+    );
   };
 
   return (
@@ -68,6 +93,7 @@ const OwnerUpload: NextPage<any> = (props) => {
         >
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <div style={{ width: "50%" }}>
+              <p>사업자등록증</p>
               <div>
                 <input
                   type="text"
@@ -92,6 +118,7 @@ const OwnerUpload: NextPage<any> = (props) => {
               </div>
             </div>
             <div style={{ width: "50%" }}>
+              <p>정비업등록증</p>
               <div>
                 <input
                   type="text"
@@ -125,12 +152,7 @@ const OwnerUpload: NextPage<any> = (props) => {
           }}
         >
           <div style={{ textAlign: "center" }}>
-            <button
-              type="button"
-              onClick={(e) => {
-                router.push("/");
-              }}
-            >
+            <button type="button" onClick={onSignOutHandler}>
               다음에하기
             </button>
             <button type="submit">제출하기</button>
