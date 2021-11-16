@@ -8,6 +8,7 @@ import { User, UserAuthority } from "./user.entity";
  * 회원 가입 정보용 DTO
  */
 export class SignUpInfo {
+
     @ApiProperty({ description: "회원 가입에 사용할 사용자 정보" })
     @ValidateNested()
     @Type(() => User)
@@ -102,4 +103,15 @@ export class HelpChangePWD {
     @ApiProperty({ description: "신규 비밀번호" })
     @IsString()
     public newPWD: string;
+}
+
+/// 회원탈퇴를 위한 정보
+export class WithdrawalInfo {
+    @ApiProperty({ description: "사용자의 ObjectID" })
+    @IsString()
+    public _id: string;
+
+    @ApiProperty({ description: "비밀번호" })
+    @IsString()
+    public PWD: string;
 }

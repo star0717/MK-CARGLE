@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, UseGuards, Res, Request, BadRequestException, Param, UseInterceptors, UploadedFile, NotAcceptableException } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Res, Req, BadRequestException, Param, UseInterceptors, UploadedFile, NotAcceptableException, UnauthorizedException } from '@nestjs/common';
 import { ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
-import { AuthTokenInfo, HelpChangePWD, HelpFindEmail, HelpFindPWD, SignUpInfo, UserInfo } from 'src/models/auth.entity';
+import { Request, Response } from 'express';
+import { AuthTokenInfo, HelpChangePWD, HelpFindEmail, HelpFindPWD, SignUpInfo, UserInfo, WithdrawalInfo } from 'src/models/auth.entity';
 import { UserAuthority } from 'src/models/user.entity';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
@@ -29,16 +29,15 @@ export class AuthController {
     private readonly commonService: CommonService,
     private readonly companiesService: CompaniesService,
     private readonly usersService: UsersService,
-  ) {
-
-  }
+  ) { }
 
   @ApiOperation({ summary: "회원 가입", description: "비밀번호는 8자 이상, 16자 이하. 업주 가입시에만 Company 데이터를 채워서 전송함" })
   @ApiBody({ description: "회원 가입에 필요한 정보 정보", type: SignUpInfo })
   @Post('signup')
   async signUp(
     @Body() signUpInfo: SignUpInfo,
-    @Res({ passthrough: true }) res: Response) {
+    @Res({ passthrough: true }) res: Response
+  ) {
 
     // 데이터 유효성 검증
     if (signUpInfo.user.auth == UserAuthority.OWNER) {
@@ -60,74 +59,71 @@ export class AuthController {
     return;
   }
 
-  /**
-   * 사용자 로그인 시도
-   * @param userInfo 로그인에 사용할 사용자 정보
-   * @param res 토큰이 주입된 응답
-   * @returns 
-   */
   @ApiOperation({ summary: "시스템에 로그인 시도 (토큰 발급)" })
   @ApiBody({ description: "로그인에 사용될 정보", type: UserInfo })
   @Post('signin')
-  async signIn(@Body() userInfo: UserInfo, @Res({ passthrough: true }) res: Response) {
+  async signIn(
+    @Body() userInfo: UserInfo,
+    @Res({ passthrough: true }) res: Response
+  ) {
     console.log(userInfo);
     const newSignInfo: SignUpInfo = await this.authService.signIn(userInfo);
     this.injectToken(newSignInfo, res);
     return;
   }
 
-  /**
-   * 토큰을 생성하여 쿠키에 주입
-   * @param signUpInfo 토큰에 주입될 사용자와 사업체의 정보
-   * @param res 토큰을 주입할 응답
-   */
-  private injectToken(signUpInfo: SignUpInfo, @Res({ passthrough: true }) res: Response) {
-    const authToken: AuthTokenInfo = {
-      cID: signUpInfo.company._id,
-      cName: signUpInfo.company.name,
-      cApproval: signUpInfo.company.approval,
-      uID: signUpInfo.user._id,
-      uName: signUpInfo.user.name,
-      uAuth: signUpInfo.user.auth,
-      uApproval: signUpInfo.user.approval
-    }
-    const token = this.authService.genJwtToken(authToken);
-    res.cookie(process.env.TK_NAME, token);
+  @ApiOperation({ summary: `로그아웃 (토큰 삭제)` })
+  @Get('signout')
+  async signOut(@Res({ passthrough: true }) res: Response) {
+    this.clearToken(res);
   }
 
-  /**
-   * 토큰을 갱신해서 재주입. 권한이나 인증 정보가 변경되었을 때 사용
-   * @param authToken 현재 토큰 정보
-   * @param res 토큰을 주입할 응답
-   */
-  private async reInjectToken(authToken: AuthTokenInfo, @Res({ passthrough: true }) res: Response) {
-    const company = await this.companiesService.findById(authToken.cID);
-    if (!company) throw new NotAcceptableException();
-    const user = await this.usersService.findById(authToken.uID);
-    if (!user) throw new NotAcceptableException();
-    const newSignUpInfo: SignUpInfo = {
-      user,
-      company,
-    };
-    this.injectToken(newSignUpInfo, res);
+  @ApiOperation({ summary: `회원탈퇴`, description: '작업자: 작업자 본인만 탈퇴. 업주: 본인을 포함한 모든 직원이 탈퇴하고 회사 정보도 삭제' })
+  @ApiBody({ description: "로그인에 사용될 정보", type: WithdrawalInfo })
+  @Post('withdrawal')
+  async withdrawal(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+    @Body() info: WithdrawalInfo,
+  ) {
+    const authToken = this.extractToken(req);
+
+    // 토큰의 사용자 ID와 입력받은 ID가 불일치 할 경우 
+    if (authToken.uID != info._id) throw new UnauthorizedException();
+
+    var user = await this.usersService.findById(authToken.uID);
+    if (!user) throw new UnauthorizedException();
+
+    // 토큰의 업체 ID와 사용자의 업체 ID가 불일치 할 경우
+    if (authToken.cID != user.comID) throw new UnauthorizedException();
+
+    // 사용자 조회(패스워드까지 포함)
+    const userInfo: UserInfo = {
+      id: user.email,
+      pwd: info.PWD
+    }
+    user = await this.usersService.findUserBySignInInfo(userInfo);
+    if (!user) throw new UnauthorizedException();
+
+    if (user.auth == UserAuthority.WORKER) {
+      await this.usersService.removeWorker(user._id, user.comID);
+    } else if (user.auth == UserAuthority.OWNER) {
+      await this.usersService.removeUsersByComID(user.comID);
+      await this.companiesService.remove(user.comID);
+    }
+    this.clearToken(res);
   }
+
 
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: `프로필 확인 (토큰 정보 확인)` })
   @Get('profile')
-  getProfile(@Request() req): AuthTokenInfo {
-    const token_info: AuthTokenInfo = req.user;
-    console.log(token_info);
-    return token_info;
+  getProfile(@Req() req: Request): AuthTokenInfo {
+    const authToken: AuthTokenInfo = this.extractToken(req);
+    console.log(authToken);
+    return authToken;
   }
-
-  @ApiOperation({ summary: `로그아웃 (토큰 삭제)` })
-  @Get('signout')
-  async signOut(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie(process.env.TK_NAME);
-  }
-
 
   @ApiOperation({ summary: '사업자번호로 사업자 조회' })
   @ApiParam({ name: "id", description: "조회할 사업자번호" })
@@ -218,7 +214,10 @@ export class AuthController {
   @ApiOperation({ summary: "암호문과 평문이 동일한지 검증함" })
   @ApiResponse({ description: "검증결과", type: Boolean })
   @Get('validate/crypto-text/:id')
-  async compareCryptoText(@Request() req, @Param('id') painText: string): Promise<boolean> {
+  async compareCryptoText(
+    @Req() req: Request,
+    @Param('id') painText: string
+  ): Promise<boolean> {
     const cryptoText: string = req.cookies[this.env_config.authMailTokenName];
     if (!cryptoText) throw new BadRequestException();
     return await compare(painText, cryptoText);
@@ -254,9 +253,9 @@ export class AuthController {
   })
   @UseInterceptors(docFileInterceptor)
   @Post('upload/com-reg-doc')
-  async uploadCrFile(@Request() req, @UploadedFile() file: Express.Multer.File): Promise<string> {
-    const token_info: AuthTokenInfo = req.user;
-    const company = await this.companiesService.findById(token_info.cID);
+  async uploadCrFile(@Req() req: Request, @UploadedFile() file: Express.Multer.File): Promise<string> {
+    const authToken: AuthTokenInfo = this.extractToken(req);
+    const company = await this.companiesService.findById(authToken.cID);
     const extension = file.originalname.substr(file.originalname.lastIndexOf('.'));
     const path = getCrnPath();
     let fileName = company.comRegNum.toString();
@@ -284,9 +283,9 @@ export class AuthController {
   })
   @UseInterceptors(docFileInterceptor)
   @Post('upload/man-reg-doc')
-  async uploadMrFile(@Request() req, @UploadedFile() file: Express.Multer.File): Promise<string> {
-    const token_info: AuthTokenInfo = req.user;
-    const company = await this.companiesService.findById(token_info.cID);
+  async uploadMrFile(@Req() req: Request, @UploadedFile() file: Express.Multer.File): Promise<string> {
+    const authToken: AuthTokenInfo = this.extractToken(req);
+    const company = await this.companiesService.findById(authToken.cID);
     const extension = file.originalname.substr(file.originalname.lastIndexOf('.'));
     const path = getMrnPath();
     let fileName = company.mbRegNum.toString();
@@ -301,9 +300,9 @@ export class AuthController {
   @ApiOperation({ summary: "업로드된 사업자등록증 파일명 반환" })
   @ApiResponse({ description: "성공: 파일명, 실패: null" })
   @Get('file-name/com-reg-docc')
-  async getCrFileName(@Request() req): Promise<string> | null {
-    const token_info: AuthTokenInfo = req.user;
-    const company = await this.companiesService.findById(token_info.cID);
+  async getCrFileName(@Req() req: Request,): Promise<string> | null {
+    const authToken: AuthTokenInfo = this.extractToken(req);
+    const company = await this.companiesService.findById(authToken.cID);
     const fileName = company.comRegNum.toString();
 
     const fileList = await this.commonService.getFileNames(getCrnPath(), fileName);
@@ -318,9 +317,9 @@ export class AuthController {
   @ApiOperation({ summary: "업로드된 정비업등록증 파일명 반환" })
   @ApiResponse({ description: "성공: 파일명, 실패: null" })
   @Get('file-name/man-reg-doc')
-  async getMrFileName(@Request() req): Promise<string> | null {
-    const token_info: AuthTokenInfo = req.user;
-    const company = await this.companiesService.findById(token_info.cID);
+  async getMrFileName(@Req() req: Request): Promise<string> | null {
+    const authToken: AuthTokenInfo = this.extractToken(req);
+    const company = await this.companiesService.findById(authToken.cID);
     const fileName = company.mbRegNum.toString();
 
     const fileList = await this.commonService.getFileNames(getMrnPath(), fileName);
@@ -372,13 +371,13 @@ export class AuthController {
   @ApiBody({ description: "사용자명과 핸드폰번호 그리고 이메일 주소", type: HelpChangePWD })
   @ApiResponse({ description: "성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송" })
   @Post('update/password')
-  async UpdateUserPassword(@Request() req, @Body() data: HelpChangePWD): Promise<boolean> {
+  async UpdateUserPassword(@Req() req: Request, @Body() data: HelpChangePWD): Promise<boolean> {
 
     console.log(data);
 
-    const token: AuthTokenInfo = req.user;
+    const authToken: AuthTokenInfo = this.extractToken(req);
 
-    if (token.uID != data._id) return false;
+    if (authToken.uID != data._id) return false;
 
     // 사용자 조회(패스워드는 제외됨)
     var user = await this.usersService.findById(data._id);
@@ -389,9 +388,57 @@ export class AuthController {
       pwd: data.oldPWD
     }
     user = await this.usersService.findUserBySignInInfo(userInfo);
+    if (!user) throw new UnauthorizedException();
 
     user = await this.usersService.update(user._id, { password: data.newPWD });
     if (user) return true;
     else return false;
+  }
+
+  /**
+  * 토큰을 생성하여 쿠키에 주입
+  * @param signUpInfo 토큰에 주입될 사용자와 사업체의 정보
+  * @param res 토큰을 주입할 응답
+  */
+  private injectToken(signUpInfo: SignUpInfo, @Res({ passthrough: true }) res: Response) {
+    const authToken: AuthTokenInfo = {
+      cID: signUpInfo.company._id,
+      cName: signUpInfo.company.name,
+      cApproval: signUpInfo.company.approval,
+      uID: signUpInfo.user._id,
+      uName: signUpInfo.user.name,
+      uAuth: signUpInfo.user.auth,
+      uApproval: signUpInfo.user.approval
+    }
+    const token = this.authService.genJwtToken(authToken);
+    res.cookie(process.env.TK_NAME, token);
+  }
+
+  /**
+   * 토큰을 갱신해서 재주입. 권한이나 인증 정보가 변경되었을 때 사용
+   * @param authToken 현재 토큰 정보
+   * @param res 토큰을 주입할 응답
+   */
+  private async reInjectToken(authToken: AuthTokenInfo, @Res({ passthrough: true }) res: Response) {
+    const company = await this.companiesService.findById(authToken.cID);
+    if (!company) throw new UnauthorizedException();
+    const user = await this.usersService.findById(authToken.uID);
+    if (!user) throw new UnauthorizedException();
+
+    this.clearToken(res);
+
+    const newSignUpInfo: SignUpInfo = {
+      user,
+      company,
+    };
+    this.injectToken(newSignUpInfo, res);
+  }
+
+  private extractToken(@Req() req): AuthTokenInfo {
+    return req.user;
+  }
+
+  private clearToken(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie(process.env.TK_NAME);
   }
 }

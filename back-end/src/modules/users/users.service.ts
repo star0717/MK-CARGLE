@@ -7,7 +7,7 @@ import { compareSync, hashSync } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
 import { UserInfo } from 'src/models/auth.entity';
 import { BaseService } from '../../lib/base-crud/base-crud.service';
-import { User } from '../../models/user.entity';
+import { User, UserAuthority } from '../../models/user.entity';
 
 @Injectable()
 export class UsersService extends BaseService<User> {
@@ -46,4 +46,34 @@ export class UsersService extends BaseService<User> {
   async findUserByHpNumber(hpNumber: string): Promise<User> {
     return await this.model.findOne({ hpNumber });
   }
+
+  /**
+   * 특정 업체에 소속된 모든 사용자(사업주 포함)를 삭제
+   * @param comID 해당 업체의 ObjectID
+   */
+  async removeUsersByComID(comID: string) {
+    const res = await this.model.deleteMany({ comID });
+    console.log("deleted workers: " + res.deletedCount);
+  }
+
+  /**
+   * 작업자를 삭제함
+   * @param id 작업자의 ObjectID
+   * @param comID 작업자의 comID
+   * @returns 
+   */
+  async removeWorker(id: string, comID: string) {
+    return await this.model.findOneAndRemove({ _id: id, comID, auth: UserAuthority.WORKER });
+  }
+
+  /**
+   * 사업자를 삭제함
+   * @param id 사업자의 ObjectID
+   * @param comID 사업자의 comID
+   * @returns 
+   */
+  async removeOwner(id: string, comID: string) {
+    return await this.model.findOneAndRemove({ _id: id, comID, auth: UserAuthority.OWNER });
+  }
+
 }
