@@ -1,5 +1,5 @@
-import { Company } from "./company.entity";
-import { User } from "./user.entity";
+import { Company, CompanyApproval } from "./company.entity";
+import { User, UserAuthority } from "./user.entity";
 /**
  * 회원 가입 정보용 DTO
  */
@@ -23,8 +23,11 @@ export declare class UserInfo {
 export declare class AuthTokenInfo {
     uID: string;
     uName: string;
+    uAuth: UserAuthority;
+    uApproval: boolean;
     cID: string;
     cName: string;
+    cApproval: CompanyApproval;
 }
 /**
  * 이메일 주소 찾기에 사용될 데이터 모델

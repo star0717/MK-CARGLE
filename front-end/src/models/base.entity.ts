@@ -27,10 +27,8 @@ export declare class BaseEntity {
     __v: number;
 }
 export declare class PaginateOptions {
-    static defaultTakeNumber: number;
-    static maxTakeNumber: number;
     page?: number;
-    readonly take: number;
+    take: number;
     searchField: string;
     searchKeyword: string;
     useRegSearch: boolean;

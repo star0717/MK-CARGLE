@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsOptional, IsString, ValidateNested } from "class-validator";
-import { Company } from "./company.entity";
-import { User } from "./user.entity";
+import { Company, CompanyApproval } from "./company.entity";
+import { User, UserAuthority } from "./user.entity";
 
 /**
  * 회원 가입 정보용 DTO
@@ -50,6 +50,14 @@ export class AuthTokenInfo {
     @IsString()
     public uName: string;
 
+    @ApiProperty({ description: "사용자 권한" })
+    @IsString()
+    public uAuth: UserAuthority;
+
+    @ApiProperty({ description: "사용자 승인여부" })
+    @IsString()
+    public uApproval: boolean;
+
     @ApiProperty({ description: "업체명" })
     @IsString()
     public cID: string;
@@ -57,6 +65,10 @@ export class AuthTokenInfo {
     @ApiProperty({ description: "업체 ObjectID" })
     @IsString()
     public cName: string;
+
+    @ApiProperty({ description: "업체 승인여부" })
+    @IsString()
+    public cApproval: CompanyApproval;
 }
 
 /**

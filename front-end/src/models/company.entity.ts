@@ -1,4 +1,9 @@
 import { BaseEntity } from "./base.entity";
+export enum CompanyApproval {
+    BEFORE = "before",
+    ING = "ing",
+    DONE = "done"
+}
 export declare class Company extends BaseEntity {
     name: string;
     comRegNum: string;
@@ -10,5 +15,5 @@ export declare class Company extends BaseEntity {
     phoneNum: string;
     faxNum: string;
     address: string;
-    approval: boolean;
+    approval: CompanyApproval;
 }
