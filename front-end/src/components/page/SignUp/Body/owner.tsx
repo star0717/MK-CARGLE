@@ -30,14 +30,6 @@ const OwnerSignUp: NextPage<any> = (props) => {
   const setStepNumber = props.setStepNumber;
   const userAuth = props.userAuth;
 
-  // 이메일 종류
-  const emailItem = [
-    { key: 1, value: "", text: "직접 입력" },
-    { key: 2, value: "gmail.com", text: "Gmail" },
-    { key: 3, value: "naver.com", text: "Naver" },
-    { key: 4, value: "daum.net", text: "Daum" },
-  ];
-
   // redux store에서 user, company 정보 가져옴
   const { user, company } = useSelector(
     (state: RootStateInterface): UserState => state.userAll
@@ -59,6 +51,8 @@ const OwnerSignUp: NextPage<any> = (props) => {
   const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
 
   const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
+
+  console.log(typeof setAddressDetail);
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -297,7 +291,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
                   },
                 })}
               >
-                {emailItem.map((item: any, index: Number) => (
+                {props.emailItem.map((item: any, index: Number) => (
                   <option key={item.key} value={item.value}>
                     {item.text}
                   </option>

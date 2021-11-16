@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Cookies from "js-cookie";
-import DaumPostcode from "react-daum-postcode";
 import { useInterval } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
@@ -20,6 +19,9 @@ import {
 } from "../../../../../store/action/user.action";
 import { SignUpInfo } from "../../../../models/auth.entity";
 
+import DaumPostcode from "react-daum-postcode";
+import CompanyFindModal from "./companyfindmodal";
+
 // modal setting
 Modal.setAppElement("body");
 
@@ -32,14 +34,6 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
   const userAuth = props.userAuth;
-
-  // 이메일 종류
-  const emailItem = [
-    { key: 1, value: "", text: "직접 입력" },
-    { key: 2, value: "gmail.com", text: "Gmail" },
-    { key: 3, value: "naver.com", text: "Naver" },
-    { key: 4, value: "daum.net", text: "Daum" },
-  ];
 
   // redux store에서 user, company 정보 가져옴
   const { user } = useSelector(
@@ -61,8 +55,16 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [joinDate, setJoinDate] = useState(null); // 가입 일자
   const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
-
+  const [modalOption, setModalOption] = useState("");
   const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
+
+  // 사업자 검색 MODAL에 넘길 props
+  const ComfindModalProps = {
+    setModalOpen,
+    setModalOption,
+    setCompanyNum,
+    style: { height: "500px" },
+  };
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -86,26 +88,27 @@ const WorkerSignUp: NextPage<any> = (props) => {
   }, [modalOpen]);
 
   // 사업자 검색 handler
-  const onComFindHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (formRegEx.COMPANY_NUM.test(companyNum)) {
-      dispatch(companyFindAction(companyNum)).then((res: any) => {
-        if (res.payload) {
-          if (
-            window.confirm(
-              `업체 정보를 확인하세요.\n - 업체명 : ${res.payload.name}\n - 대표명 : ${res.payload.ownerName}`
-            )
-          ) {
-            setCompanyCheck(true);
-            setInputUser({ ...inputUser, comID: res.payload._id });
-          } else {
-            setCompanyNum("");
-          }
-        } else {
-          alert("가입된 업체가 없습니다.");
-          setCompanyNum("");
-        }
-      });
-    }
+  const onComFindHandler = (data: any) => {
+    console.log("findData : ", data);
+    // if (formRegEx.COMPANY_NUM.test(companyNum)) {
+    //   dispatch(companyFindAction(companyNum)).then((res: any) => {
+    //     if (res.payload) {
+    //       if (
+    //         window.confirm(
+    //           `업체 정보를 확인하세요.\n - 업체명 : ${res.payload.name}\n - 대표명 : ${res.payload.ownerName}`
+    //         )
+    //       ) {
+    //         setCompanyCheck(true);
+    //         setInputUser({ ...inputUser, comID: res.payload._id });
+    //       } else {
+    //         setCompanyNum("");
+    //       }
+    //     } else {
+    //       alert("가입된 업체가 없습니다.");
+    //       setCompanyNum("");
+    //     }
+    //   });
+    // }
   };
 
   // 이메일 종류에 따라 state를 통해 값 변경 및 readonly 변경
@@ -229,8 +232,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
     } else if (!authNumCheck) {
       alert("이메일 인증을 해주세요.");
     } else {
-      console.log("@@@", inputUser);
-      console.log("$$$", user.auth);
+      // console.log("@@@", inputUser);
+      // console.log("$$$", user.auth);
 
       dispatch(
         signUpUserAction({
@@ -260,8 +263,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
     }
   };
 
-  console.log("!유저! : ", inputUser);
-  console.log("$$날짜 : ", joinDate);
+  // console.log("!유저! : ", inputUser);
+  // console.log("$$날짜 : ", joinDate);
 
   return (
     <div
@@ -282,18 +285,14 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 style={{ width: "85%" }}
                 type="text"
                 value={companyNum}
-                readOnly={companyCheck}
-                {...register("companyNum", {
-                  onChange: (e) => {
-                    setCompanyNum(e.target.value);
-                  },
-                  required: true,
-                  pattern: formRegEx.COMPANY_NUM,
-                })}
+                readOnly
               />
               <button
                 type="button"
-                onClick={onComFindHandler}
+                onClick={(e) => {
+                  setModalOption("company");
+                  setModalOpen(!modalOpen);
+                }}
                 disabled={companyCheck}
               >
                 검색
@@ -374,7 +373,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                   },
                 })}
               >
-                {emailItem.map((item: any, index: Number) => (
+                {props.emailItem.map((item: any, index: Number) => (
                   <option key={item.key} value={item.value}>
                     {item.text}
                   </option>
@@ -660,6 +659,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 type="button"
                 onClick={(e) => {
                   setModalOpen(!modalOpen);
+                  setModalOption("address");
                 }}
               >
                 주소 검색
@@ -710,10 +710,14 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 },
               }}
             >
-              <DaumPostcode
-                onComplete={addressHandler}
-                style={{ height: "500px" }}
-              />
+              {modalOption === "address" ? (
+                <DaumPostcode
+                  onComplete={addressHandler}
+                  style={{ height: "500px" }}
+                />
+              ) : (
+                <CompanyFindModal {...ComfindModalProps} />
+              )}
             </Modal>
           </div>
         </div>
