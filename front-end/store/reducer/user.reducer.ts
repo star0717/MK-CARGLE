@@ -98,6 +98,24 @@ const userAll = (
         ...state,
       };
 
+    // 사업자번호 검색 기능
+    case actionTypesUser.USER_COMPANY_FIND:
+      return {
+        ...state,
+      };
+
+    // 사업자등록증 업로드 기능
+    case actionTypesUser.COM_FILE_UPLOAD:
+      return {
+        ...state,
+      };
+
+    // 정비업등록증 업로드 기능
+    case actionTypesUser.MAN_FILE_UPLOAD:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

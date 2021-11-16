@@ -5,6 +5,7 @@ import Header from "../../src/components/layout/Header";
 import SignUp from "../../src/components/page/SignUp";
 import Main from "../../src/components/page/Main";
 import Find from "../../src/components/page/Find";
+import OwnerUpload from "../../src/components/page/Test";
 
 interface ViewProps {
   cate: any;
@@ -17,7 +18,7 @@ const Componentitem: NextPage<any> = (props) => {
   const sub = cate[1] ? cate[1] : "";
   // console.log("메인 : ", main);
 
-  console.log("cate:",cate)
+  console.log("cate:", cate);
 
   switch (main) {
     case "signup":
@@ -26,15 +27,11 @@ const Componentitem: NextPage<any> = (props) => {
       return <Main />;
     case "find":
       return <Find />;
+    case "test":
+      return <OwnerUpload />;
     default:
       return <SignUp />;
   }
-  // switch(main) {
-  //   case "SignUp" :
-  //     return (<SignUp />)
-  //   default :
-  //     return (<SignUp />)
-  // }
 };
 
 const View: NextPage<ViewProps> = ({ cate }) => {
@@ -71,6 +68,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   //     },
   //   };
   // }
+
+  // jwt를 json으로 만드는 함수
+  function parseJwt(token: string) {
+    var base64Payload = token.split(".")[1];
+    var payload = Buffer.from(base64Payload, "base64");
+    var result = JSON.parse(payload.toString());
+
+    return result;
+  }
+  // console.log(parseJwt(context.req.cookies.mk_token));
+
   // SSR
   const cate = context.query;
   // console.log(cate);

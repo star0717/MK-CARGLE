@@ -67,3 +67,45 @@ export async function companyCheckAction(dataToSubmit: string) {
     payload: req,
   };
 }
+
+// 사업자번호 검색 action
+export async function companyFindAction(dataToSubmit: string) {
+  const req = await axios
+    .get(`/api/auth/find/company/${dataToSubmit}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.USER_COMPANY_FIND,
+    payload: req,
+  };
+}
+
+// 사업자등록증 업로드 action
+export async function comFileUploadAction(dataToSubmit: any) {
+  console.log("파일들 : ", typeof dataToSubmit);
+  const req = await axios
+    .post(`/api/auth/upload/com-reg-doc`, dataToSubmit, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.COM_FILE_UPLOAD,
+    payload: req,
+  };
+}
+
+// 정비업등록증 업로드 action
+export async function manFileUploadAction(dataToSubmit: any) {
+  const req = await axios
+    .post(`/api/auth/upload/man-reg-doc`, dataToSubmit, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.MAN_FILE_UPLOAD,
+    payload: req,
+  };
+}

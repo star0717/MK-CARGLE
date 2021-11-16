@@ -28,6 +28,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
   // props 재정의
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
+  const userAuth = props.userAuth;
 
   // 이메일 종류
   const emailItem = [
@@ -52,7 +53,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
   const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
   const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
   const [authNum, setAuthNum] = useState(""); // 인증번호 input
-  const [companyCheck, setCompanyCheck] = useState(false);
+  const [companyCheck, setCompanyCheck] = useState(false); // 사업자번호 유효성 검사 여부
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
@@ -99,21 +100,19 @@ const OwnerSignUp: NextPage<any> = (props) => {
   // 이메일 인증번호 전송 handler
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const email = `${emailAddress}@${emailDomain}`;
-    if (email.length !== 0) {
-      if (formRegEx.EMAIL.test(email)) {
-        dispatch(emailSendAction(email)).then((res: any) => {
-          if (res.payload) {
-            alert("인증번호가 전송되었습니다.");
-            setEmailSend(true);
-            setTimer(300);
-          } else {
-            setError("emailAddress", {
-              type: "emailExist",
-              message: "이미 등록된 이메일입니다.",
-            });
-          }
-        });
-      }
+    if (formRegEx.EMAIL.test(email)) {
+      dispatch(emailSendAction(email)).then((res: any) => {
+        if (res.payload) {
+          alert("인증번호가 전송되었습니다.");
+          setEmailSend(true);
+          setTimer(300);
+        } else {
+          setError("emailAddress", {
+            type: "emailExist",
+            message: "이미 등록된 이메일입니다.",
+          });
+        }
+      });
     }
   };
 
@@ -130,6 +129,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
     if (timer === 0) {
       if (!Cookies.get("mk_amtn") && emailSend && !authNumCheck) {
         alert("인증번호가 만료되었습니다.");
+        setAuthNum("");
         setEmailSend(false);
       }
     }
@@ -144,8 +144,11 @@ const OwnerSignUp: NextPage<any> = (props) => {
           setAuthNumCheck(true);
           setTimer(0);
           setEmailSend(false);
+          setAuthNum("");
+          Cookies.remove("mk_amtn");
         } else {
           alert("인증번호가 일치하지 않습니다.");
+          setAuthNum("");
         }
       });
     }
@@ -208,6 +211,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
             ...inputUser,
             name: inputCompany.ownerName,
             email: `${emailAddress}@${emailDomain}`,
+            auth: userAuth,
           },
           company: {
             ...inputCompany,
