@@ -79,6 +79,17 @@ export async function companyFindAction(dataToSubmit: string) {
   };
 }
 
+// 사업자번호 검색 action
+export async function companyFindbyNameAction(dataToSubmit: string) {
+  const req = await axios
+    .get(`/api/auth/find/companies/${dataToSubmit}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.USER_COMPANY_FIND,
+    payload: req,
+  };
+}
+
 // 사업자등록증 업로드 action
 export async function comFileUploadAction(dataToSubmit: any) {
   console.log("파일들 : ", typeof dataToSubmit);
