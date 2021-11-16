@@ -12,7 +12,21 @@ export class CompaniesService extends BaseService<Company> {
         super(model);
     }
 
+    /**
+     * 사업자 번호에 해당하는 사업자 정보 반환
+     * @param comRegNum 조회할 사업자 번호
+     * @returns 사업자 정보
+     */
     async findCompanyByComRegNum(comRegNum: string): Promise<Company> {
         return await this.model.findOne({ comRegNum });
+    }
+
+    /**
+     * 사업자 이름에 해당하는 사업자 정보 반환
+     * @param name 조회할 사업자 이름
+     * @returns 사업자 정보 배열
+     */
+    async findCompaniesByName(name: string): Promise<Company[]> {
+        return await this.model.find({ name: { $regex: name, $options: '$i' } });
     }
 }

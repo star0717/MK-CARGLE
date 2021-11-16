@@ -121,6 +121,25 @@ export class AuthController {
     return resCompany;
   }
 
+  @ApiOperation({ summary: '사업자명으로 사업자 조회' })
+  @ApiParam({ name: "id", description: "조회할 사업자명" })
+  @ApiResponse({ description: "사업자정보 배열", type: [Company] })
+  @Get('find/companies/:id')
+  async findCompaniesByName(@Param('id') name: string): Promise<Partial<Company>[]> {
+    const companies = await this.companiesService.findCompaniesByName(name);
+    console.log(companies);
+    var resCompanies: Partial<Company>[] = [];
+    companies.forEach(company => {
+      resCompanies.push({
+        name: company.name,
+        address: company.address,
+        ownerName: company.ownerName,
+        _id: company._id
+      })
+    });
+    return companies;
+  }
+
 
   @ApiOperation({ summary: "사업자번호 유효성 검증" })
   @ApiParam({ name: "id", description: "검증할 사업자번호" })
