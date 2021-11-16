@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -12,7 +11,9 @@ import { User } from '../../models/user.entity';
 
 @Injectable()
 export class UsersService extends BaseService<User> {
-  constructor(@InjectModel(User) readonly model: ReturnModelType<typeof User>) {
+  constructor(
+    @InjectModel(User) readonly model: ReturnModelType<typeof User>,
+  ) {
     super(model);
   }
 

@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { prop } from "@typegoose/typegoose"
-import { Type, Transform, TransformFnParams } from "class-transformer";
-import { isBoolean, IsBoolean, IsBooleanString, IsNotEmpty, isNumber, IsNumberString, IsOptional } from 'class-validator';
+import { Transform, TransformFnParams } from "class-transformer";
+import { isBoolean, IsBoolean, isBooleanString, IsBooleanString, IsNotEmpty, isNumber, isNumberString, IsNumberString, IsOptional } from 'class-validator';
 import { TypegooseModule } from "nestjs-typegoose";
 
 
@@ -62,9 +62,7 @@ export class PaginateOptions {
         required: false
     })
     @IsOptional()
-    // @IsNumberString()
     @Transform(getValidPageNumber)
-    @Type(() => Number)
     page?: number = 1;
 
     @ApiProperty({
@@ -75,7 +73,6 @@ export class PaginateOptions {
         required: false
     })
     @IsOptional()
-    @Type(() => Number)
     @Transform(getValidTakeNumber)
     take: number = defTakeNum;
 
@@ -93,9 +90,6 @@ export class PaginateOptions {
         required: false
     })
     @IsOptional()
-    // @IsBoolean()
-    // @IsBooleanString()
-    // @Type(() => Boolean)
     @Transform(strToBoolean)
     useRegSearch: boolean = false;
 
@@ -114,7 +108,11 @@ export class PaginateOptions {
 
 // 페이지번호 검증
 export function getValidPageNumber(params: TransformFnParams) {
-    console.log("getValidPageNumber");
+    // console.log("getValidPageNumber");
+    // console.log("input: " + params.value);
+
+    params.value = parseInt(params.value);
+
     if (!isNumber(params.value)) {
         params.value = 1;
     }
@@ -126,7 +124,13 @@ export function getValidPageNumber(params: TransformFnParams) {
 
 // 페이지당 출력 문서 수 검증
 export function getValidTakeNumber(params: TransformFnParams) {
-    console.log("getValidTakeNumber");
+    // console.log("getValidTakeNumber");
+    // console.log("input: " + params.value);
+    params.value = parseInt(params.value);
+
+    if (!isNumber(params.value)) {
+        params.value = defTakeNum;
+    }
 
     if (params.value <= 0) {
         params.value = defTakeNum;
@@ -138,13 +142,12 @@ export function getValidTakeNumber(params: TransformFnParams) {
 }
 
 export function strToBoolean(params: TransformFnParams) {
-    console.log("strToBoolean");
-    console.log("=> " + params.value)
-    if (params.value == true) {
-        return true;
+    if (params.value == 'true' || params.value == true) {
+        params.value = true;
     } else {
-        return false;
+        params.value = false;
     }
+    return params.value;
 }
 
 export class PaginateResult<T> {

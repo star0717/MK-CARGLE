@@ -59,11 +59,8 @@ export function BaseControllerFactory<T extends BaseEntity = BaseEntity>(bodyDto
 
     @Get()
     @ApiOperation({ summary: `조건에 해당하는 ${bodyDto.name} 배열 데이터를 페이징 정보와 함께 반환` })
-    // @ApiQuery({ name: 'page', type: Number })
-    // @ApiQuery({ description: "검색 조건", type: PaginateOptions })
     @ApiResponse({ description: `검색된 ${bodyDto.name} 배열 데이터와 페이징 정보`, type: PaginateResult })
     async findByOptions(@Query() findQuery: PaginateOptions): Promise<PaginateResult<T>> {
-      console.log(findQuery);
       return this.baseService.findByOptions(findQuery);
     }
 
