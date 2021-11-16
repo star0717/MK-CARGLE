@@ -81,7 +81,7 @@ export async function companyFindAction(dataToSubmit: string) {
 
 // 사업자등록증 업로드 action
 export async function comFileUploadAction(dataToSubmit: any) {
-  console.log("파일들 : ", dataToSubmit);
+  console.log("파일들 : ", typeof dataToSubmit);
   const req = await axios
     .post(`/api/auth/upload/com-reg-doc`, dataToSubmit, {
       headers: {
@@ -90,7 +90,7 @@ export async function comFileUploadAction(dataToSubmit: any) {
     })
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
-    type: actionTypesUser.USER_COMPANY_FIND,
+    type: actionTypesUser.COM_FILE_UPLOAD,
     payload: req,
   };
 }
@@ -105,7 +105,7 @@ export async function manFileUploadAction(dataToSubmit: any) {
     })
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
-    type: actionTypesUser.USER_COMPANY_FIND,
+    type: actionTypesUser.MAN_FILE_UPLOAD,
     payload: req,
   };
 }

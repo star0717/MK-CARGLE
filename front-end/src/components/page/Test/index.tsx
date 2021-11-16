@@ -18,8 +18,8 @@ const OwnerUpload: NextPage<any> = (props) => {
 
   // 업로드할 파일 state
   const [file, setFile] = useState({
-    comFile: null,
-    manFile: null,
+    comFile: "",
+    manFile: "",
   });
   // 업로드할 파일명 state
   const [fileName, setFileName] = useState({
@@ -29,15 +29,17 @@ const OwnerUpload: NextPage<any> = (props) => {
 
   // 파일 선택 시 파일명 state 변경
   const onFileSelectHandler = (e: any) => {
-    console.log(e.target.files[0].name);
-    setFile({ ...file, [e.target.file]: e.target.files[0] });
+    setFile({ ...file, [e.target.name]: e.target.files[0] });
     setFileName({ ...fileName, [e.target.name]: e.target.files[0].name });
   };
+
+  console.log("파일 : ", file.comFile);
+  console.log("이름 : ", fileName.comFile);
 
   const onFileUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fileArray = new FormData();
-    fileArray.append("comFile", fileName.comFile);
+    fileArray.append("comFile", file.comFile);
     // fileArray.append("manFile", fileName.manFile);
     dispatch(comFileUploadAction(fileArray)).then((res: any) => {
       console.log(res);
