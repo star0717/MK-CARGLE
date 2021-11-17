@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/dist/client/router";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UserState } from "../../../../store/interfaces";
@@ -9,23 +10,24 @@ import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { initialState } from "../../../../store/reducer/user.reducer";
 import { signInUserAction } from "../../../../store/action/user.action";
 import styled from "styled-components";
+import { UserInfo } from "../../../models/auth.entity";
+import { formRegEx } from "../../../validation/regEx";
 
 //SCSS
 const ComponentMainBody = styled.div`
-  width: 100%;
-  height: 600px;
-  background-image: url("../../images/background2.png");
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+    width: 100%;
+    height: 600px;
+    background-image: url("../../images/background2.png");
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-const CSI = styled.div`
-  width: 900px;
-  height: 400px;
-  display: flex;
-  background-color: #E2E2E2;
-
+  .CSI {
+    width: 900px;
+    height: 400px;
+    display: flex;
+    background-color: #E2E2E2;
+  }
   .CSIdiv1 {
     width: 50%;
     padding: 20px;
@@ -74,14 +76,21 @@ const CSI = styled.div`
     .button {}
 
   }
-
-  
-
-`
+`;
 
 const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  // react-hook-form 사용을 위한 선언
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    setValue,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all" });
 
   // redux store에서 signIn 정보만 가져옴
   const { signInInfo } = useSelector(
@@ -105,14 +114,17 @@ const SignIn: NextPage<any> = (props) => {
   };
 
   // 로그인 시 handler
-  const onSignInHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (inputSignIn.id === "") {
-      // 아이디 미입력 시
-      alert("아이디를 입력해주세요.");
+  const onSignInHandler: SubmitHandler<UserInfo> = (data) => {
+    if (inputSignIn.id === "" || !formRegEx.EMAIL.test(inputSignIn.id)) {
+      setError("id", {
+        type: "idError",
+        message: "이메일을 입력해주세요.",
+      });
     } else if (inputSignIn.pwd === "") {
-      // 비밀번호 미입력 시
-      alert("비밀번호를 입력해주세요.");
+      setError("id", {
+        type: "pwdError",
+        message: "비밀번호를 입력해주세요.",
+      });
     } else {
       // 아이디, 비밀번호 정상 입력 시
       dispatch(signInUserAction(inputSignIn)).then(
@@ -141,12 +153,10 @@ const SignIn: NextPage<any> = (props) => {
   return (
     <ComponentMainBody>
       {/* 중앙 화면 */}
-      <CSI>
+      <div className="CSI">
         {/* 중앙 화면 좌측 */}
         <div className="CSIdiv1">
-          <h3 className="h3">
-            엠케이솔루션에 오신 것을 환영합니다.
-          </h3>
+          <h3 className="h3">엠케이솔루션에 오신 것을 환영합니다.</h3>
           <p className="p">등록된 회원정보가 기억나지 않으십니까?</p>
           <div className="div">
             <Link href="/view/find">
@@ -170,16 +180,19 @@ const SignIn: NextPage<any> = (props) => {
           <h3 className="h3">로그인</h3>
           <div className="div1">
             {/* 로그인 입력 form */}
-            <form onSubmit={onSignInHandler}>
+            <form onSubmit={handleSubmit(onSignInHandler)}>
               {/* 이메일 input */}
               <div className="div1">
                 <p className="p">이메일</p>
                 <input
                   className="input"
-                  type="email"
-                  name="id"
+                  type="text"
                   value={inputSignIn.id}
-                  onChange={onInputHandler}
+                  {...register("id", {
+                    onChange: (e) => {
+                      onInputHandler(e);
+                    },
+                  })}
                 />
               </div>
               {/* 비밀번호 input */}
@@ -188,9 +201,12 @@ const SignIn: NextPage<any> = (props) => {
                 <input
                   className="input"
                   type="password"
-                  name="pwd"
-                  value={inputSignIn.pwd || ""}
-                  onChange={onInputHandler}
+                  value={inputSignIn.pwd}
+                  {...register("pwd", {
+                    onChange: (e) => {
+                      onInputHandler(e);
+                    },
+                  })}
                 />
               </div>
               {/* 체크박스 div */}
@@ -208,12 +224,26 @@ const SignIn: NextPage<any> = (props) => {
                   ></input>
                 </div>
               </div>
+              {(errors.id?.type === "idError" ||
+                errors.id?.type === "pwdError") && (
+                <p
+                  style={{
+                    margin: "0",
+                    fontSize: "8px",
+                    color: "red",
+                  }}
+                >
+                  {errors.id.message}
+                </p>
+              )}
               {/* 로그인 버튼 */}
-              <button className="button" type="submit">로그인</button>
+              <button className="button" type="submit">
+                로그인
+              </button>
             </form>
           </div>
         </div>
-      </CSI>
+      </div>
     </ComponentMainBody>
   );
 };

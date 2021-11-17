@@ -42,13 +42,13 @@ const OwnerSignUp: NextPage<any> = (props) => {
   //   (state: RootStateInterface): UserState => state.userAll
   // );
 
-  // 회원가입용 user input 초기값 세팅
+  // 회원가입용(사업주) user input 초기값 세팅
   const userInit = {
     email: "",
     password: "",
     hpNumber: "",
   };
-  // 회원가입용 company input 초기값 세팅
+  // 회원가입용(사업주) company input 초기값 세팅
   const comInit = {
     comRegNum: "",
     mbRegNum: "",
@@ -248,41 +248,43 @@ const OwnerSignUp: NextPage<any> = (props) => {
         message: "사업자 등록번호 인증이 필요합니다.",
       });
     }
-    dispatch(
-      signUpUserAction({
-        user: {
-          ...inputUser,
-          name: inputCompany.ownerName,
-          email: `${emailAddress}@${emailDomain}`,
-          auth: userAuth,
+    if (authNumCheck && companyCheck) {
+      dispatch(
+        signUpUserAction({
+          user: {
+            ...inputUser,
+            name: inputCompany.ownerName,
+            email: `${emailAddress}@${emailDomain}`,
+            auth: userAuth,
+          },
+          company: {
+            ...inputCompany,
+            address:
+              addressDetail !== ""
+                ? `${addressMain}, ${addressDetail}`
+                : addressMain,
+          },
+        })
+      ).then(
+        (res: any) => {
+          setStepNumber(stepNumber + 1);
         },
-        company: {
-          ...inputCompany,
-          address:
-            addressDetail !== ""
-              ? `${addressMain}, ${addressDetail}`
-              : addressMain,
-        },
-      })
-    ).then(
-      (res: any) => {
-        setStepNumber(stepNumber + 1);
-      },
-      (err) => {
-        if (err.response.status === 400) {
-          alert("회원가입에 실패했습니다.");
-          setAuthNumCheck(false);
-          setCompanyCheck(false);
-          setInputUser(userInit);
-          setInputCompany(comInit);
-          setEmailAdderess("");
-          setEmailDomain("");
-          setPasswordCheck("");
-          setAddressMain("");
-          setAddressDetail("");
+        (err) => {
+          if (err.response.status === 400) {
+            alert("회원가입에 실패했습니다.");
+            setAuthNumCheck(false);
+            setCompanyCheck(false);
+            setInputUser(userInit);
+            setInputCompany(comInit);
+            setEmailAdderess("");
+            setEmailDomain("");
+            setPasswordCheck("");
+            setAddressMain("");
+            setAddressDetail("");
+          }
         }
-      }
-    );
+      );
+    }
   };
 
   return (

@@ -13,6 +13,7 @@ interface modalOption {
   setCompanyNum: React.Dispatch<React.SetStateAction<string>>;
   setInputUser: React.Dispatch<React.SetStateAction<any>>;
   inputUser: any;
+  setValue: any;
   style?: React.CSSProperties;
 }
 
@@ -24,6 +25,7 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
   const setCompanyNum = props.setCompanyNum;
   const setInputUser = props.setInputUser;
   const inputUser = props.inputUser;
+  const setValue = props.setValue;
 
   const [companyList, setCompanyList] = useState<any>([]); // 검색해서 받아온 업체 리스트 state
   const [searchText, setSearchText] = useState<string>(""); // 검색 input state(업체명 or 사업자번호)
@@ -82,12 +84,15 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
                 <tbody>
                   {companyList.map((item: any, index: number) => (
                     <tr
-                      style={{ textAlign: "center" }}
+                      style={{ textAlign: "center", cursor: "pointer" }}
                       id={item.comRegNum}
                       key={index}
                       onClick={(e) => {
                         setCompanyNum(item.comRegNum);
-                        setInputUser({ ...inputUser, _CID: item._id });
+                        setInputUser({ ...inputUser, _cID: item._id });
+                        setValue("companyNum", item.comRegNum, {
+                          shouldValidate: true,
+                        });
                         setModalOpen(false);
                       }}
                     >
