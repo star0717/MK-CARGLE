@@ -50,6 +50,7 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
       (err) => {
         // 입력값이 없을 때
         alert("업체명 또는 사업자번호를 입력해주세요.");
+        setCompanyList([]);
       }
     );
   };
@@ -68,39 +69,39 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
             />
             <button type="submit">검색</button>
           </div>
-          {companyList.length > 0 ? (
-            companyList.map((item: any, index: number) => (
-              <div
-                style={{ textAlign: "center" }}
-                id={item.comRegNum}
-                key={index}
-                onClick={(e) => {
-                  console.log("안녕 : ", item.comRegNum);
-                  setCompanyNum(item.comRegNum);
-                  setInputUser({ ...inputUser, comID: item._id });
-                  setModalOpen(false);
-                }}
-              >
-                <table>
+          <div style={{ textAlign: "center" }}>
+            {companyList.length > 0 ? (
+              <table style={{ width: "90%", margin: "0 auto" }}>
+                <thead>
                   <tr>
-                    <td>업체명</td>
-                    <td>대표자명</td>
-                    <td>사업자등록번호</td>
+                    <th>업체명</th>
+                    <th>대표자명</th>
+                    <th>사업자등록번호</th>
                   </tr>
-                  <tr>
-                    <td>{item.name}</td>
-                    <td>{item.ownerName}</td>
-                    <td>{item.comRegNum}</td>
-                  </tr>
-                </table>
-              </div>
-            ))
-          ) : (
-            <div style={{ textAlign: "center" }}>
-              {" "}
-              데이터가 존재하지 않습니다.{" "}
-            </div>
-          )}
+                </thead>
+                <tbody>
+                  {companyList.map((item: any, index: number) => (
+                    <tr
+                      style={{ textAlign: "center" }}
+                      id={item.comRegNum}
+                      key={index}
+                      onClick={(e) => {
+                        setCompanyNum(item.comRegNum);
+                        setInputUser({ ...inputUser, comID: item._id });
+                        setModalOpen(false);
+                      }}
+                    >
+                      <td>{item.name}</td>
+                      <td>{item.ownerName}</td>
+                      <td>{item.comRegNum}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              "데이터가 존재하지 않습니다."
+            )}
+          </div>
         </div>
       </form>
     </div>

@@ -44,3 +44,7 @@ export declare class HelpChangePWD {
     oldPWD: string;
     newPWD: string;
 }
+export declare class WithdrawalInfo {
+    _id: string;
+    PWD: string;
+}

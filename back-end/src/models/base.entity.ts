@@ -41,7 +41,15 @@ export class BaseEntity extends TypegooseModule {
     @prop()
     public updatedAt: Date;
 
-    // 버전값을 조회되지 않도록 가려버림
+    @ApiProperty({ description: "데이서 소유 업체 (자동 주입)", required: false })
+    @prop()
+    public _cID: string;
+
+    @ApiProperty({ description: "데이터 작성자의 오브젝트 ID (자동 주입)", required: false })
+    @prop()
+    public _uID: string;
+
+    /**  버전값 (조회되진 않음) */
     @prop({ type: Number, select: false })
     __v: number;
 }

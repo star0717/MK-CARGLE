@@ -24,6 +24,7 @@ export declare class BaseEntity {
     _id: string;
     createdAt: Date;
     updatedAt: Date;
+    /**  버전값을 조회되지 않도록 가려버림 */
     __v: number;
 }
 export declare class PaginateOptions {
@@ -34,7 +35,6 @@ export declare class PaginateOptions {
     useRegSearch: boolean;
     getQuery(): string;
 }
-
 export declare class PaginateResult<T> {
     docs: T[];
     totalDocs: number;
