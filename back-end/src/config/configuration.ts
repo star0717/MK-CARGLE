@@ -47,3 +47,8 @@ export const getCrnPath = (): string => {
 export const getMrnPath = (): string => {
     return process.env.FILE_STORAGE + process.env.MRN_PATH;
 }
+
+export const isUseAuthDB = (): boolean => {
+    if (process.env.DB_USE_AUTH == 'true') return true;
+    else return false;
+}

@@ -41,9 +41,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
      * @returns 인증된 사용자의 정보
      */
     async validate(payload: any) {
-        console.log("*** validate in JwtStrategy (3/4)")
-
-        console.log("payload=> " + JSON.stringify(payload) + "\n");
+        // console.log("*** validate in JwtStrategy (3/4)")
+        // console.log("payload=> " + JSON.stringify(payload) + "\n");
         return payload;
     }
 }

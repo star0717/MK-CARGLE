@@ -75,7 +75,7 @@ export class User extends BaseEntity {
         required: [false, "사업자 ID는 필수 항목입니다."],
         trim: true,
     })
-    public comID: string;
+    public _cID: string;
 
     @ApiProperty({ description: "핸드폰번호" })
     @IsOptional()

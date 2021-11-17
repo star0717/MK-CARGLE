@@ -3,10 +3,11 @@ import { ConfigModule } from '@nestjs/config';
 import { ModulesModule } from './modules/modules.module';
 import { AuthModule } from './lib/auth/auth.module';
 import { CommonModule } from './lib/common/common.module';
-import configuration from './config/configuration';
+import config, { isUseAuthDB } from './config/configuration';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { AdminModule } from './lib/admin/admin.module';
 
-const dbInfo = (process.env.DB_USE_AUTH)
+const dbInfo = (isUseAuthDB())
   ? 'mongodb://' + process.env.DB_ID + ":" + process.env.DB_PWD + "@"
   + process.env.DB_HOST + ":" + process.env.DB_PORT + '/' + process.env.DB_NAME
   : 'mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME;
@@ -17,17 +18,13 @@ console.log(dbInfo);
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      load: [configuration],
+      load: [config],
     }),
-    // TypegooseModule.forRoot('mongodb://mk:mk1234@3.36.252.198:9003/admin'),
-    // TypegooseModule.forRoot(
-    //   'mongodb://' + process.env.DB_ID + ":" + process.env.DB_PWD + "@"
-    //   + process.env.DB_HOST + '/' + process.env.DB_NAME
-    // ),
     TypegooseModule.forRoot(dbInfo),
     ModulesModule,
     AuthModule,
     CommonModule,
+    AdminModule,
   ],
 })
 export class AppModule { }

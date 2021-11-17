@@ -34,13 +34,13 @@ export class AuthService {
           throw new BadRequestException();
         }
         // 업주 정보에 업체의 ID 주입
-        signUpInfo.user.comID = company._id;
+        signUpInfo.user._cID = company._id;
       }
       // 직원 가입인 경우
       else if (signUpInfo.user.auth == UserAuthority.WORKER) {
         console.log(signUpInfo.user);
         // 해당 사업자 검색
-        company = await this.companiesService.findById(signUpInfo.user.comID);
+        company = await this.companiesService.findById(signUpInfo.user._cID);
         if (!company) {
           throw new BadRequestException();
         }
@@ -85,7 +85,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const company = await this.companiesService.findById(user.comID);
+    const company = await this.companiesService.findById(user._cID);
     if (!company) {
       throw new UnauthorizedException();
     }

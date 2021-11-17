@@ -1,7 +1,9 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { Model } from 'mongoose';
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { Model, FilterQuery, ObjectId } from 'mongoose';
 import { AuthTokenInfo } from "src/models/auth.entity";
 import { BaseEntity, DeleteResult, PaginateOptions, PaginateResult } from "src/models/base.entity";
+import { CompanyApproval } from "src/models/company.entity";
+import { UserAuthority } from "src/models/user.entity";
 
 /* 확장 서비스 클래스용 패키지 - 아래의 내용을 확장 클래스에 주입
 import { InjectModel } from 'nestjs-typegoose';
@@ -36,31 +38,18 @@ export class SafeService<T extends BaseEntity> {
 
     async create(aToken: AuthTokenInfo, doc: T): Promise<T> {
 
-        // 더미 데이터 생성용
-        // for (var i = 0; i < 1000; i++) {
-        //     doc["name"] = "cb park" + i;
-        //     doc["createdAt"] = new Date(+Date.now());
-        //     var newDoc = await this.model.create(doc);
-        // }
-        // return newDoc;
+        // ID값 주입
+        doc._cID = aToken.cID;
+        doc._uID = aToken.uID;
 
-
-        // doc.createdAt = new Date(Date.now());
-        console.log("service => db");
-        console.log(doc);
-
+        // 생성일 주입
         doc.createdAt = new Date(Date.now());
-        const result = await this.model.create(doc);
-        console.log("service <= db");
-        console.log(result);
-        return result;
+
+        return await this.model.create(doc);
     }
 
-    async findByOptions(pOptions: PaginateOptions): Promise<PaginateResult<T>> {
-        console.log("in service");
-        console.log(pOptions);
-
-        let searchOption = {};
+    async findByOptions(aToken: AuthTokenInfo, pOptions: PaginateOptions): Promise<PaginateResult<T>> {
+        let searchOption: FilterQuery<BaseEntity> = {};
         if (pOptions.searchField && pOptions.searchKeyword) {
 
             if (!this.isContainedKey(pOptions.searchField)) {
@@ -72,36 +61,57 @@ export class SafeService<T extends BaseEntity> {
             } else {
                 searchOption[pOptions.searchField] = pOptions.searchKeyword;
             }
+
+            // 검색 범위 제한
+            if (aToken.uAuth != UserAuthority.ADMIN) {
+                searchOption["_cID"] = aToken.cID;
+            }
         }
+        console.log("*** findByOptions");
         console.log(searchOption);
         const currentPage = pOptions.page;
         const skipOption = (currentPage - 1) * (pOptions.take);
         const limitOption = (pOptions.take);
 
-        let pr: PaginateResult<T> = new PaginateResult<T>();
-        pr.totalDocs = await this.model.countDocuments(searchOption);
-        pr.currentPage = pOptions.page;
-        pr.lastPage = Math.ceil(pr.totalDocs / limitOption);
-        pr.docs = await this.model.find(searchOption).skip(skipOption).limit(limitOption);
+        let result: PaginateResult<T> = new PaginateResult<T>();
+        result.totalDocs = await this.model.countDocuments(searchOption as FilterQuery<T>);
+        result.currentPage = pOptions.page;
+        result.lastPage = Math.ceil(result.totalDocs / limitOption);
+        result.docs = await this.model.find(searchOption as FilterQuery<T>).skip(skipOption).limit(limitOption);
 
-        return pr;
+        return result;
     }
 
     async findById(aToken: AuthTokenInfo, id: string): Promise<T> {
-        return await this.model.findById(id);
+
+        let sOption: FilterQuery<BaseEntity> = { _id: id };
+        if (aToken.uAuth != UserAuthority.ADMIN) {
+            sOption._cID = aToken.cID;
+        }
+
+        return await this.model.findOne(sOption as FilterQuery<T>);
     }
 
     async update(aToken: AuthTokenInfo, id: string, doc: Partial<T>): Promise<T> {
-        // 변경되면 안되는 필드 데이터 삭제
-        delete doc._id;
-        delete doc.createdAt;
+
         // 갱신 시점 주입
         doc.updatedAt = new Date(Date.now());
 
-        return await this.model.findByIdAndUpdate(id, doc as any, { new: true });
+        let sOption: FilterQuery<BaseEntity> = { _id: id };
+        if (aToken.uAuth != UserAuthority.ADMIN) {
+            sOption._cID = aToken.cID;
+        }
+
+        return await this.model.findOneAndUpdate(sOption as FilterQuery<T>, doc as any, { new: true });
     }
 
     async remove(aToken: AuthTokenInfo, id: string): Promise<DeleteResult> {
-        return await this.model.findById(id).deleteOne();
+
+        let sOption: FilterQuery<BaseEntity> = { _id: id };
+        if (aToken.uAuth != UserAuthority.ADMIN) {
+            sOption._cID = aToken.cID;
+        }
+
+        return await this.model.findOne(sOption as FilterQuery<T>).deleteOne();
     }
 }
