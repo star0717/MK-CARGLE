@@ -30,6 +30,7 @@ async function bootstrap() {
     .setTitle('API server')
     .setDescription("The API server's API description")
     .setVersion('1.0')
+    .addTag("인증 API")
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);

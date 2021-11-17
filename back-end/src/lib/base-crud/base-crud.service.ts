@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, Scope, Type } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { Model } from 'mongoose';
 import { BaseEntity, DeleteResult, PaginateOptions, PaginateResult } from "src/models/base.entity";
 
@@ -7,7 +7,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 */
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 export class BaseService<T extends BaseEntity> {
 
   /* 자식 서비스 클래스용 생성자 - 아래의 내용을 자식 클래스에 삽입
