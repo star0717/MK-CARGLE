@@ -5,7 +5,6 @@ import Header from "../../src/components/layout/Header";
 import SignUp from "../../src/components/page/SignUp";
 import Main from "../../src/components/page/Main";
 import Find from "../../src/components/page/Find";
-import OwnerUpload from "../../src/components/page/Test";
 
 interface ViewProps {
   cate: any;
@@ -27,8 +26,6 @@ const Componentitem: NextPage<any> = (props) => {
       return <Main />;
     case "find":
       return <Find />;
-    case "test":
-      return <OwnerUpload />;
     default:
       return <SignUp />;
   }

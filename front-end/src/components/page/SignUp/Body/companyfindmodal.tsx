@@ -87,7 +87,7 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
                       key={index}
                       onClick={(e) => {
                         setCompanyNum(item.comRegNum);
-                        setInputUser({ ...inputUser, comID: item._id });
+                        setInputUser({ ...inputUser, _CID: item._id });
                         setModalOpen(false);
                       }}
                     >

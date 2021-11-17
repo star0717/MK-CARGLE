@@ -6,7 +6,7 @@ import {
   comFileUploadAction,
   manFileUploadAction,
   signOutUserAction,
-} from "../../../../store/action/user.action";
+} from "../../../../../store/action/user.action";
 
 const fileInit = {
   comFile: "",
