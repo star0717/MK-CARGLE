@@ -41,13 +41,13 @@ export class AuthController {
 
     // 데이터 유효성 검증
     if (signUpInfo.user.auth == UserAuthority.OWNER) {
-      if (!signUpInfo.company || signUpInfo.user.comID) {
+      if (!signUpInfo.company || signUpInfo.user._cID) {
         // 업주가 업체정보를 포함하지 않으면 에러 발생
         throw new BadRequestException();
       }
     } else if (signUpInfo.user.auth == UserAuthority.WORKER) {
       // 직원이 업체정보를 포함하면 에러 발생
-      if (signUpInfo.company || !signUpInfo.user.comID) {
+      if (signUpInfo.company || !signUpInfo.user._cID) {
         throw new BadRequestException();
       }
     } else {
@@ -78,6 +78,7 @@ export class AuthController {
     this.clearToken(res);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: `회원탈퇴`, description: '작업자: 작업자 본인만 탈퇴. 업주: 본인을 포함한 모든 직원이 탈퇴하고 회사 정보도 삭제' })
   @ApiBody({ description: "로그인에 사용될 정보", type: WithdrawalInfo })
   @Post('withdrawal')
@@ -86,7 +87,11 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Body() info: WithdrawalInfo,
   ) {
-    const authToken = this.extractToken(req);
+    const authToken: AuthTokenInfo = this.extractToken(req);
+    console.log(authToken);
+    console.log(info);
+
+
 
     // 토큰의 사용자 ID와 입력받은 ID가 불일치 할 경우 
     if (authToken.uID != info._id) throw new UnauthorizedException();
@@ -95,7 +100,7 @@ export class AuthController {
     if (!user) throw new UnauthorizedException();
 
     // 토큰의 업체 ID와 사용자의 업체 ID가 불일치 할 경우
-    if (authToken.cID != user.comID) throw new UnauthorizedException();
+    if (authToken.cID != user._cID) throw new UnauthorizedException();
 
     // 사용자 조회(패스워드까지 포함)
     const userInfo: UserInfo = {
@@ -106,10 +111,10 @@ export class AuthController {
     if (!user) throw new UnauthorizedException();
 
     if (user.auth == UserAuthority.WORKER) {
-      await this.usersService.removeWorker(user._id, user.comID);
+      await this.usersService.removeWorker(user._id, user._cID);
     } else if (user.auth == UserAuthority.OWNER) {
-      await this.usersService.removeUsersByComID(user.comID);
-      await this.companiesService.remove(user.comID);
+      await this.usersService.removeUsersByComID(user._cID);
+      await this.companiesService.remove(user._cID);
     }
     this.clearToken(res);
   }

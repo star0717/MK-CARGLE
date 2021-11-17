@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { compareSync, hashSync } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';

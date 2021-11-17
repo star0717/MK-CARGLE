@@ -15,7 +15,7 @@ export declare class User extends BaseEntity {
     password: string;
     auth: UserAuthority;
     name: string;
-    comID: string;
+    _cID: string;
     hpNumber: string;
     address: string;
     joinDate: Date;
