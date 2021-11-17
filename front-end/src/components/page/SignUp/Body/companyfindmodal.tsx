@@ -11,6 +11,8 @@ interface modalOption {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setModalOption: React.Dispatch<React.SetStateAction<string>>;
   setCompanyNum: React.Dispatch<React.SetStateAction<string>>;
+  setInputUser: React.Dispatch<React.SetStateAction<any>>;
+  inputUser: any;
   style?: React.CSSProperties;
 }
 
@@ -20,6 +22,8 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
   // props 재정의
   const setModalOpen = props.setModalOpen;
   const setCompanyNum = props.setCompanyNum;
+  const setInputUser = props.setInputUser;
+  const inputUser = props.inputUser;
 
   const [companyList, setCompanyList] = useState<any>([]); // 검색해서 받아온 업체 리스트 state
   const [searchText, setSearchText] = useState<string>(""); // 검색 input state(업체명 or 사업자번호)
@@ -67,19 +71,35 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
           {companyList.length > 0 ? (
             companyList.map((item: any, index: number) => (
               <div
+                style={{ textAlign: "center" }}
                 id={item.comRegNum}
                 key={index}
                 onClick={(e) => {
                   console.log("안녕 : ", item.comRegNum);
                   setCompanyNum(item.comRegNum);
+                  setInputUser({ ...inputUser, comID: item._id });
                   setModalOpen(false);
                 }}
               >
-                {item.name}
+                <table>
+                  <tr>
+                    <td>업체명</td>
+                    <td>대표자명</td>
+                    <td>사업자등록번호</td>
+                  </tr>
+                  <tr>
+                    <td>{item.name}</td>
+                    <td>{item.ownerName}</td>
+                    <td>{item.comRegNum}</td>
+                  </tr>
+                </table>
               </div>
             ))
           ) : (
-            <div> 데이터가 존재하지 않습니다. </div>
+            <div style={{ textAlign: "center" }}>
+              {" "}
+              데이터가 존재하지 않습니다.{" "}
+            </div>
           )}
         </div>
       </form>

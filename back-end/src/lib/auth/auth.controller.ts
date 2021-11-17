@@ -137,7 +137,7 @@ export class AuthController {
       name: company.name,
       address: company.address,
       ownerName: company.ownerName,
-      _id: company._id
+      comRegNum: company.comRegNum,
     }
     return resCompany;
   }
@@ -155,10 +155,10 @@ export class AuthController {
         name: company.name,
         address: company.address,
         ownerName: company.ownerName,
-        _id: company._id
+        comRegNum: company.comRegNum,
       })
     });
-    return companies;
+    return resCompanies;
   }
 
 

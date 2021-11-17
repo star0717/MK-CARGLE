@@ -61,6 +61,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
     setModalOpen,
     setModalOption,
     setCompanyNum,
+    setInputUser,
+    inputUser,
     style: { height: "500px" },
   };
 
