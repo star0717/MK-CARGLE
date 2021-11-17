@@ -6,6 +6,8 @@ export enum actionTypesUser {
   USER_AUTHNUM_CHECK = "USER_AUTHNUM_CHECK",
   USER_COMPANY_CHECK = "USER_COMPANY_CHECK",
   USER_COMPANY_FIND = "USER_COMPANY_FIND",
+  USER_FIND_EMAIL = "USER_FIND_EMAIL",
+  USER_FIND_PW = "USER_FIND_PW",
   COM_FILE_UPLOAD = "COM_FILE_UPLOAD",
   MAN_FILE_UPLOAD = "MAN_FILE_UPLOAD",
 }
@@ -18,6 +20,8 @@ export type ActionsUser =
   | UserAuthNumCheck
   | UserCompanyCheck
   | UserCompanyFind
+  | UserFindEamil
+  | UserFindPw
   | ComFileUpload
   | ManFileUpload;
 
@@ -60,6 +64,18 @@ export interface UserCompanyCheck {
 // 사업자번호 검색
 export interface UserCompanyFind {
   type: actionTypesUser.USER_COMPANY_FIND;
+  payload: any;
+}
+
+// 이메일 찾기
+export interface UserFindEamil {
+  type: actionTypesUser.USER_FIND_EMAIL;
+  payload: any;
+}
+
+// 비밀번호 찾기
+export interface UserFindPw {
+  type: actionTypesUser.USER_FIND_PW;
   payload: any;
 }
 

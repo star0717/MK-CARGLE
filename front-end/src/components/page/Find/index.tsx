@@ -4,15 +4,37 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import StepOne from "./stepone"
+import StepTwo from "./steptwo"
+import StepThree from "./stepthree"
+import StepFour from "./stepfour"
+
 // verticalAlign: "middle",
 // alignItems: "center",
 // textAlign: "center"
 
-const Find: NextPage = () => {
-  const router = useRouter();
+export interface stepOption {
+    setHeaderName: React.Dispatch<React.SetStateAction<string>>;
+    setStepNumber: React.Dispatch<React.SetStateAction<number>>;
+    setFindEmail: React.Dispatch<React.SetStateAction<string>>;
+    headerName: string;
+}
 
-  const[headerName, setHeaderName] = useState('email');
-  const[stepNumber, setStepNumber] = useState(1);
+const Find: NextPage = () => {
+    const router = useRouter();
+
+    const[headerName, setHeaderName] = useState('email');
+    const [stepNumber, setStepNumber] = useState(1);
+    //step1 -> step2
+    const [findEmail,setFindEmail] = useState("") // 찾은 이메일 주소
+
+  
+    const stepProps = {
+        setHeaderName,
+        setStepNumber,
+        setFindEmail,
+        headerName,
+    }
 
 
   return (
@@ -61,132 +83,19 @@ const Find: NextPage = () => {
             >
 
             {(stepNumber === 1) ? // step 1, (사업자번호, 휴대전화번호 입력)
-                <div>
-                    <div>
-                        사업자등록번호
-                    </div>
-                    <input />
-                    <div>
-                        휴대전화번호
-                    </div>
-                    <input />
-                    <div>
-                        <button
-                            onClick={(e)=>{setStepNumber(2);}}>
-                            다음
-                        </button>
-                    </div>
-                    <div>
-                        <button
-                            onClick={(e)=>{setHeaderName("PW"); setStepNumber(2);}}>
-                            비밀번호찾기
-                        </button>
-                    </div>
-                </div>
+                <StepOne {...stepProps} />    
+                
             :
             (stepNumber === 2) ?
-                (headerName === "email") ? // email step2, 아이디 알려주고 로그인 패스워드
-                <div>
-                    <div>
-                        회원님의 이메일은 다음과 같습니다.
-                    </div>
-                    <div>
-                        <button
-                            onClick={()=>{router.push('/')}}>
-                            로그인
-                        </button>
-                    </div>
-                    <div>
-                        <button
-                            onClick={(e)=>{setHeaderName("PW"); setStepNumber(2);}}>
-                            비밀번호찾기
-                        </button>
-                    </div>
-                    
-                </div>
-
-                : // PW Step 1, 이메일 쓰고 다음버튼 클릭
-                <div>
-                    <div>
-                        이메일 입력
-                    </div>
-                    <input />
-                    <div>
-                        <button
-                            onClick={(e)=>{setHeaderName("PW"); setStepNumber(3);}}>
-                            다음
-                        </button>
-                    </div>
-                    
-                </div>
-            
+                <StepTwo {...stepProps} /> 
             :
             (stepNumber === 3) ?
-                <div>
-                    <div>
-                        이메일 입력
-                    </div>
-                    <input />
-                    <div>
-                        이메일로 전송된 6자리 코드를 입력해주세요.
-                    </div>
-                    <input />
-                    <div style={{display:"flex", justifyContent: "center",}}>
-                        <div>
-                        코드를 받지 못하셨나요? 
-                        </div>
-                        <div>
-                            다시 전송하기
-                        </div>
-                    </div>
-                    <div>
-                        <button
-                            onClick={(e)=>{setHeaderName("PW"); setStepNumber(4);}}>
-                            다음
-                        </button>
-                    </div>
-                </div>
+                <StepThree {...stepProps} /> 
             
             :
             (stepNumber === 4) ?
-                <div>
-                    <div>
-                        새 비밀번호
-                    </div>
-                    <input />
-                    <div>
-                        8~16자 영문, 숫자, 특수문자를 사용하세요 
-                    </div>
-                    <div>
-                        새 비밀번호 확인
-                    </div>
-                    <input />
-                    <div>
-                        비밀번호가 일치합니다.
-                    </div>
-                    <div>
-                        <button
-                            onClick={(e)=>{setHeaderName("PW"); setStepNumber(5);}}>
-                            완료
-                        </button>
-                    </div>
-                </div>
+                <StepFour {...stepProps} /> 
 
-            :
-            (stepNumber === 5) ?
-                <div>
-                    <div>
-                        비밀번호 재설정이 완료되었습니다. 로그인해주세요
-                    </div>
-                    <div>
-                        <button
-                            onClick={()=>{router.push('/')}}>
-                            로그인
-                        </button>
-                    </div>
-                </div>
-                
-                 
             : ""}
                 
             </div>
