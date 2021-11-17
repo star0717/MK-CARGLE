@@ -13,7 +13,6 @@ import { UserState } from "../../../../../store/interfaces";
 import { formRegEx } from "../../../../validation/regEx";
 import {
   authNumCheckAction,
-  companyFindAction,
   emailSendAction,
   signUpUserAction,
 } from "../../../../../store/action/user.action";
@@ -50,7 +49,6 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
   const [authNum, setAuthNum] = useState(""); // 인증번호 input
   const [companyNum, setCompanyNum] = useState(""); // 사업자번호 input
-  const [companyCheck, setCompanyCheck] = useState(false); // 사업자번호 검색 여부
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [joinDate, setJoinDate] = useState(null); // 가입 일자
@@ -63,6 +61,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
     setModalOpen,
     setModalOption,
     setCompanyNum,
+    setInputUser,
+    inputUser,
     style: { height: "500px" },
   };
 
@@ -86,30 +86,6 @@ const WorkerSignUp: NextPage<any> = (props) => {
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
-
-  // 사업자 검색 handler
-  const onComFindHandler = (data: any) => {
-    console.log("findData : ", data);
-    // if (formRegEx.COMPANY_NUM.test(companyNum)) {
-    //   dispatch(companyFindAction(companyNum)).then((res: any) => {
-    //     if (res.payload) {
-    //       if (
-    //         window.confirm(
-    //           `업체 정보를 확인하세요.\n - 업체명 : ${res.payload.name}\n - 대표명 : ${res.payload.ownerName}`
-    //         )
-    //       ) {
-    //         setCompanyCheck(true);
-    //         setInputUser({ ...inputUser, comID: res.payload._id });
-    //       } else {
-    //         setCompanyNum("");
-    //       }
-    //     } else {
-    //       alert("가입된 업체가 없습니다.");
-    //       setCompanyNum("");
-    //     }
-    //   });
-    // }
-  };
 
   // 이메일 종류에 따라 state를 통해 값 변경 및 readonly 변경
   const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -227,9 +203,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
 
   // 직원(worker) 회원가입 form submit handler
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
-    if (!companyCheck) {
-      alert("소속된 업체를 검색하세요.");
-    } else if (!authNumCheck) {
+    if (!authNumCheck) {
       alert("이메일 인증을 해주세요.");
     } else {
       // console.log("@@@", inputUser);
@@ -256,7 +230,6 @@ const WorkerSignUp: NextPage<any> = (props) => {
           if (err.response.status === 400) {
             alert("회원가입에 실패했습니다.");
             setAuthNumCheck(false);
-            setCompanyCheck(false);
           }
         }
       );
@@ -285,6 +258,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 style={{ width: "85%" }}
                 type="text"
                 value={companyNum}
+                placeholder="업체명 또는 사업자번호로 검색"
                 readOnly
               />
               <button
@@ -293,7 +267,6 @@ const WorkerSignUp: NextPage<any> = (props) => {
                   setModalOption("company");
                   setModalOpen(!modalOpen);
                 }}
-                disabled={companyCheck}
               >
                 검색
               </button>
@@ -680,46 +653,6 @@ const WorkerSignUp: NextPage<any> = (props) => {
               })}
             />
           </div>
-          <div>
-            <Modal
-              isOpen={modalOpen}
-              onRequestClose={() => setModalOpen(false)}
-              style={{
-                overlay: {
-                  position: "fixed",
-                  zIndex: 1020,
-                  top: 0,
-                  left: 0,
-                  width: "100vw",
-                  height: "100vh",
-                  background: "rgba(255, 255, 255, 0.75)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                },
-                content: {
-                  background: "white",
-                  width: "45rem",
-                  maxWidth: "calc(100vw - 2rem)",
-                  maxHeight: "calc(100vh - 2rem)",
-                  overflowY: "auto",
-                  position: "relative",
-                  border: "1px solid #ccc",
-                  borderRadius: "0.3rem",
-                  inset: 0,
-                },
-              }}
-            >
-              {modalOption === "address" ? (
-                <DaumPostcode
-                  onComplete={addressHandler}
-                  style={{ height: "500px" }}
-                />
-              ) : (
-                <CompanyFindModal {...ComfindModalProps} />
-              )}
-            </Modal>
-          </div>
         </div>
         {/* 입사일자 */}
         <div>
@@ -743,6 +676,46 @@ const WorkerSignUp: NextPage<any> = (props) => {
           <button type="submit">다음</button>
         </div>
       </form>
+      <div>
+        <Modal
+          isOpen={modalOpen}
+          onRequestClose={() => setModalOpen(false)}
+          style={{
+            overlay: {
+              position: "fixed",
+              zIndex: 1020,
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(255, 255, 255, 0.75)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            content: {
+              background: "white",
+              width: "45rem",
+              maxWidth: "calc(100vw - 2rem)",
+              maxHeight: "calc(100vh - 2rem)",
+              overflowY: "auto",
+              position: "relative",
+              border: "1px solid #ccc",
+              borderRadius: "0.3rem",
+              inset: 0,
+            },
+          }}
+        >
+          {modalOption === "address" ? (
+            <DaumPostcode
+              onComplete={addressHandler}
+              style={{ height: "500px" }}
+            />
+          ) : (
+            <CompanyFindModal {...ComfindModalProps} />
+          )}
+        </Modal>
+      </div>
     </div>
   );
 };
