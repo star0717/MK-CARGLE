@@ -21,8 +21,8 @@ import Header from "./Header";
 import WorkerSignUp from "./Body/worker";
 import OwnerSignUp from "./Body/owner";
 import TermSignUp from "./Body/term";
+import OwnerUpload from "./Body/fileUpload";
 import { SignUpInfo } from "../../../models/auth.entity";
-import OwnerUpload from "../Test";
 import SignupComplete from "./Body/complete";
 
 // modal setting
@@ -62,17 +62,6 @@ const SignUp: NextPage = () => {
     setError,
     formState: { errors },
   } = useForm({ criteriaMode: "all" });
-
-  // // 컴포넌트 구분 후 적용 테스트
-  // // 이메일 error 생성(react-hook-form에서 지원하는 require는 onChange만 인식함)
-  // useEffect(() => {
-  //   if (emailAddress === "" || emailDomain === "") {
-  //     setError("emailAddress", {
-  //       type: "emailNull",
-  //       message: "필수 입력사항입니다.",
-  //     });
-  //   }
-  // }, [emailAddress, emailDomain]);
 
   return (
     <div
@@ -167,7 +156,6 @@ const SignUp: NextPage = () => {
                   }}
                   onClick={() => {
                     setStepNumber(2);
-                    // setInputUser({ ...inputUser, auth: UserAuthority.OWNER });
                     setUserAuth(UserAuthority.OWNER);
                     setIsCompany(true);
                   }}
@@ -185,7 +173,6 @@ const SignUp: NextPage = () => {
                   }}
                   onClick={() => {
                     setStepNumber(2);
-                    // setInputUser({ ...inputUser, auth: UserAuthority.WORKER });
                     setUserAuth(UserAuthority.WORKER);
                     setIsCompany(false);
                   }}

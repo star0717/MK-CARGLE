@@ -1,8 +1,19 @@
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
+import { useDispatch } from "react-redux";
+import { signOutUserAction } from "../../../../../store/action/user.action";
 
 const SignupComplete: NextPage<any> = (props) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // 확인(logout 같은 기능) handler
+  const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(signOutUserAction()).then((res: any) => {
+      router.push("/");
+    });
+  };
+
   return (
     <div
       style={{
@@ -17,13 +28,9 @@ const SignupComplete: NextPage<any> = (props) => {
         <br />
         가입승인 후 정상 이용이 가능합니다.
       </div>
-      <input
-        value="확인"
-        type="button"
-        onClick={() => {
-          router.push("/");
-        }}
-      />
+      <button type="button" onClick={onSignOutHandler}>
+        확인
+      </button>
     </div>
   );
 };

@@ -9,6 +9,13 @@ module.exports = {
           destination: process.env.DESTINATION_URL,
         },
       ];
+    } else {
+      return [
+        {
+          source: process.env.SOURCE_PATH,
+          destination: process.env.DESTINATION_URL,
+        },
+      ];
     }
   },
 };

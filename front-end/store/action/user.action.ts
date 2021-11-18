@@ -57,6 +57,29 @@ export async function authNumCheckAction(dataToSubmit: string) {
   };
 }
 
+// 이메일 찾기 action
+export async function findEmailAction(dataToSubmit: any) {
+  const req = await axios
+    .post(`/api/auth/help/email`,dataToSubmit)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.USER_FIND_EMAIL,
+    payload: req,
+  };
+}
+
+// 패스워드 찾기 action 
+export async function findPWAction(dataToSubmit: any) {
+  const req = await axios
+    .post(`/api/auth/help/pwd`,dataToSubmit)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  return {
+    type: actionTypesUser.USER_FIND_PW,
+    payload: req,
+  };
+}
+
 // 사업자번호 유효성 검사 action
 export async function companyCheckAction(dataToSubmit: string) {
   const req = await axios

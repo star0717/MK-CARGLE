@@ -3,14 +3,15 @@ import Head from "next/head";
 import Footer from "../src/components/layout/Footer";
 import Header from "../src/components/layout/Header";
 import SignIn from "../src/components/page/Index/SignIn";
-import styled from "styled-components"
+import styled from "styled-components";
+import { parseJwt } from "../src/modules/parseJwt";
 
 //SCSS
 const IndexDiv = styled.div`
-  display : flex;
-  flex-direction : column;
-  min-height : 100vh;
-`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
 
 interface SignInProps {
   saveId: string;
@@ -18,7 +19,7 @@ interface SignInProps {
 }
 
 const Home: NextPage<SignInProps> = (props) => {
-  const headerProps = {cate : [""]};
+  const headerProps = { cate: [""] };
   return (
     <div>
       <Head>
@@ -27,7 +28,7 @@ const Home: NextPage<SignInProps> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <IndexDiv>
-        <Header {...headerProps}/>
+        <Header {...headerProps} />
         <SignIn {...props} />
         <Footer />
       </IndexDiv>
@@ -40,6 +41,8 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // 토큰 확인 - 있을 경우, 메인 화면으로 리디렉트
   if (context.req.cookies.mk_token) {
+    const tokenValue = parseJwt(context.req.cookies.mk_token);
+    const cApproval = tokenValue.cApproval;
     return {
       redirect: {
         permanent: false,

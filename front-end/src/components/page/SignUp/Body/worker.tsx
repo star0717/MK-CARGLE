@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/dist/client/router";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
@@ -25,22 +24,29 @@ import CompanyFindModal from "./companyfindmodal";
 Modal.setAppElement("body");
 
 const WorkerSignUp: NextPage<any> = (props) => {
-  console.log("props: ", props);
   const dispatch = useDispatch();
-  const router = useRouter();
 
   // props 재정의
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
   const userAuth = props.userAuth;
 
-  // redux store에서 user, company 정보 가져옴
-  const { user } = useSelector(
-    (state: RootStateInterface): UserState => state.userAll
-  );
+  // // redux store에서 user, company 정보 가져옴
+  // const { user } = useSelector(
+  //   (state: RootStateInterface): UserState => state.userAll
+  // );
 
-  const [inputUser, setInputUser] = useState(user); // 사용자 정보
+  // 회원가입용(직원) user input 초기값 세팅
+  const userInit = {
+    email: "",
+    password: "",
+    name: "",
+    hpNumber: "",
+    address: "",
+    joinDate: null,
+  };
 
+  const [inputUser, setInputUser] = useState(userInit); // 사용자 정보
   const [emailAddress, setEmailAdderess] = useState(""); // 이메일 주소
   const [emailDomain, setEmailDomain] = useState(""); // 이메일 도메인
   const [emailReadOnly, setEmailReadOnly] = useState(false); // 이메일 input readonly
@@ -56,6 +62,16 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const [modalOption, setModalOption] = useState("");
   const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
 
+  // react-hook-form 사용을 위한 선언
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    setValue,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
+
   // 사업자 검색 MODAL에 넘길 props
   const ComfindModalProps = {
     setModalOpen,
@@ -63,17 +79,9 @@ const WorkerSignUp: NextPage<any> = (props) => {
     setCompanyNum,
     setInputUser,
     inputUser,
+    setValue,
     style: { height: "500px" },
   };
-
-  // react-hook-form 사용을 위한 선언
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setError,
-    formState: { errors },
-  } = useForm({ criteriaMode: "all" });
 
   // modal 창 닫기 기능
   const closeModal = () => {
@@ -91,6 +99,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.target.value === "" ? setEmailReadOnly(false) : setEmailReadOnly(true); // 이메일 직접입력 외에는 readonly true
     setEmailDomain(e.target.value);
+    setValue("emailDomain", e.target.value, { shouldValidate: true });
   };
 
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
@@ -98,6 +107,13 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputUser({ ...inputUser, [e.target.name]: e.target.value });
   };
+
+  // // 사업자 번호 인식해서 form validation
+  // useEffect(() => {
+  //   if (companyNum !== "") {
+  //     setValue("companyNum", companyNum, { shouldValidate: true });
+  //   }
+  // }, [companyNum]);
 
   // 이메일 인증번호 전송 handler
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -117,7 +133,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
       });
     } else {
       setError("emailAddress", {
-        type: "emailError",
+        type: "emailNull",
         message: "형식에 맞게 입력하세요.",
       });
     }
@@ -140,7 +156,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
         setEmailSend(false);
       }
     }
-  }, [timer]);
+  }, [timer, authNumCheck, emailSend]);
 
   // 인증번호 검사 handler
   const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -155,6 +171,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
           Cookies.remove("mk_amtn");
         } else {
           alert("인증번호가 일치하지 않습니다.");
+          setAuthNum("");
         }
       });
     }
@@ -177,49 +194,26 @@ const WorkerSignUp: NextPage<any> = (props) => {
     }
 
     setAddressMain(fullAddress);
+    setValue("addressMain", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
-
-  // 주소, 가입일자는 선택사항이므로 입력이 될 때만 state에 넣어줌
-  // 회원가입이 진행될 때 넣어줘도 되지만, 이 경우에는 필드가 생성되고 그 안에 빈 값("", null)이 들어감
-  // 현재는 다른 필드처럼 값이 없으면 아예 생성되지 않게 하기 위해서 만듬
-  useEffect(() => {
-    if (addressMain !== "") {
-      setInputUser({
-        ...inputUser,
-        address:
-          addressDetail !== ""
-            ? `${addressMain}, ${addressDetail}`
-            : addressMain,
-      });
-    }
-    if (joinDate !== null) {
-      setInputUser({
-        ...inputUser,
-        joinDate: joinDate,
-      });
-    }
-  }, [addressMain, addressDetail, joinDate]);
 
   // 직원(worker) 회원가입 form submit handler
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
     if (!authNumCheck) {
       alert("이메일 인증을 해주세요.");
     } else {
-      // console.log("@@@", inputUser);
-      // console.log("$$$", user.auth);
-
       dispatch(
         signUpUserAction({
           user: {
             ...inputUser,
             email: `${emailAddress}@${emailDomain}`,
             auth: userAuth,
-            // address:
-            //   addressMain && addressDetail !== ""
-            //     ? `${addressMain}, ${addressDetail}`
-            //     : addressMain,
-            // joinDate: joinDate && joinDate,
+            address:
+              addressMain && addressDetail !== ""
+                ? `${addressMain}, ${addressDetail}`
+                : addressMain,
+            joinDate: joinDate && joinDate,
           },
         })
       ).then(
@@ -230,14 +224,18 @@ const WorkerSignUp: NextPage<any> = (props) => {
           if (err.response.status === 400) {
             alert("회원가입에 실패했습니다.");
             setAuthNumCheck(false);
+            setInputUser(userInit);
+            setEmailAdderess("");
+            setEmailDomain("");
+            setPasswordCheck("");
+            setAddressMain("");
+            setAddressDetail("");
+            setJoinDate(null);
           }
         }
       );
     }
   };
-
-  // console.log("!유저! : ", inputUser);
-  // console.log("$$날짜 : ", joinDate);
 
   return (
     <div
@@ -260,6 +258,9 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 value={companyNum}
                 placeholder="업체명 또는 사업자번호로 검색"
                 readOnly
+                {...register("companyNum", {
+                  required: { value: true, message: "필수 입력사항입니다." },
+                })}
               />
               <button
                 type="button"
@@ -280,169 +281,150 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 color: "red",
               }}
             >
-              필수 입력사항입니다.
-            </p>
-          )}
-          {errors.companyNum?.type === "pattern" && (
-            <p
-              style={{
-                margin: "0",
-                fontSize: "8px",
-                color: "red",
-              }}
-            >
-              형식에 맞게 입력하세요.
+              {errors.companyNum.message}
             </p>
           )}
         </div>
         {/* 아이디(이메일) */}
         <div>
-          <div>*아이디(이메일 형식으로 입력해주세요.)</div>
-          <div
-            style={{
-              backgroundColor: "skyblue",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-            }}
-          >
-            <div style={{ backgroundColor: "cyan" }}>
-              <input
-                type="text"
-                value={emailAddress}
-                readOnly={authNumCheck}
-                placeholder="이메일을 입력해주세요."
-                {...register("emailAddress", {
-                  onChange: (e) => {
-                    setEmailAdderess(e.target.value);
-                  },
-                  required: true,
-                  pattern: formRegEx.EMAIL_ADDRESS,
-                })}
-              />
-            </div>
-            <div style={{ backgroundColor: "yellowgreen" }}>@</div>
-            <div style={{ backgroundColor: "greenyellow" }}>
-              <input
-                type="text"
-                value={emailDomain}
-                placeholder="주소 선택"
-                readOnly={emailReadOnly || authNumCheck}
-                {...register("emailDomain", {
-                  onChange: (e) => {
-                    setEmailDomain(e.target.value);
-                  },
-                  required: true,
-                  pattern: formRegEx.EMAIL_DOMAIN,
-                })}
-              />
-            </div>
-            <div style={{ padding: "1px 2px" }}>
-              <select
-                disabled={authNumCheck}
-                {...register("emailSelect", {
-                  onChange: (e) => {
-                    onEmailKindHandler(e);
-                  },
-                })}
-              >
-                {props.emailItem.map((item: any, index: Number) => (
-                  <option key={item.key} value={item.value}>
-                    {item.text}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div style={{ padding: "1px 2px" }}>
-              <button
-                type="button"
-                onClick={onEmailSendHandler}
-                disabled={authNumCheck}
-              >
-                {emailSend ? "인증번호 재전송" : "인증번호 전송"}
-              </button>
-            </div>
-          </div>
-          {emailSend ? (
-            <div style={{ display: "flex" }}>
-              <div>
+          <div>
+            <div>*아이디(이메일 형식으로 입력해주세요.)</div>
+            <div
+              style={{
+                backgroundColor: "skyblue",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+              }}
+            >
+              <div style={{ backgroundColor: "cyan" }}>
                 <input
                   type="text"
-                  value={authNum}
-                  {...register("authNum", {
+                  value={emailAddress}
+                  readOnly={authNumCheck}
+                  placeholder="이메일을 입력해주세요."
+                  {...register("emailAddress", {
                     onChange: (e) => {
-                      setAuthNum(e.target.value);
+                      setEmailAdderess(e.target.value);
                     },
+                    required: true,
+                    pattern: formRegEx.EMAIL_ADDRESS,
                   })}
                 />
               </div>
-              <div>
-                <button type="button" onClick={onAuthNumCheckHandler}>
-                  인증
+              <div style={{ backgroundColor: "yellowgreen" }}>@</div>
+              <div style={{ backgroundColor: "greenyellow" }}>
+                <input
+                  type="text"
+                  value={emailDomain}
+                  placeholder="주소 선택"
+                  readOnly={emailReadOnly || authNumCheck}
+                  {...register("emailDomain", {
+                    onChange: (e) => {
+                      setEmailDomain(e.target.value);
+                    },
+                    required: true,
+                    pattern: formRegEx.EMAIL_DOMAIN,
+                  })}
+                />
+              </div>
+              <div style={{ padding: "1px 2px" }}>
+                <select
+                  disabled={authNumCheck}
+                  value={emailDomain}
+                  {...register("emailSelect", {
+                    onChange: (e) => {
+                      onEmailKindHandler(e);
+                    },
+                  })}
+                >
+                  {props.emailItem.map((item: any, index: Number) => (
+                    <option key={item.key} value={item.value}>
+                      {item.text}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div style={{ padding: "1px 2px" }}>
+                <button
+                  type="button"
+                  onClick={onEmailSendHandler}
+                  disabled={authNumCheck}
+                >
+                  {emailSend ? "인증번호 재전송" : "인증번호 전송"}
                 </button>
               </div>
             </div>
-          ) : null}
-          {authNumCheck ? (
-            <p
-              style={{
-                margin: "0",
-                fontSize: "8px",
-                color: "green",
-              }}
-            >
-              이메일 인증이 완료되었습니다.
-            </p>
-          ) : null}
-          <div>
-            {(errors.emailAddress?.type === "required" ||
-              errors.emailDomain?.type === "required") && (
+            {emailSend ? (
+              <div style={{ display: "flex" }}>
+                <div>
+                  <input
+                    type="text"
+                    value={authNum}
+                    {...register("authNum", {
+                      onChange: (e) => {
+                        setAuthNum(e.target.value);
+                      },
+                    })}
+                  />
+                </div>
+                <div>
+                  <button type="button" onClick={onAuthNumCheckHandler}>
+                    인증
+                  </button>
+                </div>
+              </div>
+            ) : null}
+            {authNumCheck ? (
               <p
                 style={{
                   margin: "0",
                   fontSize: "8px",
-                  color: "red",
+                  color: "green",
                 }}
               >
-                필수 입력사항입니다.
+                이메일 인증이 완료되었습니다.
               </p>
-            )}
-            {((errors.emailAddress?.type === "pattern" &&
-              errors.emailAddress?.type !== "required") ||
-              (errors.emailDomain?.type === "pattern" &&
-                errors.emailDomain?.type === "required")) && (
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "8px",
-                  color: "red",
-                }}
-              >
-                형식에 맞게 입력하세요.
-              </p>
-            )}
-            {errors.emailAddress?.type === "emailError" && (
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "8px",
-                  color: "red",
-                }}
-              >
-                {errors.emailAddress.message}
-              </p>
-            )}
-            {errors.emailAddress?.type === "emailExist" && (
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "8px",
-                  color: "red",
-                }}
-              >
-                {errors.emailAddress.message}
-              </p>
-            )}
+            ) : null}
+            <div>
+              {(errors.emailAddress?.type === "required" ||
+                errors.emailDomain?.type === "required") && (
+                <p
+                  style={{
+                    margin: "0",
+                    fontSize: "8px",
+                    color: "red",
+                  }}
+                >
+                  필수 입력사항입니다.
+                </p>
+              )}
+              {(errors.emailAddress?.type === "pattern" ||
+                errors.emailDomain?.type === "pattern") && (
+                <p
+                  style={{
+                    margin: "0",
+                    fontSize: "8px",
+                    color: "red",
+                  }}
+                >
+                  형식에 맞게 입력하세요.
+                </p>
+              )}
+              {(errors.emailAddress?.type === "emailExist" ||
+                errors.emailAddress?.type === "emailNull" ||
+                errors.emailAddress?.type === "emailAuthNeed") && (
+                <p
+                  style={{
+                    margin: "0",
+                    fontSize: "8px",
+                    color: "red",
+                  }}
+                >
+                  {errors.emailAddress.message}
+                </p>
+              )}
+            </div>
           </div>
         </div>
         {/* 비밀번호 */}
@@ -458,11 +440,15 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 onChange: (e) => {
                   onInputUserHandler(e);
                 },
-                required: true,
-                pattern: formRegEx.PASSWORD,
+                required: { value: true, message: "필수 입력사항입니다." },
+                pattern: {
+                  value: formRegEx.PASSWORD,
+                  message: "8~16자 영문, 숫자, 특수문자를 사용하세요.",
+                },
               })}
             />
-            {errors.password?.type === "required" && (
+            {(errors.password?.type === "required" ||
+              errors.password?.type === "pattern") && (
               <p
                 style={{
                   margin: "0",
@@ -470,18 +456,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                   color: "red",
                 }}
               >
-                필수 입력사항입니다.
-              </p>
-            )}
-            {errors.password?.type === "pattern" && (
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "8px",
-                  color: "red",
-                }}
-              >
-                8~16자 영문, 숫자, 특수문자를 사용하세요.
+                {errors.password.message}
               </p>
             )}
           </div>
@@ -499,8 +474,8 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 onChange: (e) => {
                   setPasswordCheck(e.target.value);
                 },
-                required: true,
-                validate: (value) => value === watch("password", ""),
+                required: { value: true, message: "필수 입력사항입니다." },
+                validate: (value) => value === watch("password"),
               })}
             />
             {errors.passwordCheck?.type === "required" && (
@@ -511,7 +486,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                   color: "red",
                 }}
               >
-                필수 입력사항입니다.
+                {errors.passwordCheck.message}
               </p>
             )}
             {errors.passwordCheck?.type === "validate" && (
@@ -553,7 +528,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 onChange: (e) => {
                   onInputUserHandler(e);
                 },
-                required: true,
+                required: { value: true, message: "필수 입력사항입니다." },
               })}
             />
             {errors.name?.type === "required" && (
@@ -564,7 +539,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                   color: "red",
                 }}
               >
-                필수 입력사항입니다.
+                {errors.name.message}
               </p>
             )}
           </div>
@@ -580,11 +555,15 @@ const WorkerSignUp: NextPage<any> = (props) => {
                 onChange: (e) => {
                   onInputUserHandler(e);
                 },
-                required: true,
-                pattern: formRegEx.HP_NUM,
+                required: { value: true, message: "필수 입력사항입니다." },
+                pattern: {
+                  value: formRegEx.HP_NUM,
+                  message: "형식에 맞게 입력하세요.",
+                },
               })}
             />
-            {errors.hpNumber?.type === "required" && (
+            {(errors.hpNumber?.type === "required" ||
+              errors.hpNumber?.type === "pattern") && (
               <p
                 style={{
                   margin: "0",
@@ -592,18 +571,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
                   color: "red",
                 }}
               >
-                필수 입력사항입니다.
-              </p>
-            )}
-            {errors.hpNumber?.type === "pattern" && (
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "8px",
-                  color: "red",
-                }}
-              >
-                형식에 맞게 입력하세요.
+                {errors.hpNumber.message}
               </p>
             )}
           </div>

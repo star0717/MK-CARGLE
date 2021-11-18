@@ -5,7 +5,8 @@ import Header from "../../src/components/layout/Header";
 import SignUp from "../../src/components/page/SignUp";
 import Main from "../../src/components/page/Main";
 import Find from "../../src/components/page/Find";
-import OwnerUpload from "../../src/components/page/Test";
+import { parseJwt } from "../../src/modules/parseJwt";
+import { CompanyApproval } from "../../src/models/company.entity";
 
 interface ViewProps {
   cate: any;
@@ -27,15 +28,12 @@ const Componentitem: NextPage<any> = (props) => {
       return <Main />;
     case "find":
       return <Find />;
-    case "test":
-      return <OwnerUpload />;
     default:
       return <SignUp />;
   }
 };
 
 const View: NextPage<ViewProps> = ({ cate }) => {
-  // console.log(cate)
   return (
     <div>
       <Head>
@@ -57,27 +55,33 @@ const View: NextPage<ViewProps> = ({ cate }) => {
 export default View;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const query = context.query;
   console.log("쿼리 : ", context.query.cate);
-  const main = context.query.cate ? context.query.cate[0] : undefined;
+
   // 토큰 확인 - 없을 경우, 로그인 화면으로 리디렉트
-  // if (!context.req.cookies.mk_token && (main !== "SignUp" && main !== "find")) {
+  // if (!context.req.cookies.mk_token && main !== "signup" && main !== "find") {
   //   return {
   //     redirect: {
   //       permanent: false,
   //       destination: "/",
   //     },
   //   };
+  // } else {
+  //   console.log(parseJwt(context.req.cookies.mk_token));
+  //   const tokenValue = parseJwt(context.req.cookies.mk_token);
+  //   const cApproval = tokenValue.cApproval;
+  //   if (
+  //     cApproval === CompanyApproval.BEFORE ||
+  //     cApproval === CompanyApproval.ING
+  //   ) {
+  //     return {
+  //       redirect: {
+  //         permanent: false,
+  //         destination: "/",
+  //       },
+  //     };
+  //   }
   // }
-
-  // jwt를 json으로 만드는 함수
-  function parseJwt(token: string) {
-    var base64Payload = token.split(".")[1];
-    var payload = Buffer.from(base64Payload, "base64");
-    var result = JSON.parse(payload.toString());
-
-    return result;
-  }
-  // console.log(parseJwt(context.req.cookies.mk_token));
 
   // SSR
   const cate = context.query;

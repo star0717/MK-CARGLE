@@ -103,6 +103,18 @@ const userAll = (
       return {
         ...state,
       };
+    
+     // 이메일 찾기 기능
+    case actionTypesUser.USER_FIND_EMAIL:
+      return {
+        ...state,
+      };
+    
+    // 비밀번호 찾기 기능
+    case actionTypesUser.USER_FIND_PW:
+      return {
+        ...state,
+      };
 
     // 사업자등록증 업로드 기능
     case actionTypesUser.COM_FILE_UPLOAD:
@@ -115,6 +127,7 @@ const userAll = (
       return {
         ...state,
       };
+    
 
     default:
       return state;
