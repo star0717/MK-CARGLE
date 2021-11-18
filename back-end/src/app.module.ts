@@ -6,6 +6,7 @@ import { CommonModule } from './lib/common/common.module';
 import config, { isUseAuthDB } from './config/configuration';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { AdminModule } from './lib/admin/admin.module';
+import { Auth2Module } from './lib/auth2/auth2.module';
 
 const dbInfo = (isUseAuthDB())
   ? 'mongodb://' + process.env.DB_ID + ":" + process.env.DB_PWD + "@"
@@ -25,6 +26,7 @@ console.log(dbInfo);
     AuthModule,
     CommonModule,
     AdminModule,
+    Auth2Module,
   ],
 })
 export class AppModule { }
