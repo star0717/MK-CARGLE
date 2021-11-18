@@ -24,6 +24,10 @@ const Wrapper = styled.div`
     background-color: lightblue;
     width: 100%;
   }
+  .test2 {
+    background-color: cyan;
+    width: 100%;
+  }
 `;
 
 // modal setting
@@ -156,7 +160,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
         setEmailSend(false);
       }
     }
-  }, [timer]);
+  }, [timer, authNumCheck, emailSend]);
 
   // 인증번호 검사 handler
   const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -478,7 +482,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
             <div>*비밀번호 확인</div>
             <div>
               <input
-                style={{ width: "100%" }}
+                className="test2"
                 type="password"
                 value={passwordCheck}
                 placeholder="비밀번호 확인을 위해 다시 입력해주세요."

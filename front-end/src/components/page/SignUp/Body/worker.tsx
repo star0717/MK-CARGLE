@@ -156,7 +156,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
         setEmailSend(false);
       }
     }
-  }, [timer]);
+  }, [timer, authNumCheck, emailSend]);
 
   // 인증번호 검사 handler
   const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {

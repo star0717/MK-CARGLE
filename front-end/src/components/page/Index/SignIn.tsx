@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/dist/client/router";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UserState } from "../../../../store/interfaces";
@@ -82,16 +81,6 @@ const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // react-hook-form 사용을 위한 선언
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setError,
-    setValue,
-    formState: { errors },
-  } = useForm({ criteriaMode: "all" });
-
   // redux store에서 signIn 정보만 가져옴
   const { signInInfo } = useSelector(
     (state: RootStateInterface): UserState => state.userAll
@@ -104,9 +93,9 @@ const SignIn: NextPage<any> = (props) => {
     id: props.saveId,
   });
 
-  // 아이디 저장 체크 여부를 위한 state
-  const [saveId, setSaveId] = useState(props.saveCheck);
-  // const [keepSignIn, setKeepSignIn] = useState(false);
+  const [saveId, setSaveId] = useState(props.saveCheck); // 아이디 저장 체크 여부를 위한 state
+  const [signInErr, setSignInErr] = useState(false); // 로그인 시도 시 에러 여부
+  const [errMsg, setErrMsg] = useState(""); // 로그인 에러 시 메세지 내용
 
   // input 값 입력 시 텍스트 변환을 위한 handler
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,18 +103,17 @@ const SignIn: NextPage<any> = (props) => {
   };
 
   // 로그인 시 handler
-  const onSignInHandler: SubmitHandler<UserInfo> = (data) => {
+  const onSignInHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (inputSignIn.id === "" || !formRegEx.EMAIL.test(inputSignIn.id)) {
-      setError("id", {
-        type: "idError",
-        message: "이메일을 입력해주세요.",
-      });
+      setSignInErr(true);
+      setErrMsg("이메일을 입력해주세요.");
     } else if (inputSignIn.pwd === "") {
-      setError("id", {
-        type: "pwdError",
-        message: "비밀번호를 입력해주세요.",
-      });
+      setSignInErr(true);
+      setErrMsg("비밀번호를 입력해주세요.");
     } else {
+      setSignInErr(false);
+      setErrMsg("");
       // 아이디, 비밀번호 정상 입력 시
       dispatch(signInUserAction(inputSignIn)).then(
         (res: any) => {
@@ -143,7 +131,10 @@ const SignIn: NextPage<any> = (props) => {
           // 입력 값이 계정과 다를 경우 에러
           // Nest에서 전송해주는 status code에 맞게 핸들링
           if (err.response.status === 401) {
-            alert("아이디 / 비밀번호를 확인해주세요.");
+            setSignInErr(true);
+            setErrMsg(
+              "이메일 또는 비밀번호가 잘못 입력되었습니다.\n이메일과 비밀번호를 정확히 입력해주세요."
+            );
           }
         }
       );
@@ -180,19 +171,18 @@ const SignIn: NextPage<any> = (props) => {
           <h3 className="h3">로그인</h3>
           <div className="div1">
             {/* 로그인 입력 form */}
-            <form onSubmit={handleSubmit(onSignInHandler)}>
+            <form onSubmit={onSignInHandler}>
               {/* 이메일 input */}
               <div className="div1">
                 <p className="p">이메일</p>
                 <input
                   className="input"
                   type="text"
+                  name="id"
                   value={inputSignIn.id}
-                  {...register("id", {
-                    onChange: (e) => {
-                      onInputHandler(e);
-                    },
-                  })}
+                  onChange={(e) => {
+                    onInputHandler(e);
+                  }}
                 />
               </div>
               {/* 비밀번호 input */}
@@ -201,12 +191,11 @@ const SignIn: NextPage<any> = (props) => {
                 <input
                   className="input"
                   type="password"
+                  name="pwd"
                   value={inputSignIn.pwd}
-                  {...register("pwd", {
-                    onChange: (e) => {
-                      onInputHandler(e);
-                    },
-                  })}
+                  onChange={(e) => {
+                    onInputHandler(e);
+                  }}
                 />
               </div>
               {/* 체크박스 div */}
@@ -215,27 +204,32 @@ const SignIn: NextPage<any> = (props) => {
                 <div className="div1">
                   <span className="span">아이디 저장</span>
                   <input
-                    className="input"
                     type="checkbox"
+                    checked={saveId}
                     onChange={(e) => {
                       setSaveId(e.target.checked);
                     }}
-                    checked={saveId}
                   ></input>
                 </div>
               </div>
-              {(errors.id?.type === "idError" ||
-                errors.id?.type === "pwdError") && (
-                <p
-                  style={{
-                    margin: "0",
-                    fontSize: "8px",
-                    color: "red",
-                  }}
-                >
-                  {errors.id.message}
-                </p>
-              )}
+              {signInErr ? (
+                <div style={{ margin: "8px 0", textAlign: "left" }}>
+                  <p
+                    style={{
+                      margin: "0",
+                      fontSize: "8px",
+                      color: "red",
+                    }}
+                  >
+                    {errMsg.split("\n").map((txt) => (
+                      <>
+                        {txt}
+                        <br />
+                      </>
+                    ))}
+                  </p>
+                </div>
+              ) : null}
               {/* 로그인 버튼 */}
               <button className="button" type="submit">
                 로그인
