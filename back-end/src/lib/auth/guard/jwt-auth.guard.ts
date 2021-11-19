@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 /**
@@ -12,10 +16,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
    * @param context
    * @returns
    */
-  // canActivate(context: ExecutionContext) {
-  //     console.log("*** canActivate in JwtAuthGuard (1/4)")
-  //     return super.canActivate(context);
-  // }
+  canActivate(context: ExecutionContext) {
+    console.log('*** canActivate in JwtAuthGuard (1/4)');
+    return super.canActivate(context);
+  }
   /**
    * 인증 전략 수행 후에 호출 (4/4)
    * @param err
@@ -23,12 +27,12 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
    * @param info
    * @returns
    */
-  // handleRequest(err, user, info) {
-  //     console.log("*** handleRequest in JwtAuthGuard (4/4)")
-  //     console.log(user);
-  //     if (err || !user) {
-  //         throw err || new UnauthorizedException();
-  //     }
-  //     return user;
-  // }
+  handleRequest(err, user, info) {
+    console.log('*** handleRequest in JwtAuthGuard (4/4)');
+    console.log(user);
+    if (err || !user) {
+      throw err || new UnauthorizedException();
+    }
+    return user;
+  }
 }

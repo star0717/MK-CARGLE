@@ -9,6 +9,7 @@ import { HttpModule } from '@nestjs/axios';
 import { CommonModule } from '../common/common.module';
 import { UsersModule } from 'src/modules/users/users.module';
 import { CompaniesModule } from 'src/modules/companies/companies.module';
+import { JwtStrategy } from './strategy/jwt.strategy';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { CompaniesModule } from 'src/modules/companies/companies.module';
     CommonModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
