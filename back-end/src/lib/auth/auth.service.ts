@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  Body,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -17,7 +16,7 @@ export class AuthService {
     private usersService: UsersService,
     private companiesService: CompaniesService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(signUpInfo: SignUpInfo): Promise<SignUpInfo> {
     let company: Company;
@@ -51,7 +50,9 @@ export class AuthService {
 
       // 업체 가입인 경우 사업자의 대표자명에 사용자명 주입
       if (signUpInfo.user.auth == UserAuthority.OWNER) {
-        company = await this.companiesService.update(company._id, { ownerName: user.name });
+        company = await this.companiesService.update(company._id, {
+          ownerName: user.name,
+        });
       }
     } catch (err) {
       console.log(err);
@@ -114,7 +115,4 @@ export class AuthService {
   async findUserByHpNumber(hpNumber: string): Promise<User> {
     return await this.usersService.findUserByHpNumber(hpNumber);
   }
-
-
-
 }

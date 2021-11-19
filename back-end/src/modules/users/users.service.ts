@@ -49,7 +49,7 @@ export class UsersService extends BaseService<User> {
    * @param comID 해당 업체의 ObjectID
    */
   async removeUsersByComID(comID: string) {
-    const res = await this.model.deleteMany({ comID });
+    const res = await this.model.deleteMany({ _cID: comID });
     console.log("deleted workers: " + res.deletedCount);
   }
 
@@ -60,7 +60,7 @@ export class UsersService extends BaseService<User> {
    * @returns 
    */
   async removeWorker(id: string, comID: string) {
-    return await this.model.findOneAndRemove({ _id: id, comID, auth: UserAuthority.WORKER });
+    return await this.model.findOneAndRemove({ _id: id, _cID: comID, auth: UserAuthority.WORKER });
   }
 
   /**
@@ -70,7 +70,7 @@ export class UsersService extends BaseService<User> {
    * @returns 
    */
   async removeOwner(id: string, comID: string) {
-    return await this.model.findOneAndRemove({ _id: id, comID, auth: UserAuthority.OWNER });
+    return await this.model.findOneAndRemove({ _id: id, _cID: comID, auth: UserAuthority.OWNER });
   }
 
 }
