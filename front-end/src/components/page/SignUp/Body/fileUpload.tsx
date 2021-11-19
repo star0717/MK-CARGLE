@@ -112,7 +112,7 @@ const FileUpload: NextPage<any> = (props) => {
                 <input
                   type="text"
                   placeholder="jpg, png, pdf 형식"
-                  value={fileName.comFile}
+                  value={file.comFile}
                   required
                   readOnly
                 />
