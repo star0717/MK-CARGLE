@@ -29,6 +29,12 @@ const FileUpload: NextPage<any> = (props) => {
 
   // const [upload, setUpload] = useState(false); // 파일 두개 업로드 여부
 
+  // 파일 선택 버튼 클릭 시 파일 초기화
+  const onFileInputInit = (e: any) => {
+    setFile({ ...file, [e.target.name]: "" });
+    setFileName({ ...fileName, [e.target.name]: "" });
+  };
+
   // 파일 선택 시 파일명 state 변경
   const onFileSelectHandler = (e: any) => {
     setFile({ ...file, [e.target.name]: e.target.files[0] });
@@ -79,6 +85,9 @@ const FileUpload: NextPage<any> = (props) => {
     );
   };
 
+  console.log("파일 : ", file);
+  console.log("파일네임 : ", fileName);
+
   return (
     <div
       style={{
@@ -117,6 +126,7 @@ const FileUpload: NextPage<any> = (props) => {
                   id="comFile"
                   name="comFile"
                   onChange={onFileSelectHandler}
+                  onClick={onFileInputInit}
                   accept=".jpg, .png, .pdf"
                   style={{ display: "none" }}
                 />
@@ -142,6 +152,7 @@ const FileUpload: NextPage<any> = (props) => {
                   id="manFile"
                   name="manFile"
                   onChange={onFileSelectHandler}
+                  onClick={onFileInputInit}
                   accept=".jpg, .png, .pdf"
                   style={{ display: "none" }}
                 />
