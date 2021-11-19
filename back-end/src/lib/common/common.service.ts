@@ -100,15 +100,22 @@ export class CommonService {
     res.cookie(process.env.TK_NAME, token);
   }
 
-  extractToken(@Req() req): AuthTokenInfo {
+  extractToken(@Req() req, isAuth: boolean = false): AuthTokenInfo {
+    console.log(isAuth);
     try {
       const token: AuthTokenInfo = req.user;
       if (!token) throw new UnauthorizedException();
 
-      // 권한 검증
-      if (token.cApproval != CompanyApproval.DONE || token.uApproval != true) {
-        throw new UnauthorizedException();
+      if (!isAuth) {
+        // 권한 검증
+        if (
+          token.cApproval != CompanyApproval.DONE ||
+          token.uApproval != true
+        ) {
+          throw new UnauthorizedException();
+        }
       }
+
       // ID값 검증
       if (
         !token ||
