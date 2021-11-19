@@ -12,12 +12,12 @@ import { Injectable } from '@nestjs/common';
  */
 const fromAuthCookie = function () {
   return function (request: any) {
-    console.log('*** fromAuthCookie in JwtStrategy (2/4)');
+    // console.log('*** fromAuthCookie in JwtStrategy (2/4)');
 
     let token = null;
     if (request && request.cookies) {
       token = request.cookies[process.env.TK_NAME];
-      console.log('token=> ' + token);
+      //   console.log('token=> ' + token);
     }
     return token;
   };
@@ -39,8 +39,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    * @returns 인증된 사용자의 정보
    */
   async validate(payload: any) {
-    console.log('*** validate in JwtStrategy (3/4)');
-    console.log('payload=> ' + JSON.stringify(payload) + '\n');
+    // console.log('*** validate in JwtStrategy (3/4)');
+    // console.log('payload=> ' + JSON.stringify(payload) + '\n');
     return payload;
   }
 }
