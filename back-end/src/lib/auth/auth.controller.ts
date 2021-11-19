@@ -120,7 +120,7 @@ export class AuthController {
   @ApiOperation({ summary: `프로필 확인 (토큰 정보 확인)` })
   @Get('profile')
   getProfile(@Req() req: Request): AuthTokenInfo {
-    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
     return token;
   }
 
