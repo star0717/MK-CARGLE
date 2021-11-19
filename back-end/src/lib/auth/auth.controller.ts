@@ -111,7 +111,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Body() info: WithdrawalInfo,
   ) {
-    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
     await this.authService.withdrawal(token, info);
     this.commonService.clearToken(res);
   }
@@ -212,7 +212,7 @@ export class AuthController {
     @Req() req: Request,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<string> {
-    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
     return await this.authService.uploadComRegFile(token, file);
   }
 
@@ -238,7 +238,7 @@ export class AuthController {
     @Req() req: Request,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<string> {
-    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
     return await this.authService.uploadMainRegFile(token, file);
   }
 
@@ -247,7 +247,7 @@ export class AuthController {
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/com-reg-docc')
   async getCrFileName(@Req() req: Request): Promise<string> | null {
-    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
     return await this.authService.getComRegFileName(token);
   }
 
@@ -256,7 +256,7 @@ export class AuthController {
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/man-reg-doc')
   async getMainRegFileName(@Req() req: Request): Promise<string> | null {
-    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
     return await this.authService.getMainRegFileName(token);
   }
 
@@ -299,7 +299,7 @@ export class AuthController {
   ): Promise<boolean> {
     console.log(data);
 
-    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
     return await this.authService.updateUserPassword(token, data);
   }
 }
