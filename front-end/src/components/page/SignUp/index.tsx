@@ -1,37 +1,18 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/dist/client/router";
-import { SubmitHandler, useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
-import Cookies from "js-cookie";
-import DaumPostcode from "react-daum-postcode";
-import { useInterval } from "react-use";
-import { useDispatch, useSelector } from "react-redux";
-import { RootStateInterface } from "../../../../store/interfaces/RootState";
-import { UserState } from "../../../../store/interfaces";
 import { UserAuthority } from "../../../models/user.entity";
-import { formRegEx } from "../../../validation/regEx";
-import {
-  authNumCheckAction,
-  companyCheckAction,
-  emailSendAction,
-  signUpUserAction,
-} from "../../../../store/action/user.action";
 import Header from "./Header";
 import WorkerSignUp from "./Body/worker";
 import OwnerSignUp from "./Body/owner";
 import TermSignUp from "./Body/term";
-import OwnerUpload from "./Body/fileUpload";
-import { SignUpInfo } from "../../../models/auth.entity";
+import FileUpload from "./Body/fileUpload";
 import SignupComplete from "./Body/complete";
 
 // modal setting
 Modal.setAppElement("body");
 
 const SignUp: NextPage = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
-
   // 이메일 종류
   const emailItem = [
     { key: 1, value: "", text: "직접 입력" },
@@ -51,17 +32,6 @@ const SignUp: NextPage = () => {
     userAuth,
     emailItem,
   };
-
-  // react-hook-form 사용을 위한 선언
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    getValues,
-    setError,
-    formState: { errors },
-  } = useForm({ criteriaMode: "all" });
 
   return (
     <div
@@ -190,7 +160,7 @@ const SignUp: NextPage = () => {
               )
             ) : stepNumber === 4 ? (
               isCompany === true ? ( // step 4, 사업자일 때(서류제출)
-                <OwnerUpload {...SignUpProps} />
+                <FileUpload {...SignUpProps} />
               ) : (
                 <SignupComplete />
               )

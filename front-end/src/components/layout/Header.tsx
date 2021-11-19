@@ -13,7 +13,6 @@ const Header: NextPage<Props> = (Props) => {
   const router = useRouter();
 
   const main = Props.cate ? Props.cate[0] : "";
-  console.log("main", main);
 
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {

@@ -25,7 +25,6 @@ export async function signOutUserAction() {
 
 // 회원가입 action
 export async function signUpUserAction(dataToSubmit: any) {
-  console.log("액션&*&*&", dataToSubmit);
   const req = await axios
     .post(`/api/auth/signup`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -60,7 +59,7 @@ export async function authNumCheckAction(dataToSubmit: string) {
 // 이메일 찾기 action
 export async function findEmailAction(dataToSubmit: any) {
   const req = await axios
-    .post(`/api/auth/help/email`,dataToSubmit)
+    .post(`/api/auth/help/email`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_FIND_EMAIL,
@@ -68,10 +67,10 @@ export async function findEmailAction(dataToSubmit: any) {
   };
 }
 
-// 패스워드 찾기 action 
+// 패스워드 찾기 action
 export async function findPWAction(dataToSubmit: any) {
   const req = await axios
-    .post(`/api/auth/help/pwd`,dataToSubmit)
+    .post(`/api/auth/help/pwd`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
@@ -115,7 +114,6 @@ export async function companyFindbyNameAction(dataToSubmit: string) {
 
 // 사업자등록증 업로드 action
 export async function comFileUploadAction(dataToSubmit: any) {
-  console.log("파일들 : ", typeof dataToSubmit);
   const req = await axios
     .post(`/api/auth/upload/com-reg-doc`, dataToSubmit, {
       headers: {
