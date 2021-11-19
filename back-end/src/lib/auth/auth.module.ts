@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
+import config from 'src/config/configuration';
+import { ConfigModule } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { UsersModule } from 'src/modules/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './strategy/jwt.strategy';
-import { ConfigModule } from '@nestjs/config';
-import config from "src/config/configuration";
-import { CompaniesModule } from 'src/modules/companies/companies.module';
-import { HttpModule } from "@nestjs/axios";
+import { HttpModule } from '@nestjs/axios';
 import { CommonModule } from '../common/common.module';
+import { UsersModule } from 'src/modules/users/users.module';
+import { CompaniesModule } from 'src/modules/companies/companies.module';
 
 @Module({
   imports: [
@@ -22,10 +21,10 @@ import { CommonModule } from '../common/common.module';
       signOptions: { expiresIn: '1d' },
     }),
     HttpModule,
-    CommonModule
+    CommonModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService],
   exports: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}

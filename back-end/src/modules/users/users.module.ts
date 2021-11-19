@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
-import { TypegooseModule } from "nestjs-typegoose"
+import { TypegooseModule } from 'nestjs-typegoose';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { User } from 'src/models/user.entity';
+import { CommonModule } from 'src/lib/common/common.module';
 
 @Module({
-  imports: [
-    TypegooseModule.forFeature([User]),
-  ],
+  imports: [TypegooseModule.forFeature([User]), CommonModule],
   controllers: [UsersController],
   providers: [UsersService],
-  exports: [UsersService] //AuthModule에서 사용가능하도록 노출
+  exports: [UsersService],
 })
-export class UsersModule { }
+export class UsersModule {}
