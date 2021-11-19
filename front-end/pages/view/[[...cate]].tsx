@@ -13,13 +13,9 @@ interface ViewProps {
 }
 
 const Componentitem: NextPage<any> = (props) => {
-  console.log(props);
   const cate = props.cate;
   const main = cate[0];
   const sub = cate[1] ? cate[1] : "";
-  // console.log("메인 : ", main);
-
-  console.log("cate:", cate);
 
   switch (main) {
     case "signup":
@@ -55,41 +51,44 @@ const View: NextPage<ViewProps> = ({ cate }) => {
 export default View;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const query = context.query;
-  console.log("쿼리 : ", context.query.cate);
+  const cate = context.query;
+  const main = cate.cate ? cate.cate[0] : null;
 
   // 토큰 확인 - 없을 경우, 로그인 화면으로 리디렉트
-  // if (!context.req.cookies.mk_token && main !== "signup" && main !== "find") {
-  //   return {
-  //     redirect: {
-  //       permanent: false,
-  //       destination: "/",
-  //     },
-  //   };
-  // } else {
-  //   console.log(parseJwt(context.req.cookies.mk_token));
-  //   const tokenValue = parseJwt(context.req.cookies.mk_token);
-  //   const cApproval = tokenValue.cApproval;
-  //   if (
-  //     cApproval === CompanyApproval.BEFORE ||
-  //     cApproval === CompanyApproval.ING
-  //   ) {
-  //     return {
-  //       redirect: {
-  //         permanent: false,
-  //         destination: "/",
-  //       },
-  //     };
-  //   }
-  // }
-
-  // SSR
-  const cate = context.query;
-  // console.log(cate);
-  // console.log(context.req.headers['user-agent']?.indexOf('Mobi'));
-  return {
-    props: {
-      cate,
-    },
-  };
+  if (!context.req.cookies.mk_token) {
+    if (main !== "signup" && main !== "find") {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/",
+        },
+      };
+    } else {
+      return {
+        props: {
+          cate,
+        },
+      };
+    }
+  } else {
+    const tokenValue = parseJwt(context.req.cookies.mk_token);
+    const cApproval = tokenValue.cApproval;
+    if (
+      cApproval === CompanyApproval.BEFORE ||
+      cApproval === CompanyApproval.ING
+    ) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/",
+        },
+      };
+    } else {
+      return {
+        props: {
+          cate,
+        },
+      };
+    }
+  }
 };

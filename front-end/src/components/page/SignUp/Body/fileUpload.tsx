@@ -13,14 +13,14 @@ const fileInit = {
   manFile: "",
 };
 
-const OwnerUpload: NextPage<any> = (props) => {
+const FileUpload: NextPage<any> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   // props 재정의
-  const stepNumber = props.stepNumber;
-  const setStepNumber = props.setStepNumber;
-  const userAuth = props.userAuth;
+  const stepNumber = props?.stepNumber;
+  const setStepNumber = props?.setStepNumber;
+  const userAuth = props?.userAuth;
 
   // 업로드할 파일 state
   const [file, setFile] = useState(fileInit);
@@ -53,7 +53,12 @@ const OwnerUpload: NextPage<any> = (props) => {
       (res: any) => {
         dispatch(manFileUploadAction(manFormData)).then(
           (res: any) => {
-            setStepNumber(stepNumber + 1);
+            if (stepNumber) {
+              setStepNumber(stepNumber + 1);
+            } else {
+              alert("제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다.");
+              router.push("/");
+            }
           },
           (err) => {
             if (err.response.status === 400 || 500) {
@@ -172,4 +177,4 @@ const OwnerUpload: NextPage<any> = (props) => {
   );
 };
 
-export default OwnerUpload;
+export default FileUpload;
