@@ -11,39 +11,36 @@ import { Injectable } from '@nestjs/common';
  * @returns 인증 토큰
  */
 const fromAuthCookie = function () {
-    return function (request: any) {
-        // console.log("*** fromAuthCookie in JwtStrategy (2/4)")
+  return function (request: any) {
+    console.log('*** fromAuthCookie in JwtStrategy (2/4)');
 
-        let token = null;
-        if (request && request.cookies) {
-            token = request.cookies[process.env.TK_NAME];
-            // console.log("token=> " + token);
-        }
-        return token;
+    let token = null;
+    if (request && request.cookies) {
+      token = request.cookies[process.env.TK_NAME];
+      console.log('token=> ' + token);
     }
-}
+    return token;
+  };
+};
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor() {
+    super({
+      jwtFromRequest: fromAuthCookie(),
+      ignoreExpiration: false,
+      secretOrKey: process.env.TK_KEY,
+    });
+  }
 
-    constructor(
-    ) {
-        super({
-            jwtFromRequest: fromAuthCookie(),
-            ignoreExpiration: false,
-            secretOrKey: process.env.TK_KEY
-        });
-    }
-
-    /**
-     * 인증된 사용자의 정보를 반환 (3/4)
-     * @param payload 사용자 토큰을 포함한 payload
-     * @returns 인증된 사용자의 정보
-     */
-    async validate(payload: any) {
-        // console.log("*** validate in JwtStrategy (3/4)")
-        // console.log("payload=> " + JSON.stringify(payload) + "\n");
-        return payload;
-    }
+  /**
+   * 인증된 사용자의 정보를 반환 (3/4)
+   * @param payload 사용자 토큰을 포함한 payload
+   * @returns 인증된 사용자의 정보
+   */
+  async validate(payload: any) {
+    console.log('*** validate in JwtStrategy (3/4)');
+    console.log('payload=> ' + JSON.stringify(payload) + '\n');
+    return payload;
+  }
 }
-
