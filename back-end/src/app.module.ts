@@ -1,16 +1,24 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ModulesModule } from './modules/modules.module';
-import { AuthModule } from './lib/auth/auth.module';
 import { CommonModule } from './lib/common/common.module';
 import config, { isUseAuthDB } from './config/configuration';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { AdminModule } from './lib/admin/admin.module';
-import { Auth2Module } from './lib/auth2/auth2.module';
+import { AuthModule } from './lib/auth/auth.module';
+import { SafeCrudModule } from './lib/safe-crud/safe-crud.module';
 
-const dbInfo = (isUseAuthDB())
-  ? 'mongodb://' + process.env.DB_ID + ":" + process.env.DB_PWD + "@"
-  + process.env.DB_HOST + ":" + process.env.DB_PORT + '/' + process.env.DB_NAME
+const dbInfo = isUseAuthDB()
+  ? 'mongodb://' +
+    process.env.DB_ID +
+    ':' +
+    process.env.DB_PWD +
+    '@' +
+    process.env.DB_HOST +
+    ':' +
+    process.env.DB_PORT +
+    '/' +
+    process.env.DB_NAME
   : 'mongodb://' + process.env.DB_HOST + '/' + process.env.DB_NAME;
 console.log(dbInfo);
 
@@ -22,11 +30,11 @@ console.log(dbInfo);
       load: [config],
     }),
     TypegooseModule.forRoot(dbInfo),
-    ModulesModule,
     AuthModule,
     CommonModule,
     AdminModule,
-    Auth2Module,
+    SafeCrudModule,
+    ModulesModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

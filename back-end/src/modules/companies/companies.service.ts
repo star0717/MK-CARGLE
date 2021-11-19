@@ -1,32 +1,49 @@
 import { Injectable } from '@nestjs/common';
-import { ReturnModelType, getClass } from '@typegoose/typegoose';
+import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import { BaseService } from 'src/lib/base-crud/base-crud.service';
+import { CommonService } from 'src/lib/common/common.service';
+import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { Company } from 'src/models/company.entity';
 
 @Injectable()
-export class CompaniesService extends BaseService<Company> {
-    constructor(
-        @InjectModel(Company) readonly model: ReturnModelType<typeof Company>,
-    ) {
-        super(model);
-    }
+export class CompaniesService extends SafeService<Company> {
+  constructor(
+    @InjectModel(Company) readonly model: ReturnModelType<typeof Company>,
+    readonly commonService: CommonService,
+  ) {
+    super(model, commonService);
+  }
 
-    /**
-     * 사업자 번호에 해당하는 사업자 정보 반환
-     * @param comRegNum 조회할 사업자 번호
-     * @returns 사업자 정보
-     */
-    async findCompanyByComRegNum(comRegNum: string): Promise<Company> {
-        return await this.model.findOne({ comRegNum });
-    }
+  async createForAuth(company: Company): Promise<Company> {
+    return await this._create(company);
+  }
 
-    /**
-     * 사업자 이름에 해당하는 사업자 정보 반환
-     * @param name 조회할 사업자 이름
-     * @returns 사업자 정보 배열
-     */
-    async findCompaniesByName(name: string): Promise<Company[]> {
-        return await this.model.find({ name: { $regex: name, $options: '$i' } });
-    }
+  async findByIdForAuth(id: string) {
+    return await this._findById(id);
+  }
+
+  async findByIdAndUpdateForAuth(
+    id: string,
+    doc: Partial<Company>,
+  ): Promise<Company> {
+    return await this._findByIdAndUpdate(id, doc);
+  }
+
+  async findByIdAndRemoveForAuth(id: string) {
+    return await this._findByIdAndRemove(id);
+  }
+
+  async findByComRegNumForAuth(comRegNum: string): Promise<Company> {
+    return await this.model.findOne(
+      { comRegNum },
+      'name comRegNum ownerName address',
+    );
+  }
+
+  async findByNameForAuth(name: string): Promise<Company[]> {
+    return await this.model.find(
+      { name: { $regex: name, $options: '$i' } },
+      'name comRegNum ownerName address',
+    );
+  }
 }

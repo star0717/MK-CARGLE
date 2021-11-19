@@ -4,7 +4,10 @@ import { CommonController } from './common.controller';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ConfigModule } from '@nestjs/config';
-import env_config from "src/config/configuration"
+import env_config from 'src/config/configuration';
+import config from 'src/config/configuration';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -13,15 +16,17 @@ import env_config from "src/config/configuration"
       transport: {
         host: env_config().mailerModule.transport.host,
         port: parseInt(env_config().mailerModule.transport.port),
-        ignoreTLS: env_config().mailerModule.transport.ignoreTLS as unknown as boolean,
-        secure: env_config().mailerModule.transport.secure as unknown as boolean,
+        ignoreTLS: env_config().mailerModule.transport
+          .ignoreTLS as unknown as boolean,
+        secure: env_config().mailerModule.transport
+          .secure as unknown as boolean,
         auth: {
           user: env_config().mailerModule.transport.auth.user,
           pass: env_config().mailerModule.transport.auth.pass,
         },
       },
       defaults: {
-        from: env_config().mailerModule.defaults.from
+        from: env_config().mailerModule.defaults.from,
       },
       template: {
         dir: __dirname + '/templates',
@@ -30,10 +35,15 @@ import env_config from "src/config/configuration"
           strict: true,
         },
       },
-    })
+    }),
+    PassportModule,
+    JwtModule.register({
+      secret: `${config().token.key}`,
+      signOptions: { expiresIn: '1d' },
+    }),
   ],
   controllers: [CommonController],
   providers: [CommonService],
-  exports: [CommonService]
+  exports: [CommonService],
 })
-export class CommonModule { }
+export class CommonModule {}

@@ -15,17 +15,15 @@ import {
   Query,
   UseGuards,
   Req,
-  UnauthorizedException,
 } from '@nestjs/common';
 import {
   ApiBody,
   ApiCreatedResponse,
   ApiOperation,
   ApiParam,
-  ApiQuery,
   ApiResponse,
-  ApiTags,
 } from '@nestjs/swagger';
+import { Request } from 'express';
 import {
   BaseEntity,
   DeleteResult,
@@ -35,7 +33,6 @@ import {
 import { SafeService } from './safe-crud.service';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { AuthTokenInfo } from 'src/models/auth.entity';
-import { CompanyApproval } from 'src/models/company.entity';
 
 @Injectable()
 export class AbstractValidationPipe extends ValidationPipe {
@@ -88,35 +85,8 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       { body: bodyDto },
     ),
   )
-  class BaseController<T extends BaseEntity> implements IController<T> {
+  class SafeController<T extends BaseEntity> implements IController<T> {
     constructor(private readonly safeService: SafeService<T>) {}
-
-    /**
-     * 토큰을 추출하여 반환. 추출 도중 잘못된 접근일 경우 익셉션 발생
-     * @param req 토큰을 추출할 request
-     * @returns
-     */
-    private extractToken(@Req() req): AuthTokenInfo {
-      const aToken: AuthTokenInfo = req.user;
-      // 권한 검증
-      if (
-        aToken.cApproval != CompanyApproval.DONE ||
-        aToken.uApproval != true
-      ) {
-        throw new UnauthorizedException();
-      }
-      // ID값 검증
-      if (
-        !aToken ||
-        !aToken.uID ||
-        !aToken.cID ||
-        aToken.uID == '' ||
-        aToken.cID == ''
-      ) {
-        throw new UnauthorizedException();
-      }
-      return aToken;
-    }
 
     @Post()
     @ApiOperation({ summary: `새로운 ${bodyDto.name} 데이터 추가` })
@@ -126,7 +96,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       type: bodyDto,
     })
     async create(@Req() req, @Body() doc: T): Promise<T> {
-      const aToken: AuthTokenInfo = this.extractToken(req);
+      const aToken: AuthTokenInfo = this.safeService.extractToken(req);
       return this.safeService.create(aToken, doc);
     }
 
@@ -139,11 +109,11 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       type: PaginateResult,
     })
     async findByOptions(
-      @Req() req,
+      @Req() req: Request,
       @Query() findQuery: PaginateOptions,
     ): Promise<PaginateResult<T>> {
-      const aToken: AuthTokenInfo = this.extractToken(req);
-      return this.safeService.findByOptions(aToken, findQuery);
+      var token: AuthTokenInfo = this.safeService.extractToken(req);
+      return this.safeService.findByOptions(token, findQuery);
     }
 
     @Get(':id')
@@ -154,8 +124,8 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       type: bodyDto,
     })
     async findById(@Req() req, @Param('id') id: string): Promise<T> {
-      const aToken: AuthTokenInfo = this.extractToken(req);
-      return this.safeService.findById(aToken, id);
+      const token: AuthTokenInfo = this.safeService.extractToken(req);
+      return this.safeService.findById(token, id);
     }
 
     @Patch(':id')
@@ -167,10 +137,10 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       @Param('id') id: string,
       @Body() doc: Partial<T>,
     ): Promise<T> {
-      const aToken: AuthTokenInfo = this.extractToken(req);
+      const token: AuthTokenInfo = this.safeService.extractToken(req);
       console.log('update in BaseController');
       console.log(doc);
-      return this.safeService.findByIdAndUpdate(aToken, id, doc);
+      return this.safeService.findByIdAndUpdate(token, id, doc);
     }
 
     @Delete(':id')
@@ -184,9 +154,9 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       @Req() req,
       @Param('id') id: string,
     ): Promise<DeleteResult> {
-      const aToken: AuthTokenInfo = this.extractToken(req);
-      return this.safeService.findByIdAndRemove(aToken, id);
+      const token: AuthTokenInfo = this.safeService.extractToken(req);
+      return this.safeService.findByIdAndRemove(token, id);
     }
   }
-  return BaseController;
+  return SafeController;
 }

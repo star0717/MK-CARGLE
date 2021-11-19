@@ -3,16 +3,15 @@ import {
   Get,
   Post,
   Body,
-  UseGuards,
-  Res,
-  Req,
-  BadRequestException,
   Param,
+  Res,
+  BadRequestException,
+  Req,
+  UseGuards,
   UseInterceptors,
   UploadedFile,
-  NotAcceptableException,
-  UnauthorizedException,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 import {
   ApiBody,
   ApiConsumes,
@@ -21,7 +20,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Request, Response } from 'express';
+import { AuthService } from './auth.service';
+import config from 'src/config/configuration';
 import {
   AuthTokenInfo,
   HelpChangePWD,
@@ -32,31 +32,21 @@ import {
   WithdrawalInfo,
 } from 'src/models/auth.entity';
 import { UserAuthority } from 'src/models/user.entity';
-import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
-import { HttpService } from '@nestjs/axios';
-import { map, Observable } from 'rxjs';
-import config, { getCrnPath, getMrnPath } from 'src/config/configuration';
-import { CommonService } from '../common/common.service';
-import { randomInt } from 'crypto';
-import { compare, hashSync } from 'bcrypt';
-import { docFileInterceptor } from 'src/config/multer.option';
-import { CompaniesService } from 'src/modules/companies/companies.service';
-import { UsersService } from 'src/modules/users/users.service';
 import { Company } from 'src/models/company.entity';
+import { Observable } from 'rxjs';
+import { docFileInterceptor } from 'src/config/multer.option';
+import { CommonService } from '../common/common.service';
 
-@ApiTags('인증 API')
 @Controller('auth')
+@ApiTags('인증 API')
 export class AuthController {
-  private readonly env_config = config();
-
   constructor(
     private readonly authService: AuthService,
-    private readonly httpService: HttpService,
     private readonly commonService: CommonService,
-    private readonly companiesService: CompaniesService,
-    private readonly usersService: UsersService,
   ) {}
+
+  private readonly env_config = config();
 
   @ApiOperation({
     summary: '회원 가입',
@@ -85,7 +75,7 @@ export class AuthController {
     }
 
     const newSignInfo: SignUpInfo = await this.authService.signUp(signUpInfo);
-    this.injectToken(newSignInfo, res);
+    this.commonService.injectToken(newSignInfo, res);
     return;
   }
 
@@ -98,14 +88,14 @@ export class AuthController {
   ) {
     console.log(userInfo);
     const newSignInfo: SignUpInfo = await this.authService.signIn(userInfo);
-    this.injectToken(newSignInfo, res);
+    this.commonService.injectToken(newSignInfo, res);
     return;
   }
 
   @ApiOperation({ summary: `로그아웃 (토큰 삭제)` })
   @Get('signout')
   async signOut(@Res({ passthrough: true }) res: Response) {
-    this.clearToken(res);
+    this.commonService.clearToken(res);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -121,43 +111,18 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Body() info: WithdrawalInfo,
   ) {
-    const authToken: AuthTokenInfo = this.extractToken(req);
-    console.log(authToken);
-    console.log(info);
-
-    // 토큰의 사용자 ID와 입력받은 ID가 불일치 할 경우
-    if (authToken.uID != info._id) throw new UnauthorizedException();
-
-    var user = await this.usersService.findById(authToken.uID);
-    if (!user) throw new UnauthorizedException();
-
-    // 토큰의 업체 ID와 사용자의 업체 ID가 불일치 할 경우
-    if (authToken.cID != user._cID) throw new UnauthorizedException();
-
-    // 사용자 조회(패스워드까지 포함)
-    const userInfo: UserInfo = {
-      id: user.email,
-      pwd: info.PWD,
-    };
-    user = await this.usersService.findUserBySignInInfo(userInfo);
-    if (!user) throw new UnauthorizedException();
-
-    if (user.auth == UserAuthority.WORKER) {
-      await this.usersService.removeWorker(user._id, user._cID);
-    } else if (user.auth == UserAuthority.OWNER) {
-      await this.usersService.removeUsersByComID(user._cID);
-      await this.companiesService.remove(user._cID);
-    }
-    this.clearToken(res);
+    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    await this.authService.withdrawal(token, info);
+    this.commonService.clearToken(res);
   }
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: `프로필 확인 (토큰 정보 확인)` })
   @Get('profile')
   getProfile(@Req() req: Request): AuthTokenInfo {
-    const authToken: AuthTokenInfo = this.extractToken(req);
-    console.log(authToken);
-    return authToken;
+    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    console.log(token);
+    return token;
   }
 
   @ApiOperation({ summary: '사업자번호로 사업자 조회' })
@@ -165,19 +130,9 @@ export class AuthController {
   @ApiResponse({ description: '사업자정보', type: Company || null })
   @Get('find/company/:id')
   async findCompanyByComRegNum(
-    @Param('id') bugNum: string,
+    @Param('id') id: string,
   ): Promise<Partial<Company>> {
-    const company = await this.companiesService.findCompanyByComRegNum(bugNum);
-    if (!company) return null;
-    // 일부만 반환
-    const resCompany: Partial<Company> = {
-      name: company.name,
-      address: company.address,
-      ownerName: company.ownerName,
-      comRegNum: company.comRegNum,
-      _id: company._id,
-    };
-    return resCompany;
+    return await this.authService.findCompanyByComRegNum(id);
   }
 
   @ApiOperation({ summary: '사업자명으로 사업자 조회' })
@@ -187,45 +142,17 @@ export class AuthController {
   async findCompaniesByName(
     @Param('id') name: string,
   ): Promise<Partial<Company>[]> {
-    const companies = await this.companiesService.findCompaniesByName(name);
-    console.log(companies);
-    var resCompanies: Partial<Company>[] = [];
-    companies.forEach((company) => {
-      resCompanies.push({
-        name: company.name,
-        address: company.address,
-        ownerName: company.ownerName,
-        comRegNum: company.comRegNum,
-        _id: company._id,
-      });
-    });
-    return resCompanies;
+    return await this.authService.findCompanyByName(name);
   }
 
   @ApiOperation({ summary: '사업자번호 유효성 검증' })
   @ApiParam({ name: 'id', description: '검증할 사업자번호' })
   @ApiResponse({ description: '사업자번호 존재여부(유효여부)', type: Boolean })
   @Get('validate/com-reg-number/:id')
-  async busNumValidate(
-    @Param('id') bugNum: String,
+  async validateBusNum(
+    @Param('id') busNum: string,
   ): Promise<Observable<boolean>> {
-    bugNum = bugNum.replace(/-/g, '');
-    const apiKey = this.env_config.busNumValidation.api_key;
-    const apiUrl = this.env_config.busNumValidation.url + apiKey;
-    const postData = {
-      b_no: [bugNum],
-    };
-    return this.httpService.post(apiUrl, postData).pipe(
-      map((response) => {
-        console.log(response.data);
-        const res = response.data;
-        if (res['match_cnt'] == 1) {
-          return true;
-        } else {
-          return false;
-        }
-      }),
-    );
+    return await this.authService.validateBusNum(busNum);
   }
 
   @ApiOperation({ summary: '가입자 메일주소 유효성 검증 및 인증메일 발송' })
@@ -235,44 +162,22 @@ export class AuthController {
     type: Boolean,
   })
   @Get('validate/email/:id')
-  async emailValidate(
+  async validateEmail(
     @Param('id') email: string,
     @Res({ passthrough: true }) res: Response,
   ): Promise<boolean> {
-    const user = await this.authService.findUserByEmail(email);
-    if (user) {
-      return false; //사용자가 존재하면 false 반환
-    } else {
-      const authCode: number = randomInt(1111, 9999);
-      const strAuthCode = hashSync(String(authCode), 10);
-
-      //테스트 목적(향 후 삭제)
-      console.log(authCode);
-      console.log(strAuthCode);
-
-      this.commonService.sendMail(
-        email,
-        '이메일 인증 요청 메일',
-        '4자리 인증 코드 : ' + `<b> ${authCode}</b>`,
-      );
-      const expireDate = new Date(Date.now() + 1000 * 60 * 5);
-      res.cookie(process.env.AUTH_EMAIL_TK_NAME, strAuthCode, {
-        expires: expireDate,
-      });
-      return true; //사용자가 존재하지 않으면 true 반환
-    }
+    return await this.authService.validateEmail(email, res);
   }
 
   @ApiOperation({ summary: '암호문과 평문이 동일한지 검증함' })
   @ApiResponse({ description: '검증결과', type: Boolean })
-  @Get('validate/crypto-text/:id')
-  async compareCryptoText(
+  @Get('validate/email-token/:id')
+  async validateEmailToken(
     @Req() req: Request,
-    @Param('id') painText: string,
+    @Param('id') plainText: string,
   ): Promise<boolean> {
     const cryptoText: string = req.cookies[this.env_config.authMailTokenName];
-    if (!cryptoText) throw new BadRequestException();
-    return await compare(painText, cryptoText);
+    return await this.authService.validateCryptoText(plainText, cryptoText);
   }
 
   @ApiOperation({ summary: '가입자 전화번호 유효성 검증' })
@@ -282,13 +187,8 @@ export class AuthController {
     type: Boolean,
   })
   @Get('validate/phone/:id')
-  async phoneValidate(@Param('id') hpNumber: string): Promise<boolean> {
-    const user = await this.authService.findUserByHpNumber(hpNumber);
-    if (user) {
-      return false; //사용자가 존재하면 false 반환
-    } else {
-      return true; //사용자가 존재하지 않으면 true 반환
-    }
+  async validatePhoneNumber(@Param('id') hpNumber: string): Promise<boolean> {
+    return await this.authService.validatePhoneNumber(hpNumber);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -309,26 +209,12 @@ export class AuthController {
   })
   @UseInterceptors(docFileInterceptor)
   @Post('upload/com-reg-doc')
-  async uploadCrFile(
+  async uploadComRegFile(
     @Req() req: Request,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<string> {
-    const authToken: AuthTokenInfo = this.extractToken(req);
-    const company = await this.companiesService.findById(authToken.cID);
-    const extension = file.originalname.substr(
-      file.originalname.lastIndexOf('.'),
-    );
-    const path = getCrnPath();
-    let fileName = company.comRegNum.toString();
-    const oldFiles = await this.commonService.getFileNames(path, fileName);
-    await this.commonService.deleteFiles(path, oldFiles);
-    fileName = fileName + extension;
-    const newFileName = await this.commonService.storeFile(
-      file,
-      path,
-      fileName,
-    );
-    return newFileName;
+    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    return await this.authService.uploadComRegFile(token, file);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -349,26 +235,12 @@ export class AuthController {
   })
   @UseInterceptors(docFileInterceptor)
   @Post('upload/man-reg-doc')
-  async uploadMrFile(
+  async uploadMainRegFile(
     @Req() req: Request,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<string> {
-    const authToken: AuthTokenInfo = this.extractToken(req);
-    const company = await this.companiesService.findById(authToken.cID);
-    const extension = file.originalname.substr(
-      file.originalname.lastIndexOf('.'),
-    );
-    const path = getMrnPath();
-    let fileName = company.mbRegNum.toString();
-    const oldFiles = await this.commonService.getFileNames(path, fileName);
-    await this.commonService.deleteFiles(path, oldFiles);
-    fileName = fileName + extension;
-    const newFileName = await this.commonService.storeFile(
-      file,
-      path,
-      fileName,
-    );
-    return newFileName;
+    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    return await this.authService.uploadMainRegFile(token, file);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -376,55 +248,25 @@ export class AuthController {
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/com-reg-docc')
   async getCrFileName(@Req() req: Request): Promise<string> | null {
-    const authToken: AuthTokenInfo = this.extractToken(req);
-    const company = await this.companiesService.findById(authToken.cID);
-    const fileName = company.comRegNum.toString();
-
-    const fileList = await this.commonService.getFileNames(
-      getCrnPath(),
-      fileName,
-    );
-
-    if (fileList.length > 0) {
-      return fileList[0];
-    } else return null;
+    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    return await this.authService.getComRegFileName(token);
   }
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '업로드된 정비업등록증 파일명 반환' })
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/man-reg-doc')
-  async getMrFileName(@Req() req: Request): Promise<string> | null {
-    const authToken: AuthTokenInfo = this.extractToken(req);
-    const company = await this.companiesService.findById(authToken.cID);
-    const fileName = company.mbRegNum.toString();
-
-    const fileList = await this.commonService.getFileNames(
-      getMrnPath(),
-      fileName,
-    );
-
-    if (fileList.length > 0) {
-      return fileList[0];
-    } else return null;
+  async getMainRegFileName(@Req() req: Request): Promise<string> | null {
+    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    return await this.authService.getMainRegFileName(token);
   }
 
   @ApiOperation({ summary: '이메일 주소 찾기' })
   @ApiBody({ description: '사용자명과 핸드폰번호', type: HelpFindEmail })
   @ApiResponse({ description: '성공: 메일주소, 실패: null' })
   @Post('help/email')
-  async helpFineEmail(@Body() data: HelpFindEmail): Promise<string> | null {
-    console.log(data);
-    const user = await this.usersService.findUserByHpNumber(data.hpNumber);
-
-    console.log(user);
-    // 검색된 사용자가 없거나 사용자명이 입력값과 다를 경우 null 반환
-    if (!user || user.name != data.name) return null;
-
-    // 메일 주소의 일부를 마스킹하여 반환
-    const email = user.email;
-    var len = email.split('@')[0].length - 5;
-    return email.replace(new RegExp('.(?=.{0,' + len + '}@)', 'g'), '*');
+  async helpFindEmail(@Body() data: HelpFindEmail): Promise<string> | null {
+    return await this.authService.helpFindEmail(data);
   }
 
   @ApiOperation({ summary: '패스워드 찾기' })
@@ -438,22 +280,7 @@ export class AuthController {
   })
   @Post('help/pwd')
   async helpFinePWD(@Body() data: HelpFindPWD): Promise<boolean> {
-    const user = await this.usersService.findUserByHpNumber(data.hpNumber);
-
-    // 검색된 사용자가 없거나 사용자명이 입력값과 다를 경우 null 반환
-    if (!user || user.name != data.name || user.email != data.email)
-      return false;
-
-    // 비밀번호를 변경하여 메일 전송
-    const password = Math.random().toString(36).substr(2, 11);
-    await this.usersService.update(user._id, { password });
-    this.commonService.sendMail(
-      user.email,
-      '임시 비밀번호 전송',
-      '4자리 인증 코드 : ' + `<b> ${password}</b>`,
-    );
-    console.log(password);
-    return true;
+    return await this.authService.helpFindPWD(data);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -473,76 +300,7 @@ export class AuthController {
   ): Promise<boolean> {
     console.log(data);
 
-    const authToken: AuthTokenInfo = this.extractToken(req);
-
-    if (authToken.uID != data._id) return false;
-
-    // 사용자 조회(패스워드는 제외됨)
-    var user = await this.usersService.findById(data._id);
-
-    // 사용자 조회(패스워드까지 포함)
-    const userInfo: UserInfo = {
-      id: user.email,
-      pwd: data.oldPWD,
-    };
-    user = await this.usersService.findUserBySignInInfo(userInfo);
-    if (!user) throw new UnauthorizedException();
-
-    user = await this.usersService.update(user._id, { password: data.newPWD });
-    if (user) return true;
-    else return false;
-  }
-
-  /**
-   * 토큰을 생성하여 쿠키에 주입
-   * @param signUpInfo 토큰에 주입될 사용자와 사업체의 정보
-   * @param res 토큰을 주입할 응답
-   */
-  private injectToken(
-    signUpInfo: SignUpInfo,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const authToken: AuthTokenInfo = {
-      cID: signUpInfo.company._id,
-      cName: signUpInfo.company.name,
-      cApproval: signUpInfo.company.approval,
-      uID: signUpInfo.user._id,
-      uName: signUpInfo.user.name,
-      uAuth: signUpInfo.user.auth,
-      uApproval: signUpInfo.user.approval,
-    };
-    const token = this.authService.genJwtToken(authToken);
-    res.cookie(process.env.TK_NAME, token);
-  }
-
-  /**
-   * 토큰을 갱신해서 재주입. 권한이나 인증 정보가 변경되었을 때 사용
-   * @param authToken 현재 토큰 정보
-   * @param res 토큰을 주입할 응답
-   */
-  private async reInjectToken(
-    authToken: AuthTokenInfo,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const company = await this.companiesService.findById(authToken.cID);
-    if (!company) throw new UnauthorizedException();
-    const user = await this.usersService.findById(authToken.uID);
-    if (!user) throw new UnauthorizedException();
-
-    this.clearToken(res);
-
-    const newSignUpInfo: SignUpInfo = {
-      user,
-      company,
-    };
-    this.injectToken(newSignUpInfo, res);
-  }
-
-  private extractToken(@Req() req): AuthTokenInfo {
-    return req.user;
-  }
-
-  private clearToken(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie(process.env.TK_NAME);
+    const token: AuthTokenInfo = this.commonService.extractToken(req);
+    return await this.authService.updateUserPassword(token, data);
   }
 }

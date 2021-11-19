@@ -1,9 +1,5 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { Model, FilterQuery, ObjectId } from 'mongoose';
+import { BadRequestException, Injectable, Req } from '@nestjs/common';
+import { Model, FilterQuery } from 'mongoose';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   BaseEntity,
@@ -11,8 +7,8 @@ import {
   PaginateOptions,
   PaginateResult,
 } from 'src/models/base.entity';
-import { CompanyApproval } from 'src/models/company.entity';
 import { UserAuthority } from 'src/models/user.entity';
+import { CommonService } from '../common/common.service';
 
 /* 확장 서비스 클래스용 패키지 - 아래의 내용을 확장 클래스에 주입
 import { InjectModel } from 'nestjs-typegoose';
@@ -28,7 +24,7 @@ export class SafeService<T extends BaseEntity> {
     */
   private modelKeys: string[];
 
-  constructor(readonly model: Model<T>) {
+  constructor(readonly model: Model<T>, readonly commonService: CommonService) {
     const schema = model.prototype.schema.paths;
     this.modelKeys = Object.keys(schema);
   }
@@ -40,6 +36,10 @@ export class SafeService<T extends BaseEntity> {
    */
   isContainedKey(key: string): boolean {
     return this.modelKeys.includes(key);
+  }
+
+  extractToken(@Req() req): AuthTokenInfo {
+    return this.commonService.extractToken(req);
   }
 
   protected async _create(doc: T): Promise<T> {
