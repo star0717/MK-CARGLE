@@ -48,7 +48,7 @@ export async function emailSendAction(dataToSubmit: string) {
 // 인증번호 검사 action
 export async function authNumCheckAction(dataToSubmit: string) {
   const req = await axios
-    .get(`/api/auth/validate/crypto-text/${dataToSubmit}`)
+    .get(`/api/auth/validate/email-token/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_AUTHNUM_CHECK,
