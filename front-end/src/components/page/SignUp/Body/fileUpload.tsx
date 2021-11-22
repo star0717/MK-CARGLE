@@ -5,24 +5,33 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import {
+  approvalReqAction,
   comFileUploadAction,
   manFileUploadAction,
   signOutUserAction,
 } from "../../../../../store/action/user.action";
+
+interface FileUploadProps {
+  stepNumber?: any;
+  setStepNumber?: any;
+  cID?: any;
+}
 
 const fileInit = {
   comFile: "",
   manFile: "",
 };
 
-const FileUpload: NextPage<any> = (props) => {
+const FileUpload: NextPage<FileUploadProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   // props 재정의
   const stepNumber = props?.stepNumber;
   const setStepNumber = props?.setStepNumber;
-  const userAuth = props?.userAuth;
+  const cID = props?.cID;
+
+  console.log("씨아이디 : ", cID);
 
   // 업로드할 파일 state
   const [file, setFile] = useState(fileInit);
@@ -54,18 +63,24 @@ const FileUpload: NextPage<any> = (props) => {
     manFormData.append("file", file.manFile);
     dispatch(comFileUploadAction(comFormData)).then(
       (res: any) => {
-        console.log(res);
         dispatch(manFileUploadAction(manFormData)).then(
           (res: any) => {
-            console.log(res);
-            if (stepNumber) {
-              setStepNumber(stepNumber + 1);
-            } else {
-              alert("제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다.");
-              dispatch(signOutUserAction()).then((res: any) => {
-                router.push("/");
-              });
-            }
+            dispatch(approvalReqAction(cID)).then((res: any) => {
+              if (res.payload) {
+                if (stepNumber) {
+                  setStepNumber(stepNumber + 1);
+                } else {
+                  alert(
+                    "제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다."
+                  );
+                  dispatch(signOutUserAction()).then((res: any) => {
+                    router.push("/");
+                  });
+                }
+              } else {
+                alert("제출에 실패했습니다.");
+              }
+            });
           },
           (err) => {
             if (err.response.status === 400 || 500) {

@@ -12,6 +12,7 @@ import Approval from "../../src/components/page/SignUp/Body/approval";
 interface ViewProps {
   cate: any;
   cApproval?: string;
+  cID?: string;
 }
 
 const Componentitem: NextPage<any> = (props) => {
@@ -28,7 +29,7 @@ const Componentitem: NextPage<any> = (props) => {
       return <SignUp />;
     case "main":
       if (cApproval === "before") {
-        return <FileUpload />;
+        return <FileUpload {...props} />;
       } else if (cApproval === "ing") {
         return <Approval />;
       } else {
@@ -85,11 +86,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   } else {
     const tokenValue = parseJwt(context.req.cookies.mk_token);
     const cApproval = tokenValue.cApproval;
+    const cID = tokenValue.cID;
+    console.log(cID);
 
     return {
       props: {
         cate,
         cApproval,
+        cID,
       },
     };
   }
