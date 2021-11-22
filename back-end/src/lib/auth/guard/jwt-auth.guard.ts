@@ -3,6 +3,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 
 /**
@@ -11,15 +12,27 @@ import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-  // /**
-  //  * 인증 전략을 수행하기 전에 호출 (1/4)
-  //  * @param context
-  //  * @returns
-  //  */
-  // canActivate(context: ExecutionContext) {
-  //   console.log('*** canActivate in JwtAuthGuard (1/4)');
-  //   return super.canActivate(context);
-  // }
+  constructor(private readonly reflector: Reflector) {
+    super();
+  }
+  /**
+   * 인증 전략을 수행하기 전에 호출 (1/4)
+   * @param context
+   * @returns
+   */
+  canActivate(context: ExecutionContext) {
+    // console.log('*** canActivate in JwtAuthGuard (1/4)');
+
+    const isPublic = this.reflector.get<boolean>(
+      'isPublic',
+      context.getHandler(),
+    );
+
+    if (isPublic) {
+      return true;
+    }
+    return super.canActivate(context);
+  }
   // /**
   //  * 인증 전략 수행 후에 호출 (4/4)
   //  * @param err

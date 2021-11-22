@@ -7,7 +7,6 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { AdminModule } from './lib/admin/admin.module';
 import { AuthModule } from './lib/auth/auth.module';
 import { SafeCrudModule } from './lib/safe-crud/safe-crud.module';
-import { TttModule } from './ttt/ttt.module';
 
 const dbInfo = isUseAuthDB()
   ? 'mongodb://' +
@@ -36,7 +35,6 @@ console.log(dbInfo);
     AdminModule,
     SafeCrudModule,
     ModulesModule,
-    TttModule,
   ],
 })
 export class AppModule {}

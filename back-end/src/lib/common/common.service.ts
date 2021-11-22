@@ -6,6 +6,7 @@ import { readdirSync, rmSync, writeFileSync } from 'fs';
 import { Address } from 'nodemailer/lib/mailer';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
 import { CompanyApproval } from 'src/models/company.entity';
+import { UserAuthority } from 'src/models/user.entity';
 
 @Injectable()
 export class CommonService {
@@ -100,42 +101,83 @@ export class CommonService {
     res.cookie(process.env.TK_NAME, token);
   }
 
-  extractToken(@Req() req, isAuth: boolean = false): AuthTokenInfo {
-    try {
-      const token: AuthTokenInfo = req.user;
-      if (!token) throw new UnauthorizedException();
+  /**
+   * 토큰 정보 추출
+   * @param req 토큰을 추출할 request
+   * @param isAuth 인증관련 요청인지 여부. true: 승인안된 사용자도 요청 가입가능
+   * @param reqAdmin 시스템 관리자 권한을 필요로 하는지 여부
+   * @returns
+   */
+  extractToken(
+    @Req() req,
+    isAuth: boolean = false,
+    reqAdmin: boolean = false,
+  ): AuthTokenInfo {
+    const token: AuthTokenInfo = req.user;
+    if (!token) throw new UnauthorizedException();
 
-      // console.log(Date.now() / 1000);
-      // console.log(token['exp']);
-      // console.log(new Date(token['exp'] * 1000));
-      // console.log();
+    // console.log(Date.now() / 1000);
+    // console.log(token['exp']);
+    // console.log(new Date(token['exp'] * 1000));
+    // console.log();
 
-      // 회원가입 중인 경우는 생략
-      if (!isAuth) {
-        // 권한 검증
-        if (
-          token.cApproval != CompanyApproval.DONE ||
-          token.uApproval != true
-        ) {
-          throw new UnauthorizedException();
-        }
-      }
-
-      // ID값 검증
-      if (
-        !token ||
-        !token.uID ||
-        !token.cID ||
-        token.uID == '' ||
-        token.cID == ''
-      ) {
+    // 회원가입 중인 경우는 생략
+    if (!isAuth) {
+      // 권한 검증
+      if (token.cApproval != CompanyApproval.DONE || token.uApproval != true) {
         throw new UnauthorizedException();
       }
-      return token;
-    } catch (err) {}
+    }
+
+    // Admin만 사용할 수 있는 요청인지 여부 확인
+    if (reqAdmin) {
+      if (token.uAuth != UserAuthority.ADMIN) {
+        throw new UnauthorizedException();
+      }
+    }
+
+    // ID값 검증
+    if (
+      !token ||
+      !token.uID ||
+      !token.cID ||
+      token.uID == '' ||
+      token.cID == ''
+    ) {
+      throw new UnauthorizedException();
+    }
+    return token;
   }
 
   clearToken(@Res({ passthrough: true }) res: Response) {
     res.clearCookie(process.env.TK_NAME);
+  }
+
+  emailDataForEmailValidation(authCode: number) {
+    return {
+      title: '이메일 인증 요청 메일',
+      content: '4자리 인증 코드 : ' + `<b> ${authCode}</b>`,
+    };
+  }
+
+  emailDataForApproved() {
+    return {
+      title: '가입 승인완료 메일',
+      content: '회원가입이 승인되었습니다.',
+    };
+  }
+
+  emailDataForRejectApproval() {
+    return {
+      title: '기입 승인거부 메일',
+      content: '회원가입이 승인거부되었습니다. 제출서류를 보완해주세요.',
+    };
+  }
+
+  emailDataForFindingAddress(password: string) {
+    return {
+      title: '임시 비밀번호 전송',
+      content: '4자리 인증 코드 : ' + `<b> ${password}</b>`,
+    };
   }
 }
