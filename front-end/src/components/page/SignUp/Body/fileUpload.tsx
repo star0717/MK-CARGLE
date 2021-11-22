@@ -3,7 +3,10 @@ import { useRouter } from "next/dist/client/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faQuestionCircle,
+  faExclamationCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   approvalReqAction,
   comFileUploadAction,
@@ -101,9 +104,6 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
     );
   };
 
-  console.log("파일 : ", file);
-  console.log("파일네임 : ", fileName);
-
   return (
     <div
       style={{
@@ -197,7 +197,14 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
             backgroundColor: "yellow",
           }}
         >
-          <div>
+          <div
+            style={{
+              width: "70%",
+              margin: "0 auto",
+              backgroundColor: "gainsboro",
+              fontSize: "0.8em",
+            }}
+          >
             <div
               style={{
                 display: "flex",
@@ -207,15 +214,27 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
             >
               <FontAwesomeIcon
                 icon={faQuestionCircle}
-                style={{ width: "15px" }}
+                style={{ width: "13px", marginRight: "3px" }}
               />
-              <p>아직 서류가 준비되지 않으셨나요?</p>
+              <div>아직 서류가 준비되지 않으셨나요?</div>
             </div>
-            <div>
-              서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
-              로그인하면 이어서 진행이 가능해요.
-              <br />
-              서류가 제출되면 최종 가입 심사가 시작됩니다!
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "baseline",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faExclamationCircle}
+                style={{ width: "13px", marginRight: "3px" }}
+              />
+              <div>
+                서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
+                로그인하면 이어서 진행이 가능해요.
+                <br />
+                서류가 제출되면 최종 가입 심사가 시작됩니다!
+              </div>
             </div>
           </div>
         </div>

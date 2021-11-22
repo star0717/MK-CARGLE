@@ -15,7 +15,7 @@ interface ViewProps {
   cID?: string;
 }
 
-const Componentitem: NextPage<any> = (props) => {
+const Componentitem: NextPage<ViewProps> = (props) => {
   // props 재정의
   const cate = props.cate.cate;
   const cApproval = props?.cApproval;
