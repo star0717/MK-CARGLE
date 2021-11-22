@@ -6,15 +6,14 @@ import { signOutUserAction } from "../../../store/action/user.action";
 
 interface HeaderProps {
   cate: any;
+  cApproval?: string;
 }
 
 const Header: NextPage<HeaderProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
   // props 재정의
-  const cate = props.cate.cate;
-
-  const main = cate ? cate[0] : "";
+  const cApproval = props?.cApproval;
 
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
@@ -34,7 +33,7 @@ const Header: NextPage<HeaderProps> = (props) => {
       <div style={{ width: "30%" }}>
         <Link href="/view/main">MK SOLUTION</Link>
       </div>
-      {main !== "" && main !== "signup" && main !== "find" ? (
+      {cApproval === "done" && (
         <div style={{ width: "80%", display: "flex" }}>
           <div style={{ width: "75%", display: "flex" }}>
             <div style={{ width: "20%", height: "100%" }}>정비</div>
@@ -48,8 +47,6 @@ const Header: NextPage<HeaderProps> = (props) => {
             <button onClick={onSignOutHandler}>로그아웃</button>
           </div>
         </div>
-      ) : (
-        ""
       )}
     </div>
   );
