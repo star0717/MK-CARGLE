@@ -18,7 +18,7 @@ import {
   UserInfo,
   WithdrawalInfo,
 } from 'src/models/auth.entity';
-import { Company } from 'src/models/company.entity';
+import { Company, CompanyApproval } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
 
 import { HttpService } from '@nestjs/axios';
@@ -42,6 +42,9 @@ export class AuthService {
   async signUp(signUpInfo: SignUpInfo): Promise<SignUpInfo> {
     let company: Company;
     let user: User;
+
+    signUpInfo.company.approval = CompanyApproval.ING;
+    signUpInfo.user.approval = false;
 
     console.log(signUpInfo);
 

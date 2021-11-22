@@ -6,22 +6,41 @@ import SignUp from "../../src/components/page/SignUp";
 import Main from "../../src/components/page/Main";
 import Find from "../../src/components/page/Find";
 import { parseJwt } from "../../src/modules/parseJwt";
-import { CompanyApproval } from "../../src/models/company.entity";
+import FileUpload from "../../src/components/page/SignUp/Body/fileUpload";
+import Approval from "../../src/components/page/SignUp/Body/approval";
 
 interface ViewProps {
   cate: any;
+  cApproval?: string;
 }
 
 const Componentitem: NextPage<any> = (props) => {
-  const cate = props.cate;
+  // props 재정의
+  const cate = props.cate.cate;
+  const cApproval = props?.cApproval;
+
+  // url(query) 구분
   const main = cate[0];
   const sub = cate[1] ? cate[1] : "";
+
+  console.log("쿼리 : ", main);
+  console.log("심사 : ", cApproval);
+  console.log("프랍 : ", props);
 
   switch (main) {
     case "signup":
       return <SignUp />;
     case "main":
-      return <Main />;
+      if (cApproval === "before") {
+        console.log("비포");
+        return <FileUpload />;
+      } else if (cApproval === "ing") {
+        console.log("아이엔지");
+        return <Approval />;
+      } else {
+        console.log("던");
+        return <Main />;
+      }
     case "find":
       return <Find />;
     default:
@@ -29,7 +48,12 @@ const Componentitem: NextPage<any> = (props) => {
   }
 };
 
-const View: NextPage<ViewProps> = ({ cate }) => {
+const View: NextPage<ViewProps> = (props) => {
+  // props 재정의
+  const cate = props.cate.cate;
+  const cApproval = props?.cApproval;
+  console.log("처음 : ", props);
+
   return (
     <div>
       <Head>
@@ -41,7 +65,7 @@ const View: NextPage<ViewProps> = ({ cate }) => {
         style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       >
         <Header {...cate} />
-        <Componentitem {...cate} />
+        <Componentitem {...props} />
         <Footer />
       </div>
     </div>
@@ -73,22 +97,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   } else {
     const tokenValue = parseJwt(context.req.cookies.mk_token);
     const cApproval = tokenValue.cApproval;
-    if (
-      cApproval === CompanyApproval.BEFORE ||
-      cApproval === CompanyApproval.ING
-    ) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: "/",
-        },
-      };
-    } else {
-      return {
-        props: {
-          cate,
-        },
-      };
-    }
+
+    return {
+      props: {
+        cate,
+        cApproval,
+      },
+    };
   }
 };
