@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Req,
+  Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import {
@@ -70,10 +71,11 @@ export class AdminController {
   })
   async approveCompany(
     @Req() req: Request,
+    @Res() res: Response,
     @Param('id') id: string,
     @Body() doc: Partial<Company>,
   ): Promise<Company> {
-    this.commonService.extractToken(req, false, true);
+    this.commonService.extractToken(req, res, false, true);
     const patchDoc: Partial<Company> = {};
     if (doc.busItem) patchDoc.busItem = doc.busItem;
     if (doc.busType) patchDoc.busType = doc.busType;
@@ -88,17 +90,22 @@ export class AdminController {
   @ApiParam({ name: 'id', description: '거부할 업체의 오브젝트ID' })
   async rejectCompany(
     @Req() req: Request,
+    @Res() res: Response,
     @Param('id') id: string,
   ): Promise<Company> {
-    this.commonService.extractToken(req, false, true);
+    this.commonService.extractToken(req, res, false, true);
     return await this.service.rejectCompany(id);
   }
 
   @Delete('delete/company/:id')
   @ApiOperation({ description: '업체 삭제. 대표자와 직원들도 모두 삭제' })
   @ApiParam({ name: 'id', description: '삭제할 업체의 오브젝트ID' })
-  async deleteCompany(@Req() req: Request, @Param('id') id: string) {
-    const token = this.commonService.extractToken(req, false, true);
+  async deleteCompany(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param('id') id: string,
+  ) {
+    const token = this.commonService.extractToken(req, res, false, true);
     this.service.deleteCompany(token, id);
   }
 }

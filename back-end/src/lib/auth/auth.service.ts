@@ -43,7 +43,7 @@ export class AuthService {
     let company: Company;
     let user: User;
 
-    signUpInfo.company.approval = CompanyApproval.ING;
+    signUpInfo.company.approval = CompanyApproval.BEFORE;
     signUpInfo.user.approval = false;
 
     console.log(signUpInfo);
@@ -293,6 +293,32 @@ export class AuthService {
     if (fileList.length > 0) {
       return fileList[0];
     } else return null;
+  }
+
+  async requestApprove(token: AuthTokenInfo, id: string): Promise<SignUpInfo> {
+    if (token.cID != id) throw new UnauthorizedException();
+    const company = await this.companiesService.findByIdAndUpdateForAuth(id, {
+      approval: CompanyApproval.ING,
+    });
+    if (!company) throw new UnauthorizedException();
+    const user = await this.usersService.findById(token, token.uID);
+    if (!user) throw new UnauthorizedException();
+
+    const mailData = this.commonService.emailDataForRequestApprove(
+      company.name,
+    );
+    this.commonService.sendMail(
+      'park.choongbum@gmail.com',
+      mailData.title,
+      mailData.content,
+    );
+
+    const signUpInfo: SignUpInfo = {
+      user,
+      company,
+    };
+
+    return signUpInfo;
   }
 
   async helpFindEmail(data: HelpFindEmail): Promise<string> | null {

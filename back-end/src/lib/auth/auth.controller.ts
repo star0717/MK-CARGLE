@@ -10,6 +10,7 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  Patch,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import {
@@ -43,7 +44,7 @@ import { Public } from '../decorators/decorators';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly commonService: CommonService,
+    private readonly comService: CommonService,
   ) {}
 
   private readonly env_config = config();
@@ -76,7 +77,7 @@ export class AuthController {
     }
 
     const newSignInfo: SignUpInfo = await this.authService.signUp(signUpInfo);
-    this.commonService.injectToken(newSignInfo, res);
+    this.comService.injectToken(newSignInfo, res);
     return;
   }
 
@@ -90,14 +91,14 @@ export class AuthController {
   ) {
     console.log(userInfo);
     const newSignInfo: SignUpInfo = await this.authService.signIn(userInfo);
-    this.commonService.injectToken(newSignInfo, res);
+    this.comService.injectToken(newSignInfo, res);
     return;
   }
 
   @ApiOperation({ summary: `로그아웃 (토큰 삭제)` })
   @Get('signout')
   async signOut(@Res({ passthrough: true }) res: Response) {
-    this.commonService.clearToken(res);
+    this.comService.clearToken(res);
   }
 
   @ApiOperation({
@@ -112,15 +113,15 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Body() info: WithdrawalInfo,
   ) {
-    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
+    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     await this.authService.withdrawal(token, info);
-    this.commonService.clearToken(res);
+    this.comService.clearToken(res);
   }
 
   @ApiOperation({ summary: `프로필 확인 (토큰 정보 확인)` })
   @Get('profile')
-  getProfile(@Req() req: Request): AuthTokenInfo {
-    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
+  getProfile(@Req() req: Request, @Res() res: Response): AuthTokenInfo {
+    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return token;
   }
 
@@ -215,9 +216,10 @@ export class AuthController {
   @Post('upload/com-reg-doc')
   async uploadComRegFile(
     @Req() req: Request,
+    @Res() res: Response,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<string> {
-    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
+    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.uploadComRegFile(token, file);
   }
 
@@ -240,26 +242,56 @@ export class AuthController {
   @Post('upload/man-reg-doc')
   async uploadMainRegFile(
     @Req() req: Request,
+    @Res() res: Response,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<string> {
-    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
+    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.uploadMainRegFile(token, file);
   }
 
   @ApiOperation({ summary: '업로드된 사업자등록증 파일명 반환' })
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/com-reg-docc')
-  async getCrFileName(@Req() req: Request): Promise<string> | null {
-    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
+  async getCrFileName(
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<string> | null {
+    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.getComRegFileName(token);
   }
 
   @ApiOperation({ summary: '업로드된 정비업등록증 파일명 반환' })
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/man-reg-doc')
-  async getMainRegFileName(@Req() req: Request): Promise<string> | null {
-    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
+  async getMainRegFileName(
+    @Req() req: Request,
+    @Res() res: Response,
+  ): Promise<string> | null {
+    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.getMainRegFileName(token);
+  }
+
+  @ApiOperation({ summary: '심사요청' })
+  @ApiResponse({ description: '심사요청 결과', type: Boolean })
+  @ApiParam({ name: 'id', description: '심사 승인을 요청할 업체의 오브젝트ID' })
+  @Patch('request/company/:id')
+  async requestApprove(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Param('id') id: string,
+  ) {
+    const token = this.comService.extractToken(req, res, false, false);
+    const signUpInfo: SignUpInfo = await this.authService.requestApprove(
+      token,
+      id,
+    );
+    if (signUpInfo) {
+      this.comService.injectToken(signUpInfo, res);
+      return true;
+    } else {
+      this.comService.clearToken(res);
+      return false;
+    }
   }
 
   @Public()
@@ -298,11 +330,12 @@ export class AuthController {
   @Post('update/password')
   async UpdateUserPassword(
     @Req() req: Request,
+    @Res() res: Response,
     @Body() data: HelpChangePWD,
   ): Promise<boolean> {
     console.log(data);
 
-    const token: AuthTokenInfo = this.commonService.extractToken(req, true);
+    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.updateUserPassword(token, data);
   }
 }

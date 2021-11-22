@@ -15,6 +15,7 @@ import {
   Query,
   UseGuards,
   Req,
+  Res,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -23,7 +24,7 @@ import {
   ApiParam,
   ApiResponse,
 } from '@nestjs/swagger';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import {
   BaseEntity,
   DeleteResult,
@@ -58,22 +59,30 @@ export class AbstractValidationPipe extends ValidationPipe {
 }
 
 export interface IController<T> {
-  create(req: Request, doc: T): Promise<T>;
+  create(req: Request, res: Response, doc: T): Promise<T>;
   findByOptions(
     req: Request,
+    res: Response,
     qeury: PaginateOptions,
   ): Promise<PaginateResult<T>>;
-  findById(req: Request, id: string): Promise<T>;
-  findByIdAndUpdate(req: Request, id: string, doc: T): Promise<T>;
-  findByIdAndRemove(req: Request, id: string): Promise<DeleteResult>;
+  findById(req: Request, res: Response, id: string): Promise<T>;
+  findByIdAndUpdate(
+    req: Request,
+    res: Response,
+    id: string,
+    doc: T,
+  ): Promise<T>;
+  findByIdAndRemove(
+    req: Request,
+    res: Response,
+    id: string,
+  ): Promise<DeleteResult>;
 }
 
 export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
   bodyDto: Type<T>,
 ): Type<IController<T>> {
   @Controller()
-  // 가드 적용: 로그인 된 연결만을 허용
-  @UseGuards(JwtAuthGuard)
   // 파이프 적용: DTO 데이터 검증
   @UsePipes(
     new AbstractValidationPipe(
@@ -95,8 +104,8 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       description: `추가된 ${bodyDto.name} 데이터`,
       type: bodyDto,
     })
-    async create(@Req() req, @Body() doc: T): Promise<T> {
-      const aToken: AuthTokenInfo = this.safeService.extractToken(req);
+    async create(@Req() req, @Res() res: Response, @Body() doc: T): Promise<T> {
+      const aToken: AuthTokenInfo = this.safeService.extractToken(req, res);
       return this.safeService.create(aToken, doc);
     }
 
@@ -110,9 +119,10 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     })
     async findByOptions(
       @Req() req: Request,
+      @Res() res: Response,
       @Query() findQuery: PaginateOptions,
     ): Promise<PaginateResult<T>> {
-      var token: AuthTokenInfo = this.safeService.extractToken(req);
+      var token: AuthTokenInfo = this.safeService.extractToken(req, res);
       return this.safeService.findByOptions(token, findQuery);
     }
 
@@ -123,8 +133,12 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       description: `검색된 ${bodyDto.name} 데이터`,
       type: bodyDto,
     })
-    async findById(@Req() req, @Param('id') id: string): Promise<T> {
-      const token: AuthTokenInfo = this.safeService.extractToken(req);
+    async findById(
+      @Req() req,
+      @Res() res: Response,
+      @Param('id') id: string,
+    ): Promise<T> {
+      const token: AuthTokenInfo = this.safeService.extractToken(req, res);
       return this.safeService.findById(token, id);
     }
 
@@ -134,10 +148,11 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     @ApiBody({ description: `갱신된 ${bodyDto.name} 데이터`, type: bodyDto })
     async findByIdAndUpdate(
       @Req() req,
+      @Res() res: Response,
       @Param('id') id: string,
       @Body() doc: Partial<T>,
     ): Promise<T> {
-      const token: AuthTokenInfo = this.safeService.extractToken(req);
+      const token: AuthTokenInfo = this.safeService.extractToken(req, res);
       console.log('update in BaseController');
       console.log(doc);
       return this.safeService.findByIdAndUpdate(token, id, doc);
@@ -152,9 +167,11 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     })
     async findByIdAndRemove(
       @Req() req,
+      @Res() res: Response,
+
       @Param('id') id: string,
     ): Promise<DeleteResult> {
-      const token: AuthTokenInfo = this.safeService.extractToken(req);
+      const token: AuthTokenInfo = this.safeService.extractToken(req, res);
       return this.safeService.findByIdAndRemove(token, id);
     }
   }
