@@ -2,6 +2,8 @@ import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import {
   comFileUploadAction,
   manFileUploadAction,
@@ -178,7 +180,27 @@ const FileUpload: NextPage<any> = (props) => {
             backgroundColor: "yellow",
           }}
         >
-          {/* 물음표 이모티콘, 메세지 삽입 */}
+          <div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "center",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faQuestionCircle}
+                style={{ width: "15px" }}
+              />
+              <p>아직 서류가 준비되지 않으셨나요?</p>
+            </div>
+            <div>
+              서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
+              로그인하면 이어서 진행이 가능해요.
+              <br />
+              서류가 제출되면 최종 가입 심사가 시작됩니다!
+            </div>
+          </div>
         </div>
       </form>
     </div>
