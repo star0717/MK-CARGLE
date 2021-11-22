@@ -125,7 +125,7 @@ const FileUpload: NextPage<any> = (props) => {
                   type="file"
                   id="comFile"
                   name="comFile"
-                  onChange={onFileSelectHandler}
+                  onInput={onFileSelectHandler}
                   onClick={onFileInputInit}
                   accept=".jpg, .png, .pdf"
                   style={{ display: "none" }}
@@ -151,7 +151,7 @@ const FileUpload: NextPage<any> = (props) => {
                   type="file"
                   id="manFile"
                   name="manFile"
-                  onChange={onFileSelectHandler}
+                  onInput={onFileSelectHandler}
                   onClick={onFileInputInit}
                   accept=".jpg, .png, .pdf"
                   style={{ display: "none" }}
