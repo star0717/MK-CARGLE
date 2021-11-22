@@ -23,22 +23,15 @@ const Componentitem: NextPage<any> = (props) => {
   const main = cate[0];
   const sub = cate[1] ? cate[1] : "";
 
-  console.log("쿼리 : ", main);
-  console.log("심사 : ", cApproval);
-  console.log("프랍 : ", props);
-
   switch (main) {
     case "signup":
       return <SignUp />;
     case "main":
       if (cApproval === "before") {
-        console.log("비포");
         return <FileUpload />;
       } else if (cApproval === "ing") {
-        console.log("아이엔지");
         return <Approval />;
       } else {
-        console.log("던");
         return <Main />;
       }
     case "find":
@@ -49,11 +42,6 @@ const Componentitem: NextPage<any> = (props) => {
 };
 
 const View: NextPage<ViewProps> = (props) => {
-  // props 재정의
-  const cate = props.cate.cate;
-  const cApproval = props?.cApproval;
-  console.log("처음 : ", props);
-
   return (
     <div>
       <Head>
@@ -64,7 +52,7 @@ const View: NextPage<ViewProps> = (props) => {
       <div
         style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       >
-        <Header {...cate} />
+        <Header {...props} />
         <Componentitem {...props} />
         <Footer />
       </div>

@@ -23,10 +23,6 @@ interface SignInProps {
 
 const Home: NextPage<SignInProps> = (props) => {
   const headerProps = { cate: [""] };
-  // // props 재정의
-  // const saveId = props.saveId;
-  // const saveCheck = props.saveCheck;
-  // const cApproval = props?.cApproval;
 
   return (
     <div>
@@ -37,7 +33,6 @@ const Home: NextPage<SignInProps> = (props) => {
       </Head>
       <IndexDiv>
         <Header {...headerProps} />
-        {/* {cApproval === "before" ? <FileUpload /> : <SignIn {...props} />} */}
         <SignIn {...props} />
         <Footer />
       </IndexDiv>
@@ -53,32 +48,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const saveCheck = context.req.cookies.saveId ? true : false; // 저장 여부(boolean)
   // 토큰 확인 - 있을 경우, 메인 화면으로 리디렉트
   if (context.req.cookies.mk_token) {
-    // const tokenValue = parseJwt(context.req.cookies.mk_token);
-    // const cApproval = tokenValue.cApproval;
-    // if (cApproval === CompanyApproval.BEFORE) {
-    //   return {
-    //     props: {
-    //       saveId,
-    //       saveCheck,
-    //       cApproval,
-    //     },
-    //   };
-    // } else if (cApproval === CompanyApproval.ING) {
-    //   return {
-    //     props: {
-    //       saveId,
-    //       saveCheck,
-    //       cApproval,
-    //     },
-    //   };
-    // } else {
     return {
       redirect: {
         permanent: false,
         destination: "/view/main",
       },
     };
-    // }
   }
   return {
     props: {

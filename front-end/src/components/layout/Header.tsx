@@ -4,15 +4,17 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../store/action/user.action";
 
-interface Props {
+interface HeaderProps {
   cate: any;
 }
 
-const Header: NextPage<Props> = (Props) => {
+const Header: NextPage<HeaderProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  // props 재정의
+  const cate = props.cate.cate;
 
-  const main = Props.cate ? Props.cate[0] : "";
+  const main = cate ? cate[0] : "";
 
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
