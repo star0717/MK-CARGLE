@@ -175,6 +175,7 @@ export class AuthService {
     const postData = {
       b_no: [busNum],
     };
+
     return this.httpService.post(apiUrl, postData).pipe(
       map((response) => {
         console.log(response.data);
@@ -199,12 +200,8 @@ export class AuthService {
     //테스트 목적(향 후 삭제)
     console.log(authCode);
     console.log(strAuthCode);
-
-    this.commonService.sendMail(
-      email,
-      '이메일 인증 요청 메일',
-      '4자리 인증 코드 : ' + `<b> ${authCode}</b>`,
-    );
+    const emailData = this.commonService.emailDataForEmailValidation(authCode);
+    this.commonService.sendMail(email, emailData.title, emailData.content);
     const expireDate = new Date(Date.now() + 1000 * 60 * 5);
     res.cookie(process.env.AUTH_EMAIL_TK_NAME, strAuthCode, {
       expires: expireDate,
@@ -321,11 +318,8 @@ export class AuthService {
     // 비밀번호를 변경하여 메일 전송
     const password = Math.random().toString(36).substr(2, 11);
     await this.usersService.findByIdAndUpdateForAuth(user._id, { password });
-    this.commonService.sendMail(
-      user.email,
-      '임시 비밀번호 전송',
-      '4자리 인증 코드 : ' + `<b> ${password}</b>`,
-    );
+    const emailData = this.commonService.emailDataForFindingAddress(password);
+    this.commonService.sendMail(user.email, emailData.title, emailData.content);
     console.log(password);
     return true;
   }

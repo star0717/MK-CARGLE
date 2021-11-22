@@ -1,8 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
+import { AuthTokenInfo } from 'src/models/auth.entity';
 import { Company, CompanyApproval } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
+import { CompaniesService } from 'src/modules/companies/companies.service';
+import { UsersService } from 'src/modules/users/users.service';
+import { CommonService } from '../common/common.service';
 
 @Injectable()
 export class AdminService {
@@ -10,6 +14,9 @@ export class AdminService {
     @InjectModel(User) readonly userModel: ReturnModelType<typeof User>,
     @InjectModel(Company)
     readonly companyModel: ReturnModelType<typeof Company>,
+    private readonly companisService: CompaniesService,
+    private readonly usersService: UsersService,
+    private readonly commonService: CommonService,
   ) {}
 
   async dropUsers() {
@@ -66,5 +73,46 @@ export class AdminService {
       user,
       company,
     };
+  }
+
+  async approveCompany(id: string, doc: Partial<Company>): Promise<Company> {
+    doc.approval = CompanyApproval.DONE;
+    const company = await this.companisService.findByIdAndUpdateForAuth(
+      id,
+      doc,
+    );
+    if (!company) throw new BadRequestException();
+    const user = await this.usersService.findByIdAndUpdateForAuth(
+      company._uID,
+      {
+        approval: true,
+      },
+    );
+    if (!user) throw new BadRequestException();
+    const mailData = this.commonService.emailDataForApproved();
+    this.commonService.sendMail(user.email, mailData.title, mailData.content);
+    return company;
+  }
+
+  async rejectCompany(id: string): Promise<Company> {
+    const company = await this.companisService.findByIdAndUpdateForAuth(id, {
+      approval: CompanyApproval.ING,
+    });
+    if (!company) throw new BadRequestException();
+    const user = await this.usersService.findByIdAndUpdateForAuth(
+      company._uID,
+      {
+        approval: false,
+      },
+    );
+    if (!user) throw new BadRequestException();
+    const mailData = this.commonService.emailDataForRejectApproval();
+    this.commonService.sendMail(user.email, mailData.title, mailData.content);
+    return company;
+  }
+
+  async deleteCompany(token: AuthTokenInfo, id: string) {
+    await this.usersService.deleteAllByComID(token, id);
+    await this.companisService.findByIdAndRemoveForAuth(id);
   }
 }

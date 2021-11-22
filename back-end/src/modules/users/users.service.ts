@@ -56,14 +56,6 @@ export class UsersService extends SafeService<User> {
     return await this._deleteMany(token, { _cID });
   }
 
-  // async isExistEmailforAuth(email: string): Promise<boolean> {
-  //   return await this.model.exists({ email });
-  // }
-
-  // async isExistHpNumberforAuth(hpNumber: string): Promise<boolean> {
-  //   return await this.model.exists({ hpNumber });
-  // }
-
   async findByFieldForAuth(doc: Partial<User>): Promise<User> {
     return await this.model.findOne(doc);
   }

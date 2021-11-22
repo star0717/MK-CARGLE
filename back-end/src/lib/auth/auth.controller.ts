@@ -32,11 +32,11 @@ import {
   WithdrawalInfo,
 } from 'src/models/auth.entity';
 import { UserAuthority } from 'src/models/user.entity';
-import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { Company } from 'src/models/company.entity';
 import { Observable } from 'rxjs';
 import { docFileInterceptor } from 'src/config/multer.option';
 import { CommonService } from '../common/common.service';
+import { Public } from '../decorators/decorators';
 
 @Controller('auth')
 @ApiTags('인증 API')
@@ -48,6 +48,7 @@ export class AuthController {
 
   private readonly env_config = config();
 
+  @Public()
   @ApiOperation({
     summary: '회원 가입',
     description:
@@ -79,6 +80,7 @@ export class AuthController {
     return;
   }
 
+  @Public()
   @ApiOperation({ summary: '시스템에 로그인 시도 (토큰 발급)' })
   @ApiBody({ description: '로그인에 사용될 정보', type: UserInfo })
   @Post('signin')
@@ -98,7 +100,6 @@ export class AuthController {
     this.commonService.clearToken(res);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: `회원탈퇴`,
     description:
@@ -116,7 +117,6 @@ export class AuthController {
     this.commonService.clearToken(res);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: `프로필 확인 (토큰 정보 확인)` })
   @Get('profile')
   getProfile(@Req() req: Request): AuthTokenInfo {
@@ -124,6 +124,7 @@ export class AuthController {
     return token;
   }
 
+  @Public()
   @ApiOperation({ summary: '사업자번호로 사업자 조회' })
   @ApiParam({ name: 'id', description: '조회할 사업자번호' })
   @ApiResponse({ description: '사업자정보', type: Company || null })
@@ -134,6 +135,7 @@ export class AuthController {
     return await this.authService.findCompanyByComRegNum(id);
   }
 
+  @Public()
   @ApiOperation({ summary: '사업자명으로 사업자 조회' })
   @ApiParam({ name: 'id', description: '조회할 사업자명' })
   @ApiResponse({ description: '사업자정보 배열', type: [Company] })
@@ -144,6 +146,7 @@ export class AuthController {
     return await this.authService.findCompanyByName(name);
   }
 
+  @Public()
   @ApiOperation({ summary: '사업자번호 유효성 검증' })
   @ApiParam({ name: 'id', description: '검증할 사업자번호' })
   @ApiResponse({ description: '사업자번호 존재여부(유효여부)', type: Boolean })
@@ -154,6 +157,7 @@ export class AuthController {
     return await this.authService.validateBusNum(busNum);
   }
 
+  @Public()
   @ApiOperation({ summary: '가입자 메일주소 유효성 검증 및 인증메일 발송' })
   @ApiParam({ name: 'id', description: '가입할 메일주소' })
   @ApiResponse({
@@ -168,6 +172,7 @@ export class AuthController {
     return await this.authService.validateEmail(email, res);
   }
 
+  @Public()
   @ApiOperation({ summary: '암호문과 평문이 동일한지 검증함' })
   @ApiResponse({ description: '검증결과', type: Boolean })
   @Get('validate/email-token/:id')
@@ -179,6 +184,7 @@ export class AuthController {
     return await this.authService.validateCryptoText(plainText, cryptoText);
   }
 
+  @Public()
   @ApiOperation({ summary: '가입자 전화번호 유효성 검증' })
   @ApiParam({ name: 'id', description: '가입할 가입자의 전화번호' })
   @ApiResponse({
@@ -190,7 +196,6 @@ export class AuthController {
     return await this.authService.validatePhoneNumber(hpNumber);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '사업자 등록증 업로드.' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -216,7 +221,6 @@ export class AuthController {
     return await this.authService.uploadComRegFile(token, file);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '정비업 등록증 업로드.' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -242,7 +246,6 @@ export class AuthController {
     return await this.authService.uploadMainRegFile(token, file);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '업로드된 사업자등록증 파일명 반환' })
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/com-reg-docc')
@@ -251,7 +254,6 @@ export class AuthController {
     return await this.authService.getComRegFileName(token);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '업로드된 정비업등록증 파일명 반환' })
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/man-reg-doc')
@@ -260,6 +262,7 @@ export class AuthController {
     return await this.authService.getMainRegFileName(token);
   }
 
+  @Public()
   @ApiOperation({ summary: '이메일 주소 찾기' })
   @ApiBody({ description: '사용자명과 핸드폰번호', type: HelpFindEmail })
   @ApiResponse({ description: '성공: 메일주소, 실패: null' })
@@ -268,6 +271,7 @@ export class AuthController {
     return await this.authService.helpFindEmail(data);
   }
 
+  @Public()
   @ApiOperation({ summary: '패스워드 찾기' })
   @ApiBody({
     description: '사용자명과 핸드폰번호 그리고 이메일 주소',
@@ -282,7 +286,6 @@ export class AuthController {
     return await this.authService.helpFindPWD(data);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '패스워드 변경' })
   @ApiBody({
     description: '사용자명과 핸드폰번호 그리고 이메일 주소',
