@@ -54,8 +54,10 @@ const FileUpload: NextPage<any> = (props) => {
     manFormData.append("file", file.manFile);
     dispatch(comFileUploadAction(comFormData)).then(
       (res: any) => {
+        console.log(res);
         dispatch(manFileUploadAction(manFormData)).then(
           (res: any) => {
+            console.log(res);
             if (stepNumber) {
               setStepNumber(stepNumber + 1);
             } else {

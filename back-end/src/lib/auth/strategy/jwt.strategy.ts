@@ -34,11 +34,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  /**
-   * 인증된 사용자의 정보를 반환 (3/4)
-   * @param payload 사용자 토큰을 포함한 payload
-   * @returns 인증된 사용자의 정보
-   */
+  // /**
+  //  * 인증된 사용자의 정보를 반환 (3/4)
+  //  * @param payload 사용자 토큰을 포함한 payload
+  //  * @returns 인증된 사용자의 정보
+  //  */
   async validate(payload: any) {
     // console.log('*** validate in JwtStrategy (3/4)');
     // console.log('payload=> ' + JSON.stringify(payload) + '\n');

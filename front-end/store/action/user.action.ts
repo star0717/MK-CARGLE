@@ -141,3 +141,14 @@ export async function manFileUploadAction(dataToSubmit: any) {
     payload: req,
   };
 }
+
+// 가입 심사 요청 action (업체)
+export async function approvalReqAction(dataToSubmit: any) {
+  const req = await axios
+    .patch(`/api/auth/request/company/${dataToSubmit}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.APPROVAL_REQUEST,
+    payload: req,
+  };
+}

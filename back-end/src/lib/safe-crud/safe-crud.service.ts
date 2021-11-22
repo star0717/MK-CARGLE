@@ -1,5 +1,6 @@
-import { BadRequestException, Injectable, Req } from '@nestjs/common';
+import { BadRequestException, Injectable, Req, Res } from '@nestjs/common';
 import { Model, FilterQuery } from 'mongoose';
+import { Request, Response } from 'express';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   BaseEntity,
@@ -38,8 +39,8 @@ export class SafeService<T extends BaseEntity> {
     return this.modelKeys.includes(key);
   }
 
-  extractToken(@Req() req): AuthTokenInfo {
-    return this.commonService.extractToken(req);
+  extractToken(@Req() req, @Res() res: Response): AuthTokenInfo {
+    return this.commonService.extractToken(req, res);
   }
 
   protected async _create(doc: T): Promise<T> {
@@ -110,7 +111,6 @@ export class SafeService<T extends BaseEntity> {
     if (aToken.uAuth != UserAuthority.ADMIN) {
       sOption._cID = aToken.cID;
     }
-
     return await this.model.findOne(sOption as FilterQuery<T>);
   }
 
