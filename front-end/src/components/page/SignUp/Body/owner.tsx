@@ -238,20 +238,6 @@ const OwnerSignUp: NextPage<any> = (props) => {
     setModalOpen(false);
   };
 
-  console.log({
-    user: {
-      ...inputUser,
-      name: inputCompany.ownerName,
-      email: `${emailAddress}@${emailDomain}`,
-      auth: userAuth,
-    },
-    company: {
-      ...inputCompany,
-      address:
-        addressDetail !== "" ? `${addressMain}, ${addressDetail}` : addressMain,
-    },
-  });
-
   // 사업자(owner) 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
     if (!authNumCheck) {

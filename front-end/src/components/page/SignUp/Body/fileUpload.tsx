@@ -29,16 +29,11 @@ const FileUpload: NextPage<any> = (props) => {
 
   // const [upload, setUpload] = useState(false); // 파일 두개 업로드 여부
 
-  // 파일 선택 버튼 클릭 시 파일 초기화
-  const onFileInputInit = (e: any) => {
-    setFile({ ...file, [e.target.name]: "" });
-    setFileName({ ...fileName, [e.target.name]: "" });
-  };
-
   // 파일 선택 시 파일명 state 변경
   const onFileSelectHandler = (e: any) => {
-    setFile({ ...file, [e.target.name]: e.target.files[0] });
-    setFileName({ ...fileName, [e.target.name]: e.target.files[0].name });
+    let fileData = e.target.files[0];
+    setFile({ ...file, [e.target.name]: fileData });
+    setFileName({ ...fileName, [e.target.name]: fileData.name });
   };
 
   // 다음에 하기(logout 같은 기능) handler
@@ -63,7 +58,9 @@ const FileUpload: NextPage<any> = (props) => {
               setStepNumber(stepNumber + 1);
             } else {
               alert("제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다.");
-              router.push("/");
+              dispatch(signOutUserAction()).then((res: any) => {
+                router.push("/");
+              });
             }
           },
           (err) => {
@@ -125,8 +122,8 @@ const FileUpload: NextPage<any> = (props) => {
                   type="file"
                   id="comFile"
                   name="comFile"
-                  onInput={onFileSelectHandler}
-                  onClick={onFileInputInit}
+                  key={file.comFile}
+                  onChange={onFileSelectHandler}
                   accept=".jpg, .png, .pdf"
                   style={{ display: "none" }}
                 />
@@ -151,8 +148,8 @@ const FileUpload: NextPage<any> = (props) => {
                   type="file"
                   id="manFile"
                   name="manFile"
-                  onInput={onFileSelectHandler}
-                  onClick={onFileInputInit}
+                  key={file.manFile}
+                  onChange={onFileSelectHandler}
                   accept=".jpg, .png, .pdf"
                   style={{ display: "none" }}
                 />

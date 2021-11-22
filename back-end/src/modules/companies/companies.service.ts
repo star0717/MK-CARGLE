@@ -3,7 +3,7 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
-import { Company } from 'src/models/company.entity';
+import { Company, CompanyApproval } from 'src/models/company.entity';
 
 @Injectable()
 export class CompaniesService extends SafeService<Company> {
@@ -35,14 +35,17 @@ export class CompaniesService extends SafeService<Company> {
 
   async findByComRegNumForAuth(comRegNum: string): Promise<Company> {
     return await this.model.findOne(
-      { comRegNum },
+      { comRegNum, approval: CompanyApproval.DONE },
       'name comRegNum ownerName address',
     );
   }
 
   async findByNameForAuth(name: string): Promise<Company[]> {
     return await this.model.find(
-      { name: { $regex: name, $options: '$i' } },
+      {
+        name: { $regex: name, $options: '$i' },
+        approval: CompanyApproval.DONE,
+      },
       'name comRegNum ownerName address',
     );
   }

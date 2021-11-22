@@ -1,6 +1,7 @@
 import { Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
+import { AuthTokenInfo } from 'src/models/auth.entity';
 
 /**
  * 로그인된 사용자 인증 전략
@@ -14,12 +15,12 @@ const fromAuthCookie = function () {
   return function (request: any) {
     // console.log('*** fromAuthCookie in JwtStrategy (2/4)');
 
-    let token = null;
+    let hashedToken = null;
     if (request && request.cookies) {
-      token = request.cookies[process.env.TK_NAME];
-      //   console.log('token=> ' + token);
+      hashedToken = request.cookies[process.env.TK_NAME];
+      // console.log('hashedToken=> ' + hashedToken);
     }
-    return token;
+    return hashedToken;
   };
 };
 

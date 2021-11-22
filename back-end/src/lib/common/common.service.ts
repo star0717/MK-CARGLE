@@ -101,11 +101,16 @@ export class CommonService {
   }
 
   extractToken(@Req() req, isAuth: boolean = false): AuthTokenInfo {
-    console.log(isAuth);
     try {
       const token: AuthTokenInfo = req.user;
       if (!token) throw new UnauthorizedException();
 
+      // console.log(Date.now() / 1000);
+      // console.log(token['exp']);
+      // console.log(new Date(token['exp'] * 1000));
+      // console.log();
+
+      // 회원가입 중인 경우는 생략
       if (!isAuth) {
         // 권한 검증
         if (
