@@ -43,7 +43,9 @@ export class AuthService {
     let company: Company;
     let user: User;
 
-    signUpInfo.company.approval = CompanyApproval.BEFORE;
+    if (signUpInfo.company) {
+      signUpInfo.company.approval = CompanyApproval.BEFORE;
+    }
     signUpInfo.user.approval = false;
 
     console.log(signUpInfo);
