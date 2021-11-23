@@ -2,25 +2,39 @@ import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faQuestionCircle,
+  faExclamationCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  approvalReqAction,
   comFileUploadAction,
   manFileUploadAction,
   signOutUserAction,
 } from "../../../../../store/action/user.action";
+
+interface FileUploadProps {
+  stepNumber?: any;
+  setStepNumber?: any;
+  cID?: any;
+}
 
 const fileInit = {
   comFile: "",
   manFile: "",
 };
 
-const FileUpload: NextPage<any> = (props) => {
+const FileUpload: NextPage<FileUploadProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   // props 재정의
   const stepNumber = props?.stepNumber;
   const setStepNumber = props?.setStepNumber;
-  const userAuth = props?.userAuth;
+  const cID = props?.cID;
+
+  console.log("씨아이디 : ", cID);
 
   // 업로드할 파일 state
   const [file, setFile] = useState(fileInit);
@@ -31,8 +45,9 @@ const FileUpload: NextPage<any> = (props) => {
 
   // 파일 선택 시 파일명 state 변경
   const onFileSelectHandler = (e: any) => {
-    setFile({ ...file, [e.target.name]: e.target.files[0] });
-    setFileName({ ...fileName, [e.target.name]: e.target.files[0].name });
+    let fileData = e.target.files[0];
+    setFile({ ...file, [e.target.name]: fileData });
+    setFileName({ ...fileName, [e.target.name]: fileData.name });
   };
 
   // 다음에 하기(logout 같은 기능) handler
@@ -53,12 +68,22 @@ const FileUpload: NextPage<any> = (props) => {
       (res: any) => {
         dispatch(manFileUploadAction(manFormData)).then(
           (res: any) => {
-            if (stepNumber) {
-              setStepNumber(stepNumber + 1);
-            } else {
-              alert("제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다.");
-              router.push("/");
-            }
+            dispatch(approvalReqAction(cID)).then((res: any) => {
+              if (res.payload) {
+                if (stepNumber) {
+                  setStepNumber(stepNumber + 1);
+                } else {
+                  alert(
+                    "제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다."
+                  );
+                  dispatch(signOutUserAction()).then((res: any) => {
+                    router.push("/");
+                  });
+                }
+              } else {
+                alert("제출에 실패했습니다.");
+              }
+            });
           },
           (err) => {
             if (err.response.status === 400 || 500) {
@@ -116,6 +141,7 @@ const FileUpload: NextPage<any> = (props) => {
                   type="file"
                   id="comFile"
                   name="comFile"
+                  key={file.comFile}
                   onChange={onFileSelectHandler}
                   accept=".jpg, .png, .pdf"
                   style={{ display: "none" }}
@@ -141,6 +167,7 @@ const FileUpload: NextPage<any> = (props) => {
                   type="file"
                   id="manFile"
                   name="manFile"
+                  key={file.manFile}
                   onChange={onFileSelectHandler}
                   accept=".jpg, .png, .pdf"
                   style={{ display: "none" }}
@@ -170,7 +197,46 @@ const FileUpload: NextPage<any> = (props) => {
             backgroundColor: "yellow",
           }}
         >
-          {/* 물음표 이모티콘, 메세지 삽입 */}
+          <div
+            style={{
+              width: "70%",
+              margin: "0 auto",
+              backgroundColor: "gainsboro",
+              fontSize: "0.8em",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "center",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faQuestionCircle}
+                style={{ width: "13px", marginRight: "3px" }}
+              />
+              <div>아직 서류가 준비되지 않으셨나요?</div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "start",
+                alignItems: "baseline",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faExclamationCircle}
+                style={{ width: "13px", marginRight: "3px" }}
+              />
+              <div>
+                서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
+                로그인하면 이어서 진행이 가능해요.
+                <br />
+                서류가 제출되면 최종 가입 심사가 시작됩니다!
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>

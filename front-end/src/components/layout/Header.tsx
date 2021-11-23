@@ -4,15 +4,16 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../store/action/user.action";
 
-interface Props {
+interface HeaderProps {
   cate: any;
+  cApproval?: string;
 }
 
-const Header: NextPage<Props> = (Props) => {
+const Header: NextPage<HeaderProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const main = Props.cate ? Props.cate[0] : "";
+  // props 재정의
+  const cApproval = props?.cApproval;
 
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
@@ -32,7 +33,7 @@ const Header: NextPage<Props> = (Props) => {
       <div style={{ width: "30%" }}>
         <Link href="/view/main">MK SOLUTION</Link>
       </div>
-      {main !== "" && main !== "signup" && main !== "find" ? (
+      {cApproval === "done" && (
         <div style={{ width: "80%", display: "flex" }}>
           <div style={{ width: "75%", display: "flex" }}>
             <div style={{ width: "20%", height: "100%" }}>정비</div>
@@ -46,8 +47,6 @@ const Header: NextPage<Props> = (Props) => {
             <button onClick={onSignOutHandler}>로그아웃</button>
           </div>
         </div>
-      ) : (
-        ""
       )}
     </div>
   );

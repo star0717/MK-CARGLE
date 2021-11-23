@@ -48,7 +48,7 @@ export async function emailSendAction(dataToSubmit: string) {
 // 인증번호 검사 action
 export async function authNumCheckAction(dataToSubmit: string) {
   const req = await axios
-    .get(`/api/auth/validate/crypto-text/${dataToSubmit}`)
+    .get(`/api/auth/validate/email-token/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_AUTHNUM_CHECK,
@@ -138,6 +138,17 @@ export async function manFileUploadAction(dataToSubmit: any) {
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.MAN_FILE_UPLOAD,
+    payload: req,
+  };
+}
+
+// 가입 심사 요청 action (업체)
+export async function approvalReqAction(dataToSubmit: any) {
+  const req = await axios
+    .patch(`/api/auth/request/company/${dataToSubmit}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.APPROVAL_REQUEST,
     payload: req,
   };
 }

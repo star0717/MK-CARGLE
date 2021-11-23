@@ -81,6 +81,9 @@ const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  // props 재정의
+  const cApproval = props?.cApproval;
+
   // redux store에서 signIn 정보만 가져옴
   const { signInInfo } = useSelector(
     (state: RootStateInterface): UserState => state.userAll
@@ -93,7 +96,7 @@ const SignIn: NextPage<any> = (props) => {
     id: props.saveId,
   });
 
-  const [saveId, setSaveId] = useState(props.saveCheck); // 아이디 저장 체크 여부를 위한 state
+  const [saveCheck, setSaveCheck] = useState(props.saveCheck); // 아이디 저장 체크 여부를 위한 state
   const [signInErr, setSignInErr] = useState(false); // 로그인 시도 시 에러 여부
   const [errMsg, setErrMsg] = useState(""); // 로그인 에러 시 메세지 내용
 
@@ -118,19 +121,25 @@ const SignIn: NextPage<any> = (props) => {
       dispatch(signInUserAction(inputSignIn)).then(
         (res: any) => {
           // 아이디 저장할 경우 쿠키로 저장
-          if (saveId) {
+          if (saveCheck) {
             // const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
             Cookies.set("saveId", inputSignIn.id, { expires: 1 });
             // 아이디 저장안할 경우 쿠키 삭제(이미 생성 후 안할 경우 쿠키는 남아있기 때문에 삭제 진행)
           } else {
             Cookies.remove("saveId");
           }
-          router.push("/view/main");
+          if (cApproval == "ing") {
+            alert("가입 심사 중인 계정입니다.");
+            setInputSignIn({ ...inputSignIn, pwd: "" });
+          } else {
+            router.push("/view/main");
+          }
         },
         (err) => {
           // 입력 값이 계정과 다를 경우 에러
           // Nest에서 전송해주는 status code에 맞게 핸들링
           if (err.response.status === 401) {
+            setInputSignIn({ ...inputSignIn, pwd: "" });
             setSignInErr(true);
             setErrMsg(
               "이메일 또는 비밀번호가 잘못 입력되었습니다.\n이메일과 비밀번호를 정확히 입력해주세요."
@@ -205,9 +214,9 @@ const SignIn: NextPage<any> = (props) => {
                   <span className="span">아이디 저장</span>
                   <input
                     type="checkbox"
-                    checked={saveId}
+                    checked={saveCheck}
                     onChange={(e) => {
-                      setSaveId(e.target.checked);
+                      setSaveCheck(e.target.checked);
                     }}
                   ></input>
                 </div>

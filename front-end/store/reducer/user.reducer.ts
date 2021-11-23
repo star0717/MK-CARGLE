@@ -103,13 +103,13 @@ const userAll = (
       return {
         ...state,
       };
-    
-     // 이메일 찾기 기능
+
+    // 이메일 찾기 기능
     case actionTypesUser.USER_FIND_EMAIL:
       return {
         ...state,
       };
-    
+
     // 비밀번호 찾기 기능
     case actionTypesUser.USER_FIND_PW:
       return {
@@ -127,7 +127,12 @@ const userAll = (
       return {
         ...state,
       };
-    
+
+    // 심사요청
+    case actionTypesUser.APPROVAL_REQUEST:
+      return {
+        ...state,
+      };
 
     default:
       return state;

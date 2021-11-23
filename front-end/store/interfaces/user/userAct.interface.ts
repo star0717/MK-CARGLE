@@ -10,6 +10,7 @@ export enum actionTypesUser {
   USER_FIND_PW = "USER_FIND_PW",
   COM_FILE_UPLOAD = "COM_FILE_UPLOAD",
   MAN_FILE_UPLOAD = "MAN_FILE_UPLOAD",
+  APPROVAL_REQUEST = "APPROVAL_REQUEST",
 }
 
 export type ActionsUser =
@@ -23,7 +24,8 @@ export type ActionsUser =
   | UserFindEamil
   | UserFindPw
   | ComFileUpload
-  | ManFileUpload;
+  | ManFileUpload
+  | ApprovalRequest;
 
 // 로그인
 export interface UserSignIn {
@@ -88,5 +90,11 @@ export interface ComFileUpload {
 // 정비업등록증 업로드
 export interface ManFileUpload {
   type: actionTypesUser.MAN_FILE_UPLOAD;
+  payload: any;
+}
+
+// 심사요청
+export interface ApprovalRequest {
+  type: actionTypesUser.APPROVAL_REQUEST;
   payload: any;
 }
