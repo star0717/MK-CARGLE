@@ -9,6 +9,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SafeControllerFactory } from 'src/lib/safe-crud/safe-crud.controller';
 import { DeleteResult } from 'src/models/base.entity';
@@ -29,15 +30,19 @@ export class CompaniesController extends SafeControllerFactory<Company>(
    */
   @Post()
   @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
-  async create(@Req() req, @Res() Res, @Body() doc: Company): Promise<Company> {
+  async create(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+    @Body() doc: Company,
+  ): Promise<Company> {
     throw new NotAcceptableException();
   }
 
   @Patch(':id')
   @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
   async findByIdAndUpdate(
-    @Req() req,
-    @Res() Res,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
     @Body() doc: Partial<Company>,
   ): Promise<Company> {
@@ -47,8 +52,8 @@ export class CompaniesController extends SafeControllerFactory<Company>(
   @Delete(':id')
   @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
   async findByIdAndRemove(
-    @Req() req,
-    @Res() Res,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
   ): Promise<DeleteResult> {
     throw new NotAcceptableException();

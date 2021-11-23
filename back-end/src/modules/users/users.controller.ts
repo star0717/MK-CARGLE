@@ -28,15 +28,19 @@ export class UsersController extends SafeControllerFactory<User>(User) {
    */
   @Post()
   @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
-  async create(@Req() req, @Res() Res, @Body() doc: User): Promise<User> {
+  async create(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+    @Body() doc: User,
+  ): Promise<User> {
     throw new NotAcceptableException();
   }
 
   @Patch(':id')
   @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
   async findByIdAndUpdate(
-    @Req() req,
-    @Res() Res,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
     @Body() doc: Partial<User>,
   ): Promise<User> {
@@ -46,8 +50,8 @@ export class UsersController extends SafeControllerFactory<User>(User) {
   @Delete(':id')
   @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
   async findByIdAndRemove(
-    @Req() req,
-    @Res() Res,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
   ): Promise<DeleteResult> {
     throw new NotAcceptableException();
