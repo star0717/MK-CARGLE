@@ -14,7 +14,7 @@ const Main: NextPage = () => {
   return (
     <div>
       <div style={{ display: "flex", height: "300px" }}>
-        <div style={{ width: "35%", height: "100%" }}>
+        <div style={{ width: "40%", height: "100%" }}>
           <div
             style={{
               width: "100%",
@@ -43,11 +43,8 @@ const Main: NextPage = () => {
           </div>
         </div>
         <div
-          style={{ width: "25%", height: "100%", backgroundColor: "lightblue" }}
-        ></div>
-        <div
           style={{
-            width: "40%",
+            width: "60%",
             height: "100%",
             backgroundColor: "lightgreen",
             padding: "10px",
@@ -57,13 +54,18 @@ const Main: NextPage = () => {
             style={{
               width: "100%",
               height: "100%",
-              backgroundColor: "lightpink",
               display: "flex",
               justifyContent: "right",
             }}
           >
-            {registerOpen ? (
-              <div style={{ width: "50%", height: "100%" }}>
+            {registerOpen && (
+              <div
+                style={{
+                  width: "50%",
+                  height: "100%",
+                  backgroundColor: "lightpink",
+                }}
+              >
                 10월 8일 예약 현황
                 <button
                   onClick={() => {
@@ -73,16 +75,13 @@ const Main: NextPage = () => {
                   {">"}
                 </button>
               </div>
-            ) : (
-              ""
             )}
 
             <div
               style={{
-                width: "50%",
-                height: "100%",
                 display: "flex",
                 alignItems: "center",
+                backgroundColor: "lightpink",
               }}
             >
               {!registerOpen && (

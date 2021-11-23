@@ -120,7 +120,10 @@ export class AuthController {
 
   @ApiOperation({ summary: `프로필 확인 (토큰 정보 확인)` })
   @Get('profile')
-  getProfile(@Req() req: Request, @Res() res: Response): AuthTokenInfo {
+  getProfile(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ): AuthTokenInfo {
     const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return token;
   }
@@ -216,7 +219,7 @@ export class AuthController {
   @Post('upload/com-reg-doc')
   async uploadComRegFile(
     @Req() req: Request,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<string> {
     const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
@@ -242,7 +245,7 @@ export class AuthController {
   @Post('upload/man-reg-doc')
   async uploadMainRegFile(
     @Req() req: Request,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<string> {
     const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
@@ -254,7 +257,7 @@ export class AuthController {
   @Get('file-name/com-reg-docc')
   async getCrFileName(
     @Req() req: Request,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
   ): Promise<string> | null {
     const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.getComRegFileName(token);
@@ -265,7 +268,7 @@ export class AuthController {
   @Get('file-name/man-reg-doc')
   async getMainRegFileName(
     @Req() req: Request,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
   ): Promise<string> | null {
     const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.getMainRegFileName(token);
@@ -277,7 +280,7 @@ export class AuthController {
   @Patch('request/company/:id')
   async requestApprove(
     @Req() req: Request,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
   ) {
     const token = this.comService.extractToken(req, res, false, false);
@@ -330,7 +333,7 @@ export class AuthController {
   @Post('update/password')
   async UpdateUserPassword(
     @Req() req: Request,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
     @Body() data: HelpChangePWD,
   ): Promise<boolean> {
     console.log(data);

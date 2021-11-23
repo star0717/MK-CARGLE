@@ -71,7 +71,7 @@ export class AdminController {
   })
   async approveCompany(
     @Req() req: Request,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
     @Body() doc: Partial<Company>,
   ): Promise<Company> {
@@ -90,7 +90,7 @@ export class AdminController {
   @ApiParam({ name: 'id', description: '거부할 업체의 오브젝트ID' })
   async rejectCompany(
     @Req() req: Request,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
   ): Promise<Company> {
     this.commonService.extractToken(req, res, false, true);
@@ -102,7 +102,7 @@ export class AdminController {
   @ApiParam({ name: 'id', description: '삭제할 업체의 오브젝트ID' })
   async deleteCompany(
     @Req() req: Request,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
   ) {
     const token = this.commonService.extractToken(req, res, false, true);

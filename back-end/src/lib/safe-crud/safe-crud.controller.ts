@@ -104,7 +104,11 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       description: `추가된 ${bodyDto.name} 데이터`,
       type: bodyDto,
     })
-    async create(@Req() req, @Res() res: Response, @Body() doc: T): Promise<T> {
+    async create(
+      @Req() req: Request,
+      @Res({ passthrough: true }) res: Response,
+      @Body() doc: T,
+    ): Promise<T> {
       const aToken: AuthTokenInfo = this.safeService.extractToken(req, res);
       return this.safeService.create(aToken, doc);
     }
@@ -119,7 +123,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     })
     async findByOptions(
       @Req() req: Request,
-      @Res() res: Response,
+      @Res({ passthrough: true }) res: Response,
       @Query() findQuery: PaginateOptions,
     ): Promise<PaginateResult<T>> {
       var token: AuthTokenInfo = this.safeService.extractToken(req, res);
@@ -134,8 +138,8 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       type: bodyDto,
     })
     async findById(
-      @Req() req,
-      @Res() res: Response,
+      @Req() req: Request,
+      @Res({ passthrough: true }) res: Response,
       @Param('id') id: string,
     ): Promise<T> {
       const token: AuthTokenInfo = this.safeService.extractToken(req, res);
@@ -147,8 +151,8 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     @ApiParam({ name: 'id', description: `해당 ${bodyDto.name}의 오브젝트 ID` })
     @ApiBody({ description: `갱신된 ${bodyDto.name} 데이터`, type: bodyDto })
     async findByIdAndUpdate(
-      @Req() req,
-      @Res() res: Response,
+      @Req() req: Request,
+      @Res({ passthrough: true }) res: Response,
       @Param('id') id: string,
       @Body() doc: Partial<T>,
     ): Promise<T> {
@@ -166,9 +170,8 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       type: DeleteResult,
     })
     async findByIdAndRemove(
-      @Req() req,
-      @Res() res: Response,
-
+      @Req() req: Request,
+      @Res({ passthrough: true }) res: Response,
       @Param('id') id: string,
     ): Promise<DeleteResult> {
       const token: AuthTokenInfo = this.safeService.extractToken(req, res);
