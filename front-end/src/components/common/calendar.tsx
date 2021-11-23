@@ -3,15 +3,32 @@ import React, { useState } from "react";
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
 
-const Calendar: NextPage = () => {
-  const [day, setDay] = useState(new Date());
+interface CalendarProps {
+  schedule: any;
+  setSchedule: React.Dispatch<React.SetStateAction<any>>;
+}
+
+const Calendar: NextPage<CalendarProps> = (props) => {
+  // props 재정의
+  const schedule = props.schedule;
+  const setSchedule = props.setSchedule;
+
+  const [day, setDay] = useState(new Date()); // 날짜 state
+
+  const modifiers = {
+    toDay: new Date(),
+    selectDay: { day },
+  };
+
+  // 날짜 클릭 이벤트
   const handleDayClick = (day: any) => {
     setDay(day);
+    setSchedule(`${day.toLocaleDateString()} 일정`);
   };
   console.log("데이데이 : ", day);
   return (
     <div>
-      <DayPicker onDayClick={handleDayClick} />
+      <DayPicker onDayClick={handleDayClick} modifiers={modifiers} />
       {/* <p>{day ? day.toLocaleDateString() : "Please select a day 👻"}</p> */}
     </div>
   );

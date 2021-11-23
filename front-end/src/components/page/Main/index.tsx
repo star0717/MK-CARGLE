@@ -10,6 +10,13 @@ const Main: NextPage = () => {
   const router = useRouter();
 
   const [registerOpen, setRegisterOpen] = useState(false);
+  const [schedule, setSchedule] = useState("");
+
+  // calendar에 넘길 props 정의
+  const calendarProps = {
+    schedule,
+    setSchedule,
+  };
 
   return (
     <div>
@@ -66,7 +73,7 @@ const Main: NextPage = () => {
                   backgroundColor: "lightpink",
                 }}
               >
-                10월 8일 예약 현황
+                {schedule}
                 <button
                   onClick={() => {
                     setRegisterOpen(false);
@@ -93,7 +100,7 @@ const Main: NextPage = () => {
                   {"<"}
                 </button>
               )}
-              <Calendar />
+              <Calendar {...calendarProps} />
             </div>
           </div>
         </div>

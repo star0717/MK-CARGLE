@@ -283,7 +283,8 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
   ) {
-    const token = this.comService.extractToken(req, res, false, false);
+    const token = this.comService.extractToken(req, res, true, false);
+    console.log(token);
     const signUpInfo: SignUpInfo = await this.authService.requestApprove(
       token,
       id,
