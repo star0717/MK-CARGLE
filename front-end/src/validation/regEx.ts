@@ -2,6 +2,7 @@ export const basicRegEx = {
   ENG: /^[a-zA-Z]*$/, // 영어만
   NUM: /^[0-9]*$/, // 숫자만
   ENGNUM: /^[a-zA-Z0-9]*$/, //영어+숫자
+  SP_CHAR: /[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi, // 특수문자 비허용
 };
 
 export const formRegEx = {
@@ -16,4 +17,12 @@ export const formRegEx = {
   MB_NUM: /^[0-9]{12}$/, // 정비업등록번호(12자리)
   HP_NUM: /^01([0|1|6|7|8|9])?([0-9]{3,4})?([0-9]{4})$/, // 휴대폰번호(-제외)
   PH_NUM: /^\d{2,3}\d{3,4}\d{4}$/, // 전화번호(-제외)
+};
+
+export const CHAR_DEL = (str: any) => {
+  if (basicRegEx.SP_CHAR.test(str)) {
+    return str.replace(basicRegEx.SP_CHAR, "");
+  } else {
+    return str;
+  }
 };

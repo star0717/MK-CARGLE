@@ -34,8 +34,6 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
   const setStepNumber = props?.setStepNumber;
   const cID = props?.cID;
 
-  console.log("씨아이디 : ", cID);
-
   // 업로드할 파일 state
   const [file, setFile] = useState(fileInit);
   // 업로드할 파일명 state
@@ -52,6 +50,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
 
   // 다음에 하기(logout 같은 기능) handler
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    alert("입력하신 계정정보로 로그인하시면 서류제출이 가능합니다.");
     dispatch(signOutUserAction()).then((res: any) => {
       router.push("/");
     });

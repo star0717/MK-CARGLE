@@ -4,9 +4,6 @@ import Footer from "../src/components/layout/Footer";
 import Header from "../src/components/layout/Header";
 import SignIn from "../src/components/page/Index/SignIn";
 import styled from "styled-components";
-import { parseJwt } from "../src/modules/parseJwt";
-import { CompanyApproval } from "../src/models/company.entity";
-import FileUpload from "../src/components/page/SignUp/Body/fileUpload";
 
 //SCSS
 const Wrapper = styled.div`
@@ -18,7 +15,6 @@ const Wrapper = styled.div`
 interface SignInProps {
   saveId: string;
   saveCheck: boolean;
-  // cApproval?: string;
 }
 
 const Home: NextPage<SignInProps> = (props) => {

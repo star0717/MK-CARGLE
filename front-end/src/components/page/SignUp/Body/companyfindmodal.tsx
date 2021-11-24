@@ -6,6 +6,7 @@ import {
   companyFindAction,
   companyFindbyNameAction,
 } from "../../../../../store/action/user.action";
+import { CHAR_DEL } from "../../../../validation/regEx";
 
 interface modalOption {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -64,7 +65,7 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <input
               type="text"
-              value={searchText}
+              value={CHAR_DEL(searchText)}
               onChange={(e) => {
                 setSearchText(e.target.value);
               }}
