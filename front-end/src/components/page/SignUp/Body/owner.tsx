@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../../store/interfaces/RootState";
 import { UserState } from "../../../../../store/interfaces";
 import { SignUpInfo } from "../../../../models/auth.entity";
-import { basicRegEx, formRegEx } from "../../../../validation/regEx";
+import { basicRegEx, CHAR_DEL, formRegEx } from "../../../../validation/regEx";
 import {
   authNumCheckAction,
   companyCheckAction,
@@ -545,7 +545,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
                 <input
                   style={{ width: "100%" }}
                   type="text"
-                  value={inputCompany?.comRegNum}
+                  value={CHAR_DEL(inputCompany.comRegNum)}
                   readOnly={companyCheck}
                   placeholder="사업자 등록번호를 입력해주세요."
                   {...register("comRegNum", {
@@ -610,7 +610,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
               <input
                 style={{ width: "100%" }}
                 type="text"
-                value={inputCompany.mbRegNum}
+                value={CHAR_DEL(inputCompany.mbRegNum)}
                 placeholder="정비업 등록번호를 입력해주세요."
                 {...register("mbRegNum", {
                   onChange: (e) => {
@@ -673,7 +673,12 @@ const OwnerSignUp: NextPage<any> = (props) => {
           >
             {/* 상호명 */}
             <div style={{ width: "49%" }}>
-              <div>*상호명</div>
+              <div>
+                *상호명{" "}
+                <small style={{ color: "red", fontSize: "8px" }}>
+                  (사업자등록증에 등록한 상호명을 입력해주세요.)
+                </small>
+              </div>
               <input
                 style={{ width: "100%" }}
                 type="text"
@@ -740,7 +745,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
               <input
                 style={{ width: "100%" }}
                 type="text"
-                value={inputUser.hpNumber}
+                value={CHAR_DEL(inputUser.hpNumber)}
                 placeholder="(- 제외)"
                 {...register("hpNumber", {
                   onChange: (e) => {
@@ -772,7 +777,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
               <input
                 style={{ width: "100%" }}
                 type="text"
-                value={inputCompany.phoneNum}
+                value={CHAR_DEL(inputCompany.phoneNum)}
                 placeholder="(- 제외, 지역번호 포함)"
                 {...register("phoneNum", {
                   onChange: (e) => {
@@ -804,7 +809,7 @@ const OwnerSignUp: NextPage<any> = (props) => {
               <input
                 style={{ width: "100%" }}
                 type="text"
-                value={inputCompany.faxNum}
+                value={CHAR_DEL(inputCompany.faxNum)}
                 placeholder="(- 제외)"
                 {...register("faxNum", {
                   onChange: (e) => {

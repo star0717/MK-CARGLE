@@ -17,7 +17,17 @@ const Calendar: NextPage<CalendarProps> = (props) => {
 
   const modifiers = {
     toDay: new Date(),
-    selectDay: { day },
+    selectDay: day,
+  };
+  const modifiersStyles = {
+    toDay: {
+      color: "white",
+      backgroundColor: "red",
+    },
+    selectDay: {
+      border: "1.5px solid red",
+      boxSizing: "border-box",
+    },
   };
 
   // 날짜 클릭 이벤트
@@ -28,7 +38,11 @@ const Calendar: NextPage<CalendarProps> = (props) => {
   console.log("데이데이 : ", day);
   return (
     <div>
-      <DayPicker onDayClick={handleDayClick} modifiers={modifiers} />
+      <DayPicker
+        onDayClick={handleDayClick}
+        modifiers={modifiers}
+        modifiersStyles={modifiersStyles}
+      />
       {/* <p>{day ? day.toLocaleDateString() : "Please select a day 👻"}</p> */}
     </div>
   );

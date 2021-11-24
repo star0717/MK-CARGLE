@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { RootStateInterface } from "../../../../../store/interfaces/RootState";
 import { UserState } from "../../../../../store/interfaces";
-import { formRegEx } from "../../../../validation/regEx";
+import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
 import {
   authNumCheckAction,
   emailSendAction,
@@ -549,7 +549,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
             <input
               style={{ width: "100%" }}
               type="text"
-              value={inputUser.hpNumber}
+              value={CHAR_DEL(inputUser.hpNumber)}
               placeholder="(- 제외)"
               {...register("hpNumber", {
                 onChange: (e) => {

@@ -10,7 +10,9 @@ const Main: NextPage = () => {
   const router = useRouter();
 
   const [registerOpen, setRegisterOpen] = useState(false);
-  const [schedule, setSchedule] = useState("");
+  const [schedule, setSchedule] = useState(
+    `${new Date().toLocaleDateString()} 일정`
+  );
 
   // calendar에 넘길 props 정의
   const calendarProps = {
