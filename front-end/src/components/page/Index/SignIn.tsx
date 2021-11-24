@@ -13,76 +13,13 @@ import { UserInfo } from "../../../models/auth.entity";
 import { formRegEx } from "../../../validation/regEx";
 
 //SCSS
-const ComponentMainBody = styled.div`
-    width: 100%;
-    height: 600px;
-    background-image: url("../../images/background2.png");
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-  .CSI {
-    width: 900px;
-    height: 400px;
-    display: flex;
-    background-color: #E2E2E2;
-  }
-  .CSIdiv1 {
-    width: 50%;
-    padding: 20px;
-    backgroundImage: url("../../images/background1.png");
-
-    .h3 {}
-
-    .p {}
-
-    .div {}
-
-    .button {}
-  }
-
-
-  .CSIdiv2 {
-    width: 50%;
-    padding: 40px;
-    text-align: center;
-
-    .h3 {}
-
-    .div1 {
-
-      .div1 {
-        text-align: left;
-
-        .p {}
-
-        .input { width : 100%; }
-      }
-
-    .div2 {
-      display: flex;
-      margin-top: 10px;
-      justify-content: space-between;
-      align-items: center;
-
-      .div1 {
-        .span {}
-
-        .input {}
-      }
-    }
-
-    .button {}
-
-  }
+const Wrapper = styled.div`
+  width: 100%;
 `;
 
 const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
-
-  // props 재정의
-  const cApproval = props?.cApproval;
 
   // redux store에서 signIn 정보만 가져옴
   const { signInInfo } = useSelector(
@@ -128,12 +65,7 @@ const SignIn: NextPage<any> = (props) => {
           } else {
             Cookies.remove("saveId");
           }
-          if (cApproval == "ing") {
-            alert("가입 심사 중인 계정입니다.");
-            setInputSignIn({ ...inputSignIn, pwd: "" });
-          } else {
-            router.push("/view/main");
-          }
+          router.push("/view/main");
         },
         (err) => {
           // 입력 값이 계정과 다를 경우 에러
@@ -151,41 +83,36 @@ const SignIn: NextPage<any> = (props) => {
   };
 
   return (
-    <ComponentMainBody>
-      {/* 중앙 화면 */}
-      <div className="CSI">
-        {/* 중앙 화면 좌측 */}
-        <div className="CSIdiv1">
-          <h3 className="h3">엠케이솔루션에 오신 것을 환영합니다.</h3>
-          <p className="p">등록된 회원정보가 기억나지 않으십니까?</p>
-          <div className="div">
-            <Link href="/view/find">
-              <a style={{ fontWeight: "bold" }}>
-                이메일 및 패스워드 찾기 &#62;
-              </a>
-            </Link>
+    <Wrapper>
+      <div
+        style={{
+          height: "600px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "lightblue",
+        }}
+      >
+        <div
+          style={{
+            width: "35%",
+            padding: "10px",
+            backgroundColor: "limegreen",
+          }}
+        >
+          <div style={{ backgroundColor: "honeydew" }}>
+            <p style={{ margin: "0" }}>정비관리도 이젠 편리하게</p>
+            <p style={{ margin: "0", fontWeight: "bold" }}>CARGLE</p>
           </div>
-          <button
-            className="button"
-            onClick={() => {
-              router.push("/view/signup");
-            }}
-          >
-            회원가입
-          </button>
-        </div>
-
-        {/* 중앙 화면 우측  */}
-        <div className="CSIdiv2">
-          <h3 className="h3">로그인</h3>
-          <div className="div1">
+          <div style={{ marginTop: "20px", backgroundColor: "greenyellow" }}>
             {/* 로그인 입력 form */}
             <form onSubmit={onSignInHandler}>
               {/* 이메일 input */}
-              <div className="div1">
-                <p className="p">이메일</p>
+              <div>
+                <p style={{ margin: "0" }}>이메일</p>
                 <input
-                  className="input"
+                  style={{ width: "100%" }}
                   type="text"
                   name="id"
                   value={inputSignIn.id}
@@ -195,10 +122,10 @@ const SignIn: NextPage<any> = (props) => {
                 />
               </div>
               {/* 비밀번호 input */}
-              <div className="div1">
-                <p className="p">비밀번호</p>
+              <div>
+                <p style={{ margin: "0" }}>비밀번호</p>
                 <input
-                  className="input"
+                  style={{ width: "100%" }}
                   type="password"
                   name="pwd"
                   value={inputSignIn.pwd}
@@ -208,10 +135,9 @@ const SignIn: NextPage<any> = (props) => {
                 />
               </div>
               {/* 체크박스 div */}
-              <div className="div2">
+              <div>
                 {/* 아이디 저장 체크박스 */}
-                <div className="div1">
-                  <span className="span">아이디 저장</span>
+                <div>
                   <input
                     type="checkbox"
                     checked={saveCheck}
@@ -219,6 +145,7 @@ const SignIn: NextPage<any> = (props) => {
                       setSaveCheck(e.target.checked);
                     }}
                   ></input>
+                  <span>아이디 저장</span>
                 </div>
               </div>
               {signInErr ? (
@@ -240,14 +167,56 @@ const SignIn: NextPage<any> = (props) => {
                 </div>
               ) : null}
               {/* 로그인 버튼 */}
-              <button className="button" type="submit">
+              <button
+                style={{ width: "100%", marginTop: "10px" }}
+                type="submit"
+              >
                 로그인
               </button>
             </form>
+            <div
+              style={{
+                width: "100%",
+                marginTop: "10px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "end",
+                backgroundColor: "gainsboro",
+              }}
+            >
+              <div
+                style={{
+                  width: "60%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  fontSize: "0.7em",
+                }}
+              >
+                <p style={{ margin: "0" }}>아직 회원이 아니신가요?</p>
+                <Link href="/view/signup">
+                  <a style={{ fontWeight: "bold" }}>회원가입</a>
+                </Link>
+              </div>
+              <div
+                style={{
+                  width: "60%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  fontSize: "0.7em",
+                }}
+              >
+                <p style={{ margin: "0" }}>계정을 찾고 싶으신가요?</p>
+                <Link href="/view/find">
+                  <a style={{ fontWeight: "bold" }}>계정찾기</a>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </ComponentMainBody>
+    </Wrapper>
   );
 };
 

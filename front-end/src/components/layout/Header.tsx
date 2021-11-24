@@ -30,8 +30,8 @@ const Header: NextPage<HeaderProps> = (props) => {
         display: "flex",
       }}
     >
-      <div style={{ width: "30%" }}>
-        <Link href="/view/main">MK SOLUTION</Link>
+      <div style={{ width: "30%", fontSize: "2em" }}>
+        <Link href="/view/main">cargle</Link>
       </div>
       {cApproval === "done" && (
         <div style={{ width: "80%", display: "flex" }}>

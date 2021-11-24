@@ -18,7 +18,6 @@ const Wrapper = styled.div`
 interface SignInProps {
   saveId: string;
   saveCheck: boolean;
-  // cApproval?: string;
 }
 
 const Home: NextPage<SignInProps> = (props) => {
