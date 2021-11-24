@@ -2,19 +2,33 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/dist/client/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
-import { initialState } from "../../../../store/reducer/user.reducer";
 import { signInUserAction } from "../../../../store/action/user.action";
 import styled from "styled-components";
-import { UserInfo } from "../../../models/auth.entity";
 import { formRegEx } from "../../../validation/regEx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 
 //SCSS
 const Wrapper = styled.div`
   width: 100%;
+`;
+
+const Main = styled.div`
+  width: 100%;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: lightblue;
+`;
+
+const P = styled.p`
+  margin: 0;
 `;
 
 const SignIn: NextPage<any> = (props) => {
@@ -84,16 +98,7 @@ const SignIn: NextPage<any> = (props) => {
 
   return (
     <Wrapper>
-      <div
-        style={{
-          height: "600px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "lightblue",
-        }}
-      >
+      <Main>
         <div
           style={{
             width: "35%",
@@ -102,7 +107,7 @@ const SignIn: NextPage<any> = (props) => {
           }}
         >
           <div style={{ backgroundColor: "honeydew" }}>
-            <p style={{ margin: "0" }}>정비관리도 이젠 편리하게</p>
+            <P>정비관리도 이젠 편리하게</P>
             <p style={{ margin: "0", fontWeight: "bold" }}>CARGLE</p>
           </div>
           <div style={{ marginTop: "20px", backgroundColor: "greenyellow" }}>
@@ -178,6 +183,7 @@ const SignIn: NextPage<any> = (props) => {
               style={{
                 width: "100%",
                 marginTop: "10px",
+                padding: "5px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "end",
@@ -188,11 +194,15 @@ const SignIn: NextPage<any> = (props) => {
                 style={{
                   width: "60%",
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "end",
                   alignItems: "center",
                   fontSize: "0.7em",
                 }}
               >
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  style={{ width: "12px" }}
+                />
                 <p style={{ margin: "0" }}>아직 회원이 아니신가요?</p>
                 <Link href="/view/signup">
                   <a style={{ fontWeight: "bold" }}>회원가입</a>
@@ -202,11 +212,15 @@ const SignIn: NextPage<any> = (props) => {
                 style={{
                   width: "60%",
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "end",
                   alignItems: "center",
                   fontSize: "0.7em",
                 }}
               >
+                <FontAwesomeIcon
+                  icon={faQuestionCircle}
+                  style={{ width: "12px" }}
+                />
                 <p style={{ margin: "0" }}>계정을 찾고 싶으신가요?</p>
                 <Link href="/view/find">
                   <a style={{ fontWeight: "bold" }}>계정찾기</a>
@@ -215,7 +229,7 @@ const SignIn: NextPage<any> = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </Main>
     </Wrapper>
   );
 };

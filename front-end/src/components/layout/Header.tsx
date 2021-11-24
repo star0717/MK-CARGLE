@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Image from "next/image";
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
@@ -28,10 +29,27 @@ const Header: NextPage<HeaderProps> = (props) => {
         height: "60px",
         backgroundColor: "gray",
         display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
       }}
     >
-      <div style={{ width: "30%", fontSize: "2em" }}>
-        <Link href="/view/main">cargle</Link>
+      <div
+        style={{
+          width: "20%",
+          fontSize: "2em",
+          paddingLeft: "20px",
+        }}
+      >
+        <Link href="/view/main">
+          <a>
+            <Image
+              src="/images/cargle.png"
+              alt="Cargle Logo"
+              width={110}
+              height={45}
+            />
+          </a>
+        </Link>
       </div>
       {cApproval === "done" && (
         <div style={{ width: "80%", display: "flex" }}>
