@@ -119,10 +119,10 @@ export class CommonService {
       const token: AuthTokenInfo = req['user'] as AuthTokenInfo;
       if (!token) throw new UnauthorizedException();
 
-      console.log(Date.now() / 1000);
-      console.log(token['exp']);
-      console.log(new Date(token['exp'] * 1000));
-      console.log();
+      // console.log(Date.now() / 1000);
+      // console.log(token['exp']);
+      // console.log(new Date(token['exp'] * 1000));
+      // console.log();
 
       // 회원가입 중인 경우는 생략
       if (!isAuth) {

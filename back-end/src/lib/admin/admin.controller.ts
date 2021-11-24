@@ -73,14 +73,14 @@ export class AdminController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
-    @Body() doc: Partial<Company>,
+    @Body() company: Partial<Company>,
   ): Promise<Company> {
     this.commonService.extractToken(req, res, false, true);
-    const patchDoc: Partial<Company> = {};
-    if (doc.busItem) patchDoc.busItem = doc.busItem;
-    if (doc.busType) patchDoc.busType = doc.busType;
-    console.log(patchDoc);
-    return await this.service.approveCompany(id, patchDoc);
+    var pCompany: Partial<Company> = {};
+    if (company.busItem) pCompany.busItem = company.busItem;
+    if (company.busType) pCompany.busType = company.busType;
+    console.log(pCompany);
+    return await this.service.approveCompany(id, pCompany);
   }
 
   @Patch('reject/company/:id')

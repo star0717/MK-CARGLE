@@ -321,25 +321,4 @@ export class AuthController {
   async helpFinePWD(@Body() data: HelpFindPWD): Promise<boolean> {
     return await this.authService.helpFindPWD(data);
   }
-
-  @ApiOperation({ summary: '패스워드 변경' })
-  @ApiBody({
-    description: '사용자명과 핸드폰번호 그리고 이메일 주소',
-    type: HelpChangePWD,
-  })
-  @ApiResponse({
-    description:
-      '성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송',
-  })
-  @Post('update/password')
-  async UpdateUserPassword(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
-    @Body() data: HelpChangePWD,
-  ): Promise<boolean> {
-    console.log(data);
-
-    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
-    return await this.authService.updateUserPassword(token, data);
-  }
 }
