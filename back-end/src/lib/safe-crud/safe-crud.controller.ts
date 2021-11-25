@@ -28,12 +28,14 @@ import { Request, Response } from 'express';
 import {
   BaseEntity,
   DeleteResult,
-  PaginateOptions,
-  PaginateResult,
+  FindParameters,
+  FindResult,
 } from '../../models/base.entity';
 import { SafeService } from './safe-crud.service';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { AuthTokenInfo } from 'src/models/auth.entity';
+import { AuthToken } from '../decorators/decorators';
+import { UserAuthority } from 'src/models/user.entity';
 
 @Injectable()
 export class AbstractValidationPipe extends ValidationPipe {
@@ -59,24 +61,14 @@ export class AbstractValidationPipe extends ValidationPipe {
 }
 
 export interface IController<T> {
-  create(req: Request, res: Response, doc: T): Promise<T>;
+  create(doc: T, token: AuthTokenInfo): Promise<T>;
   findByOptions(
-    req: Request,
-    res: Response,
-    qeury: PaginateOptions,
-  ): Promise<PaginateResult<T>>;
-  findById(req: Request, res: Response, id: string): Promise<T>;
-  findByIdAndUpdate(
-    req: Request,
-    res: Response,
-    id: string,
-    doc: T,
-  ): Promise<T>;
-  findByIdAndRemove(
-    req: Request,
-    res: Response,
-    id: string,
-  ): Promise<DeleteResult>;
+    qeury: FindParameters,
+    token: AuthTokenInfo,
+  ): Promise<FindResult<T>>;
+  findById(id: string, token: AuthTokenInfo): Promise<T>;
+  findByIdAndUpdate(id: string, doc: T, token: AuthTokenInfo): Promise<T>;
+  findByIdAndRemove(id: string, token: AuthTokenInfo): Promise<DeleteResult>;
 }
 
 export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
@@ -105,12 +97,10 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       type: bodyDto,
     })
     async create(
-      @Req() req: Request,
-      @Res({ passthrough: true }) res: Response,
       @Body() doc: T,
+      @AuthToken() token: AuthTokenInfo,
     ): Promise<T> {
-      const aToken: AuthTokenInfo = this.safeService.extractToken(req, res);
-      return this.safeService.create(aToken, doc);
+      return this.safeService.create(token, doc);
     }
 
     @Get()
@@ -119,15 +109,13 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     })
     @ApiResponse({
       description: `검색된 ${bodyDto.name} 배열 데이터와 페이징 정보`,
-      type: PaginateResult,
+      type: FindResult,
     })
     async findByOptions(
-      @Req() req: Request,
-      @Res({ passthrough: true }) res: Response,
-      @Query() findQuery: PaginateOptions,
-    ): Promise<PaginateResult<T>> {
-      var token: AuthTokenInfo = this.safeService.extractToken(req, res);
-      return this.safeService.findByOptions(token, findQuery);
+      @Query() fParams: FindParameters,
+      @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
+    ): Promise<FindResult<T>> {
+      return this.safeService.findByOptions(token, fParams);
     }
 
     @Get(':id')
@@ -138,11 +126,9 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       type: bodyDto,
     })
     async findById(
-      @Req() req: Request,
-      @Res({ passthrough: true }) res: Response,
       @Param('id') id: string,
+      @AuthToken() token: AuthTokenInfo,
     ): Promise<T> {
-      const token: AuthTokenInfo = this.safeService.extractToken(req, res);
       return this.safeService.findById(token, id);
     }
 
@@ -151,12 +137,10 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     @ApiParam({ name: 'id', description: `해당 ${bodyDto.name}의 오브젝트 ID` })
     @ApiBody({ description: `갱신된 ${bodyDto.name} 데이터`, type: bodyDto })
     async findByIdAndUpdate(
-      @Req() req: Request,
-      @Res({ passthrough: true }) res: Response,
       @Param('id') id: string,
       @Body() doc: Partial<T>,
+      @AuthToken() token: AuthTokenInfo,
     ): Promise<T> {
-      const token: AuthTokenInfo = this.safeService.extractToken(req, res);
       console.log('update in BaseController');
       console.log(doc);
       return this.safeService.findByIdAndUpdate(token, id, doc);
@@ -170,11 +154,9 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       type: DeleteResult,
     })
     async findByIdAndRemove(
-      @Req() req: Request,
-      @Res({ passthrough: true }) res: Response,
       @Param('id') id: string,
+      @AuthToken() token: AuthTokenInfo,
     ): Promise<DeleteResult> {
-      const token: AuthTokenInfo = this.safeService.extractToken(req, res);
       return this.safeService.findByIdAndRemove(token, id);
     }
   }

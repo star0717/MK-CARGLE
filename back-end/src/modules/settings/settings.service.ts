@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CommonService } from 'src/lib/common/common.service';
 import { AuthTokenInfo, HelpChangePWD, UserInfo } from 'src/models/auth.entity';
+import { FindParameters, FindResult } from 'src/models/base.entity';
 import { Company } from 'src/models/company.entity';
 import { User } from 'src/models/user.entity';
 import { CompaniesService } from '../companies/companies.service';
@@ -46,7 +47,11 @@ export class SettingsService {
     user: Partial<User>,
   ): Promise<User> {
     if (token.uID != id) throw new UnauthorizedException();
-    return await this.usersService.findByIdAndUpdate(token, id, user);
+    const pUser: Partial<User> = {};
+    if (user.hpNumber) pUser.hpNumber = user.hpNumber;
+    if (user.address) pUser.address = user.address;
+    if (user.joinDate) pUser.joinDate = user.joinDate;
+    return await this.usersService.findByIdAndUpdate(token, id, pUser);
   }
 
   async updateCompanyInfo(
@@ -55,6 +60,29 @@ export class SettingsService {
     company: Partial<Company>,
   ): Promise<Company> {
     if (token.cID != id) throw new UnauthorizedException();
-    return await this.companiesService.findByIdAndUpdate(token, id, company);
+    var pUser: Partial<Company> = {};
+    if (company.mbTypeNum) pUser.mbTypeNum = company.mbTypeNum;
+    if (company.busType) pUser.busType = company.busType;
+    if (company.busItem) pUser.busItem = company.busItem;
+    if (company.phoneNum) pUser.phoneNum = company.phoneNum;
+    if (company.faxNum) pUser.faxNum = company.faxNum;
+    if (company.address) pUser.address = company.address;
+    return await this.companiesService.findByIdAndUpdate(token, id, pUser);
+  }
+
+  async findApprovedWorkers(
+    aToken: AuthTokenInfo,
+    fParams: FindParameters,
+  ): Promise<FindResult<User>> {
+    fParams.filter = { approval: true } as Partial<User>;
+    return await this.usersService.findByOptions(aToken, fParams);
+  }
+
+  async findUnApprovedWorkers(
+    aToken: AuthTokenInfo,
+    fParams: FindParameters,
+  ): Promise<FindResult<User>> {
+    fParams.filter = { approval: false } as Partial<User>;
+    return await this.usersService.findByOptions(aToken, fParams);
   }
 }

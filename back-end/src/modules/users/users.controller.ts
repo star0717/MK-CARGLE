@@ -2,22 +2,21 @@ import {
   Controller,
   Post,
   Body,
-  Req,
   NotAcceptableException,
   Patch,
   Param,
   Delete,
-  Res,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Request, Response } from 'express';
+import { AuthToken } from 'src/lib/decorators/decorators';
 import { SafeControllerFactory } from 'src/lib/safe-crud/safe-crud.controller';
+import { AuthTokenInfo } from 'src/models/auth.entity';
 import { DeleteResult } from 'src/models/base.entity';
 import { User } from 'src/models/user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
-@ApiTags('유저 API')
+@ApiTags('업체 API')
 export class UsersController extends SafeControllerFactory<User>(User) {
   constructor(private readonly usersService: UsersService) {
     super(usersService);
@@ -29,9 +28,8 @@ export class UsersController extends SafeControllerFactory<User>(User) {
   @Post()
   @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
   async create(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
     @Body() doc: User,
+    @AuthToken() token: AuthTokenInfo,
   ): Promise<User> {
     throw new NotAcceptableException();
   }
@@ -39,10 +37,9 @@ export class UsersController extends SafeControllerFactory<User>(User) {
   @Patch(':id')
   @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
   async findByIdAndUpdate(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
     @Body() doc: Partial<User>,
+    @AuthToken() token: AuthTokenInfo,
   ): Promise<User> {
     throw new NotAcceptableException();
   }
@@ -50,9 +47,8 @@ export class UsersController extends SafeControllerFactory<User>(User) {
   @Delete(':id')
   @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
   async findByIdAndRemove(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
+    @AuthToken() token: AuthTokenInfo,
   ): Promise<DeleteResult> {
     throw new NotAcceptableException();
   }

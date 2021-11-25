@@ -20,8 +20,9 @@ import {
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { Company } from 'src/models/company.entity';
 import { CommonService } from '../common/common.service';
-import { Public } from '../decorators/decorators';
+import { AuthToken, Public } from '../decorators/decorators';
 import { AdminService } from './admin.service';
+import { UserAuthority } from 'src/models/user.entity';
 
 @Controller('admin')
 @ApiTags('관리자 API')
@@ -70,12 +71,11 @@ export class AdminController {
     type: PartialType<Company>(Company),
   })
   async approveCompany(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
     @Body() company: Partial<Company>,
+    @AuthToken({ auth: UserAuthority.ADMIN })
+    token: AuthTokenInfo,
   ): Promise<Company> {
-    this.commonService.extractToken(req, res, false, true);
     var pCompany: Partial<Company> = {};
     if (company.busItem) pCompany.busItem = company.busItem;
     if (company.busType) pCompany.busType = company.busType;
@@ -89,11 +89,10 @@ export class AdminController {
   })
   @ApiParam({ name: 'id', description: '거부할 업체의 오브젝트ID' })
   async rejectCompany(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
+    @AuthToken({ auth: UserAuthority.ADMIN })
+    token: AuthTokenInfo,
   ): Promise<Company> {
-    this.commonService.extractToken(req, res, false, true);
     return await this.service.rejectCompany(id);
   }
 
@@ -101,11 +100,10 @@ export class AdminController {
   @ApiOperation({ description: '업체 삭제. 대표자와 직원들도 모두 삭제' })
   @ApiParam({ name: 'id', description: '삭제할 업체의 오브젝트ID' })
   async deleteCompany(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
+    @AuthToken({ auth: UserAuthority.ADMIN })
+    token: AuthTokenInfo,
   ) {
-    const token = this.commonService.extractToken(req, res, false, true);
     this.service.deleteCompany(token, id);
   }
 }
