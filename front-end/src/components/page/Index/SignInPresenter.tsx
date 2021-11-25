@@ -25,11 +25,12 @@ const SigninPresenter = ({
     return (
         <WholeWrapper>
             <Wrapper
-                width={width < 1350 ? (width < 600 ? `350px` : `500px`) : `650px`}
+                width={width < 1400 ? `300px` : `378px`}
                 al={`flex-start`}
             >
                 <WelcomeTitle
-                    margin={`200px 0px 0px 0px`}
+                    margin={
+                        width < 1400 ? (width < 600 ? `50px 0px 0px 0px` : `100px 0px 0px 0px`) : `200px 0px 0px 0px`}
                     paddingBottom={`0px`}
                 >
                     정비관리도 이젠 편리하게
