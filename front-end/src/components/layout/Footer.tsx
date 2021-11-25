@@ -1,5 +1,8 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/dist/client/router";
+import Link from "next/link";
 
 const Footer: NextPage = () => {
   return (
@@ -7,13 +10,28 @@ const Footer: NextPage = () => {
       style={{
         marginTop: "auto",
         width: "100%",
-        height: "100px",
-        backgroundColor: "skyblue",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        flexDirection: "row",
+        backgroundColor: "#292929",
+        color: "#ffffff",
+        padding: "20px 10px 50px 100px",
+        fontSize: "12pt"
       }}
     >
+      <div
+        style={{
+          padding: "0px 30px"
+        }}
+      >
+        <Image
+          src="/images/logoWhite.png"
+          alt="Cargle Logo"
+          width={110}
+          height={45}
+        />
+      </div>
       <div>
         <p>
           MK Co.,Ltd. 대전광역시 유성구 대학로 227 3층 tel 1644-3486 Fax
