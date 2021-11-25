@@ -11,20 +11,27 @@ import styled from "styled-components";
 import { formRegEx } from "../../../validation/regEx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { WholeWrapper } from "../../styles/CommonComponents";
 
 //SCSS
-const Wrapper = styled.div`
-  width: 100%;
-`;
+// const Wrapper = styled.div`
+//   width: 100%;
+//   display: flex;
+//       flex-wrap: wrap;
+//       flex-direction: row; 
+//       align-items: center;
+//       justify-content: center;
+
+// `;
 
 const Main = styled.div`
-  width: 100%;
-  height: 600px;
+  width: 376px;
+  height: 100%;
+  margin:auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: lightblue;
 `;
 
 const P = styled.p`
@@ -97,27 +104,45 @@ const SignIn: NextPage<any> = (props) => {
   };
 
   return (
-    <Wrapper>
+    <WholeWrapper
+      bgColor={`#000`}>
       <Main>
         <div
           style={{
-            width: "35%",
-            padding: "10px",
-            backgroundColor: "limegreen",
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column"
           }}
         >
-          <div style={{ backgroundColor: "honeydew" }}>
+          <div
+            style={{
+              fontSize: "22pt"
+            }}
+          >
             <P>정비관리도 이젠 편리하게</P>
             <p style={{ margin: "0", fontWeight: "bold" }}>CARGLE</p>
           </div>
-          <div style={{ marginTop: "20px", backgroundColor: "greenyellow" }}>
+          <div style={{ marginTop: "20px" }}>
             {/* 로그인 입력 form */}
             <form onSubmit={onSignInHandler}>
               {/* 이메일 input */}
-              <div>
-                <p style={{ margin: "0" }}>이메일</p>
+              <div
+                style={{
+                  borderBottom: "1px solid",
+                  height: "36px",
+                  lineHeight: "36px",
+                  marginBottom: "10px",
+                }}>
+
                 <input
-                  style={{ width: "100%" }}
+                  style={{
+                    width: "100%",
+                    border: "0px;",
+                    fontSize: "16px"
+                  }}
+                  placeholder="이메일"
                   type="text"
                   name="id"
                   value={inputSignIn.id}
@@ -126,12 +151,33 @@ const SignIn: NextPage<any> = (props) => {
                   }}
                 />
               </div>
+              <div
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "bold"
+                }}>
+                <span>
+                  TIP! 아이디는 가입 시 입력한 이메일을 입력해주세요.
+                </span>
+              </div>
               {/* 비밀번호 input */}
-              <div>
-                <p style={{ margin: "0" }}>비밀번호</p>
+              <div
+                style={{
+                  borderBottom: "1px solid",
+                  height: "36px",
+                  lineHeight: "36px",
+                  marginBottom: "10px",
+                  marginTop: "10px"
+                }}>
+
                 <input
-                  style={{ width: "100%" }}
+                  style={{
+                    width: "100%",
+                    border: "0px;",
+                    fontSize: "16px"
+                  }}
                   type="password"
+                  placeholder="비밀번호"
                   name="pwd"
                   value={inputSignIn.pwd}
                   onChange={(e) => {
@@ -142,15 +188,21 @@ const SignIn: NextPage<any> = (props) => {
               {/* 체크박스 div */}
               <div>
                 {/* 아이디 저장 체크박스 */}
-                <div>
+                <div style={{
+                  marginBottom: "10px"
+                }}
+                >
                   <input
+                    style={{
+                      fontSize: "12px"
+                    }}
                     type="checkbox"
                     checked={saveCheck}
                     onChange={(e) => {
                       setSaveCheck(e.target.checked);
                     }}
                   ></input>
-                  <span>아이디 저장</span>
+                  <span style={{ fontSize: "14px" }}>아이디 저장</span>
                 </div>
               </div>
               {signInErr ? (
@@ -173,7 +225,16 @@ const SignIn: NextPage<any> = (props) => {
               ) : null}
               {/* 로그인 버튼 */}
               <button
-                style={{ width: "100%", marginTop: "10px" }}
+                style={{
+                  width: "100%",
+                  marginTop: "10px",
+                  height: "50px",
+                  backgroundColor: "#0052CE",
+                  borderRadius: "5px",
+                  color: "#ffffff",
+                  border: "0px",
+                  fontSize: "16px"
+                }}
                 type="submit"
               >
                 로그인
@@ -181,47 +242,43 @@ const SignIn: NextPage<any> = (props) => {
             </form>
             <div
               style={{
-                width: "100%",
                 marginTop: "10px",
                 padding: "5px",
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "end",
-                backgroundColor: "gainsboro",
+                alignItems: "end"
               }}
             >
               <div
                 style={{
-                  width: "60%",
                   display: "flex",
                   justifyContent: "end",
                   alignItems: "center",
-                  fontSize: "0.7em",
+                  fontSize: "14px"
                 }}
               >
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
-                  style={{ width: "12px" }}
+                  style={{ width: "12px", margin: "0px 3px 0px 0px" }}
                 />
-                <p style={{ margin: "0" }}>아직 회원이 아니신가요?</p>
+                <p style={{ margin: "0px 3px 0px 0px", fontSize: "14px" }}>아직 회원이 아니신가요?</p>
                 <Link href="/view/signup">
                   <a style={{ fontWeight: "bold" }}>회원가입</a>
                 </Link>
               </div>
               <div
                 style={{
-                  width: "60%",
                   display: "flex",
                   justifyContent: "end",
                   alignItems: "center",
-                  fontSize: "0.7em",
+                  fontSize: "14px"
                 }}
               >
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
-                  style={{ width: "12px" }}
+                  style={{ width: "12px", margin: "0px 3px 0px 0px" }}
                 />
-                <p style={{ margin: "0" }}>계정을 찾고 싶으신가요?</p>
+                <p style={{ margin: "0px 3px 0px 0px" }}>계정을 찾고 싶으신가요?</p>
                 <Link href="/view/find">
                   <a style={{ fontWeight: "bold" }}>계정찾기</a>
                 </Link>
@@ -230,7 +287,7 @@ const SignIn: NextPage<any> = (props) => {
           </div>
         </div>
       </Main>
-    </Wrapper>
+    </WholeWrapper >
   );
 };
 
