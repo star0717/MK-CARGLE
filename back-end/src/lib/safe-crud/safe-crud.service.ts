@@ -5,8 +5,8 @@ import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   BaseEntity,
   DeleteResult,
-  PaginateOptions,
-  PaginateResult,
+  FindParameters,
+  FindResult,
 } from 'src/models/base.entity';
 import { UserAuthority } from 'src/models/user.entity';
 import { CommonService } from '../common/common.service';
@@ -39,10 +39,6 @@ export class SafeService<T extends BaseEntity> {
     return this.modelKeys.includes(key);
   }
 
-  extractToken(@Req() req, @Res() res: Response): AuthTokenInfo {
-    return this.commonService.extractToken(req, res);
-  }
-
   protected async _create(doc: T): Promise<T> {
     // 생성일 주입
     doc.createdAt = new Date(Date.now());
@@ -50,52 +46,59 @@ export class SafeService<T extends BaseEntity> {
     return await this.model.create(doc);
   }
 
-  async create(aToken: AuthTokenInfo, doc: T): Promise<T> {
+  async create(token: AuthTokenInfo, doc: T): Promise<T> {
     // ID값 주입
-    doc._cID = aToken.cID;
-    doc._uID = aToken.uID;
+    doc._cID = token.cID;
+    doc._uID = token.uID;
 
     return await this._create(doc);
   }
 
   async findByOptions(
-    aToken: AuthTokenInfo,
-    pOptions: PaginateOptions,
-  ): Promise<PaginateResult<T>> {
-    let searchOption: FilterQuery<BaseEntity> = {};
-    if (pOptions.searchField && pOptions.searchKeyword) {
-      if (!this.isContainedKey(pOptions.searchField)) {
+    token: AuthTokenInfo,
+    fParams: FindParameters,
+  ): Promise<FindResult<T>> {
+    var fQuery: FilterQuery<BaseEntity> = {};
+    if (fParams.filterKey && fParams.filterValue) {
+      if (!this.isContainedKey(fParams.filterKey)) {
         throw new BadRequestException();
       }
 
-      if (pOptions.useRegSearch === true) {
-        searchOption[pOptions.searchField] = {
-          $regex: pOptions.searchKeyword,
+      if (fParams.useRegSearch === true) {
+        fQuery[fParams.filterKey] = {
+          $regex: fParams.filterValue,
           $options: '$i',
         };
       } else {
-        searchOption[pOptions.searchField] = pOptions.searchKeyword;
-      }
-
-      // 검색 범위 제한
-      if (aToken.uAuth != UserAuthority.ADMIN) {
-        searchOption['_cID'] = aToken.cID;
+        fQuery[fParams.filterKey] = fParams.filterValue;
       }
     }
-    console.log('*** findByOptions');
-    console.log(searchOption);
-    const currentPage = pOptions.page;
-    const skipOption = (currentPage - 1) * pOptions.take;
-    const limitOption = pOptions.take;
+    // 검색 범위 제한
+    if (token.uAuth != UserAuthority.ADMIN) {
+      fQuery._cID = token.cID;
+    }
 
-    let result: PaginateResult<T> = new PaginateResult<T>();
+    if (fParams.filter) {
+      fQuery = {
+        ...fQuery,
+        ...fParams.filter,
+      };
+    }
+
+    console.log('*** findByOptions');
+    console.log(fQuery);
+    const currentPage = fParams.page;
+    const skipOption = (currentPage - 1) * fParams.take;
+    const limitOption = fParams.take;
+
+    let result: FindResult<T> = new FindResult<T>();
     result.totalDocs = await this.model.countDocuments(
-      searchOption as FilterQuery<T>,
+      fQuery as FilterQuery<T>,
     );
-    result.currentPage = pOptions.page;
+    result.currentPage = fParams.page;
     result.lastPage = Math.ceil(result.totalDocs / limitOption);
     result.docs = await this.model
-      .find(searchOption as FilterQuery<T>)
+      .find(fQuery as FilterQuery<T>, fParams.projection)
       .skip(skipOption)
       .limit(limitOption);
 
@@ -106,12 +109,12 @@ export class SafeService<T extends BaseEntity> {
     return await this.model.findById(id);
   }
 
-  async findById(aToken: AuthTokenInfo, id: string): Promise<T> {
-    let sOption: FilterQuery<BaseEntity> = { _id: id };
-    if (aToken.uAuth != UserAuthority.ADMIN) {
-      sOption._cID = aToken.cID;
+  async findById(token: AuthTokenInfo, id: string): Promise<T> {
+    let fQuery: FilterQuery<BaseEntity> = { _id: id };
+    if (token.uAuth != UserAuthority.ADMIN) {
+      fQuery._cID = token.cID;
     }
-    return await this.model.findOne(sOption as FilterQuery<T>);
+    return await this.model.findOne(fQuery as FilterQuery<T>);
   }
 
   protected async _findByIdAndUpdate(id: string, doc: Partial<T>): Promise<T> {

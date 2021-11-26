@@ -1,6 +1,11 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { BaseEntity, DeleteResult, PaginateOptions, PaginateResult } from "src/models/base.entity";
+import {
+  BaseEntity,
+  DeleteResult,
+  FindParameters,
+  FindResult,
+} from 'src/models/base.entity';
 
 /* 확장 서비스 클래스용 패키지 - 아래의 내용을 확장 클래스에 주입
 import { InjectModel } from 'nestjs-typegoose';
@@ -9,7 +14,6 @@ import { ReturnModelType } from '@typegoose/typegoose';
 
 @Injectable()
 export class BaseService<T extends BaseEntity> {
-
   /* 자식 서비스 클래스용 생성자 - 아래의 내용을 자식 클래스에 삽입
   constructor(@InjectModel(EntityClass) readonly model: ReturnModelType<typeof EntityClass>) {
       super(model);
@@ -17,12 +21,10 @@ export class BaseService<T extends BaseEntity> {
   */
   private modelKeys: string[];
 
-  constructor(
-    readonly model: Model<T>,
-  ) {
+  constructor(readonly model: Model<T>) {
     const schema = model.prototype.schema.paths;
     this.modelKeys = Object.keys(schema);
-  };
+  }
 
   /**
    * 데이터 모델 클래스에 해당 key 필드가 존재하는지 유무 반환
@@ -34,54 +36,42 @@ export class BaseService<T extends BaseEntity> {
   }
 
   async create(doc: T): Promise<T> {
-
-    // 더미 데이터 생성용
-    // for (var i = 0; i < 1000; i++) {
-    //     doc["name"] = "cb park" + i;
-    //     doc["createdAt"] = new Date(+Date.now());
-    //     var newDoc = await this.model.create(doc);
-    // }
-    // return newDoc;
-
-
-    // doc.createdAt = new Date(Date.now());
-    console.log("service => db");
-    console.log(doc);
-
     doc.createdAt = new Date(Date.now());
-    const result = await this.model.create(doc);
-    console.log("service <= db");
-    console.log(result);
-    return result;
+    return await this.model.create(doc);
   }
 
-  async findByOptions(pOptions: PaginateOptions): Promise<PaginateResult<T>> {
-    console.log("in service");
+  async findByOptions(pOptions: FindParameters): Promise<FindResult<T>> {
+    console.log('in service');
     console.log(pOptions);
 
     let searchOption = {};
-    if (pOptions.searchField && pOptions.searchKeyword) {
-
-      if (!this.isContainedKey(pOptions.searchField)) {
+    if (pOptions.filterKey && pOptions.filterValue) {
+      if (!this.isContainedKey(pOptions.filterKey)) {
         throw new BadRequestException();
       }
 
       if (pOptions.useRegSearch === true) {
-        searchOption[pOptions.searchField] = { $regex: pOptions.searchKeyword, $options: '$i' };
+        searchOption[pOptions.filterKey] = {
+          $regex: pOptions.filterValue,
+          $options: '$i',
+        };
       } else {
-        searchOption[pOptions.searchField] = pOptions.searchKeyword;
+        searchOption[pOptions.filterKey] = pOptions.filterValue;
       }
     }
     console.log(searchOption);
     const currentPage = pOptions.page;
-    const skipOption = (currentPage - 1) * (pOptions.take);
-    const limitOption = (pOptions.take);
+    const skipOption = (currentPage - 1) * pOptions.take;
+    const limitOption = pOptions.take;
 
-    let pr: PaginateResult<T> = new PaginateResult<T>();
+    let pr: FindResult<T> = new FindResult<T>();
     pr.totalDocs = await this.model.countDocuments(searchOption);
     pr.currentPage = pOptions.page;
     pr.lastPage = Math.ceil(pr.totalDocs / limitOption);
-    pr.docs = await this.model.find(searchOption).skip(skipOption).limit(limitOption);
+    pr.docs = await this.model
+      .find(searchOption)
+      .skip(skipOption)
+      .limit(limitOption);
 
     return pr;
   }

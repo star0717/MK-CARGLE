@@ -101,62 +101,56 @@ export class CommonService {
     res.cookie(process.env.TK_NAME, token);
   }
 
-  /**
-   * 토큰 정보 추출
-   * @param req 토큰을 추출할 request
-   * @param res 필요시 토큰을 주입할 response
-   * @param isAuth 인증관련 요청인지 여부. true: 승인안된 사용자도 요청 가입가능
-   * @param reqAdmin 시스템 관리자 권한을 필요로 하는지 여부
-   * @returns
-   */
-  extractToken(
-    req: Request,
-    res: Response,
-    isAuth: boolean = false,
-    reqAdmin: boolean = false,
-  ): AuthTokenInfo {
-    try {
-      const token: AuthTokenInfo = req['user'] as AuthTokenInfo;
-      if (!token) throw new UnauthorizedException();
+  // /**
+  //  * 토큰 정보 추출
+  //  * @param req 토큰을 추출할 request
+  //  * @param res 필요시 토큰을 주입할 response
+  //  * @param isAuth 인증관련 요청인지 여부. true: 승인안된 사용자도 요청 가입가능
+  //  * @param reqAdmin 시스템 관리자 권한을 필요로 하는지 여부
+  //  * @returns
+  //  */
+  // extractToken(
+  //   req: Request,
+  //   res: Response,
+  //   isAuth: boolean = false,
+  //   reqAdmin: boolean = false,
+  // ): AuthTokenInfo {
+  //   try {
+  //     const token: AuthTokenInfo = req['user'] as AuthTokenInfo;
+  //     if (!token) throw new UnauthorizedException();
 
-      // console.log(Date.now() / 1000);
-      // console.log(token['exp']);
-      // console.log(new Date(token['exp'] * 1000));
-      // console.log();
+  //     // console.log(Date.now() / 1000);
+  //     // console.log(token['exp']);
+  //     // console.log(new Date(token['exp'] * 1000));
+  //     // console.log();
 
-      // 회원가입 중인 경우는 생략
-      if (!isAuth) {
-        // 권한 검증
-        if (
-          token.cApproval != CompanyApproval.DONE ||
-          token.uApproval != true
-        ) {
-          throw new UnauthorizedException();
-        }
-      }
+  //     // 회원가입 중인 경우는 생략
+  //     if (!isAuth) {
+  //       // 권한 검증
+  //       if (
+  //         token.cApproval != CompanyApproval.DONE ||
+  //         token.uApproval != true
+  //       ) {
+  //         throw new UnauthorizedException();
+  //       }
+  //     }
 
-      // Admin만 사용할 수 있는 요청인지 여부 확인
-      if (reqAdmin) {
-        if (token.uAuth != UserAuthority.ADMIN) {
-          throw new UnauthorizedException();
-        }
-      }
+  //     // Admin만 사용할 수 있는 요청인지 여부 확인
+  //     if (reqAdmin) {
+  //       if (token.uAuth != UserAuthority.ADMIN) {
+  //         throw new UnauthorizedException();
+  //       }
+  //     }
 
-      // ID값 검증
-      if (
-        !token ||
-        !token.uID ||
-        !token.cID ||
-        token.uID == '' ||
-        token.cID == ''
-      ) {
-        throw new UnauthorizedException();
-      }
-      return token;
-    } catch (err) {
-      throw new UnauthorizedException();
-    }
-  }
+  //     // ID값 검증
+  //     if (!token.uID || !token.cID || token.uID == '' || token.cID == '') {
+  //       throw new UnauthorizedException();
+  //     }
+  //     return token;
+  //   } catch (err) {
+  //     throw new UnauthorizedException();
+  //   }
+  // }
 
   clearToken(@Res({ passthrough: true }) res: Response) {
     res.clearCookie(process.env.TK_NAME);

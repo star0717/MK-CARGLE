@@ -13,25 +13,21 @@ import {
   ArgumentMetadata,
   UsePipes,
   Query,
-  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBody,
   ApiCreatedResponse,
   ApiOperation,
   ApiParam,
-  ApiQuery,
   ApiResponse,
-  ApiTags,
 } from '@nestjs/swagger';
 import {
   BaseEntity,
   DeleteResult,
-  PaginateOptions,
-  PaginateResult,
+  FindParameters,
+  FindResult,
 } from '../../models/base.entity';
 import { BaseService } from './base-crud.service';
-import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 
 @Injectable()
 export class AbstractValidationPipe extends ValidationPipe {
@@ -58,7 +54,7 @@ export class AbstractValidationPipe extends ValidationPipe {
 
 export interface IController<T> {
   create(doc: T): Promise<T>;
-  findByOptions(qeury: PaginateOptions): Promise<PaginateResult<T>>;
+  findByOptions(qeury: FindParameters): Promise<FindResult<T>>;
   findById(id: string): Promise<T>;
   update(id: string, doc: T): Promise<T>;
   remove(id: string): Promise<DeleteResult>;
@@ -101,12 +97,12 @@ export function BaseControllerFactory<T extends BaseEntity = BaseEntity>(
     })
     @ApiResponse({
       description: `검색된 ${bodyDto.name} 배열 데이터와 페이징 정보`,
-      type: PaginateResult,
+      type: FindResult,
     })
     async findByOptions(
-      @Query() findQuery: PaginateOptions,
-    ): Promise<PaginateResult<T>> {
-      return this.baseService.findByOptions(findQuery);
+      @Query() fParams: FindParameters,
+    ): Promise<FindResult<T>> {
+      return this.baseService.findByOptions(fParams);
     }
 
     @Get(':id')
