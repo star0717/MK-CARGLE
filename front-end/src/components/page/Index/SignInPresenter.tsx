@@ -11,7 +11,6 @@ import {
 } from "../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";
-import { Home, Send, Person } from "@material-ui/icons";
 
 const SigninPresenter = ({
     onSignInHandler,
@@ -42,7 +41,6 @@ const SigninPresenter = ({
                     >
                         CARGLE
                     </p>
-                    <Home />
                 </WelcomeTitle>
 
                 <div style={{ marginTop: "20px" }}>
