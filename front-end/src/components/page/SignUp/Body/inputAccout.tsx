@@ -43,7 +43,7 @@ const InputAccount: NextPage<any> = (props) => {
     name: "",
     hpNumber: "",
     address: "",
-    joinDate: null,
+    joinDate: "",
   };
 
   const [inputUser, setInputUser] = useState(userInit); // 사용자 정보
@@ -191,49 +191,48 @@ const InputAccount: NextPage<any> = (props) => {
     setModalOpen(false);
   };
 
-  // 계정 정보 form submit handler
+  // 직원(worker) 회원가입 form submit handler
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
-    console.log("hi");
+    if (!authNumCheck) {
+      alert("이메일 인증을 해주세요.");
+    } else {
+      if (userAuth === "worker") {
+        dispatch(
+          signUpUserAction({
+            user: {
+              ...inputUser,
+              email: `${emailAddress}@${emailDomain}`,
+              auth: userAuth,
+              address:
+                addressMain && addressDetail !== ""
+                  ? `${addressMain}, ${addressDetail}`
+                  : addressMain,
+              joinDate: joinDate && joinDate,
+            },
+          })
+        ).then(
+          (res: any) => {
+            setStepNumber(stepNumber + 1);
+          },
+          (err) => {
+            if (err.response.status === 400) {
+              alert("회원가입에 실패했습니다.");
+              setAuthNumCheck(false);
+              setInputUser(userInit);
+              setEmailAdderess("");
+              setEmailDomain("");
+              setPasswordCheck("");
+              setAddressMain("");
+              setAddressDetail("");
+              setJoinDate(null);
+            }
+          }
+        );
+      } else {
+        setStepNumber(stepNumber + 1);
+      }
+    }
   };
-
-  //   // 직원(worker) 회원가입 form submit handler
-  //   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
-  //     if (!authNumCheck) {
-  //       alert("이메일 인증을 해주세요.");
-  //     } else {
-  //       dispatch(
-  //         signUpUserAction({
-  //           user: {
-  //             ...inputUser,
-  //             email: `${emailAddress}@${emailDomain}`,
-  //             auth: userAuth,
-  //             address:
-  //               addressMain && addressDetail !== ""
-  //                 ? `${addressMain}, ${addressDetail}`
-  //                 : addressMain,
-  //             joinDate: joinDate && joinDate,
-  //           },
-  //         })
-  //       ).then(
-  //         (res: any) => {
-  //           setStepNumber(stepNumber + 1);
-  //         },
-  //         (err) => {
-  //           if (err.response.status === 400) {
-  //             alert("회원가입에 실패했습니다.");
-  //             setAuthNumCheck(false);
-  //             setInputUser(userInit);
-  //             setEmailAdderess("");
-  //             setEmailDomain("");
-  //             setPasswordCheck("");
-  //             setAddressMain("");
-  //             setAddressDetail("");
-  //             setJoinDate(null);
-  //           }
-  //         }
-  //       );
-  //     }
-  //   };
 
   return (
     <div

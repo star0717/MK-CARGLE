@@ -354,28 +354,4 @@ export class AuthService {
     console.log(password);
     return true;
   }
-
-  async updateUserPassword(
-    token: AuthTokenInfo,
-    data: HelpChangePWD,
-  ): Promise<boolean> {
-    if (token.uID != data._id) return false;
-
-    // 사용자 조회(패스워드는 제외됨)
-    var user = await this.usersService.findById(token, data._id);
-
-    // 사용자 조회(패스워드까지 포함)
-    const userInfo: UserInfo = {
-      id: user.email,
-      pwd: data.oldPWD,
-    };
-    user = await this.usersService.findByUserInfoForAuth(userInfo);
-    if (!user) throw new UnauthorizedException();
-
-    user = await this.usersService.findByIdAndUpdateForAuth(user._id, {
-      password: data.newPWD,
-    });
-    if (user) return true;
-    else return false;
-  }
 }

@@ -43,7 +43,7 @@ const WorkerSignUp: NextPage<any> = (props) => {
     name: "",
     hpNumber: "",
     address: "",
-    joinDate: null,
+    joinDate: "",
   };
 
   const [inputUser, setInputUser] = useState(userInit); // 사용자 정보

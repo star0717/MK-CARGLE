@@ -7,7 +7,6 @@ import {
   Res,
   BadRequestException,
   Req,
-  UseGuards,
   UseInterceptors,
   UploadedFile,
   Patch,
@@ -25,7 +24,6 @@ import { AuthService } from './auth.service';
 import config from 'src/config/configuration';
 import {
   AuthTokenInfo,
-  HelpChangePWD,
   HelpFindEmail,
   HelpFindPWD,
   SignUpInfo,
@@ -37,7 +35,7 @@ import { Company } from 'src/models/company.entity';
 import { Observable } from 'rxjs';
 import { docFileInterceptor } from 'src/config/multer.option';
 import { CommonService } from '../common/common.service';
-import { Public } from '../decorators/decorators';
+import { AuthToken, Public } from '../decorators/decorators';
 
 @Controller('auth')
 @ApiTags('인증 API')
@@ -109,11 +107,10 @@ export class AuthController {
   @ApiBody({ description: '로그인에 사용될 정보', type: WithdrawalInfo })
   @Post('withdrawal')
   async withdrawal(
-    @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
     @Body() info: WithdrawalInfo,
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ) {
-    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     await this.authService.withdrawal(token, info);
     this.comService.clearToken(res);
   }
@@ -121,10 +118,8 @@ export class AuthController {
   @ApiOperation({ summary: `프로필 확인 (토큰 정보 확인)` })
   @Get('profile')
   getProfile(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ): AuthTokenInfo {
-    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return token;
   }
 
@@ -218,11 +213,9 @@ export class AuthController {
   @UseInterceptors(docFileInterceptor)
   @Post('upload/com-reg-doc')
   async uploadComRegFile(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
     @UploadedFile() file: Express.Multer.File,
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ): Promise<string> {
-    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.uploadComRegFile(token, file);
   }
 
@@ -244,11 +237,9 @@ export class AuthController {
   @UseInterceptors(docFileInterceptor)
   @Post('upload/man-reg-doc')
   async uploadMainRegFile(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
     @UploadedFile() file: Express.Multer.File,
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ): Promise<string> {
-    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.uploadMainRegFile(token, file);
   }
 
@@ -256,10 +247,8 @@ export class AuthController {
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/com-reg-docc')
   async getCrFileName(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ): Promise<string> | null {
-    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.getComRegFileName(token);
   }
 
@@ -267,10 +256,8 @@ export class AuthController {
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/man-reg-doc')
   async getMainRegFileName(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ): Promise<string> | null {
-    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
     return await this.authService.getMainRegFileName(token);
   }
 
@@ -279,11 +266,10 @@ export class AuthController {
   @ApiParam({ name: 'id', description: '심사 승인을 요청할 업체의 오브젝트ID' })
   @Patch('request/company/:id')
   async requestApprove(
-    @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
     @Param('id') id: string,
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ) {
-    const token = this.comService.extractToken(req, res, true, false);
     console.log(token);
     const signUpInfo: SignUpInfo = await this.authService.requestApprove(
       token,
@@ -320,26 +306,5 @@ export class AuthController {
   @Post('help/pwd')
   async helpFinePWD(@Body() data: HelpFindPWD): Promise<boolean> {
     return await this.authService.helpFindPWD(data);
-  }
-
-  @ApiOperation({ summary: '패스워드 변경' })
-  @ApiBody({
-    description: '사용자명과 핸드폰번호 그리고 이메일 주소',
-    type: HelpChangePWD,
-  })
-  @ApiResponse({
-    description:
-      '성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송',
-  })
-  @Post('update/password')
-  async UpdateUserPassword(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
-    @Body() data: HelpChangePWD,
-  ): Promise<boolean> {
-    console.log(data);
-
-    const token: AuthTokenInfo = this.comService.extractToken(req, res, true);
-    return await this.authService.updateUserPassword(token, data);
   }
 }
