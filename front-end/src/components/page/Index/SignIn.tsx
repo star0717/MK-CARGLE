@@ -9,8 +9,10 @@ import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { signInUserAction } from "../../../../store/action/user.action";
 import styled from "styled-components";
 import { formRegEx } from "../../../validation/regEx";
-import withSplitting from "../../../Lib/withSpliting"
-const SigninPresenter = withSplitting(() => import("./SignInPresenter"))
+
+//SigninPresenter
+import withSplitting from "../../../Lib/withSpliting";
+const SigninPresenter = withSplitting(() => import("./SignInPresenter"));
 
 //SCSS
 // const Wrapper = styled.div`
