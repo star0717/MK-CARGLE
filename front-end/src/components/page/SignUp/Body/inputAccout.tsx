@@ -23,7 +23,7 @@ import CompanyFindModal from "./companyfindmodal";
 // modal setting
 Modal.setAppElement("body");
 
-const WorkerSignUp: NextPage<any> = (props) => {
+const InputAccount: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   // props 재정의
@@ -107,13 +107,6 @@ const WorkerSignUp: NextPage<any> = (props) => {
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputUser({ ...inputUser, [e.target.name]: e.target.value });
   };
-
-  // // 사업자 번호 인식해서 form validation
-  // useEffect(() => {
-  //   if (companyNum !== "") {
-  //     setValue("companyNum", companyNum, { shouldValidate: true });
-  //   }
-  // }, [companyNum]);
 
   // 이메일 인증번호 전송 handler
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -203,37 +196,41 @@ const WorkerSignUp: NextPage<any> = (props) => {
     if (!authNumCheck) {
       alert("이메일 인증을 해주세요.");
     } else {
-      dispatch(
-        signUpUserAction({
-          user: {
-            ...inputUser,
-            email: `${emailAddress}@${emailDomain}`,
-            auth: userAuth,
-            address:
-              addressMain && addressDetail !== ""
-                ? `${addressMain}, ${addressDetail}`
-                : addressMain,
-            joinDate: joinDate && joinDate,
+      if (userAuth === "worker") {
+        dispatch(
+          signUpUserAction({
+            user: {
+              ...inputUser,
+              email: `${emailAddress}@${emailDomain}`,
+              auth: userAuth,
+              address:
+                addressMain && addressDetail !== ""
+                  ? `${addressMain}, ${addressDetail}`
+                  : addressMain,
+              joinDate: joinDate && joinDate,
+            },
+          })
+        ).then(
+          (res: any) => {
+            setStepNumber(stepNumber + 1);
           },
-        })
-      ).then(
-        (res: any) => {
-          setStepNumber(stepNumber + 1);
-        },
-        (err) => {
-          if (err.response.status === 400) {
-            alert("회원가입에 실패했습니다.");
-            setAuthNumCheck(false);
-            setInputUser(userInit);
-            setEmailAdderess("");
-            setEmailDomain("");
-            setPasswordCheck("");
-            setAddressMain("");
-            setAddressDetail("");
-            setJoinDate(null);
+          (err) => {
+            if (err.response.status === 400) {
+              alert("회원가입에 실패했습니다.");
+              setAuthNumCheck(false);
+              setInputUser(userInit);
+              setEmailAdderess("");
+              setEmailDomain("");
+              setPasswordCheck("");
+              setAddressMain("");
+              setAddressDetail("");
+              setJoinDate(null);
+            }
           }
-        }
-      );
+        );
+      } else {
+        setStepNumber(stepNumber + 1);
+      }
     }
   };
 
@@ -247,44 +244,46 @@ const WorkerSignUp: NextPage<any> = (props) => {
       }}
     >
       <form onSubmit={handleSubmit(onSignUpUserHandler)}>
-        {/* 사업자 등록번호 */}
-        <div>
+        {/* 소속 업체(직원일 경우에만) */}
+        {userAuth === "worker" && (
           <div>
-            <div>*사업자 등록번호</div>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <input
-                style={{ width: "85%" }}
-                type="text"
-                value={companyNum}
-                placeholder="업체명 또는 사업자번호로 검색"
-                readOnly
-                {...register("companyNum", {
-                  required: { value: true, message: "필수 입력사항입니다." },
-                })}
-              />
-              <button
-                type="button"
-                onClick={(e) => {
-                  setModalOption("company");
-                  setModalOpen(!modalOpen);
+            <div>
+              <div>*소속 업체</div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <input
+                  style={{ width: "85%" }}
+                  type="text"
+                  value={companyNum}
+                  placeholder="업체명 또는 사업자번호로 검색"
+                  readOnly
+                  {...register("companyNum", {
+                    required: { value: true, message: "필수 입력사항입니다." },
+                  })}
+                />
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    setModalOption("company");
+                    setModalOpen(!modalOpen);
+                  }}
+                >
+                  검색
+                </button>
+              </div>
+            </div>
+            {errors.companyNum?.type === "required" && (
+              <p
+                style={{
+                  margin: "0",
+                  fontSize: "8px",
+                  color: "red",
                 }}
               >
-                검색
-              </button>
-            </div>
+                {errors.companyNum.message}
+              </p>
+            )}
           </div>
-          {errors.companyNum?.type === "required" && (
-            <p
-              style={{
-                margin: "0",
-                fontSize: "8px",
-                color: "red",
-              }}
-            >
-              {errors.companyNum.message}
-            </p>
-          )}
-        </div>
+        )}
         {/* 아이디(이메일) */}
         <div>
           <div>
@@ -514,67 +513,64 @@ const WorkerSignUp: NextPage<any> = (props) => {
               )}
           </div>
         </div>
-        {/* 성명 & 휴대폰번호 */}
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          {/* 성명 */}
-          <div style={{ width: "49%" }}>
-            <div>*성명</div>
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              value={inputUser.name}
-              placeholder="성명을 입력해주세요."
-              {...register("name", {
-                onChange: (e) => {
-                  onInputUserHandler(e);
-                },
-                required: { value: true, message: "필수 입력사항입니다." },
-              })}
-            />
-            {errors.name?.type === "required" && (
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "8px",
-                  color: "red",
-                }}
-              >
-                {errors.name.message}
-              </p>
-            )}
-          </div>
-          {/* 휴대폰번호 */}
-          <div style={{ width: "49%" }}>
-            <div>*휴대폰번호</div>
-            <input
-              style={{ width: "100%" }}
-              type="text"
-              value={CHAR_DEL(inputUser.hpNumber)}
-              placeholder="(- 제외)"
-              {...register("hpNumber", {
-                onChange: (e) => {
-                  onInputUserHandler(e);
-                },
-                required: { value: true, message: "필수 입력사항입니다." },
-                pattern: {
-                  value: formRegEx.HP_NUM,
-                  message: "형식에 맞게 입력하세요.",
-                },
-              })}
-            />
-            {(errors.hpNumber?.type === "required" ||
-              errors.hpNumber?.type === "pattern") && (
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "8px",
-                  color: "red",
-                }}
-              >
-                {errors.hpNumber.message}
-              </p>
-            )}
-          </div>
+        {/* 이름 */}
+        <div>
+          <div>*이름</div>
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            value={inputUser.name}
+            placeholder="성명을 입력해주세요."
+            {...register("name", {
+              onChange: (e) => {
+                onInputUserHandler(e);
+              },
+              required: { value: true, message: "필수 입력사항입니다." },
+            })}
+          />
+          {errors.name?.type === "required" && (
+            <p
+              style={{
+                margin: "0",
+                fontSize: "8px",
+                color: "red",
+              }}
+            >
+              {errors.name.message}
+            </p>
+          )}
+        </div>
+        {/* 휴대폰번호 */}
+        <div>
+          <div>*휴대폰번호</div>
+          <input
+            style={{ width: "100%" }}
+            type="text"
+            value={CHAR_DEL(inputUser.hpNumber)}
+            placeholder="(- 제외)"
+            {...register("hpNumber", {
+              onChange: (e) => {
+                onInputUserHandler(e);
+              },
+              required: { value: true, message: "필수 입력사항입니다." },
+              pattern: {
+                value: formRegEx.HP_NUM,
+                message: "형식에 맞게 입력하세요.",
+              },
+            })}
+          />
+          {(errors.hpNumber?.type === "required" ||
+            errors.hpNumber?.type === "pattern") && (
+            <p
+              style={{
+                margin: "0",
+                fontSize: "8px",
+                color: "red",
+              }}
+            >
+              {errors.hpNumber.message}
+            </p>
+          )}
         </div>
         {/* 자택주소 */}
         <div>
@@ -688,4 +684,4 @@ const WorkerSignUp: NextPage<any> = (props) => {
   );
 };
 
-export default WorkerSignUp;
+export default InputAccount;

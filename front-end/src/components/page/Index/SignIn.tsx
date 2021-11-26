@@ -9,25 +9,7 @@ import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { signInUserAction } from "../../../../store/action/user.action";
 import styled from "styled-components";
 import { formRegEx } from "../../../validation/regEx";
-
-//SigninPresenter
-import withSplitting from "../../../Lib/withSpliting";
-const SigninPresenter = withSplitting(() => import("./SignInPresenter"));
-
-//SCSS
-// const Wrapper = styled.div`
-//   width: 100%;
-//   display: flex;
-//       flex-wrap: wrap;
-//       flex-direction: row; 
-//       align-items: center;
-//       justify-content: center;
-
-// `;
-
-const P = styled.p`
-  margin: 0;
-`;
+import SigninPresenter from "./SignInPresenter";
 
 const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
