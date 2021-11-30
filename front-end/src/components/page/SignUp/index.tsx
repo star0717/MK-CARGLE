@@ -8,6 +8,9 @@ import OwnerSignUp from "./Body/owner";
 import TermSignUp from "./Body/term";
 import FileUpload from "./Body/fileUpload";
 import SignupComplete from "./Body/complete";
+import SelectUser from "./Body/selectUser";
+import InputAccount from "./Body/inputAccout";
+import InputCompany from "./Body/inputCompany";
 
 // modal setting
 Modal.setAppElement("body");
@@ -21,8 +24,7 @@ const SignUp: NextPage = () => {
     { key: 4, value: "daum.net", text: "Daum" },
   ];
 
-  const [isCompany, setIsCompany] = useState<boolean>(true); // 사업자일 경우 true
-  const [userAuth, setUserAuth] = useState(UserAuthority.WORKER);
+  const [userAuth, setUserAuth] = useState(UserAuthority.WORKER); // 유저 권한 종류
   const [stepNumber, setStepNumber] = useState<number>(1); // 스텝 숫자
 
   // component에 전달할 props들 정의
@@ -30,6 +32,7 @@ const SignUp: NextPage = () => {
     stepNumber,
     setStepNumber,
     userAuth,
+    setUserAuth,
     emailItem,
   };
 
@@ -64,41 +67,6 @@ const SignUp: NextPage = () => {
             backgroundColor: "lightgray",
           }}
         >
-          {/* 바디 부분 ( 단계 표시 ) 이미지 대체 고려중 */}
-          <div
-            style={{
-              width: "100%",
-              height: "10%",
-              backgroundColor: "lightgreen",
-            }}
-          >
-            {isCompany ? ( // 사업자일 경우
-              stepNumber === 1 ? ( // 사업자 step 1
-                <div>사업자1 회원구분</div> // 여기에 이미지를 넣거나 변수에 따라 css 변경
-              ) : stepNumber === 2 ? (
-                <div>사업자2 약관동의</div>
-              ) : stepNumber === 3 ? (
-                <div>사업자3 정보입력</div>
-              ) : stepNumber === 4 ? (
-                <div>사업자4 서류제출</div>
-              ) : stepNumber === 5 ? (
-                <div>사업자5 가입승인</div>
-              ) : (
-                ""
-              )
-            ) : stepNumber === 1 ? ( // 직원 step 1
-              <div>직원1 회원구분</div>
-            ) : stepNumber === 2 ? (
-              <div>직원2 약관동의</div>
-            ) : stepNumber === 3 ? (
-              <div>직원3 정보입력</div>
-            ) : stepNumber === 4 ? (
-              <div>직원4 가입승인</div>
-            ) : (
-              ""
-            )}
-          </div>
-
           {/* 바디 부분 ( 단계별 내용들 ) */}
           <div
             style={{
@@ -107,59 +75,29 @@ const SignUp: NextPage = () => {
               backgroundColor: "lightpink",
             }}
           >
-            {stepNumber === 1 ? ( // step이 1일 때 (사업자 or 직원 선택)
-              <div
-                style={{
-                  width: "100%",
-                  height: "350px",
-                  backgroundColor: "red",
-                  display: "flex",
-                }}
-              >
-                {/* 사업자 회원가입 버튼 */}
-                <div
-                  style={{
-                    width: "50%",
-                    height: "80%",
-                    backgroundColor: "lightslategrey",
-                    margin: "60px",
-                  }}
-                  onClick={() => {
-                    setStepNumber(2);
-                    setUserAuth(UserAuthority.OWNER);
-                    setIsCompany(true);
-                  }}
-                >
-                  사업자
-                </div>
-
-                {/* 직원 회원가입 버튼 */}
-                <div
-                  style={{
-                    width: "50%",
-                    height: "80%",
-                    backgroundColor: "linen",
-                    margin: "60px",
-                  }}
-                  onClick={() => {
-                    setStepNumber(2);
-                    setUserAuth(UserAuthority.WORKER);
-                    setIsCompany(false);
-                  }}
-                >
-                  직원
-                </div>
-              </div>
+            {stepNumber === 1 && <SelectUser {...SignUpProps} />}
+            {stepNumber === 2 && <TermSignUp {...SignUpProps} />}
+            {stepNumber === 3 && <InputAccount {...SignUpProps} />}
+            {stepNumber === 4 &&
+              (userAuth === "owner" ? (
+                <InputCompany {...SignUpProps} />
+              ) : (
+                <SignupComplete />
+              ))}
+            {stepNumber === 5 && <FileUpload {...SignUpProps} />}
+            {stepNumber === 6 && <SignupComplete {...SignUpProps} />}
+            {/* {stepNumber === 1 ? ( // step이 1일 때 (사업자 or 직원 선택)
+              <SelectUser {...SignUpProps} />
             ) : stepNumber === 2 ? ( //step이 2일 때 (약관동의화면 : 사업자, 직원 상관 없음)
               <TermSignUp {...SignUpProps} />
             ) : stepNumber === 3 ? (
-              isCompany === true ? ( // step 3, 사업자일 때
+              userAuth === "owner" ? ( // step 3, 사업자일 때
                 <OwnerSignUp {...SignUpProps} />
               ) : (
                 <WorkerSignUp {...SignUpProps} />
               )
             ) : stepNumber === 4 ? (
-              isCompany === true ? ( // step 4, 사업자일 때(서류제출)
+              userAuth === "worker" ? ( // step 4, 사업자일 때(서류제출)
                 <FileUpload {...SignUpProps} />
               ) : (
                 <SignupComplete />
@@ -168,7 +106,7 @@ const SignUp: NextPage = () => {
               <SignupComplete />
             ) : (
               ""
-            )}
+            )} */}
           </div>
         </div>
       </div>

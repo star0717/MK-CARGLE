@@ -1,4 +1,4 @@
-import { withResizeDetector } from "react-resize-detector";
+import { useResizeDetector } from "react-resize-detector";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -7,38 +7,42 @@ import {
     WelcomeTitle,
     ThemeButton,
     TextInput,
+    Text,
 } from "../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";
 
 const SigninPresenter = ({
-    width,
     onSignInHandler,
     inputSignIn,
     onInputHandler,
     saveCheck,
     setSaveCheck,
     signInErr,
-    errMsg
+    errMsg,
 }: any) => {
+    // resize 변수 선언
+    const { width, height, ref } = useResizeDetector();
+    console.log(width);
 
     return (
-        <WholeWrapper>
-            <Wrapper
-                width={width < 1400 ? `300px` : `378px`}
-                al={`flex-start`}
-            >
+        <WholeWrapper ref={ref}>
+            <Wrapper width={width < 1400 ? `300px` : `378px`} al={`flex-start`}>
                 <WelcomeTitle
-                    margin={
-                        width < 1400 ? (width < 600 ? `50px 0px 0px 0px` : `100px 0px 0px 0px`) : `200px 0px 0px 0px`}
-                    paddingBottom={`0px`}
+                    padding={width < 1500 ? (width < 500 ? `50px 0px 0px` : `80px 0px 0px`) : `200px 0px 0px`}
+                    margin={`0px`}
                 >
                     정비관리도 이젠 편리하게
-                    <p style={{
-                        margin: "0",
-                        fontWeight: "800"
-                    }}>CARGLE</p>
+                    <p
+                        style={{
+                            margin: "0",
+                            fontWeight: "800",
+                        }}
+                    >
+                        CARGLE
+                    </p>
                 </WelcomeTitle>
+
                 <div style={{ marginTop: "20px" }}>
                     {/* 로그인 입력 form */}
                     <form onSubmit={onSignInHandler}>
@@ -46,6 +50,7 @@ const SigninPresenter = ({
 
                         <TextInput
                             marginBottom={`10px`}
+                            width={width < 500 ? `300px` : `378px`}
                             placeholder="이메일"
                             type="text"
                             name="id"
@@ -54,20 +59,24 @@ const SigninPresenter = ({
                                 onInputHandler(e);
                             }}
                         />
-
                         <div
                             style={{
                                 fontSize: "14px",
-                                fontWeight: "bold"
-                            }}>
-                            <span>
-                                TIP! 아이디는 가입 시 입력한 이메일을 입력해주세요.
-                            </span>
+                                fontWeight: "bold",
+                            }}
+                        >
+                            <Text
+                                fontSize={`12px`}
+                                fontWeight={`700`}
+                                margin={`0px`}
+                            >TIP! 아이디는 가입 시 입력한 이메일을 입력해주세요.
+                            </Text>
                         </div>
                         {/* 비밀번호 input */}
 
                         <TextInput
                             marginBottom={`10px`}
+                            width={width < 500 ? `300px` : `378px`}
                             type="password"
                             placeholder="비밀번호"
                             name="pwd"
@@ -80,13 +89,14 @@ const SigninPresenter = ({
                         {/* 체크박스 div */}
                         <div>
                             {/* 아이디 저장 체크박스 */}
-                            <div style={{
-                                marginBottom: "10px"
-                            }}
+                            <div
+                                style={{
+                                    marginBottom: "10px",
+                                }}
                             >
                                 <input
                                     style={{
-                                        fontSize: "12px"
+                                        fontSize: "12px",
                                     }}
                                     type="checkbox"
                                     checked={saveCheck}
@@ -117,9 +127,7 @@ const SigninPresenter = ({
                         ) : null}
                         {/* 로그인 버튼 */}
                         <ThemeButton
-                            style={{
-                                width: ""
-                            }}
+                            width={width < 500 ? `300px` : `378px`}
                             type="submit"
                         >
                             로그인
@@ -131,7 +139,7 @@ const SigninPresenter = ({
                             padding: "5px",
                             display: "flex",
                             flexDirection: "column",
-                            alignItems: "end"
+                            alignItems: "end",
                         }}
                     >
                         <div
@@ -139,14 +147,16 @@ const SigninPresenter = ({
                                 display: "flex",
                                 justifyContent: "end",
                                 alignItems: "center",
-                                fontSize: "14px"
+                                fontSize: "14px",
                             }}
                         >
                             <FontAwesomeIcon
                                 icon={faQuestionCircle}
                                 style={{ width: "12px", margin: "0px 3px 0px 0px" }}
                             />
-                            <p style={{ margin: "0px 3px 0px 0px", fontSize: "14px" }}>아직 회원이 아니신가요?</p>
+                            <p style={{ margin: "0px 3px 0px 0px", fontSize: "14px" }}>
+                                아직 회원이 아니신가요?
+                            </p>
                             <Link href="/view/signup">
                                 <a style={{ fontWeight: "bold" }}>회원가입</a>
                             </Link>
@@ -156,14 +166,16 @@ const SigninPresenter = ({
                                 display: "flex",
                                 justifyContent: "end",
                                 alignItems: "center",
-                                fontSize: "14px"
+                                fontSize: "14px",
                             }}
                         >
                             <FontAwesomeIcon
                                 icon={faQuestionCircle}
                                 style={{ width: "12px", margin: "0px 3px 0px 0px" }}
                             />
-                            <p style={{ margin: "0px 3px 0px 0px" }}>계정을 찾고 싶으신가요?</p>
+                            <p style={{ margin: "0px 3px 0px 0px" }}>
+                                계정을 찾고 싶으신가요?
+                            </p>
                             <Link href="/view/find">
                                 <a style={{ fontWeight: "bold" }}>계정찾기</a>
                             </Link>
@@ -171,10 +183,8 @@ const SigninPresenter = ({
                     </div>
                 </div>
             </Wrapper>
-        </WholeWrapper >
-    )
+        </WholeWrapper>
+    );
+};
 
-
-}
-
-export default withResizeDetector(SigninPresenter);
+export default SigninPresenter;

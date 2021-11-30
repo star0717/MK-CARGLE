@@ -1,3 +1,4 @@
+import { prependOnceListener } from "process";
 import styled from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
 
@@ -125,6 +126,7 @@ export const WelcomeTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin};
   marginTop: ${(props) => props.marginTop};
+  padding: ${(props) => props.padding};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 28px;
   font-weight: 600;
@@ -132,11 +134,9 @@ export const WelcomeTitle = styled.h2<any>`
 
   @media (max-width: 1200px) {
     font-size: 24px;
-    margin-top:100px;
   }
   @media (max-width: 500px) {
     font-size: 20px;
-    margin-top: 20px;
   }
 `;
 
@@ -259,5 +259,166 @@ export const TextInput = styled.input<any>`
   position: relative;
   &:focus {
     outline: none;
+  }
+`;
+
+export const Text = styled.p<any>`
+  overflow: ${(props) => props.overflow};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
+  display: ${(props) => props.display};
+  flex-direction: ${(props) => props.dr};
+  align-items: ${(props) => props.al};
+  justify-content: ${(props) => props.ju};
+  font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => props.fontWeight || `500`};
+  line-height: ${(props) => props.lineHeight || `1.6`};
+  color: ${(props) => props.color};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  background: ${(props) => props.bgColor};
+  text-align: ${(props) => props.textAlign};
+  transition: 0.5s;
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+  font-style: ${(props) => props.fontStyle};
+  cursor: ${(props) => props.cursor};
+  z-index: 1;
+  white-space: pre-wrap;
+
+  & svg {
+    color: ${(props) => props.color};
+    margin-top: ${(props) => props.marginTop};
+    margin-bottom: ${(props) => props.marginBottom};
+    margin-right: ${(props) => props.marginRight};
+    font-size: ${(props) => props.fontSize || `18px`};
+    @media (max-width: 900px) {
+      font-size: 18px;
+    }
+    @media (max-width: 800px) {
+      font-size: 16px;
+    }
+    @media (max-width: 500px) {
+      font-size: 14px;
+    }
+  }
+
+  & span {
+    font-weight: 700;
+  }
+
+  @media (max-width: 800px) {
+    font-size: 15px;
+  }
+  @media (max-width: 500px) {
+    font-size: 13px;
+  }
+`;
+/*
+export const CheckBoxContainer = styled.div<any>`
+  display: inline-block;
+  vertical-align: middle;
+`;
+
+export const StyledCheckBox = styled.div<any>`
+  display:inline-block;
+  width:2rem;
+  height:2rem;
+  border:${props => props.checked ? 'none' : 'solid 0.1rem #dddddd'};
+  background:${props => props.checked ? 'black' : 'white'};
+  border-radius:0.4rem;
+  transition:all 150ms;
+
+  & {icon} {
+    visibility: ${props => props.checked? 'visible' : 'hidden'}
+  }
+
+`;
+
+export const HiddenCheckBox = styled.input<any>`
+  border: 0;
+  clip: rext(0 0 0 0);
+  clippath: inset(50%)
+  height: 1px;
+  margin: -1px;
+  overflow:hidden;
+  padding: 0;
+  position: absolute;
+  white-space:nowrap;
+  width:1px;
+`;
+
+export const Icon = styled.svg<any>`
+  fill:none;
+  stroke:white;
+  stroke-width:2px;
+  `;
+  **/
+
+export const CheckBox = styled.div<any>`
+  display: inline-block;
+  > input {
+    opacity: 0;
+  }
+  > input + label {
+    position: relative; /* permet de positionner les pseudo-éléments */
+    padding-left: 25px; /* fait un peu d'espace pour notre case à venir */
+    cursor: pointer;    /* affiche un curseur adapté */
+    &:before {
+      content: '';
+      position: absolute;
+      left:0; top: 1px;
+      width: 17px; height: 17px; /* dim. de la case */
+      border: 1px solid #aaa;
+      background: #f8f8f8;
+      border-radius: 3px; /* angles arrondis */
+      box-shadow: inset 0 1px 3px rgba(0,0,0,.3) /* légère ombre interne */
+    }
+    &:after {
+      content: '✔';
+      position: absolute;
+      top: -1px; left: 2px;
+      font-size: 16px;
+      color: #09ad7e;
+      transition: all .2s; /* on prévoit une animation */
+    }
+  }
+  > input:not(:checked) + label {
+      &:after {
+        opacity: 0; /* coche invisible */
+        transform: scale(0); /* mise à l'échelle à 0 */
+      }
+  }
+  > input:disabled:not(:checked) + label {
+      &:before {
+        box-shadow: none;
+        border-color: #bbb;
+        background-color: #ddd;
+      }
+  }
+  > input:checked + label {
+    &:after {
+      opacity: 1; /* coche opaque */
+      transform: scale(1); /* mise à l'échelle 1:1 */
+    }
+  }
+  > input:disabled:checked + label {
+    &:after {
+      color: #999;
+    }
+  }
+  > input:disabled + label {
+    color: #aaa;
+  }
+  > input:checked:focus + label, input:not(:checked):focus + label {
+    &:before {
+      border: 1px dotted blue;
+    }
   }
 `;

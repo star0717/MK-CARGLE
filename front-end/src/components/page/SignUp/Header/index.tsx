@@ -18,8 +18,17 @@ const Header: NextPage<any> = (props) => {
           textAlign: "center",
         }}
       >
-        {stepNumber === 1 ? ( // 01 회원구분
-          <div>123</div>
+        {stepNumber === 1 && <div>가입 유형을 선택해주세요.</div>}
+        {stepNumber === 2 && (
+          <div>서비스 이용을 위해 약관 동의가 필요해요.</div>
+        )}
+        {stepNumber === 3 && <div>계정 정보를 입력해주세요.</div>}
+        {stepNumber === 4 && userAuth === UserAuthority.OWNER ? (
+          <div>사업자 정보를 입력해주세요.</div>
+        ) : null}
+        {stepNumber === 5 && <div>가입 승인을 위해 서류를 제출해주세요.</div>}
+        {/* {stepNumber === 1 ? ( // 01 회원구분
+          <div>가입 유형을 선택해주세요.</div>
         ) : stepNumber === 2 ? ( // 02 약관 동의
           `02 약관 동의`
         ) : stepNumber === 3 ? ( // 03 정보 입력
@@ -34,7 +43,7 @@ const Header: NextPage<any> = (props) => {
           `05 가입승인`
         ) : (
           ""
-        )}
+        )} */}
       </div>
     </div>
   );
