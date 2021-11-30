@@ -33,10 +33,57 @@ export const WholeWrapper = styled.div<any>`
   padding: ${(props) => props.padding};
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
+  min-height: ${(props) => props.minHeight};
 
   & .MuiCheckbox-root,
   & .MuiCheckbox-colorSecondary.Mui-checked {
     color: ${(props) => props.theme.black_C} !important;
+  }
+`;
+
+export const RsWrapper = styled.div<any>`
+  width: 1350px;
+  height: ${(props) => props.height || `100%`};
+  ${(props) => props.minHeight && `min-height: ${props.minHeight};`}
+  color: ${(props) => props.color};
+  display: flex;
+  background: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  flex-wrap: ${(props) => props.wrap || `wrap`};
+  backdrop-filter: ${(props) => props.filter};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  overflow: ${(props) => props.overflow};
+  border-bottom: ${(props) => props.borderBottom};
+  border: ${(props) => props.border};
+  font-size: ${(props) => props.fontSize};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+
+  @media (max-width: 1500px) {
+    width: 1350px;
+  }
+  @media (max-width: 1350px) {
+    width: 1280px;
+  }
+  @media (max-width: 1350px) {
+    width: 1100px;
+  }
+  @media (max-width: 1100px) {
+    width: 900px;
+  }
+  @media (max-width: 900px) {
+    width: 800px;
+  }
+  @media (max-width: 800px) {
+    width: 700px;
+  }
+  @media (max-width: 700px) {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 `;
 
@@ -76,6 +123,7 @@ export const Wrapper = styled.div<any>`
   background-repeat: no-repeat;
   background-attachment: ${(props) => props.attachment || `fixed`};
   background-position: center;
+  background-color: ${(props) => props.bgColor};
 
   transition: 0.5s;
   cursor: ${(props) => props.cursor};
@@ -313,52 +361,46 @@ export const Text = styled.p<any>`
     font-weight: 700;
   }
 
+
+  &.hover  {
+    text-decoration: underline;
+  }
+
+`;
+
+export const Image = styled.img<any>`
+  display: ${(props) => props.display};
+  width: ${(props) => props.width || `100%`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `auto`};
+  margin: ${(props) => props.margin};
+  object-fit: ${(props) => props.objectFit || `cover`};
+  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
+  box-shadow: ${(props) => props.shadow};
+  border-radius: ${(props) => props.radius};
+  z-index: ${(props) => props.zIndex};
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
+  bottom: ${(props) => props.bottom};
+  right: ${(props) => props.right};
+  transition: 0.3s;
+
+  filter: ${(props) => (props.isFilter ? `brightness(30%) opacity(0.4)` : ` `)};
+
+  &:hover {
+    filter: ${(props) => (props.isHover ? `brightness(100%) opacity(1)` : ` `)};
+  }
+`;
+
+/*
+
   @media (max-width: 800px) {
     font-size: 15px;
   }
   @media (max-width: 500px) {
     font-size: 13px;
   }
-`;
-/*
-export const CheckBoxContainer = styled.div<any>`
-  display: inline-block;
-  vertical-align: middle;
-`;
 
-export const StyledCheckBox = styled.div<any>`
-  display:inline-block;
-  width:2rem;
-  height:2rem;
-  border:${props => props.checked ? 'none' : 'solid 0.1rem #dddddd'};
-  background:${props => props.checked ? 'black' : 'white'};
-  border-radius:0.4rem;
-  transition:all 150ms;
-
-  & {icon} {
-    visibility: ${props => props.checked? 'visible' : 'hidden'}
-  }
-
-`;
-
-export const HiddenCheckBox = styled.input<any>`
-  border: 0;
-  clip: rext(0 0 0 0);
-  clippath: inset(50%)
-  height: 1px;
-  margin: -1px;
-  overflow:hidden;
-  padding: 0;
-  position: absolute;
-  white-space:nowrap;
-  width:1px;
-`;
-
-export const Icon = styled.svg<any>`
-  fill:none;
-  stroke:white;
-  stroke-width:2px;
-  `;
   **/
 
 export const CheckBox = styled.div<any>`
@@ -422,3 +464,4 @@ export const CheckBox = styled.div<any>`
     }
   }
 `;
+

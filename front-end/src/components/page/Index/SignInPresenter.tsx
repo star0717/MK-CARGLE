@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import {
     WholeWrapper,
+    RsWrapper,
     Wrapper,
     WelcomeTitle,
     ThemeButton,
@@ -27,162 +28,164 @@ const SigninPresenter = ({
 
     return (
         <WholeWrapper ref={ref}>
-            <Wrapper width={width < 1400 ? `300px` : `378px`} al={`flex-start`}>
-                <WelcomeTitle
-                    padding={width < 1500 ? (width < 500 ? `50px 0px 0px` : `80px 0px 0px`) : `200px 0px 0px`}
-                    margin={`0px`}
-                >
-                    정비관리도 이젠 편리하게
-                    <p
-                        style={{
-                            margin: "0",
-                            fontWeight: "800",
-                        }}
+            <RsWrapper>
+                <Wrapper width={width < 1400 ? `300px` : `378px`} al={`flex-start`}>
+                    <WelcomeTitle
+                        padding={width < 1500 ? (width < 500 ? `50px 0px 0px` : `80px 0px 0px`) : `200px 0px 0px`}
+                        margin={`0px`}
                     >
-                        CARGLE
-                    </p>
-                </WelcomeTitle>
-
-                <div style={{ marginTop: "20px" }}>
-                    {/* 로그인 입력 form */}
-                    <form onSubmit={onSignInHandler}>
-                        {/* 이메일 input */}
-
-                        <TextInput
-                            marginBottom={`10px`}
-                            width={width < 500 ? `300px` : `378px`}
-                            placeholder="이메일"
-                            type="text"
-                            name="id"
-                            value={inputSignIn.id}
-                            onChange={(e: any) => {
-                                onInputHandler(e);
-                            }}
-                        />
-                        <div
+                        정비관리도 이젠 편리하게
+                        <p
                             style={{
-                                fontSize: "14px",
-                                fontWeight: "bold",
+                                margin: "0",
+                                fontWeight: "800",
                             }}
                         >
-                            <Text
-                                fontSize={`12px`}
-                                fontWeight={`700`}
-                                margin={`0px`}
-                            >TIP! 아이디는 가입 시 입력한 이메일을 입력해주세요.
-                            </Text>
-                        </div>
-                        {/* 비밀번호 input */}
+                            CARGLE
+                        </p>
+                    </WelcomeTitle>
 
-                        <TextInput
-                            marginBottom={`10px`}
-                            width={width < 500 ? `300px` : `378px`}
-                            type="password"
-                            placeholder="비밀번호"
-                            name="pwd"
-                            value={inputSignIn.pwd}
-                            onChange={(e: any) => {
-                                onInputHandler(e);
-                            }}
-                        />
+                    <Wrapper
+                        margin={`20px 0px 0px`}
+                    >
+                        {/* 로그인 입력 form */}
+                        <Wrapper
+                            width={width < 1400 ? `300px` : `378px`}
+                            onSubmit={onSignInHandler}
+                        >
+                            {/* 이메일 input */}
 
-                        {/* 체크박스 div */}
-                        <div>
-                            {/* 아이디 저장 체크박스 */}
-                            <div
-                                style={{
-                                    marginBottom: "10px",
+                            <TextInput
+                                marginBottom={`10px`}
+                                width={width < 1400 ? `300px` : `378px`}
+                                placeholder="이메일"
+                                type="text"
+                                name="id"
+                                value={inputSignIn.id}
+                                onChange={(e: any) => {
+                                    onInputHandler(e);
                                 }}
-                            >
-                                <input
-                                    style={{
-                                        fontSize: "12px",
-                                    }}
-                                    type="checkbox"
-                                    checked={saveCheck}
-                                    onChange={(e) => {
-                                        setSaveCheck(e.target.checked);
-                                    }}
-                                ></input>
-                                <span style={{ fontSize: "14px" }}>아이디 저장</span>
-                            </div>
-                        </div>
-                        {signInErr ? (
-                            <div style={{ margin: "8px 0", textAlign: "left" }}>
-                                <p
-                                    style={{
-                                        margin: "0",
-                                        fontSize: "8px",
-                                        color: "red",
-                                    }}
+                            />
+                            <Wrapper>
+                                <Text
+                                    fontSize={`12px`}
+                                    fontWeight={`700`}
+                                    margin={`0px`}
+                                    width={`100%`}
+                                    display={`flex`}
+                                    ju={`flex-start`}
                                 >
-                                    {errMsg.split("\n").map((txt: any) => (
-                                        <>
-                                            {txt}
-                                            <br />
-                                        </>
-                                    ))}
-                                </p>
-                            </div>
-                        ) : null}
-                        {/* 로그인 버튼 */}
-                        <ThemeButton
-                            width={width < 500 ? `300px` : `378px`}
-                            type="submit"
-                        >
-                            로그인
-                        </ThemeButton>
-                    </form>
-                    <div
-                        style={{
-                            marginTop: "10px",
-                            padding: "5px",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "end",
-                        }}
-                    >
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "end",
-                                alignItems: "center",
-                                fontSize: "14px",
-                            }}
-                        >
-                            <FontAwesomeIcon
-                                icon={faQuestionCircle}
-                                style={{ width: "12px", margin: "0px 3px 0px 0px" }}
+                                    TIP! 아이디는 가입 시 입력한 이메일을 입력해주세요.
+                                </Text>
+                            </Wrapper>
+                            {/* 비밀번호 input */}
+
+                            <TextInput
+                                width={width < 1400 ? `300px` : `378px`}
+                                type="password"
+                                placeholder="비밀번호"
+                                name="pwd"
+                                value={inputSignIn.pwd}
+                                onChange={(e: any) => {
+                                    onInputHandler(e);
+                                }}
                             />
-                            <p style={{ margin: "0px 3px 0px 0px", fontSize: "14px" }}>
-                                아직 회원이 아니신가요?
-                            </p>
-                            <Link href="/view/signup">
-                                <a style={{ fontWeight: "bold" }}>회원가입</a>
-                            </Link>
-                        </div>
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "end",
-                                alignItems: "center",
-                                fontSize: "14px",
-                            }}
+
+                            {/* 체크박스 div */}
+                            <Wrapper
+                                margin={`5px 0px`}
+                            >
+                                <Wrapper
+                                    dr={`row`}
+                                    ju={`flex-end`}
+                                >
+                                    <input
+                                        style={{
+                                            fontSize: "12px",
+                                        }}
+                                        type="checkbox"
+                                        checked={saveCheck}
+                                        onChange={(e) => { setSaveCheck(e.target.checked) }}
+                                    >
+                                    </input>
+                                    <Text
+                                        fontSize={`14px`}
+                                        padding={`5px 0px`}
+                                        margin={`0px`}
+                                    >
+                                        아이디 저장
+                                    </Text>
+                                </Wrapper>
+                            </Wrapper>
+                            {signInErr ? (
+                                <Wrapper style={{ margin: "8px 0", textAlign: "left" }}>
+                                    <Text
+                                        margin={`0px`}
+                                        fontSize={`8px`}
+                                        color={`#d6263b`}
+                                    >
+                                        {errMsg.split("\n").map((txt: any) => (
+                                            <>
+                                                {txt}
+                                                <br />
+                                            </>
+                                        ))}
+                                    </Text>
+                                </Wrapper>
+                            ) : null}
+                            {/* 로그인 버튼 */}
+                            <ThemeButton
+                                width={width < 1400 ? `300px` : `378px`}
+                                type="submit"
+                            >
+                                로그인
+                            </ThemeButton>
+                        </Wrapper>
+                        <Wrapper
+                            padding={`10px 0px`}
                         >
-                            <FontAwesomeIcon
-                                icon={faQuestionCircle}
-                                style={{ width: "12px", margin: "0px 3px 0px 0px" }}
-                            />
-                            <p style={{ margin: "0px 3px 0px 0px" }}>
-                                계정을 찾고 싶으신가요?
-                            </p>
-                            <Link href="/view/find">
-                                <a style={{ fontWeight: "bold" }}>계정찾기</a>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </Wrapper>
+                            <Wrapper
+                                dr={`row`}
+                                fontSize={`14px`}
+                                ju={`flex-end`}
+                            >
+                                <FontAwesomeIcon
+                                    icon={faQuestionCircle}
+                                    style={{ width: "12px", margin: "0px 3px 0px 0px" }}
+                                />
+                                <Text
+                                    margin={`0px 3px 0px`}
+                                    fontSize={`14px`}
+                                >
+                                    아직 회원이 아니신가요?
+                                </Text>
+                                <Link href="/view/signup">
+                                    <a style={{ fontWeight: "bold" }}>회원가입</a>
+                                </Link>
+                            </Wrapper>
+                            <Wrapper
+                                dr={`row`}
+                                fontSize={`14px`}
+                                ju={`flex-end`}
+                            >
+                                <FontAwesomeIcon
+                                    icon={faQuestionCircle}
+                                    style={{ width: "12px", margin: "0px 3px 0px 0px" }}
+                                />
+                                <Text
+                                    margin={`0px 3px 0px`}
+                                    fontSize={`14px`}
+                                >
+                                    계정을 찾고 싶으신가요?
+                                </Text>
+                                <Link href="/view/find">
+                                    <a style={{ fontWeight: "bold" }}>계정찾기</a>
+                                </Link>
+                            </Wrapper>
+                        </Wrapper>
+                    </Wrapper>
+                </Wrapper>
+            </RsWrapper>
         </WholeWrapper>
     );
 };
