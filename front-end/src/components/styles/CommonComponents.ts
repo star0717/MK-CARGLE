@@ -7,6 +7,8 @@ interface Propsinterface {
 
 }
 
+/** Wrapper */
+
 export const WholeWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height};
@@ -21,7 +23,7 @@ export const WholeWrapper = styled.div<any>`
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  box-shadow: ${(props) => props.boxShadow};
+  box-shadow: ${(props) => props.shadow};
   z-index: ${(props) => props.index};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   position: ${(props) => (props.isFixed ? `fixed` : ``)};
@@ -168,7 +170,7 @@ export const Wrapper = styled.div<any>`
 
 /**text */
 
-export const WelcomeTitle = styled.h2<any>`
+export const CommonTitle = styled.h2<any>`
   width: ${(props) => props.width};
   display: ${(props) => props.display};
   position: relative;
@@ -176,29 +178,81 @@ export const WelcomeTitle = styled.h2<any>`
   marginTop: ${(props) => props.marginTop};
   padding: ${(props) => props.padding};
   padding-bottom: ${(props) => props.paddingBottom};
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 36px;
+  font-weight: 800;
   color: ${(props) => props.color};
-
-  @media (max-width: 1200px) {
-    font-size: 24px;
+  text-align: ${(props) => props.textAlign};
+  @media (max-width: 1439px) {
+    font-size: 32px;
   }
   @media (max-width: 500px) {
-    font-size: 20px;
+    font-size: 24px;
   }
 `;
+
+export const Text = styled.p<any>`
+  overflow: ${(props) => props.overflow};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
+  display: ${(props) => props.display};
+  flex-direction: ${(props) => props.dr};
+  align-items: ${(props) => props.al};
+  justify-content: ${(props) => props.ju};
+  font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => props.fontWeight || `500`};
+  line-height: ${(props) => props.lineHeight || `1.6`};
+  color: ${(props) => props.color};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  background: ${(props) => props.bgColor};
+  text-align: ${(props) => props.textAlign || `center`};
+  transition: 0.5s;
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+  font-style: ${(props) => props.fontStyle};
+  cursor: ${(props) => props.cursor};
+  z-index: 1;
+  white-space: pre-wrap;
+
+  & svg {
+    color: ${(props) => props.color};
+    margin-top: ${(props) => props.marginTop};
+    margin-bottom: ${(props) => props.marginBottom};
+    margin-right: ${(props) => props.marginRight};
+    font-size: ${(props) => props.fontSize || `18px`};
+    
+  }
+
+  & span {
+    font-weight: 700;
+  }
+
+
+  &.hover  {
+    text-decoration: underline;
+  }
+
+`;
+
+
 
 /**button */
 
 export const ThemeButton = styled.button<any>`
-  width: ${(props) => props.width || `378px`};
+  width: ${(props) => props.width || `500px`};
   min-width: ${(props) => props.minWidth};
-  height: ${(props) => props.height || `50px`};
+  height: ${(props) => props.height || `60px`};
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius || `4px`};
-  font-size: ${(props) => props.fontSize || `16px`};
+  font-size: ${(props) => props.fontSize || `24px`};
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
@@ -291,82 +345,38 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
     props.kindOf === `naver` && `color : ${props.theme.white_C};`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
   }
+
+  @media (max-width: 500px) {
+    height:40px;
+    font-size:18px;
+    width:300px;
+  }
 `;
+
+/** Input */
 
 export const TextInput = styled.input<any>`
   width: ${(props) => props.width || `378px`};
-  height: ${(props) => props.height || `42px`};
-  border:0px;
-  border-bottom: 2px solid ${(props) => props.theme.black_C};
+  height: ${(props) => props.height || `60px`};
+  border:1px solid ${(props) => props.theme.grey_C};
+  border-radius: ${(props) => props.theme.radius};
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding || props.theme.inputPadding};
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   margin-bottom: ${(props) => props.marginBottom};
-  font-size:14px;
+  margin-top: ${(props) => props.marginTop};
+  font-size:18px;
   position: relative;
   &:focus {
     outline: none;
   }
+
+  @media (max-width: 500px) {
+    height:40px;
+  }
 `;
 
-export const Text = styled.p<any>`
-  overflow: ${(props) => props.overflow};
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  min-height: ${(props) => props.minHeight};
-  max-height: ${(props) => props.maxHeight};
-  display: ${(props) => props.display};
-  flex-direction: ${(props) => props.dr};
-  align-items: ${(props) => props.al};
-  justify-content: ${(props) => props.ju};
-  font-size: ${(props) => props.fontSize};
-  font-weight: ${(props) => props.fontWeight || `500`};
-  line-height: ${(props) => props.lineHeight || `1.6`};
-  color: ${(props) => props.color};
-  margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding};
-  background: ${(props) => props.bgColor};
-  text-align: ${(props) => props.textAlign};
-  transition: 0.5s;
-  position: ${(props) => (props.isRelative ? `relative` : ``)};
-  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
-  top: ${(props) => props.top};
-  bottom: ${(props) => props.bottom};
-  left: ${(props) => props.left};
-  right: ${(props) => props.right};
-  font-style: ${(props) => props.fontStyle};
-  cursor: ${(props) => props.cursor};
-  z-index: 1;
-  white-space: pre-wrap;
-
-  & svg {
-    color: ${(props) => props.color};
-    margin-top: ${(props) => props.marginTop};
-    margin-bottom: ${(props) => props.marginBottom};
-    margin-right: ${(props) => props.marginRight};
-    font-size: ${(props) => props.fontSize || `18px`};
-    @media (max-width: 900px) {
-      font-size: 18px;
-    }
-    @media (max-width: 800px) {
-      font-size: 16px;
-    }
-    @media (max-width: 500px) {
-      font-size: 14px;
-    }
-  }
-
-  & span {
-    font-weight: 700;
-  }
-
-
-  &.hover  {
-    text-decoration: underline;
-  }
-
-`;
 
 export const Image = styled.img<any>`
   display: ${(props) => props.display};
@@ -384,6 +394,7 @@ export const Image = styled.img<any>`
   bottom: ${(props) => props.bottom};
   right: ${(props) => props.right};
   transition: 0.3s;
+  padding: ${(props) => props.padding};
 
   filter: ${(props) => (props.isFilter ? `brightness(30%) opacity(0.4)` : ` `)};
 
@@ -401,67 +412,14 @@ export const Image = styled.img<any>`
     font-size: 13px;
   }
 
-  **/
-
-export const CheckBox = styled.div<any>`
-  display: inline-block;
-  > input {
-    opacity: 0;
-  }
-  > input + label {
-    position: relative; /* permet de positionner les pseudo-éléments */
-    padding-left: 25px; /* fait un peu d'espace pour notre case à venir */
-    cursor: pointer;    /* affiche un curseur adapté */
-    &:before {
-      content: '';
-      position: absolute;
-      left:0; top: 1px;
-      width: 17px; height: 17px; /* dim. de la case */
-      border: 1px solid #aaa;
-      background: #f8f8f8;
-      border-radius: 3px; /* angles arrondis */
-      box-shadow: inset 0 1px 3px rgba(0,0,0,.3) /* légère ombre interne */
+      @media (max-width: 900px) {
+      font-size: 18px;
     }
-    &:after {
-      content: '✔';
-      position: absolute;
-      top: -1px; left: 2px;
+    @media (max-width: 800px) {
       font-size: 16px;
-      color: #09ad7e;
-      transition: all .2s; /* on prévoit une animation */
     }
-  }
-  > input:not(:checked) + label {
-      &:after {
-        opacity: 0; /* coche invisible */
-        transform: scale(0); /* mise à l'échelle à 0 */
-      }
-  }
-  > input:disabled:not(:checked) + label {
-      &:before {
-        box-shadow: none;
-        border-color: #bbb;
-        background-color: #ddd;
-      }
-  }
-  > input:checked + label {
-    &:after {
-      opacity: 1; /* coche opaque */
-      transform: scale(1); /* mise à l'échelle 1:1 */
+    @media (max-width: 500px) {
+      font-size: 14px;
     }
-  }
-  > input:disabled:checked + label {
-    &:after {
-      color: #999;
-    }
-  }
-  > input:disabled + label {
-    color: #aaa;
-  }
-  > input:checked:focus + label, input:not(:checked):focus + label {
-    &:before {
-      border: 1px dotted blue;
-    }
-  }
-`;
 
+  **/
