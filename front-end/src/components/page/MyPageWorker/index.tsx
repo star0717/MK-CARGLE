@@ -10,3 +10,5 @@ const MyPageWorker : NextPage = () => {
         </WholeWrapper>
     );
 }
+
+export default MyPageWorker

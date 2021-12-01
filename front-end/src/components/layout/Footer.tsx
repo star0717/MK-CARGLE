@@ -3,12 +3,17 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
+import {
+  WholeWrapper,
+  RsWrapper,
+  Wrapper,
+  Text,
+} from "../styles/CommonComponents";
 
 const Footer: NextPage = () => {
   return (
     <div
       style={{
-        marginTop: "auto",
         width: "100%",
         display: "flex",
         justifyContent: "center",

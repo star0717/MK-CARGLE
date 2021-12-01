@@ -1,26 +1,35 @@
-import type {NextPage} from "next";
-import { TextInput, WholeWrapper, Wrapper, Text } from "../../styles/CommonComponents";
+import type { NextPage } from "next";
+import { useState } from "react";
+import {
+  TextInput,
+  WholeWrapper,
+  Wrapper,
+  Text,
+} from "../../styles/CommonComponents";
+import Account from "./Body/AccountM";
+import MyPage from "./Body/MyPage";
+import Withdrawal from "./Body/Withdrawal";
 
 const MyPageAccount: NextPage = () => {
-    return (
-       <WholeWrapper>
-           <Wrapper>
-               <Text>
-                   계정 관리를 위해 비밀번호를 입력해주세요.
-               </Text>
-               
-               <TextInput
-               placeholder = "비밀번호를 입력하세요."
-               />
+  const [pages, setPages] = useState(1);
 
-               <button
-               type = "submit" 
-               >
-               확인
-               </button>
-           </Wrapper>
-       </WholeWrapper>
-    );
-}
+  const MyPageProps = {
+    setPages,
+  };
+
+  return (
+    <div>
+      {pages === 1 ? (
+        <MyPage {...MyPageProps} />
+      ) : pages === 2 ? (
+        <Account {...MyPageProps} />
+      ) : pages === 3 ? (
+        <Withdrawal {...MyPageProps} />
+      ) : (
+        ""
+      )}
+    </div>
+  );
+};
 
 export default MyPageAccount;
