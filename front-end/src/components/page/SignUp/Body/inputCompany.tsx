@@ -7,7 +7,7 @@ import DaumPostcode from "react-daum-postcode";
 import { useInterval } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../../store/interfaces/RootState";
-import { UserState } from "../../../../../store/interfaces";
+import { actionTypesUser, UserState } from "../../../../../store/interfaces";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import { basicRegEx, CHAR_DEL, formRegEx } from "../../../../validation/regEx";
 import {
@@ -18,6 +18,7 @@ import {
   signUpUserAction,
 } from "../../../../../store/action/user.action";
 import styled from "styled-components";
+import { initialState } from "../../../../../store/reducer/user.reducer";
 
 const Wrapper = styled.div`
   .test {
@@ -37,47 +38,35 @@ const InputCompany: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   // props 재정의
+  const user = props.user;
+  const company = props.company;
+  const formInput = props.formInput;
+  const formCheck = props.formCheck;
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
   const userAuth = props.userAuth;
 
   // // redux store에서 user, company 정보 가져옴
-  // const { user, company } = useSelector(
+  // const { user, company, formInput, formCheck } = useSelector(
   //   (state: RootStateInterface): UserState => state.userAll
   // );
 
-  // 회원가입용(사업주) user input 초기값 세팅
-  const userInit = {
-    email: "",
-    password: "",
-    hpNumber: "",
-  };
-  // 회원가입용(사업주) company input 초기값 세팅
-  const comInit = {
-    comRegNum: "",
-    mbRegNum: "",
-    mbTypeNum: "",
-    name: "",
-    ownerName: "",
-    phoneNum: "",
-    faxNum: "",
-    address: "",
-  };
-
-  const [inputUser, setInputUser] = useState(userInit); // 사용자 정보
-  const [inputCompany, setInputCompany] = useState(comInit); // 업체 정보
-
-  const [emailAddress, setEmailAdderess] = useState(""); // 이메일 주소
-  const [emailDomain, setEmailDomain] = useState(""); // 이메일 도메인
-  const [emailReadOnly, setEmailReadOnly] = useState(false); // 이메일 input readonly
-  const [emailSend, setEmailSend] = useState(false); // 이메일 인증 전송여부
-  const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
-  const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
-  const [authNum, setAuthNum] = useState(""); // 인증번호 input
-  const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
-  const [companyCheck, setCompanyCheck] = useState(false); // 사업자번호 유효성 검사 여부
-  const [addressMain, setAddressMain] = useState(""); // 주소(메인)
-  const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
+  const [inputCompany, setInputCompany] = useState({
+    ...company,
+    ownerName: user.name,
+  }); // 업체 정보
+  const [inputForm, setInputForm] = useState(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
+  // const [emailAddress, setEmailAdderess] = useState(""); // 이메일 주소
+  // const [emailDomain, setEmailDomain] = useState(""); // 이메일 도메인
+  // const [emailReadOnly, setEmailReadOnly] = useState(false); // 이메일 input readonly
+  // const [emailSend, setEmailSend] = useState(false); // 이메일 인증 전송여부
+  // const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
+  // const [authNumCheck, setAuthNumCheck] = useState(false); // 인증번호 체크여부
+  // const [authNum, setAuthNum] = useState(""); // 인증번호 input
+  // const [passwordCheck, setPasswordCheck] = useState(""); // 비밀번호 확인
+  // const [companyCheck, setCompanyCheck] = useState(false); // 사업자번호 유효성 검사 여부
+  // const [addressMain, setAddressMain] = useState(""); // 주소(메인)
+  // const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
 
   // react-hook-form 사용을 위한 선언
@@ -102,83 +91,14 @@ const InputCompany: NextPage<any> = (props) => {
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
 
-  // 이메일 종류에 따라 state를 통해 값 변경 및 readonly 변경
-  const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    e.target.value === "" ? setEmailReadOnly(false) : setEmailReadOnly(true); // 이메일 직접입력 외에는 readonly true
-    setEmailDomain(e.target.value);
-    setValue("emailDomain", e.target.value, { shouldValidate: true });
-  };
-
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
-  // 사용자 정보
-  const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputUser({ ...inputUser, [e.target.name]: e.target.value });
-  };
   // 업체 정보
   const onInputCompanyHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
   };
-
-  // 이메일 인증번호 전송 handler
-  const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const email = `${emailAddress}@${emailDomain}`;
-    if (formRegEx.EMAIL.test(email)) {
-      dispatch(emailSendAction(email)).then((res: any) => {
-        if (res.payload) {
-          alert("인증번호가 전송되었습니다.");
-          setEmailSend(true);
-          setTimer(300);
-        } else {
-          setError("emailAddress", {
-            type: "emailExist",
-            message: "이미 등록된 이메일입니다.",
-          });
-        }
-      });
-    } else {
-      setError("emailAddress", {
-        type: "emailNull",
-        message: "형식에 맞게 입력하세요.",
-      });
-    }
-  };
-
-  // 인증번호 타이머
-  useInterval(
-    () => {
-      setTimer(timer - 1);
-    },
-    emailSend ? 1000 : null
-  );
-
-  // 인증번호 만료 시 emailSend state 변경
-  useEffect(() => {
-    if (timer === 0) {
-      if (!Cookies.get("mk_amtn") && emailSend && !authNumCheck) {
-        alert("인증번호가 만료되었습니다.");
-        setAuthNum("");
-        setEmailSend(false);
-      }
-    }
-  }, [timer, authNumCheck, emailSend]);
-
-  // 인증번호 검사 handler
-  const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (authNum) {
-      dispatch(authNumCheckAction(authNum)).then((res: any) => {
-        if (res.payload) {
-          alert("인증되었습니다.");
-          setAuthNumCheck(true);
-          setTimer(0);
-          setEmailSend(false);
-          setAuthNum("");
-          Cookies.remove("mk_amtn");
-        } else {
-          alert("인증번호가 일치하지 않습니다.");
-          setAuthNum("");
-        }
-      });
-    }
+  // 그 외 form 정보
+  const onInputFormHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputForm({ ...inputForm, [e.target.name]: e.target.value });
   };
 
   // 사업자번호 유효성 검사 handler
@@ -194,7 +114,10 @@ const InputCompany: NextPage<any> = (props) => {
                     type: "comCheckTrue",
                     message: "사업자등록번호 인증이 완료되었습니다.",
                   });
-                  setCompanyCheck(true);
+                  dispatch({
+                    type: actionTypesUser.FORM_CHECK,
+                    payload: { ...formCheck, companyCheck: true },
+                  });
                 } else {
                   setError("comRegNum", {
                     type: "comCheckFalse",
@@ -233,40 +156,35 @@ const InputCompany: NextPage<any> = (props) => {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    setAddressMain(fullAddress);
-    setValue("addressMain", fullAddress, { shouldValidate: true });
+    setInputForm({ ...inputForm, cAddressMain: fullAddress });
+    setValue("cAddressMain", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
 
   // 사업자(owner) 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
-    if (!authNumCheck) {
-      setError("emailAddress", {
-        type: "emailAuthNeed",
-        message: "이메일 인증이 필요합니다.",
-      });
-    }
-    if (!companyCheck) {
+    dispatch({ type: actionTypesUser.INPUT_COMPANY, payload: inputCompany });
+    dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
+    if (!formCheck.companyCheck) {
       setError("comRegNum", {
         type: "comCheckNeed",
         message: "사업자 등록번호 인증이 필요합니다.",
       });
-    }
-    if (authNumCheck && companyCheck) {
+    } else {
+      delete user._cID;
       dispatch(
         signUpUserAction({
           user: {
-            ...inputUser,
+            ...user,
             name: inputCompany.ownerName,
-            email: `${emailAddress}@${emailDomain}`,
-            auth: userAuth,
+            email: `${formInput.emailAddress}@${formInput.emailDomain}`,
           },
           company: {
             ...inputCompany,
             address:
-              addressDetail !== ""
-                ? `${addressMain}, ${addressDetail}`
-                : addressMain,
+              inputForm.cAddressDetail !== ""
+                ? `${inputForm.cAddressMain}, ${inputForm.cAddressDetail}`
+                : inputForm.cAddressMain,
           },
         })
       ).then(
@@ -276,20 +194,21 @@ const InputCompany: NextPage<any> = (props) => {
         (err) => {
           if (err.response.status === 400) {
             alert("회원가입에 실패했습니다.");
-            setAuthNumCheck(false);
-            setCompanyCheck(false);
-            setInputUser(userInit);
-            setInputCompany(comInit);
-            setEmailAdderess("");
-            setEmailDomain("");
-            setPasswordCheck("");
-            setAddressMain("");
-            setAddressDetail("");
+            setStepNumber(stepNumber - 1);
+            dispatch({
+              type: actionTypesUser.FORM_CHECK,
+              payload: initialState.formCheck,
+            });
           }
         }
       );
     }
   };
+
+  console.log("@@회사 : ", inputCompany);
+  console.log("##인풋스테이트 : ", formInput);
+  console.log("##유저스테이트 : ", user);
+  console.log("^^^폼체크 : ", formCheck);
 
   return (
     <Wrapper>
@@ -350,7 +269,7 @@ const InputCompany: NextPage<any> = (props) => {
                   style={{ width: "100%" }}
                   type="text"
                   value={CHAR_DEL(inputCompany.comRegNum)}
-                  readOnly={companyCheck}
+                  readOnly={formCheck.companyCheck}
                   placeholder="사업자 등록번호를 입력해주세요."
                   {...register("comRegNum", {
                     onChange: (e) => {
@@ -394,7 +313,7 @@ const InputCompany: NextPage<any> = (props) => {
                 <button
                   type="button"
                   onClick={onComRegNumCheck}
-                  disabled={companyCheck}
+                  disabled={formCheck.companyCheck}
                 >
                   인증
                 </button>
@@ -438,6 +357,7 @@ const InputCompany: NextPage<any> = (props) => {
             <div>*정비업종</div>
             <select
               style={{ width: "100%" }}
+              value={inputCompany.mbTypeNum}
               {...register("mbTypeNum", {
                 onChange: (e) => {
                   onInputCompanyHandler(e);
@@ -531,15 +451,13 @@ const InputCompany: NextPage<any> = (props) => {
                 onChange: (e) => {
                   onInputCompanyHandler(e);
                 },
-                required: { value: true, message: "필수 입력사항입니다." },
                 pattern: {
                   value: basicRegEx.NUM,
                   message: "형식에 맞게 입력하세요.",
                 },
               })}
             />
-            {(errors.faxNum?.type === "required" ||
-              errors.faxNum?.type === "pattern") && (
+            {errors.faxNum?.type === "pattern" && (
               <p
                 style={{
                   margin: "0",
@@ -565,13 +483,13 @@ const InputCompany: NextPage<any> = (props) => {
                   style={{ width: "100%" }}
                   type="text"
                   placeholder="주소를 입력해주세요."
-                  value={addressMain}
+                  value={inputForm.cAddressMain}
                   readOnly
-                  {...register("addressMain", {
+                  {...register("cAddressMain", {
                     required: { value: true, message: "필수 입력사항입니다." },
                   })}
                 />
-                {errors.addressMain?.type === "required" && (
+                {errors.cAddressMain?.type === "required" && (
                   <p
                     style={{
                       margin: "0",
@@ -579,7 +497,7 @@ const InputCompany: NextPage<any> = (props) => {
                       color: "red",
                     }}
                   >
-                    {errors.addressMain.message}
+                    {errors.cAddressMain.message}
                   </p>
                 )}
               </div>
@@ -599,11 +517,11 @@ const InputCompany: NextPage<any> = (props) => {
                 style={{ width: "100%" }}
                 type="text"
                 placeholder="상세 주소"
-                value={addressDetail}
-                readOnly={addressMain ? false : true}
-                {...register("addressDetail", {
+                value={inputForm.cAddressDetail}
+                readOnly={inputForm.cAddressMain ? false : true}
+                {...register("cAddressDetail", {
                   onChange: (e) => {
-                    setAddressDetail(e.target.value);
+                    onInputFormHandler(e);
                   },
                 })}
               />
@@ -648,12 +566,20 @@ const InputCompany: NextPage<any> = (props) => {
           <div style={{ textAlign: "center" }}>
             <button
               onClick={(e) => {
-                props.setStepNumber(props.stepNumber - 1);
+                setStepNumber(props.stepNumber - 1);
+                dispatch({
+                  type: actionTypesUser.INPUT_COMPANY,
+                  payload: inputCompany,
+                });
+                dispatch({
+                  type: actionTypesUser.INPUT_FORM,
+                  payload: inputForm,
+                });
               }}
             >
               이전
             </button>
-            <button type="submit">다음</button>
+            <button type="submit">완료</button>
           </div>
         </form>
       </div>

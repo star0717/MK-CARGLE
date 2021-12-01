@@ -11,8 +11,9 @@ import { CHAR_DEL } from "../../../../validation/regEx";
 interface modalOption {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setModalOption: React.Dispatch<React.SetStateAction<string>>;
-  setCompanyNum: React.Dispatch<React.SetStateAction<string>>;
+  setInputForm: React.Dispatch<React.SetStateAction<string>>;
   setInputUser: React.Dispatch<React.SetStateAction<any>>;
+  inputForm: any;
   inputUser: any;
   setValue: any;
   style?: React.CSSProperties;
@@ -23,8 +24,9 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
 
   // props 재정의
   const setModalOpen = props.setModalOpen;
-  const setCompanyNum = props.setCompanyNum;
+  const setInputForm = props.setInputForm;
   const setInputUser = props.setInputUser;
+  const inputForm = props.inputForm;
   const inputUser = props.inputUser;
   const setValue = props.setValue;
 
@@ -89,7 +91,10 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
                       id={item.comRegNum}
                       key={index}
                       onClick={(e) => {
-                        setCompanyNum(item.comRegNum);
+                        setInputForm({
+                          ...inputForm,
+                          companyNum: item.comRegNum,
+                        });
                         setInputUser({ ...inputUser, _cID: item._id });
                         setValue("companyNum", item.comRegNum, {
                           shouldValidate: true,

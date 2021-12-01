@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { actionTypesUser } from "../../../../../store/interfaces";
 
 // react-hook-form을 사용하는 form에서 받을 데이터 타입 정의
 // 이용약관 form
@@ -20,12 +22,15 @@ const Wrapper = styled.div`
 `;
 
 const TermSignUp: NextPage<any> = (props) => {
+  const dispatch = useDispatch();
+
   // props 재정의
+  const formCheck = props.formCheck;
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
 
-  const [mkTerm, setMkTerm] = useState(false); // 엠케이 이용약관 체크여부
-  const [privacyTerm, setPrivacyTerm] = useState(false); // 개인정보 동의 체크여부
+  // const [mkTerm, setMkTerm] = useState(false); // 엠케이 이용약관 체크여부
+  // const [privacyTerm, setPrivacyTerm] = useState(false); // 개인정보 동의 체크여부
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -55,10 +60,14 @@ const TermSignUp: NextPage<any> = (props) => {
             엠케이솔루션 이용약관 동의(필수)
             <input
               type="checkbox"
-              checked={mkTerm}
+              checked={formCheck.mkTerm}
               {...register("mkTerm", {
                 onChange: (e) => {
-                  setMkTerm(e.target.checked);
+                  // setMkTerm(e.target.checked);
+                  dispatch({
+                    type: actionTypesUser.FORM_CHECK,
+                    payload: { ...formCheck, mkTerm: e.target.checked },
+                  });
                 },
                 required: true,
               })}
@@ -81,10 +90,14 @@ const TermSignUp: NextPage<any> = (props) => {
             개인정보 수집 및 이용약관 동의(필수)
             <input
               type="checkbox"
-              checked={privacyTerm}
+              checked={formCheck.privacyTerm}
               {...register("privacyTerm", {
                 onChange: (e) => {
-                  setPrivacyTerm(e.target.checked);
+                  // setPrivacyTerm(e.target.checked);
+                  dispatch({
+                    type: actionTypesUser.FORM_CHECK,
+                    payload: { ...formCheck, privacyTerm: e.target.checked },
+                  });
                 },
                 required: true,
               })}

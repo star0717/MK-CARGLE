@@ -31,8 +31,30 @@ import { Company } from "../../../src/models/company.entity";
 //   approval: boolean;
 // }
 
+export interface FormInput {
+  companyNum: string;
+  emailAddress: string;
+  emailDomain: string;
+  passwordCheck: string;
+  uAddressMain: string;
+  uAddressDetail: string;
+  cAddressMain: string;
+  cAddressDetail: string;
+}
+
+export interface FormCheck {
+  mkTerm: boolean;
+  privacyTerm: boolean;
+  emailReadOnly: boolean;
+  emailSend: boolean;
+  authNumCheck: boolean;
+  companyCheck: boolean;
+}
+
 export interface UserState {
   signInInfo: UserInfo;
   user: User;
   company: Company;
+  formInput: FormInput;
+  formCheck: FormCheck;
 }

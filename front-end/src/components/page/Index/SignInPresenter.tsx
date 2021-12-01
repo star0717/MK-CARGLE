@@ -18,6 +18,7 @@ const SigninPresenter = ({
   saveCheck,
   setSaveCheck,
   signInErr,
+  userInit,
   errMsg,
 }: any) => {
   // resize 변수 선언
@@ -158,7 +159,9 @@ const SigninPresenter = ({
                 아직 회원이 아니신가요?
               </p>
               <Link href="/view/signup">
-                <a style={{ fontWeight: "bold" }}>회원가입</a>
+                <a style={{ fontWeight: "bold" }} onClick={userInit}>
+                  회원가입
+                </a>
               </Link>
             </div>
             <div
