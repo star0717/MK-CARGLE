@@ -21,7 +21,7 @@ export const WholeWrapper = styled.div<any>`
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  box-shadow: ${(props) => props.boxShadow};
+  box-shadow: ${(props) => props.shadow};
   z-index: ${(props) => props.index};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   position: ${(props) => (props.isFixed ? `fixed` : ``)};
@@ -324,10 +324,10 @@ export const Text = styled.p<any>`
   font-weight: ${(props) => props.fontWeight || `500`};
   line-height: ${(props) => props.lineHeight || `1.6`};
   color: ${(props) => props.color};
-  margin: ${(props) => props.margin};
+  margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   background: ${(props) => props.bgColor};
-  text-align: ${(props) => props.textAlign};
+  text-align: ${(props) => props.textAlign || `center`};
   transition: 0.5s;
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
@@ -346,15 +346,7 @@ export const Text = styled.p<any>`
     margin-bottom: ${(props) => props.marginBottom};
     margin-right: ${(props) => props.marginRight};
     font-size: ${(props) => props.fontSize || `18px`};
-    @media (max-width: 900px) {
-      font-size: 18px;
-    }
-    @media (max-width: 800px) {
-      font-size: 16px;
-    }
-    @media (max-width: 500px) {
-      font-size: 14px;
-    }
+    
   }
 
   & span {
@@ -384,6 +376,7 @@ export const Image = styled.img<any>`
   bottom: ${(props) => props.bottom};
   right: ${(props) => props.right};
   transition: 0.3s;
+  padding: ${(props) => props.padding};
 
   filter: ${(props) => (props.isFilter ? `brightness(30%) opacity(0.4)` : ` `)};
 
@@ -400,6 +393,16 @@ export const Image = styled.img<any>`
   @media (max-width: 500px) {
     font-size: 13px;
   }
+
+      @media (max-width: 900px) {
+      font-size: 18px;
+    }
+    @media (max-width: 800px) {
+      font-size: 16px;
+    }
+    @media (max-width: 500px) {
+      font-size: 14px;
+    }
 
   **/
 

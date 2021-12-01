@@ -31,7 +31,7 @@ const SigninPresenter = ({
             <RsWrapper>
                 <Wrapper width={width < 1400 ? `300px` : `378px`} al={`flex-start`}>
                     <WelcomeTitle
-                        padding={width < 1500 ? (width < 500 ? `50px 0px 0px` : `80px 0px 0px`) : `200px 0px 0px`}
+
                         margin={`0px`}
                     >
                         정비관리도 이젠 편리하게
