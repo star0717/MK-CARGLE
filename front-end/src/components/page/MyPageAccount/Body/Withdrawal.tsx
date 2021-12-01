@@ -6,7 +6,6 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  CheckBox,
   TextInput,
 } from "../../../styles/CommonComponents";
 
@@ -35,7 +34,7 @@ const Withdrawal: NextPage<any> = (props) => {
         <div>회원탈퇴 약관 영역입니다.</div>
         <Wrapper dr={`row`}>
           <Text>회원탈퇴 약관을 상세히 읽고 숙지하였으며, 동의합니다.</Text>
-          <CheckBox></CheckBox>
+          {/* <CheckBox></CheckBox> */}
         </Wrapper>
         <TextInput
           type="password"

@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
 
 interface Propsinterface {
-  width: Number,
-
+  width: Number;
 }
 
 /** Wrapper */
@@ -175,7 +174,7 @@ export const CommonTitle = styled.h2<any>`
   display: ${(props) => props.display};
   position: relative;
   margin: ${(props) => props.margin};
-  marginTop: ${(props) => props.marginTop};
+  margintop: ${(props) => props.marginTop};
   padding: ${(props) => props.padding};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 36px;
@@ -226,25 +225,20 @@ export const Text = styled.p<any>`
     margin-bottom: ${(props) => props.marginBottom};
     margin-right: ${(props) => props.marginRight};
     font-size: ${(props) => props.fontSize || `18px`};
-    
   }
 
   & span {
     font-weight: 700;
   }
 
-
-  &.hover  {
+  &.hover {
     text-decoration: underline;
   }
-
 `;
-
-
 
 /**button */
 
-export const ThemeButton = styled.button<any>`
+export const CommonButton = styled.button<any>`
   width: ${(props) => props.width || `500px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `60px`};
@@ -260,7 +254,6 @@ export const ThemeButton = styled.button<any>`
   cursor: ${(props) => props.cursor || `pointer`};
   color: #fff;
   border: 0px;
- 
 
   ${(props) => !props.kindOf && `background : ${props.theme.basicTheme_C};`}
   ${(props) =>
@@ -305,51 +298,50 @@ export const ThemeButton = styled.button<any>`
     font-size: 25px;
     color: #fff;
   }
-  
+
   &:hover {
     background: #fff;
     color: ${(props) => props.theme.white_C};
     box-shadow: ${(props) => props.theme.boxShadow};
+    ${(props) => !props.kindOf && `background ${props.theme.darkTheme_C};`}
     ${(props) =>
-    !props.kindOf && `background ${props.theme.darkTheme_C};`}
-    ${(props) =>
-    props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
+      props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
          ${(props) =>
-    props.kindOf === `white` && `color ${props.theme.white_C};`}
+      props.kindOf === `white` && `color ${props.theme.white_C};`}
 ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
   ${(props) => props.kindOf === `black` && `color : ${props.theme.black_C};`}
   ${(props) =>
-    props.kindOf === `black` &&
-    `border : 1px solid ${props.theme.darkGrey_C};`}
+      props.kindOf === `black` &&
+      `border : 1px solid ${props.theme.darkGrey_C};`}
         ${(props) =>
-    props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
+      props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
           ${(props) =>
-    props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
+      props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
       ${(props) => props.kindOf === `grey` && `color ${props.theme.white_C};`}
           ${(props) =>
-    props.kindOf === `grey` && `background ${props.theme.grey_C};`}
+      props.kindOf === `grey` && `background ${props.theme.grey_C};`}
          ${(props) =>
-    props.kindOf === `create` &&
-    `border :1px solid ${props.theme.create_B_C};`}
+      props.kindOf === `create` &&
+      `border :1px solid ${props.theme.create_B_C};`}
     ${(props) =>
-    props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
+      props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
     ${(props) =>
-    props.kindOf === `update` &&
-    `border :1px solid ${props.theme.update_B_C};`}
+      props.kindOf === `update` &&
+      `border :1px solid ${props.theme.update_B_C};`}
     ${(props) =>
-    props.kindOf === `delete` &&
-    `border :1px solid ${props.theme.delete_B_C};`}
+      props.kindOf === `delete` &&
+      `border :1px solid ${props.theme.delete_B_C};`}
 
 ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) =>
-    props.kindOf === `naver` && `color : ${props.theme.white_C};`}
+      props.kindOf === `naver` && `color : ${props.theme.white_C};`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
   }
 
   @media (max-width: 500px) {
-    height:40px;
-    font-size:18px;
-    width:300px;
+    height: 40px;
+    font-size: 18px;
+    width: 300px;
   }
 `;
 
@@ -358,7 +350,7 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
 export const TextInput = styled.input<any>`
   width: ${(props) => props.width || `378px`};
   height: ${(props) => props.height || `60px`};
-  border:1px solid ${(props) => props.theme.grey_C};
+  border: 1px solid ${(props) => props.theme.grey_C};
   border-radius: ${(props) => props.theme.radius};
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding || props.theme.inputPadding};
@@ -366,17 +358,16 @@ export const TextInput = styled.input<any>`
   margin: ${(props) => props.margin};
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
-  font-size:18px;
+  font-size: 18px;
   position: relative;
   &:focus {
     outline: none;
   }
 
   @media (max-width: 500px) {
-    height:40px;
+    height: 40px;
   }
 `;
-
 
 export const Image = styled.img<any>`
   display: ${(props) => props.display};
