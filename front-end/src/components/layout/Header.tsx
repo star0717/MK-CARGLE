@@ -49,7 +49,7 @@ const Header: NextPage<HeaderProps> = (props) => {
               <Image
                 src="/images/cargle.png"
                 alt="Cargle Logo"
-                width={width < 1440 ? `100px` : `153px`}
+                width={width < 1439 ? `100px` : `153px`}
               />
             </a>
           </Link>

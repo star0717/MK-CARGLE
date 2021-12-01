@@ -32,7 +32,7 @@ const Footer: NextPage = () => {
         />
 
         <Wrapper
-          fontSize={`12px`}
+          fontSize={`14px`}
           lineHeignt={`22px`}
           padding={`10px`}
           width={`auto`}

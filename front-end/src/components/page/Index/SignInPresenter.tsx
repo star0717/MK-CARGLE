@@ -5,7 +5,7 @@ import {
     WholeWrapper,
     RsWrapper,
     Wrapper,
-    WelcomeTitle,
+    CommonTitle,
     ThemeButton,
     TextInput,
     Text,
@@ -29,35 +29,30 @@ const SigninPresenter = ({
     return (
         <WholeWrapper ref={ref}>
             <RsWrapper>
-                <Wrapper width={width < 1400 ? `300px` : `378px`} al={`flex-start`}>
-                    <WelcomeTitle
-
+                <Wrapper width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}>
+                    <CommonTitle
+                        textAlign={`center`}
                         margin={`0px`}
                     >
-                        정비관리도 이젠 편리하게
-                        <p
-                            style={{
-                                margin: "0",
-                                fontWeight: "800",
-                            }}
-                        >
-                            CARGLE
-                        </p>
-                    </WelcomeTitle>
+                        CARGLE
+                        <Text>
+                            정비관리도 이젠 편리하게
+                        </Text>
+                    </CommonTitle>
 
                     <Wrapper
                         margin={`20px 0px 0px`}
                     >
                         {/* 로그인 입력 form */}
                         <Wrapper
-                            width={width < 1400 ? `300px` : `378px`}
+                            width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
                             onSubmit={onSignInHandler}
                         >
                             {/* 이메일 input */}
 
                             <TextInput
                                 marginBottom={`10px`}
-                                width={width < 1400 ? `300px` : `378px`}
+                                width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
                                 placeholder="이메일"
                                 type="text"
                                 name="id"
@@ -68,7 +63,7 @@ const SigninPresenter = ({
                             />
                             <Wrapper>
                                 <Text
-                                    fontSize={`12px`}
+                                    fontSize={width < 500 ? `14px` : `18px`}
                                     fontWeight={`700`}
                                     margin={`0px`}
                                     width={`100%`}
@@ -81,7 +76,8 @@ const SigninPresenter = ({
                             {/* 비밀번호 input */}
 
                             <TextInput
-                                width={width < 1400 ? `300px` : `378px`}
+                                width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
+                                marginTop={`10px`}
                                 type="password"
                                 placeholder="비밀번호"
                                 name="pwd"
@@ -101,7 +97,7 @@ const SigninPresenter = ({
                                 >
                                     <input
                                         style={{
-                                            fontSize: "12px",
+                                            fontSize: "14px",
                                         }}
                                         type="checkbox"
                                         checked={saveCheck}
@@ -109,7 +105,7 @@ const SigninPresenter = ({
                                     >
                                     </input>
                                     <Text
-                                        fontSize={`14px`}
+                                        fontSize={`18px`}
                                         padding={`5px 0px`}
                                         margin={`0px`}
                                     >
@@ -135,7 +131,6 @@ const SigninPresenter = ({
                             ) : null}
                             {/* 로그인 버튼 */}
                             <ThemeButton
-                                width={width < 1400 ? `300px` : `378px`}
                                 type="submit"
                             >
                                 로그인
@@ -146,7 +141,7 @@ const SigninPresenter = ({
                         >
                             <Wrapper
                                 dr={`row`}
-                                fontSize={`14px`}
+                                fontSize={`18px`}
                                 ju={`flex-end`}
                             >
                                 <FontAwesomeIcon
@@ -155,17 +150,17 @@ const SigninPresenter = ({
                                 />
                                 <Text
                                     margin={`0px 3px 0px`}
-                                    fontSize={`14px`}
+                                    fontSize={`18px`}
                                 >
                                     아직 회원이 아니신가요?
                                 </Text>
                                 <Link href="/view/signup">
-                                    <a style={{ fontWeight: "bold" }}>회원가입</a>
+                                    <a style={{ fontWeight: "bold", fontSize: "18px" }}>회원가입</a>
                                 </Link>
                             </Wrapper>
                             <Wrapper
                                 dr={`row`}
-                                fontSize={`14px`}
+                                fontSize={`18px`}
                                 ju={`flex-end`}
                             >
                                 <FontAwesomeIcon
@@ -174,12 +169,12 @@ const SigninPresenter = ({
                                 />
                                 <Text
                                     margin={`0px 3px 0px`}
-                                    fontSize={`14px`}
+                                    fontSize={`18px`}
                                 >
                                     계정을 찾고 싶으신가요?
                                 </Text>
                                 <Link href="/view/find">
-                                    <a style={{ fontWeight: "bold" }}>계정찾기</a>
+                                    <a style={{ fontWeight: "bold", fontSize: "18px" }}>계정찾기</a>
                                 </Link>
                             </Wrapper>
                         </Wrapper>
