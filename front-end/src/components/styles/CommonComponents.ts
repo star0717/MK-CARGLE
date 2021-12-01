@@ -244,7 +244,7 @@ export const Text = styled.p<any>`
 
 /**button */
 
-export const ThemeButton = styled.button<any>`
+export const CommonButton = styled.button<any>`
   width: ${(props) => props.width || `500px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `60px`};

@@ -6,7 +6,7 @@ import {
     RsWrapper,
     Wrapper,
     CommonTitle,
-    ThemeButton,
+    CommonButton,
     TextInput,
     Text,
 } from "../../styles/CommonComponents";
@@ -130,11 +130,11 @@ const SigninPresenter = ({
                                 </Wrapper>
                             ) : null}
                             {/* 로그인 버튼 */}
-                            <ThemeButton
+                            <CommonButton
                                 type="submit"
                             >
                                 로그인
-                            </ThemeButton>
+                            </CommonButton>
                         </Wrapper>
                         <Wrapper
                             padding={`10px 0px`}
