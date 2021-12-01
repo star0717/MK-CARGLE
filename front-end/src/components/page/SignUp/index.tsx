@@ -11,11 +11,19 @@ import SignupComplete from "./Body/complete";
 import SelectUser from "./Body/selectUser";
 import InputAccount from "./Body/inputAccout";
 import InputCompany from "./Body/inputCompany";
+import { useSelector } from "react-redux";
+import { RootStateInterface } from "../../../../store/interfaces/RootState";
+import { UserState } from "../../../../store/interfaces";
 
 // modal setting
 Modal.setAppElement("body");
 
 const SignUp: NextPage = () => {
+  // redux store에서 user, company 정보 가져옴
+  const { user, company, formInput, formCheck } = useSelector(
+    (state: RootStateInterface): UserState => state.userAll
+  );
+
   // 이메일 종류
   const emailItem = [
     { key: 1, value: "", text: "직접 입력" },
@@ -29,6 +37,10 @@ const SignUp: NextPage = () => {
 
   // component에 전달할 props들 정의
   const SignUpProps = {
+    user,
+    company,
+    formInput,
+    formCheck,
     stepNumber,
     setStepNumber,
     userAuth,

@@ -13,6 +13,7 @@ import {
   manFileUploadAction,
   signOutUserAction,
 } from "../../../../../store/action/user.action";
+import { actionTypesUser } from "../../../../../store/interfaces";
 
 interface FileUploadProps {
   stepNumber?: any;
@@ -52,6 +53,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     alert("입력하신 계정정보로 로그인하시면 서류제출이 가능합니다.");
     dispatch(signOutUserAction()).then((res: any) => {
+      dispatch({ type: actionTypesUser.USER_INIT });
       router.push("/");
     });
   };

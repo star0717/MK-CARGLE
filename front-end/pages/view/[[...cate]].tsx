@@ -5,6 +5,7 @@ import Header from "../../src/components/layout/Header";
 import SignUp from "../../src/components/page/SignUp";
 import Main from "../../src/components/page/Main";
 import Find from "../../src/components/page/Find";
+import Account from "../../src/components/page/MyPageAccount";
 import { parseJwt } from "../../src/modules/parseJwt";
 import FileUpload from "../../src/components/page/SignUp/Body/fileUpload";
 import Approval from "../../src/components/page/SignUp/Body/approval";
@@ -37,6 +38,8 @@ const Componentitem: NextPage<ViewProps> = (props) => {
       }
     case "find":
       return <Find />;
+    case "account":
+      return <Account />;
     default:
       return <SignUp />;
   }
@@ -69,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   // 토큰 확인 - 없을 경우, 로그인 화면으로 리디렉트
   if (!context.req.cookies.mk_token) {
-    if (main !== "signup" && main !== "find") {
+    if (main !== "signup" && main !== "find" && main !== "account" ) {
       return {
         redirect: {
           permanent: false,
