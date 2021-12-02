@@ -40,6 +40,10 @@ export class SettingsController {
     description: '로그인된 사용자의 오브젝트 ID와 비밀번호',
     type: ConfirmPWD,
   })
+  @ApiResponse({
+    description:
+      '성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송',
+  })
   @Post('users/confirm/password')
   async comfirmPassword(
     @Body() data: ConfirmPWD,
