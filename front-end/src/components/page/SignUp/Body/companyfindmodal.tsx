@@ -1,4 +1,3 @@
-import axios from "axios";
 import { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -59,6 +58,7 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
       }
     );
   };
+
   return (
     <div style={props.style}>
       <form onSubmit={findCompanyHandler}>
@@ -91,6 +91,7 @@ const CompanyFindModal: NextPage<modalOption> = (props) => {
                       id={item.comRegNum}
                       key={index}
                       onClick={(e) => {
+                        console.log("ㅇㅇㅇㅇ");
                         setInputForm({
                           ...inputForm,
                           companyNum: item.comRegNum,

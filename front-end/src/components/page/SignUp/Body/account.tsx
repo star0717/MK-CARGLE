@@ -4,19 +4,16 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import Cookies from "js-cookie";
 import { useInterval } from "react-use";
-import { useDispatch, useSelector } from "react-redux";
-import DatePicker from "react-datepicker";
+import { useDispatch } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
-import { RootStateInterface } from "../../../../../store/interfaces/RootState";
-import { actionTypesUser, UserState } from "../../../../../store/interfaces";
-import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
+import { actionTypesUser } from "../../../../../store/interfaces";
+import { formRegEx } from "../../../../validation/regEx";
 import {
   authNumCheckAction,
   emailSendAction,
   signUpUserAction,
 } from "../../../../../store/action/user.action";
 import { SignUpInfo } from "../../../../models/auth.entity";
-
 import DaumPostcode from "react-daum-postcode";
 import CompanyFindModal from "./companyfindmodal";
 import { UserAuthority } from "../../../../models/user.entity";
@@ -226,12 +223,6 @@ const Account: NextPage<any> = (props) => {
     }
   };
 
-  console.log("@@인풋 : ", inputForm);
-  console.log("@@유저 : ", inputUser);
-  console.log("##인풋스테이트 : ", formInput);
-  console.log("##유저스테이트 : ", user);
-  console.log("^^^폼체크 : ", formCheck);
-
   // MODAL에 넘길 props
   const ComfindModalProps = {
     setModalOpen,
@@ -251,14 +242,18 @@ const Account: NextPage<any> = (props) => {
     register,
     watch,
     errors,
+    setValue,
     inputForm,
+    setInputForm,
     formInput,
     formCheck,
     inputUser,
     setInputUser,
+    modalOption,
     setModalOption,
     modalOpen,
     setModalOpen,
+    addressHandler,
     onInputFormHandler,
     onInputUserHandler,
     onEmailKindHandler,
@@ -268,6 +263,7 @@ const Account: NextPage<any> = (props) => {
     onAuthNumCheckHandler,
     stepNumber,
     setStepNumber,
+    onSignUpUserHandler,
   };
 
   return (
