@@ -2,30 +2,14 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UserState } from "../../../../store/interfaces";
+import { actionTypesUser, UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { signInUserAction } from "../../../../store/action/user.action";
 import styled from "styled-components";
 import { formRegEx } from "../../../validation/regEx";
-import withSplitting from "../../../Lib/withSpliting"
-const SigninPresenter = withSplitting(() => import("./SignInPresenter"))
-
-//SCSS
-// const Wrapper = styled.div`
-//   width: 100%;
-//   display: flex;
-//       flex-wrap: wrap;
-//       flex-direction: row; 
-//       align-items: center;
-//       justify-content: center;
-
-// `;
-
-const P = styled.p`
-  margin: 0;
-`;
+import SigninPresenter from "./SignInPresenter";
 
 const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
@@ -92,6 +76,10 @@ const SignIn: NextPage<any> = (props) => {
     }
   };
 
+  const userInit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch({ type: actionTypesUser.USER_INIT });
+  };
+
   return (
     <SigninPresenter
       onSignInHandler={onSignInHandler}
@@ -100,6 +88,7 @@ const SignIn: NextPage<any> = (props) => {
       saveCheck={saveCheck}
       setSaveCheck={setSaveCheck}
       signInErr={signInErr}
+      userInit={userInit}
       errMsg={errMsg}
     />
   );
