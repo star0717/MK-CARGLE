@@ -13,6 +13,7 @@ import { UserInfo } from "../../src/models/auth.entity";
 import { User, UserAuthority } from "../../src/models/user.entity";
 import { Company, CompanyApproval } from "../../src/models/company.entity";
 import { ApiPayloadTooLargeResponse } from "@nestjs/swagger";
+import { faSleigh } from "@fortawesome/free-solid-svg-icons";
 
 export const initialState: UserState = {
   signInInfo: <UserInfo>{
@@ -56,6 +57,7 @@ export const initialState: UserState = {
   formCheck: <FormCheck>{
     mkTerm: false,
     privacyTerm: false,
+    marketTerm: false,
     emailReadOnly: false,
     emailSend: false,
     authNumCheck: false,

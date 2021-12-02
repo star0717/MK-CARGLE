@@ -2,20 +2,10 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Footer from "../src/components/layout/Footer";
 import Header from "../src/components/layout/Header";
-import SignIn from "../src/components/page/Index/SignIn";
-import styled from "styled-components";
-import {
-  WholeWrapper,
-  RsWrapper,
-  Wrapper,
-  WelcomeTitle,
-  ThemeButton,
-  TextInput,
-  Text,
-} from "../src/components/styles/CommonComponents";
+import SignIn from "../src/components/page/SignIn/SignIn";
+import { WholeWrapper } from "../src/components/styles/CommonComponents";
 
 //SCSS
-
 
 interface SignInProps {
   saveId: string;

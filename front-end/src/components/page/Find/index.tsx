@@ -1,17 +1,11 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
-import { SubmitHandler, useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
 
 import StepOne from "./stepone";
 import StepTwo from "./steptwo";
 import StepThree from "./stepthree";
 import StepFour from "./stepfour";
-
-// verticalAlign: "middle",
-// alignItems: "center",
-// textAlign: "center"
 
 export interface stepOption {
   setHeaderName: React.Dispatch<React.SetStateAction<string>>;
@@ -22,8 +16,6 @@ export interface stepOption {
 }
 
 const Find: NextPage = () => {
-  const router = useRouter();
-
   const [headerName, setHeaderName] = useState("email");
   const [stepNumber, setStepNumber] = useState(1);
   //step1 -> step2

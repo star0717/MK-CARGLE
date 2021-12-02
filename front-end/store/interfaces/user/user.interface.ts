@@ -45,6 +45,7 @@ export interface FormInput {
 export interface FormCheck {
   mkTerm: boolean;
   privacyTerm: boolean;
+  marketTerm: boolean;
   emailReadOnly: boolean;
   emailSend: boolean;
   authNumCheck: boolean;
