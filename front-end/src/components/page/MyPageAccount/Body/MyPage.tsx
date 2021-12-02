@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { passwordCheck } from "../../../../../store/action/user.action";
-import { WithdrawalInfo } from "../../../../models/auth.entity";
 import {
   TextInput,
   WholeWrapper,
@@ -16,7 +15,7 @@ const MyPage: NextPage<any> = (props) => {
 
   const setpages = props.setPages;
   const [password, setPassword] = useState("");
-  const confirmPWD: WithdrawalInfo = {
+  const confirmPWD = {
     _id: props.uID,
     PWD: password,
   };
@@ -40,6 +39,7 @@ const MyPage: NextPage<any> = (props) => {
           <Text>계정 관리를 위해 비밀번호를 입력해주세요.</Text>
 
           <TextInput
+            type="password"
             value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setPassword(e.target.value);

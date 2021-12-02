@@ -1,5 +1,5 @@
-import { Company, CompanyApproval } from "./company.entity";
-import { User, UserAuthority } from "./user.entity";
+import { Company, CompanyApproval } from './company.entity';
+import { User, UserAuthority } from './user.entity';
 /**
  * 회원 가입 정보용 DTO
  */
@@ -44,7 +44,7 @@ export declare class HelpChangePWD {
     oldPWD: string;
     newPWD: string;
 }
-export declare class WithdrawalInfo {
+export declare class ConfirmPWD {
     _id: string;
     PWD: string;
 }
