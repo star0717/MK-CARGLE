@@ -165,3 +165,18 @@ export async function passwordCheck(dataToSubmit: ConfirmPWD) {
     payload: req,
   };
 }
+
+/**
+ *
+ * @param dataToSubmit
+ * @returns
+ */
+export async function getMyInfo() {
+  const req = await axios
+    .get(`/api/settings/myinfo`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.MY_INFO,
+    payload: req,
+  };
+}

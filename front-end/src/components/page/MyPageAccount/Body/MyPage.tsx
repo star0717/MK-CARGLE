@@ -1,7 +1,10 @@
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { passwordCheck } from "../../../../../store/action/user.action";
+import {
+  getMyInfo,
+  passwordCheck,
+} from "../../../../../store/action/user.action";
 import {
   TextInput,
   WholeWrapper,
@@ -14,7 +17,7 @@ const MyPage: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   const setpages = props.setPages;
-  const [accountInfo, setAccountInfo] = useState(props.accountInfo);
+  const setAccountInfo = props.setAccountInfo;
   const [password, setPassword] = useState("");
   const confirmPWD = {
     _id: props.uID,
@@ -25,8 +28,13 @@ const MyPage: NextPage<any> = (props) => {
     e.preventDefault();
     console.log(confirmPWD);
     dispatch(passwordCheck(confirmPWD)).then((res: any) => {
-      if (res.payload) {
-        setpages(2);
+      if (res.payload === true) {
+        dispatch(getMyInfo()).then((res: any) => {
+          if (res.payload) {
+            setAccountInfo(res.payload);
+            setpages(2);
+          }
+        });
       } else {
         alert("비밀번호가 틀립니다.");
       }

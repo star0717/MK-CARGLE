@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useState } from "react";
+import { SignUpInfo } from "../../../models/auth.entity";
 import {
   TextInput,
   WholeWrapper,
@@ -12,7 +13,7 @@ import Withdrawal from "./Body/Withdrawal";
 
 const MyPageAccount: NextPage<any> = (props) => {
   const [pages, setPages] = useState(1);
-  const [accountInfo, setAccountInfo] = useState("");
+  const [accountInfo, setAccountInfo] = useState<SignUpInfo>();
 
   console.log(props);
 

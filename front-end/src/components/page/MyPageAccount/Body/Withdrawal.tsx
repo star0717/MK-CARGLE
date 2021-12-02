@@ -13,6 +13,8 @@ Modal.setAppElement("body");
 
 const Withdrawal: NextPage<any> = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const accountInfo = props.accountInfo;
+  const setAccountInfo = props.setAccountInfo;
   const setpages = props.setPages;
   const closeModal = () => {
     setModalOpen(false);

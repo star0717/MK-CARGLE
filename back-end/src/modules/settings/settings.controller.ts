@@ -23,6 +23,7 @@ import {
   AuthTokenInfo,
   HelpChangePWD,
   ConfirmPWD,
+  SignUpInfo,
 } from 'src/models/auth.entity';
 import { SettingsService } from './settings.service';
 import { User, UserAuthority } from 'src/models/user.entity';
@@ -52,6 +53,18 @@ export class SettingsController {
     return await this.settingsService.comfirmPassword(token, data);
   }
 
+  @ApiOperation({ summary: '[WORKER] 내 정보 조회' })
+  @ApiResponse({
+    description: '회사 정보와 사용자 정보',
+    type: SignUpInfo,
+  })
+  @Get('myinfo')
+  async findMyInfo(
+    @AuthToken({ auth: UserAuthority.WORKER }) token: AuthTokenInfo,
+  ): Promise<SignUpInfo> {
+    return await this.settingsService.findMyInfo(token);
+  }
+
   @ApiOperation({ summary: '[WORKER] 패스워드 변경' })
   @ApiParam({ name: 'id', description: '사용자 오브젝트 ID' })
   @ApiBody({
@@ -63,7 +76,7 @@ export class SettingsController {
       '성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송',
   })
   @Patch('users/password/:id')
-  async UpdateUserPassword(
+  async updateUserPassword(
     @Param('id') id: string,
     @Body() data: HelpChangePWD,
     @AuthToken({ auth: UserAuthority.WORKER })
