@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/dist/client/router";
 import React, { useState } from "react";
@@ -7,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionTypesUser, UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { signInUserAction } from "../../../../store/action/user.action";
-import styled from "styled-components";
 import { formRegEx } from "../../../validation/regEx";
 import SigninPresenter from "./SignInPresenter";
 
@@ -76,22 +74,24 @@ const SignIn: NextPage<any> = (props) => {
     }
   };
 
+  // 회원가입 state 초기화
   const userInit = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch({ type: actionTypesUser.USER_INIT });
   };
 
-  return (
-    <SigninPresenter
-      onSignInHandler={onSignInHandler}
-      inputSignIn={inputSignIn}
-      onInputHandler={onInputHandler}
-      saveCheck={saveCheck}
-      setSaveCheck={setSaveCheck}
-      signInErr={signInErr}
-      userInit={userInit}
-      errMsg={errMsg}
-    />
-  );
+  // 화면 구성에 넘겨줄 props
+  const fProps = {
+    onSignInHandler,
+    inputSignIn,
+    onInputHandler,
+    saveCheck,
+    setSaveCheck,
+    signInErr,
+    userInit,
+    errMsg,
+  };
+
+  return <SigninPresenter {...fProps} />;
 };
 
 export default SignIn;
