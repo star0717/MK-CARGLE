@@ -25,7 +25,7 @@ import { AdminService } from './admin.service';
 import { UserAuthority } from 'src/models/user.entity';
 
 @Controller('admin')
-@ApiTags('관리자 API')
+@ApiTags('시스템 관리자 API')
 export class AdminController {
   constructor(
     private readonly service: AdminService,
@@ -34,21 +34,21 @@ export class AdminController {
 
   @Public()
   @Get('drop/users')
-  @ApiOperation({ description: '사용자 컬렉션 삭제' })
+  @ApiOperation({ summary: '[PUBLIC] 사용자 컬렉션 삭제' })
   async dropUsers() {
     await this.service.dropUsers();
   }
 
   @Public()
   @Get('drop/companies')
-  @ApiOperation({ description: '업체 컬렉션 삭제' })
+  @ApiOperation({ summary: '[PUBLIC] 업체 컬렉션 삭제' })
   async dropCompanies() {
     await this.service.dropCompanies();
   }
 
   @Public()
   @Get('drop/all')
-  @ApiOperation({ description: '전체 컬렉션 삭제' })
+  @ApiOperation({ summary: '[PUBLIC] 전체 컬렉션 삭제' })
   async dropAll() {
     await this.service.dropUsers();
     await this.service.dropCompanies();
@@ -56,14 +56,15 @@ export class AdminController {
 
   @Public()
   @Get('create/admin')
-  @ApiOperation({ description: '어드민 계정 생성' })
+  @ApiOperation({ summary: '[PUBLIC] 어드민 계정 생성' })
   async createAdmin() {
     return await this.service.createAdmin();
   }
 
-  @Patch('approve/company/:id')
+  @Patch('review/approve/companies/:id')
   @ApiOperation({
-    description: '업체와 대표자 사용승인. busItem, busType도 동시 변경 가능',
+    summary:
+      '[ADMIN] 업체와 대표자 사용승인. busItem, busType도 동시 변경 가능',
   })
   @ApiParam({ name: 'id', description: '승인할 업체의 오브젝트ID' })
   @ApiBody({
@@ -72,7 +73,7 @@ export class AdminController {
   })
   async approveCompany(
     @Param('id') id: string,
-    @Body() company: Partial<Company>,
+    @Body() company: Company,
     @AuthToken({ auth: UserAuthority.ADMIN })
     token: AuthTokenInfo,
   ): Promise<Company> {
@@ -83,9 +84,9 @@ export class AdminController {
     return await this.service.approveCompany(id, pCompany);
   }
 
-  @Patch('reject/company/:id')
+  @Patch('review/reject/companies/:id')
   @ApiOperation({
-    description: '업체 승인요청 거부. 대표자의 승인도 동시 취소',
+    summary: '[ADMIN] 업체 승인요청 거부. 대표자의 승인도 동시 취소',
   })
   @ApiParam({ name: 'id', description: '거부할 업체의 오브젝트ID' })
   async rejectCompany(
@@ -96,14 +97,34 @@ export class AdminController {
     return await this.service.rejectCompany(id);
   }
 
-  @Delete('delete/company/:id')
-  @ApiOperation({ description: '업체 삭제. 대표자와 직원들도 모두 삭제' })
+  @Delete('review/delete/companies/:id')
+  @ApiOperation({
+    summary: '[ADMIN] 업체 삭제. 대표자와 직원들도 모두 삭제',
+  })
   @ApiParam({ name: 'id', description: '삭제할 업체의 오브젝트ID' })
   async deleteCompany(
     @Param('id') id: string,
     @AuthToken({ auth: UserAuthority.ADMIN })
     token: AuthTokenInfo,
   ) {
-    this.service.deleteCompany(token, id);
+    return this.service.deleteCompany(token, id);
+  }
+
+  @Patch('companies/:id')
+  @ApiOperation({ summary: '[ADMIN] 회사 정보 수정' })
+  @ApiParam({ name: 'id', description: '업체의 오브젝트ID' })
+  @ApiBody({
+    description:
+      '변경할 업체 정보. mbTypeNum, busType, busItem, phoneNum, faxNum 만 허용',
+    type: PartialType<Company>(Company),
+  })
+  async updateCompanyInfo(
+    @Param('id') id: string,
+    @Body() company: Company,
+    @AuthToken({ auth: UserAuthority.ADMIN })
+    token: AuthTokenInfo,
+  ): Promise<Company> {
+    console.log(company);
+    return await this.service.updateCompanyInfo(token, id, company);
   }
 }
