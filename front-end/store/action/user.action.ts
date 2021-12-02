@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { WithdrawalInfo } from "../../src/models/auth.entity";
 import { actionTypesUser } from "../interfaces";
 
 // 로그인 action
@@ -154,12 +155,13 @@ export async function approvalReqAction(dataToSubmit: any) {
 }
 
 // 비밀번호 확인 action
-export async function passwordCheck(dataToSubmit: any) {
+export async function passwordCheck(dataToSubmit: WithdrawalInfo) {
+  console.log("####", dataToSubmit);
   const req = await axios
     .post(`/api/settings/users/confirm/password`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
-    type: actionTypesUser.APPROVAL_REQUEST,
+    type: actionTypesUser.PASSWORD_CHECK,
     payload: req,
   };
 }

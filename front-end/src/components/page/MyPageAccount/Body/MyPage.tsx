@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { passwordCheck } from "../../../../../store/action/user.action";
+import { WithdrawalInfo } from "../../../../models/auth.entity";
 import {
   TextInput,
   WholeWrapper,
@@ -15,10 +16,15 @@ const MyPage: NextPage<any> = (props) => {
 
   const setpages = props.setPages;
   const [password, setPassword] = useState("");
-  console.log("2@@@", password);
+  const confirmPWD: WithdrawalInfo = {
+    _id: props.uID,
+    PWD: password,
+  };
 
   const test = (e: React.FormEvent<HTMLFormElement>) => {
-    dispatch(passwordCheck(password)).then((res: any) => {
+    e.preventDefault();
+    console.log(confirmPWD);
+    dispatch(passwordCheck(confirmPWD)).then((res: any) => {
       if (res.payload) {
         setpages(2);
       } else {
