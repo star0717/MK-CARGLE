@@ -67,9 +67,9 @@ const AccountM: NextPage<any> = (props) => {
     <WholeWrapper>
       <Wrapper>
         <Text>마이페이지{">"}계정관리</Text>
-        <Wrapper>
-          <Text>계정정보</Text>
-        </Wrapper>
+
+        <Text>계정정보</Text>
+
         <Wrapper dr={`row`}>
           <Text>아이디</Text>
           <TextInput placeholder="asd123@naver.com" type="text" />
@@ -116,9 +116,7 @@ const AccountM: NextPage<any> = (props) => {
           회원탈퇴
         </button>
 
-        <Wrapper>
-          <Text>사업자 정보</Text>
-        </Wrapper>
+        <Text>사업자 정보</Text>
         <Wrapper dr={`row`}>
           <Text>상호명</Text>
           <TextInput placeholder="카센터 상호명" type="text" />
