@@ -1,12 +1,23 @@
 import { NextPage } from "next";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { actionTypesUser, UserState } from "../../../../../store/interfaces";
+import { RootStateInterface } from "../../../../../store/interfaces/RootState";
 import { UserAuthority } from "../../../../models/user.entity";
 
 const SelectUser: NextPage<any> = (props) => {
+  const dispatch = useDispatch();
+
   // props 재정의
+  const user = props.user;
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
   const setUserAuth = props.setUserAuth;
+
+  // // redux store에서 user, company 정보 가져옴
+  // const { user } = useSelector(
+  //   (state: RootStateInterface): UserState => state.userAll
+  // );
 
   return (
     <div>
@@ -29,6 +40,11 @@ const SelectUser: NextPage<any> = (props) => {
           onClick={() => {
             setStepNumber(stepNumber + 1);
             setUserAuth(UserAuthority.OWNER);
+            dispatch({ type: actionTypesUser.USER_INIT });
+            dispatch({
+              type: actionTypesUser.INPUT_ACCOUNT,
+              payload: { ...user, auth: UserAuthority.OWNER },
+            });
           }}
         >
           사업자
@@ -45,6 +61,11 @@ const SelectUser: NextPage<any> = (props) => {
           onClick={() => {
             setStepNumber(stepNumber + 1);
             setUserAuth(UserAuthority.WORKER);
+            dispatch({ type: actionTypesUser.USER_INIT });
+            dispatch({
+              type: actionTypesUser.INPUT_ACCOUNT,
+              payload: { ...user, auth: UserAuthority.WORKER },
+            });
           }}
         >
           직원

@@ -6,10 +6,13 @@ import {
   // Company,
   actionTypesUser,
   ActionsUser,
+  FormInput,
+  FormCheck,
 } from "../interfaces";
 import { UserInfo } from "../../src/models/auth.entity";
-import { User } from "../../src/models/user.entity";
-import { Company } from "../../src/models/company.entity";
+import { User, UserAuthority } from "../../src/models/user.entity";
+import { Company, CompanyApproval } from "../../src/models/company.entity";
+import { ApiPayloadTooLargeResponse } from "@nestjs/swagger";
 
 export const initialState: UserState = {
   signInInfo: <UserInfo>{
@@ -17,28 +20,45 @@ export const initialState: UserState = {
     pwd: "",
   },
   user: <User>{
-    // email: "",
-    // password: "",
-    // auth: "worker",
-    // name: "",
-    // comID: "",
-    // hpNumber: "",
-    // address: "",
-    // joinDate: 0,
-    // approval: false,
+    email: "",
+    password: "",
+    auth: UserAuthority.WORKER,
+    name: "",
+    _cID: "",
+    hpNumber: "",
+    address: "",
+    joinDate: null,
+    approval: false,
   },
   company: <Company>{
-    // name: "",
-    // comRegNum: "",
-    // mbRegNum: "",
-    // mbTypeNum: "",
-    // ownerName: "",
-    // busType: "",
-    // busItem: "",
-    // phoneNum: "",
-    // faxNum: "",
-    // address: "",
-    // approval: false,
+    name: "",
+    comRegNum: "",
+    mbRegNum: "",
+    mbTypeNum: "",
+    ownerName: "",
+    busType: "",
+    busItem: "",
+    phoneNum: "",
+    faxNum: "",
+    address: "",
+    approval: CompanyApproval.BEFORE,
+  },
+  formInput: <FormInput>{
+    companyNum: "",
+    emailAddress: "",
+    emailDomain: "",
+    passwordCheck: "",
+    uAddressMain: "",
+    uAddressDetail: "",
+    cAddressMain: "",
+    cAddressDetail: "",
+  },
+  formCheck: <FormCheck>{
+    mkTerm: false,
+    privacyTerm: false,
+    emailReadOnly: false,
+    emailSend: false,
+    authNumCheck: false,
   },
 };
 
@@ -55,12 +75,42 @@ const userAll = (
     case HYDRATE:
       return { ...state, ...action.payload.userAll };
 
-    // // 입력값 onChange 기능
-    // case actionTypesUser.USER_INPUT:
-    //   return {
-    //     ...state,
-    //     [action.data[0]]: action.data[1],
-    //   };
+    case actionTypesUser.USER_INIT:
+      return {
+        ...state,
+        user: initialState.user,
+        company: initialState.company,
+        formInput: initialState.formInput,
+        formCheck: initialState.formCheck,
+      };
+
+    // 계정 정보 state 변환
+    case actionTypesUser.INPUT_ACCOUNT:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    // 업체 정보 state 변환
+    case actionTypesUser.INPUT_COMPANY:
+      return {
+        ...state,
+        company: action.payload,
+      };
+
+    // 그 외 form state 변환
+    case actionTypesUser.INPUT_FORM:
+      return {
+        ...state,
+        formInput: action.payload,
+      };
+
+    // form check 변환
+    case actionTypesUser.FORM_CHECK:
+      return {
+        ...state,
+        formCheck: action.payload,
+      };
 
     // 로그인 기능
     case actionTypesUser.USER_SIGNIN:
@@ -130,6 +180,12 @@ const userAll = (
 
     // 심사요청
     case actionTypesUser.APPROVAL_REQUEST:
+      return {
+        ...state,
+      };
+
+    // 비밀번호 체크 기능
+    case actionTypesUser.PASSWORD_CHECK:
       return {
         ...state,
       };

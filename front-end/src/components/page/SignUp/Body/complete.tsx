@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../../../store/action/user.action";
+import { actionTypesUser } from "../../../../../store/interfaces";
 
 const SignupComplete: NextPage<any> = (props) => {
   const router = useRouter();
@@ -10,6 +11,7 @@ const SignupComplete: NextPage<any> = (props) => {
   // 확인(logout 같은 기능) handler
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
+      dispatch({ type: actionTypesUser.USER_INIT });
       router.push("/");
     });
   };

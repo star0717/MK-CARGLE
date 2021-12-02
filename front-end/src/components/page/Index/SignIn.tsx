@@ -2,9 +2,9 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UserState } from "../../../../store/interfaces";
+import { actionTypesUser, UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { signInUserAction } from "../../../../store/action/user.action";
 import styled from "styled-components";
@@ -76,6 +76,10 @@ const SignIn: NextPage<any> = (props) => {
     }
   };
 
+  const userInit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch({ type: actionTypesUser.USER_INIT });
+  };
+
   return (
     <SigninPresenter
       onSignInHandler={onSignInHandler}
@@ -84,6 +88,7 @@ const SignIn: NextPage<any> = (props) => {
       saveCheck={saveCheck}
       setSaveCheck={setSaveCheck}
       signInErr={signInErr}
+      userInit={userInit}
       errMsg={errMsg}
     />
   );

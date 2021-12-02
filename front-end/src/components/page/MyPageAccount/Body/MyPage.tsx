@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { passwordCheck } from "../../../../../store/action/user.action";
 import {
   TextInput,
   WholeWrapper,
@@ -9,18 +11,38 @@ import {
 import Account from "./AccountM";
 
 const MyPage: NextPage<any> = (props) => {
+  const dispatch = useDispatch();
+
   const setpages = props.setPages;
+  const [password, setPassword] = useState("");
+  console.log("2@@@", password);
+
+  const test = (e: React.FormEvent<HTMLFormElement>) => {
+    dispatch(passwordCheck(password)).then((res: any) => {
+      if (res.payload) {
+        setpages(2);
+      } else {
+        alert("비밀번호가 틀립니다.");
+      }
+    });
+  };
 
   return (
     <WholeWrapper>
       <Wrapper>
-        <Text>계정 관리를 위해 비밀번호를 입력해주세요.</Text>
+        <form onSubmit={test}>
+          <Text>계정 관리를 위해 비밀번호를 입력해주세요.</Text>
 
-        <TextInput placeholder="비밀번호를 입력하세요." />
+          <TextInput
+            value={password}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPassword(e.target.value);
+            }}
+            placeholder="비밀번호를 입력하세요."
+          />
 
-        <button type="button" onClick={() => setpages(2)}>
-          확인
-        </button>
+          <button type="submit">확인</button>
+        </form>
       </Wrapper>
     </WholeWrapper>
   );

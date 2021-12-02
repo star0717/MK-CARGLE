@@ -1,4 +1,9 @@
 export enum actionTypesUser {
+  USER_INIT = "USER_INIT",
+  INPUT_ACCOUNT = "INPUT_ACCOUNT",
+  INPUT_COMPANY = "INPUT_COMPANY",
+  INPUT_FORM = "INPUT_FORM",
+  FORM_CHECK = "FORM_CHECK",
   USER_SIGNIN = "USER_SIGNIN",
   USER_SIGNUP = "USER_SIGNUP",
   USER_SIGNOUT = "USER_SIGNOUT",
@@ -11,9 +16,15 @@ export enum actionTypesUser {
   COM_FILE_UPLOAD = "COM_FILE_UPLOAD",
   MAN_FILE_UPLOAD = "MAN_FILE_UPLOAD",
   APPROVAL_REQUEST = "APPROVAL_REQUEST",
+  PASSWORD_CHECK = "PASSWORD_CHECK",
 }
 
 export type ActionsUser =
+  | UserInit
+  | InputAccount
+  | InputCompany
+  | InputForm
+  | FormCheck
   | UserSignIn
   | UserSignUp
   | UserSignOut
@@ -25,7 +36,38 @@ export type ActionsUser =
   | UserFindPw
   | ComFileUpload
   | ManFileUpload
-  | ApprovalRequest;
+  | ApprovalRequest
+  | PasswordCheck;
+
+// 초기화
+export interface UserInit {
+  type: actionTypesUser.USER_INIT;
+  payload: any;
+}
+
+// 계정 정보 state 변환
+export interface InputAccount {
+  type: actionTypesUser.INPUT_ACCOUNT;
+  payload: any;
+}
+
+// 업체 정보 state 변환
+export interface InputCompany {
+  type: actionTypesUser.INPUT_COMPANY;
+  payload: any;
+}
+
+// 그 외 form state 변환
+export interface InputForm {
+  type: actionTypesUser.INPUT_FORM;
+  payload: any;
+}
+
+// form check 여부 변환
+export interface FormCheck {
+  type: actionTypesUser.FORM_CHECK;
+  payload: any;
+}
 
 // 로그인
 export interface UserSignIn {
@@ -96,5 +138,11 @@ export interface ManFileUpload {
 // 심사요청
 export interface ApprovalRequest {
   type: actionTypesUser.APPROVAL_REQUEST;
+  payload: any;
+}
+
+// 비밀번호 체크(마이페이지)
+export interface PasswordCheck {
+  type: actionTypesUser.PASSWORD_CHECK;
   payload: any;
 }
