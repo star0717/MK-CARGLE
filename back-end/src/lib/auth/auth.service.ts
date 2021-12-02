@@ -16,7 +16,7 @@ import {
   HelpFindPWD,
   SignUpInfo,
   UserInfo,
-  WithdrawalInfo,
+  ConfirmPWD,
 } from 'src/models/auth.entity';
 import { Company, CompanyApproval } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
@@ -139,7 +139,7 @@ export class AuthService {
     return newSignUpInfo;
   }
 
-  async withdrawal(token: AuthTokenInfo, info: WithdrawalInfo) {
+  async withdrawal(token: AuthTokenInfo, info: ConfirmPWD) {
     // 토큰의 사용자 ID와 입력받은 ID가 불일치 할 경우
     if (token.uID != info._id) throw new UnauthorizedException();
 
@@ -309,8 +309,10 @@ export class AuthService {
     const mailData = this.commonService.emailDataForRequestApprove(
       company.name,
     );
+
+    const address = process.env.MAIL_AUTH_USER;
     this.commonService.sendMail(
-      'park.choongbum@gmail.com',
+      this.env_config.mailerModule.defaults.from,
       mailData.title,
       mailData.content,
     );

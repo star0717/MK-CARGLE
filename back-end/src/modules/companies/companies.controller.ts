@@ -19,7 +19,7 @@ import { AuthToken } from 'src/lib/decorators/decorators';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 
 @Controller('companies')
-@ApiTags('사업자 API')
+@ApiTags('업체(Company) API')
 export class CompaniesController extends SafeControllerFactory<Company>(
   Company,
 ) {
@@ -31,7 +31,9 @@ export class CompaniesController extends SafeControllerFactory<Company>(
    * Safe-CRUD 오버라이딩
    */
   @Post()
-  @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
+  @ApiOperation({
+    summary: `[DISABLED]`,
+  })
   async create(
     @Body() doc: Company,
     @AuthToken() token: AuthTokenInfo,
@@ -40,17 +42,21 @@ export class CompaniesController extends SafeControllerFactory<Company>(
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
+  @ApiOperation({
+    summary: `[DISABLED]`,
+  })
   async findByIdAndUpdate(
     @Param('id') id: string,
-    @Body() doc: Partial<Company>,
+    @Body() doc: Company,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<Company> {
     throw new NotAcceptableException();
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
+  @ApiOperation({
+    summary: `[DISABLED]`,
+  })
   async findByIdAndRemove(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,

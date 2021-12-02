@@ -1,9 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { CommonService } from 'src/lib/common/common.service';
-import { AuthTokenInfo, HelpChangePWD, UserInfo } from 'src/models/auth.entity';
+import {
+  AuthTokenInfo,
+  HelpChangePWD,
+  UserInfo,
+  ConfirmPWD,
+} from 'src/models/auth.entity';
 import { FindParameters, FindResult } from 'src/models/base.entity';
 import { Company } from 'src/models/company.entity';
-import { User } from 'src/models/user.entity';
+import { User, UserAuthority } from 'src/models/user.entity';
 import { CompaniesService } from '../companies/companies.service';
 import { UsersService } from '../users/users.service';
 
@@ -14,6 +20,25 @@ export class SettingsService {
     private companiesService: CompaniesService,
     private readonly commonService: CommonService,
   ) {}
+
+  async comfirmPassword(
+    token: AuthTokenInfo,
+    data: ConfirmPWD,
+  ): Promise<boolean> {
+    if (token.uID != data._id) throw new UnauthorizedException();
+
+    // 사용자 조회(패스워드는 제외됨)
+    var user = await this.usersService.findById(token, data._id);
+
+    // 사용자 조회(패스워드까지 포함)
+    const userInfo: UserInfo = {
+      id: user.email,
+      pwd: data.PWD,
+    };
+    user = await this.usersService.findByUserInfoForAuth(userInfo);
+    if (user) return true;
+    else return false;
+  }
 
   async updateUserPassword(
     token: AuthTokenInfo,
@@ -48,9 +73,13 @@ export class SettingsService {
   ): Promise<User> {
     if (token.uID != id) throw new UnauthorizedException();
     const pUser: Partial<User> = {};
+    if (user.name) pUser.name = user.name;
     if (user.hpNumber) pUser.hpNumber = user.hpNumber;
     if (user.address) pUser.address = user.address;
     if (user.joinDate) pUser.joinDate = user.joinDate;
+    // 오너에 한해 approval 수정 승인
+    if (token.uAuth == UserAuthority.OWNER && user.approval)
+      pUser.approval = user.approval;
     return await this.usersService.findByIdAndUpdate(token, id, pUser);
   }
 
@@ -66,23 +95,14 @@ export class SettingsService {
     if (company.busItem) pUser.busItem = company.busItem;
     if (company.phoneNum) pUser.phoneNum = company.phoneNum;
     if (company.faxNum) pUser.faxNum = company.faxNum;
-    if (company.address) pUser.address = company.address;
     return await this.companiesService.findByIdAndUpdate(token, id, pUser);
   }
 
-  async findApprovedWorkers(
-    aToken: AuthTokenInfo,
+  async findWorksers(
+    token: AuthTokenInfo,
     fParams: FindParameters,
   ): Promise<FindResult<User>> {
-    fParams.filter = { approval: true } as Partial<User>;
-    return await this.usersService.findByOptions(aToken, fParams);
-  }
-
-  async findUnApprovedWorkers(
-    aToken: AuthTokenInfo,
-    fParams: FindParameters,
-  ): Promise<FindResult<User>> {
-    fParams.filter = { approval: false } as Partial<User>;
-    return await this.usersService.findByOptions(aToken, fParams);
+    fParams.filter = { auth: UserAuthority.WORKER } as Partial<User>;
+    return await this.usersService.findByOptions(token, fParams);
   }
 }

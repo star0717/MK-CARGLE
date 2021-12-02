@@ -14,7 +14,7 @@ export class AdminService {
     @InjectModel(User) readonly userModel: ReturnModelType<typeof User>,
     @InjectModel(Company)
     readonly companyModel: ReturnModelType<typeof Company>,
-    private readonly companisService: CompaniesService,
+    private readonly companiesService: CompaniesService,
     private readonly usersService: UsersService,
     private readonly commonService: CommonService,
   ) {}
@@ -77,7 +77,7 @@ export class AdminService {
 
   async approveCompany(id: string, doc: Partial<Company>): Promise<Company> {
     doc.approval = CompanyApproval.DONE;
-    const company = await this.companisService.findByIdAndUpdateForAuth(
+    const company = await this.companiesService.findByIdAndUpdateForAuth(
       id,
       doc,
     );
@@ -95,7 +95,7 @@ export class AdminService {
   }
 
   async rejectCompany(id: string): Promise<Company> {
-    const company = await this.companisService.findByIdAndUpdateForAuth(id, {
+    const company = await this.companiesService.findByIdAndUpdateForAuth(id, {
       approval: CompanyApproval.ING,
     });
     if (!company) throw new BadRequestException();
@@ -113,6 +113,21 @@ export class AdminService {
 
   async deleteCompany(token: AuthTokenInfo, id: string) {
     await this.usersService.deleteAllByComID(token, id);
-    await this.companisService.findByIdAndRemoveForAuth(id);
+    await this.companiesService.findByIdAndRemoveForAuth(id);
+  }
+
+  async updateCompanyInfo(
+    token: AuthTokenInfo,
+    id: string,
+    company: Partial<Company>,
+  ): Promise<Company> {
+    var pUser: Partial<Company> = {};
+    if (company.mbTypeNum) pUser.mbTypeNum = company.mbTypeNum;
+    if (company.busType) pUser.busType = company.busType;
+    if (company.busItem) pUser.busItem = company.busItem;
+    if (company.phoneNum) pUser.phoneNum = company.phoneNum;
+    if (company.faxNum) pUser.faxNum = company.faxNum;
+    // return await this.companiesService.findByIdAndUpdate(token, id, pUser);
+    return;
   }
 }

@@ -16,7 +16,7 @@ import { User } from 'src/models/user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
-@ApiTags('업체 API')
+@ApiTags('사용자 (User) API')
 export class UsersController extends SafeControllerFactory<User>(User) {
   constructor(private readonly usersService: UsersService) {
     super(usersService);
@@ -26,7 +26,9 @@ export class UsersController extends SafeControllerFactory<User>(User) {
    * Safe-CRUD 오버라이딩
    */
   @Post()
-  @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
+  @ApiOperation({
+    summary: `[DISABLED]`,
+  })
   async create(
     @Body() doc: User,
     @AuthToken() token: AuthTokenInfo,
@@ -35,17 +37,21 @@ export class UsersController extends SafeControllerFactory<User>(User) {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
+  @ApiOperation({
+    summary: `[DISABLED]`,
+  })
   async findByIdAndUpdate(
     @Param('id') id: string,
-    @Body() doc: Partial<User>,
+    @Body() doc: User,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<User> {
     throw new NotAcceptableException();
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: `제공 안함 (NotAcceptableException 처리)` })
+  @ApiOperation({
+    summary: `[DISABLED]`,
+  })
   async findByIdAndRemove(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
