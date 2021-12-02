@@ -5,7 +5,6 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ConfigModule } from '@nestjs/config';
 import env_config from 'src/config/configuration';
-import config from 'src/config/configuration';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
@@ -38,7 +37,7 @@ import { PassportModule } from '@nestjs/passport';
     }),
     PassportModule,
     JwtModule.register({
-      secret: `${config().token.key}`,
+      secret: `${env_config().token.key}`,
       signOptions: { expiresIn: '1d' },
     }),
   ],

@@ -28,7 +28,7 @@ import {
   HelpFindPWD,
   SignUpInfo,
   UserInfo,
-  WithdrawalInfo,
+  ConfirmPWD,
 } from 'src/models/auth.entity';
 import { UserAuthority } from 'src/models/user.entity';
 import { Company } from 'src/models/company.entity';
@@ -49,7 +49,7 @@ export class AuthController {
 
   @Public()
   @ApiOperation({
-    summary: '회원 가입',
+    summary: '[PUBLIC] 회원 가입',
     description:
       '비밀번호는 8자 이상, 16자 이하. 업주 가입시에만 Company 데이터를 채워서 전송함',
   })
@@ -80,7 +80,7 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({ summary: '시스템에 로그인 시도 (토큰 발급)' })
+  @ApiOperation({ summary: '[PUBLIC] 시스템에 로그인 시도 (토큰 발급)' })
   @ApiBody({ description: '로그인에 사용될 정보', type: UserInfo })
   @Post('signin')
   async signIn(
@@ -93,29 +93,29 @@ export class AuthController {
     return;
   }
 
-  @ApiOperation({ summary: `로그아웃 (토큰 삭제)` })
+  @ApiOperation({ summary: `[WORKER] 로그아웃 (토큰 삭제)` })
   @Get('signout')
   async signOut(@Res({ passthrough: true }) res: Response) {
     this.comService.clearToken(res);
   }
 
   @ApiOperation({
-    summary: `회원탈퇴`,
+    summary: `[WORKER] 회원탈퇴`,
     description:
       '작업자: 작업자 본인만 탈퇴. 업주: 본인을 포함한 모든 직원이 탈퇴하고 회사 정보도 삭제',
   })
-  @ApiBody({ description: '로그인에 사용될 정보', type: WithdrawalInfo })
+  @ApiBody({ description: '로그인에 사용될 정보', type: ConfirmPWD })
   @Post('withdrawal')
   async withdrawal(
     @Res({ passthrough: true }) res: Response,
-    @Body() info: WithdrawalInfo,
+    @Body() info: ConfirmPWD,
     @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ) {
     await this.authService.withdrawal(token, info);
     this.comService.clearToken(res);
   }
 
-  @ApiOperation({ summary: `프로필 확인 (토큰 정보 확인)` })
+  @ApiOperation({ summary: `[WORKER] 프로필 확인 (토큰 정보 확인)` })
   @Get('profile')
   getProfile(
     @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
@@ -124,7 +124,7 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({ summary: '사업자번호로 사업자 조회' })
+  @ApiOperation({ summary: '[PUBLIC] 사업자번호로 사업자 조회' })
   @ApiParam({ name: 'id', description: '조회할 사업자번호' })
   @ApiResponse({ description: '사업자정보', type: Company || null })
   @Get('find/company/:id')
@@ -135,7 +135,7 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({ summary: '사업자명으로 사업자 조회' })
+  @ApiOperation({ summary: '[PUBLIC] 사업자명으로 사업자 조회' })
   @ApiParam({ name: 'id', description: '조회할 사업자명' })
   @ApiResponse({ description: '사업자정보 배열', type: [Company] })
   @Get('find/companies/:id')
@@ -146,7 +146,7 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({ summary: '사업자번호 유효성 검증' })
+  @ApiOperation({ summary: '[PUBLIC] 사업자번호 유효성 검증' })
   @ApiParam({ name: 'id', description: '검증할 사업자번호' })
   @ApiResponse({ description: '사업자번호 존재여부(유효여부)', type: Boolean })
   @Get('validate/com-reg-number/:id')
@@ -157,7 +157,9 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({ summary: '가입자 메일주소 유효성 검증 및 인증메일 발송' })
+  @ApiOperation({
+    summary: '[PUBLIC] 가입자 메일주소 유효성 검증 및 인증메일 발송',
+  })
   @ApiParam({ name: 'id', description: '가입할 메일주소' })
   @ApiResponse({
     description: '메일주소 유효여부. 가입가능: true, 가입불가: false',
@@ -172,7 +174,7 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({ summary: '암호문과 평문이 동일한지 검증함' })
+  @ApiOperation({ summary: '[PUBLIC] 암호문과 평문이 동일한지 검증함' })
   @ApiResponse({ description: '검증결과', type: Boolean })
   @Get('validate/email-token/:id')
   async validateEmailToken(
@@ -184,7 +186,7 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({ summary: '가입자 전화번호 유효성 검증' })
+  @ApiOperation({ summary: '[PUBLIC] 가입자 전화번호 유효성 검증' })
   @ApiParam({ name: 'id', description: '가입할 가입자의 전화번호' })
   @ApiResponse({
     description: '전화번호 유효여부. 가입가능: true, 가입불가: false',
@@ -195,7 +197,7 @@ export class AuthController {
     return await this.authService.validatePhoneNumber(hpNumber);
   }
 
-  @ApiOperation({ summary: '사업자 등록증 업로드.' })
+  @ApiOperation({ summary: '[WORKER] 사업자 등록증 업로드.' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description:
@@ -219,7 +221,7 @@ export class AuthController {
     return await this.authService.uploadComRegFile(token, file);
   }
 
-  @ApiOperation({ summary: '정비업 등록증 업로드.' })
+  @ApiOperation({ summary: '[WORKER] 정비업 등록증 업로드.' })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description:
@@ -243,7 +245,7 @@ export class AuthController {
     return await this.authService.uploadMainRegFile(token, file);
   }
 
-  @ApiOperation({ summary: '업로드된 사업자등록증 파일명 반환' })
+  @ApiOperation({ summary: '[WORKER] 업로드된 사업자등록증 파일명 반환' })
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/com-reg-docc')
   async getCrFileName(
@@ -261,7 +263,7 @@ export class AuthController {
     return await this.authService.getMainRegFileName(token);
   }
 
-  @ApiOperation({ summary: '심사요청' })
+  @ApiOperation({ summary: '[WORKER] 심사요청' })
   @ApiResponse({ description: '심사요청 결과', type: Boolean })
   @ApiParam({ name: 'id', description: '심사 승인을 요청할 업체의 오브젝트ID' })
   @Patch('request/company/:id')
@@ -285,7 +287,7 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({ summary: '이메일 주소 찾기' })
+  @ApiOperation({ summary: '[PUBLIC] 이메일 주소 찾기' })
   @ApiBody({ description: '사용자명과 핸드폰번호', type: HelpFindEmail })
   @ApiResponse({ description: '성공: 메일주소, 실패: null' })
   @Post('help/email')
@@ -294,7 +296,7 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({ summary: '패스워드 찾기' })
+  @ApiOperation({ summary: '[PUBLIC] 패스워드 찾기' })
   @ApiBody({
     description: '사용자명과 핸드폰번호 그리고 이메일 주소',
     type: HelpFindPWD,

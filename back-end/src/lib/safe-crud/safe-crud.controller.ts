@@ -90,7 +90,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     constructor(private readonly safeService: SafeService<T>) {}
 
     @Post()
-    @ApiOperation({ summary: `새로운 ${bodyDto.name} 데이터 추가` })
+    @ApiOperation({ summary: `[WORKER] 새로운 ${bodyDto.name} 데이터 추가` })
     @ApiBody({ description: `추가할 ${bodyDto.name} 데이터`, type: bodyDto })
     @ApiCreatedResponse({
       description: `추가된 ${bodyDto.name} 데이터`,
@@ -105,7 +105,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
 
     @Get()
     @ApiOperation({
-      summary: `조건에 해당하는 ${bodyDto.name} 배열 데이터를 페이징 정보와 함께 반환`,
+      summary: `[WORKER] 조건에 해당하는 ${bodyDto.name} 배열 데이터를 페이징 정보와 함께 반환`,
     })
     @ApiResponse({
       description: `검색된 ${bodyDto.name} 배열 데이터와 페이징 정보`,
@@ -113,13 +113,15 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     })
     async findByOptions(
       @Query() fParams: FindParameters,
-      @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
+      @AuthToken() token: AuthTokenInfo,
     ): Promise<FindResult<T>> {
       return this.safeService.findByOptions(token, fParams);
     }
 
     @Get(':id')
-    @ApiOperation({ summary: `id에 해당하는 ${bodyDto.name} 데이터 반환` })
+    @ApiOperation({
+      summary: `[WORKER] id에 해당하는 ${bodyDto.name} 데이터 반환`,
+    })
     @ApiParam({ name: 'id', description: `해당 ${bodyDto.name}의 오브젝트 ID` })
     @ApiResponse({
       description: `검색된 ${bodyDto.name} 데이터`,
@@ -133,12 +135,14 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     }
 
     @Patch(':id')
-    @ApiOperation({ summary: `id에 해당하는 ${bodyDto.name} 데이터 갱신` })
+    @ApiOperation({
+      summary: `[WORKER] id에 해당하는 ${bodyDto.name} 데이터 갱신`,
+    })
     @ApiParam({ name: 'id', description: `해당 ${bodyDto.name}의 오브젝트 ID` })
     @ApiBody({ description: `갱신된 ${bodyDto.name} 데이터`, type: bodyDto })
     async findByIdAndUpdate(
       @Param('id') id: string,
-      @Body() doc: Partial<T>,
+      @Body() doc: T,
       @AuthToken() token: AuthTokenInfo,
     ): Promise<T> {
       console.log('update in BaseController');
@@ -147,7 +151,9 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     }
 
     @Delete(':id')
-    @ApiOperation({ summary: `id에 해당하는 ${bodyDto.name} 데이터 삭제` })
+    @ApiOperation({
+      summary: `[WORKER] id에 해당하는 ${bodyDto.name} 데이터 삭제`,
+    })
     @ApiParam({ name: 'id', description: `해당 ${bodyDto.name}의 오브젝트 ID` })
     @ApiResponse({
       description: `삭제된 ${bodyDto.name} 데이터의 수`,
