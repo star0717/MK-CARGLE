@@ -156,7 +156,7 @@ export async function approvalReqAction(dataToSubmit: any) {
 // 비밀번호 확인 action
 export async function passwordCheck(dataToSubmit: any) {
   const req = await axios
-    .post(`/api/auth/request/company/`, dataToSubmit)
+    .post(`/api/settings/users/confirm/password`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.APPROVAL_REQUEST,
