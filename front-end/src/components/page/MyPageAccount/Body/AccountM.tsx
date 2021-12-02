@@ -11,14 +11,18 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
+import { SignUpInfo } from "../../../../models/auth.entity";
 
 Modal.setAppElement("body");
 
 const AccountM: NextPage<any> = (props) => {
+  console.log("아이구", props);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOption, setModalOption] = useState("");
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
+  const accountInfo = props.accountInfo;
+  const setAccountInfo = props.setAccountInfo;
 
   const setpages = props.setPages;
 
@@ -67,12 +71,12 @@ const AccountM: NextPage<any> = (props) => {
     <WholeWrapper>
       <Wrapper>
         <Text>마이페이지{">"}계정관리</Text>
-        <Wrapper>
-          <Text>계정정보</Text>
-        </Wrapper>
+
+        <Text>계정정보</Text>
+
         <Wrapper dr={`row`}>
           <Text>아이디</Text>
-          <TextInput placeholder="asd123@naver.com" type="text" />
+          <TextInput value={accountInfo.user.email} type="text" />
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>비밀번호</Text>
@@ -89,15 +93,15 @@ const AccountM: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>이름</Text>
-          <TextInput placeholder="등록된 이름" />
+          <TextInput value={accountInfo.user.name} />
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>전화번호</Text>
-          <TextInput placeholder="등록된 전화번호" />
+          <TextInput value={accountInfo.user.hpNumber} />
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>주소</Text>
-          <TextInput placeholder="등록된 주소" />
+          <TextInput value={accountInfo.user.address} />
           <button
             type="button"
             onClick={(e) => {
@@ -110,30 +114,28 @@ const AccountM: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>입사일자</Text>
-          <input type="date" value="2018-12-12"></input>
+          <input type="date" value={accountInfo.user.joinDate}></input>
         </Wrapper>
         <button type="submit" onClick={() => setpages(3)}>
           회원탈퇴
         </button>
 
-        <Wrapper>
-          <Text>사업자 정보</Text>
-        </Wrapper>
+        <Text>사업자 정보</Text>
         <Wrapper dr={`row`}>
           <Text>상호명</Text>
-          <TextInput placeholder="카센터 상호명" type="text" />
+          <TextInput value={accountInfo.company.name} type="text" />
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>사업자등록번호</Text>
-          <TextInput placeholder="123-45-67890" type="text" />
+          <TextInput value={accountInfo.company.comRegNum} type="text" />
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>정비업 등록번호</Text>
-          <TextInput placeholder="12-34-56789124" type="text" />
+          <TextInput value={accountInfo.company.mbRegNum} type="text" />
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>대표자명</Text>
-          <TextInput placeholder="김일번" type="text" />
+          <TextInput value={accountInfo.company.ownerName} type="text" />
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>정비업종</Text>
@@ -145,20 +147,20 @@ const AccountM: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>업태</Text>
-          <TextInput placeholder="서비스업" />
+          <TextInput value={accountInfo.company.busType} />
           <Text>업종</Text>
-          <TextInput placeholder="자동차 정비" />
+          <TextInput value={accountInfo.company.busItem} />
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>사업자 전화번호</Text>
-          <TextInput placeholder="전화번호" />
+          <TextInput value={accountInfo.company.phoneNum} />
           <Text>사업자팩스번호</Text>
-          <TextInput placeholder="사업자 팩스번호" />
+          <TextInput value={accountInfo.company.faxNum} />
         </Wrapper>
         <Wrapper dr={`row`}>
           <Text>사업자 주소</Text>
           <TextInput
-            placeholder="대전광역시 oo구 oo동 123-12"
+            value={accountInfo.company.address}
             type="text"
           ></TextInput>
         </Wrapper>

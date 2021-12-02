@@ -6,6 +6,7 @@ import {
   HelpChangePWD,
   UserInfo,
   ConfirmPWD,
+  SignUpInfo,
 } from 'src/models/auth.entity';
 import { FindParameters, FindResult } from 'src/models/base.entity';
 import { Company } from 'src/models/company.entity';
@@ -38,6 +39,21 @@ export class SettingsService {
     user = await this.usersService.findByUserInfoForAuth(userInfo);
     if (user) return true;
     else return false;
+  }
+
+  async findMyInfo(token: AuthTokenInfo): Promise<SignUpInfo> {
+    const user = await this.usersService.findById(token, token.uID);
+    if (!user) throw new UnauthorizedException();
+
+    const company = await this.companiesService.findById(token, token.cID);
+    if (!company) throw new UnauthorizedException();
+
+    const myInfo: SignUpInfo = {
+      company,
+      user,
+    };
+
+    return myInfo;
   }
 
   async updateUserPassword(

@@ -186,6 +186,12 @@ const userAll = (
         ...state,
       };
 
+    // 비밀번호 체크 기능
+    case actionTypesUser.PASSWORD_CHECK:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }
