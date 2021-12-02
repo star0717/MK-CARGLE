@@ -14,6 +14,7 @@ const MyPage: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   const setpages = props.setPages;
+  const [accountInfo, setAccountInfo] = useState(props.accountInfo);
   const [password, setPassword] = useState("");
   const confirmPWD = {
     _id: props.uID,

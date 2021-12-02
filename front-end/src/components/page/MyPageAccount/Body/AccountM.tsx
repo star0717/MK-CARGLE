@@ -19,6 +19,7 @@ const AccountM: NextPage<any> = (props) => {
   const [modalOption, setModalOption] = useState("");
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
+  const [acountInfo, setAcountInfo] = useState(props.acountInfo);
 
   const setpages = props.setPages;
 

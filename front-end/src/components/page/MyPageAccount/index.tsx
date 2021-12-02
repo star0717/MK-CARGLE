@@ -12,12 +12,15 @@ import Withdrawal from "./Body/Withdrawal";
 
 const MyPageAccount: NextPage<any> = (props) => {
   const [pages, setPages] = useState(1);
+  const [accountInfo, setAccountInfo] = useState("");
 
   console.log(props);
 
   const MyPageProps = {
     ...props,
     setPages,
+    accountInfo,
+    setAccountInfo,
   };
 
   return (
