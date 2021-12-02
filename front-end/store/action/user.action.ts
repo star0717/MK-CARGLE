@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { ConfirmPWD } from "../../src/models/auth.entity";
 import { actionTypesUser } from "../interfaces";
 
 // 로그인 action
@@ -149,6 +150,18 @@ export async function approvalReqAction(dataToSubmit: any) {
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.APPROVAL_REQUEST,
+    payload: req,
+  };
+}
+
+// 비밀번호 확인 action
+export async function passwordCheck(dataToSubmit: ConfirmPWD) {
+  console.log("####", dataToSubmit);
+  const req = await axios
+    .post(`/api/settings/users/confirm/password`, dataToSubmit)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.PASSWORD_CHECK,
     payload: req,
   };
 }

@@ -10,6 +10,7 @@ import { parseJwt } from "../../src/modules/parseJwt";
 import FileUpload from "../../src/components/page/SignUp/Body/fileUpload";
 import Approval from "../../src/components/page/SignUp/Body/approval";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
+import { AuthTokenInfo } from "../../src/models/auth.entity";
 
 interface ViewProps {
   cate: any;
@@ -40,7 +41,7 @@ const Componentitem: NextPage<ViewProps> = (props) => {
     case "find":
       return <Find />;
     case "account":
-      return <Account />;
+      return <Account {...props} />;
     default:
       return <SignUp />;
   }
@@ -86,9 +87,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       };
     }
   } else {
-    const tokenValue = parseJwt(context.req.cookies.mk_token);
+    const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
+    console.log(tokenValue);
     const cApproval = tokenValue.cApproval;
     const cID = tokenValue.cID;
+    const uID = tokenValue.uID;
     console.log(cID);
 
     return {
@@ -96,6 +99,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         cate,
         cApproval,
         cID,
+        uID,
       },
     };
   }

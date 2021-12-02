@@ -16,6 +16,7 @@ export enum actionTypesUser {
   COM_FILE_UPLOAD = "COM_FILE_UPLOAD",
   MAN_FILE_UPLOAD = "MAN_FILE_UPLOAD",
   APPROVAL_REQUEST = "APPROVAL_REQUEST",
+  PASSWORD_CHECK = "PASSWORD_CHECK",
 }
 
 export type ActionsUser =
@@ -35,7 +36,8 @@ export type ActionsUser =
   | UserFindPw
   | ComFileUpload
   | ManFileUpload
-  | ApprovalRequest;
+  | ApprovalRequest
+  | PasswordCheck;
 
 // 초기화
 export interface UserInit {
@@ -136,5 +138,11 @@ export interface ManFileUpload {
 // 심사요청
 export interface ApprovalRequest {
   type: actionTypesUser.APPROVAL_REQUEST;
+  payload: any;
+}
+
+// 비밀번호 체크(마이페이지)
+export interface PasswordCheck {
+  type: actionTypesUser.PASSWORD_CHECK;
   payload: any;
 }
