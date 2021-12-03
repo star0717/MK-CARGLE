@@ -192,6 +192,16 @@ const userAll = (
         ...state,
       };
 
+    case actionTypesUser.GET_MY_INFO:
+      return {
+        ...state,
+      };
+
+    case actionTypesUser.SET_MY_INFO:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

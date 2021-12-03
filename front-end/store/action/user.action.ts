@@ -166,8 +166,7 @@ export async function passwordCheck(dataToSubmit: ConfirmPWD) {
 }
 
 /**
- *
- * @param dataToSubmit
+ * user와 company정보 가져오기
  * @returns
  */
 export async function getMyInfo() {
@@ -175,7 +174,21 @@ export async function getMyInfo() {
     .get(`/api/settings/myinfo`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
-    type: actionTypesUser.MY_INFO,
+    type: actionTypesUser.GET_MY_INFO,
+    payload: req,
+  };
+}
+
+/**
+ * user와 company정보 업데이트
+ * @returns
+ */
+export async function setMyInfo(dataToSubmit: any) {
+  const req = await axios
+    .patch(`/api/settings/myinfo`, dataToSubmit)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.SET_MY_INFO,
     payload: req,
   };
 }
