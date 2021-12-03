@@ -3,8 +3,9 @@ import { useRouter } from "next/dist/client/router";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import CompletePresenter from "./completePresenter";
 
-const SignupComplete: NextPage<any> = (props) => {
+const Complete: NextPage<any> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -16,25 +17,12 @@ const SignupComplete: NextPage<any> = (props) => {
     });
   };
 
-  return (
-    <div
-      style={{
-        width: "95%",
-        height: "300px",
-        backgroundColor: "mintcream",
-        margin: "10px",
-      }}
-    >
-      <div>
-        회원가입이 완료되었습니다.
-        <br />
-        가입승인 후 정상 이용이 가능합니다.
-      </div>
-      <button type="button" onClick={onSignOutHandler}>
-        확인
-      </button>
-    </div>
-  );
+  // 화면구성에 넘길 props
+  const fProps = {
+    onSignOutHandler,
+  };
+
+  return <CompletePresenter {...fProps} />;
 };
 
-export default SignupComplete;
+export default Complete;

@@ -5,7 +5,7 @@ import FileUpload from "./Body/fileUpload";
 import SignupComplete from "./Body/complete";
 import SelectUser from "./Body/selectUser";
 import InputAccount from "./Body/account";
-import InputCompany from "./Body/inputCompany";
+import InputCompany from "./Body/company";
 import { WholeWrapper, Wrapper } from "../../styles/CommonComponents";
 import React from "react";
 

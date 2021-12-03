@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { useInterval } from "react-use";
 import { useDispatch } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
-import { actionTypesUser } from "../../../../../store/interfaces";
+import { actionTypesUser, FormInput } from "../../../../../store/interfaces";
 import { formRegEx } from "../../../../validation/regEx";
 import {
   authNumCheckAction,
@@ -15,8 +15,8 @@ import {
 } from "../../../../../store/action/user.action";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import DaumPostcode from "react-daum-postcode";
-import CompanyFindModal from "./companyfindmodal";
-import { UserAuthority } from "../../../../models/user.entity";
+import CompanyFindModal from "./comFindModal";
+import { User, UserAuthority } from "../../../../models/user.entity";
 import { initialState } from "../../../../../store/reducer/user.reducer";
 import AccountPresenter from "./accountPresenter";
 import { WholeWrapper, Wrapper } from "../../../styles/CommonComponents";
@@ -35,12 +35,12 @@ const Account: NextPage<any> = (props) => {
   const setStepNumber = props.setStepNumber;
   const userAuth = props.userAuth;
 
-  const [inputUser, setInputUser] = useState(user); // 사용자 정보
-  const [inputForm, setInputForm] = useState(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
-  const [timer, setTimer] = useState(0); // 인증번호 유효시간 타이머
-  const [authNum, setAuthNum] = useState(""); // 인증번호 input
-  const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
-  const [modalOption, setModalOption] = useState("");
+  const [inputUser, setInputUser] = useState<User>(user); // 사용자 정보
+  const [inputForm, setInputForm] = useState<FormInput>(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
+  const [timer, setTimer] = useState<number>(0); // 인증번호 유효시간 타이머
+  const [authNum, setAuthNum] = useState<string>(""); // 인증번호 input
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달창 open 여부
+  const [modalOption, setModalOption] = useState<string>("");
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -226,13 +226,11 @@ const Account: NextPage<any> = (props) => {
   // MODAL에 넘길 props
   const ComfindModalProps = {
     setModalOpen,
-    setModalOption,
     inputForm,
     setInputForm,
     setInputUser,
     inputUser,
     setValue,
-    style: { height: "500px" },
   };
 
   // 화면구성에 넘길 props
@@ -272,7 +270,6 @@ const Account: NextPage<any> = (props) => {
       <Wrapper>
         <Modal
           isOpen={modalOpen}
-          onRequestClose={() => setModalOpen(false)}
           style={{
             overlay: {
               position: "fixed",
@@ -299,6 +296,9 @@ const Account: NextPage<any> = (props) => {
             },
           }}
         >
+          <button type="button" onClick={closeModal}>
+            닫기
+          </button>
           {modalOption === "address" ? (
             <DaumPostcode
               onComplete={addressHandler}
