@@ -21,9 +21,7 @@ const SigninPresenter: NextPage<any> = (props) => {
   const onInputHandler = props.onInputHandler;
   const saveCheck = props.saveCheck;
   const setSaveCheck = props.setSaveCheck;
-  const signInErr = props.signInErr;
   const userInit = props.userInit;
-  const errMsg = props.errMsg;
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
@@ -104,21 +102,6 @@ const SigninPresenter: NextPage<any> = (props) => {
                     </Text>
                   </Wrapper>
                 </Wrapper>
-                {signInErr ? (
-                  <Wrapper style={{ margin: "8px 0", textAlign: "left" }}>
-                    {errMsg.split("\n").map((txt: any, index: string) => (
-                      <Text
-                        key={index}
-                        margin={`0px`}
-                        fontSize={`8px`}
-                        color={`#d6263b`}
-                      >
-                        {txt}
-                        <br />
-                      </Text>
-                    ))}
-                  </Wrapper>
-                ) : null}
                 {/* 로그인 버튼 */}
                 <CommonButton type="submit">로그인</CommonButton>
               </form>
