@@ -95,7 +95,7 @@ export class Company extends BaseEntity {
   @IsOptional()
   @IsString()
   @prop({
-    unique: true,
+    unique: false,
     required: [false, '팩스번호는 필수 항목입니다.'],
   })
   public faxNum: string;

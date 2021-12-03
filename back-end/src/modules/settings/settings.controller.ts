@@ -105,22 +105,41 @@ export class SettingsController {
     return await this.settingsService.updateUserInfo(token, id, user);
   }
 
-  @ApiOperation({ summary: '[OWNER] 업체 정보 변경' })
-  @ApiParam({ name: 'id', description: '업체 오브젝트 ID' })
+  // @ApiOperation({ summary: '[OWNER] 업체 정보 변경' })
+  // @ApiParam({ name: 'id', description: '업체 오브젝트 ID' })
+  // @ApiBody({
+  //   description:
+  //     '변경할 업체 정보. mbTypeNum, busType, busItem, phoneNum, faxNum 만 허용',
+  //   type: PartialType<Company>(Company),
+  // })
+  // @ApiResponse({ description: '변경된 업체 정보', type: Company })
+  // @Patch('companies/:id')
+  // async updateCompanyInfo(
+  //   @Param('id') id: string,
+  //   @Body() company: Company,
+  //   @AuthToken({ auth: UserAuthority.OWNER })
+  //   token: AuthTokenInfo,
+  // ): Promise<Company> {
+  //   return await this.settingsService.updateCompanyInfo(token, id, company);
+  // }
+
+  @ApiOperation({
+    summary: '[WORKER] 내 정보 변경',
+    description:
+      '변경할 내 정보. OWNER: User와 Company 정보 수정 가능. WORKER: Company 정보만 수정 가능',
+  })
   @ApiBody({
     description:
-      '변경할 업체 정보. mbTypeNum, busType, busItem, phoneNum, faxNum 만 허용',
-    type: PartialType<Company>(Company),
+      'User: name, hpNumber, address, joinDate 수정 가능. Company: mbTypeNum, busType, busItem, phoneNum, faxNum 수정 가능',
+    type: PartialType<SignUpInfo>(SignUpInfo),
   })
-  @ApiResponse({ description: '변경된 업체 정보', type: Company })
-  @Patch('companies/:id')
-  async updateCompanyInfo(
-    @Param('id') id: string,
-    @Body() company: Company,
-    @AuthToken({ auth: UserAuthority.OWNER })
-    token: AuthTokenInfo,
-  ): Promise<Company> {
-    return await this.settingsService.updateCompanyInfo(token, id, company);
+  @ApiResponse({ description: '변경된 내 정보', type: SignUpInfo })
+  @Patch('myinfo')
+  async updateMyInfo(
+    @Body() data: SignUpInfo,
+    @AuthToken({ auth: UserAuthority.WORKER }) token: AuthTokenInfo,
+  ): Promise<SignUpInfo> {
+    return await this.settingsService.updateMyInfo(token, data);
   }
 
   @ApiOperation({ summary: '[OWNER] 작업자 조회' })

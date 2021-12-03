@@ -105,13 +105,39 @@ export class SettingsService {
     company: Partial<Company>,
   ): Promise<Company> {
     if (token.cID != id) throw new UnauthorizedException();
-    var pUser: Partial<Company> = {};
-    if (company.mbTypeNum) pUser.mbTypeNum = company.mbTypeNum;
-    if (company.busType) pUser.busType = company.busType;
-    if (company.busItem) pUser.busItem = company.busItem;
-    if (company.phoneNum) pUser.phoneNum = company.phoneNum;
-    if (company.faxNum) pUser.faxNum = company.faxNum;
-    return await this.companiesService.findByIdAndUpdate(token, id, pUser);
+    var pCompany: Partial<Company> = {};
+    if (company.mbTypeNum) pCompany.mbTypeNum = company.mbTypeNum;
+    if (company.busType) pCompany.busType = company.busType;
+    if (company.busItem) pCompany.busItem = company.busItem;
+    if (company.phoneNum) pCompany.phoneNum = company.phoneNum;
+    if (company.faxNum) pCompany.faxNum = company.faxNum;
+    return await this.companiesService.findByIdAndUpdate(token, id, pCompany);
+  }
+
+  async updateMyInfo(
+    token: AuthTokenInfo,
+    info: SignUpInfo,
+  ): Promise<SignUpInfo> {
+    if (token.uID != info.user._id || token.cID != info.company._id)
+      throw new UnauthorizedException();
+
+    const user = await this.updateUserInfo(token, token.uID, info.user);
+    if (!user) throw new UnauthorizedException();
+
+    var company: Company;
+    if (token.uAuth == UserAuthority.WORKER) {
+      company = await this.companiesService.findById(token, token.cID);
+    } else {
+      company = await this.updateCompanyInfo(token, token.cID, info.company);
+    }
+    if (!company) throw new UnauthorizedException();
+
+    const myInfo: SignUpInfo = {
+      company,
+      user,
+    };
+
+    return myInfo;
   }
 
   async findWorksers(
