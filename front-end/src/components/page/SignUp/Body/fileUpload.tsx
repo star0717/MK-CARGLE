@@ -2,11 +2,6 @@ import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faQuestionCircle,
-  faExclamationCircle,
-} from "@fortawesome/free-solid-svg-icons";
 import {
   approvalReqAction,
   comFileUploadAction,
@@ -14,6 +9,7 @@ import {
   signOutUserAction,
 } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import FileUploadPresenter from "./fileUploadPresenter";
 
 interface FileUploadProps {
   stepNumber?: any;
@@ -78,6 +74,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
                     "제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다."
                   );
                   dispatch(signOutUserAction()).then((res: any) => {
+                    dispatch({ type: actionTypesUser.USER_INIT });
                     router.push("/");
                   });
                 }
@@ -105,143 +102,15 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
     );
   };
 
-  return (
-    <div
-      style={{
-        width: "95%",
-        height: "400px",
-        backgroundColor: "mintcream",
-        margin: "10px",
-      }}
-    >
-      <form onSubmit={onFileUploadHandler}>
-        <div
-          style={{
-            width: "100%",
-            height: "40%",
-            backgroundColor: "peru",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <div style={{ width: "50%" }}>
-              <p>사업자등록증</p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="jpg, png, pdf 형식"
-                  value={fileName.comFile}
-                  required
-                  readOnly
-                />
-              </div>
-              <div>
-                <label htmlFor="comFile" style={{ backgroundColor: "green" }}>
-                  파일선택
-                </label>
-                <input
-                  type="file"
-                  id="comFile"
-                  name="comFile"
-                  key={file.comFile}
-                  onChange={onFileSelectHandler}
-                  accept=".jpg, .png, .pdf"
-                  style={{ display: "none" }}
-                />
-              </div>
-            </div>
-            <div style={{ width: "50%" }}>
-              <p>정비업등록증</p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="jpg, png, pdf 형식"
-                  value={fileName.manFile}
-                  required
-                  readOnly
-                />
-              </div>
-              <div>
-                <label htmlFor="manFile" style={{ backgroundColor: "green" }}>
-                  파일선택
-                </label>
-                <input
-                  type="file"
-                  id="manFile"
-                  name="manFile"
-                  key={file.manFile}
-                  onChange={onFileSelectHandler}
-                  accept=".jpg, .png, .pdf"
-                  style={{ display: "none" }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            height: "30%",
-            backgroundColor: "orange",
-          }}
-        >
-          <div style={{ textAlign: "center" }}>
-            <button type="button" onClick={onSignOutHandler}>
-              다음에하기
-            </button>
-            <button type="submit">제출하기</button>
-          </div>
-        </div>
-        <div
-          style={{
-            width: "100%",
-            height: "30%",
-            backgroundColor: "yellow",
-          }}
-        >
-          <div
-            style={{
-              width: "70%",
-              margin: "0 auto",
-              backgroundColor: "gainsboro",
-              fontSize: "0.8em",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "center",
-              }}
-            >
-              <FontAwesomeIcon
-                icon={faQuestionCircle}
-                style={{ width: "13px", marginRight: "3px" }}
-              />
-              <div>아직 서류가 준비되지 않으셨나요?</div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "start",
-                alignItems: "baseline",
-              }}
-            >
-              <FontAwesomeIcon
-                icon={faExclamationCircle}
-                style={{ width: "13px", marginRight: "3px" }}
-              />
-              <div>
-                서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
-                로그인하면 이어서 진행이 가능해요.
-                <br />
-                서류가 제출되면 최종 가입 심사가 시작됩니다!
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  );
+  const fProps = {
+    fileName,
+    file,
+    onFileUploadHandler,
+    onFileSelectHandler,
+    onSignOutHandler,
+  };
+
+  return <FileUploadPresenter {...fProps} />;
 };
 
 export default FileUpload;

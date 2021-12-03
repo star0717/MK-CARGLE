@@ -15,19 +15,26 @@ const SignUpHeaderPresenter: NextPage<any> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <Wrapper>
-        {userAuth === "owner" && stepNumber === (3 || 4 || 5) && (
-          <Wrapper>
-            <Text style={{ backgroundColor: stepNumber === 3 ? "red" : null }}>
-              1
-            </Text>
-            <Text style={{ backgroundColor: stepNumber === 4 ? "red" : null }}>
-              2
-            </Text>
-            <Text style={{ backgroundColor: stepNumber === 5 ? "red" : null }}>
-              3
-            </Text>
-          </Wrapper>
-        )}
+        {userAuth === "owner" &&
+          (stepNumber === 3 || stepNumber === 4 || stepNumber === 5) && (
+            <Wrapper>
+              <Text
+                style={{ backgroundColor: stepNumber === 3 ? "red" : null }}
+              >
+                1
+              </Text>
+              <Text
+                style={{ backgroundColor: stepNumber === 4 ? "red" : null }}
+              >
+                2
+              </Text>
+              <Text
+                style={{ backgroundColor: stepNumber === 5 ? "red" : null }}
+              >
+                3
+              </Text>
+            </Wrapper>
+          )}
         <Wrapper>
           {stepNumber === 1 && <Text>가입 유형을 선택해주세요.</Text>}
           {stepNumber === 2 && (

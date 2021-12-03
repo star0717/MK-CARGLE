@@ -4,6 +4,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import ApprovalPresenter from "./approvalPresenter";
 
 const Approval: NextPage<any> = (props) => {
   const dispatch = useDispatch();
@@ -17,14 +18,12 @@ const Approval: NextPage<any> = (props) => {
     });
   };
 
-  return (
-    <div>
-      <h1>가입 심사가 진행 중입니다.</h1>
-      <button type="button" onClick={onSignOutHandler}>
-        돌아가기
-      </button>
-    </div>
-  );
+  // 화면구성에 넘길 props
+  const fProps = {
+    onSignOutHandler,
+  };
+
+  return <ApprovalPresenter {...fProps} />;
 };
 
 export default Approval;
