@@ -26,8 +26,8 @@ const SignIn: NextPage<any> = (props) => {
   });
 
   const [saveCheck, setSaveCheck] = useState(props.saveCheck); // 아이디 저장 체크 여부를 위한 state
-  const [signInErr, setSignInErr] = useState(false); // 로그인 시도 시 에러 여부
-  const [errMsg, setErrMsg] = useState(""); // 로그인 에러 시 메세지 내용
+  // const [signInErr, setSignInErr] = useState(false); // 로그인 시도 시 에러 여부
+  // const [errMsg, setErrMsg] = useState(""); // 로그인 에러 시 메세지 내용
 
   // input 값 입력 시 텍스트 변환을 위한 handler
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,14 +38,16 @@ const SignIn: NextPage<any> = (props) => {
   const onSignInHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputSignIn.id === "" || !formRegEx.EMAIL.test(inputSignIn.id)) {
-      setSignInErr(true);
-      setErrMsg("이메일을 입력해주세요.");
+      // setSignInErr(true);
+      // setErrMsg("이메일을 입력해주세요.");
+      alert("이메일을 입력해주세요.");
     } else if (inputSignIn.pwd === "") {
-      setSignInErr(true);
-      setErrMsg("비밀번호를 입력해주세요.");
+      // setSignInErr(true);
+      // setErrMsg("비밀번호를 입력해주세요.");
+      alert("비밀번호를 입력해주세요.");
     } else {
-      setSignInErr(false);
-      setErrMsg("");
+      // setSignInErr(false);
+      // setErrMsg("");
       // 아이디, 비밀번호 정상 입력 시
       dispatch(signInUserAction(inputSignIn)).then(
         (res: any) => {
@@ -64,8 +66,11 @@ const SignIn: NextPage<any> = (props) => {
           // Nest에서 전송해주는 status code에 맞게 핸들링
           if (err.response.status === 401) {
             setInputSignIn({ ...inputSignIn, pwd: "" });
-            setSignInErr(true);
-            setErrMsg(
+            // setSignInErr(true);
+            // setErrMsg(
+            //   "이메일 또는 비밀번호가 잘못 입력되었습니다.\n이메일과 비밀번호를 정확히 입력해주세요."
+            // );
+            alert(
               "이메일 또는 비밀번호가 잘못 입력되었습니다.\n이메일과 비밀번호를 정확히 입력해주세요."
             );
           }
@@ -86,9 +91,9 @@ const SignIn: NextPage<any> = (props) => {
     onInputHandler,
     saveCheck,
     setSaveCheck,
-    signInErr,
+    // signInErr,
     userInit,
-    errMsg,
+    // errMsg,
   };
 
   return <SigninPresenter {...fProps} />;
