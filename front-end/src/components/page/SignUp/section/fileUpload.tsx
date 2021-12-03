@@ -7,6 +7,7 @@ import {
   comFileUploadAction,
   manFileUploadAction,
   signOutUserAction,
+  tokenCheckAction,
 } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import FileUploadPresenter from "./fileUploadPresenter";
@@ -14,7 +15,7 @@ import FileUploadPresenter from "./fileUploadPresenter";
 interface FileUploadProps {
   stepNumber?: any;
   setStepNumber?: any;
-  cID?: any;
+  tokenValue?: any;
 }
 
 const fileInit = {
@@ -29,14 +30,11 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
   // props 재정의
   const stepNumber = props?.stepNumber;
   const setStepNumber = props?.setStepNumber;
-  const cID = props?.cID;
 
   // 업로드할 파일 state
   const [file, setFile] = useState(fileInit);
   // 업로드할 파일명 state
   const [fileName, setFileName] = useState(fileInit);
-
-  // const [upload, setUpload] = useState(false); // 파일 두개 업로드 여부
 
   // 파일 선택 시 파일명 state 변경
   const onFileSelectHandler = (e: any) => {
@@ -65,21 +63,29 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
       (res: any) => {
         dispatch(manFileUploadAction(manFormData)).then(
           (res: any) => {
-            dispatch(approvalReqAction(cID)).then((res: any) => {
+            dispatch(tokenCheckAction()).then((res: any) => {
               if (res.payload) {
-                if (stepNumber) {
-                  setStepNumber(stepNumber + 1);
-                } else {
-                  alert(
-                    "제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다."
-                  );
-                  dispatch(signOutUserAction()).then((res: any) => {
-                    dispatch({ type: actionTypesUser.USER_INIT });
-                    router.push("/");
-                  });
-                }
+                dispatch(approvalReqAction(res.payload.cID)).then(
+                  (res: any) => {
+                    if (res.payload) {
+                      if (stepNumber) {
+                        setStepNumber(stepNumber + 1);
+                      } else {
+                        alert(
+                          "제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다."
+                        );
+                        dispatch(signOutUserAction()).then((res: any) => {
+                          dispatch({ type: actionTypesUser.USER_INIT });
+                          router.push("/");
+                        });
+                      }
+                    } else {
+                      alert("파일 업로드에 실패했습니다.");
+                    }
+                  }
+                );
               } else {
-                alert("제출에 실패했습니다.");
+                alert("파일 업로드에 실패했습니다.");
               }
             });
           },

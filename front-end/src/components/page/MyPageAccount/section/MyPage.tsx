@@ -20,7 +20,7 @@ const MyPage: NextPage<any> = (props) => {
   const setAccountInfo = props.setAccountInfo;
   const [password, setPassword] = useState("");
   const confirmPWD = {
-    _id: props.uID,
+    _id: props.tokenValue.uID,
     PWD: password,
   };
 

@@ -11,17 +11,18 @@ import {
   Text,
   Image,
 } from "../styles/CommonComponents";
+import { CompanyApproval } from "../../models/company.entity";
 
 interface HeaderProps {
-  cate: any;
-  cApproval?: string;
+  query: any;
+  tokenValue?: any;
 }
 
 const Header: NextPage<HeaderProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
   // props 재정의
-  const cApproval = props?.cApproval;
+  const tokenValue = props?.tokenValue;
 
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
@@ -30,20 +31,16 @@ const Header: NextPage<HeaderProps> = (props) => {
   };
 
   const { width, height, ref } = useResizeDetector();
-  console.log(width);
 
   return (
-    <WholeWrapper ref={ref}
-      shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
-    >
+    <WholeWrapper ref={ref} shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}>
       <Wrapper
         bgColor={`#fff`}
         ju={`space-between`}
         al={`flex-start`}
-        padding={width < 1439 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}>
-        <Wrapper
-          width={`auto`}
-        >
+        padding={width < 1439 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
+      >
+        <Wrapper width={`auto`}>
           <Link href="/view/main">
             <a>
               <Image
@@ -54,7 +51,7 @@ const Header: NextPage<HeaderProps> = (props) => {
             </a>
           </Link>
         </Wrapper>
-        {cApproval === "done" && (
+        {tokenValue && tokenValue.cApproval === CompanyApproval.DONE && (
           <div style={{ width: "80%", display: "flex" }}>
             <div style={{ width: "75%", display: "flex" }}>
               <div style={{ width: "20%", height: "100%" }}>정비</div>

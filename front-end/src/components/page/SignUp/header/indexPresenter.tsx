@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import { useResizeDetector } from "react-resize-detector";
 import { WholeWrapper, Wrapper, Text } from "../../../styles/CommonComponents";
 import React from "react";
+import { FaBeer } from 'react-icons/fa';
 
 const SignUpHeaderPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의

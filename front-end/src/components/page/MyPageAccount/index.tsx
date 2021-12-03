@@ -7,9 +7,9 @@ import {
   Wrapper,
   Text,
 } from "../../styles/CommonComponents";
-import Account from "./Body/AccountM";
-import MyPage from "./Body/MyPage";
-import Withdrawal from "./Body/Withdrawal";
+import Account from "./section/AccountM";
+import MyPage from "./section/MyPage";
+import Withdrawal from "./section/Withdrawal";
 
 const MyPageAccount: NextPage<any> = (props) => {
   const [pages, setPages] = useState(1);

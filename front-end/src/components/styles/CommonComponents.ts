@@ -670,7 +670,7 @@ export const PagenationBtn = styled.div<any>`
   }
 `;
 
-/** 회원가입 1단계 */
+/** 회원가입 */
 
 export const JoinFirstStepSelect = styled.div<any>`
   width: ${(props) => props.width || `480px`};

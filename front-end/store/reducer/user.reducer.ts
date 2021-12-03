@@ -132,6 +132,14 @@ const userAll = (
         ...state,
       };
 
+    /**
+     * 토큰 체크 기능
+     */
+    case actionTypesUser.TOKEN_CHECK:
+      return {
+        ...state,
+      };
+
     // 이메일 인증번호 전송 기능
     case actionTypesUser.USER_EMAIL_SEND:
       return {
@@ -188,6 +196,16 @@ const userAll = (
 
     // 비밀번호 체크 기능
     case actionTypesUser.PASSWORD_CHECK:
+      return {
+        ...state,
+      };
+
+    case actionTypesUser.GET_MY_INFO:
+      return {
+        ...state,
+      };
+
+    case actionTypesUser.SET_MY_INFO:
       return {
         ...state,
       };
