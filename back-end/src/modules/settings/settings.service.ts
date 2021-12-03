@@ -120,13 +120,16 @@ export class SettingsService {
   ): Promise<SignUpInfo> {
     if (token.uID != info.user._id || token.cID != info.company._id)
       throw new UnauthorizedException();
+
     const user = await this.updateUserInfo(token, token.uID, info.user);
     if (!user) throw new UnauthorizedException();
-    const company = await this.updateCompanyInfo(
-      token,
-      token.cID,
-      info.company,
-    );
+
+    var company: Company;
+    if (token.uAuth == UserAuthority.WORKER) {
+      company = await this.companiesService.findById(token, token.cID);
+    } else {
+      company = await this.updateCompanyInfo(token, token.cID, info.company);
+    }
     if (!company) throw new UnauthorizedException();
 
     const myInfo: SignUpInfo = {
