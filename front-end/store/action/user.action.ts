@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { State } from "react-daum-postcode";
 import { ConfirmPWD } from "../../src/models/auth.entity";
 import { actionTypesUser } from "../interfaces";
 

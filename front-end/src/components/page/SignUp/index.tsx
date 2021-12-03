@@ -12,7 +12,10 @@ import { WholeWrapper } from "../../styles/CommonComponents";
 // modal setting
 Modal.setAppElement("body");
 
-const SignUp: NextPage = () => {
+const SignUp: NextPage<any> = (props) => {
+  // 필요한 props 재정의
+  const tokenValue = props.tokenValue;
+
   // redux store에서 user, company 정보 가져옴
   const { user, company, formInput, formCheck } = useSelector(
     (state: RootStateInterface): UserState => state.userAll
@@ -31,6 +34,7 @@ const SignUp: NextPage = () => {
 
   // component에 전달할 props들 정의
   const SignUpProps = {
+    tokenValue,
     user,
     company,
     formInput,

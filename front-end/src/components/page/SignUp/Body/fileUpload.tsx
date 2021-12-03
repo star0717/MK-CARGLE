@@ -14,7 +14,7 @@ import FileUploadPresenter from "./fileUploadPresenter";
 interface FileUploadProps {
   stepNumber?: any;
   setStepNumber?: any;
-  cID?: any;
+  tokenValue?: any;
 }
 
 const fileInit = {
@@ -29,7 +29,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
   // props 재정의
   const stepNumber = props?.stepNumber;
   const setStepNumber = props?.setStepNumber;
-  const cID = props?.cID;
+  const tokenValue = props?.tokenValue;
 
   // 업로드할 파일 state
   const [file, setFile] = useState(fileInit);
@@ -65,7 +65,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
       (res: any) => {
         dispatch(manFileUploadAction(manFormData)).then(
           (res: any) => {
-            dispatch(approvalReqAction(cID)).then((res: any) => {
+            dispatch(approvalReqAction(tokenValue.cID)).then((res: any) => {
               if (res.payload) {
                 if (stepNumber) {
                   setStepNumber(stepNumber + 1);

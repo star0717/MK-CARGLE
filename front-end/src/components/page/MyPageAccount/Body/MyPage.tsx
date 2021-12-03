@@ -16,13 +16,11 @@ import Account from "./AccountM";
 const MyPage: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
-  console.log("###", props);
-
   const setpages = props.setPages;
   const setAccountInfo = props.setAccountInfo;
   const [password, setPassword] = useState("");
   const confirmPWD = {
-    _id: props.uID,
+    _id: props.tokenValue.uID,
     PWD: password,
   };
 
