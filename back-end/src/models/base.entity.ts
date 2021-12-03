@@ -117,7 +117,6 @@ export class FindParameters {
   projection: string = null;
 
   getQuery() {
-    console.log(this.useRegSearch);
     let query = '?page=' + this.page;
     if (this.filterKey && this.filterValue) {
       query =
