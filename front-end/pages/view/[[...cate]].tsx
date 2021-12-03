@@ -11,17 +11,17 @@ import FileUpload from "../../src/components/page/SignUp/Body/fileUpload";
 import Approval from "../../src/components/page/SignUp/Body/approval";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
+import { CompanyApproval } from "../../src/models/company.entity";
 
 interface ViewProps {
   cate: any;
-  cApproval?: string;
-  cID?: string;
+  tokenValue?: any;
 }
 
 const Componentitem: NextPage<ViewProps> = (props) => {
   // props 재정의
   const cate = props.cate.cate;
-  const cApproval = props?.cApproval;
+  const tokenValue: AuthTokenInfo = props?.tokenValue;
 
   // url(query) 구분
   const main = cate[0];
@@ -29,21 +29,21 @@ const Componentitem: NextPage<ViewProps> = (props) => {
 
   switch (main) {
     case "signup":
-      return <SignUp />;
+      return <SignUp {...props} />;
     case "main":
-      if (cApproval === "before") {
+      if (tokenValue.cApproval === CompanyApproval.BEFORE) {
         return <FileUpload {...props} />;
-      } else if (cApproval === "ing") {
-        return <Approval />;
+      } else if (tokenValue.cApproval === CompanyApproval.ING) {
+        return <Approval {...props} />;
       } else {
-        return <Main />;
+        return <Main {...props} />;
       }
     case "find":
-      return <Find />;
+      return <Find {...props} />;
     case "account":
       return <Account {...props} />;
     default:
-      return <SignUp />;
+      return <SignUp {...props} />;
   }
 };
 
@@ -88,18 +88,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   } else {
     const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
-    console.log(tokenValue);
-    const cApproval = tokenValue.cApproval;
-    const cID = tokenValue.cID;
-    const uID = tokenValue.uID;
-    console.log(cID);
 
     return {
       props: {
         cate,
-        cApproval,
-        cID,
-        uID,
+        tokenValue,
       },
     };
   }

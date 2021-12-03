@@ -48,6 +48,7 @@ const Account: NextPage<any> = (props) => {
     handleSubmit,
     watch,
     setError,
+    clearErrors,
     setValue,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
@@ -98,6 +99,7 @@ const Account: NextPage<any> = (props) => {
             type: actionTypesUser.FORM_CHECK,
             payload: { ...formCheck, emailSend: true },
           });
+          clearErrors("emailAddress");
           setTimer(300);
         } else {
           setError("emailAddress", {
