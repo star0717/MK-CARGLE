@@ -6,6 +6,7 @@ import {
   WholeWrapper,
   RsWrapper,
   Wrapper,
+  CommonForm,
   CommonTitle,
   CommonButton,
   TextInput,
@@ -44,7 +45,7 @@ const SigninPresenter: NextPage<any> = (props) => {
             <Wrapper
               width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             >
-              <form onSubmit={onSignInHandler}>
+              <CommonForm onSubmit={onSignInHandler}>
                 <TextInput
                   marginBottom={`10px`}
                   width={
@@ -121,7 +122,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                 ) : null}
                 {/* 로그인 버튼 */}
                 <CommonButton type="submit">로그인</CommonButton>
-              </form>
+              </CommonForm>
             </Wrapper>
             <Wrapper padding={`10px 0px`}>
               <Wrapper dr={`row`} fontSize={`18px`} ju={`flex-end`}>
