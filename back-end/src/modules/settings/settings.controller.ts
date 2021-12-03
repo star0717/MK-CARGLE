@@ -126,7 +126,7 @@ export class SettingsController {
   @ApiOperation({
     summary: '[WORKER] 내 정보 변경',
     description:
-      '변경할 내 정보. OWNER: User와 Company 정보 수정 가능. WORKER: Company 정보만 수정 가능',
+      '변경할 내 정보. OWNER: User와 Company 정보 수정 가능. WORKER: User 정보만 수정 가능',
   })
   @ApiBody({
     description:
