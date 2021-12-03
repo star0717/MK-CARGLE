@@ -14,7 +14,7 @@ import {
 import { CompanyApproval } from "../../models/company.entity";
 
 interface HeaderProps {
-  cate: any;
+  query: any;
   tokenValue?: any;
 }
 

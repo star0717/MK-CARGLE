@@ -13,7 +13,7 @@ interface SignInProps {
 }
 
 const Home: NextPage<SignInProps> = (props) => {
-  const headerProps = { cate: [""] };
+  const headerProps = { query: [""] };
 
   return (
     <>

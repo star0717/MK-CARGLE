@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 import { useResizeDetector } from "react-resize-detector";
-import TermSignUp from "./Body/term";
-import FileUpload from "./Body/fileUpload";
-import SignupComplete from "./Body/complete";
-import SelectUser from "./Body/selectUser";
-import InputAccount from "./Body/account";
-import InputCompany from "./Body/company";
+import TermSignUp from "./section/term";
+import FileUpload from "./section/fileUpload";
+import SignupComplete from "./section/complete";
+import SelectUser from "./section/selectUser";
+import InputAccount from "./section/account";
+import InputCompany from "./section/company";
 import { WholeWrapper, Wrapper } from "../../styles/CommonComponents";
 import React from "react";
 

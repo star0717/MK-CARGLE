@@ -7,30 +7,31 @@ import Main from "../../src/components/page/Main";
 import Find from "../../src/components/page/Find";
 import Account from "../../src/components/page/MyPageAccount";
 import { parseJwt } from "../../src/modules/parseJwt";
-import FileUpload from "../../src/components/page/SignUp/Body/fileUpload";
-import Approval from "../../src/components/page/SignUp/Body/approval";
+import FileUpload from "../../src/components/page/SignUp/section/fileUpload";
+import Approval from "../../src/components/page/SignUp/section/approval";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
 import { CompanyApproval } from "../../src/models/company.entity";
+import { Query } from "../../src/models/query.entity";
 
 interface ViewProps {
-  cate: any;
+  query: any;
   tokenValue?: any;
 }
 
 const Componentitem: NextPage<ViewProps> = (props) => {
   // props 재정의
-  const cate = props.cate.cate;
+  const query = props.query.query;
   const tokenValue: AuthTokenInfo = props?.tokenValue;
 
   // url(query) 구분
-  const main = cate[0];
-  const sub = cate[1] ? cate[1] : "";
+  const main = query[0];
+  const sub = query[1] ? query[1] : "";
 
   switch (main) {
-    case "signup":
+    case Query.SIGNUP:
       return <SignUp {...props} />;
-    case "main":
+    case Query.MAIN:
       if (tokenValue.cApproval === CompanyApproval.BEFORE) {
         return <FileUpload {...props} />;
       } else if (tokenValue.cApproval === CompanyApproval.ING) {
@@ -38,9 +39,9 @@ const Componentitem: NextPage<ViewProps> = (props) => {
       } else {
         return <Main {...props} />;
       }
-    case "find":
+    case Query.FIND:
       return <Find {...props} />;
-    case "account":
+    case Query.ACCOUNT:
       return <Account {...props} />;
     default:
       return <SignUp {...props} />;
@@ -67,8 +68,8 @@ const View: NextPage<ViewProps> = (props) => {
 export default View;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cate = context.query;
-  const main = cate.cate ? cate.cate[0] : null;
+  const query = context.query;
+  const main = query.query ? query.query[0] : null;
 
   // 토큰 확인 - 없을 경우, 로그인 화면으로 리디렉트
   if (!context.req.cookies.mk_token) {
@@ -82,7 +83,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     } else {
       return {
         props: {
-          cate,
+          query,
         },
       };
     }
@@ -91,7 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     return {
       props: {
-        cate,
+        query,
         tokenValue,
       },
     };
