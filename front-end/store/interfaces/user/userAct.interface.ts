@@ -1,3 +1,5 @@
+import { setMyInfo } from "../../action/user.action";
+
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
   INPUT_ACCOUNT = "INPUT_ACCOUNT",
@@ -17,7 +19,8 @@ export enum actionTypesUser {
   MAN_FILE_UPLOAD = "MAN_FILE_UPLOAD",
   APPROVAL_REQUEST = "APPROVAL_REQUEST",
   PASSWORD_CHECK = "PASSWORD_CHECK",
-  MY_INFO = "MY_INFO",
+  GET_MY_INFO = "GET_MY_INFO",
+  SET_MY_INFO = "SET_MY_INFO",
 }
 
 export type ActionsUser =
@@ -39,7 +42,8 @@ export type ActionsUser =
   | ManFileUpload
   | ApprovalRequest
   | PasswordCheck
-  | MyInfo;
+  | GetMyInfo
+  | SetMyInfo;
 
 // 초기화
 export interface UserInit {
@@ -149,8 +153,14 @@ export interface PasswordCheck {
   payload: any;
 }
 
-// 비밀번호 체크(마이페이지)
-export interface MyInfo {
-  type: actionTypesUser.MY_INFO;
+// user, company 정보 받기
+export interface GetMyInfo {
+  type: actionTypesUser.GET_MY_INFO;
+  payload: any;
+}
+
+// user, company 정보 업데이트
+export interface SetMyInfo {
+  type: actionTypesUser.SET_MY_INFO;
   payload: any;
 }

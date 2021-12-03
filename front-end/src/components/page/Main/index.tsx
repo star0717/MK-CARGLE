@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../../store/action/user.action";
 import Calendar from "../../common/calendar";
+import MyPageAccount from "../MyPageAccount";
+import Link from "next/link";
 
 const Main: NextPage = () => {
   const dispatch = useDispatch();
@@ -36,7 +38,11 @@ const Main: NextPage = () => {
           <div
             style={{ width: "100%", height: "40%", backgroundColor: "maroon" }}
           >
-            <button>마이페이지</button>
+            <Link href="/view/account">
+              <a>
+                <button>마이페이지</button>
+              </a>
+            </Link>
           </div>
           <div
             style={{

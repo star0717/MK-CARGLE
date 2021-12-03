@@ -33,17 +33,14 @@ const Header: NextPage<HeaderProps> = (props) => {
   console.log(width);
 
   return (
-    <WholeWrapper ref={ref}
-      shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
-    >
+    <WholeWrapper ref={ref} shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}>
       <Wrapper
         bgColor={`#fff`}
         ju={`space-between`}
         al={`flex-start`}
-        padding={width < 1439 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}>
-        <Wrapper
-          width={`auto`}
-        >
+        padding={width < 1439 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
+      >
+        <Wrapper width={`auto`}>
           <Link href="/view/main">
             <a>
               <Image
