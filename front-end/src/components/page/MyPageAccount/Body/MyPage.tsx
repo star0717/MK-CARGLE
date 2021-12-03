@@ -16,6 +16,8 @@ import Account from "./AccountM";
 const MyPage: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
+  console.log("###", props);
+
   const setpages = props.setPages;
   const setAccountInfo = props.setAccountInfo;
   const [password, setPassword] = useState("");
