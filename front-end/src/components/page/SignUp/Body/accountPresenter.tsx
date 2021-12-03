@@ -53,7 +53,6 @@ const AccountPresenter: NextPage<any> = (props) => {
               <Wrapper>
                 <Text>*소속 업체</Text>
                 <TextInput
-                  style={{ width: "85%" }}
                   type="text"
                   value={inputForm.companyNum}
                   placeholder="업체명 또는 사업자번호로 검색"
@@ -217,22 +216,13 @@ const AccountPresenter: NextPage<any> = (props) => {
             )}
             {watch("passwordCheck", "") !== "" &&
               errors.passwordCheck?.type !== "validate" && (
-                <Text
-                  style={{
-                    margin: "0",
-                    fontSize: "8px",
-                    color: "green",
-                  }}
-                >
-                  비밀번호가 일치합니다.
-                </Text>
+                <Text>비밀번호가 일치합니다.</Text>
               )}
           </Wrapper>
           {/* 이름 */}
           <Wrapper>
             <Text>*이름</Text>
             <TextInput
-              style={{ width: "100%" }}
               type="text"
               value={inputUser.name}
               placeholder="성명을 입력해주세요."
@@ -248,10 +238,9 @@ const AccountPresenter: NextPage<any> = (props) => {
             )}
           </Wrapper>
           {/* 휴대폰번호 */}
-          <div>
-            <div>*휴대폰번호</div>
-            <input
-              style={{ width: "100%" }}
+          <Wrapper>
+            <Text>*휴대폰번호</Text>
+            <TextInput
               type="text"
               value={CHAR_DEL(inputUser.hpNumber)}
               placeholder="(- 제외)"
@@ -268,77 +257,54 @@ const AccountPresenter: NextPage<any> = (props) => {
             />
             {(errors.hpNumber?.type === "required" ||
               errors.hpNumber?.type === "pattern") && (
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "8px",
-                  color: "red",
+              <Text>{errors.hpNumber.message}</Text>
+            )}
+          </Wrapper>
+          {/* 자택주소 */}
+          <Wrapper>
+            <Text>자택주소(선택)</Text>
+            <Wrapper>
+              <TextInput
+                type="text"
+                placeholder="주소를 입력해주세요."
+                value={inputForm.uAddressMain}
+                readOnly
+                {...register("uAddressMain")}
+              />
+              <button
+                type="button"
+                onClick={(e) => {
+                  setModalOpen(!modalOpen);
+                  setModalOption("address");
                 }}
               >
-                {errors.hpNumber.message}
-              </p>
-            )}
-          </div>
-          {/* 자택주소 */}
-          <div>
-            <div>자택주소(선택)</div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <div style={{ width: "80%" }}>
-                <input
-                  style={{ width: "100%" }}
-                  type="text"
-                  placeholder="주소를 입력해주세요."
-                  value={inputForm.uAddressMain}
-                  readOnly
-                  {...register("uAddressMain")}
-                />
-              </div>
-              <div>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    setModalOpen(!modalOpen);
-                    setModalOption("address");
-                  }}
-                >
-                  주소 검색
-                </button>
-              </div>
-            </div>
-            <div>
-              <input
-                style={{ width: "100%" }}
-                type="text"
-                placeholder="상세 주소"
-                value={inputForm.uAddressDetail}
-                readOnly={inputForm.uAddressMain ? false : true}
-                {...register("uAddressDetail", {
-                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputFormHandler(e);
-                  },
-                })}
-              />
-            </div>
-          </div>
+                주소 검색
+              </button>
+            </Wrapper>
+            <TextInput
+              type="text"
+              placeholder="상세 주소"
+              value={inputForm.uAddressDetail}
+              readOnly={inputForm.uAddressMain ? false : true}
+              {...register("uAddressDetail", {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputFormHandler(e);
+                },
+              })}
+            />
+          </Wrapper>
           {/* 입사일자 */}
-          <div>
-            <div>입사일자(선택)</div>
-            <div>
-              <DatePicker
-                selected={inputUser.joinDate}
-                onChange={(date: any) =>
-                  setInputUser({ ...inputUser, joinDate: date })
-                }
-                placeholderText="YYYY-MM-DD"
-              />
-            </div>
-          </div>
-          <div style={{ textAlign: "center" }}>
+          <Wrapper>
+            <Text>입사일자(선택)</Text>
+            <DatePicker
+              selected={inputUser.joinDate}
+              onChange={(date: any) =>
+                setInputUser({ ...inputUser, joinDate: date })
+              }
+              placeholderText="YYYY-MM-DD"
+            />
+          </Wrapper>
+          <Wrapper>
             <button
               onClick={(e) => {
                 setStepNumber(stepNumber - 1);
@@ -357,7 +323,7 @@ const AccountPresenter: NextPage<any> = (props) => {
             <button type="submit">
               {userAuth === UserAuthority.OWNER ? "다음" : "완료"}
             </button>
-          </div>
+          </Wrapper>
         </form>
       </Wrapper>
     </WholeWrapper>
