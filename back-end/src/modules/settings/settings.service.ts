@@ -82,7 +82,7 @@ export class SettingsService {
     else return false;
   }
 
-  async updateUserInfo(
+  async updateMyUserInfo(
     token: AuthTokenInfo,
     id: string,
     user: Partial<User>,
@@ -93,13 +93,10 @@ export class SettingsService {
     if (user.hpNumber) pUser.hpNumber = user.hpNumber;
     if (user.address) pUser.address = user.address;
     if (user.joinDate) pUser.joinDate = user.joinDate;
-    // 오너에 한해 approval 수정 승인
-    if (token.uAuth == UserAuthority.OWNER && user.approval)
-      pUser.approval = user.approval;
     return await this.usersService.findByIdAndUpdate(token, id, pUser);
   }
 
-  async updateCompanyInfo(
+  async updateMyCompanyInfo(
     token: AuthTokenInfo,
     id: string,
     company: Partial<Company>,
@@ -118,19 +115,16 @@ export class SettingsService {
     token: AuthTokenInfo,
     info: SignUpInfo,
   ): Promise<SignUpInfo> {
-    console.log(token);
-    console.log(info);
     if (token.cID != info.user._cID) throw new UnauthorizedException();
 
-    console.log('1');
-    const user = await this.updateUserInfo(token, token.uID, info.user);
+    const user = await this.updateMyUserInfo(token, token.uID, info.user);
     if (!user) throw new UnauthorizedException();
-    console.log('2');
+
     var company: Company;
     if (token.uAuth == UserAuthority.WORKER) {
       company = await this.companiesService.findById(token, token.cID);
     } else {
-      company = await this.updateCompanyInfo(token, token.cID, info.company);
+      company = await this.updateMyCompanyInfo(token, token.cID, info.company);
     }
     if (!company) throw new UnauthorizedException();
 
@@ -139,7 +133,6 @@ export class SettingsService {
       user,
     };
 
-    console.log(myInfo);
     return myInfo;
   }
 
