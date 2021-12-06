@@ -207,3 +207,17 @@ export async function setMyInfo(dataToSubmit: any) {
     payload: req,
   };
 }
+
+/**
+ * user와 company정보 업데이트
+ * @returns
+ */
+export async function changePass(dataToSubmit: string) {
+  const req = await axios
+    .patch(`/api/settings/users/password/${dataToSubmit}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.CHANGE_PASSWORD,
+    payload: req,
+  };
+}

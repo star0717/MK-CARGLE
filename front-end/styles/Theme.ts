@@ -3,7 +3,7 @@ const BORDER_RADIUS = "4px";
 const TABLE_RADIUS = "0px";
 const INPUT_PADDING = "0px 8px";
 const TEXT_PADDING = "10px";
-const BOX_SHADOW = "0px 4px 4px rgba(0, 0, 0, 0.25)";
+const BOX_SHADOW = "0px 10px 15px rgba(220,220,220,1)";
 const BOX_SHADOW_V2 = "0px 5px 10px rgba(220,220,220,1)";
 const BOX_SHADOW_DARK = "0px 10px  rgba(70,70,70,1)";
 

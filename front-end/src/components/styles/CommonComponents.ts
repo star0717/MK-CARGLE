@@ -167,6 +167,85 @@ export const Wrapper = styled.div<any>`
   }
 `;
 
+export const CommonForm = styled.form<any>`
+  width: ${(props) => props.width || `100%`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  display: ${(props) => props.display || `flex`};
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  flex-wrap: ${(props) => props.wrap || `wrap`};
+  background: ${(props) => props.white_C};
+  color: ${(props) => props.color};
+  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
+  bottom: ${(props) => props.bottom};
+  right: ${(props) => props.right};
+  z-index: ${(props) => props.zIndex};
+  border: ${(props) => props.border};
+  border-bottom: ${(props) => props.borderBottom};
+  border-top: ${(props) => props.borderTop};
+  border-right: ${(props) => props.borderRight};
+  border-left: ${(props) => props.borderLeft};
+  border-radius: ${(props) => props.radius};
+  box-shadow: ${(props) => props.shadow};
+  font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => props.fontWeight};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  overflow: ${(props) => (props.isOverflow ? `auto` : props.overflow || ``)};
+  background-image: ${(props) => props.bgImg};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: ${(props) => props.attachment || `fixed`};
+  background-position: center;
+  background-color: ${(props) => props.bgColor};
+
+  transition: 0.5s;
+  cursor: ${(props) => props.cursor};
+  line-height: ${(props) => props.lineHeight};
+  text-align: ${(props) => props.textAlign};
+  animation: ${appearAnimation} 1s forwards;
+
+  &.active div {
+    color: ${(props) => props.theme.black_C};
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  & .react-reveal {
+    width: inherit;
+    z-index: 1;
+  }
+
+  & pre {
+    white-space: pre-wrap;
+    line-height: 1.4;
+    color: #6f6f6f;
+    font-size: 14px;
+  }
+
+  &.faqBoard:last-child {
+    border-bottom: 1px solid #3c3c3c;
+  }
+
+  &:hover {
+    font-weight: ${(props) => (props.isHeaderHover ? `800` : ``)};
+  }
+
+  @media (max-width: 700px) {
+    font-size: 14px;
+
+    & svg {
+      font-size: 20px;
+    }
+  }
+`;
+
 /**text */
 
 export const CommonTitle = styled.h2<any>`
@@ -187,6 +266,17 @@ export const CommonTitle = styled.h2<any>`
   @media (max-width: 500px) {
     font-size: 24px;
   }
+`;
+
+export const CommonSubTitle = styled.h2<any>`
+  width: ${(props) => props.width};
+  display: ${(props) => props.display};
+  position: relative;
+  margin: ${(props) => props.margin || ` 30px 0 50px`};
+  padding-bottom: 40px;
+  font-size: 24px;
+  font-weight: 800;
+  color: ${(props) => props.color || `${props.theme.darkGrey_C}`};
 `;
 
 export const Text = styled.p<any>`
@@ -231,8 +321,8 @@ export const Text = styled.p<any>`
     font-weight: 700;
   }
 
-  &.hover {
-    text-decoration: underline;
+  &:hover {
+    text-decoration: ${(props) => props.decoration};
   }
 `;
 
@@ -305,36 +395,36 @@ export const CommonButton = styled.button<any>`
     box-shadow: ${(props) => props.theme.boxShadow};
     ${(props) => !props.kindOf && `background ${props.theme.darkTheme_C};`}
     ${(props) =>
-      props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
+    props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
          ${(props) =>
-      props.kindOf === `white` && `color ${props.theme.white_C};`}
+    props.kindOf === `white` && `color ${props.theme.white_C};`}
 ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
   ${(props) => props.kindOf === `black` && `color : ${props.theme.black_C};`}
   ${(props) =>
-      props.kindOf === `black` &&
-      `border : 1px solid ${props.theme.darkGrey_C};`}
+    props.kindOf === `black` &&
+    `border : 1px solid ${props.theme.darkGrey_C};`}
         ${(props) =>
-      props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
+    props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
           ${(props) =>
-      props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
+    props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
       ${(props) => props.kindOf === `grey` && `color ${props.theme.white_C};`}
           ${(props) =>
-      props.kindOf === `grey` && `background ${props.theme.grey_C};`}
+    props.kindOf === `grey` && `background ${props.theme.grey_C};`}
          ${(props) =>
-      props.kindOf === `create` &&
-      `border :1px solid ${props.theme.create_B_C};`}
+    props.kindOf === `create` &&
+    `border :1px solid ${props.theme.create_B_C};`}
     ${(props) =>
-      props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
+    props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
     ${(props) =>
-      props.kindOf === `update` &&
-      `border :1px solid ${props.theme.update_B_C};`}
+    props.kindOf === `update` &&
+    `border :1px solid ${props.theme.update_B_C};`}
     ${(props) =>
-      props.kindOf === `delete` &&
-      `border :1px solid ${props.theme.delete_B_C};`}
+    props.kindOf === `delete` &&
+    `border :1px solid ${props.theme.delete_B_C};`}
 
 ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) =>
-      props.kindOf === `naver` && `color : ${props.theme.white_C};`}
+    props.kindOf === `naver` && `color : ${props.theme.white_C};`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
   }
 
@@ -342,6 +432,42 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
     height: 40px;
     font-size: 18px;
     width: 300px;
+  }
+`;
+
+export const SmallButton = styled.button<any>
+  `
+  width: ${(props) => props.width || `80px`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `40px`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  color: #fff;
+  ${(props) => props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
+  ${(props) => props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
+  ${(props) => props.kindOf === `default` && `border : 1px solid ${props.theme.basicTheme_C};`}
+  
+
+  ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
+  ${(props) => props.kindOf === `ghost` && `color ${props.theme.darkGrey_C};`}
+  
+
+  & svg {
+    font-size: 25px;
+    color: #fff;
+  }
+
+  &:hover {
+    box-shadow: ${(props) => props.theme.boxShadowV3};
+    ${(props) => props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
+    ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
   }
 `;
 
@@ -362,11 +488,30 @@ export const TextInput = styled.input<any>`
   position: relative;
   &:focus {
     outline: none;
+    box-shadow: ${(props) => props.theme.boxShadow};
   }
 
   @media (max-width: 500px) {
     height: 40px;
   }
+`;
+
+export const TextInput2 = styled.input<any>`
+width: ${(props) => props.width};
+height: ${(props) => props.height || `40px`};
+border: ${(props) => props.theme.border};
+padding: ${(props) => props.padding || props.theme.inputPadding};
+border-radius: ${(props) => props.theme.radius};
+transition: ${(props) => props.transition || props.theme.transition};
+margin: ${(props) => props.margin};
+background-color: ${(props) => props.bgColor};
+&:focus {
+  box-shadow: ${(props) => props.theme.boxShadow};
+}
+
+&:read-only:focus {
+  box-shadow: none;
+}
 `;
 
 export const Image = styled.img<any>`
@@ -394,23 +539,151 @@ export const Image = styled.img<any>`
   }
 `;
 
-/*
+/** table */
 
-  @media (max-width: 800px) {
-    font-size: 15px;
+export const TableWrapper = styled.div<any>`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: ${(props) => props.margin || `20px 0px 50px`};
+  padding: ${(props) => props.margin || `20px 0px 50px`};
+`;
+
+export const TableHead = styled.ul<any>`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: ${(props) => props.shadow};
+  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
+  border-bottom: ${(props) => props.borderBottom};
+  border-top: ${(props) => props.borderTop || `1px solid #292929`};
+  border-radius: ${(props) => props.radius || ``};
+  background: #fff;
+  color: #292929;
+`;
+
+export const TableHeadLIST = styled.li<any>`
+  width: ${(props) => props.width};
+  height: 100%;
+  display: ${(props) => props.display || `flex`};
+  flex-direction: row;
+  align-items: center;
+  justify-content: ${(props) => props.ju || `center`};
+`;
+
+export const TableBody = styled.ul<any>`
+  width: 100%;
+  height: ${(props) => props.height || `40px`};
+  padding: ${(props) => props.padding};
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: ${(props) => props.ju || `space-between`};
+  border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
+  transition: 0.5s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f5f5f5;
   }
-  @media (max-width: 500px) {
-    font-size: 13px;
+`;
+
+export const TableBodyLIST = styled.li<any>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `100%`};
+  display: ${(props) => props.display || `flex`};
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  padding: ${(props) => props.padding};
+  line-height: ${(props) => props.lineHeight || `1.2`};
+  border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
+`;
+
+/** pagenation */
+
+export const PagenationWrapper = styled.div<any>`
+  width: ${(props) => props.width || `100%`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height};
+  color: ${(props) => props.color};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  background: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  border: ${(props) => props.border};
+  border-bottom: ${(props) => props.borderBottom};
+  border-radius: ${(props) => props.radius};
+  box-shadow: ${(props) => props.shadow};
+  font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => props.fontWeight};
+  margin: ${(props) => props.margin || `20px 0px 0px`};
+  padding: ${(props) => props.padding};
+`;
+
+export const Pagenation = styled.div<any>`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  cursor: pointer;
+  padding-top: 3px;
+
+  &.active {
+    background-color: ${(props) => props.theme.basicTheme_C};
+    color: ${(props) => props.theme.white_C};
+    border-radius: 30px;
+    box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
+  }
+`;
+
+export const PagenationBtn = styled.div<any>`
+  text-align: center;
+  font-size: 18px;
+  width: 25px;
+  height: 25px;
+  color: ${(props) => props.color || `#eee`};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 25px;
+  margin: 0px 3px;
+
+  &:first-child,
+  &:last-child {
+    background-color: ${(props) => props.theme.subWhite_C};
+    border: 1px solid #ddd;
+    color: ${(props) => props.theme.black_C};
   }
 
-      @media (max-width: 900px) {
-      font-size: 18px;
-    }
-    @media (max-width: 800px) {
-      font-size: 16px;
-    }
-    @media (max-width: 500px) {
-      font-size: 14px;
-    }
+  &:hover {
+    box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
+  }
+`;
 
-  **/
+/** 회원가입 */
+
+export const JoinFirstStepSelect = styled.div<any>`
+  width: ${(props) => props.width || `480px`};
+  height: ${(props) => props.height || `380px`}
+  color: ${(props) => props.color || `#9d9d9d`}
+  background-color: ${(props) => props.bgColor || `#f5f5f5`}
+  border:${(props) => props.border || `1px solid #c4c4c4`}
+
+
+  &:hover {
+    box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
+    color: ${(props) => props.theme.basicTheme_C};
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
+    background-color: #fff;
+  }
+`;

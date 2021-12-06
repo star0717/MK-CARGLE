@@ -110,33 +110,37 @@ const SigninPresenter: NextPage<any> = (props) => {
               <Wrapper dr={`row`} fontSize={`18px`} ju={`flex-end`}>
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
-                  style={{ width: "12px", margin: "0px 3px 0px 0px" }}
+                  style={{ width: "18px", margin: "0px 3px 0px 0px" }}
                 />
                 <Text margin={`0px 3px 0px`} fontSize={`18px`}>
                   아직 회원이 아니신가요?
                 </Text>
-                <Link href="/view/signup">
-                  <a
-                    style={{ fontWeight: "bold", fontSize: "18px" }}
-                    onClick={userInit}
-                  >
-                    회원가입
-                  </a>
-                </Link>
+                <Text decoration={`underline`}>
+                  <Link href="/view/signup">
+                    <a
+                      style={{ fontWeight: "bold", fontSize: "18px" }}
+                      onClick={userInit}
+                    >
+                      회원가입
+                    </a>
+                  </Link>
+                </Text>
               </Wrapper>
               <Wrapper dr={`row`} fontSize={`18px`} ju={`flex-end`}>
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
-                  style={{ width: "12px", margin: "0px 3px 0px 0px" }}
+                  style={{ width: "18px", margin: "0px 3px 0px 0px" }}
                 />
                 <Text margin={`0px 3px 0px`} fontSize={`18px`}>
                   계정을 찾고 싶으신가요?
                 </Text>
-                <Link href="/view/find">
-                  <a style={{ fontWeight: "bold", fontSize: "18px" }}>
-                    계정찾기
-                  </a>
-                </Link>
+                <Text decoration={`underline`}>
+                  <Link href="/view/find">
+                    <a style={{ fontWeight: "bold", fontSize: "18px" }}>
+                      계정찾기
+                    </a>
+                  </Link>
+                </Text>
               </Wrapper>
             </Wrapper>
           </Wrapper>

@@ -48,6 +48,7 @@ const AccountM: NextPage<any> = (props) => {
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   const AccountModalProps = {
+    accountInfo,
     setModalOpen,
     setModalOption,
     setValue,
@@ -93,10 +94,10 @@ const AccountM: NextPage<any> = (props) => {
 
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //setAccountInfo({ company: comData, user: userData });
+    setAccountInfo({ company: comData, user: userData });
+    console.log(accountInfo);
     dispatch(setMyInfo(accountInfo)).then((res: any) => {
       alert("저장되었습니다.");
-      console.log(accountInfo);
     });
   };
 
@@ -111,6 +112,7 @@ const AccountM: NextPage<any> = (props) => {
             value={accountInfo.user.email}
             type="text"
             readOnly={true}
+            disabled={true}
           />
         </Wrapper>
         <Wrapper dr={`row`}>
@@ -119,6 +121,7 @@ const AccountM: NextPage<any> = (props) => {
             value={accountInfo.user.password}
             type="password"
             readOnly={true}
+            disabled={true}
           />
           <button
             type="button"
