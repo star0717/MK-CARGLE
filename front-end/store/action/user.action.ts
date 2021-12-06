@@ -207,3 +207,17 @@ export async function setMyInfo(dataToSubmit: any) {
     payload: req,
   };
 }
+
+/**
+ * 비밀번호 변경
+ * @returns
+ */
+export async function changePass(dataToSubmit: any) {
+  const req = await axios
+    .patch(`/api/settings/users/password/${dataToSubmit}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.CHANGE_PASSWORD,
+    payload: req,
+  };
+}

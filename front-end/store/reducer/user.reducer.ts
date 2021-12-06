@@ -210,6 +210,11 @@ const userAll = (
         ...state,
       };
 
+    case actionTypesUser.CHANGE_PASSWORD:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

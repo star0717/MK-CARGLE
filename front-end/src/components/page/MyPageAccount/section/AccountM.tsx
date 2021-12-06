@@ -10,8 +10,7 @@ import Modal from "react-modal";
 
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
-import { useForm } from "react-hook-form";
-import { SignUpInfo } from "../../../../models/auth.entity";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
 
@@ -48,6 +47,7 @@ const AccountM: NextPage<any> = (props) => {
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   const AccountModalProps = {
+    accountInfo,
     setModalOpen,
     setModalOption,
     setValue,
@@ -93,18 +93,16 @@ const AccountM: NextPage<any> = (props) => {
 
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //setAccountInfo({ company: comData, user: userData });
+    setAccountInfo({ company: comData, user: userData });
+    console.log(accountInfo);
     dispatch(setMyInfo(accountInfo)).then((res: any) => {
       alert("저장되었습니다.");
-      console.log(accountInfo);
     });
   };
 
   return (
     <WholeWrapper>
       <Wrapper>
-        <Text>마이페이지{">"}계정관리</Text>
-
         <Text>계정정보</Text>
 
         <Wrapper dr={`row`}>
@@ -113,6 +111,7 @@ const AccountM: NextPage<any> = (props) => {
             value={accountInfo.user.email}
             type="text"
             readOnly={true}
+            disabled={true}
           />
         </Wrapper>
         <Wrapper dr={`row`}>
@@ -121,6 +120,7 @@ const AccountM: NextPage<any> = (props) => {
             value={accountInfo.user.password}
             type="password"
             readOnly={true}
+            disabled={true}
           />
           <button
             type="button"
@@ -217,9 +217,9 @@ const AccountM: NextPage<any> = (props) => {
         <Wrapper dr={`row`}>
           <Text>정비업종</Text>
           <select name="mbTypeNum">
-            <option>1급(자동차 전문 정비업)</option>
-            <option>2급(자동차 전문 정비업)</option>
-            <option>3급(자동차 전문 정비업)</option>
+            <option>1급 자동차 공업사(자동차 종합 정비소)</option>
+            <option>2급 자동차 공업사(소형 자동차 정비소)</option>
+            <option>3급 자동차 공업사(자동차 전문 정비소)</option>
           </select>
         </Wrapper>
         <Wrapper dr={`row`}>
