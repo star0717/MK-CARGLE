@@ -102,7 +102,7 @@ export class SettingsController {
     @AuthToken({ auth: UserAuthority.WORKER })
     token: AuthTokenInfo,
   ): Promise<User> {
-    return await this.settingsService.updateUserInfo(token, id, user);
+    return await this.settingsService.updateMyUserInfo(token, id, user);
   }
 
   // @ApiOperation({ summary: '[OWNER] 업체 정보 변경' })

@@ -30,7 +30,7 @@ import {
   UserInfo,
   ConfirmPWD,
 } from 'src/models/auth.entity';
-import { UserAuthority } from 'src/models/user.entity';
+import { User, UserAuthority } from 'src/models/user.entity';
 import { Company } from 'src/models/company.entity';
 import { Observable } from 'rxjs';
 import { docFileInterceptor } from 'src/config/multer.option';
