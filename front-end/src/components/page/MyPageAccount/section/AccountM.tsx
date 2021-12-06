@@ -103,8 +103,6 @@ const AccountM: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper>
-        <Text>마이페이지{">"}계정관리</Text>
-
         <Text>계정정보</Text>
 
         <Wrapper dr={`row`}>
@@ -217,9 +215,9 @@ const AccountM: NextPage<any> = (props) => {
         <Wrapper dr={`row`}>
           <Text>정비업종</Text>
           <select name="mbTypeNum">
-            <option>1급(자동차 전문 정비업)</option>
-            <option>2급(자동차 전문 정비업)</option>
-            <option>3급(자동차 전문 정비업)</option>
+            <option>1급 자동차 공업사(자동차 종합 정비소)</option>
+            <option>2급 자동차 공업사(소형 자동차 정비소)</option>
+            <option>3급 자동차 공업사(자동차 전문 정비소)</option>
           </select>
         </Wrapper>
         <Wrapper dr={`row`}>
