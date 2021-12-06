@@ -11,7 +11,6 @@ import {
   Wrapper,
   Text,
 } from "../../../styles/CommonComponents";
-import Account from "./AccountM";
 
 const MyPage: NextPage<any> = (props) => {
   const dispatch = useDispatch();

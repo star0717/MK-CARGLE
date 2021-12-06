@@ -209,10 +209,10 @@ export async function setMyInfo(dataToSubmit: any) {
 }
 
 /**
- * user와 company정보 업데이트
+ * 비밀번호 변경
  * @returns
  */
-export async function changePass(dataToSubmit: string) {
+export async function changePass(dataToSubmit: any) {
   const req = await axios
     .patch(`/api/settings/users/password/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);

@@ -88,7 +88,7 @@ export class SettingsService {
     user: Partial<User>,
   ): Promise<User> {
     if (token.uID != id) throw new UnauthorizedException();
-    const pUser: Partial<User> = {};
+    var pUser: Partial<User> = {};
     if (user.name) pUser.name = user.name;
     if (user.hpNumber) pUser.hpNumber = user.hpNumber;
     if (user.address) pUser.address = user.address;
@@ -118,12 +118,14 @@ export class SettingsService {
     token: AuthTokenInfo,
     info: SignUpInfo,
   ): Promise<SignUpInfo> {
-    if (token.uID != info.user._id || token.cID != info.company._id)
-      throw new UnauthorizedException();
+    console.log(token);
+    console.log(info);
+    if (token.cID != info.user._cID) throw new UnauthorizedException();
 
+    console.log('1');
     const user = await this.updateUserInfo(token, token.uID, info.user);
     if (!user) throw new UnauthorizedException();
-
+    console.log('2');
     var company: Company;
     if (token.uAuth == UserAuthority.WORKER) {
       company = await this.companiesService.findById(token, token.cID);
@@ -137,6 +139,7 @@ export class SettingsService {
       user,
     };
 
+    console.log(myInfo);
     return myInfo;
   }
 
