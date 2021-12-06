@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { ConfirmPWD } from "../../src/models/auth.entity";
+import { ConfirmPWD, HelpChangePWD } from "../../src/models/auth.entity";
 import { actionTypesUser } from "../interfaces";
 
 // 로그인 action
@@ -212,9 +212,9 @@ export async function setMyInfo(dataToSubmit: any) {
  * 비밀번호 변경
  * @returns
  */
-export async function changePass(dataToSubmit: any) {
+export async function changePass(dataToSubmit: HelpChangePWD) {
   const req = await axios
-    .patch(`/api/settings/users/password/${dataToSubmit}`)
+    .patch(`/api/settings/users/password/${dataToSubmit._id}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.CHANGE_PASSWORD,

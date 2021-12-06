@@ -36,9 +36,9 @@ export const AuthToken = createParamDecorator(
     } else {
       approved = false;
     }
-    // console.log(token);
-    // console.log(params);
-    // console.log(approved);
+    console.log(token);
+    console.log(params);
+    console.log(approved);
 
     // 시스템 어드민의 경우 통과
     if (token.uAuth == UAuth.ADMIN && approved) {
@@ -53,12 +53,16 @@ export const AuthToken = createParamDecorator(
     }
     // 작업자가
     else if (token.uAuth == UAuth.WORKER && params.auth == UAuth.WORKER) {
+      console.log('hah3');
       if (approved) return token;
       else if (params.allowUnapproved) return token;
       else throw new UnauthorizedException();
     }
     // 그 외에는 모두 익셉션
-    else throw new UnauthorizedException();
+    else {
+      console.log('hah');
+      throw new UnauthorizedException();
+    }
   },
 );
 
