@@ -306,7 +306,7 @@ export class AuthService {
     const user = await this.usersService.findById(token, token.uID);
     if (!user) throw new UnauthorizedException();
 
-    const mailData = this.commonService.emailDataForRequestApprove(
+    const mailData = this.commonService.emailDataToRequestOwnerReview(
       company.name,
     );
 
@@ -351,7 +351,7 @@ export class AuthService {
     // 비밀번호를 변경하여 메일 전송
     const password = Math.random().toString(36).substr(2, 11);
     await this.usersService.findByIdAndUpdateForAuth(user._id, { password });
-    const emailData = this.commonService.emailDataForFindingAddress(password);
+    const emailData = this.commonService.emailDataToFindUserPassword(password);
     this.commonService.sendMail(user.email, emailData.title, emailData.content);
     console.log(password);
     return true;

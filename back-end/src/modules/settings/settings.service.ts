@@ -8,7 +8,11 @@ import {
   ConfirmPWD,
   SignUpInfo,
 } from 'src/models/auth.entity';
-import { FindParameters, FindResult } from 'src/models/base.entity';
+import {
+  DeleteResult,
+  FindParameters,
+  FindResult,
+} from 'src/models/base.entity';
 import { Company } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
 import { CompaniesService } from '../companies/companies.service';
@@ -142,5 +146,35 @@ export class SettingsService {
   ): Promise<FindResult<User>> {
     fParams.filter = { auth: UserAuthority.WORKER } as Partial<User>;
     return await this.usersService.findByOptions(token, fParams);
+  }
+
+  async approveWorker(token: AuthTokenInfo, id: string): Promise<User> {
+    const user = await this.usersService.findByIdAndUpdate(token, id, {
+      approval: true,
+    });
+    // 승인 완료 메일 전송
+    const email = this.commonService.emailDataToApproveWorker(token.cName);
+    this.commonService.sendMail(user.email, email.title, email.content);
+    return user;
+  }
+
+  async rejectWorker(token: AuthTokenInfo, id: string): Promise<User> {
+    const user = await this.usersService.findByIdAndUpdate(token, id, {
+      approval: false,
+    });
+    // 승인 거부 메일 전송
+    const email = this.commonService.emailDataToRejectWorker(token.cName);
+    this.commonService.sendMail(user.email, email.title, email.content);
+    return user;
+  }
+
+  async deleteWorker(token: AuthTokenInfo, id: string): Promise<DeleteResult> {
+    const user = await this.usersService.findById(token, id);
+    if (!user) throw new UnauthorizedException();
+    const result = await this.usersService.findByIdAndRemove(token, id);
+    // 승인 거부 메일 전송
+    const email = this.commonService.emailDataToDeleteWorker(token.cName);
+    this.commonService.sendMail(user.email, email.title, email.content);
+    return result;
   }
 }

@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 import { readdirSync, rmSync, writeFileSync } from 'fs';
 import { Address } from 'nodemailer/lib/mailer';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
-import { CompanyApproval } from 'src/models/company.entity';
+import { Company, CompanyApproval } from 'src/models/company.entity';
 import { UserAuthority } from 'src/models/user.entity';
 
 @Injectable()
@@ -101,60 +101,11 @@ export class CommonService {
     res.cookie(process.env.TK_NAME, token);
   }
 
-  // /**
-  //  * 토큰 정보 추출
-  //  * @param req 토큰을 추출할 request
-  //  * @param res 필요시 토큰을 주입할 response
-  //  * @param isAuth 인증관련 요청인지 여부. true: 승인안된 사용자도 요청 가입가능
-  //  * @param reqAdmin 시스템 관리자 권한을 필요로 하는지 여부
-  //  * @returns
-  //  */
-  // extractToken(
-  //   req: Request,
-  //   res: Response,
-  //   isAuth: boolean = false,
-  //   reqAdmin: boolean = false,
-  // ): AuthTokenInfo {
-  //   try {
-  //     const token: AuthTokenInfo = req['user'] as AuthTokenInfo;
-  //     if (!token) throw new UnauthorizedException();
-
-  //     // console.log(Date.now() / 1000);
-  //     // console.log(token['exp']);
-  //     // console.log(new Date(token['exp'] * 1000));
-  //     // console.log();
-
-  //     // 회원가입 중인 경우는 생략
-  //     if (!isAuth) {
-  //       // 권한 검증
-  //       if (
-  //         token.cApproval != CompanyApproval.DONE ||
-  //         token.uApproval != true
-  //       ) {
-  //         throw new UnauthorizedException();
-  //       }
-  //     }
-
-  //     // Admin만 사용할 수 있는 요청인지 여부 확인
-  //     if (reqAdmin) {
-  //       if (token.uAuth != UserAuthority.ADMIN) {
-  //         throw new UnauthorizedException();
-  //       }
-  //     }
-
-  //     // ID값 검증
-  //     if (!token.uID || !token.cID || token.uID == '' || token.cID == '') {
-  //       throw new UnauthorizedException();
-  //     }
-  //     return token;
-  //   } catch (err) {
-  //     throw new UnauthorizedException();
-  //   }
-  // }
-
   clearToken(@Res({ passthrough: true }) res: Response) {
     res.clearCookie(process.env.TK_NAME);
   }
+
+  /** ADMIN용 메일 템플릿 **/
 
   // 회원가입시 승인 메일 템플릿
   emailDataForEmailValidation(authCode: number) {
@@ -165,7 +116,7 @@ export class CommonService {
   }
 
   // 회원가입 및 관련서류 제출 후 관리자에게 전송할 심사 요청 메일
-  emailDataForRequestApprove(name: string) {
+  emailDataToRequestOwnerReview(name: string) {
     return {
       title: '심사 승인 요청 메일',
       content:
@@ -176,7 +127,7 @@ export class CommonService {
   }
 
   // 심사 통과 후 가입 완료 안내 메일
-  emailDataForApproved() {
+  emailDataToApproveOwner() {
     return {
       title: '가입 승인완료 메일',
       content: '회원가입이 승인되었습니다.',
@@ -184,7 +135,7 @@ export class CommonService {
   }
 
   // 심사 승인 결과 통보 안내 메일
-  emailDataForRejectApproval() {
+  emailDataToRejectOwner() {
     return {
       title: '기입 승인거부 메일',
       content: '회원가입이 승인거부되었습니다. 제출서류를 보완해주세요.',
@@ -192,10 +143,37 @@ export class CommonService {
   }
 
   // 비밀번호 찾기 메일
-  emailDataForFindingAddress(password: string) {
+  emailDataToFindUserPassword(password: string) {
     return {
       title: '임시 비밀번호 전송',
       content: '4자리 인증 코드 : ' + `<b> ${password}</b>`,
+    };
+  }
+
+  /** OWNER용 메일 템플릿 **/
+  emailDataToApproveWorker(comName: string) {
+    return {
+      title: '승인 완료 메일',
+      content: `${comName}의 작업자 가입이 승인 완료 되었습니다.`,
+    };
+  }
+
+  emailDataToRejectWorker(comName: string) {
+    return {
+      title: '승인 거부 메일',
+      content:
+        `${comName}의 대표자가 작업자의 승인을 거부했습니다.<br>` +
+        `서비스의 이용이 제한됩니다.<br>` +
+        `자세한 사항은 대표자에게 문의하시기 바랍니다.`,
+    };
+  }
+
+  emailDataToDeleteWorker(comName: string) {
+    return {
+      title: '계정 삭제 메일',
+      content:
+        `${comName}의 대표자가 작업자의 계정을 삭제했습니다.<br>` +
+        `현 시점부터 시스템에 로그인 할 수 없습니다.`,
     };
   }
 }

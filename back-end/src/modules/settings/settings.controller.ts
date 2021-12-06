@@ -27,8 +27,11 @@ import {
 } from 'src/models/auth.entity';
 import { SettingsService } from './settings.service';
 import { User, UserAuthority } from 'src/models/user.entity';
-import { Company } from 'src/models/company.entity';
-import { FindParameters, FindResult } from 'src/models/base.entity';
+import {
+  DeleteResult,
+  FindParameters,
+  FindResult,
+} from 'src/models/base.entity';
 import { AuthToken } from 'src/lib/decorators/decorators';
 
 @ApiTags('설정(마이페이지) API')
@@ -150,9 +153,41 @@ export class SettingsController {
   @Get('workers')
   async findWorkers(
     @Query() fParams: FindParameters,
-    @AuthToken({ auth: UserAuthority.OWNER })
-    token: AuthTokenInfo,
+    @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
   ): Promise<FindResult<User>> {
     return await this.settingsService.findWorksers(token, fParams);
+  }
+
+  @ApiOperation({ summary: '[OWNER] 작업자 승인' })
+  @ApiParam({ name: 'id', description: '승인할 작업자의 오브젝트ID' })
+  @ApiResponse({ description: '승인된 사용자 정보', type: User })
+  @Patch('review/approve/users/:id')
+  async approveWorker(
+    @Param('id') id: string,
+    @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
+  ): Promise<User> {
+    return await this.settingsService.approveWorker(token, id);
+  }
+
+  @ApiOperation({ summary: '[OWNER] 작업자 승인 거부' })
+  @ApiParam({ name: 'id', description: '승인 거부할 작업자의 오브젝트ID' })
+  @ApiResponse({ description: '승인 거부된 사용자 정보', type: User })
+  @Patch('review/reject/users/:id')
+  async rejectWorker(
+    @Param('id') id: string,
+    @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
+  ): Promise<User> {
+    return await this.settingsService.rejectWorker(token, id);
+  }
+
+  @ApiOperation({ summary: '[OWNER] 작업자 삭제' })
+  @ApiParam({ name: 'id', description: '삭제할 작업자의 오브젝트ID' })
+  @ApiResponse({ description: '삭제된 데이터의 수', type: DeleteResult })
+  @Patch('review/delete/users/:id')
+  async deleteWorker(
+    @Param('id') id: string,
+    @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
+  ): Promise<DeleteResult> {
+    return await this.settingsService.deleteWorker(token, id);
   }
 }
