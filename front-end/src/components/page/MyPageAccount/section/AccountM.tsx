@@ -13,6 +13,7 @@ import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
 import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
+import { faTerminal } from "@fortawesome/free-solid-svg-icons";
 
 Modal.setAppElement("body");
 
@@ -86,18 +87,17 @@ const AccountM: NextPage<any> = (props) => {
     setValue("addressMain", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
-
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
+    setAccountInfo({ company: comData, user: userData });
   };
-
   const onInputComHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
   };
 
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setAccountInfo({ company: comData, user: userData });
+    console.log(accountInfo);
     dispatch(setMyInfo(accountInfo)).then((res: any) => {
       alert("저장되었습니다.");
     });

@@ -198,7 +198,7 @@ export async function getMyInfo() {
  * user와 company정보 업데이트
  * @returns
  */
-export async function setMyInfo(dataToSubmit: any) {
+export async function setMyInfo(dataToSubmit: string) {
   const req = await axios
     .patch(`/api/settings/myinfo`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
