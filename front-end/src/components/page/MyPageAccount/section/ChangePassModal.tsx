@@ -1,4 +1,3 @@
-import Modal from "react-modal";
 import React, { useState } from "react";
 import { NextPage } from "next";
 import { useDispatch } from "react-redux";
@@ -23,9 +22,6 @@ interface modalOption {
 }
 
 const ChangePassModal: NextPage<modalOption> = (props) => {
-  // const handleSubmit = props.handleSubmit;
-  // const watch = props.watch;
-  // const register = props.register;
   const dispatch = useDispatch();
   const setModalOpen = props.setModalOpen;
   const [password, setPassword] = useState("");
@@ -41,26 +37,32 @@ const ChangePassModal: NextPage<modalOption> = (props) => {
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
+  {
+    /* 비밀번호 확인용 */
+  }
   const confirmPWD = {
     _id: accountInfo.user._uID,
     PWD: password,
   };
-
+  {
+    /* 비밀번호 변경용 */
+  }
   const HelpChangePWD = {
     _id: accountInfo.user._uID,
     oldPWD: password,
     newPWD: newPassword,
   };
 
+  {
+    /* 비밀번호 변경 함수 */
+  }
   const pass: SubmitHandler<any> = (data) => {
-    console.log(confirmPWD);
-    console.log(HelpChangePWD);
     dispatch(passwordCheck(confirmPWD)).then((res: any) => {
       if (res.payload === true) {
-        console.log("패스워드 일치");
         dispatch(changePass(HelpChangePWD)).then((res: any) => {
           if (res.payload === true) {
             alert("비밀번호가 변경되었습니다.");
+            setModalOpen(false);
           } else {
             alert("변경 실패");
           }
@@ -116,7 +118,7 @@ const ChangePassModal: NextPage<modalOption> = (props) => {
               type="password"
               value={newPasswordCheck}
               placeholder="비밀번호 확인을 위해 다시 입력해주세요."
-              {...register("newPassword2", {
+              {...register("newPasswordCheck", {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                   setNewPasswordCheck(e.target.value);
                 },
@@ -137,7 +139,9 @@ const ChangePassModal: NextPage<modalOption> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <button type="submit">확인</button>
-            <button type="button">취소</button>
+            <button type="button" onClick={(e) => setModalOpen(false)}>
+              취소
+            </button>
           </Wrapper>
         </form>
       </Wrapper>
