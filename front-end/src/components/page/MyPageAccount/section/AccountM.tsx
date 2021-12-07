@@ -21,6 +21,7 @@ const AccountM: NextPage<any> = (props) => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOption, setModalOption] = useState("");
+  const [addressOption, setAddressOption] = useState("hidden"); //상세주소여닫기
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [readOnly, setReadOnly] = useState(true);
@@ -84,8 +85,8 @@ const AccountM: NextPage<any> = (props) => {
       console.log("fullAddress => " + fullAddress);
     }
 
-    setAddressMain(fullAddress);
-    console.log(fullAddress);
+    setUserData({ ...userData, address: fullAddress });
+
     setValue("address", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
@@ -96,6 +97,12 @@ const AccountM: NextPage<any> = (props) => {
   const onInputComHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
   };
+
+  const onInputAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // setAddressDetail(e.target.value);
+    setUserData({ ...userData, address: userData.address + e.target.value });
+  };
+  console.log(userData);
 
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -176,20 +183,25 @@ const AccountM: NextPage<any> = (props) => {
               placeholder="주소를 입력해주세요."
               value={userData.address}
               name="address"
-              onChange={(e: any) => {
-                onInputUserHandler(e);
-              }}
             />
             <button
               type="button"
               onClick={(e) => {
                 setModalOpen(!modalOpen);
                 setModalOption("address");
+                setAddressOption("text");
               }}
             >
               주소 검색
             </button>
           </Wrapper>
+          <TextInput
+            type={addressOption}
+            placeholder="상세주소를 입력해 주세요."
+            onChange={(e: any) => {
+              onInputAddressHandler(e);
+            }}
+          />
           <Wrapper dr={`row`}>
             <Text>입사일자</Text>
             <input type="date" value={accountInfo.user.joinDate}></input>
