@@ -82,7 +82,6 @@ const AccountM: NextPage<any> = (props) => {
           extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-      console.log("fullAddress => " + fullAddress);
     }
 
     setUserData({ ...userData, address: fullAddress });
@@ -99,10 +98,9 @@ const AccountM: NextPage<any> = (props) => {
   };
 
   const onInputAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setAddressDetail(e.target.value);
-    setUserData({ ...userData, address: userData.address + e.target.value });
+    setAddressDetail(e.target.value);
+    // setUserData({ ...userData, address: userData.address + e.target.value });
   };
-  console.log(userData);
 
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -113,6 +111,7 @@ const AccountM: NextPage<any> = (props) => {
     };
     dispatch(setMyInfo(ai)).then((res: any) => {
       const info: SignUpInfo = res.payload;
+
       setAccountInfo({ company: info.company, user: info.user });
       alert("저장되었습니다.");
     });
@@ -154,12 +153,11 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>이름</Text>
             <TextInput
-              value={userData.name}
+              defaultValue={userData.name}
               type="text"
               readOnly={false}
               name="name"
               onChange={(e: any) => {
-                console.log("=> " + e.target.value);
                 onInputUserHandler(e);
               }}
             />
@@ -167,7 +165,7 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>전화번호</Text>
             <TextInput
-              value={userData.hpNumber}
+              defaultValue={userData.hpNumber}
               type="tel"
               readOnly={false}
               name="hpNumber"
@@ -319,7 +317,16 @@ const AccountM: NextPage<any> = (props) => {
               업 로 드
             </button>
           </Wrapper>
-          <button type="submit" name="save">
+          <button
+            type="submit"
+            name="save"
+            onClick={() => {
+              setUserData({
+                ...userData,
+                address: userData.address + addressDetail,
+              });
+            }}
+          >
             저 장
           </button>
         </Wrapper>
