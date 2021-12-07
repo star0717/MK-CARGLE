@@ -13,11 +13,7 @@ import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
 import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
-<<<<<<< HEAD
-import { faTerminal } from "@fortawesome/free-solid-svg-icons";
-=======
 import { SignUpInfo } from "../../../../models/auth.entity";
->>>>>>> 7ce5eeb6460a87916638757caf7dc1091a9fdcdc
 
 Modal.setAppElement("body");
 
@@ -101,10 +97,6 @@ const AccountM: NextPage<any> = (props) => {
 
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-<<<<<<< HEAD
-    console.log(accountInfo);
-    dispatch(setMyInfo(accountInfo)).then((res: any) => {
-=======
 
     const ai: SignUpInfo = {
       company: comData,
@@ -113,7 +105,6 @@ const AccountM: NextPage<any> = (props) => {
     dispatch(setMyInfo(ai)).then((res: any) => {
       const info: SignUpInfo = res.payload;
       setAccountInfo({ company: info.company, user: info.user });
->>>>>>> 7ce5eeb6460a87916638757caf7dc1091a9fdcdc
       alert("저장되었습니다.");
     });
   };
