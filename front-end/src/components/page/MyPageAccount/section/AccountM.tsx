@@ -10,7 +10,7 @@ import Modal from "react-modal";
 
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
 
@@ -53,6 +53,10 @@ const AccountM: NextPage<any> = (props) => {
     setValue,
     style: { height: "500px" },
   };
+
+  {
+    /* 모달창 밖 클릭시 닫기 옵션 */
+  }
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -94,7 +98,6 @@ const AccountM: NextPage<any> = (props) => {
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setAccountInfo({ company: comData, user: userData });
-    console.log(accountInfo);
     dispatch(setMyInfo(accountInfo)).then((res: any) => {
       alert("저장되었습니다.");
     });
