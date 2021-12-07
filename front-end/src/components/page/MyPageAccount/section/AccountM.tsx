@@ -13,6 +13,7 @@ import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
 import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
+import { SignUpInfo } from "../../../../models/auth.entity";
 
 Modal.setAppElement("body");
 
@@ -97,8 +98,14 @@ const AccountM: NextPage<any> = (props) => {
 
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setAccountInfo({ company: comData, user: userData });
-    dispatch(setMyInfo(accountInfo)).then((res: any) => {
+
+    const ai: SignUpInfo = {
+      company: comData,
+      user: userData,
+    };
+    dispatch(setMyInfo(ai)).then((res: any) => {
+      const info: SignUpInfo = res.payload;
+      setAccountInfo({ company: info.company, user: info.user });
       alert("저장되었습니다.");
     });
   };
@@ -106,188 +113,190 @@ const AccountM: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper>
-        <Text>계정정보</Text>
-
-        <Wrapper dr={`row`}>
-          <Text>아이디</Text>
-          <TextInput
-            value={accountInfo.user.email}
-            type="text"
-            readOnly={true}
-            disabled={true}
-          />
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>비밀번호</Text>
-          <TextInput
-            value={accountInfo.user.password}
-            type="password"
-            readOnly={true}
-            disabled={true}
-          />
-          <button
-            type="button"
-            onClick={(e) => {
-              setModalOpen(!modalOpen);
-              setModalOption("password");
-            }}
-          >
-            비밀번호변경
-          </button>
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>이름</Text>
-          <TextInput
-            value={userData.name}
-            type="text"
-            readOnly={false}
-            name="name"
-            onChange={(e: any) => {
-              onInputUserHandler(e);
-            }}
-          />
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>전화번호</Text>
-          <TextInput
-            value={userData.hpNumber}
-            type="tel"
-            readOnly={false}
-            name="hpNumber"
-            onChange={(e: any) => {
-              onInputUserHandler(e);
-            }}
-          />
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>주소</Text>
-          <TextInput value={accountInfo.user.address} />
-          <button
-            type="button"
-            onClick={(e) => {
-              setModalOpen(!modalOpen);
-              setModalOption("address");
-            }}
-          >
-            주소 검색
-          </button>
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>입사일자</Text>
-          <input type="date" value={accountInfo.user.joinDate}></input>
-        </Wrapper>
-        <button type="submit" onClick={() => setpages(3)}>
-          회원탈퇴
-        </button>
-
-        <Text>사업자 정보</Text>
-        <Wrapper dr={`row`}>
-          <Text>상호명</Text>
-          <TextInput
-            disabled={true}
-            value={accountInfo.company.name}
-            type="text"
-            readonly={true}
-          />
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>사업자등록번호</Text>
-          <TextInput
-            disabled={true}
-            value={accountInfo.company.comRegNum}
-            type="text"
-            readonly={true}
-          />
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>정비업 등록번호</Text>
-          <TextInput
-            disabled={true}
-            value={accountInfo.company.mbRegNum}
-            type="text"
-            readonly={true}
-          />
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>대표자명</Text>
-          <TextInput
-            disabled={true}
-            value={accountInfo.company.ownerName}
-            type="text"
-            readonly={true}
-          />
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>정비업종</Text>
-          <select name="mbTypeNum">
-            <option>1급 자동차 공업사(자동차 종합 정비소)</option>
-            <option>2급 자동차 공업사(소형 자동차 정비소)</option>
-            <option>3급 자동차 공업사(자동차 전문 정비소)</option>
-          </select>
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>업태</Text>
-          <TextInput
-            value={accountInfo.company.busType}
-            type="text"
-            name="busType"
-            readOnly={readOnly}
-            disabled={readOnly}
-            onChange={(e: any) => {
-              onInputComHandler(e);
-            }}
-          />
-          <Text>업종</Text>
-          <TextInput
-            value={accountInfo.company.busItem}
-            type="text"
-            name="busItem"
-            readOnly={readOnly}
-            disabled={readOnly}
-            onChange={(e: any) => {
-              onInputComHandler(e);
-            }}
-          />
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>사업자 전화번호</Text>
-          <TextInput
-            value={accountInfo.company.phoneNum}
-            type="tel"
-            name="phoneNum"
-            readOnly={readOnly}
-            disabled={readOnly}
-            onChange={(e: any) => {
-              onInputComHandler(e);
-            }}
-          />
-          <Text>사업자팩스번호</Text>
-          <TextInput
-            value={accountInfo.company.faxNum}
-            type="tel"
-            name="faxNum"
-            readOnly={readOnly}
-            disabled={readOnly}
-            onChange={(e: any) => {
-              onInputComHandler(e);
-            }}
-          />
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>사업자 주소</Text>
-          <TextInput
-            value={accountInfo.company.address}
-            type="text"
-            readOnly={true}
-            disabled={true}
-          ></TextInput>
-        </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>사업자 도장</Text>
-          <input type="image"></input>
-          <button type="submit">업 로 드</button>
-        </Wrapper>
         <form onSubmit={saveData}>
+          <Text>계정정보</Text>
+
+          <Wrapper dr={`row`}>
+            <Text>아이디</Text>
+            <TextInput
+              value={accountInfo.user.email}
+              type="text"
+              readOnly={true}
+              disabled={true}
+            />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>비밀번호</Text>
+            <TextInput
+              value={accountInfo.user.password}
+              type="password"
+              readOnly={true}
+              disabled={true}
+            />
+            <button
+              type="button"
+              onClick={(e) => {
+                setModalOpen(!modalOpen);
+                setModalOption("password");
+              }}
+            >
+              비밀번호변경
+            </button>
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>이름</Text>
+            <TextInput
+              value={userData.name}
+              type="text"
+              readOnly={false}
+              name="name"
+              onChange={(e: any) => {
+                console.log("=> " + e.target.value);
+                onInputUserHandler(e);
+              }}
+            />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>전화번호</Text>
+            <TextInput
+              value={userData.hpNumber}
+              type="tel"
+              readOnly={false}
+              name="hpNumber"
+              onChange={(e: any) => {
+                onInputUserHandler(e);
+              }}
+            />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>주소</Text>
+            <TextInput value={accountInfo.user.address} />
+            <button
+              type="button"
+              onClick={(e) => {
+                setModalOpen(!modalOpen);
+                setModalOption("address");
+              }}
+            >
+              주소 검색
+            </button>
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>입사일자</Text>
+            <input type="date" value={accountInfo.user.joinDate}></input>
+          </Wrapper>
+          <button type="submit" onClick={() => setpages(3)}>
+            회원탈퇴
+          </button>
+
+          <Text>사업자 정보</Text>
+          <Wrapper dr={`row`}>
+            <Text>상호명</Text>
+            <TextInput
+              disabled={true}
+              value={accountInfo.company.name}
+              type="text"
+              readonly={true}
+            />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>사업자등록번호</Text>
+            <TextInput
+              disabled={true}
+              value={accountInfo.company.comRegNum}
+              type="text"
+              readonly={true}
+            />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>정비업 등록번호</Text>
+            <TextInput
+              disabled={true}
+              value={accountInfo.company.mbRegNum}
+              type="text"
+              readonly={true}
+            />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>대표자명</Text>
+            <TextInput
+              disabled={true}
+              value={accountInfo.company.ownerName}
+              type="text"
+              readonly={true}
+            />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>정비업종</Text>
+            <select name="mbTypeNum">
+              <option>1급 자동차 공업사(자동차 종합 정비소)</option>
+              <option>2급 자동차 공업사(소형 자동차 정비소)</option>
+              <option>3급 자동차 공업사(자동차 전문 정비소)</option>
+            </select>
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>업태</Text>
+            <TextInput
+              value={accountInfo.company.busType}
+              type="text"
+              name="busType"
+              readOnly={readOnly}
+              disabled={readOnly}
+              onChange={(e: any) => {
+                onInputComHandler(e);
+              }}
+            />
+            <Text>업종</Text>
+            <TextInput
+              value={accountInfo.company.busItem}
+              type="text"
+              name="busItem"
+              readOnly={readOnly}
+              disabled={readOnly}
+              onChange={(e: any) => {
+                onInputComHandler(e);
+              }}
+            />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>사업자 전화번호</Text>
+            <TextInput
+              value={accountInfo.company.phoneNum}
+              type="tel"
+              name="phoneNum"
+              readOnly={readOnly}
+              disabled={readOnly}
+              onChange={(e: any) => {
+                onInputComHandler(e);
+              }}
+            />
+            <Text>사업자팩스번호</Text>
+            <TextInput
+              value={accountInfo.company.faxNum}
+              type="tel"
+              name="faxNum"
+              readOnly={readOnly}
+              disabled={readOnly}
+              onChange={(e: any) => {
+                onInputComHandler(e);
+              }}
+            />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>사업자 주소</Text>
+            <TextInput
+              value={accountInfo.company.address}
+              type="text"
+              readOnly={true}
+              disabled={true}
+            ></TextInput>
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>사업자 도장</Text>
+            <input type="image"></input>
+            <button type="submit">업 로 드</button>
+          </Wrapper>
+
           <button type="submit">저 장</button>
         </form>
       </Wrapper>
