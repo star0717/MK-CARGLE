@@ -81,10 +81,12 @@ const AccountM: NextPage<any> = (props) => {
           extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+      console.log("fullAddress => " + fullAddress);
     }
 
     setAddressMain(fullAddress);
-    setValue("addressMain", fullAddress, { shouldValidate: true });
+    console.log(fullAddress);
+    setValue("address", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,8 +113,8 @@ const AccountM: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper>
-      <Wrapper>
-        <form onSubmit={saveData}>
+      <form onSubmit={saveData}>
+        <Wrapper>
           <Text>계정정보</Text>
 
           <Wrapper dr={`row`}>
@@ -169,7 +171,15 @@ const AccountM: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>주소</Text>
-            <TextInput value={accountInfo.user.address} />
+            <TextInput
+              type="text"
+              placeholder="주소를 입력해주세요."
+              value={userData.address}
+              name="address"
+              onChange={(e: any) => {
+                onInputUserHandler(e);
+              }}
+            />
             <button
               type="button"
               onClick={(e) => {
@@ -293,12 +303,15 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>사업자 도장</Text>
             <input type="image"></input>
-            <button type="submit">업 로 드</button>
+            <button type="button" name="upload">
+              업 로 드
+            </button>
           </Wrapper>
-
-          <button type="submit">저 장</button>
-        </form>
-      </Wrapper>
+          <button type="submit" name="save">
+            저 장
+          </button>
+        </Wrapper>
+      </form>
       <Wrapper>
         <Modal
           isOpen={modalOpen}
