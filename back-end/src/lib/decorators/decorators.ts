@@ -15,7 +15,6 @@ export const AuthToken = createParamDecorator(
     params: Partial<AuthTokenParas> = new AuthTokenParas(),
     ctx: ExecutionContext,
   ) => {
-    console.log('deco');
     if (!params.auth) params.auth = UAuth.WORKER;
 
     const req = ctx.switchToHttp().getRequest();
