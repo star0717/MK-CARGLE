@@ -13,8 +13,6 @@ interface SignInProps {
 }
 
 const Home: NextPage<SignInProps> = (props) => {
-  const headerProps = { query: [""] };
-
   return (
     <>
       <Head>
@@ -23,7 +21,7 @@ const Home: NextPage<SignInProps> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <WholeWrapper minHeight={`100vh`} ju={`space-between`}>
-        <Header {...headerProps} />
+        <Header />
         <SignIn {...props} />
         <Footer />
       </WholeWrapper>
@@ -42,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/view/main",
+        destination: "/main",
       },
     };
   }

@@ -15,7 +15,6 @@ import FileUploadPresenter from "./fileUploadPresenter";
 interface FileUploadProps {
   stepNumber?: any;
   setStepNumber?: any;
-  tokenValue?: any;
 }
 
 const fileInit = {

@@ -14,7 +14,6 @@ import {
 import { CompanyApproval } from "../../models/company.entity";
 
 interface HeaderProps {
-  query: any;
   tokenValue?: any;
 }
 
@@ -41,7 +40,7 @@ const Header: NextPage<HeaderProps> = (props) => {
         padding={width < 1439 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
       >
         <Wrapper width={`auto`}>
-          <Link href="/view/main">
+          <Link href="/main">
             <a>
               <Image
                 src="/images/cargle.png"

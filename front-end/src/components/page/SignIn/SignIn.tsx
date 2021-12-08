@@ -51,7 +51,7 @@ const SignIn: NextPage<any> = (props) => {
           } else {
             Cookies.remove("saveId");
           }
-          router.push("/view/main");
+          router.push("/main");
         },
         (err) => {
           // 입력 값이 계정과 다를 경우 에러
