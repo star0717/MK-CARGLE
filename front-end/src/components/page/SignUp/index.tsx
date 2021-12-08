@@ -12,10 +12,7 @@ import { WholeWrapper } from "../../styles/CommonComponents";
 // modal setting
 Modal.setAppElement("body");
 
-const SignUp: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const tokenValue = props.tokenValue;
-
+const SignUp: NextPage<any> = () => {
   // redux store에서 user, company 정보 가져옴
   const { user, company, formInput, formCheck } = useSelector(
     (state: RootStateInterface): UserState => state.userAll
@@ -29,12 +26,11 @@ const SignUp: NextPage<any> = (props) => {
     { key: 4, value: "daum.net", text: "daum.net" },
   ];
 
-  const [userAuth, setUserAuth] = useState(UserAuthority.WORKER); // 유저 권한 종류
+  const [userAuth, setUserAuth] = useState(UserAuthority.OWNER); // 유저 권한 종류
   const [stepNumber, setStepNumber] = useState<number>(3); // 스텝 숫자
 
   // component에 전달할 props들 정의
   const SignUpProps = {
-    tokenValue,
     user,
     company,
     formInput,

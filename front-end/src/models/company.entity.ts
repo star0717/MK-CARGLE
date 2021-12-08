@@ -14,6 +14,8 @@ export declare class Company extends BaseEntity {
   busItem: string;
   phoneNum: string;
   faxNum: string;
-  address: string;
+  postcode: string;
+  address1: string;
+  address2: string;
   approval: CompanyApproval;
 }

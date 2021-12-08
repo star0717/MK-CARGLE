@@ -18,7 +18,7 @@ import {
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
-import { BsSearch } from 'react-icons/bs';
+import { BsSearch } from "react-icons/bs";
 
 const ComFindModalPresenter: NextPage<any> = (props) => {
   // props 재정의
