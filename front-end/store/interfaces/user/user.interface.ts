@@ -36,10 +36,6 @@ export interface FormInput {
   emailAddress: string;
   emailDomain: string;
   passwordCheck: string;
-  uAddressMain: string;
-  uAddressDetail: string;
-  cAddressMain: string;
-  cAddressDetail: string;
 }
 
 export interface FormCheck {

@@ -166,6 +166,7 @@ const Account: NextPage<any> = (props) => {
   // 주소 검색 api handler
   const addressHandler = (data: any) => {
     let fullAddress = data.address;
+    let zonecode = data.zonecode;
     let extraAddress = "";
 
     if (data.addressType === "R") {
@@ -179,8 +180,8 @@ const Account: NextPage<any> = (props) => {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    setInputForm({ ...inputForm, uAddressMain: fullAddress });
-    setValue("uAddressMain", fullAddress, { shouldValidate: true });
+    setInputUser({ ...inputUser, address1: fullAddress, postcode: zonecode });
+    setValue("address1", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
 
@@ -199,11 +200,6 @@ const Account: NextPage<any> = (props) => {
             user: {
               ...inputUser,
               email: `${inputForm.emailAddress}@${inputForm.emailDomain}`,
-              address:
-                inputForm.uAddressMain && inputForm.uAddressDetail !== ""
-                  ? `${inputForm.uAddressMain}, ${inputForm.uAddressDetail}`
-                  : inputForm.uAddressMain,
-              joinDate: inputUser.joinDate && inputUser.joinDate,
             },
           })
         ).then(

@@ -12,7 +12,8 @@ import Approval from "../../src/components/page/SignUp/section/approval";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
 import { CompanyApproval } from "../../src/models/company.entity";
-import { Query } from "../../src/models/query.entity";
+import { MainRoute } from "../../src/models/router.entity";
+import { useRouter } from "next/dist/client/router";
 
 interface ViewProps {
   query: any;
@@ -20,6 +21,8 @@ interface ViewProps {
 }
 
 const Componentitem: NextPage<ViewProps> = (props) => {
+  const router = useRouter();
+  console.log("라우터", router.query);
   // props 재정의
   const query = props.query.query;
   const tokenValue: AuthTokenInfo = props?.tokenValue;
@@ -29,9 +32,9 @@ const Componentitem: NextPage<ViewProps> = (props) => {
   const sub = query[1] ? query[1] : "";
 
   switch (main) {
-    case Query.SIGNUP:
+    case MainRoute.SIGNUP:
       return <SignUp {...props} />;
-    case Query.MAIN:
+    case MainRoute.MAIN:
       if (tokenValue.cApproval === CompanyApproval.BEFORE) {
         return <FileUpload {...props} />;
       } else if (tokenValue.cApproval === CompanyApproval.ING) {
@@ -39,9 +42,9 @@ const Componentitem: NextPage<ViewProps> = (props) => {
       } else {
         return <Main {...props} />;
       }
-    case Query.FIND:
+    case MainRoute.FIND:
       return <Find {...props} />;
-    case Query.ACCOUNT:
+    case MainRoute.ACCOUNT:
       return <Account {...props} />;
     default:
       return <SignUp {...props} />;

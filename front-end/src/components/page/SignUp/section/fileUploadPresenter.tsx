@@ -18,11 +18,9 @@ import React from "react";
 import {
   BsExclamationCircleFill,
   BsFillLightbulbFill,
-  BsFillQuestionCircleFill
-} from 'react-icons/bs';
-import {
-  IoIosCloseCircle
-} from 'react-icons/io'
+  BsFillQuestionCircleFill,
+} from "react-icons/bs";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const FileUploadPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
@@ -31,6 +29,8 @@ const FileUploadPresenter: NextPage<any> = (props) => {
   const onFileUploadHandler = props.onFileUploadHandler;
   const onFileSelectHandler = props.onFileSelectHandler;
   const onSignOutHandler = props.onSignOutHandler;
+  const guideMsg = props.guideMsg;
+  const setGuideMsg = props.setGuideMsg;
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
@@ -39,15 +39,13 @@ const FileUploadPresenter: NextPage<any> = (props) => {
     <WholeWrapper ref={ref}>
       <form onSubmit={onFileUploadHandler}>
         <Wrapper dr={`row`} ju={`space-between`}>
-          <Wrapper
-            ju={`flex-start`}
-            al={`flex-start`}
-            width={`auto`}
-          >
+          <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
             <Text>사업자등록증</Text>
             <Wrapper dr={`row`} ju={`flex-start`}>
               <TextInput2
-                width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `480px`}
+                width={
+                  width < 1439 ? (width < 500 ? `300px` : `400px`) : `480px`
+                }
                 type="text"
                 placeholder="jpg, png, pdf 형식"
                 value={fileName.comFile}
@@ -55,31 +53,30 @@ const FileUploadPresenter: NextPage<any> = (props) => {
                 readOnly
               />
               <SmallButton
+                type="button"
                 kindOf={`default`}
                 margin={`0px 0px 0px 20px`}
               >
                 <label htmlFor="comFile">파일선택</label>
+                <TextInput2
+                  style={{ display: "none" }}
+                  type="file"
+                  id="comFile"
+                  name="comFile"
+                  key={file.comFile}
+                  onChange={onFileSelectHandler}
+                  accept=".jpg, .png, .pdf"
+                />
               </SmallButton>
-              <TextInput2
-                style={{ display: "none" }}
-                type="file"
-                id="comFile"
-                name="comFile"
-                key={file.comFile}
-                onChange={onFileSelectHandler}
-                accept=".jpg, .png, .pdf"
-              />
             </Wrapper>
           </Wrapper>
-          <Wrapper
-            ju={`flex-start`}
-            al={`flex-start`}
-            width={`auto`}
-          >
+          <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
             <Text>정비업등록증</Text>
             <Wrapper dr={`row`} ju={`flex-start`}>
               <TextInput2
-                width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `480px`}
+                width={
+                  width < 1439 ? (width < 500 ? `300px` : `400px`) : `480px`
+                }
                 type="text"
                 placeholder="jpg, png, pdf 형식"
                 value={fileName.manFile}
@@ -87,6 +84,7 @@ const FileUploadPresenter: NextPage<any> = (props) => {
                 readOnly
               />
               <SmallButton
+                type="button"
                 kindOf={`default`}
                 margin={`0px 0px 0px 20px`}
               >
@@ -112,46 +110,33 @@ const FileUploadPresenter: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper>
           <Wrapper
+            display={!guideMsg && `none`}
             border={`1px solid #c4c4c4`}
             radius={`5px`}
             al={`flex-start`}
-            width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+            width={width < 1439 ? (width < 500 ? `300px` : `1040px`) : `1200px`}
             shadow={`0px 10px 15px rgba(220,220,220,1)`}
           >
-            <Wrapper
-              al={`flex-end`}
-              padding={`10px 15px 10px 0px`}
-            >
+            <Wrapper al={`flex-end`} padding={`10px 15px 10px 0px`}>
               <Text
                 fontSize={`28px`}
                 cursor={`pointer`}
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  setGuideMsg(false);
+                }}
               >
                 <IoIosCloseCircle />
               </Text>
             </Wrapper>
-            <Wrapper
-              padding={`0px 30px 30px`}
-            >
-              <Wrapper
-                dr={`row`}
-                ju={`flex-start`}
-                margin={`0px 0px 10px`}
-              >
-                <Text
-                  padding={`3px 15px 0px 0px`}
-                >
+            <Wrapper padding={`0px 30px 30px`}>
+              <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
+                <Text padding={`3px 15px 0px 0px`}>
                   <BsFillQuestionCircleFill />
                 </Text>
                 <Text>아직 서류가 준비되지 않으셨나요?</Text>
               </Wrapper>
-              <Wrapper
-                dr={`row`}
-                ju={`flex-start`}
-                al={`flex-start`}
-              >
-                <Text
-                  padding={`3px 15px 0px 0px`}
-                >
+              <Wrapper dr={`row`} ju={`flex-start`} al={`flex-start`}>
+                <Text padding={`3px 15px 0px 0px`}>
                   <BsFillLightbulbFill />
                 </Text>
                 <Text textAlign={`start`}>
@@ -163,7 +148,11 @@ const FileUploadPresenter: NextPage<any> = (props) => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
-          <QuestionIcon>
+          <QuestionIcon
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              setGuideMsg(!guideMsg);
+            }}
+          >
             <BsFillQuestionCircleFill />
           </QuestionIcon>
         </Wrapper>
