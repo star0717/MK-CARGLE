@@ -125,7 +125,6 @@ export const Wrapper = styled.div<any>`
   background-attachment: ${(props) => props.attachment || `fixed`};
   background-position: center;
   background-color: ${(props) => props.bgColor};
-
   transition: 0.5s;
   cursor: ${(props) => props.cursor};
   line-height: ${(props) => props.lineHeight};
@@ -553,7 +552,7 @@ export const SearchInputWrapper = styled.div<any>`
   height: ${(props) => props.height || `46px`};
   border:none;
   border-bottom:1px solid #363636;
-  flex-direction: ${(props) => props.dr || `column`};
+  flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
   padding: ${(props) => props.padding};
@@ -563,7 +562,6 @@ export const SearchInput = styled.input<any>`
   width: ${(props) => props.width || `378px`};
   height: ${(props) => props.height || `46px`};
   border: none;
-  border-bottom:1px solid #363636;
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding || props.theme.inputPadding};
   transition: ${(props) => props.transition || props.theme.transition};
@@ -573,6 +571,7 @@ export const SearchInput = styled.input<any>`
   font-size: 18px;
   position: relative;
   outline: none;
+  display: flex;
 
   &:focus {
     outline: none;
@@ -804,18 +803,4 @@ export const JoinFirstStepSelectText = styled.p<any>`
   margin:0px;
 `;
 
-export const QuestionIcon = styled.text<any>`
-  width: ${(props) => props.width || `100%`};
-  display:flex;
-  align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `flex-end`};
-  color: ${(props) => props.color || props.theme.grey_C};
-  font-size: ${(props) => props.fontSize || `32px`};
-  transition: 0.5s;
-  cursor: pointer;
-  padding:${(props) => props.padding || `20px 0px 100px`};
 
-  &:hover{
-  color: ${(props) => props.theme.basicTheme_C};
-}
-`;

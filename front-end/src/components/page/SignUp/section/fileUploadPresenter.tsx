@@ -22,6 +22,7 @@ import {
 } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 
+
 const FileUploadPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
   const fileName = props.fileName;
@@ -29,8 +30,6 @@ const FileUploadPresenter: NextPage<any> = (props) => {
   const onFileUploadHandler = props.onFileUploadHandler;
   const onFileSelectHandler = props.onFileSelectHandler;
   const onSignOutHandler = props.onSignOutHandler;
-  const guideMsg = props.guideMsg;
-  const setGuideMsg = props.setGuideMsg;
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
@@ -108,25 +107,16 @@ const FileUploadPresenter: NextPage<any> = (props) => {
           </CommonButton>
           <CommonButton type="submit">제출하기</CommonButton>
         </Wrapper>
-        <Wrapper>
+        <Wrapper
+          padding={`0px 0px 100px`}
+        >
           <Wrapper
-            display={!guideMsg && `none`}
-            border={`1px solid #c4c4c4`}
-            radius={`5px`}
+            borderTop={`1px solid #c4c4c4`}
             al={`flex-start`}
             width={width < 1439 ? (width < 500 ? `300px` : `1040px`) : `1200px`}
-            shadow={`0px 10px 15px rgba(220,220,220,1)`}
           >
-            <Wrapper al={`flex-end`} padding={`10px 15px 10px 0px`}>
-              <Text
-                fontSize={`28px`}
-                cursor={`pointer`}
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  setGuideMsg(false);
-                }}
-              >
-                <IoIosCloseCircle />
-              </Text>
+
+            <Wrapper al={`flex-end`} padding={`30px 15px 10px 0px`}>
             </Wrapper>
             <Wrapper padding={`0px 30px 30px`}>
               <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
@@ -148,13 +138,6 @@ const FileUploadPresenter: NextPage<any> = (props) => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
-          <QuestionIcon
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              setGuideMsg(!guideMsg);
-            }}
-          >
-            <BsFillQuestionCircleFill />
-          </QuestionIcon>
         </Wrapper>
       </form>
     </WholeWrapper>
