@@ -487,7 +487,7 @@ export const SearchButton = styled.button<any>
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
   transition: ${(props) => props.transition || props.theme.transition};
-  margin: ${(props) => props.margin};
+  margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
   font-size: ${(props) => props.fontSize};
@@ -497,30 +497,8 @@ export const SearchButton = styled.button<any>
   justify-content: ${(props) => props.ju || `center`};
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
-  border-radius:5px;
-  color: #fff;
   cursor: pointer;
-  ${(props) => props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
-  ${(props) => props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
-  ${(props) => props.kindOf === `default` && `border : 1px solid ${props.theme.basicTheme_C};`}
-  
-
-  ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
-  ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `ghost` && `cursor : default;`}
-  ${(props) => props.kindOf === `ghost` && `border : none;`}
-  
-
-  & svg {
-    font-size: 25px;
-    color: #fff;
-  }
-
-  &:hover {
-    box-shadow: ${(props) => props.theme.boxShadowV3};
-    ${(props) => props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
-    ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
-  }
+  border:none;
 `;
 
 

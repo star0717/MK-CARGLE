@@ -45,8 +45,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
           <SearchInputWrapper
             width={`678px`}
             dr={`row`}
-            border={`1px solid #000`}
-            padding={`0px 65px 0px 5px`}>
+            border={`1px solid #000`}>
             <SearchInput
               width={`598px`}
               padding={`0px 5px 0px 5px`}
@@ -61,11 +60,11 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
               width={`auto`}
               bgColor={`#fff`}
               color={`#292929`}
+              fontSize={`22px`}
             >
               <BsSearch />
             </SearchButton>
           </SearchInputWrapper>
-          <SmallButton kindOf={`default`} type="submit">검색</SmallButton>
           <Wrapper>
             {companyList.length > 0 ? (
               <table>
