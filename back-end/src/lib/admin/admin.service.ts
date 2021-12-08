@@ -29,7 +29,7 @@ export class AdminService {
 
   async createAdmin() {
     var user: Partial<User> = {
-      address: '대전 유성구 송림로 13',
+      address1: '대전 유성구 송림로 13',
       approval: true,
       auth: UserAuthority.OWNER,
       email: 'park.choongbum@gmail.com',
@@ -39,7 +39,7 @@ export class AdminService {
     };
 
     var company: Partial<Company> = {
-      address: '대전 유성구 은구비로 8',
+      address1: '대전 유성구 은구비로 8',
       approval: CompanyApproval.DONE,
       comRegNum: '3388800960',
       mbRegNum: '3388800960',

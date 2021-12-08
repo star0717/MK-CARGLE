@@ -96,6 +96,16 @@ export class User extends BaseEntity {
   })
   public hpNumber: string;
 
+  @ApiProperty({ description: '자택 우편번호' })
+  @IsOptional()
+  @IsString()
+  @prop({
+    unique: false,
+    required: [false, '자택 우편번호는 필수 항목입니다.'],
+    trim: true,
+  })
+  public postcode: string;
+
   @ApiProperty({ description: '자택 주소', required: false })
   @IsOptional()
   @IsString()
@@ -104,7 +114,17 @@ export class User extends BaseEntity {
     required: [false, '자택 주소는 필수 항목입니다.'],
     trim: true,
   })
-  public address: string;
+  public address1: string;
+
+  @ApiProperty({ description: '자택 상세 주소' })
+  @IsOptional()
+  @IsString()
+  @prop({
+    unique: false,
+    required: [false, '자택 상세 주소는 필수 항목입니다.'],
+    trim: true,
+  })
+  public address2: string;
 
   @ApiProperty({ description: '입사일', required: false })
   @IsOptional()
