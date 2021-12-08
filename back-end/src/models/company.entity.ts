@@ -100,6 +100,16 @@ export class Company extends BaseEntity {
   })
   public faxNum: string;
 
+  @ApiProperty({ description: '사업장 우편 번호' })
+  @IsOptional()
+  @IsString()
+  @prop({
+    unique: false,
+    required: [true, '사업장 주소는 필수 항목입니다.'],
+    trim: true,
+  })
+  public postcode: string;
+
   @ApiProperty({ description: '사업장 주소' })
   @IsOptional()
   @IsString()
@@ -108,7 +118,17 @@ export class Company extends BaseEntity {
     required: [true, '사업장 주소는 필수 항목입니다.'],
     trim: true,
   })
-  public address: string;
+  public address1: string;
+
+  @ApiProperty({ description: '사업장 상세 주소' })
+  @IsOptional()
+  @IsString()
+  @prop({
+    unique: false,
+    required: [true, '사업장 상세 주소는 필수 항목입니다.'],
+    trim: true,
+  })
+  public address2: string;
 
   @ApiProperty({
     description: '승인여부',

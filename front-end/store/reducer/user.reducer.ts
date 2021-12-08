@@ -1,9 +1,6 @@
 import { HYDRATE } from "next-redux-wrapper";
 import {
   UserState,
-  // UserInfo,
-  // User,
-  // Company,
   actionTypesUser,
   ActionsUser,
   FormInput,
@@ -12,8 +9,6 @@ import {
 import { UserInfo } from "../../src/models/auth.entity";
 import { User, UserAuthority } from "../../src/models/user.entity";
 import { Company, CompanyApproval } from "../../src/models/company.entity";
-import { ApiPayloadTooLargeResponse } from "@nestjs/swagger";
-import { faSleigh } from "@fortawesome/free-solid-svg-icons";
 
 export const initialState: UserState = {
   signInInfo: <UserInfo>{
@@ -27,7 +22,9 @@ export const initialState: UserState = {
     name: "",
     _cID: "",
     hpNumber: "",
-    address: "",
+    postcode: "",
+    address1: "",
+    address2: "",
     joinDate: null,
     approval: false,
   },
@@ -41,7 +38,9 @@ export const initialState: UserState = {
     busItem: "",
     phoneNum: "",
     faxNum: "",
-    address: "",
+    postcode: "",
+    address1: "",
+    address2: "",
     approval: CompanyApproval.BEFORE,
   },
   formInput: <FormInput>{
