@@ -14,12 +14,10 @@ import {
   CommonForm,
   SearchInput,
   SearchInputWrapper,
-  CommonButton,
-  SearchButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
-import { BsSearch } from "react-icons/bs";
+import { BsSearch } from 'react-icons/bs';
 
 const ComFindModalPresenter: NextPage<any> = (props) => {
   // props 재정의
@@ -40,32 +38,36 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <Wrapper height={`500px`}>
-        <CommonForm onSubmit={findCompanyHandler}>
+        <CommonForm
+          ju={`flex-start`}
+          onSubmit={findCompanyHandler}>
           <Text>업체명 또는 사업자번호 입력</Text>
-          <SearchInputWrapper
+          <Wrapper
             width={`678px`}
+            al={`flex-start`}
+            padding={`0px 5px`}
             dr={`row`}
-            border={`1px solid #000`}
-            padding={`0px 65px 0px 5px`}>
-            <SearchInput
-              width={`598px`}
-              padding={`0px 5px 0px 5px`}
-              placeholder="업체명 또는 사업자번호 입력"
-              type="text"
-              value={CHAR_DEL(searchText)}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setSearchText(e.target.value);
-              }}
-            />
-            <SearchButton
-              width={`auto`}
-              bgColor={`#fff`}
-              color={`#292929`}
-            >
-              <BsSearch />
-            </SearchButton>
-          </SearchInputWrapper>
-          <SmallButton kindOf={`default`} type="submit">검색</SmallButton>
+            ju={`flex-start`}
+            borderBottom={`3px solid #000`}
+          >
+            <Wrapper width={`auto`}>
+              <SearchInput
+                width={`632px`}
+                padding={`0px 5px 0px 5px`}
+                placeholder="업체명 또는 사업자번호 입력"
+                type="text"
+                value={CHAR_DEL(searchText)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchText(e.target.value);
+                }}
+              />
+            </Wrapper>
+            <Wrapper width={`36px`} height={`46px`}>
+              <Text fontSize={`24px`}>
+                <BsSearch />
+              </Text>
+            </Wrapper>
+          </Wrapper>
           <Wrapper>
             {companyList.length > 0 ? (
               <table>
