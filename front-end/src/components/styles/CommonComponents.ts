@@ -428,6 +428,11 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
   }
 
+  @media (max-width: 1439px) {
+    font-size: 18px;
+    width: 400px;
+  }
+
   @media (max-width: 500px) {
     height: 40px;
     font-size: 18px;
