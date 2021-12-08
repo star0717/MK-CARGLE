@@ -13,7 +13,8 @@ import {
   TableBodyLIST,
   CommonForm,
   SearchInput,
-  SearchWrapper,
+  SearchInputWrapper,
+  CommonButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
@@ -40,29 +41,30 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
       <Wrapper height={`500px`}>
         <CommonForm onSubmit={findCompanyHandler}>
           <Text>업체명 또는 사업자번호 입력</Text>
-          <Wrapper
-            al={`flex-start`}
-            padding={`10px 5px`}
+          <SearchInputWrapper
+            width={`678px`}
             dr={`row`}
-            ju={`flex-start`}
-          >
-
-            <SearchWrapper width={`auto`} dr={`row`} border={`1px solid #000`}>
+            border={`1px solid #000`}
+            padding={`0px 65px 0px 5px`}>
+            <SearchInput
+              width={`598px`}
+              padding={`0px 5px 0px 5px`}
+              placeholder="업체명 또는 사업자번호 입력"
+              type="text"
+              value={CHAR_DEL(searchText)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchText(e.target.value);
+              }}
+            />
+            <SmallButton
+              width={`auto`}
+              bgColor={`#fff`}
+              color={`#292929`}
+            >
               <BsSearch />
-
-              <SearchInput
-                width={`200px`}
-                padding={`0px 5px 0px 5px`}
-                type="text"
-                value={CHAR_DEL(searchText)}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setSearchText(e.target.value);
-                }}
-              />
-
-            </SearchWrapper>
-          </Wrapper>
-          <button type="submit">검색</button>
+            </SmallButton>
+          </SearchInputWrapper>
+          <SmallButton kindOf={`default`} type="submit">검색</SmallButton>
           <Wrapper>
             {companyList.length > 0 ? (
               <table>
