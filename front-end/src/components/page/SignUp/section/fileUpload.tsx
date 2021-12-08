@@ -30,10 +30,8 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
   const stepNumber = props?.stepNumber;
   const setStepNumber = props?.setStepNumber;
 
-  // 업로드할 파일 state
-  const [file, setFile] = useState(fileInit);
-  // 업로드할 파일명 state
-  const [fileName, setFileName] = useState(fileInit);
+  const [file, setFile] = useState(fileInit); // 업로드할 파일 state
+  const [fileName, setFileName] = useState(fileInit); // 업로드할 파일명 state
 
   // 파일 선택 시 파일명 state 변경
   const onFileSelectHandler = (e: any) => {

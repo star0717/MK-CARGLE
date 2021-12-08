@@ -18,16 +18,16 @@ const SignUp: NextPage<any> = () => {
     (state: RootStateInterface): UserState => state.userAll
   );
 
-  // 이메일 종류
+  // 이메일 종류ß
   const emailItem = [
     { key: 1, value: "", text: "직접 입력" },
-    { key: 2, value: "gmail.com", text: "Gmail" },
-    { key: 3, value: "naver.com", text: "Naver" },
-    { key: 4, value: "daum.net", text: "Daum" },
+    { key: 2, value: "gmail.com", text: "gmail.com" },
+    { key: 3, value: "naver.com", text: "naver.com" },
+    { key: 4, value: "daum.net", text: "daum.net" },
   ];
 
-  const [userAuth, setUserAuth] = useState(UserAuthority.WORKER); // 유저 권한 종류
-  const [stepNumber, setStepNumber] = useState<number>(1); // 스텝 숫자
+  const [userAuth, setUserAuth] = useState(UserAuthority.OWNER); // 유저 권한 종류
+  const [stepNumber, setStepNumber] = useState<number>(5); // 스텝 숫자
 
   // component에 전달할 props들 정의
   const SignUpProps = {

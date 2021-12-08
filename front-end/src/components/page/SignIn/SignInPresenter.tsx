@@ -10,9 +10,11 @@ import {
   CommonButton,
   TextInput,
   Text,
+  CommonSubTitle,
 } from "../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";
+
 
 const SigninPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
@@ -32,9 +34,9 @@ const SigninPresenter: NextPage<any> = (props) => {
         <Wrapper
           width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
         >
-          <CommonTitle textAlign={`center`} margin={`0px`}>
+          <CommonTitle textAlign={`center`} margin={`0px`} padding={`0px`}>
             CARGLE
-            <Text>정비관리도 이젠 편리하게</Text>
+            <CommonSubTitle color={`#000`}>정비관리도 이젠 편리하게</CommonSubTitle>
           </CommonTitle>
 
           <Wrapper margin={`20px 0px 0px`}>
