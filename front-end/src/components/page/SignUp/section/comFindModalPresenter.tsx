@@ -15,6 +15,7 @@ import {
   SearchInput,
   SearchInputWrapper,
   CommonButton,
+  SearchButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
@@ -56,13 +57,13 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                 setSearchText(e.target.value);
               }}
             />
-            <SmallButton
+            <SearchButton
               width={`auto`}
               bgColor={`#fff`}
               color={`#292929`}
             >
               <BsSearch />
-            </SmallButton>
+            </SearchButton>
           </SearchInputWrapper>
           <SmallButton kindOf={`default`} type="submit">검색</SmallButton>
           <Wrapper>
