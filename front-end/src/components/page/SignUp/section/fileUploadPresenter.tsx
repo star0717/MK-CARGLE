@@ -115,7 +115,7 @@ const FileUploadPresenter: NextPage<any> = (props) => {
             border={`1px solid #c4c4c4`}
             radius={`5px`}
             al={`flex-start`}
-            width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+            width={width < 1439 ? (width < 500 ? `300px` : `1040px`) : `1200px`}
             shadow={`0px 10px 15px rgba(220,220,220,1)`}
           >
             <Wrapper

@@ -513,7 +513,7 @@ margin: ${(props) => props.margin};
 background-color: ${(props) => props.bgColor};
 &:focus {
   outline: none;
-  box-shadow: ${(props) => props.theme.boxShadow};
+  border: 1px solid ${(props) => props.theme.basicTheme_C};
 }
 
 &:read-only:focus {
@@ -579,6 +579,7 @@ export const Combo = styled.select<any>`
 
   &:focus {
     outline: none;
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
   }
 
 `;

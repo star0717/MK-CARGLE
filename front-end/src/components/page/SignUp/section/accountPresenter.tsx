@@ -130,7 +130,7 @@ const AccountPresenter: NextPage<any> = (props) => {
                       onEmailKindHandler(e);
                     },
                   })}
-                  width={width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`}
+                  width={`120px`}
                   margin={`0px 0px 0px 20px`}
                 >
                   {props.emailItem.map((item: any, index: Number) => (
