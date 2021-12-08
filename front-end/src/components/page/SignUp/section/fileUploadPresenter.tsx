@@ -110,6 +110,7 @@ const FileUploadPresenter: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper>
           <Wrapper
+            display={!guideMsg && `none`}
             border={`1px solid #c4c4c4`}
             radius={`5px`}
             al={`flex-start`}
@@ -117,7 +118,13 @@ const FileUploadPresenter: NextPage<any> = (props) => {
             shadow={`0px 10px 15px rgba(220,220,220,1)`}
           >
             <Wrapper al={`flex-end`} padding={`10px 15px 10px 0px`}>
-              <Text fontSize={`28px`} cursor={`pointer`}>
+              <Text
+                fontSize={`28px`}
+                cursor={`pointer`}
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  setGuideMsg(false);
+                }}
+              >
                 <IoIosCloseCircle />
               </Text>
             </Wrapper>
@@ -141,7 +148,11 @@ const FileUploadPresenter: NextPage<any> = (props) => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
-          <QuestionIcon>
+          <QuestionIcon
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              setGuideMsg(!guideMsg);
+            }}
+          >
             <BsFillQuestionCircleFill />
           </QuestionIcon>
         </Wrapper>
