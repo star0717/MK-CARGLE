@@ -37,7 +37,10 @@ import { AuthToken } from 'src/lib/decorators/decorators';
 @ApiTags('설정(마이페이지) API')
 @Controller('settings')
 export class SettingsController {
-  constructor(private readonly settingsService: SettingsService) {}
+  constructor(
+    private readonly settingsService: SettingsService,
+    private readonly comService: CommonService,
+  ) {}
 
   @ApiOperation({ summary: '[WORKER] 비밀번호 확인' })
   @ApiBody({
@@ -48,7 +51,7 @@ export class SettingsController {
     description:
       '성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송',
   })
-  @Post('users/confirm/password')
+  @Post('myinfo/confirm/password')
   async comfirmPassword(
     @Body() data: ConfirmPWD,
     @AuthToken({ auth: UserAuthority.WORKER }) token: AuthTokenInfo,
@@ -68,64 +71,6 @@ export class SettingsController {
     return await this.settingsService.findMyInfo(token);
   }
 
-  @ApiOperation({ summary: '[WORKER] 패스워드 변경' })
-  @ApiParam({ name: 'id', description: '사용자 오브젝트 ID' })
-  @ApiBody({
-    description: '현재 비번과 신규 비번',
-    type: HelpChangePWD,
-  })
-  @ApiResponse({
-    description:
-      '성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송',
-  })
-  @Patch('users/password/:id')
-  async updateUserPassword(
-    @Param('id') id: string,
-    @Body() data: HelpChangePWD,
-    @AuthToken({ auth: UserAuthority.WORKER })
-    token: AuthTokenInfo,
-  ): Promise<boolean> {
-    console.log(data);
-
-    return await this.settingsService.updateUserPassword(token, id, data);
-  }
-
-  @ApiOperation({ summary: '[WORKER] 사용자 정보 변경' })
-  @ApiParam({ name: 'id', description: '사용자 오브젝트 ID' })
-  @ApiBody({
-    description:
-      '변경할 사용자 정보. name, hpNumber, address, joinDate 만 허용. 클라이언트가 업주일 경우 approval까지 허용',
-    type: PartialType<User>(User),
-  })
-  @ApiResponse({ description: '변경된 사용자 정보', type: User })
-  @Patch('users/:id')
-  async updateUserInfo(
-    @Param('id') id: string,
-    @Body() user: User,
-    @AuthToken({ auth: UserAuthority.WORKER })
-    token: AuthTokenInfo,
-  ): Promise<User> {
-    return await this.settingsService.updateMyUserInfo(token, id, user);
-  }
-
-  // @ApiOperation({ summary: '[OWNER] 업체 정보 변경' })
-  // @ApiParam({ name: 'id', description: '업체 오브젝트 ID' })
-  // @ApiBody({
-  //   description:
-  //     '변경할 업체 정보. mbTypeNum, busType, busItem, phoneNum, faxNum 만 허용',
-  //   type: PartialType<Company>(Company),
-  // })
-  // @ApiResponse({ description: '변경된 업체 정보', type: Company })
-  // @Patch('companies/:id')
-  // async updateCompanyInfo(
-  //   @Param('id') id: string,
-  //   @Body() company: Company,
-  //   @AuthToken({ auth: UserAuthority.OWNER })
-  //   token: AuthTokenInfo,
-  // ): Promise<Company> {
-  //   return await this.settingsService.updateCompanyInfo(token, id, company);
-  // }
-
   @ApiOperation({
     summary: '[WORKER] 내 정보 변경',
     description:
@@ -141,8 +86,36 @@ export class SettingsController {
   async updateMyInfo(
     @Body() data: SignUpInfo,
     @AuthToken({ auth: UserAuthority.WORKER }) token: AuthTokenInfo,
+    @Res({ passthrough: true }) res: Response,
   ): Promise<SignUpInfo> {
-    return await this.settingsService.updateMyInfo(token, data);
+    const newSignInfo: SignUpInfo = await this.settingsService.updateMyInfo(
+      token,
+      data,
+    );
+    this.comService.injectToken(newSignInfo, res);
+    return newSignInfo;
+  }
+
+  @ApiOperation({ summary: '[WORKER] 패스워드 변경' })
+  @ApiParam({ name: 'id', description: '사용자 오브젝트 ID' })
+  @ApiBody({
+    description: '현재 비번과 신규 비번',
+    type: HelpChangePWD,
+  })
+  @ApiResponse({
+    description:
+      '성공: true, 실패: false. 성공시엔 변경된 비밀번호가 메일로 전송',
+  })
+  @Patch('myinfo/change/password/:id')
+  async updateUserPassword(
+    @Param('id') id: string,
+    @Body() data: HelpChangePWD,
+    @AuthToken({ auth: UserAuthority.WORKER })
+    token: AuthTokenInfo,
+  ): Promise<boolean> {
+    console.log(data);
+
+    return await this.settingsService.updateUserPassword(token, id, data);
   }
 
   @ApiOperation({ summary: '[OWNER] 작업자 조회' })
@@ -150,7 +123,7 @@ export class SettingsController {
     description: `검색된 User 배열 데이터와 페이징 정보`,
     type: FindResult,
   })
-  @Get('workers')
+  @Get('management/workers')
   async findWorkers(
     @Query() fParams: FindParameters,
     @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
@@ -161,7 +134,7 @@ export class SettingsController {
   @ApiOperation({ summary: '[OWNER] 작업자 승인' })
   @ApiParam({ name: 'id', description: '승인할 작업자의 오브젝트ID' })
   @ApiResponse({ description: '승인된 사용자 정보', type: User })
-  @Patch('review/approve/users/:id')
+  @Patch('management/approve/workers/:id')
   async approveWorker(
     @Param('id') id: string,
     @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
@@ -172,7 +145,7 @@ export class SettingsController {
   @ApiOperation({ summary: '[OWNER] 작업자 승인 거부' })
   @ApiParam({ name: 'id', description: '승인 거부할 작업자의 오브젝트ID' })
   @ApiResponse({ description: '승인 거부된 사용자 정보', type: User })
-  @Patch('review/reject/users/:id')
+  @Patch('management/reject/workers/:id')
   async rejectWorker(
     @Param('id') id: string,
     @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
@@ -183,7 +156,7 @@ export class SettingsController {
   @ApiOperation({ summary: '[OWNER] 작업자 삭제' })
   @ApiParam({ name: 'id', description: '삭제할 작업자의 오브젝트ID' })
   @ApiResponse({ description: '삭제된 데이터의 수', type: DeleteResult })
-  @Patch('review/delete/users/:id')
+  @Patch('management/delete/workers/:id')
   async deleteWorker(
     @Param('id') id: string,
     @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,

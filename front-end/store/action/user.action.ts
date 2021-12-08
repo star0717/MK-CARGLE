@@ -172,7 +172,7 @@ export async function approvalReqAction(dataToSubmit: any) {
 // 비밀번호 확인 action
 export async function passwordCheck(dataToSubmit: ConfirmPWD) {
   const req = await axios
-    .post(`/api/settings/users/confirm/password`, dataToSubmit)
+    .post(`/api/settings/myinfo/confirm/password`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.PASSWORD_CHECK,
@@ -214,7 +214,10 @@ export async function setMyInfo(dataToSubmit: any) {
  */
 export async function changePass(dataToSubmit: HelpChangePWD) {
   const req = await axios
-    .patch(`/api/settings/users/password/${dataToSubmit._id}`, dataToSubmit)
+    .patch(
+      `/api/settings/myinfo/change/password/${dataToSubmit._id}`,
+      dataToSubmit
+    )
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.CHANGE_PASSWORD,

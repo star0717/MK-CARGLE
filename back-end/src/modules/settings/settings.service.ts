@@ -121,6 +121,7 @@ export class SettingsService {
   ): Promise<SignUpInfo> {
     if (token.cID != info.user._cID) throw new UnauthorizedException();
 
+    console.log(info.user);
     const user = await this.updateMyUserInfo(token, token.uID, info.user);
     if (!user) throw new UnauthorizedException();
 
@@ -137,6 +138,7 @@ export class SettingsService {
       user,
     };
 
+    console.log(myInfo.user);
     return myInfo;
   }
 
