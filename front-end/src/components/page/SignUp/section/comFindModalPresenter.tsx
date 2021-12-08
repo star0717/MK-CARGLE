@@ -5,9 +5,19 @@ import {
   Wrapper,
   TextInput,
   Text,
+  SmallButton,
+  TableWrapper,
+  TableHead,
+  TableHeadLIST,
+  TableBody,
+  TableBodyLIST,
+  CommonForm,
+  SearchInput,
+  SearchWrapper,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
+import { BsSearch } from 'react-icons/bs';
 
 const ComFindModalPresenter: NextPage<any> = (props) => {
   // props 재정의
@@ -28,15 +38,30 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <Wrapper height={`500px`}>
-        <form onSubmit={findCompanyHandler}>
+        <CommonForm onSubmit={findCompanyHandler}>
           <Text>업체명 또는 사업자번호 입력</Text>
-          <TextInput
-            type="text"
-            value={CHAR_DEL(searchText)}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setSearchText(e.target.value);
-            }}
-          />
+          <Wrapper
+            al={`flex-start`}
+            padding={`10px 5px`}
+            dr={`row`}
+            ju={`flex-start`}
+          >
+
+            <SearchWrapper width={`auto`} dr={`row`} border={`1px solid #000`}>
+              <BsSearch />
+
+              <SearchInput
+                width={`200px`}
+                padding={`0px 5px 0px 5px`}
+                type="text"
+                value={CHAR_DEL(searchText)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchText(e.target.value);
+                }}
+              />
+
+            </SearchWrapper>
+          </Wrapper>
           <button type="submit">검색</button>
           <Wrapper>
             {companyList.length > 0 ? (
@@ -77,7 +102,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
               "데이터가 존재하지 않습니다."
             )}
           </Wrapper>
-        </form>
+        </CommonForm>
       </Wrapper>
     </WholeWrapper>
   );
