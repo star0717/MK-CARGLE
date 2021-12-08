@@ -32,6 +32,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
 
   const [file, setFile] = useState(fileInit); // 업로드할 파일 state
   const [fileName, setFileName] = useState(fileInit); // 업로드할 파일명 state
+  const [guideMsg, setGuideMsg] = useState<boolean>(false); // 가이드 메세지
 
   // 파일 선택 시 파일명 state 변경
   const onFileSelectHandler = (e: any) => {
@@ -111,6 +112,8 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
     onFileUploadHandler,
     onFileSelectHandler,
     onSignOutHandler,
+    guideMsg,
+    setGuideMsg,
   };
 
   return <FileUploadPresenter {...fProps} />;

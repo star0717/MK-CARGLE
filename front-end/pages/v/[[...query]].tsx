@@ -13,6 +13,7 @@ import { MainRoute, SubRoute } from "../../src/models/router.entity";
 import { useRouter } from "next/dist/client/router";
 import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
+import Err404 from "../../src/components/page/Error/404";
 
 interface ViewProps {
   route: any;
@@ -55,7 +56,7 @@ const SubComponent: NextPage<ViewProps> = (props) => {
   console.log("서브", subRoute);
 
   switch (mainRoute) {
-    case null:
+    case MainRoute.MAIN:
       return <Main {...props} />;
       break;
 
@@ -67,7 +68,7 @@ const SubComponent: NextPage<ViewProps> = (props) => {
         return <MyPageWorker {...props} />;
       }
     default:
-      // router.push("/404");
+      return <Err404 />;
       break;
   }
 };
