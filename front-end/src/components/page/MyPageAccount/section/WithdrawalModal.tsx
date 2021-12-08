@@ -1,7 +1,14 @@
 import { NextPage } from "next";
+import React from "react";
 import { WholeWrapper, Wrapper, Text } from "../../../styles/CommonComponents";
 
-const WithdrawalModal: NextPage = () => {
+interface modalOption {
+  accountInfo: any;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  style?: React.CSSProperties;
+}
+
+const WithdrawalModal: NextPage<modalOption> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper>

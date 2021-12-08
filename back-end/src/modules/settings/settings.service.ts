@@ -8,7 +8,11 @@ import {
   ConfirmPWD,
   SignUpInfo,
 } from 'src/models/auth.entity';
-import { FindParameters, FindResult } from 'src/models/base.entity';
+import {
+  DeleteResult,
+  FindParameters,
+  FindResult,
+} from 'src/models/base.entity';
 import { Company } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
 import { CompaniesService } from '../companies/companies.service';
@@ -82,24 +86,21 @@ export class SettingsService {
     else return false;
   }
 
-  async updateUserInfo(
+  async updateMyUserInfo(
     token: AuthTokenInfo,
     id: string,
     user: Partial<User>,
   ): Promise<User> {
     if (token.uID != id) throw new UnauthorizedException();
-    const pUser: Partial<User> = {};
+    var pUser: Partial<User> = {};
     if (user.name) pUser.name = user.name;
     if (user.hpNumber) pUser.hpNumber = user.hpNumber;
     if (user.address) pUser.address = user.address;
     if (user.joinDate) pUser.joinDate = user.joinDate;
-    // 오너에 한해 approval 수정 승인
-    if (token.uAuth == UserAuthority.OWNER && user.approval)
-      pUser.approval = user.approval;
     return await this.usersService.findByIdAndUpdate(token, id, pUser);
   }
 
-  async updateCompanyInfo(
+  async updateMyCompanyInfo(
     token: AuthTokenInfo,
     id: string,
     company: Partial<Company>,
@@ -118,17 +119,17 @@ export class SettingsService {
     token: AuthTokenInfo,
     info: SignUpInfo,
   ): Promise<SignUpInfo> {
-    if (token.uID != info.user._id || token.cID != info.company._id)
-      throw new UnauthorizedException();
+    if (token.cID != info.user._cID) throw new UnauthorizedException();
 
-    const user = await this.updateUserInfo(token, token.uID, info.user);
+    console.log(info.user);
+    const user = await this.updateMyUserInfo(token, token.uID, info.user);
     if (!user) throw new UnauthorizedException();
 
     var company: Company;
     if (token.uAuth == UserAuthority.WORKER) {
       company = await this.companiesService.findById(token, token.cID);
     } else {
-      company = await this.updateCompanyInfo(token, token.cID, info.company);
+      company = await this.updateMyCompanyInfo(token, token.cID, info.company);
     }
     if (!company) throw new UnauthorizedException();
 
@@ -137,6 +138,7 @@ export class SettingsService {
       user,
     };
 
+    console.log(myInfo.user);
     return myInfo;
   }
 
@@ -146,5 +148,35 @@ export class SettingsService {
   ): Promise<FindResult<User>> {
     fParams.filter = { auth: UserAuthority.WORKER } as Partial<User>;
     return await this.usersService.findByOptions(token, fParams);
+  }
+
+  async approveWorker(token: AuthTokenInfo, id: string): Promise<User> {
+    const user = await this.usersService.findByIdAndUpdate(token, id, {
+      approval: true,
+    });
+    // 승인 완료 메일 전송
+    const email = this.commonService.emailDataToApproveWorker(token.cName);
+    this.commonService.sendMail(user.email, email.title, email.content);
+    return user;
+  }
+
+  async rejectWorker(token: AuthTokenInfo, id: string): Promise<User> {
+    const user = await this.usersService.findByIdAndUpdate(token, id, {
+      approval: false,
+    });
+    // 승인 거부 메일 전송
+    const email = this.commonService.emailDataToRejectWorker(token.cName);
+    this.commonService.sendMail(user.email, email.title, email.content);
+    return user;
+  }
+
+  async deleteWorker(token: AuthTokenInfo, id: string): Promise<DeleteResult> {
+    const user = await this.usersService.findById(token, id);
+    if (!user) throw new UnauthorizedException();
+    const result = await this.usersService.findByIdAndRemove(token, id);
+    // 승인 거부 메일 전송
+    const email = this.commonService.emailDataToDeleteWorker(token.cName);
+    this.commonService.sendMail(user.email, email.title, email.content);
+    return result;
   }
 }

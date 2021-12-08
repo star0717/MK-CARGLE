@@ -22,6 +22,7 @@ export enum actionTypesUser {
   PASSWORD_CHECK = "PASSWORD_CHECK",
   GET_MY_INFO = "GET_MY_INFO",
   SET_MY_INFO = "SET_MY_INFO",
+  CHANGE_PASSWORD = "CHANGE_PASSWORD",
 }
 
 export type ActionsUser =
@@ -45,7 +46,8 @@ export type ActionsUser =
   | ApprovalRequest
   | PasswordCheck
   | GetMyInfo
-  | SetMyInfo;
+  | SetMyInfo
+  | ChangePassword;
 
 // 초기화
 export interface UserInit {
@@ -172,5 +174,11 @@ export interface GetMyInfo {
 // user, company 정보 업데이트
 export interface SetMyInfo {
   type: actionTypesUser.SET_MY_INFO;
+  payload: any;
+}
+
+// user, company 정보 업데이트
+export interface ChangePassword {
+  type: actionTypesUser.CHANGE_PASSWORD;
   payload: any;
 }

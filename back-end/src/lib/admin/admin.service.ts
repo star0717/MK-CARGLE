@@ -89,7 +89,7 @@ export class AdminService {
       },
     );
     if (!user) throw new BadRequestException();
-    const mailData = this.commonService.emailDataForApproved();
+    const mailData = this.commonService.emailDataToApproveOwner();
     this.commonService.sendMail(user.email, mailData.title, mailData.content);
     return company;
   }
@@ -106,7 +106,7 @@ export class AdminService {
       },
     );
     if (!user) throw new BadRequestException();
-    const mailData = this.commonService.emailDataForRejectApproval();
+    const mailData = this.commonService.emailDataToRejectOwner();
     this.commonService.sendMail(user.email, mailData.title, mailData.content);
     return company;
   }
