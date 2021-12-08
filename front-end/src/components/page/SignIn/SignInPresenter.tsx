@@ -15,7 +15,6 @@ import {
 import Link from "next/link";
 import React from "react";
 
-
 const SigninPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
   const onSignInHandler = props.onSignInHandler;
@@ -36,7 +35,9 @@ const SigninPresenter: NextPage<any> = (props) => {
         >
           <CommonTitle textAlign={`center`} margin={`0px`} padding={`0px`}>
             CARGLE
-            <CommonSubTitle color={`#000`}>정비관리도 이젠 편리하게</CommonSubTitle>
+            <CommonSubTitle color={`#000`}>
+              정비관리도 이젠 편리하게
+            </CommonSubTitle>
           </CommonTitle>
 
           <Wrapper margin={`20px 0px 0px`}>
@@ -118,7 +119,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   아직 회원이 아니신가요?
                 </Text>
                 <Text decoration={`underline`}>
-                  <Link href="/signup">
+                  <Link href="/view/signup">
                     <a
                       style={{ fontWeight: "bold", fontSize: "18px" }}
                       onClick={userInit}
@@ -137,7 +138,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   계정을 찾고 싶으신가요?
                 </Text>
                 <Text decoration={`underline`}>
-                  <Link href="/find">
+                  <Link href="/view/find">
                     <a style={{ fontWeight: "bold", fontSize: "18px" }}>
                       계정찾기
                     </a>

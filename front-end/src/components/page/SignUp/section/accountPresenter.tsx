@@ -47,7 +47,6 @@ const AccountPresenter: NextPage<any> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-
     <WholeWrapper ref={ref}>
       <Wrapper>
         <form onSubmit={handleSubmit(onSignUpUserHandler)}>
@@ -58,7 +57,13 @@ const AccountPresenter: NextPage<any> = (props) => {
                 <Text margin={`0px 0px 10px`}>*소속 업체</Text>
                 <Wrapper dr={`row`}>
                   <TextInput2
-                    width={width < 1439 ? (width < 500 ? `200px` : `900px`) : `1100px`}
+                    width={
+                      width < 1439
+                        ? width < 500
+                          ? `200px`
+                          : `900px`
+                        : `1100px`
+                    }
                     type="text"
                     value={inputForm.companyNum}
                     placeholder="업체명 또는 사업자번호로 검색"
@@ -84,17 +89,30 @@ const AccountPresenter: NextPage<any> = (props) => {
                 </Wrapper>
               </Wrapper>
               {errors.companyNum?.type === "required" && (
-                <Text margin={`0px 0px 10px 0px`} width={`100%`} color={`#d6263b`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>{errors.companyNum.message}</Text>
+                <Text
+                  margin={`0px 0px 10px 0px`}
+                  width={`100%`}
+                  color={`#d6263b`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  {errors.companyNum.message}
+                </Text>
               )}
             </Wrapper>
           )}
           {/* 아이디(이메일) */}
           <Wrapper>
             <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>*아이디(이메일 형식으로 입력해주세요.)</Text>
+              <Text margin={`0px 0px 10px`}>
+                *아이디(이메일 형식으로 입력해주세요.)
+              </Text>
               <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
                 <TextInput2
-                  width={width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`}
+                  width={
+                    width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`
+                  }
                   type="text"
                   value={inputForm.emailAddress}
                   readOnly={formCheck.authNumCheck}
@@ -109,7 +127,9 @@ const AccountPresenter: NextPage<any> = (props) => {
                 />
                 <TextInput2
                   margin={`0px 0px 0px 20px`}
-                  width={width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`}
+                  width={
+                    width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`
+                  }
                   type="text"
                   value={inputForm.emailDomain}
                   placeholder="주소 선택"
@@ -130,7 +150,9 @@ const AccountPresenter: NextPage<any> = (props) => {
                       onEmailKindHandler(e);
                     },
                   })}
-                  width={width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`}
+                  width={
+                    width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`
+                  }
                   margin={`0px 0px 0px 20px`}
                 >
                   {props.emailItem.map((item: any, index: Number) => (
@@ -152,7 +174,9 @@ const AccountPresenter: NextPage<any> = (props) => {
               {formCheck.emailSend ? (
                 <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
                   <TextInput2
-                    width={width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`}
+                    width={
+                      width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`
+                    }
                     type="text"
                     value={authNum}
                     {...register("authNum", {
@@ -161,28 +185,68 @@ const AccountPresenter: NextPage<any> = (props) => {
                       },
                     })}
                   />
-                  <SmallButton kindOf={`default`} margin={`0px 0px 0px 20px`} type="button" onClick={onAuthNumCheckHandler}>
+                  <SmallButton
+                    kindOf={`default`}
+                    margin={`0px 0px 0px 20px`}
+                    type="button"
+                    onClick={onAuthNumCheckHandler}
+                  >
                     인증
                   </SmallButton>
                 </Wrapper>
               ) : null}
               {formCheck.authNumCheck ? (
-                <Text width={`100%`} color={`#1ccd8d`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>이메일 인증이 완료되었습니다.</Text>
+                <Text
+                  width={`100%`}
+                  color={`#1ccd8d`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  이메일 인증이 완료되었습니다.
+                </Text>
               ) : null}
               <Wrapper>
                 {(errors.emailAddress?.type === "required" ||
                   errors.emailDomain?.type === "required") && (
-                    <Text margin={`0px 0px 10px 0px`} width={`100%`} color={`#d6263b`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>필수 입력사항입니다.</Text>
-                  )}
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    필수 입력사항입니다.
+                  </Text>
+                )}
                 {(errors.emailAddress?.type === "pattern" ||
                   errors.emailDomain?.type === "pattern") && (
-                    <Text margin={`0px 0px 10px 0px`} width={`100%`} color={`#d6263b`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>형식에 맞게 입력하세요.</Text>
-                  )}
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    형식에 맞게 입력하세요.
+                  </Text>
+                )}
                 {(errors.emailAddress?.type === "emailExist" ||
                   errors.emailAddress?.type === "emailNull" ||
                   errors.emailAddress?.type === "emailAuthNeed") && (
-                    <Text margin={`0px 0px 10px 0px`} width={`100%`} color={`#d6263b`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>{errors.emailAddress.message}</Text>
-                  )}
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    {errors.emailAddress.message}
+                  </Text>
+                )}
               </Wrapper>
             </Wrapper>
           </Wrapper>
@@ -190,7 +254,9 @@ const AccountPresenter: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*비밀번호</Text>
             <TextInput2
-              width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+              width={
+                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+              }
               margin={`0px 0px 10px`}
               type="password"
               value={inputUser.password}
@@ -208,14 +274,25 @@ const AccountPresenter: NextPage<any> = (props) => {
             />
             {(errors.password?.type === "required" ||
               errors.password?.type === "pattern") && (
-                <Text margin={`0px 0px 10px 0px`} width={`100%`} color={`#d6263b`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>{errors.password.message}</Text>
-              )}
+              <Text
+                margin={`0px 0px 10px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.password.message}
+              </Text>
+            )}
           </Wrapper>
           {/* 비밀번호확인 */}
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*비밀번호 확인</Text>
             <TextInput2
-              width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+              width={
+                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+              }
               margin={`0px 0px 10px`}
               type="password"
               value={inputForm.passwordCheck}
@@ -229,21 +306,50 @@ const AccountPresenter: NextPage<any> = (props) => {
               })}
             />
             {errors.passwordCheck?.type === "required" && (
-              <Text margin={`0px 0px 10px 0px`} width={`100%`} color={`#d6263b`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>{errors.passwordCheck.message}</Text>
+              <Text
+                margin={`0px 0px 10px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.passwordCheck.message}
+              </Text>
             )}
             {errors.passwordCheck?.type === "validate" && (
-              <Text margin={`0px 0px 10px 0px`} width={`100%`} color={`#d6263b`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>비밀번호가 일치하지 않습니다.</Text>
+              <Text
+                margin={`0px 0px 10px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                비밀번호가 일치하지 않습니다.
+              </Text>
             )}
             {watch("passwordCheck", "") !== "" &&
               errors.passwordCheck?.type !== "validate" && (
-                <Text margin={`0px 0px 10px 0px`} width={`100%`} color={`#1ccd8d`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>비밀번호가 일치합니다.</Text>
+                <Text
+                  margin={`0px 0px 10px 0px`}
+                  width={`100%`}
+                  color={`#1ccd8d`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  비밀번호가 일치합니다.
+                </Text>
               )}
           </Wrapper>
           {/* 이름 */}
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*이름</Text>
             <TextInput2
-              width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+              width={
+                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+              }
               margin={`0px 0px 10px`}
               type="text"
               value={inputUser.name}
@@ -256,14 +362,25 @@ const AccountPresenter: NextPage<any> = (props) => {
               })}
             />
             {errors.name?.type === "required" && (
-              <Text margin={`0px 0px 10px`} width={`100%`} color={`#d6263b`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>{errors.name.message}</Text>
+              <Text
+                margin={`0px 0px 10px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.name.message}
+              </Text>
             )}
           </Wrapper>
           {/* 휴대폰번호 */}
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*휴대폰번호</Text>
             <TextInput2
-              width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+              width={
+                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+              }
               margin={`0px 0px 10px`}
               type="text"
               value={CHAR_DEL(inputUser.hpNumber)}
@@ -281,20 +398,31 @@ const AccountPresenter: NextPage<any> = (props) => {
             />
             {(errors.hpNumber?.type === "required" ||
               errors.hpNumber?.type === "pattern") && (
-                <Text margin={`0px 0px 10px`} width={`100%`} color={`#d6263b`} al={`flex-start`} fontSize={`14px`} textAlign={`left`}>{errors.hpNumber.message}</Text>
-              )}
+              <Text
+                margin={`0px 0px 10px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.hpNumber.message}
+              </Text>
+            )}
           </Wrapper>
           {/* 자택주소 */}
-          <Wrapper al={`flex-start`} >
+          <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>자택주소(선택)</Text>
             <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
               <TextInput2
-                width={width < 1439 ? (width < 500 ? `200px` : `900px`) : `1100px`}
+                width={
+                  width < 1439 ? (width < 500 ? `200px` : `900px`) : `1100px`
+                }
                 type="text"
                 placeholder="주소를 입력해주세요."
-                value={inputForm.uAddressMain}
+                value={inputUser.address1}
                 readOnly
-                {...register("uAddressMain")}
+                {...register("address1")}
               />
               <SmallButton
                 kindOf={`default`}
@@ -309,15 +437,17 @@ const AccountPresenter: NextPage<any> = (props) => {
               </SmallButton>
             </Wrapper>
             <TextInput2
-              width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+              width={
+                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+              }
               margin={`0px 0px 10px`}
               type="text"
               placeholder="상세 주소"
-              value={inputForm.uAddressDetail}
-              readOnly={inputForm.uAddressMain ? false : true}
-              {...register("uAddressDetail", {
+              value={inputUser.address2}
+              readOnly={inputUser.address1 ? false : true}
+              {...register("address2", {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputFormHandler(e);
+                  onInputUserHandler(e);
                 },
               })}
             />
@@ -332,9 +462,12 @@ const AccountPresenter: NextPage<any> = (props) => {
               }
               placeholderText="YYYY-MM-DD"
             />
-
           </Wrapper>
-          <Wrapper dr={`row`} ju={`space-around`} padding={`50px 0px 100px 0px`} >
+          <Wrapper
+            dr={`row`}
+            ju={`space-around`}
+            padding={`50px 0px 100px 0px`}
+          >
             <CommonButton
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 setStepNumber(stepNumber - 1);

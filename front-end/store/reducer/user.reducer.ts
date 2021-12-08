@@ -48,10 +48,6 @@ export const initialState: UserState = {
     emailAddress: "",
     emailDomain: "",
     passwordCheck: "",
-    uAddressMain: "",
-    uAddressDetail: "",
-    cAddressMain: "",
-    cAddressDetail: "",
   },
   formCheck: <FormCheck>{
     mkTerm: false,

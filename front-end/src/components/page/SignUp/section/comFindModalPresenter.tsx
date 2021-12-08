@@ -13,11 +13,11 @@ import {
   TableBodyLIST,
   CommonForm,
   SearchInput,
-  SearchWrapper,
+  SearchInputWrapper,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
-import { BsSearch } from 'react-icons/bs';
+import { BsSearch } from "react-icons/bs";
 
 const ComFindModalPresenter: NextPage<any> = (props) => {
   // props 재정의
@@ -46,8 +46,11 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
             dr={`row`}
             ju={`flex-start`}
           >
-
-            <SearchWrapper width={`auto`} dr={`row`} border={`1px solid #000`}>
+            <SearchInputWrapper
+              width={`auto`}
+              dr={`row`}
+              border={`1px solid #000`}
+            >
               <BsSearch />
 
               <SearchInput
@@ -59,8 +62,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                   setSearchText(e.target.value);
                 }}
               />
-
-            </SearchWrapper>
+            </SearchInputWrapper>
           </Wrapper>
           <button type="submit">검색</button>
           <Wrapper>
