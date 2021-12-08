@@ -124,22 +124,22 @@ const CompanyPresenter: NextPage<any> = (props) => {
                 errors.comRegNum?.type === "comCheckFalse" ||
                 errors.comRegNum?.type === "comExist" ||
                 errors.comRegNum?.type === "comCheckNeed") && (
-                <Text
-                  margin={`0px 0px 10px 0px`}
-                  width={`100%`}
-                  color={`#d6263b`}
-                  al={`flex-start`}
-                  fontSize={`14px`}
-                  textAlign={`left`}
-                >
-                  {errors.comRegNum.message}
-                </Text>
-              )}
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    {errors.comRegNum.message}
+                  </Text>
+                )}
               {errors.comRegNum?.type === "comCheckTrue" && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}
-                  color={`#d6263b`}
+                  color={`#1ccd8d`}
                   al={`flex-start`}
                   fontSize={`14px`}
                   textAlign={`left`}
@@ -177,17 +177,17 @@ const CompanyPresenter: NextPage<any> = (props) => {
               />
               {(errors.mbRegNum?.type === "required" ||
                 errors.mbRegNum?.type === "pattern") && (
-                <Text
-                  margin={`0px 0px 10px 0px`}
-                  width={`100%`}
-                  color={`#d6263b`}
-                  al={`flex-start`}
-                  fontSize={`14px`}
-                  textAlign={`left`}
-                >
-                  {errors.mbRegNum.message}
-                </Text>
-              )}
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    {errors.mbRegNum.message}
+                  </Text>
+                )}
             </Wrapper>
             {/* 정비업종 */}
             <Wrapper
@@ -283,17 +283,17 @@ const CompanyPresenter: NextPage<any> = (props) => {
               />
               {(errors.phoneNum?.type === "required" ||
                 errors.phoneNum?.type === "pattern") && (
-                <Text
-                  margin={`0px 0px 10px 0px`}
-                  width={`100%`}
-                  color={`#d6263b`}
-                  al={`flex-start`}
-                  fontSize={`14px`}
-                  textAlign={`left`}
-                >
-                  {errors.phoneNum.message}
-                </Text>
-              )}
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    {errors.phoneNum.message}
+                  </Text>
+                )}
             </Wrapper>
             {/* 사업자 팩스번호 */}
             <Wrapper

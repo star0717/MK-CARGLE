@@ -26,7 +26,7 @@ const SignUp: NextPage<any> = () => {
     { key: 4, value: "daum.net", text: "daum.net" },
   ];
 
-  const [userAuth, setUserAuth] = useState(UserAuthority.OWNER); // 유저 권한 종류
+  const [userAuth, setUserAuth] = useState(UserAuthority.WORKER); // 유저 권한 종류
   const [stepNumber, setStepNumber] = useState<number>(3); // 스텝 숫자
 
   // component에 전달할 props들 정의
