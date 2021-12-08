@@ -128,7 +128,7 @@ const AccountM: NextPage<any> = (props) => {
             <TextInput
               value={accountInfo.user.email}
               type="text"
-              readOnly={true}
+              readOnly
               disabled={true}
             />
           </Wrapper>
@@ -137,7 +137,7 @@ const AccountM: NextPage<any> = (props) => {
             <TextInput
               value={accountInfo.user.password}
               type="password"
-              readOnly={true}
+              readOnly
               disabled={true}
             />
             <button
@@ -155,7 +155,6 @@ const AccountM: NextPage<any> = (props) => {
             <TextInput
               defaultValue={userData.name}
               type="text"
-              readOnly={false}
               name="name"
               onChange={(e: any) => {
                 onInputUserHandler(e);
@@ -167,7 +166,6 @@ const AccountM: NextPage<any> = (props) => {
             <TextInput
               defaultValue={userData.hpNumber}
               type="tel"
-              readOnly={false}
               name="hpNumber"
               onChange={(e: any) => {
                 onInputUserHandler(e);
@@ -215,7 +213,7 @@ const AccountM: NextPage<any> = (props) => {
               disabled={true}
               value={accountInfo.company.name}
               type="text"
-              readonly={true}
+              readonly
             />
           </Wrapper>
           <Wrapper dr={`row`}>
@@ -224,7 +222,7 @@ const AccountM: NextPage<any> = (props) => {
               disabled={true}
               value={accountInfo.company.comRegNum}
               type="text"
-              readonly={true}
+              readonly
             />
           </Wrapper>
           <Wrapper dr={`row`}>
@@ -233,7 +231,7 @@ const AccountM: NextPage<any> = (props) => {
               disabled={true}
               value={accountInfo.company.mbRegNum}
               type="text"
-              readonly={true}
+              readonly
             />
           </Wrapper>
           <Wrapper dr={`row`}>
@@ -242,7 +240,7 @@ const AccountM: NextPage<any> = (props) => {
               disabled={true}
               value={accountInfo.company.ownerName}
               type="text"
-              readonly={true}
+              readonly
             />
           </Wrapper>
           <Wrapper dr={`row`}>
@@ -256,7 +254,7 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>업태</Text>
             <TextInput
-              value={accountInfo.company.busType}
+              defaultValue={accountInfo.company.busType}
               type="text"
               name="busType"
               readOnly={readOnly}
@@ -267,7 +265,7 @@ const AccountM: NextPage<any> = (props) => {
             />
             <Text>업종</Text>
             <TextInput
-              value={accountInfo.company.busItem}
+              defaultValue={accountInfo.company.busItem}
               type="text"
               name="busItem"
               readOnly={readOnly}
@@ -280,7 +278,7 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>사업자 전화번호</Text>
             <TextInput
-              value={accountInfo.company.phoneNum}
+              defaultValue={accountInfo.company.phoneNum}
               type="tel"
               name="phoneNum"
               readOnly={readOnly}
@@ -291,7 +289,7 @@ const AccountM: NextPage<any> = (props) => {
             />
             <Text>사업자팩스번호</Text>
             <TextInput
-              value={accountInfo.company.faxNum}
+              defaultValue={accountInfo.company.faxNum}
               type="tel"
               name="faxNum"
               readOnly={readOnly}
@@ -306,7 +304,7 @@ const AccountM: NextPage<any> = (props) => {
             <TextInput
               value={accountInfo.company.address}
               type="text"
-              readOnly={true}
+              readOnly
               disabled={true}
             ></TextInput>
           </Wrapper>
