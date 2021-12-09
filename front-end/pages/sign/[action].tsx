@@ -15,8 +15,6 @@ const SignComponent: NextPage = () => {
   const router = useRouter();
   const { action } = router.query;
 
-  console.log("액션", action);
-
   switch (action) {
     case SignRoute.SIGNUP:
       return <SignUp />;
@@ -49,13 +47,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const route = context.query;
   const signRoute = route.action ? route.action : null;
   const signItem: any = Object.values(SignRoute); // page first query array
-  console.log("?", signRoute);
 
   if (context.req.cookies.mk_token) {
     return {
       redirect: {
         permanent: false,
-        destination: "/view/main",
+        destination: "/v/main",
       },
     };
   } else {

@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/view/main",
+        destination: "/v/main",
       },
     };
   }
