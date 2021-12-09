@@ -14,12 +14,15 @@ import {
   CommonForm,
   SearchInput,
   SearchInputWrapper,
-  CommonButton,
-  SearchButton,
+  Pagenation,
+  PagenationWrapper,
+  PagenationBtn,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
-import { BsSearch } from "react-icons/bs";
+import { BsSearch } from 'react-icons/bs';
+import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowForward } from 'react-icons/io';
 
 const ComFindModalPresenter: NextPage<any> = (props) => {
   // props 재정의
@@ -39,72 +42,117 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper height={`500px`}>
-        <CommonForm onSubmit={findCompanyHandler}>
-          <Text>업체명 또는 사업자번호 입력</Text>
-          <SearchInputWrapper
+      <Wrapper height={`500px`}
+        ju={`flex-start`}
+      >
+        <CommonForm
+          ju={`flex-start`}
+          onSubmit={findCompanyHandler}>
+          <Wrapper
             width={`678px`}
+            padding={`0px 5px`}
             dr={`row`}
-            border={`1px solid #000`}
-            padding={`0px 65px 0px 5px`}>
-            <SearchInput
-              width={`598px`}
-              padding={`0px 5px 0px 5px`}
-              placeholder="업체명 또는 사업자번호 입력"
-              type="text"
-              value={CHAR_DEL(searchText)}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setSearchText(e.target.value);
-              }}
-            />
-            <SearchButton
-              width={`auto`}
-              bgColor={`#fff`}
-              color={`#292929`}
-            >
-              <BsSearch />
-            </SearchButton>
-          </SearchInputWrapper>
-          <SmallButton kindOf={`default`} type="submit">검색</SmallButton>
-          <Wrapper>
-            {companyList.length > 0 ? (
-              <table>
-                <thead>
-                  <tr>
-                    <th>업체명</th>
-                    <th>대표자명</th>
-                    <th>사업자등록번호</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {companyList.map((item: any, index: number) => (
-                    <tr
-                      style={{ cursor: "pointer" }}
-                      id={item.comRegNum}
-                      key={index}
-                      onClick={(e) => {
-                        setInputForm({
-                          ...inputForm,
-                          companyNum: item.comRegNum,
-                        });
-                        setInputUser({ ...inputUser, _cID: item._id });
-                        setValue("companyNum", item.comRegNum, {
-                          shouldValidate: true,
-                        });
-                        setModalOpen(false);
-                      }}
-                    >
-                      <td>{item.name}</td>
-                      <td>{item.ownerName}</td>
-                      <td>{item.comRegNum}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              "데이터가 존재하지 않습니다."
-            )}
+            borderBottom={`1px solid #000`}
+            margin={`10px 0px 0px`}
+          >
+            <Wrapper width={`auto`}>
+              <SearchInput
+                width={`632px`}
+                padding={`0px 5px 0px 5px`}
+                placeholder="업체명 또는 사업자번호 입력"
+                type="text"
+                value={CHAR_DEL(searchText)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchText(e.target.value);
+                }}
+              />
+            </Wrapper>
+            <Wrapper width={`36px`} height={`46px`}>
+              <Text fontSize={`24px`}>
+                <BsSearch />
+              </Text>
+            </Wrapper>
           </Wrapper>
+          <Wrapper
+            fontSize={`18px`}
+          >
+            <TableWrapper
+              margin={`0px`}
+              padding={`0px`}
+            >
+              <TableHead
+                margin={`0px`}
+                borderTop={`0px`}
+              >
+                <TableHeadLIST
+                  width={`226px`}
+                >
+                  업체명
+                </TableHeadLIST>
+                <TableHeadLIST
+                  width={`226px`}
+                >
+                  대표자명
+                </TableHeadLIST>
+                <TableHeadLIST
+                  width={`226px`}
+                >
+                  사업자등록번호
+                </TableHeadLIST>
+              </TableHead>
+              <TableBody
+                margin={`0px`}
+              >
+                <TableBodyLIST
+                  width={`226px`}
+                >
+                  상호명
+                </TableBodyLIST>
+                <TableBodyLIST
+                  width={`226px`}
+                >
+                  변무영
+                </TableBodyLIST>
+                <TableBodyLIST
+                  width={`226px`}
+                >
+                  338800960
+                </TableBodyLIST>
+              </TableBody>
+              <TableBody
+                margin={`0px`}
+              >
+                <TableBodyLIST
+                  width={`226px`}
+                >
+                  상호명
+                </TableBodyLIST>
+                <TableBodyLIST
+                  width={`226px`}
+                >
+                  변무영
+                </TableBodyLIST>
+                <TableBodyLIST
+                  width={`226px`}
+                >
+                  338800960
+                </TableBodyLIST>
+              </TableBody>
+            </TableWrapper>
+          </Wrapper>
+          <PagenationWrapper>
+
+            <PagenationBtn>
+              <IoIosArrowBack />
+            </PagenationBtn>
+            <Pagenation>
+              1
+            </Pagenation>
+            <PagenationBtn>
+              <IoIosArrowForward />
+            </PagenationBtn>
+
+          </PagenationWrapper>
         </CommonForm>
       </Wrapper>
     </WholeWrapper>

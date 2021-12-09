@@ -125,7 +125,6 @@ export const Wrapper = styled.div<any>`
   background-attachment: ${(props) => props.attachment || `fixed`};
   background-position: center;
   background-color: ${(props) => props.bgColor};
-
   transition: 0.5s;
   cursor: ${(props) => props.cursor};
   line-height: ${(props) => props.lineHeight};
@@ -487,7 +486,7 @@ export const SearchButton = styled.button<any>
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
   transition: ${(props) => props.transition || props.theme.transition};
-  margin: ${(props) => props.margin};
+  margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
   font-size: ${(props) => props.fontSize};
@@ -497,32 +496,36 @@ export const SearchButton = styled.button<any>
   justify-content: ${(props) => props.ju || `center`};
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
-  border-radius:5px;
-  color: #fff;
   cursor: pointer;
-  ${(props) => props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
-  ${(props) => props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
-  ${(props) => props.kindOf === `default` && `border : 1px solid ${props.theme.basicTheme_C};`}
-  
+  border:none;
 
-  ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
-  ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `ghost` && `cursor : default;`}
-  ${(props) => props.kindOf === `ghost` && `border : none;`}
-  
-
-  & svg {
-    font-size: 25px;
-    color: #fff;
-  }
-
-  &:hover {
-    box-shadow: ${(props) => props.theme.boxShadowV3};
-    ${(props) => props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
-    ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
-  }
 `;
 
+export const CloseButton = styled.button<any>
+  `
+  width: ${(props) => props.width || `auto`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `auto`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize || `28px`};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `flex-end`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor || `#fff`};
+  color: ${(props) => props.color || props.basicTheme_C};
+  cursor: pointer;
+  border:none;
+
+
+  & svg {
+    color: ${(props) => props.color || props.basicTheme_C};
+    font-size: 28px;
+  }
+`;
 
 
 
@@ -575,7 +578,7 @@ export const SearchInputWrapper = styled.div<any>`
   height: ${(props) => props.height || `46px`};
   border:none;
   border-bottom:1px solid #363636;
-  flex-direction: ${(props) => props.dr || `column`};
+  flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
   padding: ${(props) => props.padding};
@@ -585,7 +588,6 @@ export const SearchInput = styled.input<any>`
   width: ${(props) => props.width || `378px`};
   height: ${(props) => props.height || `46px`};
   border: none;
-  border-bottom:1px solid #363636;
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding || props.theme.inputPadding};
   transition: ${(props) => props.transition || props.theme.transition};
@@ -595,6 +597,7 @@ export const SearchInput = styled.input<any>`
   font-size: 18px;
   position: relative;
   outline: none;
+  display: flex;
 
   &:focus {
     outline: none;
@@ -669,23 +672,24 @@ export const TableWrapper = styled.div<any>`
   flex-direction: column;
   align-items: center;
   margin: ${(props) => props.margin || `20px 0px 50px`};
-  padding: ${(props) => props.margin || `20px 0px 50px`};
+  padding: ${(props) => props.padding || `20px 0px 50px`};
 `;
 
 export const TableHead = styled.ul<any>`
   width: 100%;
-  height: 40px;
+  height: ${(props) => props.height || `40px`};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px 0px 10px 0px`};
-  border-bottom: ${(props) => props.borderBottom};
+  border-bottom: ${(props) => props.borderBottom || `1px solid #292929`};
   border-top: ${(props) => props.borderTop || `1px solid #292929`};
   border-radius: ${(props) => props.radius || ``};
   background: #fff;
   color: #292929;
+  padding: ${(props) => props.padding || `0px`};
 `;
 
 export const TableHeadLIST = styled.li<any>`
@@ -700,12 +704,13 @@ export const TableHeadLIST = styled.li<any>`
 export const TableBody = styled.ul<any>`
   width: 100%;
   height: ${(props) => props.height || `40px`};
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.padding || `0px`};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: ${(props) => props.ju || `space-between`};
   border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
+  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   transition: 0.5s;
   cursor: pointer;
 
@@ -772,13 +777,15 @@ export const PagenationBtn = styled.div<any>`
   font-size: 18px;
   width: 25px;
   height: 25px;
-  color: ${(props) => props.color || `#eee`};
+  color: ${(props) => props.color || `#292929`};
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   border-radius: 25px;
   margin: 0px 3px;
+  background-color: ${(props) => props.theme.subWhite_C};
+    border: 1px solid #ddd;
 
   &:first-child,
   &:last-child {
@@ -826,18 +833,4 @@ export const JoinFirstStepSelectText = styled.p<any>`
   margin:0px;
 `;
 
-export const QuestionIcon = styled.text<any>`
-  width: ${(props) => props.width || `100%`};
-  display:flex;
-  align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `flex-end`};
-  color: ${(props) => props.color || props.theme.grey_C};
-  font-size: ${(props) => props.fontSize || `32px`};
-  transition: 0.5s;
-  cursor: pointer;
-  padding:${(props) => props.padding || `20px 0px 100px`};
 
-  &:hover{
-  color: ${(props) => props.theme.basicTheme_C};
-}
-`;
