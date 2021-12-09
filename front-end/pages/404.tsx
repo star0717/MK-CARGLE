@@ -21,8 +21,8 @@ import {
 
 export default function Custom404() {
   return (
-    <WholeWrapper>
-      <Wrapper width={`500px`} padding={`200px 0px 50px`}>
+    <WholeWrapper padding={`20px`}>
+      <Wrapper width={`500px`} padding={`180px 0px 50px`}>
         <Image src="/images/404.png" />
       </Wrapper>
       <Wrapper>
@@ -52,10 +52,10 @@ export default function Custom404() {
         </Text>
       </Wrapper>
       <Wrapper padding={`10px 0px 0px`} dr={`row`}>
-        <CommonButton margin={`0px 10px 0px`}>
+        <CommonButton margin={`10px`}>
           이전페이지
         </CommonButton>
-        <CommonButton margin={`0px 10px 0px`}>
+        <CommonButton margin={` 10px`}>
           홈으로 돌아가기
         </CommonButton>
       </Wrapper>
