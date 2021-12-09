@@ -254,12 +254,12 @@ export const CommonTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin};
   margintop: ${(props) => props.marginTop};
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.padding || `100px 0px 0px`};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 36px;
   font-weight: 800;
   color: ${(props) => props.color};
-  text-align: ${(props) => props.textAlign};
+  text-align: ${(props) => props.textAlign || `center`};
   @media (max-width: 1439px) {
     font-size: 32px;
   }
@@ -272,11 +272,11 @@ export const CommonSubTitle = styled.h2<any>`
   width: ${(props) => props.width};
   display: ${(props) => props.display};
   position: relative;
-  margin: ${(props) => props.margin || ` 30px 0 50px`};
+  margin: ${(props) => props.margin || `0px`};
   padding-bottom: 40px;
   font-size: 24px;
-  font-weight: 800;
   color: ${(props) => props.color || `${props.theme.darkGrey_C}`};
+  font-weight: ${(props) => props.fontWeight || `700`};
 `;
 
 export const Text = styled.p<any>`
@@ -289,7 +289,7 @@ export const Text = styled.p<any>`
   flex-direction: ${(props) => props.dr};
   align-items: ${(props) => props.al};
   justify-content: ${(props) => props.ju};
-  font-size: ${(props) => props.fontSize};
+  font-size: ${(props) => props.fontSize || `18px`};
   font-weight: ${(props) => props.fontWeight || `500`};
   line-height: ${(props) => props.lineHeight || `1.6`};
   color: ${(props) => props.color};
@@ -336,7 +336,7 @@ export const CommonButton = styled.button<any>`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius || `4px`};
-  font-size: ${(props) => props.fontSize || `24px`};
+  font-size: ${(props) => props.fontSize || `18px`};
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
@@ -448,6 +448,7 @@ export const SmallButton = styled.button<any>`
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
+  border-radius:5px;
   color: #fff;
   ${(props) =>
     props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
@@ -501,6 +502,7 @@ export const TextInput = styled.input<any>`
 `;
 
 export const TextInput2 = styled.input<any>`
+<<<<<<< HEAD
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
   border: ${(props) => props.theme.border};
@@ -512,10 +514,86 @@ export const TextInput2 = styled.input<any>`
   &:focus {
     box-shadow: ${(props) => props.theme.boxShadow};
   }
+=======
+width: ${(props) => props.width};
+height: ${(props) => props.height || `40px`};
+border: ${(props) => props.theme.border};
+padding: ${(props) => props.padding || props.theme.inputPadding};
+border-radius: ${(props) => props.theme.radius};
+transition: ${(props) => props.transition || props.theme.transition};
+margin: ${(props) => props.margin};
+background-color: ${(props) => props.bgColor};
+&:focus {
+  outline: none;
+  box-shadow: ${(props) => props.theme.boxShadow};
+}
+>>>>>>> 098551c37ad1fa4bd35cbe91d8a996104b286c83
 
   &:read-only:focus {
     box-shadow: none;
   }
+`;
+
+export const SearchInputWrapper = styled.div<any>`
+  width:${(props) => props.width || `678px`};
+  height: ${(props) => props.height || `46px`};
+  border:none;
+  border-bottom:1px solid #363636;
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+`;
+
+export const SearchInput = styled.input<any>`
+  width: ${(props) => props.width || `378px`};
+  height: ${(props) => props.height || `46px`};
+  border:none;
+  border-radius: ${(props) => props.theme.radius};
+  background-color: ${(props) => props.bgColor};
+  padding: ${(props) => props.padding || props.theme.inputPadding};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  margin-bottom: ${(props) => props.marginBottom};
+  margin-top: ${(props) => props.marginTop};
+  font-size: 18px;
+  position: relative;
+  outline: none;
+
+  &:focus {
+    outline: none;
+
+  }
+
+  & svg {
+    font-size: ${(props) => props.fontSize || `15px`};
+    cursor: pointer;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  @media (max-width: 500px) {
+    height: 40px;
+  }
+`;
+
+export const Combo = styled.select<any>`
+  width: ${(props) => props.width};
+  height: 40px;
+  border: ${(props) => props.border || props.theme.border};
+  padding:0px 8px;
+  color: ${(props) => props.color};
+  border-radius: ${(props) => props.theme.radius};
+  margin: ${(props) => props.margin || `0px 5px`};
+
+  &:focus {
+    outline: none;
+  }
+
 `;
 
 export const Image = styled.img<any>`
@@ -535,6 +613,7 @@ export const Image = styled.img<any>`
   right: ${(props) => props.right};
   transition: 0.3s;
   padding: ${(props) => props.padding};
+  align-items: center;
 
   filter: ${(props) => (props.isFilter ? `brightness(30%) opacity(0.4)` : ` `)};
 
@@ -678,16 +757,48 @@ export const PagenationBtn = styled.div<any>`
 
 export const JoinFirstStepSelect = styled.div<any>`
   width: ${(props) => props.width || `480px`};
-  height: ${(props) => props.height || `380px`}
-  color: ${(props) => props.color || `#9d9d9d`}
-  background-color: ${(props) => props.bgColor || `#f5f5f5`}
-  border:${(props) => props.border || `1px solid #c4c4c4`}
-
+  height: ${(props) => props.height || `380px`};
+  color: ${(props) => props.color || props.theme.basicTheme_C};
+  background-color: ${(props) => props.bgColor || `#f5f5f5`};
+  border:${(props) => props.border || `1px solid #c4c4c4`};
+  align-items: ${(props) => props.al || `center`};
+  border-radius: ${(props) => props.radius || `5px`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  filter:grayscale(100%);
+  justify-content: ${(props) => props.ju || `center`};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `column`};
+  cursor: pointer;
+  padding-bottom: ${(props) => props.paddingBottom || `40px`};
 
   &:hover {
     box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
-    color: ${(props) => props.theme.basicTheme_C};
     border: 1px solid ${(props) => props.theme.basicTheme_C};
     background-color: #fff;
+    filter:grayscale(0%);
   }
+`;
+
+export const JoinFirstStepSelectText = styled.p<any>`
+  color: ${(props) => props.color || `#9d9d9d`};
+  align-items: ${(props) => props.al || `center`};
+  text-align:center;
+  font-size:18px;
+  margin:0px;
+`;
+
+export const QuestionIcon = styled.text<any>`
+  width: ${(props) => props.width || `100%`};
+  display:flex;
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `flex-end`};
+  color: ${(props) => props.color || props.theme.grey_C};
+  font-size: ${(props) => props.fontSize || `32px`};
+  transition: 0.5s;
+  cursor: pointer;
+  padding:${(props) => props.padding || `20px 0px 100px`};
+
+  &:hover{
+  color: ${(props) => props.theme.basicTheme_C};
+}
 `;
