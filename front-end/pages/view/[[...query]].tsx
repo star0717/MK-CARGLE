@@ -12,7 +12,7 @@ import Approval from "../../src/components/page/SignUp/section/approval";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
 import { CompanyApproval } from "../../src/models/company.entity";
-import { MainRoute } from "../../src/models/router.entity";
+import { MainRoute, SignRoute } from "../../src/models/router.entity";
 import { useRouter } from "next/dist/client/router";
 
 interface ViewProps {
@@ -32,7 +32,7 @@ const Componentitem: NextPage<ViewProps> = (props) => {
   const sub = query[1] ? query[1] : "";
 
   switch (main) {
-    case MainRoute.SIGNUP:
+    case SignRoute.SIGNUP:
       return <SignUp {...props} />;
     case MainRoute.MAIN:
       if (tokenValue.cApproval === CompanyApproval.BEFORE) {
@@ -42,7 +42,7 @@ const Componentitem: NextPage<ViewProps> = (props) => {
       } else {
         return <Main {...props} />;
       }
-    case MainRoute.FIND:
+    case SignRoute.FIND:
       return <Find {...props} />;
     case MainRoute.ACCOUNT:
       return <Account {...props} />;

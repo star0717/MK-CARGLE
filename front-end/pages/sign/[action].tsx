@@ -5,7 +5,7 @@ import Header from "../../src/components/layout/Header";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import SignUp from "../../src/components/page/SignUp";
 import { useRouter } from "next/dist/client/router";
-import { MainRoute } from "../../src/models/router.entity";
+import { SignRoute } from "../../src/models/router.entity";
 import Find from "../../src/components/page/Find";
 
 /**
@@ -15,11 +15,13 @@ const SignComponent: NextPage = () => {
   const router = useRouter();
   const { action } = router.query;
 
+  console.log("액션", action);
+
   switch (action) {
-    case MainRoute.SIGNUP:
+    case SignRoute.SIGNUP:
       return <SignUp />;
-      break;
-    case MainRoute.FIND:
+
+    case SignRoute.FIND:
       return <Find />;
   }
 };
@@ -44,6 +46,11 @@ const SignUpPage: NextPage = () => {
 export default SignUpPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const route = context.query;
+  const signRoute = route.action ? route.action : null;
+  const signItem: any = Object.values(SignRoute); // page first query array
+  console.log("?", signRoute);
+
   if (context.req.cookies.mk_token) {
     return {
       redirect: {
@@ -51,5 +58,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         destination: "/view/main",
       },
     };
+  } else {
+    if (signItem.indexOf(signRoute) === -1) {
+      return {
+        notFound: true,
+      };
+    } else {
+      return {
+        props: {},
+      };
+    }
   }
 };
