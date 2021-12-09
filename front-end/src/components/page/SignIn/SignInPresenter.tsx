@@ -119,7 +119,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   아직 회원이 아니신가요?
                 </Text>
                 <Text decoration={`underline`}>
-                  <Link href="/view/signup">
+                  <Link href="/sign/signup">
                     <a
                       style={{ fontWeight: "bold", fontSize: "18px" }}
                       onClick={userInit}
@@ -138,7 +138,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   계정을 찾고 싶으신가요?
                 </Text>
                 <Text decoration={`underline`}>
-                  <Link href="/view/find">
+                  <Link href="/sign/find">
                     <a style={{ fontWeight: "bold", fontSize: "18px" }}>
                       계정찾기
                     </a>

@@ -498,8 +498,34 @@ export const SearchButton = styled.button<any>
   color: ${(props) => props.color};
   cursor: pointer;
   border:none;
+
 `;
 
+export const CloseButton = styled.button<any>
+  `
+  width: ${(props) => props.width || `auto`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `auto`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize || `28px`};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `flex-end`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor || `#fff`};
+  color: ${(props) => props.color || props.basicTheme_C};
+  cursor: pointer;
+  border:none;
+
+
+  & svg {
+    color: ${(props) => props.color || props.basicTheme_C};
+    font-size: 28px;
+  }
+`;
 
 
 
@@ -646,23 +672,24 @@ export const TableWrapper = styled.div<any>`
   flex-direction: column;
   align-items: center;
   margin: ${(props) => props.margin || `20px 0px 50px`};
-  padding: ${(props) => props.margin || `20px 0px 50px`};
+  padding: ${(props) => props.padding || `20px 0px 50px`};
 `;
 
 export const TableHead = styled.ul<any>`
   width: 100%;
-  height: 40px;
+  height: ${(props) => props.height || `40px`};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px 0px 10px 0px`};
-  border-bottom: ${(props) => props.borderBottom};
+  border-bottom: ${(props) => props.borderBottom || `1px solid #292929`};
   border-top: ${(props) => props.borderTop || `1px solid #292929`};
   border-radius: ${(props) => props.radius || ``};
   background: #fff;
   color: #292929;
+  padding: ${(props) => props.padding || `0px`};
 `;
 
 export const TableHeadLIST = styled.li<any>`
@@ -677,12 +704,13 @@ export const TableHeadLIST = styled.li<any>`
 export const TableBody = styled.ul<any>`
   width: 100%;
   height: ${(props) => props.height || `40px`};
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.padding || `0px`};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: ${(props) => props.ju || `space-between`};
   border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
+  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   transition: 0.5s;
   cursor: pointer;
 
@@ -749,13 +777,15 @@ export const PagenationBtn = styled.div<any>`
   font-size: 18px;
   width: 25px;
   height: 25px;
-  color: ${(props) => props.color || `#eee`};
+  color: ${(props) => props.color || `#292929`};
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   border-radius: 25px;
   margin: 0px 3px;
+  background-color: ${(props) => props.theme.subWhite_C};
+    border: 1px solid #ddd;
 
   &:first-child,
   &:last-child {

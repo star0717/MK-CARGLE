@@ -12,17 +12,24 @@ import {
   Image,
 } from "../styles/CommonComponents";
 import { CompanyApproval } from "../../models/company.entity";
+import { MainRoute, SubRoute } from "../../models/router.entity";
+import { useState } from "react";
 
-interface HeaderProps {
+interface LayoutProps {
   tokenValue?: any;
 }
 
-const Header: NextPage<HeaderProps> = (props) => {
+const Header: NextPage<LayoutProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  // props 재정의
+
+  // 필요한 props 재정의
   const tokenValue = props?.tokenValue;
 
+  /**
+   * 로그아웃 기능
+   * @param e
+   */
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
       router.push("/");

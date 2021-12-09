@@ -38,7 +38,7 @@ const Main: NextPage = () => {
           <div
             style={{ width: "100%", height: "40%", backgroundColor: "maroon" }}
           >
-            <Link href="/view/account">
+            <Link href="/v/mypage/account">
               <a>
                 <button>마이페이지</button>
               </a>
