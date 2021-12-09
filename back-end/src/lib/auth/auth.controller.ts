@@ -254,7 +254,7 @@ export class AuthController {
     return await this.authService.getComRegFileName(token);
   }
 
-  @ApiOperation({ summary: '업로드된 정비업등록증 파일명 반환' })
+  @ApiOperation({ summary: '[WORKER] 업로드된 정비업등록증 파일명 반환' })
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/man-reg-doc')
   async getMainRegFileName(
