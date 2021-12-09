@@ -13,7 +13,6 @@ import { MainRoute, SubRoute } from "../../src/models/router.entity";
 import { useRouter } from "next/dist/client/router";
 import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
-import Err404 from "../../src/components/page/Error/404";
 
 interface ViewProps {
   route: any;
@@ -21,7 +20,7 @@ interface ViewProps {
 }
 
 /**
- * cApproval 에 따른 메인 컴포넌트
+ * cApproval에 따른 메인 컴포넌트
  * @param props
  * @returns
  */
@@ -32,33 +31,31 @@ const MainComponent: NextPage<ViewProps> = (props) => {
   switch (tokenValue.cApproval) {
     case CompanyApproval.BEFORE:
       return <FileUpload {...props} />;
-      break;
 
     case CompanyApproval.ING:
       return <Approval />;
-      break;
 
     default:
       return <SubComponent {...props} />;
-      break;
   }
 };
 
+/**
+ * url query에 따른 서브 컴포넌트
+ * @param props
+ * @returns
+ */
 const SubComponent: NextPage<ViewProps> = (props) => {
-  // const router = useRouter();
+  const router = useRouter();
 
-  const route = props.route;
-  // const route = router.query;
-  const mainRoute = route.query ? route.query[0] : null;
-  const subRoute = route.query ? route.query[1] : null;
-  console.log("전체", route);
-  console.log("메인", mainRoute);
-  console.log("서브", subRoute);
+  const { page } = router.query; // page url query
+
+  const mainRoute = page && page[0];
+  const subRoute = page && page[1];
 
   switch (mainRoute) {
     case MainRoute.MAIN:
       return <Main {...props} />;
-      break;
 
     case MainRoute.MYPAGE:
       if (subRoute === SubRoute.ACCOUNT) {
@@ -67,13 +64,17 @@ const SubComponent: NextPage<ViewProps> = (props) => {
       if (subRoute === SubRoute.WORKER) {
         return <MyPageWorker {...props} />;
       }
-    default:
-      return <Err404 />;
-      break;
   }
 };
 
+/**
+ * 실제 페이지를 구성하는 컴포넌트
+ * @param props
+ * @returns
+ */
 const MainPage: NextPage<ViewProps> = (props) => {
+  console.log("아호이");
+
   return (
     <>
       <Head>
@@ -94,16 +95,29 @@ export default MainPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const route = context.query;
+  const mainRoute = route.page ? route.page[0] : null;
+  const subRoute = route.page ? route.page[1] : null;
+
+  const mItem: any = Object.values(MainRoute); // page first query array
+  const sItem: any = Object.values(SubRoute); // page second query array
+
+  console.log("프랍1", mainRoute);
+  console.log("프랍2", subRoute);
 
   if (context.req.cookies.mk_token) {
     const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
 
-    return {
-      props: {
-        route,
-        tokenValue,
-      },
-    };
+    if (mItem.indexOf(mainRoute) === -1 || sItem.indexOf(subRoute) === -1) {
+      return {
+        notFound: true,
+      };
+    } else {
+      return {
+        props: {
+          tokenValue,
+        },
+      };
+    }
     // 토큰 확인 - 없을 경우, 로그인 화면으로 리디렉트
   } else {
     return {

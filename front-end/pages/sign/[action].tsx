@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Footer from "../../src/components/layout/Footer";
 import Header from "../../src/components/layout/Header";
@@ -7,7 +7,6 @@ import SignUp from "../../src/components/page/SignUp";
 import { useRouter } from "next/dist/client/router";
 import { MainRoute } from "../../src/models/router.entity";
 import Find from "../../src/components/page/Find";
-import Err404 from "../../src/components/page/Error/404";
 
 /**
  * sign: url에 따른 컴포넌트
@@ -22,9 +21,6 @@ const SignComponent: NextPage = () => {
       break;
     case MainRoute.FIND:
       return <Find />;
-    default:
-      return <Err404 />;
-      break;
   }
 };
 
@@ -46,3 +42,14 @@ const SignUpPage: NextPage = () => {
 };
 
 export default SignUpPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  if (context.req.cookies.mk_token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/view/main",
+      },
+    };
+  }
+};
