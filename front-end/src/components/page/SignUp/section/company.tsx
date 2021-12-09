@@ -14,6 +14,7 @@ import {
 import { initialState } from "../../../../../store/reducer/user.reducer";
 import CompanyPresenter from "./companyPresenter";
 import { WholeWrapper, Wrapper } from "../../../styles/CommonComponents";
+import { IoIosCloseCircle } from 'react-icons/io';
 
 // modal setting
 Modal.setAppElement("body");
@@ -221,7 +222,7 @@ const Company: NextPage<any> = (props) => {
           }}
         >
           <button type="button" onClick={closeModal}>
-            닫기
+            <IoIosCloseCircle />
           </button>
           <DaumPostcode
             onComplete={addressHandler}
