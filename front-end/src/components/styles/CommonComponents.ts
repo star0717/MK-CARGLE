@@ -255,7 +255,7 @@ export const CommonTitle = styled.h2<any>`
   margintop: ${(props) => props.marginTop};
   padding: ${(props) => props.padding || `100px 0px 0px`};
   padding-bottom: ${(props) => props.paddingBottom};
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 800;
   color: ${(props) => props.color};
   text-align: ${(props) => props.textAlign || `center`};
@@ -273,7 +273,7 @@ export const CommonSubTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin || `0px`};
   padding-bottom: 40px;
-  font-size: 24px;
+  font-size: 22px;
   color: ${(props) => props.color || `${props.theme.darkGrey_C}`};
   font-weight: ${(props) => props.fontWeight || `700`};
 `;
@@ -698,10 +698,12 @@ export const TableHeadLIST = styled.li<any>`
 `;
 
 export const TableBody = styled.div<any>`
-height: ${(props) => props.height || `360px`};
-overflow: ${(props) => props.overflow || ``};
-`
-
+  width: 100%;
+  height: ${(props) => props.height || `360px`};
+  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
+  padding: ${(props) => props.padding || `0px`};
+  overflow: ${(props) => props.overflow || ``};
+`;
 export const TableRow = styled.ul<any>`
   width: 100%;
   height: ${(props) => props.height || `40px`};

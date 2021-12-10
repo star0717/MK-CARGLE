@@ -48,16 +48,16 @@ const AccountPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper>
+      <Wrapper
+        width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1100px`}
+        padding={`50px`}
+        border={`1px solid #ccc`}
+        radius={`5px`}
+      >
         <form onSubmit={handleSubmit(onSignUpUserHandler)}>
           {/* 소속 업체(직원일 경우에만) */}
           {userAuth === "worker" && (
             <Wrapper margin={`0px 0px 10px`}>
-              <Wrapper
-
-              >
-
-              </Wrapper>
               <Wrapper al={`flex-start`}>
                 <Text margin={`0px 0px 10px`}>*소속 업체</Text>
                 <Wrapper dr={`row`} ju={`flex-start`}>
@@ -444,34 +444,33 @@ const AccountPresenter: NextPage<any> = (props) => {
               placeholderText="YYYY-MM-DD"
             />
           </Wrapper>
-          <Wrapper
-            dr={`row`}
-            ju={`space-around`}
-            padding={`50px 0px 100px 0px`}
-          >
-            <CommonButton
-              margin={`0px 10px 0px 0px`}
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                setStepNumber(stepNumber - 1);
-                dispatch({
-                  type: actionTypesUser.INPUT_ACCOUNT,
-                  payload: inputUser,
-                });
-                dispatch({
-                  type: actionTypesUser.INPUT_FORM,
-                  payload: inputForm,
-                });
-              }}
-            >
-              이전
-            </CommonButton>
-            <CommonButton
-              margin={`0px 0px 0px 10px`}
-              type="submit">
-              {userAuth === UserAuthority.OWNER ? "다음" : "완료"}
-            </CommonButton>
-          </Wrapper>
         </form>
+      </Wrapper>
+      <Wrapper
+        dr={`row`}
+        padding={`50px 0px 100px 0px`}
+      >
+        <CommonButton
+          margin={`0px 10px 0px 0px`}
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            setStepNumber(stepNumber - 1);
+            dispatch({
+              type: actionTypesUser.INPUT_ACCOUNT,
+              payload: inputUser,
+            });
+            dispatch({
+              type: actionTypesUser.INPUT_FORM,
+              payload: inputForm,
+            });
+          }}
+        >
+          이전
+        </CommonButton>
+        <CommonButton
+          margin={`0px 0px 0px 10px`}
+          type="submit">
+          {userAuth === UserAuthority.OWNER ? "다음" : "완료"}
+        </CommonButton>
       </Wrapper>
     </WholeWrapper>
   );
