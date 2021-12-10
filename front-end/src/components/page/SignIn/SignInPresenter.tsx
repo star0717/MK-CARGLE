@@ -149,7 +149,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   계정을 찾고 싶으신가요?
                 </Text>
                 <Text decoration={`underline`}>
-                  <Link href="/sign/find">
+                  <Link href="/sign/findemail">
                     <a style={{ fontWeight: "bold", fontSize: "16px" }}>
                       계정찾기
                     </a>

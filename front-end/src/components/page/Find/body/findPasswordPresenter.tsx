@@ -27,29 +27,29 @@ const FindPasswordPresenter: NextPage<any> = (props) => {
       <form onSubmit={onFindPwHandler}>
         <Text>이름 입력</Text>
         <TextInput
+          type="text"
           value={name}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setName(e.target.value);
           }}
-          type="text"
         />
 
         <Text>핸드폰 번호 입력</Text>
         <TextInput
+          type="text"
           value={hpNumber}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setHpNumber(e.target.value);
           }}
-          type="text"
         />
 
         <Text>이메일 입력</Text>
         <TextInput
+          type="email"
           value={email}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setEmail(e.target.value);
           }}
-          type="email"
         />
 
         <Wrapper>
