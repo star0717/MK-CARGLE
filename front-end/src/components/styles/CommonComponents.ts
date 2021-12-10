@@ -394,36 +394,36 @@ export const CommonButton = styled.button<any>`
     box-shadow: ${(props) => props.theme.boxShadow};
     ${(props) => !props.kindOf && `background ${props.theme.darkTheme_C};`}
     ${(props) =>
-      props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
+    props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
          ${(props) =>
-      props.kindOf === `white` && `color ${props.theme.white_C};`}
+    props.kindOf === `white` && `color ${props.theme.white_C};`}
 ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
   ${(props) => props.kindOf === `black` && `color : ${props.theme.black_C};`}
   ${(props) =>
-      props.kindOf === `black` &&
-      `border : 1px solid ${props.theme.darkGrey_C};`}
+    props.kindOf === `black` &&
+    `border : 1px solid ${props.theme.darkGrey_C};`}
         ${(props) =>
-      props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
+    props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
           ${(props) =>
-      props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
+    props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
       ${(props) => props.kindOf === `grey` && `color ${props.theme.white_C};`}
           ${(props) =>
-      props.kindOf === `grey` && `background ${props.theme.grey_C};`}
+    props.kindOf === `grey` && `background ${props.theme.grey_C};`}
          ${(props) =>
-      props.kindOf === `create` &&
-      `border :1px solid ${props.theme.create_B_C};`}
+    props.kindOf === `create` &&
+    `border :1px solid ${props.theme.create_B_C};`}
     ${(props) =>
-      props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
+    props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
     ${(props) =>
-      props.kindOf === `update` &&
-      `border :1px solid ${props.theme.update_B_C};`}
+    props.kindOf === `update` &&
+    `border :1px solid ${props.theme.update_B_C};`}
     ${(props) =>
-      props.kindOf === `delete` &&
-      `border :1px solid ${props.theme.delete_B_C};`}
+    props.kindOf === `delete` &&
+    `border :1px solid ${props.theme.delete_B_C};`}
 
 ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) =>
-      props.kindOf === `naver` && `color : ${props.theme.white_C};`}
+    props.kindOf === `naver` && `color : ${props.theme.white_C};`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
   }
 
@@ -479,7 +479,7 @@ export const SmallButton = styled.button<any>`
   &:hover {
     box-shadow: ${(props) => props.theme.boxShadowV3};
     ${(props) =>
-      props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
+    props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
     ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
   }
 `;
@@ -697,7 +697,12 @@ export const TableHeadLIST = styled.li<any>`
   justify-content: ${(props) => props.ju || `center`};
 `;
 
-export const TableBody = styled.ul<any>`
+export const TableBody = styled.div<any>`
+height: ${(props) => props.height || `360px`};
+overflow: ${(props) => props.overflow || ``};
+`
+
+export const TableRow = styled.ul<any>`
   width: 100%;
   height: ${(props) => props.height || `40px`};
   padding: ${(props) => props.padding || `0px`};
@@ -709,14 +714,13 @@ export const TableBody = styled.ul<any>`
   margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   transition: 0.5s;
   cursor: pointer;
-  overflow: ${(props) => props.overflow || ``};
 
   &:hover {
     background-color: #f5f5f5;
   }
 `;
 
-export const TableBodyLIST = styled.li<any>`
+export const TableRowLIST = styled.li<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `100%`};
   display: ${(props) => props.display || `flex`};

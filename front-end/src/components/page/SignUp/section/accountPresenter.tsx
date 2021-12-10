@@ -53,6 +53,11 @@ const AccountPresenter: NextPage<any> = (props) => {
           {/* 소속 업체(직원일 경우에만) */}
           {userAuth === "worker" && (
             <Wrapper margin={`0px 0px 10px`}>
+              <Wrapper
+
+              >
+
+              </Wrapper>
               <Wrapper al={`flex-start`}>
                 <Text margin={`0px 0px 10px`}>*소속 업체</Text>
                 <Wrapper dr={`row`} ju={`flex-start`}>
@@ -445,6 +450,7 @@ const AccountPresenter: NextPage<any> = (props) => {
             padding={`50px 0px 100px 0px`}
           >
             <CommonButton
+              margin={`0px 10px 0px 0px`}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 setStepNumber(stepNumber - 1);
                 dispatch({
@@ -459,7 +465,9 @@ const AccountPresenter: NextPage<any> = (props) => {
             >
               이전
             </CommonButton>
-            <CommonButton type="submit">
+            <CommonButton
+              margin={`0px 0px 0px 10px`}
+              type="submit">
               {userAuth === UserAuthority.OWNER ? "다음" : "완료"}
             </CommonButton>
           </Wrapper>
