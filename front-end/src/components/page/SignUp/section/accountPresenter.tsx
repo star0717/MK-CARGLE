@@ -446,10 +446,7 @@ const AccountPresenter: NextPage<any> = (props) => {
           </Wrapper>
         </form>
       </Wrapper>
-      <Wrapper
-        dr={`row`}
-        padding={`50px 0px 100px 0px`}
-      >
+      <Wrapper dr={`row`} padding={`50px 0px 100px 0px`}>
         <CommonButton
           margin={`0px 10px 0px 0px`}
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -466,9 +463,7 @@ const AccountPresenter: NextPage<any> = (props) => {
         >
           이전
         </CommonButton>
-        <CommonButton
-          margin={`0px 0px 0px 10px`}
-          type="submit">
+        <CommonButton margin={`0px 0px 0px 10px`} type="submit">
           {userAuth === UserAuthority.OWNER ? "다음" : "완료"}
         </CommonButton>
       </Wrapper>
