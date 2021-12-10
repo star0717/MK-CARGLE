@@ -38,25 +38,26 @@ const CompanyPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper>
+      <Wrapper
+        width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1100px`}
+        padding={`50px`}
+        border={`1px solid #ccc`}
+        radius={`5px`}
+      >
         <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
           <Wrapper>
             {/* 상호명 */}
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
             >
               <Text margin={`0px 0px 10px`}>
                 *상호명{" "}
                 <small>(사업자등록증에 등록한 상호명을 입력해주세요.)</small>
               </Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`300px`}
                 type="text"
                 value={inputCompany.name}
                 placeholder="상호명을 입력해주세요."
@@ -84,9 +85,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
             >
               <Text margin={`0px 0px 10px`}>*사업자 등록번호</Text>
               <Wrapper dr={`row`}>
@@ -152,15 +151,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
             >
               <Text margin={`0px 0px 10px`}>*정비업 등록번호</Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`300px`}
                 type="text"
                 value={CHAR_DEL(inputCompany.mbRegNum)}
                 placeholder="정비업 등록번호를 입력해주세요."
@@ -193,15 +188,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
             >
               <Text margin={`0px 0px 10px`}>*정비업종</Text>
               <Combo
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`300px`}
                 margin={`0px`}
                 value={inputCompany.mbTypeNum}
                 {...register("mbTypeNum", {
@@ -222,15 +213,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
             >
               <Text margin={`0px 0px 10px`}>*대표자명</Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`300px`}
                 type="text"
                 value={inputCompany.ownerName}
                 placeholder="대표자명을 입력해주세요."
@@ -258,15 +245,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
             >
               <Text margin={`0px 0px 10px`}>*업체 전화번호</Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`300px`}
                 type="text"
                 value={CHAR_DEL(inputCompany.phoneNum)}
                 placeholder="(- 제외, 지역번호 포함)"
@@ -299,15 +282,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
             >
               <Text margin={`0px 0px 10px`}>업체 팩스번호(선택)</Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`300px`}
                 type="text"
                 value={CHAR_DEL(inputCompany.faxNum)}
                 placeholder="(- 제외)"
@@ -338,9 +317,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
             >
               <Text margin={`0px 0px 10px`}>*사업자 주소</Text>
               <Wrapper dr={`row`}>
@@ -381,9 +358,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               )}
             </Wrapper>
             <TextInput2
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
               type="text"
               placeholder="상세 주소"
               value={inputCompany.address2}
