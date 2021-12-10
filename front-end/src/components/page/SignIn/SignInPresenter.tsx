@@ -61,7 +61,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                 />
                 <Wrapper>
                   <Text
-                    fontSize={width < 500 ? `14px` : `18px`}
+                    fontSize={width < 500 ? `12px` : `16px`}
                     fontWeight={`700`}
                     margin={`0px`}
                     width={`100%`}
@@ -100,7 +100,11 @@ const SigninPresenter: NextPage<any> = (props) => {
                         setSaveCheck(e.target.checked);
                       }}
                     ></input>
-                    <Text fontSize={`18px`} padding={`5px 0px`} margin={`0px`}>
+                    <Text
+                      fontSize={width < 500 ? `12px` : `16px`}
+                      padding={`5px 0px`}
+                      margin={`0px`}
+                    >
                       아이디 저장
                     </Text>
                   </Wrapper>
@@ -110,18 +114,25 @@ const SigninPresenter: NextPage<any> = (props) => {
               </form>
             </Wrapper>
             <Wrapper padding={`10px 0px`}>
-              <Wrapper dr={`row`} fontSize={`18px`} ju={`flex-end`}>
+              <Wrapper
+                dr={`row`}
+                fontSize={width < 500 ? `12px` : `16px`}
+                ju={`flex-end`}
+              >
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
                   style={{ width: "18px", margin: "0px 3px 0px 0px" }}
                 />
-                <Text margin={`0px 3px 0px`} fontSize={`18px`}>
+                <Text
+                  margin={`0px 3px 0px`}
+                  fontSize={width < 500 ? `12px` : `16px`}
+                >
                   아직 회원이 아니신가요?
                 </Text>
                 <Text decoration={`underline`}>
                   <Link href="/sign/signup">
                     <a
-                      style={{ fontWeight: "bold", fontSize: "18px" }}
+                      style={{ fontWeight: "bold", fontSize: "16px" }}
                       onClick={userInit}
                     >
                       회원가입
@@ -129,17 +140,17 @@ const SigninPresenter: NextPage<any> = (props) => {
                   </Link>
                 </Text>
               </Wrapper>
-              <Wrapper dr={`row`} fontSize={`18px`} ju={`flex-end`}>
+              <Wrapper dr={`row`} fontSize={`16px`} ju={`flex-end`}>
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
-                  style={{ width: "18px", margin: "0px 3px 0px 0px" }}
+                  style={{ width: "16px", margin: "0px 3px 0px 0px" }}
                 />
-                <Text margin={`0px 3px 0px`} fontSize={`18px`}>
+                <Text margin={`0px 3px 0px`} fontSize={`16px`}>
                   계정을 찾고 싶으신가요?
                 </Text>
                 <Text decoration={`underline`}>
                   <Link href="/sign/find">
-                    <a style={{ fontWeight: "bold", fontSize: "18px" }}>
+                    <a style={{ fontWeight: "bold", fontSize: "16px" }}>
                       계정찾기
                     </a>
                   </Link>
