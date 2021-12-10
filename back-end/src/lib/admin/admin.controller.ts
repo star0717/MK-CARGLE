@@ -117,7 +117,7 @@ export class AdminController {
   @ApiParam({ name: 'id', description: '업체의 오브젝트ID' })
   async getComRegDoc(
     @Param('id') id: string,
-    @AuthToken()
+    @AuthToken({ auth: UserAuthority.ADMIN })
     token: AuthTokenInfo,
     @Res({ passthrough: true }) res: Response,
   ) {
@@ -151,7 +151,7 @@ export class AdminController {
   @ApiParam({ name: 'id', description: '업체의 오브젝트ID' })
   async getMainRegDoc(
     @Param('id') id: string,
-    @AuthToken()
+    @AuthToken({ auth: UserAuthority.ADMIN })
     token: AuthTokenInfo,
     @Res({ passthrough: true }) res: Response,
   ) {
