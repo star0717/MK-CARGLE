@@ -20,9 +20,9 @@ import {
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
-import { BsSearch } from 'react-icons/bs';
-import { IoIosArrowBack } from 'react-icons/io';
-import { IoIosArrowForward } from 'react-icons/io';
+import { BsSearch } from "react-icons/bs";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 
 const ComFindModalPresenter: NextPage<any> = (props) => {
   // props 재정의
@@ -42,12 +42,8 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper height={`500px`}
-        ju={`flex-start`}
-      >
-        <CommonForm
-          ju={`flex-start`}
-          onSubmit={findCompanyHandler}>
+      <Wrapper height={`500px`} ju={`flex-start`}>
+        <CommonForm ju={`flex-start`} onSubmit={findCompanyHandler}>
           <Wrapper
             width={`678px`}
             padding={`0px 5px`}
@@ -69,89 +65,135 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
             </Wrapper>
             <Wrapper width={`36px`} height={`46px`}>
               <Text fontSize={`24px`}>
-                <BsSearch />
+                <button type="submit">
+                  <BsSearch />
+                </button>
               </Text>
             </Wrapper>
           </Wrapper>
-          <Wrapper
-            fontSize={`18px`}
-          >
-            <TableWrapper
-              margin={`0px`}
-              padding={`0px`}
-            >
-              <TableHead
-                margin={`0px`}
-                borderTop={`0px`}
-              >
-                <TableHeadLIST
-                  width={`226px`}
-                >
-                  업체명
-                </TableHeadLIST>
-                <TableHeadLIST
-                  width={`226px`}
-                >
-                  대표자명
-                </TableHeadLIST>
-                <TableHeadLIST
-                  width={`226px`}
-                >
-                  사업자등록번호
-                </TableHeadLIST>
+          <Wrapper fontSize={`18px`}>
+            <TableWrapper margin={`0px`} padding={`0px`}>
+              <TableHead margin={`0px`} borderTop={`0px`}>
+                <TableHeadLIST width={`226px`}>업체명</TableHeadLIST>
+                <TableHeadLIST width={`226px`}>대표자명</TableHeadLIST>
+                <TableHeadLIST width={`226px`}>사업자등록번호</TableHeadLIST>
               </TableHead>
-              <TableBody
-                margin={`0px`}
-              >
-                <TableBodyLIST
-                  width={`226px`}
+              {companyList.map((item: any, index: number) => (
+                <TableBody
+                  margin={`0px`}
+                  id={item.comRegNum}
+                  key={index}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    setInputForm({
+                      ...inputForm,
+                      companyNum: item.comRegNum,
+                    });
+                    setInputUser({ ...inputUser, _cID: item._id });
+                    setValue("companyNum", item.comRegNum, {
+                      shouldValidate: true,
+                    });
+                    setModalOpen(false);
+                  }}
                 >
-                  상호명
-                </TableBodyLIST>
-                <TableBodyLIST
-                  width={`226px`}
-                >
-                  변무영
-                </TableBodyLIST>
-                <TableBodyLIST
-                  width={`226px`}
-                >
-                  338800960
-                </TableBodyLIST>
+                  <TableBodyLIST width={`226px`}>{item.name}</TableBodyLIST>
+                  <TableBodyLIST width={`226px`}>
+                    {item.ownerName}
+                  </TableBodyLIST>
+                  <TableBodyLIST width={`226px`}>
+                    {item.comRegNum}
+                  </TableBodyLIST>
+                </TableBody>
+              ))}
+              <TableBody>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
               </TableBody>
-              <TableBody
-                margin={`0px`}
-              >
-                <TableBodyLIST
-                  width={`226px`}
-                >
-                  상호명
-                </TableBodyLIST>
-                <TableBodyLIST
-                  width={`226px`}
-                >
-                  변무영
-                </TableBodyLIST>
-                <TableBodyLIST
-                  width={`226px`}
-                >
-                  338800960
-                </TableBodyLIST>
+              <TableBody margin={`0px`}>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody margin={`0px`}>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody margin={`0px`}>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody margin={`0px`}>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody margin={`0px`}>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody margin={`0px`}>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody margin={`0px`}>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
+              </TableBody>
+              <TableBody margin={`0px`}>
+                <TableBodyLIST width={`226px`}>상호명</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>변무영</TableBodyLIST>
+                <TableBodyLIST width={`226px`}>338800960</TableBodyLIST>
               </TableBody>
             </TableWrapper>
           </Wrapper>
           <PagenationWrapper>
-
             <PagenationBtn>
               <IoIosArrowBack />
             </PagenationBtn>
-            <Pagenation>
-              1
-            </Pagenation>
+            <Pagenation>1</Pagenation>
             <PagenationBtn>
               <IoIosArrowForward />
             </PagenationBtn>
-
           </PagenationWrapper>
         </CommonForm>
       </Wrapper>
