@@ -125,7 +125,6 @@ export const Wrapper = styled.div<any>`
   background-attachment: ${(props) => props.attachment || `fixed`};
   background-position: center;
   background-color: ${(props) => props.bgColor};
-
   transition: 0.5s;
   cursor: ${(props) => props.cursor};
   line-height: ${(props) => props.lineHeight};
@@ -428,6 +427,11 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
   }
 
+  @media (max-width: 1439px) {
+    font-size: 18px;
+    width: 400px;
+  }
+
   @media (max-width: 500px) {
     height: 40px;
     font-size: 18px;
@@ -448,8 +452,10 @@ export const SmallButton = styled.button<any>`
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor};
   border-radius:5px;
   color: #fff;
+<<<<<<< HEAD
   ${(props) =>
     props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
   ${(props) =>
@@ -457,10 +463,18 @@ export const SmallButton = styled.button<any>`
   ${(props) =>
     props.kindOf === `default` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
+=======
+  cursor: pointer;
+  ${(props) => props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
+  ${(props) => props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
+  ${(props) => props.kindOf === `default` && `border : 1px solid ${props.theme.basicTheme_C};`}
+>>>>>>> ede50d5129c863b767de184aff797d1035b9a5c3
   
 
   ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
-  ${(props) => props.kindOf === `ghost` && `color ${props.theme.darkGrey_C};`}
+  ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
+  ${(props) => props.kindOf === `ghost` && `cursor : default;`}
+  ${(props) => props.kindOf === `ghost` && `border : none;`}
   
 
   & svg {
@@ -475,6 +489,55 @@ export const SmallButton = styled.button<any>`
     ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
   }
 `;
+
+export const SearchButton = styled.button<any>
+  `
+  width: ${(props) => props.width || `80px`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `40px`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  cursor: pointer;
+  border:none;
+
+`;
+
+export const CloseButton = styled.button<any>
+  `
+  width: ${(props) => props.width || `auto`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `auto`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize || `28px`};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `flex-end`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor || `#fff`};
+  color: ${(props) => props.color || props.basicTheme_C};
+  cursor: pointer;
+  border:none;
+
+
+  & svg {
+    color: ${(props) => props.color || props.basicTheme_C};
+    font-size: 28px;
+  }
+`;
+
+
 
 /** Input */
 
@@ -525,7 +588,7 @@ margin: ${(props) => props.margin};
 background-color: ${(props) => props.bgColor};
 &:focus {
   outline: none;
-  box-shadow: ${(props) => props.theme.boxShadow};
+  border: 1px solid ${(props) => props.theme.basicTheme_C};
 }
 >>>>>>> 098551c37ad1fa4bd35cbe91d8a996104b286c83
 
@@ -539,16 +602,16 @@ export const SearchInputWrapper = styled.div<any>`
   height: ${(props) => props.height || `46px`};
   border:none;
   border-bottom:1px solid #363636;
-  flex-direction: ${(props) => props.dr || `column`};
+  flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
+  padding: ${(props) => props.padding};
 `;
 
 export const SearchInput = styled.input<any>`
   width: ${(props) => props.width || `378px`};
   height: ${(props) => props.height || `46px`};
-  border:none;
-  border-radius: ${(props) => props.theme.radius};
+  border: none;
   background-color: ${(props) => props.bgColor};
   padding: ${(props) => props.padding || props.theme.inputPadding};
   transition: ${(props) => props.transition || props.theme.transition};
@@ -558,6 +621,7 @@ export const SearchInput = styled.input<any>`
   font-size: 18px;
   position: relative;
   outline: none;
+  display: flex;
 
   &:focus {
     outline: none;
@@ -574,6 +638,7 @@ export const SearchInput = styled.input<any>`
     position: absolute;
     right: 0;
     top: 0;
+    
   }
 
   @media (max-width: 500px) {
@@ -592,6 +657,7 @@ export const Combo = styled.select<any>`
 
   &:focus {
     outline: none;
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
   }
 
 `;
@@ -630,23 +696,24 @@ export const TableWrapper = styled.div<any>`
   flex-direction: column;
   align-items: center;
   margin: ${(props) => props.margin || `20px 0px 50px`};
-  padding: ${(props) => props.margin || `20px 0px 50px`};
+  padding: ${(props) => props.padding || `20px 0px 50px`};
 `;
 
 export const TableHead = styled.ul<any>`
   width: 100%;
-  height: 40px;
+  height: ${(props) => props.height || `40px`};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px 0px 10px 0px`};
-  border-bottom: ${(props) => props.borderBottom};
+  border-bottom: ${(props) => props.borderBottom || `1px solid #292929`};
   border-top: ${(props) => props.borderTop || `1px solid #292929`};
   border-radius: ${(props) => props.radius || ``};
   background: #fff;
   color: #292929;
+  padding: ${(props) => props.padding || `0px`};
 `;
 
 export const TableHeadLIST = styled.li<any>`
@@ -661,12 +728,13 @@ export const TableHeadLIST = styled.li<any>`
 export const TableBody = styled.ul<any>`
   width: 100%;
   height: ${(props) => props.height || `40px`};
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.padding || `0px`};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: ${(props) => props.ju || `space-between`};
   border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
+  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   transition: 0.5s;
   cursor: pointer;
 
@@ -733,13 +801,15 @@ export const PagenationBtn = styled.div<any>`
   font-size: 18px;
   width: 25px;
   height: 25px;
-  color: ${(props) => props.color || `#eee`};
+  color: ${(props) => props.color || `#292929`};
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   border-radius: 25px;
   margin: 0px 3px;
+  background-color: ${(props) => props.theme.subWhite_C};
+    border: 1px solid #ddd;
 
   &:first-child,
   &:last-child {
@@ -787,18 +857,4 @@ export const JoinFirstStepSelectText = styled.p<any>`
   margin:0px;
 `;
 
-export const QuestionIcon = styled.text<any>`
-  width: ${(props) => props.width || `100%`};
-  display:flex;
-  align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `flex-end`};
-  color: ${(props) => props.color || props.theme.grey_C};
-  font-size: ${(props) => props.fontSize || `32px`};
-  transition: 0.5s;
-  cursor: pointer;
-  padding:${(props) => props.padding || `20px 0px 100px`};
 
-  &:hover{
-  color: ${(props) => props.theme.basicTheme_C};
-}
-`;

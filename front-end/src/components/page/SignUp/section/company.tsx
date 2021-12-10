@@ -14,6 +14,7 @@ import {
 import { initialState } from "../../../../../store/reducer/user.reducer";
 import CompanyPresenter from "./companyPresenter";
 import { WholeWrapper, Wrapper } from "../../../styles/CommonComponents";
+import { IoIosCloseCircle } from 'react-icons/io';
 
 // modal setting
 Modal.setAppElement("body");
@@ -110,6 +111,7 @@ const Company: NextPage<any> = (props) => {
   // 주소 검색 api handler
   const addressHandler = (data: any) => {
     let fullAddress = data.address;
+    let zonecode = data.zonecode;
     let extraAddress = "";
 
     if (data.addressType === "R") {
@@ -123,8 +125,12 @@ const Company: NextPage<any> = (props) => {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    setInputForm({ ...inputForm, cAddressMain: fullAddress });
-    setValue("cAddressMain", fullAddress, { shouldValidate: true });
+    setInputCompany({
+      ...inputCompany,
+      address1: fullAddress,
+      postcode: zonecode,
+    });
+    setValue("address1", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
 
@@ -143,15 +149,10 @@ const Company: NextPage<any> = (props) => {
         signUpUserAction({
           user: {
             ...user,
-            name: inputCompany.ownerName,
             email: `${formInput.emailAddress}@${formInput.emailDomain}`,
           },
           company: {
             ...inputCompany,
-            address:
-              inputForm.cAddressDetail !== ""
-                ? `${inputForm.cAddressMain}, ${inputForm.cAddressDetail}`
-                : inputForm.cAddressMain,
           },
         })
       ).then(
@@ -221,7 +222,7 @@ const Company: NextPage<any> = (props) => {
           }}
         >
           <button type="button" onClick={closeModal}>
-            닫기
+            <IoIosCloseCircle />
           </button>
           <DaumPostcode
             onComplete={addressHandler}

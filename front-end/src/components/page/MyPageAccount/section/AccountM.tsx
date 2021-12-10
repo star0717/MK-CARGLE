@@ -21,10 +21,11 @@ const AccountM: NextPage<any> = (props) => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOption, setModalOption] = useState("");
-  const [addressOption, setAddressOption] = useState("hidden"); //상세주소여닫기
+  //const [addressOption, setAddressOption] = useState("hidden"); //상세주소여닫기
   const [addressMain, setAddressMain] = useState(""); // 주소(메인)
   const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [readOnly, setReadOnly] = useState(true);
+  //const [postCode, setPostCode] = useState("");
 
   const accountInfo = props.accountInfo;
   const setAccountInfo = props.setAccountInfo;
@@ -71,6 +72,7 @@ const AccountM: NextPage<any> = (props) => {
   // 주소 검색 api handler
   const addressHandler = (data: any) => {
     let fullAddress = data.address;
+    let zonecode = data.zonecode;
     let extraAddress = "";
 
     if (data.addressType === "R") {
@@ -84,8 +86,8 @@ const AccountM: NextPage<any> = (props) => {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    setUserData({ ...userData, address: fullAddress });
-
+    setUserData({ ...userData, address1: fullAddress, postcode: zonecode });
+    //setPostCode(zonecode);
     setValue("address", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
@@ -97,10 +99,10 @@ const AccountM: NextPage<any> = (props) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
   };
 
-  const onInputAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddressDetail(e.target.value);
-    // setUserData({ ...userData, address: userData.address + e.target.value });
-  };
+  // const onInputAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  //   // setUserData({ ...userData, address: userData.address + e.target.value });
+  // };
 
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -173,11 +175,15 @@ const AccountM: NextPage<any> = (props) => {
             />
           </Wrapper>
           <Wrapper dr={`row`}>
+            <Text>우편번호</Text>
+            <TextInput value={userData.postcode} />
+          </Wrapper>
+          <Wrapper dr={`row`}>
             <Text>주소</Text>
             <TextInput
               type="text"
               placeholder="주소를 입력해주세요."
-              value={userData.address}
+              value={userData.address1}
               name="address"
             />
             <button
@@ -185,26 +191,23 @@ const AccountM: NextPage<any> = (props) => {
               onClick={(e) => {
                 setModalOpen(!modalOpen);
                 setModalOption("address");
-                setAddressOption("text");
               }}
             >
               주소 검색
             </button>
           </Wrapper>
           <TextInput
-            type={addressOption}
+            type="text"
+            name="address2"
             placeholder="상세주소를 입력해 주세요."
             onChange={(e: any) => {
-              onInputAddressHandler(e);
+              onInputUserHandler(e);
             }}
           />
           <Wrapper dr={`row`}>
             <Text>입사일자</Text>
             <input type="date" value={accountInfo.user.joinDate}></input>
           </Wrapper>
-          <button type="submit" onClick={() => setpages(3)}>
-            회원탈퇴
-          </button>
 
           <Text>사업자 정보</Text>
           <Wrapper dr={`row`}>
@@ -315,6 +318,9 @@ const AccountM: NextPage<any> = (props) => {
               업 로 드
             </button>
           </Wrapper>
+          <button type="submit" onClick={() => setpages(3)}>
+            회원탈퇴
+          </button>
           <button
             type="submit"
             name="save"

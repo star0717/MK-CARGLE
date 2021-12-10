@@ -95,7 +95,7 @@ export class SettingsService {
     var pUser: Partial<User> = {};
     if (user.name) pUser.name = user.name;
     if (user.hpNumber) pUser.hpNumber = user.hpNumber;
-    if (user.address) pUser.address = user.address;
+    if (user.address1) pUser.address1 = user.address1;
     if (user.joinDate) pUser.joinDate = user.joinDate;
     return await this.usersService.findByIdAndUpdate(token, id, pUser);
   }

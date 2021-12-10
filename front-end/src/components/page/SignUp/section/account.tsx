@@ -19,7 +19,8 @@ import CompanyFindModal from "./comFindModal";
 import { User, UserAuthority } from "../../../../models/user.entity";
 import { initialState } from "../../../../../store/reducer/user.reducer";
 import AccountPresenter from "./accountPresenter";
-import { WholeWrapper, Wrapper } from "../../../styles/CommonComponents";
+import { CloseButton, WholeWrapper, Wrapper } from "../../../styles/CommonComponents";
+import { IoIosCloseCircle } from 'react-icons/io';
 
 // modal setting
 Modal.setAppElement("body");
@@ -166,6 +167,7 @@ const Account: NextPage<any> = (props) => {
   // 주소 검색 api handler
   const addressHandler = (data: any) => {
     let fullAddress = data.address;
+    let zonecode = data.zonecode;
     let extraAddress = "";
 
     if (data.addressType === "R") {
@@ -179,8 +181,8 @@ const Account: NextPage<any> = (props) => {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    setInputForm({ ...inputForm, uAddressMain: fullAddress });
-    setValue("uAddressMain", fullAddress, { shouldValidate: true });
+    setInputUser({ ...inputUser, address1: fullAddress, postcode: zonecode });
+    setValue("address1", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
 
@@ -199,11 +201,6 @@ const Account: NextPage<any> = (props) => {
             user: {
               ...inputUser,
               email: `${inputForm.emailAddress}@${inputForm.emailDomain}`,
-              address:
-                inputForm.uAddressMain && inputForm.uAddressDetail !== ""
-                  ? `${inputForm.uAddressMain}, ${inputForm.uAddressDetail}`
-                  : inputForm.uAddressMain,
-              joinDate: inputUser.joinDate && inputUser.joinDate,
             },
           })
         ).then(
@@ -298,9 +295,17 @@ const Account: NextPage<any> = (props) => {
             },
           }}
         >
-          <button type="button" onClick={closeModal}>
-            닫기
-          </button>
+          <Wrapper
+            fontSize={`28px`}
+            al={`flex-end`}
+          >
+            <CloseButton
+              onClick={closeModal}>
+              <IoIosCloseCircle
+                color={`#0066ff`}
+              />
+            </CloseButton>
+          </Wrapper>
           {modalOption === "address" ? (
             <DaumPostcode
               onComplete={addressHandler}

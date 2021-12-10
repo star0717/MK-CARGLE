@@ -12,18 +12,24 @@ import {
   Image,
 } from "../styles/CommonComponents";
 import { CompanyApproval } from "../../models/company.entity";
+import { MainRoute, SubRoute } from "../../models/router.entity";
+import { useState } from "react";
 
-interface HeaderProps {
-  query: any;
+interface LayoutProps {
   tokenValue?: any;
 }
 
-const Header: NextPage<HeaderProps> = (props) => {
+const Header: NextPage<LayoutProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  // props 재정의
+
+  // 필요한 props 재정의
   const tokenValue = props?.tokenValue;
 
+  /**
+   * 로그아웃 기능
+   * @param e
+   */
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
       router.push("/");
@@ -41,7 +47,7 @@ const Header: NextPage<HeaderProps> = (props) => {
         padding={width < 1439 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
       >
         <Wrapper width={`auto`}>
-          <Link href="/view/main">
+          <Link href="/main">
             <a>
               <Image
                 src="/images/cargle.png"
