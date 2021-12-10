@@ -109,86 +109,86 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                       </TableRowLIST>
                     </TableRow>
                   ))}
-                  {/* <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-                <TableRow margin={`0px`}>
-                  <TableRowLIST width={`226px`}>상호명</TableRowLIST>
-                  <TableRowLIST width={`226px`}>변무영</TableRowLIST>
-                  <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow> */}
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
+                  <TableRow margin={`0px`}>
+                    <TableRowLIST width={`226px`}>상호명</TableRowLIST>
+                    <TableRowLIST width={`226px`}>변무영</TableRowLIST>
+                    <TableRowLIST width={`226px`}>338800960</TableRowLIST>
+                  </TableRow>
                 </TableBody>
               )}
             </TableWrapper>

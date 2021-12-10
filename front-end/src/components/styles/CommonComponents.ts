@@ -251,7 +251,7 @@ export const CommonTitle = styled.h2<any>`
   width: ${(props) => props.width};
   display: ${(props) => props.display};
   position: relative;
-  margin: ${(props) => props.margin};
+  margin: ${(props) => props.margin || `0px`};
   margintop: ${(props) => props.marginTop};
   padding: ${(props) => props.padding || `100px 0px 0px`};
   padding-bottom: ${(props) => props.paddingBottom};
@@ -523,6 +523,30 @@ export const CloseButton = styled.button<any>`
   }
 `;
 
+export const IconButton = styled.button<any>`
+  width: ${(props) => props.width || `auto`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `auto`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize || `28px`};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `flex-end`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor || `#fff`};
+  color: ${(props) => props.color || props.basicTheme_C};
+  cursor: pointer;
+  border: none;
+
+  & svg {
+    color: ${(props) => props.color || props.basicTheme_C};
+    font-size: 28px;
+  }
+`;
+
 /** Input */
 
 export const TextInput = styled.input<any>`
@@ -558,9 +582,7 @@ export const TextInput2 = styled.input<any>`
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
-  &:focus {
-    box-shadow: ${(props) => props.theme.boxShadow};
-  }
+
 width: ${(props) => props.width};
 height: ${(props) => props.height || `40px`};
 border: ${(props) => props.theme.border};
@@ -569,6 +591,7 @@ border-radius: ${(props) => props.theme.radius};
 transition: ${(props) => props.transition || props.theme.transition};
 margin: ${(props) => props.margin};
 background-color: ${(props) => props.bgColor};
+
 &:focus {
   outline: none;
   border: 1px solid ${(props) => props.theme.basicTheme_C};
@@ -844,3 +867,53 @@ export const JoinFirstStepSelectText = styled.p<any>`
   font-size: 18px;
   margin: 0px;
 `;
+
+
+export const JoinStepBarWrapper = styled.p<any>`
+display:flex;
+width:100%;
+justify-content: ${(props) => props.ju || `center`};
+  align-items: ${(props) => props.al || `center`};
+  text-align: center;
+  font-size: 18px;
+  margin: 0px;
+  padding:0px 0px 30px 0px;
+  flex-direction:row;
+`;
+
+export const JoinStepBar = styled.p<any>`
+display:flex;
+justify-content: ${(props) => props.ju || `center`};
+align-items: ${(props) => props.al || `center`};
+  text-align: center;
+  font-size: 18px;
+  font-weight:800;
+  margin: 0px;
+  padding:0px;
+  width: ${(props) => props.width || `32px`};
+  height: ${(props) => props.height || `32px`};
+  border-radius: ${(props) => props.radius || `32px`};
+  background-color: ${(props) => props.bgColor || `32px`};
+
+  ${(props) => props.kindOf === `line` && `height : 1px;`}
+  ${(props) => props.kindOf === `line` && `border-radius : 0px;`}
+  ${(props) => props.kindOf === `line` && `border : 1px solid ${props.theme.basicTheme_C};`}
+  
+  ${(props) => props.kindOf === `line2` && `height : 1px;`}
+  ${(props) => props.kindOf === `line2` && `border-radius : 0px;`}
+  ${(props) => props.kindOf === `line2` && `border : 1px solid ${props.theme.darkGrey_C};`}
+  
+  ${(props) => props.kindOf === `before` && `background ${props.theme.subWhite_C};`}
+  ${(props) => props.kindOf === `before` && `color ${props.theme.darkGrey_C};`}
+  ${(props) => props.kindOf === `before` && `border : 1px solid ${props.theme.darkGrey_C};`}
+  
+  ${(props) => props.kindOf === `progress` && `background : #d2e5ff;`}
+  ${(props) => props.kindOf === `progress` && `color ${props.theme.basicTheme_C};`}
+  ${(props) => props.kindOf === `progress` && `border : 1px solid ${props.theme.basicTheme_C};`}
+
+    ${(props) => props.kindOf === `complete` && `background ${props.theme.basicTheme_C};`}
+  ${(props) => props.kindOf === `complete` && `color ${props.theme.white_C};`}
+  
+`;
+
+

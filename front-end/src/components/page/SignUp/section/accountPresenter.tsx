@@ -13,7 +13,10 @@ import {
   Combo,
   SmallButton,
   CommonButton,
+  JoinStepBarWrapper,
+  JoinStepBar,
 } from "../../../styles/CommonComponents";
+import { GoCheck } from "react-icons/go";
 
 const AccountPresenter: NextPage<any> = (props) => {
   const dispatch = useDispatch();
@@ -49,7 +52,7 @@ const AccountPresenter: NextPage<any> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <Wrapper
-        width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1100px`}
+        width={`auto`}
         padding={`50px`}
         border={`1px solid #ccc`}
         radius={`5px`}
@@ -122,7 +125,7 @@ const AccountPresenter: NextPage<any> = (props) => {
                     pattern: formRegEx.EMAIL_ADDRESS,
                   })}
                 />
-                <TextInput2
+                {/* <TextInput2
                   margin={`0px 0px 0px 20px`}
                   width={`300px`}
                   type="text"
@@ -153,7 +156,7 @@ const AccountPresenter: NextPage<any> = (props) => {
                       {item.text}
                     </option>
                   ))}
-                </Combo>
+                </Combo> */}
                 <SmallButton
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
@@ -167,9 +170,7 @@ const AccountPresenter: NextPage<any> = (props) => {
               {formCheck.emailSend ? (
                 <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
                   <TextInput2
-                    width={
-                      width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`
-                    }
+                    width={`300px`}
                     type="text"
                     value={authNum}
                     {...register("authNum", {
@@ -247,7 +248,7 @@ const AccountPresenter: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*비밀번호</Text>
             <TextInput2
-              width={`300px`}
+              width={`400px`}
               margin={`0px 0px 10px`}
               type="password"
               value={inputUser.password}
@@ -281,7 +282,7 @@ const AccountPresenter: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*비밀번호 확인</Text>
             <TextInput2
-              width={`300px`}
+              width={`400px`}
               margin={`0px 0px 10px`}
               type="password"
               value={inputForm.passwordCheck}
@@ -336,7 +337,7 @@ const AccountPresenter: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*이름</Text>
             <TextInput2
-              width={`300px`}
+              width={`400px`}
               margin={`0px 0px 10px`}
               type="text"
               value={inputUser.name}
@@ -365,7 +366,7 @@ const AccountPresenter: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*휴대폰번호</Text>
             <TextInput2
-              width={`300px`}
+              width={`400px`}
               margin={`0px 0px 10px`}
               type="text"
               value={CHAR_DEL(inputUser.hpNumber)}
@@ -446,9 +447,10 @@ const AccountPresenter: NextPage<any> = (props) => {
           </Wrapper>
         </form>
       </Wrapper>
-      <Wrapper dr={`row`} padding={`50px 0px 100px 0px`}>
+      <Wrapper padding={`50px 0px 100px 0px`}>
         <CommonButton
-          margin={`0px 10px 0px 0px`}
+          kindOf={`white`}
+          margin={`0px 0px 10px 0px`}
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             setStepNumber(stepNumber - 1);
             dispatch({
@@ -463,7 +465,7 @@ const AccountPresenter: NextPage<any> = (props) => {
         >
           이전
         </CommonButton>
-        <CommonButton margin={`0px 0px 0px 10px`} type="submit">
+        <CommonButton margin={`10px 0px 0px 0px`} type="submit">
           {userAuth === UserAuthority.OWNER ? "다음" : "완료"}
         </CommonButton>
       </Wrapper>
