@@ -107,11 +107,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (context.req.cookies.mk_token) {
     const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
 
-    if (mItem.indexOf(mainRoute) === -1 || sItem.indexOf(subRoute) === -1) {
+    if (mItem.indexOf(mainRoute) === -1) {
       return {
         notFound: true,
       };
     } else {
+      if (mainRoute === "mypage" && sItem.indexOf(subRoute) === -1) {
+        return {
+          notFound: true,
+        };
+      }
       return {
         props: {
           tokenValue,
