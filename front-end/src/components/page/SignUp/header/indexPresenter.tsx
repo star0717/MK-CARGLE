@@ -1,11 +1,12 @@
 import { NextPage } from "next";
 import { useResizeDetector } from "react-resize-detector";
 import {
-  WholeWrapper, Wrapper, Text, CommonTitle, CommonSubTitle
+  WholeWrapper, Wrapper, Text, CommonTitle, CommonSubTitle, JoinStepBarWrapper, JoinStepBar
 
 
 } from "../../../styles/CommonComponents";
 import React from "react";
+import { GoCheck } from "react-icons/go";
 
 const SignUpHeaderPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
@@ -18,6 +19,30 @@ const SignUpHeaderPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
+
+      {/* <JoinStepBar
+          kindOf={`complete`}
+        >
+          <GoCheck />
+        </JoinStepBar>
+        <JoinStepBar
+          kindOf={`line`}
+        ></JoinStepBar>
+        <JoinStepBar
+          kindOf={`progress`}
+        >2</JoinStepBar>
+        <JoinStepBar
+          kindOf={`line2`}
+        ></JoinStepBar>
+        <JoinStepBar
+          kindOf={`before`}
+        >3</JoinStepBar>
+        <JoinStepBar
+          kindOf={`line2`}
+        ></JoinStepBar>
+        <JoinStepBar
+          kindOf={`before`}
+        >4</JoinStepBar> */}
       {/*          
       <Wrapper>
         {userAuth === "owner" &&
@@ -68,6 +93,25 @@ const SignUpHeaderPresenter: NextPage<any> = (props) => {
           </CommonTitle>
         )}
       </Wrapper>
+
+      {userAuth === UserAuthority.OWNER &&
+        (stepNumber === 2 || stepNumber === 3 || stepNumber === 4 || stepNumber === 5) &&
+        <JoinStepBarWrapper>
+          <JoinStepBar kindOf={stepNumber === 2 ? `progress` : `complete`}>{stepNumber === 2 ? `1` : <GoCheck />}</JoinStepBar>
+          <JoinStepBar
+            kindOf={stepNumber > 2 ? `line` : `line2`}
+          ></JoinStepBar>
+          <JoinStepBar kindOf={stepNumber < 3 ? `before` : stepNumber === 3 ? `progress` : `complete`}>{stepNumber > 3 ? <GoCheck /> : `2`}</JoinStepBar>
+          <JoinStepBar
+            kindOf={stepNumber > 3 ? `line` : `line2`}
+          ></JoinStepBar>
+          <JoinStepBar kindOf={stepNumber < 4 ? `before` : stepNumber === 4 ? `progress` : `complete`}>{stepNumber > 4 ? <GoCheck /> : `3`}</JoinStepBar>
+          <JoinStepBar
+            kindOf={stepNumber > 4 ? `line` : `line2`}
+          ></JoinStepBar>
+          <JoinStepBar kindOf={stepNumber === 5 ? `progress` : `before`}>4</JoinStepBar>
+        </JoinStepBarWrapper>
+      }
     </WholeWrapper>
   );
 };

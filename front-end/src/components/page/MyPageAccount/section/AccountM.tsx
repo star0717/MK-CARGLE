@@ -119,7 +119,7 @@ const AccountM: NextPage<any> = (props) => {
       alert("저장되었습니다.");
     });
   };
-
+  console.log(accountInfo);
   return (
     <WholeWrapper>
       <form onSubmit={saveData}>
@@ -208,7 +208,14 @@ const AccountM: NextPage<any> = (props) => {
           />
           <Wrapper dr={`row`}>
             <Text>입사일자</Text>
-            <input type="date" value={userData.joinDate}></input>
+            <input
+              type="date"
+              value={userData.joinDate}
+              name="joinDate"
+              onChange={(e: any) => {
+                onInputUserHandler(e);
+              }}
+            />
           </Wrapper>
 
           <Text>사업자 정보</Text>
@@ -311,8 +318,9 @@ const AccountM: NextPage<any> = (props) => {
                 comData.address1 +
                 " " +
                 comData.address2 +
-                ", " +
-                comData.postcode
+                ", (" +
+                comData.postcode +
+                ")"
               }
               type="text"
               readOnly

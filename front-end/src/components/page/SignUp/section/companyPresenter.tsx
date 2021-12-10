@@ -8,11 +8,14 @@ import {
   SmallButton,
   CommonButton,
   Combo,
+  JoinStepBarWrapper,
+  JoinStepBar,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { basicRegEx, CHAR_DEL, formRegEx } from "../../../../validation/regEx";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import { GoCheck } from "react-icons/go";
 
 const CompanyPresenter: NextPage<any> = (props) => {
   const dispatch = useDispatch();
@@ -37,26 +40,29 @@ const CompanyPresenter: NextPage<any> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
+
     <WholeWrapper ref={ref}>
-      <Wrapper>
+      <Wrapper
+        width={`auto`}
+        padding={`50px`}
+        border={`1px solid #ccc`}
+        radius={`5px`}
+      >
         <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
           <Wrapper>
             {/* 상호명 */}
             <Wrapper
               al={`flex-start`}
+              ju={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`auto`}
             >
               <Text margin={`0px 0px 10px`}>
                 *상호명{" "}
                 <small>(사업자등록증에 등록한 상호명을 입력해주세요.)</small>
               </Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`400px`}
                 type="text"
                 value={inputCompany.name}
                 placeholder="상호명을 입력해주세요."
@@ -82,18 +88,15 @@ const CompanyPresenter: NextPage<any> = (props) => {
             </Wrapper>
             {/* 사업자등록번호 */}
             <Wrapper
+              ju={`flex-start`}
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`auto`}
             >
               <Text margin={`0px 0px 10px`}>*사업자 등록번호</Text>
-              <Wrapper dr={`row`}>
+              <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
                 <TextInput2
-                  width={
-                    width < 1439 ? (width < 500 ? `200px` : `900px`) : `1100px`
-                  }
+                  width={`300px`}
                   type="text"
                   value={CHAR_DEL(inputCompany.comRegNum)}
                   readOnly={formCheck.companyCheck}
@@ -152,15 +155,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`auto`}
             >
               <Text margin={`0px 0px 10px`}>*정비업 등록번호</Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`400px`}
                 type="text"
                 value={CHAR_DEL(inputCompany.mbRegNum)}
                 placeholder="정비업 등록번호를 입력해주세요."
@@ -193,15 +192,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`auto`}
             >
               <Text margin={`0px 0px 10px`}>*정비업종</Text>
               <Combo
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`400px`}
                 margin={`0px`}
                 value={inputCompany.mbTypeNum}
                 {...register("mbTypeNum", {
@@ -222,15 +217,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`auto`}
             >
               <Text margin={`0px 0px 10px`}>*대표자명</Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`400px`}
                 type="text"
                 value={inputCompany.ownerName}
                 placeholder="대표자명을 입력해주세요."
@@ -258,15 +249,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`auto`}
             >
               <Text margin={`0px 0px 10px`}>*업체 전화번호</Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`400px`}
                 type="text"
                 value={CHAR_DEL(inputCompany.phoneNum)}
                 placeholder="(- 제외, 지역번호 포함)"
@@ -299,15 +286,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`auto`}
             >
               <Text margin={`0px 0px 10px`}>업체 팩스번호(선택)</Text>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                width={`400px`}
                 type="text"
                 value={CHAR_DEL(inputCompany.faxNum)}
                 placeholder="(- 제외)"
@@ -338,16 +321,12 @@ const CompanyPresenter: NextPage<any> = (props) => {
             <Wrapper
               al={`flex-start`}
               margin={`0px 0px 10px`}
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`auto`}
             >
               <Text margin={`0px 0px 10px`}>*사업자 주소</Text>
               <Wrapper dr={`row`}>
                 <TextInput2
-                  width={
-                    width < 1439 ? (width < 500 ? `200px` : `900px`) : `1100px`
-                  }
+                  width={`300px`}
                   type="text"
                   placeholder="주소를 입력해주세요."
                   value={inputCompany.address1}
@@ -381,9 +360,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               )}
             </Wrapper>
             <TextInput2
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`400px`}
               type="text"
               placeholder="상세 주소"
               value={inputCompany.address2}
@@ -395,29 +372,27 @@ const CompanyPresenter: NextPage<any> = (props) => {
               })}
             />
           </Wrapper>
-          <Wrapper
-            dr={`row`}
-            ju={`space-around`}
-            padding={`50px 0px 100px 0px`}
-          >
-            <CommonButton
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                setStepNumber(stepNumber - 1);
-                dispatch({
-                  type: actionTypesUser.INPUT_COMPANY,
-                  payload: inputCompany,
-                });
-                dispatch({
-                  type: actionTypesUser.INPUT_FORM,
-                  payload: inputForm,
-                });
-              }}
-            >
-              이전
-            </CommonButton>
-            <CommonButton type="submit">완료</CommonButton>
-          </Wrapper>
         </form>
+      </Wrapper>
+      <Wrapper padding={`50px 0px 100px 0px`}>
+        <CommonButton
+          kindOf={`white`}
+          margin={`0px 0px 10px 0px`}
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            setStepNumber(stepNumber - 1);
+            dispatch({
+              type: actionTypesUser.INPUT_COMPANY,
+              payload: inputCompany,
+            });
+            dispatch({
+              type: actionTypesUser.INPUT_FORM,
+              payload: inputForm,
+            });
+          }}
+        >
+          이전
+        </CommonButton>
+        <CommonButton margin={`10px 0px 0px 0px`} type="submit">완료</CommonButton>
       </Wrapper>
     </WholeWrapper>
   );
