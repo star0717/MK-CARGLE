@@ -79,34 +79,37 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                 <TableHeadLIST width={`226px`}>대표자명</TableHeadLIST>
                 <TableHeadLIST width={`226px`}>사업자등록번호</TableHeadLIST>
               </TableHead>
-              <TableBody>
-                {companyList.map((item: any, index: number) => (
-                  <TableRow
-                    margin={`0px`}
-                    id={item.comRegNum}
-                    key={index}
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      setInputForm({
-                        ...inputForm,
-                        companyNum: item.comRegNum,
-                      });
-                      setInputUser({ ...inputUser, _cID: item._id });
-                      setValue("companyNum", item.comRegNum, {
-                        shouldValidate: true,
-                      });
-                      setModalOpen(false);
-                    }}
-                  >
-                    <TableRowLIST width={`226px`}>{item.name}</TableRowLIST>
-                    <TableRowLIST width={`226px`}>
-                      {item.ownerName}
-                    </TableRowLIST>
-                    <TableRowLIST width={`226px`}>
-                      {item.comRegNum}
-                    </TableRowLIST>
-                  </TableRow>
-                ))}
-                <TableRow>
+              {companyList.length === 0 ? (
+                <Wrapper>소속 업체를 검색하세요.</Wrapper>
+              ) : (
+                <TableBody margin={`0px`} overflow={`auto`}>
+                  {companyList.map((item: any, index: number) => (
+                    <TableRow
+                      margin={`0px`}
+                      id={item.comRegNum}
+                      key={index}
+                      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        setInputForm({
+                          ...inputForm,
+                          companyNum: item.comRegNum,
+                        });
+                        setInputUser({ ...inputUser, _cID: item._id });
+                        setValue("companyNum", item.comRegNum, {
+                          shouldValidate: true,
+                        });
+                        setModalOpen(false);
+                      }}
+                    >
+                      <TableRowLIST width={`226px`}>{item.name}</TableRowLIST>
+                      <TableRowLIST width={`226px`}>
+                        {item.ownerName}
+                      </TableRowLIST>
+                      <TableRowLIST width={`226px`}>
+                        {item.comRegNum}
+                      </TableRowLIST>
+                    </TableRow>
+                  ))}
+                  {/* <TableRow margin={`0px`}>
                   <TableRowLIST width={`226px`}>상호명</TableRowLIST>
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
@@ -116,7 +119,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
                 </TableRow>
-                <TableRow>
+                <TableRow margin={`0px`}>
                   <TableRowLIST width={`226px`}>상호명</TableRowLIST>
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
@@ -126,7 +129,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
                 </TableRow>
-                <TableRow>
+                <TableRow margin={`0px`}>
                   <TableRowLIST width={`226px`}>상호명</TableRowLIST>
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
@@ -136,7 +139,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
                 </TableRow>
-                <TableRow>
+                <TableRow margin={`0px`}>
                   <TableRowLIST width={`226px`}>상호명</TableRowLIST>
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
@@ -146,7 +149,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
                 </TableRow>
-                <TableRow>
+                <TableRow margin={`0px`}>
                   <TableRowLIST width={`226px`}>상호명</TableRowLIST>
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
@@ -156,7 +159,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
                 </TableRow>
-                <TableRow>
+                <TableRow margin={`0px`}>
                   <TableRowLIST width={`226px`}>상호명</TableRowLIST>
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
@@ -166,7 +169,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
                 </TableRow>
-                <TableRow>
+                <TableRow margin={`0px`}>
                   <TableRowLIST width={`226px`}>상호명</TableRowLIST>
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
@@ -176,7 +179,7 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
                 </TableRow>
-                <TableRow>
+                <TableRow margin={`0px`}>
                   <TableRowLIST width={`226px`}>상호명</TableRowLIST>
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
@@ -185,19 +188,11 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                   <TableRowLIST width={`226px`}>상호명</TableRowLIST>
                   <TableRowLIST width={`226px`}>변무영</TableRowLIST>
                   <TableRowLIST width={`226px`}>338800960</TableRowLIST>
-                </TableRow>
-              </TableBody>
+                </TableRow> */}
+                </TableBody>
+              )}
             </TableWrapper>
           </Wrapper>
-          <PagenationWrapper>
-            <PagenationBtn>
-              <IoIosArrowBack />
-            </PagenationBtn>
-            <Pagenation>1</Pagenation>
-            <PagenationBtn>
-              <IoIosArrowForward />
-            </PagenationBtn>
-          </PagenationWrapper>
         </CommonForm>
       </Wrapper>
     </WholeWrapper>
