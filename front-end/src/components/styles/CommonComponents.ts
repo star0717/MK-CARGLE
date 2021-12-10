@@ -288,7 +288,7 @@ export const Text = styled.p<any>`
   flex-direction: ${(props) => props.dr};
   align-items: ${(props) => props.al};
   justify-content: ${(props) => props.ju};
-  font-size: ${(props) => props.fontSize || `18px`};
+  font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || `500`};
   line-height: ${(props) => props.lineHeight || `1.6`};
   color: ${(props) => props.color};
@@ -544,6 +544,7 @@ export const TextInput = styled.input<any>`
   margin-top: ${(props) => props.marginTop};
   font-size: 18px;
   position: relative;
+  letter-spacing: 0px;
   &:focus {
     outline: none;
     box-shadow: ${(props) => props.theme.boxShadow};
@@ -713,6 +714,7 @@ export const TableBody = styled.ul<any>`
   margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   transition: 0.5s;
   cursor: pointer;
+  overflow: ${(props) => props.overflow || ``};
 
   &:hover {
     background-color: #f5f5f5;
