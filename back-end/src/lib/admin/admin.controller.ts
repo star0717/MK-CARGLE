@@ -1,15 +1,14 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
   Delete,
-  Req,
   Res,
+  StreamableFile,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import {
   ApiBody,
   ApiOperation,
@@ -23,6 +22,9 @@ import { CommonService } from '../common/common.service';
 import { AuthToken, Public } from '../decorators/decorators';
 import { AdminService } from './admin.service';
 import { UserAuthority } from 'src/models/user.entity';
+import { createReadStream } from 'fs';
+import { join } from 'path/posix';
+import { getCrnPath, getMrnPath } from 'src/config/configuration';
 
 @Controller('admin')
 @ApiTags('시스템 관리자 API')
@@ -108,6 +110,74 @@ export class AdminController {
     token: AuthTokenInfo,
   ) {
     return this.service.deleteCompany(token, id);
+  }
+
+  @Get('review/com-reg-doc/:id')
+  @ApiOperation({ summary: '[ADMIN] 업체의 사업자 등록증 반환' })
+  @ApiParam({ name: 'id', description: '업체의 오브젝트ID' })
+  async getComRegDoc(
+    @Param('id') id: string,
+    @AuthToken()
+    token: AuthTokenInfo,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const fileName = await this.service.getComRegDoc(token, id);
+    const extension = this.commonService.getFileExtension(fileName);
+
+    var conType: string;
+    switch (extension) {
+      case 'jpg' || 'jpeg':
+        conType = 'image/jpeg';
+        break;
+      case 'png':
+        conType = 'image/png';
+        break;
+      case 'pdf':
+        conType = 'application/pdf';
+        break;
+    }
+
+    res.set({
+      'Content-Type': conType,
+      'Content-Disposition': 'inline',
+    });
+
+    const file = createReadStream(join(process.cwd(), getCrnPath() + fileName));
+    return new StreamableFile(file);
+  }
+
+  @Get('review/main-reg-doc/:id')
+  @ApiOperation({ summary: '[ADMIN] 업체의 사업자 등록증 반환' })
+  @ApiParam({ name: 'id', description: '업체의 오브젝트ID' })
+  async getMainRegDoc(
+    @Param('id') id: string,
+    @AuthToken()
+    token: AuthTokenInfo,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const fileName = await this.service.getMainRegDoc(token, id);
+    const extension = this.commonService.getFileExtension(fileName);
+
+    var conType: string;
+    switch (extension) {
+      case 'jpg' || 'jpeg':
+        conType = 'image/jpeg';
+        break;
+      case 'png':
+        conType = 'image/png';
+        break;
+      case 'pdf':
+        conType = 'application/pdf';
+        break;
+    }
+
+    res.set({
+      'Content-Type': conType,
+      'Content-Disposition': 'inline',
+    });
+
+    const file = createReadStream(join(process.cwd(), getMrnPath() + fileName));
+    return new StreamableFile(file);
   }
 
   @Patch('companies/:id')

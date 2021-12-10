@@ -10,6 +10,7 @@ export class FilesController {
   @Get()
   getFile(@Response({ passthrough: true }) res): StreamableFile {
     const file = createReadStream(join(process.cwd(), '/public/profile.jpg'));
+
     res.set({
       'Content-Type': 'image/jpeg|image/png|application/pdf',
       'Content-Disposition': 'inline',
