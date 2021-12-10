@@ -47,7 +47,7 @@ const Header: NextPage<LayoutProps> = (props) => {
         padding={width < 1439 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
       >
         <Wrapper width={`auto`}>
-          <Link href="/main">
+          <Link href="/v/main">
             <a>
               <Image
                 src="/images/cargle.png"
