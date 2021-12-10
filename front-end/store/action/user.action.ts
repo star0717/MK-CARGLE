@@ -199,6 +199,7 @@ export async function getMyInfo() {
  * @returns
  */
 export async function setMyInfo(dataToSubmit: any) {
+  console.log("액션", dataToSubmit);
   const req = await axios
     .patch(`/api/settings/myinfo`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);

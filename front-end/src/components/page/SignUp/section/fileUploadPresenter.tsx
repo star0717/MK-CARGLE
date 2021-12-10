@@ -10,7 +10,6 @@ import {
   Wrapper,
   Text,
   TextInput2,
-  QuestionIcon,
   SmallButton,
   CommonButton,
 } from "../../../styles/CommonComponents";

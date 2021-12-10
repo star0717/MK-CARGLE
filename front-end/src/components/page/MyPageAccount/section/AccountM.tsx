@@ -22,8 +22,8 @@ const AccountM: NextPage<any> = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOption, setModalOption] = useState("");
   //const [addressOption, setAddressOption] = useState("hidden"); //상세주소여닫기
-  const [addressMain, setAddressMain] = useState(""); // 주소(메인)
-  const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
+  // const [addressMain, setAddressMain] = useState(""); // 주소(메인)
+  // const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [readOnly, setReadOnly] = useState(true);
   //const [postCode, setPostCode] = useState("");
 
@@ -93,7 +93,6 @@ const AccountM: NextPage<any> = (props) => {
   };
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
-    setAccountInfo({ company: comData, user: userData });
   };
   const onInputComHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
@@ -107,14 +106,16 @@ const AccountM: NextPage<any> = (props) => {
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const ai: SignUpInfo = {
-      company: comData,
-      user: userData,
-    };
-    dispatch(setMyInfo(ai)).then((res: any) => {
-      const info: SignUpInfo = res.payload;
+    //console.log(userData);
+    console.log("ddd", accountInfo);
+    // const ai: SignUpInfo = {
+    //   company: comData,
+    //   user: userData,
+    // };
+    dispatch(setMyInfo(accountInfo)).then((res: any) => {
+      //const info: SignUpInfo = res.payload;
 
-      setAccountInfo({ company: info.company, user: info.user });
+      //setAccountInfo({ company: info.company, user: info.user });
       alert("저장되었습니다.");
     });
   };
@@ -128,7 +129,7 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>아이디</Text>
             <TextInput
-              value={accountInfo.user.email}
+              value={userData.email}
               type="text"
               readOnly
               disabled={true}
@@ -137,7 +138,7 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>비밀번호</Text>
             <TextInput
-              value={accountInfo.user.password}
+              value={userData.password}
               type="password"
               readOnly
               disabled={true}
@@ -176,7 +177,7 @@ const AccountM: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>우편번호</Text>
-            <TextInput value={userData.postcode} />
+            <TextInput name="postcode" value={userData.postcode} />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>주소</Text>
@@ -184,7 +185,7 @@ const AccountM: NextPage<any> = (props) => {
               type="text"
               placeholder="주소를 입력해주세요."
               value={userData.address1}
-              name="address"
+              name="address1"
             />
             <button
               type="button"
@@ -200,13 +201,14 @@ const AccountM: NextPage<any> = (props) => {
             type="text"
             name="address2"
             placeholder="상세주소를 입력해 주세요."
+            value={userData.address2}
             onChange={(e: any) => {
               onInputUserHandler(e);
             }}
           />
           <Wrapper dr={`row`}>
             <Text>입사일자</Text>
-            <input type="date" value={accountInfo.user.joinDate}></input>
+            <input type="date" value={userData.joinDate}></input>
           </Wrapper>
 
           <Text>사업자 정보</Text>
@@ -214,7 +216,7 @@ const AccountM: NextPage<any> = (props) => {
             <Text>상호명</Text>
             <TextInput
               disabled={true}
-              value={accountInfo.company.name}
+              value={comData.name}
               type="text"
               readonly
             />
@@ -223,7 +225,7 @@ const AccountM: NextPage<any> = (props) => {
             <Text>사업자등록번호</Text>
             <TextInput
               disabled={true}
-              value={accountInfo.company.comRegNum}
+              value={comData.comRegNum}
               type="text"
               readonly
             />
@@ -232,7 +234,7 @@ const AccountM: NextPage<any> = (props) => {
             <Text>정비업 등록번호</Text>
             <TextInput
               disabled={true}
-              value={accountInfo.company.mbRegNum}
+              value={comData.mbRegNum}
               type="text"
               readonly
             />
@@ -241,7 +243,7 @@ const AccountM: NextPage<any> = (props) => {
             <Text>대표자명</Text>
             <TextInput
               disabled={true}
-              value={accountInfo.company.ownerName}
+              value={comData.ownerName}
               type="text"
               readonly
             />
@@ -257,7 +259,7 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>업태</Text>
             <TextInput
-              defaultValue={accountInfo.company.busType}
+              defaultValue={comData.busType}
               type="text"
               name="busType"
               readOnly={readOnly}
@@ -268,7 +270,7 @@ const AccountM: NextPage<any> = (props) => {
             />
             <Text>업종</Text>
             <TextInput
-              defaultValue={accountInfo.company.busItem}
+              defaultValue={comData.busItem}
               type="text"
               name="busItem"
               readOnly={readOnly}
@@ -281,7 +283,7 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>사업자 전화번호</Text>
             <TextInput
-              defaultValue={accountInfo.company.phoneNum}
+              defaultValue={comData.phoneNum}
               type="tel"
               name="phoneNum"
               readOnly={readOnly}
@@ -292,7 +294,7 @@ const AccountM: NextPage<any> = (props) => {
             />
             <Text>사업자팩스번호</Text>
             <TextInput
-              defaultValue={accountInfo.company.faxNum}
+              defaultValue={comData.faxNum}
               type="tel"
               name="faxNum"
               readOnly={readOnly}
@@ -305,7 +307,13 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>사업자 주소</Text>
             <TextInput
-              value={accountInfo.company.address}
+              value={
+                comData.address1 +
+                " " +
+                comData.address2 +
+                ", " +
+                comData.postcode
+              }
               type="text"
               readOnly
               disabled={true}
@@ -325,9 +333,10 @@ const AccountM: NextPage<any> = (props) => {
             type="submit"
             name="save"
             onClick={() => {
-              setUserData({
-                ...userData,
-                address: userData.address + addressDetail,
+              setAccountInfo({
+                ...accountInfo,
+                company: comData,
+                user: userData,
               });
             }}
           >

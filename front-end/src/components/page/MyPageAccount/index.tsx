@@ -15,7 +15,7 @@ const MyPageAccount: NextPage<any> = (props) => {
   const [pages, setPages] = useState(1);
   const [accountInfo, setAccountInfo] = useState<SignUpInfo>();
 
-  console.log(props);
+  //console.log(props);
 
   const MyPageProps = {
     ...props,

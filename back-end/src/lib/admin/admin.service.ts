@@ -1,6 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
+import { getCrnPath, getMrnPath } from 'src/config/configuration';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { Company, CompanyApproval } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
@@ -114,6 +119,38 @@ export class AdminService {
   async deleteCompany(token: AuthTokenInfo, id: string) {
     await this.usersService.deleteAllByComID(token, id);
     await this.companiesService.findByIdAndRemoveForAuth(id);
+  }
+
+  async getComRegDoc(token: AuthTokenInfo, id: string) {
+    const company = await this.companiesService.findById(token, token.cID);
+    var fileName = company.comRegNum;
+
+    const fileList = await this.commonService.getFileNames(
+      getCrnPath(),
+      fileName,
+    );
+
+    if (fileList.length == 0) {
+      throw new NotFoundException();
+    }
+
+    return fileList[0];
+  }
+
+  async getMainRegDoc(token: AuthTokenInfo, id: string) {
+    const company = await this.companiesService.findById(token, token.cID);
+    var fileName = company.mbRegNum;
+
+    const fileList = await this.commonService.getFileNames(
+      getMrnPath(),
+      fileName,
+    );
+
+    if (fileList.length == 0) {
+      throw new NotFoundException();
+    }
+
+    return fileList[0];
   }
 
   async updateCompanyInfo(

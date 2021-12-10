@@ -1,12 +1,10 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable, Req, Res, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Res } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { readdirSync, rmSync, writeFileSync } from 'fs';
 import { Address } from 'nodemailer/lib/mailer';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
-import { Company, CompanyApproval } from 'src/models/company.entity';
-import { UserAuthority } from 'src/models/user.entity';
 
 @Injectable()
 export class CommonService {
@@ -62,9 +60,9 @@ export class CommonService {
    */
   async getFileNames(path: string, startname: string) {
     let fileList = readdirSync(path);
-    console.log(fileList);
+    // console.log(fileList);
     fileList = fileList.filter((file) => file.startsWith(startname));
-    console.log(fileList);
+    // console.log(fileList);
     return fileList;
   }
 
@@ -73,6 +71,10 @@ export class CommonService {
       console.log(file);
       rmSync(path + file);
     });
+  }
+
+  getFileExtension(fileName: string) {
+    return fileName.substr(fileName.lastIndexOf('.') + 1);
   }
 
   private _genJwtToken(authToken: AuthTokenInfo) {
