@@ -48,22 +48,16 @@ const AccountPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper>
+      <Wrapper bgColor={`#000`}>
         <form onSubmit={handleSubmit(onSignUpUserHandler)}>
           {/* 소속 업체(직원일 경우에만) */}
           {userAuth === "worker" && (
             <Wrapper margin={`0px 0px 10px`}>
               <Wrapper al={`flex-start`}>
                 <Text margin={`0px 0px 10px`}>*소속 업체</Text>
-                <Wrapper dr={`row`}>
+                <Wrapper dr={`row`} ju={`flex-start`}>
                   <TextInput2
-                    width={
-                      width < 1439
-                        ? width < 500
-                          ? `200px`
-                          : `900px`
-                        : `1100px`
-                    }
+                    width={`300px`}
                     type="text"
                     value={inputForm.companyNum}
                     placeholder="업체명 또는 사업자번호로 검색"
@@ -110,9 +104,7 @@ const AccountPresenter: NextPage<any> = (props) => {
               </Text>
               <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
                 <TextInput2
-                  width={
-                    width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`
-                  }
+                  width={`300px`}
                   type="text"
                   value={inputForm.emailAddress}
                   readOnly={formCheck.authNumCheck}
@@ -127,9 +119,7 @@ const AccountPresenter: NextPage<any> = (props) => {
                 />
                 <TextInput2
                   margin={`0px 0px 0px 20px`}
-                  width={
-                    width < 1439 ? (width < 500 ? `300px` : `287px`) : `353px`
-                  }
+                  width={`300px`}
                   type="text"
                   value={inputForm.emailDomain}
                   placeholder="주소 선택"
@@ -150,7 +140,7 @@ const AccountPresenter: NextPage<any> = (props) => {
                       onEmailKindHandler(e);
                     },
                   })}
-                  width={`120px`}
+                  width={`180px`}
                   margin={`0px 0px 0px 20px`}
                 >
                   {props.emailItem.map((item: any, index: Number) => (
@@ -252,9 +242,7 @@ const AccountPresenter: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*비밀번호</Text>
             <TextInput2
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
               margin={`0px 0px 10px`}
               type="password"
               value={inputUser.password}
@@ -288,9 +276,7 @@ const AccountPresenter: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*비밀번호 확인</Text>
             <TextInput2
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
               margin={`0px 0px 10px`}
               type="password"
               value={inputForm.passwordCheck}
@@ -345,9 +331,7 @@ const AccountPresenter: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*이름</Text>
             <TextInput2
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
               margin={`0px 0px 10px`}
               type="text"
               value={inputUser.name}
@@ -376,9 +360,7 @@ const AccountPresenter: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>*휴대폰번호</Text>
             <TextInput2
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`300px`}
               margin={`0px 0px 10px`}
               type="text"
               value={CHAR_DEL(inputUser.hpNumber)}
@@ -413,9 +395,7 @@ const AccountPresenter: NextPage<any> = (props) => {
             <Text margin={`0px 0px 10px`}>자택주소(선택)</Text>
             <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
               <TextInput2
-                width={
-                  width < 1439 ? (width < 500 ? `200px` : `900px`) : `1100px`
-                }
+                width={`300px`}
                 type="text"
                 placeholder="주소를 입력해주세요."
                 value={inputUser.address1}
@@ -435,9 +415,7 @@ const AccountPresenter: NextPage<any> = (props) => {
               </SmallButton>
             </Wrapper>
             <TextInput2
-              width={
-                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-              }
+              width={`400px`}
               margin={`0px 0px 10px`}
               type="text"
               placeholder="상세 주소"
