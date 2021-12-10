@@ -48,7 +48,7 @@ const AccountPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper bgColor={`#000`}>
+      <Wrapper>
         <form onSubmit={handleSubmit(onSignUpUserHandler)}>
           {/* 소속 업체(직원일 경우에만) */}
           {userAuth === "worker" && (
