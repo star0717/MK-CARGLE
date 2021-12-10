@@ -288,7 +288,7 @@ export const Text = styled.p<any>`
   flex-direction: ${(props) => props.dr};
   align-items: ${(props) => props.al};
   justify-content: ${(props) => props.ju};
-  font-size: ${(props) => props.fontSize || `18px`};
+  font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || `500`};
   line-height: ${(props) => props.lineHeight || `1.6`};
   color: ${(props) => props.color};
@@ -394,36 +394,36 @@ export const CommonButton = styled.button<any>`
     box-shadow: ${(props) => props.theme.boxShadow};
     ${(props) => !props.kindOf && `background ${props.theme.darkTheme_C};`}
     ${(props) =>
-    props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
+      props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
          ${(props) =>
-    props.kindOf === `white` && `color ${props.theme.white_C};`}
+      props.kindOf === `white` && `color ${props.theme.white_C};`}
 ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
   ${(props) => props.kindOf === `black` && `color : ${props.theme.black_C};`}
   ${(props) =>
-    props.kindOf === `black` &&
-    `border : 1px solid ${props.theme.darkGrey_C};`}
+      props.kindOf === `black` &&
+      `border : 1px solid ${props.theme.darkGrey_C};`}
         ${(props) =>
-    props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
+      props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
           ${(props) =>
-    props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
+      props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
       ${(props) => props.kindOf === `grey` && `color ${props.theme.white_C};`}
           ${(props) =>
-    props.kindOf === `grey` && `background ${props.theme.grey_C};`}
+      props.kindOf === `grey` && `background ${props.theme.grey_C};`}
          ${(props) =>
-    props.kindOf === `create` &&
-    `border :1px solid ${props.theme.create_B_C};`}
+      props.kindOf === `create` &&
+      `border :1px solid ${props.theme.create_B_C};`}
     ${(props) =>
-    props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
+      props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
     ${(props) =>
-    props.kindOf === `update` &&
-    `border :1px solid ${props.theme.update_B_C};`}
+      props.kindOf === `update` &&
+      `border :1px solid ${props.theme.update_B_C};`}
     ${(props) =>
-    props.kindOf === `delete` &&
-    `border :1px solid ${props.theme.delete_B_C};`}
+      props.kindOf === `delete` &&
+      `border :1px solid ${props.theme.delete_B_C};`}
 
 ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) =>
-    props.kindOf === `naver` && `color : ${props.theme.white_C};`}
+      props.kindOf === `naver` && `color : ${props.theme.white_C};`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
   }
 
@@ -439,8 +439,7 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
   }
 `;
 
-export const SmallButton = styled.button<any>
-  `
+export const SmallButton = styled.button<any>`
   width: ${(props) => props.width || `80px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
@@ -454,12 +453,16 @@ export const SmallButton = styled.button<any>
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
   background-color: ${(props) => props.bgColor};
-  border-radius:5px;
+  border-radius: 5px;
   color: #fff;
   cursor: pointer;
-  ${(props) => props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
-  ${(props) => props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
-  ${(props) => props.kindOf === `default` && `border : 1px solid ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
+  ${(props) =>
+    props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `default` &&
+    `border : 1px solid ${props.theme.basicTheme_C};`}
   
 
   ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
@@ -475,13 +478,13 @@ export const SmallButton = styled.button<any>
 
   &:hover {
     box-shadow: ${(props) => props.theme.boxShadowV3};
-    ${(props) => props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
+    ${(props) =>
+      props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
     ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
   }
 `;
 
-export const SearchButton = styled.button<any>
-  `
+export const SearchButton = styled.button<any>`
   width: ${(props) => props.width || `80px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
@@ -497,12 +500,10 @@ export const SearchButton = styled.button<any>
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
   cursor: pointer;
-  border:none;
-
+  border: none;
 `;
 
-export const CloseButton = styled.button<any>
-  `
+export const CloseButton = styled.button<any>`
   width: ${(props) => props.width || `auto`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `auto`};
@@ -518,16 +519,13 @@ export const CloseButton = styled.button<any>
   background-color: ${(props) => props.bgColor || `#fff`};
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
-  border:none;
-
+  border: none;
 
   & svg {
     color: ${(props) => props.color || props.basicTheme_C};
     font-size: 28px;
   }
 `;
-
-
 
 /** Input */
 
@@ -544,6 +542,7 @@ export const TextInput = styled.input<any>`
   margin-top: ${(props) => props.marginTop};
   font-size: 18px;
   position: relative;
+  letter-spacing: 0px;
   &:focus {
     outline: none;
     box-shadow: ${(props) => props.theme.boxShadow};
@@ -555,29 +554,29 @@ export const TextInput = styled.input<any>`
 `;
 
 export const TextInput2 = styled.input<any>`
-width: ${(props) => props.width};
-height: ${(props) => props.height || `40px`};
-border: ${(props) => props.theme.border};
-padding: ${(props) => props.padding || props.theme.inputPadding};
-border-radius: ${(props) => props.theme.radius};
-transition: ${(props) => props.transition || props.theme.transition};
-margin: ${(props) => props.margin};
-background-color: ${(props) => props.bgColor};
-&:focus {
-  outline: none;
-  border: 1px solid ${(props) => props.theme.basicTheme_C};
-}
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.theme.border};
+  padding: ${(props) => props.padding || props.theme.inputPadding};
+  border-radius: ${(props) => props.theme.radius};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
+  &:focus {
+    outline: none;
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
+  }
 
-&:read-only:focus {
-  box-shadow: none;
-}
+  &:read-only:focus {
+    box-shadow: none;
+  }
 `;
 
 export const SearchInputWrapper = styled.div<any>`
-  width:${(props) => props.width || `678px`};
+  width: ${(props) => props.width || `678px`};
   height: ${(props) => props.height || `46px`};
-  border:none;
-  border-bottom:1px solid #363636;
+  border: none;
+  border-bottom: 1px solid #363636;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
@@ -601,7 +600,6 @@ export const SearchInput = styled.input<any>`
 
   &:focus {
     outline: none;
-
   }
 
   & svg {
@@ -614,7 +612,6 @@ export const SearchInput = styled.input<any>`
     position: absolute;
     right: 0;
     top: 0;
-    
   }
 
   @media (max-width: 500px) {
@@ -626,7 +623,7 @@ export const Combo = styled.select<any>`
   width: ${(props) => props.width};
   height: 40px;
   border: ${(props) => props.border || props.theme.border};
-  padding:0px 8px;
+  padding: 0px 8px;
   color: ${(props) => props.color};
   border-radius: ${(props) => props.theme.radius};
   margin: ${(props) => props.margin || `0px 5px`};
@@ -635,7 +632,6 @@ export const Combo = styled.select<any>`
     outline: none;
     border: 1px solid ${(props) => props.theme.basicTheme_C};
   }
-
 `;
 
 export const Image = styled.img<any>`
@@ -713,6 +709,7 @@ export const TableBody = styled.ul<any>`
   margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   transition: 0.5s;
   cursor: pointer;
+  overflow: ${(props) => props.overflow || ``};
 
   &:hover {
     background-color: #f5f5f5;
@@ -785,7 +782,7 @@ export const PagenationBtn = styled.div<any>`
   border-radius: 25px;
   margin: 0px 3px;
   background-color: ${(props) => props.theme.subWhite_C};
-    border: 1px solid #ddd;
+  border: 1px solid #ddd;
 
   &:first-child,
   &:last-child {
@@ -806,11 +803,11 @@ export const JoinFirstStepSelect = styled.div<any>`
   height: ${(props) => props.height || `380px`};
   color: ${(props) => props.color || props.theme.basicTheme_C};
   background-color: ${(props) => props.bgColor || `#f5f5f5`};
-  border:${(props) => props.border || `1px solid #c4c4c4`};
+  border: ${(props) => props.border || `1px solid #c4c4c4`};
   align-items: ${(props) => props.al || `center`};
   border-radius: ${(props) => props.radius || `5px`};
   transition: ${(props) => props.transition || props.theme.transition};
-  filter:grayscale(100%);
+  filter: grayscale(100%);
   justify-content: ${(props) => props.ju || `center`};
   display: flex;
   flex-direction: ${(props) => props.dr || `column`};
@@ -821,16 +818,14 @@ export const JoinFirstStepSelect = styled.div<any>`
     box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
     border: 1px solid ${(props) => props.theme.basicTheme_C};
     background-color: #fff;
-    filter:grayscale(0%);
+    filter: grayscale(0%);
   }
 `;
 
 export const JoinFirstStepSelectText = styled.p<any>`
   color: ${(props) => props.color || `#9d9d9d`};
   align-items: ${(props) => props.al || `center`};
-  text-align:center;
-  font-size:18px;
-  margin:0px;
+  text-align: center;
+  font-size: 18px;
+  margin: 0px;
 `;
-
-
