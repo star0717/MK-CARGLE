@@ -1,4 +1,8 @@
-// jwt를 json으로 만드는 함수
+/**
+ * jwt를 json으로 만드는 함수
+ * @param token
+ * @returns
+ */
 export const parseJwt = (token: string) => {
   var base64Payload = token.split(".")[1];
   var payload = Buffer.from(base64Payload, "base64");

@@ -7,6 +7,7 @@ import SignUp from "../../src/components/page/SignUp";
 import { useRouter } from "next/dist/client/router";
 import { SignRoute } from "../../src/models/router.entity";
 import Find from "../../src/components/page/Find";
+import FindEmail from "../../src/components/page/FindEmail";
 
 /**
  * sign: url에 따른 컴포넌트
@@ -21,6 +22,9 @@ const SignComponent: NextPage = () => {
 
     case SignRoute.FIND:
       return <Find />;
+
+    case SignRoute.FINDEMAIL:
+      return <FindEmail />;
   }
 };
 

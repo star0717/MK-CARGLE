@@ -4,6 +4,8 @@
 export enum SignRoute {
   SIGNUP = "signup",
   FIND = "find",
+  FINDEMAIL = "findemail",
+  FINDPASSWORD = "findpassword",
 }
 
 export enum MainRoute {

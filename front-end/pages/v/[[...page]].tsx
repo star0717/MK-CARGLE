@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Footer from "../../src/components/layout/Footer";
 import Header from "../../src/components/layout/Header";
-import { parseJwt } from "../../src/modules/parseJwt";
+import { parseJwt } from "../../src/modules/commonModule";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
 import { CompanyApproval } from "../../src/models/company.entity";
