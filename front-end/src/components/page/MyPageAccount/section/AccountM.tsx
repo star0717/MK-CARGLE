@@ -5,15 +5,15 @@ import {
   Wrapper,
   Text,
   TextInput,
+  TextInput2,
+  Image,
 } from "../../../styles/CommonComponents";
 import Modal from "react-modal";
-
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
 import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
-import { SignUpInfo } from "../../../../models/auth.entity";
 
 Modal.setAppElement("body");
 
@@ -21,11 +21,7 @@ const AccountM: NextPage<any> = (props) => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOption, setModalOption] = useState("");
-  //const [addressOption, setAddressOption] = useState("hidden"); //상세주소여닫기
-  // const [addressMain, setAddressMain] = useState(""); // 주소(메인)
-  // const [addressDetail, setAddressDetail] = useState(""); // 주소(상세)
   const [readOnly, setReadOnly] = useState(true);
-  //const [postCode, setPostCode] = useState("");
 
   const accountInfo = props.accountInfo;
   const setAccountInfo = props.setAccountInfo;
@@ -87,10 +83,10 @@ const AccountM: NextPage<any> = (props) => {
     }
 
     setUserData({ ...userData, address1: fullAddress, postcode: zonecode });
-    //setPostCode(zonecode);
     setValue("address", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
+
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
@@ -107,11 +103,12 @@ const AccountM: NextPage<any> = (props) => {
     e.preventDefault();
 
     //console.log(userData);
-    console.log("ddd", accountInfo);
+    //console.log("ddd", accountInfo);
     // const ai: SignUpInfo = {
     //   company: comData,
     //   user: userData,
     // };
+
     dispatch(setMyInfo(accountInfo)).then((res: any) => {
       //const info: SignUpInfo = res.payload;
 
@@ -119,7 +116,7 @@ const AccountM: NextPage<any> = (props) => {
       alert("저장되었습니다.");
     });
   };
-  console.log(accountInfo);
+  //console.log(accountInfo);
   return (
     <WholeWrapper>
       <form onSubmit={saveData}>
@@ -204,9 +201,9 @@ const AccountM: NextPage<any> = (props) => {
           />
           <Wrapper dr={`row`}>
             <Text>입사일자</Text>
-            <input
+            <TextInput2
               type="date"
-              value={userData.joinDate}
+              value={userData.joinDate.slice(0, 10)}
               name="joinDate"
               onChange={(e: any) => {
                 onInputUserHandler(e);
@@ -325,7 +322,13 @@ const AccountM: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>사업자 도장</Text>
-            <input type="image"></input>
+            <Image
+              type="image"
+              alt="도장 사진"
+              width="300px"
+              height="300px"
+              background="gray"
+            />
             <button type="button" name="upload">
               업 로 드
             </button>
@@ -342,6 +345,7 @@ const AccountM: NextPage<any> = (props) => {
                 company: comData,
                 user: userData,
               });
+              console.log(accountInfo);
             }}
           >
             저 장
