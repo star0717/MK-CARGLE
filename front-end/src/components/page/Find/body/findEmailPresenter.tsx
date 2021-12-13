@@ -27,12 +27,12 @@ const FindEmailPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}>
+      <Wrapper
+        width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
+      >
         <CommonTitle textAlign={`center`} margin={`0px`}>
           계정찾기
-          <CommonSubTitle>
-            이메일 찾기
-          </CommonSubTitle>
+          <CommonSubTitle>이메일 찾기</CommonSubTitle>
         </CommonTitle>
         <form onSubmit={onfindEmailHandler}>
           <TextInput2
@@ -43,7 +43,7 @@ const FindEmailPresenter: NextPage<any> = (props) => {
             width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             height={`60px`}
             margin={`0px 0px 10px 0px`}
-            placeholder="이메일"
+            placeholder="이름"
           />
           <TextInput2
             value={hpNumber}
@@ -56,20 +56,22 @@ const FindEmailPresenter: NextPage<any> = (props) => {
             placeholder="휴대전화번호"
           />
           <CommonButtonWrapper>
-            <CommonButton type="submit"
+            <CommonButton
+              type="submit"
               kindOf={`white`}
               margin={`0px 0px 20px`}
             >
               다음
             </CommonButton>
-            <CommonButton type="button"
+            <CommonButton
+              type="button"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                router.push('/sign/findpassword')
-              }}>
+                router.push("/sign/findpassword");
+              }}
+            >
               비밀번호 찾기
             </CommonButton>
           </CommonButtonWrapper>
-
         </form>
       </Wrapper>
     </WholeWrapper>

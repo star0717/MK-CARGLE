@@ -7,6 +7,7 @@ import {
   Delete,
   Res,
   StreamableFile,
+  NotFoundException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import {
@@ -121,7 +122,8 @@ export class AdminController {
     token: AuthTokenInfo,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const fileName = await this.service.getComRegDoc(token, id);
+    const fileName = await this.service.getComRegFileName(token, id);
+    if (!fileName) throw new NotFoundException();
     const extension = this.commonService.getFileExtension(fileName);
 
     var conType: string;
@@ -155,7 +157,8 @@ export class AdminController {
     token: AuthTokenInfo,
     @Res({ passthrough: true }) res: Response,
   ) {
-    const fileName = await this.service.getMainRegDoc(token, id);
+    const fileName = await this.service.getMainRegFileName(token, id);
+    if (!fileName) throw new NotFoundException();
     const extension = this.commonService.getFileExtension(fileName);
 
     var conType: string;

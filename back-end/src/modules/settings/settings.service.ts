@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { getStampPath } from 'src/config/configuration';
 import { CommonService } from 'src/lib/common/common.service';
 import {
   AuthTokenInfo,
@@ -84,6 +85,41 @@ export class SettingsService {
     });
     if (user) return true;
     else return false;
+  }
+
+  async getStampFileName(token: AuthTokenInfo): Promise<string> | null {
+    const company = await this.companiesService.findById(token, token.cID);
+    const fileName = company.comRegNum;
+
+    const fileList = await this.commonService.getFileNames(
+      getStampPath(),
+      fileName,
+    );
+
+    if (fileList.length > 0) {
+      return fileList[0];
+    } else return null;
+  }
+
+  async patchStampFile(
+    token: AuthTokenInfo,
+    file: Express.Multer.File,
+  ): Promise<string> {
+    const company = await this.companiesService.findById(token, token.cID);
+    const extension = file.originalname.substr(
+      file.originalname.lastIndexOf('.'),
+    );
+    const path = getStampPath();
+    let fileName = company.comRegNum.toString();
+    const oldFiles = await this.commonService.getFileNames(path, fileName);
+    await this.commonService.deleteFiles(path, oldFiles);
+    fileName = fileName + extension;
+    const newFileName = await this.commonService.storeFile(
+      file,
+      path,
+      fileName,
+    );
+    return newFileName;
   }
 
   async updateMyUserInfo(

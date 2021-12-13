@@ -121,7 +121,7 @@ export class AdminService {
     await this.companiesService.findByIdAndRemoveForAuth(id);
   }
 
-  async getComRegDoc(token: AuthTokenInfo, id: string) {
+  async getComRegFileName(token: AuthTokenInfo, id: string) {
     const company = await this.companiesService.findById(token, token.cID);
     var fileName = company.comRegNum;
 
@@ -137,7 +137,7 @@ export class AdminService {
     return fileList[0];
   }
 
-  async getMainRegDoc(token: AuthTokenInfo, id: string) {
+  async getMainRegFileName(token: AuthTokenInfo, id: string) {
     const company = await this.companiesService.findById(token, token.cID);
     var fileName = company.mbRegNum;
 
