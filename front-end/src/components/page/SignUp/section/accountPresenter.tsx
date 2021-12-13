@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { useResizeDetector } from "react-resize-detector";
 import React from "react";
-import DatePicker from "react-datepicker";
 import { formRegEx } from "../../../../validation/regEx";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
@@ -15,6 +14,7 @@ import {
   CommonButton,
   JoinStepBarWrapper,
   JoinStepBar,
+  TextInput,
 } from "../../../styles/CommonComponents";
 import { GoCheck } from "react-icons/go";
 
@@ -401,12 +401,22 @@ const AccountPresenter: NextPage<any> = (props) => {
           {/* 입사일자 */}
           <Wrapper al={`flex-start`} margin={`0px 0px 30px`}>
             <Text margin={`0px 0px 10px`}>입사일자(선택)</Text>
-            <DatePicker
+            {/* <DatePicker
               selected={inputUser.joinDate}
               onChange={(date: any) =>
                 setInputUser({ ...inputUser, joinDate: date })
               }
               placeholderText="YYYY-MM-DD"
+            /> */}
+            <TextInput2
+              width={`400px`}
+              margin={`0px 0px 10px`}
+              type="date"
+              {...register("joinDate", {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputUserHandler(e);
+                },
+              })}
             />
           </Wrapper>
         </Wrapper>

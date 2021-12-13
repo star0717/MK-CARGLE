@@ -101,9 +101,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const mItem: any = Object.values(MainRoute); // page first query array
   const sItem: any = Object.values(SubRoute); // page second query array
 
-  console.log("프랍1", mainRoute);
-  console.log("프랍2", subRoute);
-
   if (context.req.cookies.mk_token) {
     const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
 

@@ -5,7 +5,6 @@ import Modal from "react-modal";
 import Cookies from "js-cookie";
 import { useInterval } from "react-use";
 import { useDispatch } from "react-redux";
-import "react-datepicker/dist/react-datepicker.css";
 import { actionTypesUser, FormInput } from "../../../../../store/interfaces";
 import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
 import {
@@ -180,8 +179,6 @@ const Account: NextPage<any> = (props) => {
     setModalOpen(false);
   };
 
-  console.log(inputUser);
-
   // 직원(worker) 회원가입 form submit handler
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
     if (!formCheck.authNumCheck) {
@@ -214,6 +211,8 @@ const Account: NextPage<any> = (props) => {
       }
     }
   };
+
+  console.log(inputUser);
 
   // MODAL에 넘길 props
   const ComfindModalProps = {
