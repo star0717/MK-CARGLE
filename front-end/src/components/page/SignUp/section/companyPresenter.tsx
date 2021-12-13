@@ -12,7 +12,7 @@ import {
   JoinStepBar,
 } from "../../../styles/CommonComponents";
 import React from "react";
-import { basicRegEx, CHAR_DEL, formRegEx } from "../../../../validation/regEx";
+import { basicRegEx, formRegEx } from "../../../../validation/regEx";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { GoCheck } from "react-icons/go";
@@ -26,11 +26,11 @@ const CompanyPresenter: NextPage<any> = (props) => {
   const errors = props.errors;
   const onSignUpCompanyHandler = props.onSignUpCompanyHandler;
   const inputCompany = props.inputCompany;
+  const inputForm = props.inputForm;
   const onInputCompanyHandler = props.onInputCompanyHandler;
   const formCheck = props.formCheck;
   const onComRegNumCheck = props.onComRegNumCheck;
-  const inputForm = props.inputForm;
-  const onInputFormHandler = props.onInputFormHandler;
+  // const inputForm = props.inputForm;
   const modalOpen = props.modalOpen;
   const setModalOpen = props.setModalOpen;
   const stepNumber = props.stepNumber;
@@ -102,7 +102,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
                 <TextInput2
                   width={`300px`}
                   type="text"
-                  value={CHAR_DEL(inputCompany.comRegNum)}
+                  value={inputCompany.comRegNum}
                   readOnly={formCheck.companyCheck}
                   placeholder="사업자 등록번호를 입력해주세요."
                   {...register("comRegNum", {
@@ -161,7 +161,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={CHAR_DEL(inputCompany.mbRegNum)}
+                value={inputCompany.mbRegNum}
                 placeholder="정비업 등록번호를 입력해주세요."
                 {...register("mbRegNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -243,7 +243,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={CHAR_DEL(inputCompany.phoneNum)}
+                value={inputCompany.phoneNum}
                 placeholder="(- 제외, 지역번호 포함)"
                 {...register("phoneNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -276,14 +276,14 @@ const CompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={CHAR_DEL(inputCompany.faxNum)}
+                value={inputCompany.faxNum}
                 placeholder="(- 제외)"
                 {...register("faxNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                     onInputCompanyHandler(e);
                   },
                   pattern: {
-                    value: basicRegEx.NUM,
+                    value: formRegEx.FAX_NUM,
                     message: "형식에 맞게 입력하세요.",
                   },
                 })}
@@ -312,7 +312,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
                   value={inputCompany.address1}
                   readOnly
                   {...register("address1", {
-                    required: { value: true, message: "필수 입력사항입니다." },
+                    required: true,
                   })}
                 />
                 <SmallButton
@@ -326,18 +326,6 @@ const CompanyPresenter: NextPage<any> = (props) => {
                   주소 검색
                 </SmallButton>
               </Wrapper>
-              {errors.address1?.type === "required" && (
-                <Text
-                  margin={`0px 0px 10px 0px`}
-                  width={`100%`}
-                  color={`#d6263b`}
-                  al={`flex-start`}
-                  fontSize={`14px`}
-                  textAlign={`left`}
-                >
-                  {errors.address1.message}
-                </Text>
-              )}
             </Wrapper>
             <TextInput2
               width={`400px`}
@@ -349,8 +337,22 @@ const CompanyPresenter: NextPage<any> = (props) => {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputCompanyHandler(e);
                 },
+                required: true,
               })}
             />
+            {(errors.address1?.type === "required" ||
+              errors.address2?.type === "required") && (
+              <Text
+                margin={`0px 0px 10px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                필수 입력사항입니다.
+              </Text>
+            )}
           </Wrapper>
         </Wrapper>
         <Wrapper padding={`50px 0px 100px 0px`}>

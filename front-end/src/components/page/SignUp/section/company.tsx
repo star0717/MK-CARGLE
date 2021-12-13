@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import { useDispatch } from "react-redux";
-import { actionTypesUser } from "../../../../../store/interfaces";
+import { actionTypesUser, FormInput } from "../../../../../store/interfaces";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import {
   companyCheckAction,
@@ -19,6 +19,7 @@ import {
   Wrapper,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
+import { CHAR_DEL } from "../../../../validation/regEx";
 
 // modal setting
 Modal.setAppElement("body");
@@ -38,7 +39,7 @@ const Company: NextPage<any> = (props) => {
     ...company,
     ownerName: user.name,
   }); // 업체 정보
-  const [inputForm, setInputForm] = useState(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
+  const [inputForm, setInputForm] = useState<FormInput>(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
   const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
 
   // react-hook-form 사용을 위한 선언
@@ -66,11 +67,15 @@ const Company: NextPage<any> = (props) => {
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
   // 업체 정보
   const onInputCompanyHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (
+      e.target.name === "comRegNum" ||
+      e.target.name === "mbRegNum" ||
+      e.target.name === "phoneNum" ||
+      e.target.name === "faxNum"
+    ) {
+      e.target.value = CHAR_DEL(e.target.value);
+    }
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
-  };
-  // 그 외 form 정보
-  const onInputFormHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputForm({ ...inputForm, [e.target.name]: e.target.value });
   };
 
   // 사업자번호 유효성 검사 handler
@@ -183,7 +188,6 @@ const Company: NextPage<any> = (props) => {
     onInputCompanyHandler,
     onComRegNumCheck,
     inputForm,
-    onInputFormHandler,
     modalOpen,
     setModalOpen,
   };

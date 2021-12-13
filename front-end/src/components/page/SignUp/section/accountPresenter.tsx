@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useResizeDetector } from "react-resize-detector";
 import React from "react";
 import DatePicker from "react-datepicker";
-import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
+import { formRegEx } from "../../../../validation/regEx";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import {
@@ -333,7 +333,7 @@ const AccountPresenter: NextPage<any> = (props) => {
               width={`400px`}
               margin={`0px 0px 10px`}
               type="text"
-              value={CHAR_DEL(inputUser.hpNumber)}
+              value={inputUser.hpNumber}
               placeholder="(- 제외)"
               {...register("hpNumber", {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {

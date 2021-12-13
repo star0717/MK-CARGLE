@@ -7,7 +7,7 @@ import { useInterval } from "react-use";
 import { useDispatch } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import { actionTypesUser, FormInput } from "../../../../../store/interfaces";
-import { formRegEx } from "../../../../validation/regEx";
+import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
 import {
   authNumCheckAction,
   emailSendAction,
@@ -73,25 +73,15 @@ const Account: NextPage<any> = (props) => {
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
   // 사용자 정보
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "hpNumber") {
+      e.target.value = CHAR_DEL(e.target.value);
+    }
     setInputUser({ ...inputUser, [e.target.name]: e.target.value });
   };
   // 그 외 form 정보
   const onInputFormHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputForm({ ...inputForm, [e.target.name]: e.target.value });
   };
-
-  // // 이메일 종류에 따라 state를 통해 값 변경 및 readonly 변경
-  // const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   dispatch({
-  //     type: actionTypesUser.FORM_CHECK,
-  //     payload: {
-  //       ...formCheck,
-  //       emailReadOnly: e.target.value === "" ? false : true,
-  //     },
-  //   });
-  //   setInputForm({ ...inputForm, emailDomain: e.target.value });
-  //   setValue("emailDomain", e.target.value, { shouldValidate: true });
-  // };
 
   // 이메일 인증번호 전송 handler
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -190,9 +180,10 @@ const Account: NextPage<any> = (props) => {
     setModalOpen(false);
   };
 
+  console.log(inputUser);
+
   // 직원(worker) 회원가입 form submit handler
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
-    console.log("들어옴");
     if (!formCheck.authNumCheck) {
       alert("이메일 인증을 해주세요.");
     } else {
@@ -201,7 +192,11 @@ const Account: NextPage<any> = (props) => {
         dispatch({ type: actionTypesUser.INPUT_ACCOUNT, payload: inputUser });
         setStepNumber(stepNumber + 1);
       } else {
-        dispatch(signUpUserAction(inputUser)).then(
+        dispatch(
+          signUpUserAction({
+            user: inputUser,
+          })
+        ).then(
           (res: any) => {
             setStepNumber(stepNumber + 1);
           },
