@@ -14,6 +14,7 @@ import {
 } from "../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";
+import { Checkbox } from "@material-ui/core";
 
 const SigninPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
@@ -92,7 +93,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                 {/* 체크박스 div */}
                 <Wrapper margin={`5px 0px`}>
                   <Wrapper dr={`row`} ju={`flex-end`}>
-                    <input
+                    {/* <input
                       style={{
                         fontSize: "14px",
                       }}
@@ -101,7 +102,13 @@ const SigninPresenter: NextPage<any> = (props) => {
                       onChange={(e) => {
                         setSaveCheck(e.target.checked);
                       }}
-                    ></input>
+                    ></input> */}
+                    <Checkbox
+                      checked={saveCheck}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setSaveCheck(e.target.checked);
+                      }}
+                    />
                     <Text
                       fontSize={width < 500 ? `12px` : `16px`}
                       padding={`5px 0px`}
@@ -125,9 +132,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   icon={faQuestionCircle}
                   style={{ width: "18px", margin: "0px 3px 4px 0px" }}
                 />
-                <Text
-                  margin={`0px 3px 0px`}
-                  fontSize={`16px`}>
+                <Text margin={`0px 3px 0px`} fontSize={`16px`}>
                   아직 회원이 아니신가요?
                 </Text>
                 <Text decoration={`underline`}>
