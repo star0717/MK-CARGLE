@@ -44,7 +44,7 @@ const Header: NextPage<LayoutProps> = (props) => {
         bgColor={`#fff`}
         ju={`space-between`}
         al={`flex-start`}
-        padding={width < 1439 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
+        padding={width < 1450 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
       >
         <Wrapper width={`auto`}>
           <Link href="/v/main">
@@ -52,7 +52,7 @@ const Header: NextPage<LayoutProps> = (props) => {
               <Image
                 src="/images/cargle.png"
                 alt="Cargle Logo"
-                width={width < 1439 ? `100px` : `153px`}
+                width={width < 1450 ? `100px` : `153px`}
               />
             </a>
           </Link>
