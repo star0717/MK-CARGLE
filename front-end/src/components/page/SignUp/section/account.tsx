@@ -19,8 +19,12 @@ import CompanyFindModal from "./comFindModal";
 import { User, UserAuthority } from "../../../../models/user.entity";
 import { initialState } from "../../../../../store/reducer/user.reducer";
 import AccountPresenter from "./accountPresenter";
-import { CloseButton, WholeWrapper, Wrapper } from "../../../styles/CommonComponents";
-import { IoIosCloseCircle } from 'react-icons/io';
+import {
+  CloseButton,
+  WholeWrapper,
+  Wrapper,
+} from "../../../styles/CommonComponents";
+import { IoIosCloseCircle } from "react-icons/io";
 
 // modal setting
 Modal.setAppElement("body");
@@ -76,41 +80,41 @@ const Account: NextPage<any> = (props) => {
     setInputForm({ ...inputForm, [e.target.name]: e.target.value });
   };
 
-  // 이메일 종류에 따라 state를 통해 값 변경 및 readonly 변경
-  const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch({
-      type: actionTypesUser.FORM_CHECK,
-      payload: {
-        ...formCheck,
-        emailReadOnly: e.target.value === "" ? false : true,
-      },
-    });
-    setInputForm({ ...inputForm, emailDomain: e.target.value });
-    setValue("emailDomain", e.target.value, { shouldValidate: true });
-  };
+  // // 이메일 종류에 따라 state를 통해 값 변경 및 readonly 변경
+  // const onEmailKindHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   dispatch({
+  //     type: actionTypesUser.FORM_CHECK,
+  //     payload: {
+  //       ...formCheck,
+  //       emailReadOnly: e.target.value === "" ? false : true,
+  //     },
+  //   });
+  //   setInputForm({ ...inputForm, emailDomain: e.target.value });
+  //   setValue("emailDomain", e.target.value, { shouldValidate: true });
+  // };
 
   // 이메일 인증번호 전송 handler
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const email = `${inputForm.emailAddress}@${inputForm.emailDomain}`;
-    if (formRegEx.EMAIL.test(email)) {
-      dispatch(emailSendAction(email)).then((res: any) => {
+    // const email = `${inputForm.emailAddress}@${inputForm.emailDomain}`;
+    if (formRegEx.EMAIL.test(inputUser.email)) {
+      dispatch(emailSendAction(inputUser.email)).then((res: any) => {
         if (res.payload) {
           alert("인증번호가 전송되었습니다.");
           dispatch({
             type: actionTypesUser.FORM_CHECK,
             payload: { ...formCheck, emailSend: true },
           });
-          clearErrors("emailAddress");
+          clearErrors("email");
           setTimer(300);
         } else {
-          setError("emailAddress", {
+          setError("email", {
             type: "emailExist",
             message: "이미 등록된 이메일입니다.",
           });
         }
       });
     } else {
-      setError("emailAddress", {
+      setError("email", {
         type: "emailNull",
         message: "형식에 맞게 입력하세요.",
       });
@@ -188,6 +192,7 @@ const Account: NextPage<any> = (props) => {
 
   // 직원(worker) 회원가입 form submit handler
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
+    console.log("들어옴");
     if (!formCheck.authNumCheck) {
       alert("이메일 인증을 해주세요.");
     } else {
@@ -196,14 +201,7 @@ const Account: NextPage<any> = (props) => {
         dispatch({ type: actionTypesUser.INPUT_ACCOUNT, payload: inputUser });
         setStepNumber(stepNumber + 1);
       } else {
-        dispatch(
-          signUpUserAction({
-            user: {
-              ...inputUser,
-              email: `${inputForm.emailAddress}@${inputForm.emailDomain}`,
-            },
-          })
-        ).then(
+        dispatch(signUpUserAction(inputUser)).then(
           (res: any) => {
             setStepNumber(stepNumber + 1);
           },
@@ -253,7 +251,6 @@ const Account: NextPage<any> = (props) => {
     addressHandler,
     onInputFormHandler,
     onInputUserHandler,
-    onEmailKindHandler,
     onEmailSendHandler,
     authNum,
     setAuthNum,
@@ -295,15 +292,9 @@ const Account: NextPage<any> = (props) => {
             },
           }}
         >
-          <Wrapper
-            fontSize={`28px`}
-            al={`flex-end`}
-          >
-            <CloseButton
-              onClick={closeModal}>
-              <IoIosCloseCircle
-                color={`#0066ff`}
-              />
+          <Wrapper fontSize={`28px`} al={`flex-end`}>
+            <CloseButton onClick={closeModal}>
+              <IoIosCloseCircle color={`#0066ff`} />
             </CloseButton>
           </Wrapper>
           {modalOption === "address" ? (

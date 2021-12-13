@@ -33,8 +33,6 @@ import { Company } from "../../../src/models/company.entity";
 
 export interface FormInput {
   companyNum: string;
-  emailAddress: string;
-  emailDomain: string;
   passwordCheck: string;
 }
 

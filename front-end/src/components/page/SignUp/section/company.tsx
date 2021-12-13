@@ -13,8 +13,12 @@ import {
 } from "../../../../../store/action/user.action";
 import { initialState } from "../../../../../store/reducer/user.reducer";
 import CompanyPresenter from "./companyPresenter";
-import { WholeWrapper, Wrapper } from "../../../styles/CommonComponents";
-import { IoIosCloseCircle } from 'react-icons/io';
+import {
+  CloseButton,
+  WholeWrapper,
+  Wrapper,
+} from "../../../styles/CommonComponents";
+import { IoIosCloseCircle } from "react-icons/io";
 
 // modal setting
 Modal.setAppElement("body");
@@ -147,13 +151,8 @@ const Company: NextPage<any> = (props) => {
       delete user._cID;
       dispatch(
         signUpUserAction({
-          user: {
-            ...user,
-            email: `${formInput.emailAddress}@${formInput.emailDomain}`,
-          },
-          company: {
-            ...inputCompany,
-          },
+          user: user,
+          company: inputCompany,
         })
       ).then(
         (res: any) => {
@@ -221,9 +220,11 @@ const Company: NextPage<any> = (props) => {
             },
           }}
         >
-          <button type="button" onClick={closeModal}>
-            <IoIosCloseCircle />
-          </button>
+          <Wrapper fontSize={`28px`} al={`flex-end`}>
+            <CloseButton onClick={closeModal}>
+              <IoIosCloseCircle color={`#0066ff`} />
+            </CloseButton>
+          </Wrapper>
           <DaumPostcode
             onComplete={addressHandler}
             style={{ height: "500px" }}

@@ -560,7 +560,7 @@ export const TextInput = styled.input<any>`
   margin: ${(props) => props.margin};
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
-  font-size: 18px;
+  font-size: 16px;
   position: relative;
   letter-spacing: 0px;
   &:focus {
@@ -582,6 +582,7 @@ export const TextInput2 = styled.input<any>`
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
+  font-size: 16px;
 
 width: ${(props) => props.width};
 height: ${(props) => props.height || `40px`};

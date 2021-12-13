@@ -36,7 +36,6 @@ const AccountPresenter: NextPage<any> = (props) => {
   const setModalOpen = props.setModalOpen;
   const onInputFormHandler = props.onInputFormHandler;
   const onInputUserHandler = props.onInputUserHandler;
-  const onEmailKindHandler = props.onEmailKindHandler;
   const onEmailSendHandler = props.onEmailSendHandler;
   const authNum = props.authNum;
   const setAuthNum = props.setAuthNum;
@@ -51,13 +50,13 @@ const AccountPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper
-        width={`auto`}
-        padding={`50px`}
-        border={`1px solid #ccc`}
-        radius={`5px`}
-      >
-        <form onSubmit={handleSubmit(onSignUpUserHandler)}>
+      <form onSubmit={handleSubmit(onSignUpUserHandler)}>
+        <Wrapper
+          width={`auto`}
+          padding={`50px`}
+          border={`1px solid #ccc`}
+          radius={`5px`}
+        >
           {/* 소속 업체(직원일 경우에만) */}
           {userAuth === "worker" && (
             <Wrapper margin={`0px 0px 10px`}>
@@ -113,50 +112,17 @@ const AccountPresenter: NextPage<any> = (props) => {
               <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
                 <TextInput2
                   width={`300px`}
-                  type="text"
-                  value={inputForm.emailAddress}
-                  readOnly={formCheck.authNumCheck}
+                  type="email"
+                  value={inputUser.email}
                   placeholder="이메일을 입력해주세요."
-                  {...register("emailAddress", {
+                  {...register("email", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputFormHandler(e);
+                      onInputUserHandler(e);
                     },
                     required: true,
-                    pattern: formRegEx.EMAIL_ADDRESS,
+                    pattern: formRegEx.EMAIL,
                   })}
                 />
-                {/* <TextInput2
-                  margin={`0px 0px 0px 20px`}
-                  width={`300px`}
-                  type="text"
-                  value={inputForm.emailDomain}
-                  placeholder="주소 선택"
-                  readOnly={formCheck.emailReadOnly || formCheck.authNumCheck}
-                  {...register("emailDomain", {
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputFormHandler(e);
-                    },
-                    required: true,
-                    pattern: formRegEx.EMAIL_DOMAIN,
-                  })}
-                />
-                <Combo
-                  disabled={formCheck.authNumCheck}
-                  value={inputForm.emailDomain}
-                  {...register("emailSelect", {
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onEmailKindHandler(e);
-                    },
-                  })}
-                  width={`180px`}
-                  margin={`0px 0px 0px 20px`}
-                >
-                  {props.emailItem.map((item: any, index: Number) => (
-                    <option key={item.key} value={item.value}>
-                      {item.text}
-                    </option>
-                  ))}
-                </Combo> */}
                 <SmallButton
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
@@ -201,46 +167,44 @@ const AccountPresenter: NextPage<any> = (props) => {
                 </Text>
               ) : null}
               <Wrapper>
-                {(errors.emailAddress?.type === "required" ||
-                  errors.emailDomain?.type === "required") && (
-                    <Text
-                      margin={`0px 0px 10px 0px`}
-                      width={`100%`}
-                      color={`#d6263b`}
-                      al={`flex-start`}
-                      fontSize={`14px`}
-                      textAlign={`left`}
-                    >
-                      필수 입력사항입니다.
-                    </Text>
-                  )}
-                {(errors.emailAddress?.type === "pattern" ||
-                  errors.emailDomain?.type === "pattern") && (
-                    <Text
-                      margin={`0px 0px 10px 0px`}
-                      width={`100%`}
-                      color={`#d6263b`}
-                      al={`flex-start`}
-                      fontSize={`14px`}
-                      textAlign={`left`}
-                    >
-                      형식에 맞게 입력하세요.
-                    </Text>
-                  )}
-                {(errors.emailAddress?.type === "emailExist" ||
-                  errors.emailAddress?.type === "emailNull" ||
-                  errors.emailAddress?.type === "emailAuthNeed") && (
-                    <Text
-                      margin={`0px 0px 10px 0px`}
-                      width={`100%`}
-                      color={`#d6263b`}
-                      al={`flex-start`}
-                      fontSize={`14px`}
-                      textAlign={`left`}
-                    >
-                      {errors.emailAddress.message}
-                    </Text>
-                  )}
+                {errors.email?.type === "required" && (
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    필수 입력사항입니다.
+                  </Text>
+                )}
+                {errors.email?.type === "pattern" && (
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    형식에 맞게 입력하세요.
+                  </Text>
+                )}
+                {(errors.email?.type === "emailExist" ||
+                  errors.email?.type === "emailNull" ||
+                  errors.email?.type === "emailAuthNeed") && (
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    {errors.email.message}
+                  </Text>
+                )}
               </Wrapper>
             </Wrapper>
           </Wrapper>
@@ -266,17 +230,17 @@ const AccountPresenter: NextPage<any> = (props) => {
             />
             {(errors.password?.type === "required" ||
               errors.password?.type === "pattern") && (
-                <Text
-                  margin={`0px 0px 10px 0px`}
-                  width={`100%`}
-                  color={`#d6263b`}
-                  al={`flex-start`}
-                  fontSize={`14px`}
-                  textAlign={`left`}
-                >
-                  {errors.password.message}
-                </Text>
-              )}
+              <Text
+                margin={`0px 0px 10px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.password.message}
+              </Text>
+            )}
           </Wrapper>
           {/* 비밀번호확인 */}
           <Wrapper al={`flex-start`}>
@@ -384,17 +348,17 @@ const AccountPresenter: NextPage<any> = (props) => {
             />
             {(errors.hpNumber?.type === "required" ||
               errors.hpNumber?.type === "pattern") && (
-                <Text
-                  margin={`0px 0px 10px`}
-                  width={`100%`}
-                  color={`#d6263b`}
-                  al={`flex-start`}
-                  fontSize={`14px`}
-                  textAlign={`left`}
-                >
-                  {errors.hpNumber.message}
-                </Text>
-              )}
+              <Text
+                margin={`0px 0px 10px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.hpNumber.message}
+              </Text>
+            )}
           </Wrapper>
           {/* 자택주소 */}
           <Wrapper al={`flex-start`}>
@@ -445,30 +409,30 @@ const AccountPresenter: NextPage<any> = (props) => {
               placeholderText="YYYY-MM-DD"
             />
           </Wrapper>
-        </form>
-      </Wrapper>
-      <Wrapper padding={`50px 0px 100px 0px`}>
-        <CommonButton
-          kindOf={`white`}
-          margin={`0px 0px 10px 0px`}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            setStepNumber(stepNumber - 1);
-            dispatch({
-              type: actionTypesUser.INPUT_ACCOUNT,
-              payload: inputUser,
-            });
-            dispatch({
-              type: actionTypesUser.INPUT_FORM,
-              payload: inputForm,
-            });
-          }}
-        >
-          이전
-        </CommonButton>
-        <CommonButton margin={`10px 0px 0px 0px`} type="submit">
-          {userAuth === UserAuthority.OWNER ? "다음" : "완료"}
-        </CommonButton>
-      </Wrapper>
+        </Wrapper>
+        <Wrapper padding={`50px 0px 100px 0px`}>
+          <CommonButton
+            kindOf={`white`}
+            margin={`0px 0px 10px 0px`}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              setStepNumber(stepNumber - 1);
+              dispatch({
+                type: actionTypesUser.INPUT_ACCOUNT,
+                payload: inputUser,
+              });
+              dispatch({
+                type: actionTypesUser.INPUT_FORM,
+                payload: inputForm,
+              });
+            }}
+          >
+            이전
+          </CommonButton>
+          <CommonButton margin={`10px 0px 0px 0px`} type="submit">
+            {userAuth === UserAuthority.OWNER ? "다음" : "완료"}
+          </CommonButton>
+        </Wrapper>
+      </form>
     </WholeWrapper>
   );
 };
