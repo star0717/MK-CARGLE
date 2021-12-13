@@ -4,14 +4,18 @@ import {
   Body,
   Patch,
   Param,
-  Req,
   Res,
   Query,
   Post,
+  UseInterceptors,
+  UploadedFile,
+  StreamableFile,
+  NotFoundException,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import {
   ApiBody,
+  ApiConsumes,
   ApiOperation,
   ApiParam,
   ApiResponse,
@@ -33,6 +37,10 @@ import {
   FindResult,
 } from 'src/models/base.entity';
 import { AuthToken } from 'src/lib/decorators/decorators';
+import { stampFileInterceptor } from 'src/config/multer.option';
+import { createReadStream } from 'fs';
+import { join } from 'path';
+import { getStampPath } from 'src/config/configuration';
 
 @ApiTags('설정(마이페이지) API')
 @Controller('settings')
@@ -116,6 +124,73 @@ export class SettingsController {
     console.log(data);
 
     return await this.settingsService.updateUserPassword(token, id, data);
+  }
+
+  @ApiOperation({ summary: '[OWNER] 업체 도장 파일명 반환' })
+  @ApiResponse({ description: '도장 파일명', type: String })
+  @Get('myinfo/stamp/filename')
+  async getStampFileName(
+    @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
+  ): Promise<string> | null {
+    return await this.settingsService.getStampFileName(token);
+  }
+
+  @ApiOperation({ summary: '[OWNER] 업체 도장 파일 업로드/갱신' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'image/jpeg|image/png 타입의 도장 이미지 파일',
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @ApiResponse({ description: '도장 파일명', type: String })
+  @UseInterceptors(stampFileInterceptor)
+  @Patch('myinfo/stamp')
+  async patchStampFile(
+    @UploadedFile() file: Express.Multer.File,
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
+  ): Promise<string> {
+    return await this.settingsService.patchStampFile(token, file);
+  }
+
+  @ApiOperation({ summary: '[OWNER] 업체 도장 파일 반환' })
+  @Get('myinfo/stamp')
+  async getStampFile(
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const fileName = await this.settingsService.getStampFileName(token);
+    if (!fileName) throw new NotFoundException();
+    const extension = this.comService.getFileExtension(fileName);
+
+    var conType: string;
+    switch (extension) {
+      case 'jpg' || 'jpeg':
+        conType = 'image/jpeg';
+        break;
+      case 'png':
+        conType = 'image/png';
+        break;
+      case 'pdf':
+        conType = 'application/pdf';
+        break;
+    }
+
+    res.set({
+      'Content-Type': conType,
+      'Content-Disposition': 'inline',
+    });
+
+    const file = createReadStream(
+      join(process.cwd(), getStampPath() + fileName),
+    );
+    return new StreamableFile(file);
   }
 
   @ApiOperation({ summary: '[OWNER] 작업자 조회' })

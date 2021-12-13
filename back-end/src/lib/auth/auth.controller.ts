@@ -212,6 +212,7 @@ export class AuthController {
       },
     },
   })
+  @ApiResponse({ description: '업로드된 파일명', type: String })
   @UseInterceptors(docFileInterceptor)
   @Post('upload/com-reg-doc')
   async uploadComRegFile(
@@ -236,6 +237,7 @@ export class AuthController {
       },
     },
   })
+  @ApiResponse({ description: '업로드된 파일명', type: String })
   @UseInterceptors(docFileInterceptor)
   @Post('upload/man-reg-doc')
   async uploadMainRegFile(

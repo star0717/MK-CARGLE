@@ -35,6 +35,8 @@ async function bootstrap() {
     mkdirSync(env.fileStorage.root + env.fileStorage.crn_path);
   if (!existsSync(env.fileStorage.root + env.fileStorage.mrn_path))
     mkdirSync(env.fileStorage.root + env.fileStorage.mrn_path);
+  if (!existsSync(env.fileStorage.root + env.fileStorage.stamp_path))
+    mkdirSync(env.fileStorage.root + env.fileStorage.stamp_path);
 
   // Swagger 문서툴 설정
   const swaggerConfig = new DocumentBuilder()
