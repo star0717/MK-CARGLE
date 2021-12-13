@@ -27,7 +27,7 @@ const SignUp: NextPage<any> = () => {
   ];
 
   const [userAuth, setUserAuth] = useState(UserAuthority.OWNER); // 유저 권한 종류
-  const [stepNumber, setStepNumber] = useState<number>(5); // 스텝 숫자
+  const [stepNumber, setStepNumber] = useState<number>(6); // 스텝 숫자
 
   // component에 전달할 props들 정의
   const SignUpProps = {
