@@ -93,16 +93,6 @@ const SigninPresenter: NextPage<any> = (props) => {
                 {/* 체크박스 div */}
                 <Wrapper margin={`5px 0px`}>
                   <Wrapper dr={`row`} ju={`flex-end`}>
-                    {/* <input
-                      style={{
-                        fontSize: "14px",
-                      }}
-                      type="checkbox"
-                      checked={saveCheck}
-                      onChange={(e) => {
-                        setSaveCheck(e.target.checked);
-                      }}
-                    ></input> */}
                     <Checkbox
                       checked={saveCheck}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
