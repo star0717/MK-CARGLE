@@ -176,10 +176,6 @@ const AccountM: NextPage<any> = (props) => {
             />
           </Wrapper>
           <Wrapper dr={`row`}>
-            <Text>우편번호</Text>
-            <TextInput name="postcode" value={userData.postcode} />
-          </Wrapper>
-          <Wrapper dr={`row`}>
             <Text>주소</Text>
             <TextInput
               type="text"
