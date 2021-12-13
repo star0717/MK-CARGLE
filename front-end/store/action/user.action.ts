@@ -199,7 +199,6 @@ export async function getMyInfo() {
  * @returns
  */
 export async function setMyInfo(dataToSubmit: any) {
-  console.log("액션", dataToSubmit);
   const req = await axios
     .patch(`/api/settings/myinfo`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -222,6 +221,20 @@ export async function changePass(dataToSubmit: HelpChangePWD) {
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.CHANGE_PASSWORD,
+    payload: req,
+  };
+}
+
+/**
+ * 도장 업로드
+ * @returns
+ */
+export async function uproadStamp(dateToSubmit: any) {
+  const req = await axios
+    .patch(`/api/settings/myinfo/stamp`, dateToSubmit)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.UPROAD_STAMP,
     payload: req,
   };
 }

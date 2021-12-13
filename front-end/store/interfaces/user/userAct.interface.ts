@@ -23,6 +23,7 @@ export enum actionTypesUser {
   GET_MY_INFO = "GET_MY_INFO",
   SET_MY_INFO = "SET_MY_INFO",
   CHANGE_PASSWORD = "CHANGE_PASSWORD",
+  UPROAD_STAMP = "UPROAD_STAMP",
 }
 
 export type ActionsUser =
@@ -47,7 +48,8 @@ export type ActionsUser =
   | PasswordCheck
   | GetMyInfo
   | SetMyInfo
-  | ChangePassword;
+  | ChangePassword
+  | UproadStamp;
 
 // 초기화
 export interface UserInit {
@@ -180,5 +182,10 @@ export interface SetMyInfo {
 // user, company 정보 업데이트
 export interface ChangePassword {
   type: actionTypesUser.CHANGE_PASSWORD;
+  payload: any;
+}
+// 도장 업로드
+export interface UproadStamp {
+  type: actionTypesUser.UPROAD_STAMP;
   payload: any;
 }
