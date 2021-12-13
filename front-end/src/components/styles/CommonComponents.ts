@@ -698,6 +698,25 @@ export const Combo = styled.select<any>`
   }
 `;
 
+export const Label = styled.label<any>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  margin: ${(props) => props.margin};
+  cursor: pointer;
+  /* display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`}; */
+  & .MuiFormControlLabel-root svg {
+    font-size: 20px;
+    margin-bottom: 1px;
+    color: #ce0000;
+  }
+  & .main.MuiFormControlLabel-root svg {
+    color: #0b0b0b;
+  }
+`;
+
 export const Image = styled.img<any>`
   display: ${(props) => props.display};
   width: ${(props) => props.width || `100%`};

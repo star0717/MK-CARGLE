@@ -36,10 +36,10 @@ const SigninPresenter: NextPage<any> = (props) => {
         >
           <CommonTitle textAlign={`center`} margin={`0px`} padding={`0px`}>
             CARGLE
-            <CommonSubTitle color={`#000`}>
-              정비관리도 이젠 편리하게
-            </CommonSubTitle>
           </CommonTitle>
+          <CommonSubTitle color={`#000`}>
+            정비관리도 이젠 편리하게
+          </CommonSubTitle>
 
           <Wrapper margin={`20px 0px 0px`}>
             {/* 로그인 입력 form */}
@@ -108,6 +108,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setSaveCheck(e.target.checked);
                       }}
+                      color={`default`}
                     />
                     <Text
                       fontSize={width < 500 ? `12px` : `16px`}
