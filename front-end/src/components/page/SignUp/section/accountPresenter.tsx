@@ -412,6 +412,7 @@ const AccountPresenter: NextPage<any> = (props) => {
               width={`400px`}
               margin={`0px 0px 10px`}
               type="date"
+              // value={inputUser.joinDate}
               {...register("joinDate", {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputUserHandler(e);
