@@ -253,7 +253,7 @@ export const CommonTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin || `0px`};
   margintop: ${(props) => props.marginTop};
-  padding: ${(props) => props.padding || `100px 0px 0px`};
+  padding: ${(props) => props.padding || `0px 0px 0px`};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 34px;
   font-weight: 800;
@@ -307,6 +307,8 @@ export const Text = styled.p<any>`
   cursor: ${(props) => props.cursor};
   z-index: 1;
   white-space: pre-wrap;
+  margin-bottom: ${(props) => props.marginBottom};
+  margin-top: ${(props) => props.marginTop};
 
   & svg {
     color: ${(props) => props.color};
@@ -326,6 +328,25 @@ export const Text = styled.p<any>`
 `;
 
 /**button */
+
+export const CommonButtonWrapper = styled.div<any>`
+  width: ${(props) => props.width};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding || `0px 0px 70px 0px`};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  cursor: pointer;
+  border: none;
+`;
 
 export const CommonButton = styled.button<any>`
   width: ${(props) => props.width || `500px`};
