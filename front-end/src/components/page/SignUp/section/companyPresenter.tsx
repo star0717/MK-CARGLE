@@ -40,15 +40,14 @@ const CompanyPresenter: NextPage<any> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-
     <WholeWrapper ref={ref}>
-      <Wrapper
-        width={`auto`}
-        padding={`50px`}
-        border={`1px solid #ccc`}
-        radius={`5px`}
-      >
-        <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
+      <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
+        <Wrapper
+          width={`auto`}
+          padding={`50px`}
+          border={`1px solid #ccc`}
+          radius={`5px`}
+        >
           <Wrapper>
             {/* 상호명 */}
             <Wrapper
@@ -94,7 +93,12 @@ const CompanyPresenter: NextPage<any> = (props) => {
               width={`auto`}
             >
               <Text margin={`0px 0px 10px`}>*사업자 등록번호</Text>
-              <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+              <Wrapper
+                dr={`row`}
+                ju={`flex-start`}
+                margin={`0px 0px 10px`}
+                width={`400px`}
+              >
                 <TextInput2
                   width={`300px`}
                   type="text"
@@ -127,17 +131,17 @@ const CompanyPresenter: NextPage<any> = (props) => {
                 errors.comRegNum?.type === "comCheckFalse" ||
                 errors.comRegNum?.type === "comExist" ||
                 errors.comRegNum?.type === "comCheckNeed") && (
-                  <Text
-                    margin={`0px 0px 10px 0px`}
-                    width={`100%`}
-                    color={`#d6263b`}
-                    al={`flex-start`}
-                    fontSize={`14px`}
-                    textAlign={`left`}
-                  >
-                    {errors.comRegNum.message}
-                  </Text>
-                )}
+                <Text
+                  margin={`0px 0px 10px 0px`}
+                  width={`100%`}
+                  color={`#d6263b`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  {errors.comRegNum.message}
+                </Text>
+              )}
               {errors.comRegNum?.type === "comCheckTrue" && (
                 <Text
                   margin={`0px 0px 10px 0px`}
@@ -152,11 +156,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               )}
             </Wrapper>
             {/* 정비업등록번호 */}
-            <Wrapper
-              al={`flex-start`}
-              margin={`0px 0px 10px`}
-              width={`auto`}
-            >
+            <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
               <Text margin={`0px 0px 10px`}>*정비업 등록번호</Text>
               <TextInput2
                 width={`400px`}
@@ -176,24 +176,20 @@ const CompanyPresenter: NextPage<any> = (props) => {
               />
               {(errors.mbRegNum?.type === "required" ||
                 errors.mbRegNum?.type === "pattern") && (
-                  <Text
-                    margin={`0px 0px 10px 0px`}
-                    width={`100%`}
-                    color={`#d6263b`}
-                    al={`flex-start`}
-                    fontSize={`14px`}
-                    textAlign={`left`}
-                  >
-                    {errors.mbRegNum.message}
-                  </Text>
-                )}
+                <Text
+                  margin={`0px 0px 10px 0px`}
+                  width={`100%`}
+                  color={`#d6263b`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  {errors.mbRegNum.message}
+                </Text>
+              )}
             </Wrapper>
             {/* 정비업종 */}
-            <Wrapper
-              al={`flex-start`}
-              margin={`0px 0px 10px`}
-              width={`auto`}
-            >
+            <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
               <Text margin={`0px 0px 10px`}>*정비업종</Text>
               <Combo
                 width={`400px`}
@@ -214,11 +210,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               )}
             </Wrapper>
             {/* 대표자명 */}
-            <Wrapper
-              al={`flex-start`}
-              margin={`0px 0px 10px`}
-              width={`auto`}
-            >
+            <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
               <Text margin={`0px 0px 10px`}>*대표자명</Text>
               <TextInput2
                 width={`400px`}
@@ -246,11 +238,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               )}
             </Wrapper>
             {/* 사업자 전화번호 */}
-            <Wrapper
-              al={`flex-start`}
-              margin={`0px 0px 10px`}
-              width={`auto`}
-            >
+            <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
               <Text margin={`0px 0px 10px`}>*업체 전화번호</Text>
               <TextInput2
                 width={`400px`}
@@ -270,24 +258,20 @@ const CompanyPresenter: NextPage<any> = (props) => {
               />
               {(errors.phoneNum?.type === "required" ||
                 errors.phoneNum?.type === "pattern") && (
-                  <Text
-                    margin={`0px 0px 10px 0px`}
-                    width={`100%`}
-                    color={`#d6263b`}
-                    al={`flex-start`}
-                    fontSize={`14px`}
-                    textAlign={`left`}
-                  >
-                    {errors.phoneNum.message}
-                  </Text>
-                )}
+                <Text
+                  margin={`0px 0px 10px 0px`}
+                  width={`100%`}
+                  color={`#d6263b`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  {errors.phoneNum.message}
+                </Text>
+              )}
             </Wrapper>
             {/* 사업자 팩스번호 */}
-            <Wrapper
-              al={`flex-start`}
-              margin={`0px 0px 10px`}
-              width={`auto`}
-            >
+            <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
               <Text margin={`0px 0px 10px`}>업체 팩스번호(선택)</Text>
               <TextInput2
                 width={`400px`}
@@ -318,11 +302,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               )}
             </Wrapper>
             {/* 업체 주소 */}
-            <Wrapper
-              al={`flex-start`}
-              margin={`0px 0px 10px`}
-              width={`auto`}
-            >
+            <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
               <Text margin={`0px 0px 10px`}>*사업자 주소</Text>
               <Wrapper dr={`row`}>
                 <TextInput2
@@ -372,28 +352,30 @@ const CompanyPresenter: NextPage<any> = (props) => {
               })}
             />
           </Wrapper>
-        </form>
-      </Wrapper>
-      <Wrapper padding={`50px 0px 100px 0px`}>
-        <CommonButton
-          kindOf={`white`}
-          margin={`0px 0px 10px 0px`}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            setStepNumber(stepNumber - 1);
-            dispatch({
-              type: actionTypesUser.INPUT_COMPANY,
-              payload: inputCompany,
-            });
-            dispatch({
-              type: actionTypesUser.INPUT_FORM,
-              payload: inputForm,
-            });
-          }}
-        >
-          이전
-        </CommonButton>
-        <CommonButton margin={`10px 0px 0px 0px`} type="submit">완료</CommonButton>
-      </Wrapper>
+        </Wrapper>
+        <Wrapper padding={`50px 0px 100px 0px`}>
+          <CommonButton
+            kindOf={`white`}
+            margin={`0px 0px 10px 0px`}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              setStepNumber(stepNumber - 1);
+              dispatch({
+                type: actionTypesUser.INPUT_COMPANY,
+                payload: inputCompany,
+              });
+              dispatch({
+                type: actionTypesUser.INPUT_FORM,
+                payload: inputForm,
+              });
+            }}
+          >
+            이전
+          </CommonButton>
+          <CommonButton margin={`10px 0px 0px 0px`} type="submit">
+            완료
+          </CommonButton>
+        </Wrapper>
+      </form>
     </WholeWrapper>
   );
 };

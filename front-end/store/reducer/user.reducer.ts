@@ -45,8 +45,6 @@ export const initialState: UserState = {
   },
   formInput: <FormInput>{
     companyNum: "",
-    emailAddress: "",
-    emailDomain: "",
     passwordCheck: "",
   },
   formCheck: <FormCheck>{
