@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import { useDispatch } from "react-redux";
-import { actionTypesUser } from "../../../../../store/interfaces";
+import { actionTypesUser, FormInput } from "../../../../../store/interfaces";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import {
   companyCheckAction,
@@ -30,6 +30,7 @@ const Company: NextPage<any> = (props) => {
   // props 재정의
   const user = props.user;
   const company = props.company;
+  const formInput = props.formInput;
   const formCheck = props.formCheck;
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
@@ -38,6 +39,7 @@ const Company: NextPage<any> = (props) => {
     ...company,
     ownerName: user.name,
   }); // 업체 정보
+  const [inputForm, setInputForm] = useState<FormInput>(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
   const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
 
   // react-hook-form 사용을 위한 선언
@@ -144,7 +146,7 @@ const Company: NextPage<any> = (props) => {
   // 사업자(owner) 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
     dispatch({ type: actionTypesUser.INPUT_COMPANY, payload: inputCompany });
-    // dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
+    dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
     if (!formCheck.companyCheck) {
       setError("comRegNum", {
         type: "comCheckNeed",
@@ -185,7 +187,7 @@ const Company: NextPage<any> = (props) => {
     inputCompany,
     onInputCompanyHandler,
     onComRegNumCheck,
-    // inputForm,
+    inputForm,
     modalOpen,
     setModalOpen,
   };

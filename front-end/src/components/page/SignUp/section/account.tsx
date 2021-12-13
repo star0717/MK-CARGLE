@@ -180,9 +180,10 @@ const Account: NextPage<any> = (props) => {
     setModalOpen(false);
   };
 
+  console.log(inputUser);
+
   // 직원(worker) 회원가입 form submit handler
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
-    console.log("들어옴");
     if (!formCheck.authNumCheck) {
       alert("이메일 인증을 해주세요.");
     } else {
@@ -191,7 +192,11 @@ const Account: NextPage<any> = (props) => {
         dispatch({ type: actionTypesUser.INPUT_ACCOUNT, payload: inputUser });
         setStepNumber(stepNumber + 1);
       } else {
-        dispatch(signUpUserAction(inputUser)).then(
+        dispatch(
+          signUpUserAction({
+            user: inputUser,
+          })
+        ).then(
           (res: any) => {
             setStepNumber(stepNumber + 1);
           },

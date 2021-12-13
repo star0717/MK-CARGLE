@@ -34,7 +34,7 @@ const TermPresenter: NextPage<any> = (props) => {
         <form onSubmit={handleSubmit(agreeTermHandler)}>
           <Wrapper al={`flex-start`}>
             <Text
-              fontSize={`24px`}
+              fontSize={`18px`}
               fontWeight={`700`}
               padding={`10px 0px 10px 0px`}
             >
@@ -99,7 +99,7 @@ const TermPresenter: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper al={`flex-start`}>
             <Text
-              fontSize={`24px`}
+              fontSize={`18px`}
               fontWeight={`700`}
               padding={`10px 0px 10px 0px`}
             >
@@ -164,7 +164,7 @@ const TermPresenter: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper al={`flex-start`}>
             <Text
-              fontSize={`24px`}
+              fontSize={`18px`}
               fontWeight={`700`}
               padding={`10px 0px 10px 0px`}
             >
@@ -222,6 +222,7 @@ const TermPresenter: NextPage<any> = (props) => {
                 setStepNumber(stepNumber - 1);
               }}
               width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
+              kindOf={`white`}
             >
               이전
             </CommonButton>

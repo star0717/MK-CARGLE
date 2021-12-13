@@ -26,6 +26,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
   const errors = props.errors;
   const onSignUpCompanyHandler = props.onSignUpCompanyHandler;
   const inputCompany = props.inputCompany;
+  const inputForm = props.inputForm;
   const onInputCompanyHandler = props.onInputCompanyHandler;
   const formCheck = props.formCheck;
   const onComRegNumCheck = props.onComRegNumCheck;
@@ -311,7 +312,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
                   value={inputCompany.address1}
                   readOnly
                   {...register("address1", {
-                    required: { value: true, message: "필수 입력사항입니다." },
+                    required: true,
                   })}
                 />
                 <SmallButton
@@ -325,18 +326,6 @@ const CompanyPresenter: NextPage<any> = (props) => {
                   주소 검색
                 </SmallButton>
               </Wrapper>
-              {errors.address1?.type === "required" && (
-                <Text
-                  margin={`0px 0px 10px 0px`}
-                  width={`100%`}
-                  color={`#d6263b`}
-                  al={`flex-start`}
-                  fontSize={`14px`}
-                  textAlign={`left`}
-                >
-                  {errors.address1.message}
-                </Text>
-              )}
             </Wrapper>
             <TextInput2
               width={`400px`}
@@ -348,8 +337,22 @@ const CompanyPresenter: NextPage<any> = (props) => {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputCompanyHandler(e);
                 },
+                required: true,
               })}
             />
+            {(errors.address1?.type === "required" ||
+              errors.address2?.type === "required") && (
+              <Text
+                margin={`0px 0px 10px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                필수 입력사항입니다.
+              </Text>
+            )}
           </Wrapper>
         </Wrapper>
         <Wrapper padding={`50px 0px 100px 0px`}>
@@ -362,10 +365,10 @@ const CompanyPresenter: NextPage<any> = (props) => {
                 type: actionTypesUser.INPUT_COMPANY,
                 payload: inputCompany,
               });
-              // dispatch({
-              //   type: actionTypesUser.INPUT_FORM,
-              //   payload: inputForm,
-              // });
+              dispatch({
+                type: actionTypesUser.INPUT_FORM,
+                payload: inputForm,
+              });
             }}
           >
             이전

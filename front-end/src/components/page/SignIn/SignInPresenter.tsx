@@ -8,7 +8,7 @@ import {
   Wrapper,
   CommonTitle,
   CommonButton,
-  TextInput,
+  TextInput2,
   Text,
   CommonSubTitle,
 } from "../../styles/CommonComponents";
@@ -46,11 +46,12 @@ const SigninPresenter: NextPage<any> = (props) => {
               width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             >
               <form onSubmit={onSignInHandler}>
-                <TextInput
+                <TextInput2
                   marginBottom={`10px`}
                   width={
                     width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`
                   }
+                  height={`60px`}
                   placeholder="이메일"
                   type="text"
                   name="id"
@@ -63,7 +64,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   <Text
                     fontSize={width < 500 ? `12px` : `16px`}
                     fontWeight={`700`}
-                    margin={`0px`}
+                    margin={`5px 0px 10px 0px`}
                     width={`100%`}
                     display={`flex`}
                     ju={`flex-start`}
@@ -73,10 +74,11 @@ const SigninPresenter: NextPage<any> = (props) => {
                 </Wrapper>
                 {/* 비밀번호 input */}
 
-                <TextInput
+                <TextInput2
                   width={
                     width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`
                   }
+                  height={`60px`}
                   marginTop={`10px`}
                   type="password"
                   placeholder="비밀번호"
