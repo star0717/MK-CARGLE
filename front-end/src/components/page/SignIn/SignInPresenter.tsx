@@ -123,12 +123,11 @@ const SigninPresenter: NextPage<any> = (props) => {
               >
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
-                  style={{ width: "18px", margin: "0px 3px 0px 0px" }}
+                  style={{ width: "18px", margin: "0px 3px 4px 0px" }}
                 />
                 <Text
                   margin={`0px 3px 0px`}
-                  fontSize={width < 500 ? `12px` : `16px`}
-                >
+                  fontSize={`16px`}>
                   아직 회원이 아니신가요?
                 </Text>
                 <Text decoration={`underline`}>
@@ -145,7 +144,7 @@ const SigninPresenter: NextPage<any> = (props) => {
               <Wrapper dr={`row`} fontSize={`16px`} ju={`flex-end`}>
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
-                  style={{ width: "16px", margin: "0px 3px 0px 0px" }}
+                  style={{ width: "18px", margin: "0px 3px 4px 0px" }}
                 />
                 <Text margin={`0px 3px 0px`} fontSize={`16px`}>
                   계정을 찾고 싶으신가요?
