@@ -7,6 +7,17 @@ interface Propsinterface {
 }
 
 /** Wrapper */
+export const TestDiv = styled.div<any>`
+display: none;`
+
+export const Test = styled.li<any>`
+&:hover {
+  color: red
+}
+  &:hover ${TestDiv} {
+    display: block
+  }
+`
 
 export const WholeWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
@@ -785,6 +796,91 @@ export const TableRowLIST = styled.li<any>`
   padding: ${(props) => props.padding};
   line-height: ${(props) => props.lineHeight || `1.2`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
+`;
+
+export const UlWrapper = styled.ul<any>`
+  width: ${(props) => props.width || `100%`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height};
+  color: ${(props) => props.color};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  flex-wrap: ${(props) => (props.isWrap ? `wrap` : ``)};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  background: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  border-right: ${(props) => props.borderRight};
+  border-left: ${(props) => props.borderLeft};
+  border-bottom: ${(props) => props.borderBottom};
+  border-top: ${(props) => props.borderTop};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  overflow: ${(props) => (props.ishidden ? `hidden` : ``)};
+  transition: 0.3s;
+  list-style:none;
+  padding-left:0px;
+
+  & .react-reveal {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+export const LiWrapper = styled.li<any>`
+  width: ${(props) => props.width};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  color: ${(props) => props.color};
+  font-weight: ${(props) => props.fontWeight};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  flex-wrap: ${(props) => (props.isWrap ? `wrap` : ``)};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  background: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  border: ${(props) => props.border};
+  border-right: ${(props) => props.borderRight};
+  border-top: ${(props) => props.borderTop};
+  border-left: ${(props) => props.borderLeft};
+  border-bottom: ${(props) => props.borderBottom};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  text-align: ${(props) => props.textAlign};
+  line-height: ${(props) => props.lineHeight};
+  box-shadow: ${(props) => props.shadow};
+  cursor: ${(props) => props.cursor};
+  transition: 0.4s;
+  z-index: ${(props) => props.zIndex};
+
+  @media (max-width: 700px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 13px;
+  }
+
+  & .headerIcon {
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  &:hover {
+    background: ${(props) =>
+    props.isTabHover ? `${props.theme.basicTheme_C}` : ``};
+    color: ${(props) => (props.isTabHover ? `${props.theme.white_C}` : ``)};
+  }
 `;
 
 /** pagenation */

@@ -10,6 +10,10 @@ import {
   Wrapper,
   Text,
   Image,
+  Test,
+  TestDiv,
+  UlWrapper,
+  LiWrapper,
 } from "../styles/CommonComponents";
 import { CompanyApproval } from "../../models/company.entity";
 import { MainRoute, SubRoute } from "../../models/router.entity";
@@ -45,6 +49,7 @@ const Header: NextPage<LayoutProps> = (props) => {
         ju={`space-between`}
         al={`flex-start`}
         padding={width < 1450 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
+        dr={`row`}
       >
         <Wrapper width={`auto`}>
           <Link href="/v/main">
@@ -56,6 +61,45 @@ const Header: NextPage<LayoutProps> = (props) => {
               />
             </a>
           </Link>
+          <div>
+            <Wrapper>
+              <UlWrapper>
+                <Test>
+                  <p>1</p>
+                  <TestDiv>
+                    <UlWrapper >
+                      <LiWrapper>
+                        11
+                      </LiWrapper>
+                      <LiWrapper>
+                        11
+                      </LiWrapper>
+                    </UlWrapper>
+                  </TestDiv>
+                </Test>
+                <Test>
+                  <p>2</p>
+                  <TestDiv>
+                    <UlWrapper >
+                      <LiWrapper>
+                        22
+                      </LiWrapper>
+                    </UlWrapper>
+                  </TestDiv>
+                </Test>
+                <Test>
+                  <p>3</p>
+                  <TestDiv>
+                    <UlWrapper>
+                      <LiWrapper>
+                        33
+                      </LiWrapper>
+                    </UlWrapper>
+                  </TestDiv>
+                </Test>
+              </UlWrapper>
+            </Wrapper>
+          </div>
         </Wrapper>
         {tokenValue && tokenValue.cApproval === CompanyApproval.DONE && (
           <div style={{ width: "80%", display: "flex" }}>
