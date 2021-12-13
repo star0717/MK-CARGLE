@@ -12,7 +12,7 @@ import {
   JoinStepBar,
 } from "../../../styles/CommonComponents";
 import React from "react";
-import { basicRegEx, CHAR_DEL, formRegEx } from "../../../../validation/regEx";
+import { basicRegEx, formRegEx } from "../../../../validation/regEx";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { GoCheck } from "react-icons/go";
@@ -29,8 +29,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
   const onInputCompanyHandler = props.onInputCompanyHandler;
   const formCheck = props.formCheck;
   const onComRegNumCheck = props.onComRegNumCheck;
-  const inputForm = props.inputForm;
-  const onInputFormHandler = props.onInputFormHandler;
+  // const inputForm = props.inputForm;
   const modalOpen = props.modalOpen;
   const setModalOpen = props.setModalOpen;
   const stepNumber = props.stepNumber;
@@ -102,7 +101,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
                 <TextInput2
                   width={`300px`}
                   type="text"
-                  value={CHAR_DEL(inputCompany.comRegNum)}
+                  value={inputCompany.comRegNum}
                   readOnly={formCheck.companyCheck}
                   placeholder="사업자 등록번호를 입력해주세요."
                   {...register("comRegNum", {
@@ -161,7 +160,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={CHAR_DEL(inputCompany.mbRegNum)}
+                value={inputCompany.mbRegNum}
                 placeholder="정비업 등록번호를 입력해주세요."
                 {...register("mbRegNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -243,7 +242,7 @@ const CompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={CHAR_DEL(inputCompany.phoneNum)}
+                value={inputCompany.phoneNum}
                 placeholder="(- 제외, 지역번호 포함)"
                 {...register("phoneNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -276,14 +275,14 @@ const CompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={CHAR_DEL(inputCompany.faxNum)}
+                value={inputCompany.faxNum}
                 placeholder="(- 제외)"
                 {...register("faxNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                     onInputCompanyHandler(e);
                   },
                   pattern: {
-                    value: basicRegEx.NUM,
+                    value: formRegEx.FAX_NUM,
                     message: "형식에 맞게 입력하세요.",
                   },
                 })}
@@ -363,10 +362,10 @@ const CompanyPresenter: NextPage<any> = (props) => {
                 type: actionTypesUser.INPUT_COMPANY,
                 payload: inputCompany,
               });
-              dispatch({
-                type: actionTypesUser.INPUT_FORM,
-                payload: inputForm,
-              });
+              // dispatch({
+              //   type: actionTypesUser.INPUT_FORM,
+              //   payload: inputForm,
+              // });
             }}
           >
             이전

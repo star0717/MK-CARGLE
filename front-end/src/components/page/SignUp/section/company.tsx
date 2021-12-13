@@ -19,6 +19,7 @@ import {
   Wrapper,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
+import { CHAR_DEL } from "../../../../validation/regEx";
 
 // modal setting
 Modal.setAppElement("body");
@@ -29,7 +30,6 @@ const Company: NextPage<any> = (props) => {
   // props 재정의
   const user = props.user;
   const company = props.company;
-  const formInput = props.formInput;
   const formCheck = props.formCheck;
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
@@ -38,7 +38,6 @@ const Company: NextPage<any> = (props) => {
     ...company,
     ownerName: user.name,
   }); // 업체 정보
-  const [inputForm, setInputForm] = useState(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
   const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
 
   // react-hook-form 사용을 위한 선언
@@ -66,11 +65,15 @@ const Company: NextPage<any> = (props) => {
   // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
   // 업체 정보
   const onInputCompanyHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (
+      e.target.name === "comRegNum" ||
+      e.target.name === "mbRegNum" ||
+      e.target.name === "phoneNum" ||
+      e.target.name === "faxNum"
+    ) {
+      e.target.value = CHAR_DEL(e.target.value);
+    }
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
-  };
-  // 그 외 form 정보
-  const onInputFormHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputForm({ ...inputForm, [e.target.name]: e.target.value });
   };
 
   // 사업자번호 유효성 검사 handler
@@ -141,7 +144,7 @@ const Company: NextPage<any> = (props) => {
   // 사업자(owner) 회원가입 form submit handler
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
     dispatch({ type: actionTypesUser.INPUT_COMPANY, payload: inputCompany });
-    dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
+    // dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
     if (!formCheck.companyCheck) {
       setError("comRegNum", {
         type: "comCheckNeed",
@@ -182,8 +185,7 @@ const Company: NextPage<any> = (props) => {
     inputCompany,
     onInputCompanyHandler,
     onComRegNumCheck,
-    inputForm,
-    onInputFormHandler,
+    // inputForm,
     modalOpen,
     setModalOpen,
   };
