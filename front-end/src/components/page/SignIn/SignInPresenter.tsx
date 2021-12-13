@@ -11,10 +11,12 @@ import {
   TextInput2,
   Text,
   CommonSubTitle,
+  Label,
 } from "../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";
-import { Checkbox } from "@material-ui/core";
+import { Checkbox, Switch } from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const SigninPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
@@ -103,13 +105,21 @@ const SigninPresenter: NextPage<any> = (props) => {
                         setSaveCheck(e.target.checked);
                       }}
                     ></input> */}
-                    <Checkbox
+                    {/* <Checkbox
                       checked={saveCheck}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setSaveCheck(e.target.checked);
                       }}
                       color={`default`}
-                    />
+                    /> */}
+                    <Label width={`100%`} margin={`10px 0`}>
+                      <FormControlLabel
+                        value="end"
+                        control={<Checkbox />}
+                        label="아이디 저장"
+                        labelPlacement="end"
+                      />
+                    </Label>
                     <Text
                       fontSize={width < 500 ? `12px` : `16px`}
                       padding={`5px 0px`}

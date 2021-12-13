@@ -710,10 +710,10 @@ export const Label = styled.label<any>`
   & .MuiFormControlLabel-root svg {
     font-size: 20px;
     margin-bottom: 1px;
-    color: #ce0000;
+    color: #0066ff;
   }
   & .main.MuiFormControlLabel-root svg {
-    color: #0b0b0b;
+    color: #fff;
   }
 `;
 
