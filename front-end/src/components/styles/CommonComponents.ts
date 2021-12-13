@@ -454,7 +454,6 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
   }
 
   @media (max-width: 500px) {
-    height: 40px;
     font-size: 18px;
     width: 300px;
   }
