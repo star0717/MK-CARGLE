@@ -5,34 +5,6 @@ import "react-image-crop/dist/ReactCrop.css";
 import { useDispatch } from "react-redux";
 import { uploadStamp } from "../../../../store/action/user.action";
 
-const onStampUploadHandler = () => {
-  console.log("클릭!");
-};
-
-// const generateDownload = (canvas: any, crop: any) => {
-//   if (!crop || !canvas) {
-//     return;
-//   }
-
-//   canvas.toBlob(
-//     (blob: any) => {
-//       const previewUrl = window.URL.createObjectURL(blob);
-//       //   const formData = new FormData();
-//       //   formData.append("file", blob);
-
-//       //   anchor.download = "cropPreview.png";
-//       //   anchor.href = URL.createObjectURL(blob);
-//       //   anchor.click();
-
-//       // window.URL.revokeObjectURL(previewUrl);
-//     },
-//     "image/png",
-//     1
-//   );
-//   console.log("캔버스 : ", canvas);
-//   //   console.log("크롭 : ", crop);
-// };
-
 const Test: NextPage = () => {
   const dispatch = useDispatch();
 
