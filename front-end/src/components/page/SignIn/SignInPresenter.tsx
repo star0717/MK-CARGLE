@@ -101,12 +101,20 @@ const SigninPresenter: NextPage<any> = (props) => {
                       control={<Checkbox />}
                       label="아이디 저장"
                       labelPlacement="end"
-                      defaultChecked color="success"
+                      defaultChecked
+                      color="success"
                     />
                   </Label>
                 </Wrapper>
                 {/* 로그인 버튼 */}
-                <CommonButton type="submit">로그인</CommonButton>
+                <CommonButton
+                  type="submit"
+                  width={
+                    width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`
+                  }
+                >
+                  로그인
+                </CommonButton>
               </form>
             </Wrapper>
             <Wrapper padding={`10px 0px`}>
