@@ -95,23 +95,15 @@ const SigninPresenter: NextPage<any> = (props) => {
                 {/* 체크박스 div */}
                 <Wrapper margin={`5px 0px`}>
                   <Wrapper dr={`row`} ju={`flex-end`}>
-                    {/* <input
-                      style={{
-                        fontSize: "14px",
-                      }}
-                      type="checkbox"
-                      checked={saveCheck}
-                      onChange={(e) => {
-                        setSaveCheck(e.target.checked);
-                      }}
-                    ></input> */}
-                    {/* <Checkbox
+
+
+                    <Checkbox
                       checked={saveCheck}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setSaveCheck(e.target.checked);
                       }}
                       color={`default`}
-                    /> */}
+                    /> */
                     <Label width={`100%`} margin={`10px 0`}>
                       <FormControlLabel
                         value="end"

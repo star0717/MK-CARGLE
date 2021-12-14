@@ -12,7 +12,10 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
-import { setMyInfo } from "../../../../../store/action/user.action";
+import {
+  setMyInfo,
+  uproadStamp,
+} from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
 
 Modal.setAppElement("body");
@@ -322,16 +325,14 @@ const AccountM: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>사업자 도장</Text>
-            <Image
-              type="image"
-              alt="도장 사진"
-              width="300px"
-              height="300px"
-              background="gray"
-            />
-            <button type="button" name="upload">
+            <Image type="image" alt="도장 사진" width="300px" height="300px" />
+            <input type="text" />
+            <input type="file" />
+            {/* <button type="button" name="upload" onClick={(e) => {
+              
+            }}>
               업 로 드
-            </button>
+            </button> */}
           </Wrapper>
           <button type="submit" onClick={() => setpages(3)}>
             회원탈퇴

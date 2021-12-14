@@ -207,6 +207,10 @@ const userAll = (
       return {
         ...state,
       };
+    case actionTypesUser.UPROAD_STAMP:
+      return {
+        ...state,
+      };
 
     default:
       return state;
