@@ -229,7 +229,7 @@ export async function changePass(dataToSubmit: HelpChangePWD) {
  * 도장 업로드
  * @returns
  */
-export async function uproadStamp(dateToSubmit: any) {
+export async function uploadStamp(dateToSubmit: any) {
   const req = await axios
     .patch(`/api/settings/myinfo/stamp`, dateToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);

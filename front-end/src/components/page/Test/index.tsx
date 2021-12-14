@@ -2,6 +2,8 @@ import { NextPage } from "next";
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { useDispatch } from "react-redux";
+import { uploadStamp } from "../../../../store/action/user.action";
 
 const onStampUploadHandler = () => {
   console.log("클릭!");
@@ -32,6 +34,8 @@ const onStampUploadHandler = () => {
 // };
 
 const Test: NextPage = () => {
+  const dispatch = useDispatch();
+
   const [upImg, setUpImg] = useState<any>();
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
@@ -53,6 +57,7 @@ const Test: NextPage = () => {
         console.log("블랍 : ", blob);
         const formData = new FormData();
         formData.append("file", blob);
+        dispatch(uploadStamp(formData)).then((res: any) => {});
 
         //   anchor.download = "cropPreview.png";
         //   anchor.href = URL.createObjectURL(blob);
