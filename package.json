@@ -7,5 +7,22 @@
   },
   "devDependencies": {
     "@types/styled-components": "^5.1.15"
-  }
+  },
+  "name": "n2server",
+  "description": "Next.js + Nestjs 기반의 통합서버",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ByunMooYoung/n2server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ByunMooYoung/n2server/issues"
+  },
+  "homepage": "https://github.com/ByunMooYoung/n2server#readme"
 }
