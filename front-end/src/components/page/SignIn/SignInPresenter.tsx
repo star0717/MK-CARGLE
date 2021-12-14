@@ -118,6 +118,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                         control={<Checkbox />}
                         label="아이디 저장"
                         labelPlacement="end"
+                        defaultChecked color="success"
                       />
                     </Label>
                     <Text
