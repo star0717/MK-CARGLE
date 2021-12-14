@@ -12,24 +12,38 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
-import {
-  setMyInfo,
-  uproadStamp,
-} from "../../../../../store/action/user.action";
+import { changePass, setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
 import { SignUpInfo } from "../../../../models/auth.entity";
+import StampModal from "./StampModal";
 
 Modal.setAppElement("body");
 
 const AccountM: NextPage<any> = (props) => {
   const dispatch = useDispatch();
+
+  //모달 관련
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOption, setModalOption] = useState("");
+
+  //owner 와 worker 구분용 state
   const [readOnly, setReadOnly] = useState(true);
+
+  //user, company데이터
   const accountInfo = props.accountInfo;
   const setAccountInfo = props.setAccountInfo;
+
+  // //도장 이미지, 파일명 관련 데이터
+  // const [stampFile, setStampFile] = useState("");
+  // const [stampName, setStampName] = useState("");
+
+  //accountinfo.user 데이터
   const [userData, setUserData] = useState(accountInfo.user);
+
+  //accountinfo.company 데이터
   const [comData, setComData] = useState(accountInfo.company);
+
+  //page전환용 setstate
   const setpages = props.setPages;
 
   useEffect(() => {
@@ -53,9 +67,7 @@ const AccountM: NextPage<any> = (props) => {
     style: { height: "500px" },
   };
 
-  {
-    /* 모달창 밖 클릭시 닫기 옵션 */
-  }
+  // 모달창 밖 클릭시 닫기 옵션
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -110,9 +122,10 @@ const AccountM: NextPage<any> = (props) => {
     });
   };
 
-  const onStampUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  // const onStampUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  // };
 
   return (
     <WholeWrapper>
@@ -320,17 +333,24 @@ const AccountM: NextPage<any> = (props) => {
             ></TextInput>
           </Wrapper>
         </form>
-        <form id="stampform" onSubmit={onStampUploadHandler}>
-          <Wrapper dr={`row`}>
-            <Text>사업자 도장</Text>
-            <Image type="image" alt="도장 사진" width="300px" height="300px" />
-            {/* <input type="text" /> */}
-            {/* <input type="file" /> */}
-            <button type="submit" name="upload">
-              업 로 드
-            </button>
-          </Wrapper>
-        </form>
+        {/* <form id="stampform" onSubmit={onStampUploadHandler}> */}
+        <Wrapper dr={`row`}>
+          <Text>사업자 도장</Text>
+          <Image type="image" alt="도장 사진" width="300px" height="300px" />
+          {/* <input type="text" /> */}
+          {/* <input type="file" /> */}
+          <button
+            name="upload"
+            type="button"
+            onClick={(e) => {
+              setModalOpen(!modalOpen);
+              setModalOption("stamp");
+            }}
+          >
+            파일선택
+          </button>
+        </Wrapper>
+        {/* </form> */}
         <button type="button" onClick={() => setpages(3)}>
           회원탈퇴
         </button>
@@ -374,8 +394,10 @@ const AccountM: NextPage<any> = (props) => {
               onComplete={addressHandler}
               style={{ height: "500px" }}
             />
-          ) : (
+          ) : modalOption === "password" ? (
             <ChangePassModal {...AccountModalProps} />
+          ) : (
+            <StampModal {...AccountModalProps} />
           )}
         </Modal>
       </Wrapper>
