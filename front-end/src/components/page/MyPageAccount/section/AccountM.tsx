@@ -12,27 +12,38 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
-import {
-  setMyInfo,
-  uproadStamp,
-} from "../../../../../store/action/user.action";
+import { changePass, setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
+import { SignUpInfo } from "../../../../models/auth.entity";
+import StampModal from "./StampModal";
 
 Modal.setAppElement("body");
 
 const AccountM: NextPage<any> = (props) => {
   const dispatch = useDispatch();
+
+  //모달 관련
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOption, setModalOption] = useState("");
+
+  //owner 와 worker 구분용 state
   const [readOnly, setReadOnly] = useState(true);
 
+  //user, company데이터
   const accountInfo = props.accountInfo;
   const setAccountInfo = props.setAccountInfo;
+
+  // //도장 이미지, 파일명 관련 데이터
+  // const [stampFile, setStampFile] = useState("");
+  // const [stampName, setStampName] = useState("");
+
+  //accountinfo.user 데이터
   const [userData, setUserData] = useState(accountInfo.user);
+
+  //accountinfo.company 데이터
   const [comData, setComData] = useState(accountInfo.company);
 
-  //setAccountInfo({user: userData, company: comData})
-
+  //page전환용 setstate
   const setpages = props.setPages;
 
   useEffect(() => {
@@ -56,9 +67,7 @@ const AccountM: NextPage<any> = (props) => {
     style: { height: "500px" },
   };
 
-  {
-    /* 모달창 밖 클릭시 닫기 옵션 */
-  }
+  // 모달창 밖 클릭시 닫기 옵션
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -97,35 +106,32 @@ const AccountM: NextPage<any> = (props) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
   };
 
-  // const onInputAddressHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-  //   // setUserData({ ...userData, address: userData.address + e.target.value });
-  // };
-
   const saveData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    //console.log(userData);
-    //console.log("ddd", accountInfo);
-    // const ai: SignUpInfo = {
-    //   company: comData,
-    //   user: userData,
-    // };
-
-    dispatch(setMyInfo(accountInfo)).then((res: any) => {
-      //const info: SignUpInfo = res.payload;
-
-      //setAccountInfo({ company: info.company, user: info.user });
+    const ai: SignUpInfo = {
+      company: comData,
+      user: userData,
+    };
+    dispatch(setMyInfo(ai)).then((res: any) => {
       alert("저장되었습니다.");
+      setAccountInfo({
+        ...accountInfo,
+        company: comData,
+        user: userData,
+      });
     });
   };
-  //console.log(accountInfo);
+
+  // const onStampUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  // };
+
   return (
     <WholeWrapper>
-      <form onSubmit={saveData}>
-        <Wrapper>
+      <Wrapper>
+        <form id="saveform" onSubmit={saveData}>
           <Text>계정정보</Text>
-
           <Wrapper dr={`row`}>
             <Text>아이디</Text>
             <TextInput
@@ -193,15 +199,18 @@ const AccountM: NextPage<any> = (props) => {
               주소 검색
             </button>
           </Wrapper>
-          <TextInput
-            type="text"
-            name="address2"
-            placeholder="상세주소를 입력해 주세요."
-            value={userData.address2}
-            onChange={(e: any) => {
-              onInputUserHandler(e);
-            }}
-          />
+          <Wrapper dr={`row`}>
+            <Text>상세주소</Text>
+            <TextInput
+              type="text"
+              name="address2"
+              placeholder="상세주소를 입력해 주세요."
+              value={userData.address2}
+              onChange={(e: any) => {
+                onInputUserHandler(e);
+              }}
+            />
+          </Wrapper>
           <Wrapper dr={`row`}>
             <Text>입사일자</Text>
             <TextInput2
@@ -323,36 +332,33 @@ const AccountM: NextPage<any> = (props) => {
               disabled={true}
             ></TextInput>
           </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text>사업자 도장</Text>
-            <Image type="image" alt="도장 사진" width="300px" height="300px" />
-            <input type="text" />
-            <input type="file" />
-            {/* <button type="button" name="upload" onClick={(e) => {
-              
-            }}>
-              업 로 드
-            </button> */}
-          </Wrapper>
-          <button type="submit" onClick={() => setpages(3)}>
-            회원탈퇴
-          </button>
+        </form>
+        {/* <form id="stampform" onSubmit={onStampUploadHandler}> */}
+        <Wrapper dr={`row`}>
+          <Text>사업자 도장</Text>
+          <Image type="image" alt="도장 사진" width="300px" height="300px" />
+          {/* <input type="text" /> */}
+          {/* <input type="file" /> */}
           <button
-            type="submit"
-            name="save"
-            onClick={() => {
-              setAccountInfo({
-                ...accountInfo,
-                company: comData,
-                user: userData,
-              });
-              console.log(accountInfo);
+            name="upload"
+            type="button"
+            onClick={(e) => {
+              setModalOpen(!modalOpen);
+              setModalOption("stamp");
             }}
           >
-            저 장
+            파일선택
           </button>
         </Wrapper>
-      </form>
+        {/* </form> */}
+        <button type="button" onClick={() => setpages(3)}>
+          회원탈퇴
+        </button>
+        <button form="saveform" type="submit" name="save">
+          저 장
+        </button>
+      </Wrapper>
+
       <Wrapper>
         <Modal
           isOpen={modalOpen}
@@ -388,8 +394,10 @@ const AccountM: NextPage<any> = (props) => {
               onComplete={addressHandler}
               style={{ height: "500px" }}
             />
-          ) : (
+          ) : modalOption === "password" ? (
             <ChangePassModal {...AccountModalProps} />
+          ) : (
+            <StampModal {...AccountModalProps} />
           )}
         </Modal>
       </Wrapper>

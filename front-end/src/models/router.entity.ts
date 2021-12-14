@@ -11,6 +11,7 @@ export enum SignRoute {
 export enum MainRoute {
   MAIN = "main",
   MYPAGE = "mypage",
+  TEST = "test",
 }
 
 export enum SubRoute {
