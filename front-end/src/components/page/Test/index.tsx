@@ -4,13 +4,21 @@ import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { useDispatch } from "react-redux";
 import { uploadStamp } from "../../../../store/action/user.action";
+import {
+  SmallButton,
+  Text,
+  TextInput2,
+  WholeWrapper,
+  Wrapper,
+} from "../../styles/CommonComponents";
 
 const Test: NextPage = () => {
   const dispatch = useDispatch();
 
+  const [fileName, setFileName] = useState("");
   const [upImg, setUpImg] = useState<any>();
-  const imgRef = useRef(null);
-  const previewCanvasRef = useRef(null);
+  const imgRef = useRef<any>(null);
+  const previewCanvasRef = useRef<any>(null);
   const [crop, setCrop] = useState<any>({
     unit: "%",
     width: 30,
@@ -25,27 +33,25 @@ const Test: NextPage = () => {
 
     canvas.toBlob(
       (blob: any) => {
-        // const previewUrl = window.URL.createObjectURL(blob);
         console.log("블랍 : ", blob);
         const formData = new FormData();
         formData.append("file", blob);
-        dispatch(uploadStamp(formData)).then((res: any) => {});
-
-        //   anchor.download = "cropPreview.png";
-        //   anchor.href = URL.createObjectURL(blob);
-        //   anchor.click();
-
-        // window.URL.revokeObjectURL(previewUrl);
+        dispatch(uploadStamp(formData)).then((res: any) => {
+          if (res.payload.length !== 0) {
+            alert("도장이 업로드되었습니다.");
+          } else {
+            alert("업로드에 실패했습니다.");
+          }
+        });
       },
       "image/png",
       1
     );
-    console.log("캔버스 : ", canvas);
-    //   console.log("크롭 : ", crop);
   };
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
+      setFileName(e.target.files[0].name);
       const reader = new FileReader();
       reader.addEventListener("load", () => setUpImg(reader.result));
       reader.readAsDataURL(e.target.files[0]);
@@ -90,41 +96,68 @@ const Test: NextPage = () => {
   }, [completedCrop]);
 
   return (
-    <div className="App">
-      <div>
-        <input type="file" accept="image/*" onChange={onSelectFile} />
-      </div>
-      <ReactCrop
-        src={upImg}
-        onImageLoaded={onLoad}
-        crop={crop}
-        onChange={(c) => setCrop(c)}
-        onComplete={(c) => setCompletedCrop(c)}
-      />
-      <div>
-        <canvas
-          ref={previewCanvasRef}
-          // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-          style={{
-            width: Math.round(completedCrop?.width ?? 0),
-            height: Math.round(completedCrop?.height ?? 0),
-          }}
+    <WholeWrapper>
+      <Wrapper>
+        <Text margin={`0px 0px 10px`}>정비업등록증</Text>
+        <Wrapper>
+          <TextInput2
+            width={`300px`}
+            type="text"
+            placeholder="이미지 파일"
+            value={fileName}
+            required
+            readOnly
+          />
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+          >
+            <label htmlFor="stamp">파일선택</label>
+            <TextInput2
+              style={{ display: "none" }}
+              id="stamp"
+              type="file"
+              onChange={onSelectFile}
+              accept="image/*"
+            />
+          </SmallButton>
+        </Wrapper>
+        <ReactCrop
+          src={upImg}
+          onImageLoaded={onLoad}
+          crop={crop}
+          onChange={(c) => setCrop(c)}
+          onComplete={(c) => setCompletedCrop(c)}
         />
-      </div>
-      <p>
-        Note that the download below won't work in this sandbox due to the
-        iframe missing 'allow-downloads'. It's just for your reference.
-      </p>
-      <button
-        type="button"
-        disabled={!completedCrop?.width || !completedCrop?.height}
-        onClick={() =>
-          generateDownload(previewCanvasRef.current, completedCrop)
-        }
-      >
-        Download cropped image
-      </button>
-    </div>
+        <Wrapper>
+          <canvas
+            ref={previewCanvasRef}
+            // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+            style={{
+              width: Math.round(completedCrop?.width ?? 0),
+              height: Math.round(completedCrop?.height ?? 0),
+            }}
+          />
+        </Wrapper>
+        {completedCrop?.width && completedCrop?.height && (
+          <Wrapper>
+            <Text>선택한 영역이 업로드됩니다.</Text>
+            <SmallButton
+              type="button"
+              kindOf={`default`}
+              margin={`0px 0px 0px 20px`}
+              disabled={!completedCrop?.width || !completedCrop?.height}
+              onClick={() =>
+                generateDownload(previewCanvasRef.current, completedCrop)
+              }
+            >
+              업로드
+            </SmallButton>
+          </Wrapper>
+        )}
+      </Wrapper>
+    </WholeWrapper>
   );
 };
 

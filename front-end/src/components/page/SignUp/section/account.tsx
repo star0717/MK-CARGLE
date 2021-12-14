@@ -207,7 +207,6 @@ const Account: NextPage<any> = (props) => {
             }
           }
         );
-        setStepNumber(stepNumber + 1);
       }
     }
   };
