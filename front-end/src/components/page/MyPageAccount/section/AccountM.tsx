@@ -12,11 +12,7 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
-import {
-  changePass,
-  setMyInfo,
-  uproadStamp,
-} from "../../../../../store/action/user.action";
+import { changePass, setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import StampModal from "./StampModal";

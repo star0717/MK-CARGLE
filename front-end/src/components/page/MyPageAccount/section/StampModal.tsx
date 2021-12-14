@@ -15,6 +15,7 @@ const StampModal: NextPage<modalOption> = (props) => {
   const dispatch = useDispatch();
   const setModalOpen = props.setModalOpen;
   const accountInfo = props.accountInfo;
+
   const [upImg, setUpImg] = useState<any>();
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
