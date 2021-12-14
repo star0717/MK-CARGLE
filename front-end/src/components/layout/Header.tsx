@@ -48,6 +48,7 @@ const Header: NextPage<LayoutProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref} shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`} >
+      <RsWrapper>
       <Wrapper
         bgColor={`#fff`}
         ju={`space-between`}
@@ -55,10 +56,6 @@ const Header: NextPage<LayoutProps> = (props) => {
         padding={width < 1450 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
         dr={`row`}
       >
-        <Wrapper
-          width={`auto`}
-          al={`cneter`}
-        >
           <Link href="/v/main">
             <a>
               <Image
@@ -68,124 +65,9 @@ const Header: NextPage<LayoutProps> = (props) => {
               />
             </a>
           </Link>
+        
         </Wrapper>
-        <Wrapper
-          dr={`row`}
-          width={`auto`}
-          al={`center`}
-        >
-          <Wrapper
-            width={`auto`}
-            dr={`row`}
-            padding={`0px 100px`}
-          >
-            <UlWrapper
-              al={`flex-start`}
-            >
-              <Test>
-                <Text>정비</Text>
-              </Test>
-              <Test>
-                <Text>회계</Text>
-              </Test>
-              <Test>
-                <Text>회계</Text>
-              </Test>
-              <Test>
-                <Text>회계</Text>
-              </Test>
-              <Test>
-                <Text>회계</Text>
-              </Test>
-              <TestWrapper>
-                <Wrapper>
-                  <UlWrapper
-                    dr={`column`}
-                  >
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                  </UlWrapper>
-                  <UlWrapper
-                    dr={`column`}
-                  >
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                  </UlWrapper>
-                  <UlWrapper
-                    dr={`column`}
-                  >
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                  </UlWrapper>
-
-
-                  <UlWrapper
-                    dr={`column`}
-                  >
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                  </UlWrapper>
-
-
-                  <UlWrapper
-                    dr={`column`}
-                  >
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                  </UlWrapper>
-                </Wrapper>
-              </TestWrapper>
-            </UlWrapper>
-          </Wrapper>
-          <Wrapper
-            width={`auto`}
-            padding={`0px 100px`}
-            dr={`row`}
-          >
-            <IconButton
-            >
-              <FaBell />
-            </IconButton>
-            <IconButton
-            >
-              <FaBell />
-            </IconButton>
-          </Wrapper>
-        </Wrapper>
-
-        {tokenValue && tokenValue.cApproval === CompanyApproval.DONE && (
-          <div style={{ width: "80%", display: "flex" }}>
-            <div style={{ width: "75%", display: "flex" }}>
-              <div style={{ width: "20%", height: "100%" }}>정비</div>
-              <div style={{ width: "20%", height: "100%" }}>회계</div>
-              <div style={{ width: "20%", height: "100%" }}>마이페이지</div>
-              <div style={{ width: "20%", height: "100%" }}>커뮤니티</div>
-              <div style={{ width: "20%", height: "100%" }}>도움말</div>
-            </div>
-            <div style={{ width: "25%", textAlign: "right" }}>
-              <button>알림</button>
-              <button onClick={onSignOutHandler}>로그아웃</button>
-            </div>
-          </div>
-        )}
-      </Wrapper>
+        </RsWrapper>
     </WholeWrapper>
   );
 };
