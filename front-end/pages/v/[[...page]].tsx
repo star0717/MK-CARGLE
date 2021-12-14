@@ -13,7 +13,7 @@ import { MainRoute, SubRoute } from "../../src/models/router.entity";
 import { useRouter } from "next/dist/client/router";
 import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
-// import Test from "../../src/components/page/Test";
+import Test from "../../src/components/page/Test";
 
 interface ViewProps {
   route: any;
@@ -66,8 +66,8 @@ const SubComponent: NextPage<ViewProps> = (props) => {
         return <MyPageWorker {...props} />;
       }
 
-    // case MainRoute.TEST:
-    //   return <Test {...props} />;
+    case MainRoute.TEST:
+      return <Test {...props} />;
   }
 };
 
