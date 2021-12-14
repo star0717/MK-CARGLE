@@ -24,8 +24,8 @@ import { AuthToken, Public } from '../decorators/decorators';
 import { AdminService } from './admin.service';
 import { UserAuthority } from 'src/models/user.entity';
 import { createReadStream } from 'fs';
-import { join } from 'path/posix';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
+import { join } from 'path';
 
 @Controller('admin')
 @ApiTags('시스템 관리자 API')
