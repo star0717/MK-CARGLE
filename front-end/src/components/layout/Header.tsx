@@ -11,7 +11,6 @@ import {
   Text,
   Image,
   Test,
-  TestDiv,
   UlWrapper,
   LiWrapper,
   IconButton,
@@ -47,15 +46,20 @@ const Header: NextPage<LayoutProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref} shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`} >
-      <RsWrapper>
+    <WholeWrapper ref={ref} shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}>
       <Wrapper
-        bgColor={`#fff`}
+      height={`90px`}
+        // isRelative={true}
+        bgColor={`red`}
         ju={`space-between`}
         al={`center`}
-        padding={width < 1450 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
+        padding={width < 1450 ? `0px 0px 0px 70px` : `0px 0px 0px 100px`}
         dr={`row`}
       >
+        <Wrapper
+          width={`auto`}
+          al={`cneter`}
+        >
           <Link href="/v/main">
             <a>
               <Image
@@ -65,9 +69,81 @@ const Header: NextPage<LayoutProps> = (props) => {
               />
             </a>
           </Link>
-        
         </Wrapper>
-        </RsWrapper>
+        <Wrapper
+          dr={`row`}
+          width={`auto`}
+          al={`center`}
+        >
+          <Wrapper
+            width={`auto`}
+            dr={`row`}
+            padding={`0px 100px`}
+          >
+            <UlWrapper
+            height={`90px`}
+            bgColor={`skyblue`}
+              al={`center`}
+              margin={`0px`}
+              width={`100%`}
+            >
+              <Test>
+                <Text>정비</Text>
+              </Test>
+              <Test>
+                <Text>회계</Text>
+              </Test>
+              <TestWrapper>
+                  <ul
+                  >
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                  </ul>
+                  <ul
+                  >
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                  </ul>
+              </TestWrapper>
+            </UlWrapper>
+          </Wrapper>
+          <Wrapper
+            width={`auto`}
+            padding={`0px 100px`}
+            dr={`row`}
+          >
+            <IconButton
+            >
+              <FaBell />
+            </IconButton>
+            <IconButton
+            >
+              <FaBell />
+            </IconButton>
+          </Wrapper>
+        </Wrapper>
+
+        {tokenValue && tokenValue.cApproval === CompanyApproval.DONE && (
+          <div style={{ width: "80%", display: "flex" }}>
+            <div style={{ width: "75%", display: "flex" }}>
+              <div style={{ width: "20%", height: "100%" }}>정비</div>
+              <div style={{ width: "20%", height: "100%" }}>회계</div>
+              <div style={{ width: "20%", height: "100%" }}>마이페이지</div>
+              <div style={{ width: "20%", height: "100%" }}>커뮤니티</div>
+              <div style={{ width: "20%", height: "100%" }}>도움말</div>
+            </div>
+            <div style={{ width: "25%", textAlign: "right" }}>
+              <button>알림</button>
+              <button onClick={onSignOutHandler}>로그아웃</button>
+            </div>
+          </div>
+        )}
+      </Wrapper>
     </WholeWrapper>
   );
 };
