@@ -6,6 +6,7 @@ import { signOutUserAction } from "../../../../store/action/user.action";
 import Calendar from "../../common/calendar";
 import MyPageAccount from "../MyPageAccount";
 import Link from "next/link";
+import { Text, Wrapper } from "../../styles/CommonComponents";
 
 const Main: NextPage = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,11 @@ const Main: NextPage = () => {
   const calendarProps = {
     schedule,
     setSchedule,
+  };
+
+  // 파일 업로드
+  const onStampUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
 
   return (
@@ -43,6 +49,15 @@ const Main: NextPage = () => {
                 <button>마이페이지</button>
               </a>
             </Link>
+            <form id="stampform" onSubmit={onStampUploadHandler}>
+              <Wrapper dr={`row`}>
+                <Text>사업자 도장</Text>
+                <input type="file" />
+                <button type="submit" name="upload">
+                  업 로 드
+                </button>
+              </Wrapper>
+            </form>
           </div>
           <div
             style={{
