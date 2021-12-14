@@ -14,10 +14,14 @@ import {
   TestDiv,
   UlWrapper,
   LiWrapper,
+  IconButton,
+  TestWrapper,
 } from "../styles/CommonComponents";
 import { CompanyApproval } from "../../models/company.entity";
 import { MainRoute, SubRoute } from "../../models/router.entity";
 import { useState } from "react";
+import { appearAnimation } from "../styles/AnimationCommon";
+import { FaBell } from 'react-icons/fa';
 
 interface LayoutProps {
   tokenValue?: any;
@@ -43,66 +47,129 @@ const Header: NextPage<LayoutProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref} shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}>
+    <WholeWrapper ref={ref} shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`} >
       <Wrapper
         bgColor={`#fff`}
         ju={`space-between`}
-        al={`flex-start`}
+        al={`center`}
         padding={width < 1450 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
         dr={`row`}
       >
-        <Wrapper width={`auto`}
-          dr={`row`}
+        <Wrapper
+          width={`auto`}
+          al={`cneter`}
         >
-          <div>
-            <Wrapper dr={`row`}>
-              <Link href="/v/main">
-                <a>
-                  <Image
-                    src="/images/cargle.png"
-                    alt="Cargle Logo"
-                    width={width < 1450 ? `100px` : `153px`}
-                  />
-                </a>
-              </Link>
-              <UlWrapper>
-                <Test>
-                  <p>1</p>
-                  <TestDiv>
-                    <UlWrapper >
-                      <LiWrapper>
-                        11
-                      </LiWrapper>
-                      <LiWrapper>
-                        11
-                      </LiWrapper>
-                    </UlWrapper>
-                  </TestDiv>
-                </Test>
-                <Test>
-                  <p>2</p>
-                  <TestDiv>
-                    <UlWrapper >
-                      <LiWrapper>
-                        22
-                      </LiWrapper>
-                    </UlWrapper>
-                  </TestDiv>
-                </Test>
-                <Test>
-                  <p>3</p>
-                  <TestDiv>
-                    <UlWrapper>
-                      <LiWrapper>
-                        33
-                      </LiWrapper>
-                    </UlWrapper>
-                  </TestDiv>
-                </Test>
-              </UlWrapper>
-            </Wrapper>
-          </div>
+          <Link href="/v/main">
+            <a>
+              <Image
+                src="/images/cargle.png"
+                alt="Cargle Logo"
+                width={width < 1450 ? `133px` : `153px`}
+              />
+            </a>
+          </Link>
         </Wrapper>
+        <Wrapper
+          dr={`row`}
+          width={`auto`}
+          al={`center`}
+        >
+          <Wrapper
+            width={`auto`}
+            dr={`row`}
+            padding={`0px 100px`}
+          >
+            <UlWrapper
+              al={`flex-start`}
+            >
+              <Test>
+                <Text>정비</Text>
+              </Test>
+              <Test>
+                <Text>회계</Text>
+              </Test>
+              <Test>
+                <Text>회계</Text>
+              </Test>
+              <Test>
+                <Text>회계</Text>
+              </Test>
+              <Test>
+                <Text>회계</Text>
+              </Test>
+              <TestWrapper>
+                <Wrapper>
+                  <UlWrapper
+                    dr={`column`}
+                  >
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                  </UlWrapper>
+                  <UlWrapper
+                    dr={`column`}
+                  >
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                  </UlWrapper>
+                  <UlWrapper
+                    dr={`column`}
+                  >
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                  </UlWrapper>
+
+
+                  <UlWrapper
+                    dr={`column`}
+                  >
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                  </UlWrapper>
+
+
+                  <UlWrapper
+                    dr={`column`}
+                  >
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                    <LiWrapper>
+                      정비등록
+                    </LiWrapper>
+                  </UlWrapper>
+                </Wrapper>
+              </TestWrapper>
+            </UlWrapper>
+          </Wrapper>
+          <Wrapper
+            width={`auto`}
+            padding={`0px 100px`}
+            dr={`row`}
+          >
+            <IconButton
+            >
+              <FaBell />
+            </IconButton>
+            <IconButton
+            >
+              <FaBell />
+            </IconButton>
+          </Wrapper>
+        </Wrapper>
+
         {tokenValue && tokenValue.cApproval === CompanyApproval.DONE && (
           <div style={{ width: "80%", display: "flex" }}>
             <div style={{ width: "75%", display: "flex" }}>

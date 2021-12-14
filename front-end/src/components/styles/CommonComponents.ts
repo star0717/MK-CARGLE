@@ -10,17 +10,27 @@ interface Propsinterface {
 export const TestDiv = styled.div<any>`
 display: none;
 padding-left: 0px;
+height: 100px;
+transition: all 0.3s;
 `;
+
+export const TestWrapper = styled.div<any>`
+display: none;
+position: absolute;
+top: 90px;
+left: 0;
+width: 100%;
+height: 100px;
+background-color: white;
+`
 
 export const Test = styled.li<any>`
 width: ${(props) => props.width || `100px`};
 padding:0px;
+transition: all 0.3s;
 
-&:hover {
-  color: red
-}
-  &:hover ${TestDiv} {
-    display: block
+  &:hover ${TestWrapper} {
+    display: block;
   }
 `
 
@@ -830,7 +840,7 @@ export const UlWrapper = styled.ul<any>`
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
   flex-wrap: ${(props) => (props.isWrap ? `wrap` : ``)};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   background: ${(props) => props.bgColor};
@@ -854,6 +864,11 @@ export const UlWrapper = styled.ul<any>`
     align-items: center;
     justify-content: center;
   }
+
+  &:hover ${TestWrapper} {
+    display:flex;
+    transform: translateX(50px);
+  }
 `;
 
 export const LiWrapper = styled.li<any>`
@@ -866,7 +881,7 @@ export const LiWrapper = styled.li<any>`
   display: flex;
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
   flex-wrap: ${(props) => (props.isWrap ? `wrap` : ``)};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   background: ${(props) => props.bgColor};
@@ -1057,4 +1072,22 @@ align-items: ${(props) => props.al || `center`};
   
 `;
 
+/*Header */
 
+export const NavWrap = styled.div<any>`
+width: ${(props) => props.width || `100%`};
+height: ${(props) => props.height || `200px`};
+position: ${(props) => props.position || `absolute`};
+z-index: ${(props) => props.zIndex || `100`};
+transition: all 0.3s;
+`;
+
+export const NavAll = styled.div<any>`
+width: ${(props) => props.width || `100%`};
+height: ${(props) => props.height || `90px`};
+overflow: ${(props) => props.overflow || `hiedden`};
+position: ${(props) => props.position || `relative`};
+text-decoration: none;
+background-color:${(props) => props.bgColor || `#fff`};
+transition: all 0.3s;
+`;
