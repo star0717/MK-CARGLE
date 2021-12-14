@@ -5,7 +5,6 @@
     "3000": "next dev -p 3000",
     "4000": "next dev -p 4000",
     "5000": "next dev -p 5000",
-    "6000": "next dev -p 6000",
     "7000": "next dev -p 7000",
     "dev": "next dev",
     "build": "next build",
