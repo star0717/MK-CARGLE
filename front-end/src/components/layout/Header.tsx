@@ -51,18 +51,20 @@ const Header: NextPage<LayoutProps> = (props) => {
         padding={width < 1450 ? `10px 0px 10px 70px` : `15px 0px 15px 100px`}
         dr={`row`}
       >
-        <Wrapper width={`auto`}>
-          <Link href="/v/main">
-            <a>
-              <Image
-                src="/images/cargle.png"
-                alt="Cargle Logo"
-                width={width < 1450 ? `100px` : `153px`}
-              />
-            </a>
-          </Link>
+        <Wrapper width={`auto`}
+          dr={`row`}
+        >
           <div>
-            <Wrapper>
+            <Wrapper dr={`row`}>
+              <Link href="/v/main">
+                <a>
+                  <Image
+                    src="/images/cargle.png"
+                    alt="Cargle Logo"
+                    width={width < 1450 ? `100px` : `153px`}
+                  />
+                </a>
+              </Link>
               <UlWrapper>
                 <Test>
                   <p>1</p>

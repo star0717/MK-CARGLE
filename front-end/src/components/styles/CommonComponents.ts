@@ -8,9 +8,14 @@ interface Propsinterface {
 
 /** Wrapper */
 export const TestDiv = styled.div<any>`
-display: none;`
+display: none;
+padding-left: 0px;
+`;
 
 export const Test = styled.li<any>`
+width: ${(props) => props.width || `100px`};
+padding:0px;
+
 &:hover {
   color: red
 }
@@ -703,10 +708,10 @@ export const Label = styled.label<any>`
   height: ${(props) => props.height};
   margin: ${(props) => props.margin};
   cursor: pointer;
-  /* display: flex;
+  display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`}; */
+  justify-content: ${(props) => props.ju || `center`};
   & .MuiFormControlLabel-root svg {
     font-size: 20px;
     margin-bottom: 1px;

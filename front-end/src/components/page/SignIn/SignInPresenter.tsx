@@ -93,34 +93,17 @@ const SigninPresenter: NextPage<any> = (props) => {
                 />
 
                 {/* 체크박스 div */}
-                <Wrapper margin={`5px 0px`}>
-                  <Wrapper dr={`row`} ju={`flex-end`}>
 
-
-                    <Checkbox
-                      checked={saveCheck}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setSaveCheck(e.target.checked);
-                      }}
-                      color={`default`}
-                    /> */
-                    <Label width={`100%`} margin={`10px 0`}>
-                      <FormControlLabel
-                        value="end"
-                        control={<Checkbox />}
-                        label="아이디 저장"
-                        labelPlacement="end"
-                        defaultChecked color="success"
-                      />
-                    </Label>
-                    <Text
-                      fontSize={width < 500 ? `12px` : `16px`}
-                      padding={`5px 0px`}
-                      margin={`0px`}
-                    >
-                      아이디 저장
-                    </Text>
-                  </Wrapper>
+                <Wrapper dr={`row`} ju={`flex-end`}>
+                  <Label width={`100%`} margin={`4px 0`} ju={`flex-end`}>
+                    <FormControlLabel
+                      value="end"
+                      control={<Checkbox />}
+                      label="아이디 저장"
+                      labelPlacement="end"
+                      defaultChecked color="success"
+                    />
+                  </Label>
                 </Wrapper>
                 {/* 로그인 버튼 */}
                 <CommonButton type="submit">로그인</CommonButton>
