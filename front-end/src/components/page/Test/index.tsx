@@ -7,38 +7,29 @@ const onStampUploadHandler = () => {
   console.log("클릭!");
 };
 
-const generateDownload = (canvas: any, crop: any) => {
-  if (!crop || !canvas) {
-    return;
-  }
+// const generateDownload = (canvas: any, crop: any) => {
+//   if (!crop || !canvas) {
+//     return;
+//   }
 
-  canvas.toBlob(
-    (blob: any) => {
-      const previewUrl = window.URL.createObjectURL(blob);
+//   canvas.toBlob(
+//     (blob: any) => {
+//       const previewUrl = window.URL.createObjectURL(blob);
+//       //   const formData = new FormData();
+//       //   formData.append("file", blob);
 
-      const form = document.createElement("form");
-      const input = document.createElement("input");
-      const button = document.createElement("button");
-      console.log("블랍 : ", blob);
-      console.log("폼 : ", form);
-      console.log("인풋 : ", input);
-      console.log("버튼 : ", button);
-      //   input.type = "file";
-      //   input.
-      console.log("@#@#@", previewUrl);
+//       //   anchor.download = "cropPreview.png";
+//       //   anchor.href = URL.createObjectURL(blob);
+//       //   anchor.click();
 
-      //   anchor.download = "cropPreview.png";
-      //   anchor.href = URL.createObjectURL(blob);
-      //   anchor.click();
-
-      // window.URL.revokeObjectURL(previewUrl);
-    },
-    "image/png",
-    1
-  );
-  //   console.log("캔버스 : ", canvas);
-  //   console.log("크롭 : ", crop);
-};
+//       // window.URL.revokeObjectURL(previewUrl);
+//     },
+//     "image/png",
+//     1
+//   );
+//   console.log("캔버스 : ", canvas);
+//   //   console.log("크롭 : ", crop);
+// };
 
 const Test: NextPage = () => {
   const [upImg, setUpImg] = useState<any>();
@@ -50,6 +41,31 @@ const Test: NextPage = () => {
     aspect: 16 / 9,
   });
   const [completedCrop, setCompletedCrop] = useState(null);
+
+  const generateDownload = (canvas: any, crop: any) => {
+    if (!crop || !canvas) {
+      return;
+    }
+
+    canvas.toBlob(
+      (blob: any) => {
+        // const previewUrl = window.URL.createObjectURL(blob);
+        console.log("블랍 : ", blob);
+        const formData = new FormData();
+        formData.append("file", blob);
+
+        //   anchor.download = "cropPreview.png";
+        //   anchor.href = URL.createObjectURL(blob);
+        //   anchor.click();
+
+        // window.URL.revokeObjectURL(previewUrl);
+      },
+      "image/png",
+      1
+    );
+    console.log("캔버스 : ", canvas);
+    //   console.log("크롭 : ", crop);
+  };
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
