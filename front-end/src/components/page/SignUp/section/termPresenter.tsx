@@ -38,9 +38,12 @@ const TermPresenter: NextPage<any> = (props) => {
               fontWeight={`700`}
               padding={`10px 0px 10px 0px`}
             >
-              CARGLE 서비스 이용 약관(필수)</Text>
+              CARGLE 서비스 이용 약관(필수)
+            </Text>
             <Wrapper
-              width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+              width={
+                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+              }
               height={`150px`}
               border={`1px solid #ccc`}
               al={`flex-start`}
@@ -50,30 +53,23 @@ const TermPresenter: NextPage<any> = (props) => {
               overflow={`auto`}
             >
               <Text textAlign={`flex-start`}>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim modi in
-                exercitationem explicabo, at rem officia autem non porro soluta dolorum
-                officiis ipsa repellat, laudantium ea unde labore, temporibus quas?Lorem
-                ipsum dolor sit amet, consectetur adipisicing elit. Eveniet eius totam
-                quam pariatur ratione, in voluptatem dignissimos laboriosam sint aut!
-                Repudiandae consectetur odit quo corrupti quidem perferendis aut dolores
-                quis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nam
-                optio dolore recusandae fuga voluptatibus. Ea quam deserunt consectetur
-                quo aut eligendi, molestiae incidunt molestias ullam? Repellendus ratione
-                repellat
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
+                modi in exercitationem explicabo, at rem officia autem non porro
+                soluta dolorum officiis ipsa repellat, laudantium ea unde
+                labore, temporibus quas?Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Eveniet eius totam quam pariatur ratione, in
+                voluptatem dignissimos laboriosam sint aut! Repudiandae
+                consectetur odit quo corrupti quidem perferendis aut dolores
+                quis?Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Placeat nam optio dolore recusandae fuga voluptatibus. Ea quam
+                deserunt consectetur quo aut eligendi, molestiae incidunt
+                molestias ullam? Repellendus ratione repellat
               </Text>
             </Wrapper>
-            <Wrapper
-              ju={`space-between`}
-              dr={`row`}
-              padding={`10px 0px`}
-            >
+            <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
               <Wrapper width={`auto`}>
                 {errors.mkTerm && (
-                  <Text
-                    width={`100%`}
-                    textAlign={`right`}
-                    color={`#d6263b`}
-                  >
+                  <Text width={`100%`} textAlign={`right`} color={`#d6263b`}>
                     필수사항입니다.
                   </Text>
                 )}
@@ -95,7 +91,6 @@ const TermPresenter: NextPage<any> = (props) => {
                 />
               </Wrapper>
             </Wrapper>
-
           </Wrapper>
           <Wrapper al={`flex-start`}>
             <Text
@@ -103,9 +98,12 @@ const TermPresenter: NextPage<any> = (props) => {
               fontWeight={`700`}
               padding={`10px 0px 10px 0px`}
             >
-              개인정보 수집 및 이용 약관(필수)</Text>
+              개인정보 수집 및 이용 약관(필수)
+            </Text>
             <Wrapper
-              width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+              width={
+                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+              }
               height={`150px`}
               border={`1px solid #ccc`}
               al={`flex-start`}
@@ -115,30 +113,23 @@ const TermPresenter: NextPage<any> = (props) => {
               overflow={`auto`}
             >
               <Text textAlign={`flex-start`}>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim modi in
-                exercitationem explicabo, at rem officia autem non porro soluta dolorum
-                officiis ipsa repellat, laudantium ea unde labore, temporibus quas?Lorem
-                ipsum dolor sit amet, consectetur adipisicing elit. Eveniet eius totam
-                quam pariatur ratione, in voluptatem dignissimos laboriosam sint aut!
-                Repudiandae consectetur odit quo corrupti quidem perferendis aut dolores
-                quis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nam
-                optio dolore recusandae fuga voluptatibus. Ea quam deserunt consectetur
-                quo aut eligendi, molestiae incidunt molestias ullam? Repellendus ratione
-                repellat
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
+                modi in exercitationem explicabo, at rem officia autem non porro
+                soluta dolorum officiis ipsa repellat, laudantium ea unde
+                labore, temporibus quas?Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Eveniet eius totam quam pariatur ratione, in
+                voluptatem dignissimos laboriosam sint aut! Repudiandae
+                consectetur odit quo corrupti quidem perferendis aut dolores
+                quis?Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Placeat nam optio dolore recusandae fuga voluptatibus. Ea quam
+                deserunt consectetur quo aut eligendi, molestiae incidunt
+                molestias ullam? Repellendus ratione repellat
               </Text>
             </Wrapper>
-            <Wrapper
-              ju={`space-between`}
-              dr={`row`}
-              padding={`10px 0px`}
-            >
+            <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
               <Wrapper width={`auto`}>
                 {errors.privacyTerm && (
-                  <Text
-                    width={`auto`}
-                    al={`flex-start`}
-                    color={`#d6263b`}
-                  >
+                  <Text width={`auto`} al={`flex-start`} color={`#d6263b`}>
                     필수사항입니다.
                   </Text>
                 )}
@@ -152,7 +143,10 @@ const TermPresenter: NextPage<any> = (props) => {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                       dispatch({
                         type: actionTypesUser.FORM_CHECK,
-                        payload: { ...formCheck, privacyTerm: e.target.checked },
+                        payload: {
+                          ...formCheck,
+                          privacyTerm: e.target.checked,
+                        },
                       });
                     },
                     required: true,
@@ -160,7 +154,6 @@ const TermPresenter: NextPage<any> = (props) => {
                 />
               </Wrapper>
             </Wrapper>
-
           </Wrapper>
           <Wrapper al={`flex-start`}>
             <Text
@@ -168,9 +161,12 @@ const TermPresenter: NextPage<any> = (props) => {
               fontWeight={`700`}
               padding={`10px 0px 10px 0px`}
             >
-              마케팅 정보 수신 동의(선택)</Text>
+              마케팅 정보 수신 동의(선택)
+            </Text>
             <Wrapper
-              width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
+              width={
+                width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+              }
               height={`150px`}
               border={`1px solid #ccc`}
               al={`flex-start`}
@@ -180,23 +176,20 @@ const TermPresenter: NextPage<any> = (props) => {
               overflow={`auto`}
             >
               <Text textAlign={`flex-start`}>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim modi in
-                exercitationem explicabo, at rem officia autem non porro soluta dolorum
-                officiis ipsa repellat, laudantium ea unde labore, temporibus quas?Lorem
-                ipsum dolor sit amet, consectetur adipisicing elit. Eveniet eius totam
-                quam pariatur ratione, in voluptatem dignissimos laboriosam sint aut!
-                Repudiandae consectetur odit quo corrupti quidem perferendis aut dolores
-                quis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat nam
-                optio dolore recusandae fuga voluptatibus. Ea quam deserunt consectetur
-                quo aut eligendi, molestiae incidunt molestias ullam? Repellendus ratione
-                repellat
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
+                modi in exercitationem explicabo, at rem officia autem non porro
+                soluta dolorum officiis ipsa repellat, laudantium ea unde
+                labore, temporibus quas?Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit. Eveniet eius totam quam pariatur ratione, in
+                voluptatem dignissimos laboriosam sint aut! Repudiandae
+                consectetur odit quo corrupti quidem perferendis aut dolores
+                quis?Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Placeat nam optio dolore recusandae fuga voluptatibus. Ea quam
+                deserunt consectetur quo aut eligendi, molestiae incidunt
+                molestias ullam? Repellendus ratione repellat
               </Text>
             </Wrapper>
-            <Wrapper
-              ju={`flex-end`}
-              dr={`row`}
-              padding={`10px 0px`}
-            >
+            <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
               <Text>동의합니다.</Text>
               <input
                 type="checkbox"
@@ -216,7 +209,8 @@ const TermPresenter: NextPage<any> = (props) => {
             textAlign={`center`}
             dr={`row`}
             ju={`space-around`}
-            padding={`50px 0px 100px 0px`} >
+            padding={`50px 0px 100px 0px`}
+          >
             <CommonButton
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 setStepNumber(stepNumber - 1);
@@ -226,7 +220,8 @@ const TermPresenter: NextPage<any> = (props) => {
             >
               이전
             </CommonButton>
-            <CommonButton type="submit"
+            <CommonButton
+              type="submit"
               width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             >
               다음

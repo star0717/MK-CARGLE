@@ -15,7 +15,7 @@ import Link from "next/link";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
-import { IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowForward } from "react-icons/io";
 
 const SelectUserPresenter = ({
   user,
@@ -30,10 +30,7 @@ const SelectUserPresenter = ({
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper
-        dr={`row`}
-        padding={`0px 0px 40px 0px`}
-      >
+      <Wrapper dr={`row`} padding={`0px 0px 40px 0px`}>
         {/* 사업자 회원가입 버튼 */}
         <Wrapper padding={`20px`} width={`auto`} ju={`center`} al={`center`}>
           <JoinFirstStepSelect
@@ -56,8 +53,12 @@ const SelectUserPresenter = ({
               display={`flex`}
               margin={`0 auto`}
             />
-            <JoinFirstStepSelectText>카센터를 운영하고 계신가요?</JoinFirstStepSelectText>
-            <Text fontSize={`24px`} fontWeight={`700`}>사업자</Text>
+            <JoinFirstStepSelectText>
+              카센터를 운영하고 계신가요?
+            </JoinFirstStepSelectText>
+            <Text fontSize={`24px`} fontWeight={`700`}>
+              사업자
+            </Text>
           </JoinFirstStepSelect>
         </Wrapper>
 
@@ -83,8 +84,12 @@ const SelectUserPresenter = ({
               display={`flex`}
               margin={`0 auto`}
             />
-            <JoinFirstStepSelectText>카센터에서 근무하고 계신가요?</JoinFirstStepSelectText>
-            <Text color={`0066FF`} fontSize={`24px`} fontWeight={`700`}>직원</Text>
+            <JoinFirstStepSelectText>
+              카센터에서 근무하고 계신가요?
+            </JoinFirstStepSelectText>
+            <Text color={`0066FF`} fontSize={`24px`} fontWeight={`700`}>
+              직원
+            </Text>
           </JoinFirstStepSelect>
         </Wrapper>
       </Wrapper>
