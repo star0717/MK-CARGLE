@@ -238,3 +238,18 @@ export async function uploadStamp(dateToSubmit: any) {
     payload: req,
   };
 }
+
+/**
+ * 도장 이미지 반환
+ * @returns
+ */
+export async function downloadStamp() {
+  const req = await axios
+    .get(`/api/settings/myinfo/stamp`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  return {
+    type: actionTypesUser.DOWNROAD_STAMP,
+    payload: req,
+  };
+}

@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import React, { ReactPropTypes, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   WholeWrapper,
   Wrapper,
@@ -12,9 +12,9 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
-import { changePass, setMyInfo } from "../../../../../store/action/user.action";
+import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
-import { SignUpInfo } from "../../../../models/auth.entity";
+import { SignUpInfo, StampInfo } from "../../../../models/auth.entity";
 import StampModal from "./StampModal";
 
 Modal.setAppElement("body");
@@ -34,7 +34,7 @@ const AccountM: NextPage<any> = (props) => {
   const setAccountInfo = props.setAccountInfo;
 
   // //도장 이미지, 파일명 관련 데이터
-  // const [stampFile, setStampFile] = useState("");
+  const [stampInfo, setStampInfo] = useState<StampInfo>();
   // const [stampName, setStampName] = useState("");
 
   //accountinfo.user 데이터
@@ -61,6 +61,15 @@ const AccountM: NextPage<any> = (props) => {
 
   const AccountModalProps = {
     accountInfo,
+    setModalOpen,
+    setModalOption,
+    setValue,
+    style: { height: "500px" },
+  };
+
+  const StampModalProps = {
+    stampInfo,
+    setStampInfo,
     setModalOpen,
     setModalOption,
     setValue,
@@ -122,10 +131,7 @@ const AccountM: NextPage<any> = (props) => {
     });
   };
 
-  // const onStampUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  // };
+  //console.log("stampUrl => ", stampUrl);
 
   return (
     <WholeWrapper>
@@ -336,9 +342,14 @@ const AccountM: NextPage<any> = (props) => {
         {/* <form id="stampform" onSubmit={onStampUploadHandler}> */}
         <Wrapper dr={`row`}>
           <Text>사업자 도장</Text>
-          <Image type="image" alt="도장 사진" width="300px" height="300px" />
-          {/* <input type="text" /> */}
-          {/* <input type="file" /> */}
+          <Image
+            type="image"
+            alt="도장 사진"
+            width="300px"
+            height="300px"
+            src={stampInfo.stampUrL}
+          />
+
           <button
             name="upload"
             type="button"
@@ -397,7 +408,7 @@ const AccountM: NextPage<any> = (props) => {
           ) : modalOption === "password" ? (
             <ChangePassModal {...AccountModalProps} />
           ) : (
-            <StampModal {...AccountModalProps} />
+            <StampModal {...StampModalProps} />
           )}
         </Modal>
       </Wrapper>
