@@ -126,12 +126,11 @@ const StampModal: NextPage<modalOption> = (props) => {
             required
             readOnly
           />
-          {/* <SmallButton
-            type="button"
+          <LabelButton
             kindOf={`default`}
-            margin={`0px 0px 0px 20px`}
-          > */}
-          <LabelButton kindOf={`default`} htmlFor="stamp">
+            margin={`20px 0px 0px 20px`}
+            htmlFor="stamp"
+          >
             파일선택
           </LabelButton>
           <TextInput2
@@ -141,7 +140,6 @@ const StampModal: NextPage<modalOption> = (props) => {
             onChange={onSelectFile}
             accept="image/*"
           />
-          {/* </SmallButton> */}
         </Wrapper>
         <ReactCrop
           src={upImg}

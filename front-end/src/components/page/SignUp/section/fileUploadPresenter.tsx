@@ -14,6 +14,7 @@ import {
   CommonButton,
   JoinStepBarWrapper,
   JoinStepBar,
+  LabelButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import {
@@ -56,22 +57,22 @@ const FileUploadPresenter: NextPage<any> = (props) => {
                   required
                   readOnly
                 />
-                <SmallButton
-                  type="button"
+                <LabelButton
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
+                  htmlFor="comFile"
                 >
-                  <label htmlFor="comFile">파일선택</label>
-                  <TextInput2
-                    style={{ display: "none" }}
-                    type="file"
-                    id="comFile"
-                    name="comFile"
-                    key={file.comFile}
-                    onChange={onFileSelectHandler}
-                    accept=".jpg, .png, .pdf"
-                  />
-                </SmallButton>
+                  파일선택
+                </LabelButton>
+                <TextInput2
+                  style={{ display: "none" }}
+                  type="file"
+                  id="comFile"
+                  name="comFile"
+                  key={file.comFile}
+                  onChange={onFileSelectHandler}
+                  accept=".jpg, .png, .pdf"
+                />
               </Wrapper>
             </Wrapper>
             <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
@@ -85,22 +86,22 @@ const FileUploadPresenter: NextPage<any> = (props) => {
                   required
                   readOnly
                 />
-                <SmallButton
-                  type="button"
+                <LabelButton
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
+                  htmlFor="manFile"
                 >
-                  <label htmlFor="manFile">파일선택</label>
-                  <TextInput2
-                    style={{ display: "none" }}
-                    type="file"
-                    id="manFile"
-                    name="manFile"
-                    key={file.manFile}
-                    onChange={onFileSelectHandler}
-                    accept=".jpg, .png, .pdf"
-                  />
-                </SmallButton>
+                  파일선택
+                </LabelButton>
+                <TextInput2
+                  style={{ display: "none" }}
+                  type="file"
+                  id="manFile"
+                  name="manFile"
+                  key={file.manFile}
+                  onChange={onFileSelectHandler}
+                  accept=".jpg, .png, .pdf"
+                />
               </Wrapper>
             </Wrapper>
           </Wrapper>
