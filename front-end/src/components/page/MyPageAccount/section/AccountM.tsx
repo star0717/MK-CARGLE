@@ -146,13 +146,12 @@ const AccountM: NextPage<any> = (props) => {
       <Wrapper>
         <form id="saveform" onSubmit={saveData}>
           <Text>계정정보</Text>
-          <Wrapper dr={`row`}>
+          <Wrapper dr={`row`} margin={`100px 0px 0px`}>
             <Text>아이디</Text>
             <TextInput value={userData.email} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>비밀번호</Text>
-            <TextInput value={userData.password} type="password" disabled />
             <button
               type="button"
               onClick={(e) => {
