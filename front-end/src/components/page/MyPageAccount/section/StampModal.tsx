@@ -18,7 +18,6 @@ import {
 interface modalOption {
   stampNum: number;
   setStampNum: React.Dispatch<React.SetStateAction<number>>;
-  setStampData: React.Dispatch<React.SetStateAction<string>>;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setModalOption: React.Dispatch<React.SetStateAction<string>>;
   style?: React.CSSProperties;
@@ -28,7 +27,6 @@ const StampModal: NextPage<modalOption> = (props) => {
   const dispatch = useDispatch();
   //필요한 props 재정의
   const setModalOpen = props.setModalOpen;
-  const setStampData = props.setStampData;
   const stampNum = props.stampNum;
   const setStampNum = props.setStampNum;
 
@@ -54,8 +52,8 @@ const StampModal: NextPage<modalOption> = (props) => {
         formData.append("file", blob);
         dispatch(uploadStamp(formData)).then((res: any) => {
           if (res.payload.length !== 0) {
+            console.log(res.payload);
             alert("도장이 업로드되었습니다.");
-            setStampData("/api/settings/myinfo/stamp?" + `${stampNum}`);
             setStampNum(stampNum + 1);
             setModalOpen(false);
           } else {
