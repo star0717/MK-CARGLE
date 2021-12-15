@@ -8,6 +8,7 @@ import {
   uploadStamp,
 } from "../../../../../store/action/user.action";
 import {
+  LabelButton,
   SmallButton,
   Text,
   TextInput2,
@@ -125,20 +126,20 @@ const StampModal: NextPage<modalOption> = (props) => {
             required
             readOnly
           />
-          <SmallButton
-            type="button"
+          <LabelButton
             kindOf={`default`}
-            margin={`0px 0px 0px 20px`}
+            margin={`20px 0px 0px 20px`}
+            htmlFor="stamp"
           >
-            <label htmlFor="stamp">파일선택</label>
-            <TextInput2
-              style={{ display: "none" }}
-              id="stamp"
-              type="file"
-              onChange={onSelectFile}
-              accept="image/*"
-            />
-          </SmallButton>
+            파일선택
+          </LabelButton>
+          <TextInput2
+            style={{ display: "none" }}
+            id="stamp"
+            type="file"
+            onChange={onSelectFile}
+            accept="image/*"
+          />
         </Wrapper>
         <ReactCrop
           src={upImg}

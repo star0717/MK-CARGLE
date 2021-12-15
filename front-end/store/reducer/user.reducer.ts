@@ -192,26 +192,33 @@ const userAll = (
       return {
         ...state,
       };
-
+    // 계정 정보 반환
     case actionTypesUser.GET_MY_INFO:
       return {
         ...state,
       };
-
+    // 계정정보 변경
     case actionTypesUser.SET_MY_INFO:
       return {
         ...state,
       };
-
+    //비밀번호 변경
     case actionTypesUser.CHANGE_PASSWORD:
       return {
         ...state,
       };
+    //도장 이미지 업로드
     case actionTypesUser.UPROAD_STAMP:
       return {
         ...state,
       };
+    //도장 이미지 다운로드
     case actionTypesUser.DOWNROAD_STAMP:
+      return {
+        ...state,
+      };
+    //회원 탈퇴
+    case actionTypesUser.WITHDRAWAL:
       return {
         ...state,
       };

@@ -32,6 +32,7 @@ const Withdrawal: NextPage<any> = (props) => {
   };
 
   const WithdrawalModalProps = {
+    password,
     accountInfo,
     setModalOpen,
     style: { height: "500px" },

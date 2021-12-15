@@ -17,15 +17,14 @@ const MyPage: NextPage<any> = (props) => {
 
   const setpages = props.setPages;
   const setAccountInfo = props.setAccountInfo;
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState<string>("");
   const confirmPWD = {
     _id: props.tokenValue.uID,
     PWD: password,
   };
 
-  const test = (e: React.FormEvent<HTMLFormElement>) => {
+  const passworkCheck = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(confirmPWD);
     dispatch(passwordCheck(confirmPWD)).then((res: any) => {
       if (res.payload === true) {
         dispatch(getMyInfo()).then((res: any) => {
@@ -43,7 +42,7 @@ const MyPage: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper>
-        <form onSubmit={test}>
+        <form onSubmit={passworkCheck}>
           <Text>계정 관리를 위해 비밀번호를 입력해주세요.</Text>
 
           <TextInput

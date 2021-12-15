@@ -13,7 +13,6 @@ import {
 import React from "react";
 import { useRouter } from "next/dist/client/router";
 
-
 const FindPasswordPresenter: NextPage<any> = (props) => {
   const router = useRouter();
   // 필요한 props 재정의
@@ -30,13 +29,13 @@ const FindPasswordPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}>
+      <Wrapper
+        width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
+      >
         <CommonTitle textAlign={`center`} margin={`0px`}>
           계정찾기
-          <CommonSubTitle>
-            패스워드 찾기
-          </CommonSubTitle>
         </CommonTitle>
+        <CommonSubTitle>패스워드 찾기</CommonSubTitle>
         <form onSubmit={onFindPwHandler}>
           <TextInput2
             type="text"
@@ -73,16 +72,19 @@ const FindPasswordPresenter: NextPage<any> = (props) => {
           />
           <Wrapper>
             <CommonButtonWrapper>
-              <CommonButton type="submit"
+              <CommonButton
+                type="submit"
                 kindOf={`white`}
                 margin={`0px 0px 20px`}
               >
                 다음
               </CommonButton>
-              <CommonButton type="button"
+              <CommonButton
+                type="button"
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  router.push('/sign/findemail')
-                }}>
+                  router.push("/sign/findemail");
+                }}
+              >
                 이메일 찾기
               </CommonButton>
             </CommonButtonWrapper>

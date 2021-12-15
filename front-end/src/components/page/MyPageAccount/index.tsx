@@ -6,7 +6,7 @@ import MyPage from "./section/MyPage";
 import Withdrawal from "./section/Withdrawal";
 
 const MyPageAccount: NextPage<any> = (props) => {
-  const [pages, setPages] = useState(1);
+  const [pages, setPages] = useState<number>(1);
   const [accountInfo, setAccountInfo] = useState<SignUpInfo>();
 
   //console.log(props);
@@ -20,15 +20,9 @@ const MyPageAccount: NextPage<any> = (props) => {
 
   return (
     <div>
-      {pages === 1 ? (
-        <MyPage {...MyPageProps} />
-      ) : pages === 2 ? (
-        <Account {...MyPageProps} />
-      ) : pages === 3 ? (
-        <Withdrawal {...MyPageProps} />
-      ) : (
-        ""
-      )}
+      {pages === 1 && <MyPage {...MyPageProps} />}
+      {pages === 2 && <Account {...MyPageProps} />}
+      {pages === 3 && <Withdrawal {...MyPageProps} />}
     </div>
   );
 };

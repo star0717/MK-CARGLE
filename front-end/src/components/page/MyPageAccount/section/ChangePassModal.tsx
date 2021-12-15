@@ -23,17 +23,19 @@ interface modalOption {
 
 const ChangePassModal: NextPage<modalOption> = (props) => {
   const dispatch = useDispatch();
+
   const setModalOpen = props.setModalOpen;
+
+  const accountInfo = props.accountInfo;
+
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
-  const accountInfo = props.accountInfo;
 
   const {
     handleSubmit,
     watch,
     register,
-    setValue,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
@@ -85,9 +87,11 @@ const ChangePassModal: NextPage<modalOption> = (props) => {
             <TextInput
               type="password"
               placeholder="현재 비밀번호를 입력하세요."
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setPassword(e.target.value);
-              }}
+              {...register("password", {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  setPassword(e.target.value);
+                },
+              })}
             />
           </Wrapper>
           <Wrapper dr={`row`}>
@@ -105,11 +109,15 @@ const ChangePassModal: NextPage<modalOption> = (props) => {
                   value: formRegEx.PASSWORD,
                   message: "8~16자 영문, 숫자, 특수문자를 사용하세요.",
                 },
+                validate: (value: string) => value !== watch("password"),
               })}
             />
             {(errors.newPassword?.type === "required" ||
               errors.newPassword?.type === "pattern") && (
-              <Text>8~16자 영문, 숫자, 특수문자를 사용하세요.</Text>
+              <Text>{errors.newPassword.message}</Text>
+            )}
+            {errors.newPassword?.type === "validate" && (
+              <Text>현재 비밀번호와 다르게 설정하세요.</Text>
             )}
           </Wrapper>
           <Wrapper dr={`row`}>
