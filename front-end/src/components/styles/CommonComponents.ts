@@ -32,7 +32,7 @@ export const WholeWrapper = styled.div<any>`
   right: ${(props) => props.right};
   bottom: ${(props) => props.bottom};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.padding || `90px 0px 0px 0px`};
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
   min-height: ${(props) => props.minHeight};
@@ -44,7 +44,7 @@ export const WholeWrapper = styled.div<any>`
 `;
 
 export const RsWrapper = styled.div<any>`
-  width: 1350px;
+  width: 1200px;
   height: ${(props) => props.height || `100%`};
   ${(props) => props.minHeight && `min-height: ${props.minHeight};`}
   color: ${(props) => props.color};
@@ -103,6 +103,7 @@ export const Wrapper = styled.div<any>`
   color: ${(props) => props.color};
   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
+  position: ${(props) => (props.isFixed ? `fixed` : ``)};
   top: ${(props) => props.top};
   left: ${(props) => props.left};
   bottom: ${(props) => props.bottom};
@@ -611,12 +612,77 @@ export const IconButton = styled.button<any>`
   background-color: ${(props) => props.bgColor || `#fff`};
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
-  border: none;
+  border: ${(props) => props.border || `none`};
   border-radius: ${(props) => props.radius || props.theme.radius};
+  box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
 
   & svg {
     color: ${(props) => props.color || props.basicTheme_C};
     font-size: 28px;
+  }
+`;
+
+export const HeaderIconButton = styled.button<any>`
+  width: ${(props) => props.width || `34px`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `34px`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize || `28px`};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `flex-end`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor || `#fff`};
+  color: ${(props) => props.color || props.basicTheme_C};
+  cursor: pointer;
+  border: ${(props) => props.border || `none`};
+  border-radius: ${(props) => props.radius || props.theme.radius};
+  box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
+
+  &:hover {
+    color: #0066ff;
+    border: 1px solid #0066ff;
+  }
+`;
+
+export const HeaderIconAlarmWrapper = styled.div<any>`
+  position: absolute;
+  z-index: 9999;
+  top: 50px;
+  left: -230px;
+`;
+
+export const HeaderIconAlarm = styled.div<any>`
+  width: ${(props) => props.width || `300px`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `100px`};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize || `16px`};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor || `#fff`};
+  color: ${(props) => props.color || props.basicTheme_C};
+  cursor: pointer;
+  border: ${(props) => props.border || `1px solid #0066ff`};
+  border-radius: ${(props) => props.radius || props.theme.radius};
+  box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
+  padding: 0px 20px;
+  margin: 5px 0px;
+  opacity: 0.8;
+
+  ${(props) => props.kindOf === `confirm` && `background-color : #f5f5f5;`}
+  ${(props) => props.kindOf === `confirm` && `color : #9d9d9d;`}
+  ${(props) => props.kindOf === `confirm` && `border : 1px solid #9d9d9d;`}
+
+  &:hover {
   }
 `;
 
@@ -867,15 +933,13 @@ export const TestWrapper = styled.div<any>`
 export const Test = styled.li<any>`
   width: ${(props) => props.width || `100px`};
   padding: 0px;
-  animation: ${appearAnimation} 0.5s forwards;
 `;
 
 export const TestDiv2 = styled.div<any>`
   display: none;
-  animation: ${appearAnimation} 0.5s forwards;
+
   box-shadow: ${(props) => props.shadow};
   position: absolute;
-  z-index: 9999;
 `;
 
 export const TestDiv = styled.div<any>`
@@ -883,7 +947,6 @@ export const TestDiv = styled.div<any>`
   height: 90px;
   display: flex;
   align-items: center;
-  animation: ${appearAnimation} 0.5s forwards;
 
   &:hover ${TestDiv2} {
     display: block;
@@ -896,13 +959,57 @@ export const TestDiv = styled.div<any>`
     background-color: #fafafa;
     height: 180px;
     position: absolute;
-    z-index: 9999;
   }
 `;
 
-export const TestA = styled.a<any>`
-  color: gray;
-  cursor: pointer;
+export const TestA = styled.p<any>`
+  overflow: ${(props) => props.overflow};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
+  display: ${(props) => props.display};
+  flex-direction: ${(props) => props.dr};
+  align-items: ${(props) => props.al};
+  justify-content: ${(props) => props.ju};
+  font-size: ${(props) => props.fontSize || `16px`};
+  font-weight: ${(props) => props.fontWeight || `500`};
+  line-height: ${(props) => props.lineHeight || `1.6`};
+  color: ${(props) => props.color};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  background: ${(props) => props.bgColor};
+  text-align: ${(props) => props.textAlign || `center`};
+  transition: 0.5s;
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+  font-style: ${(props) => props.fontStyle};
+  cursor: ${(props) => props.cursor};
+  z-index: 1;
+  white-space: pre-wrap;
+  margin-bottom: ${(props) => props.marginBottom};
+  margin-top: ${(props) => props.marginTop};
+
+  & svg {
+    color: ${(props) => props.color};
+    margin-top: ${(props) => props.marginTop};
+    margin-bottom: ${(props) => props.marginBottom};
+    margin-right: ${(props) => props.marginRight};
+    font-size: ${(props) => props.fontSize || `18px`};
+  }
+
+  & span {
+    font-weight: 700;
+  }
+
+  &:hover {
+    text-decoration: ${(props) => props.decoration};
+    color: #0066ff;
+  }
 `;
 
 /* end test */
@@ -1100,12 +1207,13 @@ export const JoinFirstStepSelect = styled.div<any>`
 export const JoinFirstStepSelectText = styled.p<any>`
   color: ${(props) => props.color || `#9d9d9d`};
   align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
   text-align: center;
   font-size: 18px;
   margin: 0px;
 `;
 
-export const JoinStepBarWrapper = styled.p<any>`
+export const JoinStepBarWrapper = styled.div<any>`
   display: flex;
   width: 100%;
   justify-content: ${(props) => props.ju || `center`};
@@ -1117,7 +1225,7 @@ export const JoinStepBarWrapper = styled.p<any>`
   flex-direction: row;
 `;
 
-export const JoinStepBar = styled.p<any>`
+export const JoinStepBar = styled.div<any>`
   display: flex;
   justify-content: ${(props) => props.ju || `center`};
   align-items: ${(props) => props.al || `center`};
