@@ -98,11 +98,20 @@ const SigninPresenter: NextPage<any> = (props) => {
                   <Label width={`100%`} margin={`4px 0`} ju={`flex-end`}>
                     <FormControlLabel
                       value="end"
-                      control={<Checkbox />}
+                      control={
+                        <Checkbox
+                          checked={saveCheck}
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setSaveCheck(e.target.checked);
+                          }}
+                          color="primary"
+                        />
+                      }
                       label="아이디 저장"
                       labelPlacement="end"
-                      defaultChecked
-                      color="success"
+                      // color="success"
                     />
                   </Label>
                 </Wrapper>
