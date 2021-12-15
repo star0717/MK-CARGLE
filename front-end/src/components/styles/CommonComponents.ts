@@ -1,6 +1,7 @@
 import { prependOnceListener } from "process";
 import styled from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
+import { translateX } from "./AnimationCommon";
 
 interface Propsinterface {
   width: Number;
@@ -549,9 +550,9 @@ export const CloseButton = styled.button<any>`
 `;
 
 export const IconButton = styled.button<any>`
-  width: ${(props) => props.width || `auto`};
+  width: ${(props) => props.width || `34px`};
   min-width: ${(props) => props.minWidth};
-  height: ${(props) => props.height || `auto`};
+  height: ${(props) => props.height || `34px`};
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
@@ -565,6 +566,7 @@ export const IconButton = styled.button<any>`
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
   border: none;
+  border-radius: ${(props) => props.radius || props.theme.radius};
 
   & svg {
     color: ${(props) => props.color || props.basicTheme_C};
@@ -813,27 +815,27 @@ export const TableRowLIST = styled.li<any>`
 
 export const TestWrapper = styled.div<any>`
   display: none;
+  height: 0px;
 `;
 
 export const Test = styled.li<any>`
   width: ${(props) => props.width || `100px`};
   padding: 0px;
-  transition: all 0.3s;
+  animation: ${appearAnimation} 0.5s forwards;
 `;
 
 export const TestDiv2 = styled.div<any>`
   display: none;
-  transition: all 0.3s;
+  animation: ${appearAnimation} 0.5s forwards;
+  box-shadow: ${(props) => props.shadow};
 `;
 
 export const TestDiv = styled.div<any>`
-  width: 300px;
+  width: ${(props) => props.width || ``};
   height: 90px;
-  background-color: blue;
   display: flex;
-  color: #fff;
   align-items: center;
-  transition: all 0.3s;
+  animation: ${appearAnimation} 0.5s forwards;
 
   &:hover ${TestDiv2} {
     display: block;
@@ -842,8 +844,10 @@ export const TestDiv = styled.div<any>`
     left: 0;
     width: 100%;
     height: 100px;
-    background-color: skyblue;
-    transition: all 0.3s;
+    animation: ${appearAnimation} 0.5s forwards;
+    padding: 20px 0px;
+    background-color: #fafafa;
+    height: 180px;
   }
 `;
 

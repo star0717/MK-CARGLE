@@ -52,7 +52,6 @@ const Header: NextPage<LayoutProps> = (props) => {
     <WholeWrapper ref={ref} shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}>
       <Wrapper
         height={`90px`}
-        bgColor={`red`}
         ju={`space-between`}
         al={`center`}
         padding={width < 1450 ? `0px 0px 0px 70px` : `0px 0px 0px 100px`}
@@ -70,36 +69,69 @@ const Header: NextPage<LayoutProps> = (props) => {
           </Link>
         </Wrapper>
         <Wrapper dr={`row`} width={`auto`} al={`center`}>
-          <TestDiv width={`auto`} dr={`row`} padding={`0px 100px`}>
-            <Text cursor={`pointer`} width={`200px`}>
+          <TestDiv
+            width={`auto`}
+            dr={`row`}
+            padding={width < 1450 ? `0px 50px` : `0px 100px`}
+          >
+            <Text
+              cursor={`pointer`}
+              fontSize={width < 1450 ? `16px` : `18px`}
+              fontWeight={`600`}
+              padding={width < 1450 ? `0px 30px` : `0px 50px`}
+            >
               정비
             </Text>
-            <Text cursor={`pointer`} width={`200px`}>
+            <Text
+              cursor={`pointer`}
+              fontSize={width < 1450 ? `16px` : `18px`}
+              fontWeight={`600`}
+              padding={width < 1450 ? `0px 30px` : `0px 50px`}
+            >
               회계
             </Text>
-            <Text cursor={`pointer`} width={`200px`}>
+            <Text
+              cursor={`pointer`}
+              fontSize={width < 1450 ? `16px` : `18px`}
+              fontWeight={`600`}
+              padding={width < 1450 ? `0px 30px` : `0px 50px`}
+            >
               마이페이지
             </Text>
-            <Text cursor={`pointer`} width={`200px`}>
+            <Text
+              cursor={`pointer`}
+              fontSize={width < 1450 ? `16px` : `18px`}
+              fontWeight={`600`}
+              padding={width < 1450 ? `0px 30px` : `0px 50px`}
+            >
               커뮤니티
             </Text>
-            <Text cursor={`pointer`} width={`200px`}>
+            <Text
+              cursor={`pointer`}
+              fontSize={width < 1450 ? `16px` : `18px`}
+              fontWeight={`600`}
+              padding={width < 1450 ? `0px 30px` : `0px 50px`}
+            >
               도움말
             </Text>
-            <TestDiv2>
+            <TestDiv2 shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}>
               <Link href="#">
                 <TestA>소메뉴1</TestA>
               </Link>
             </TestDiv2>
           </TestDiv>
-          <Wrapper width={`auto`} padding={`0px 100px`} dr={`row`}>
-            <IconButton>
+          <Wrapper
+            width={`auto`}
+            padding={width < 1450 ? `0px 50px` : `0px 100px`}
+            dr={`row`}
+          >
+            <IconButton radius={`100px`} al={`center`} margin={`0px 10px`}>
               <FaBell />
             </IconButton>
-            <IconButton>
+            <IconButton radius={`100px`} al={`center`} margin={`0px 10px`}>
               <FaBell />
             </IconButton>
-            <button onClick={onSignOutHandler}>로그아웃</button>
+            {/* <button onClick={onSignOutHandler}>로그아웃</button> */}
           </Wrapper>
         </Wrapper>
 

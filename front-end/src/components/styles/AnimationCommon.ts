@@ -54,3 +54,13 @@ export const translateX = keyframes`
   transform:translateX(0px);
 }
 `;
+
+export const headerSlide = keyframes`
+0%{
+  height: 0px;
+}
+100% {
+  height: 180px;
+}
+
+`;
