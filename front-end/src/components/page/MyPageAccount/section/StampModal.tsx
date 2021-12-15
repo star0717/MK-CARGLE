@@ -16,8 +16,9 @@ import {
 } from "../../../styles/CommonComponents";
 
 interface modalOption {
-  stampData: any;
-  setStampData: React.Dispatch<React.SetStateAction<object>>;
+  stampNum: number;
+  setStampNum: React.Dispatch<React.SetStateAction<number>>;
+  setStampData: React.Dispatch<React.SetStateAction<string>>;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setModalOption: React.Dispatch<React.SetStateAction<string>>;
   style?: React.CSSProperties;
@@ -28,6 +29,8 @@ const StampModal: NextPage<modalOption> = (props) => {
   //필요한 props 재정의
   const setModalOpen = props.setModalOpen;
   const setStampData = props.setStampData;
+  const stampNum = props.stampNum;
+  const setStampNum = props.setStampNum;
 
   const [fileName, setFileName] = useState("");
   const [upImg, setUpImg] = useState<any>();
@@ -52,11 +55,9 @@ const StampModal: NextPage<modalOption> = (props) => {
         dispatch(uploadStamp(formData)).then((res: any) => {
           if (res.payload.length !== 0) {
             alert("도장이 업로드되었습니다.");
-            dispatch(downloadStamp()).then((res: any) => {
-              // console.log("res =>", res.payload);
-              // setStampData();
-              setModalOpen(false);
-            });
+            setStampData("/api/settings/myinfo/stamp?" + `${stampNum}`);
+            setStampNum(stampNum + 1);
+            setModalOpen(false);
           } else {
             alert("업로드에 실패했습니다.");
           }

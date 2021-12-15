@@ -14,7 +14,7 @@ import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
 import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
-import { SignUpInfo, StampInfo } from "../../../../models/auth.entity";
+import { SignUpInfo } from "../../../../models/auth.entity";
 import StampModal from "./StampModal";
 
 Modal.setAppElement("body");
@@ -34,7 +34,9 @@ const AccountM: NextPage<any> = (props) => {
   const setAccountInfo = props.setAccountInfo;
 
   // //도장 이미지, 파일명 관련 데이터
-  const [stampInfo, setStampInfo] = useState<StampInfo>();
+  const [stampData, setStampData] = useState("/api/settings/myinfo/stamp");
+  const [stampNum, setStampNum] = useState(0);
+
   // const [stampName, setStampName] = useState("");
 
   //accountinfo.user 데이터
@@ -68,8 +70,9 @@ const AccountM: NextPage<any> = (props) => {
   };
 
   const StampModalProps = {
-    stampInfo,
-    setStampInfo,
+    stampNum,
+    setStampNum,
+    setStampData,
     setModalOpen,
     setModalOption,
     setValue,
@@ -130,8 +133,6 @@ const AccountM: NextPage<any> = (props) => {
       });
     });
   };
-
-  //console.log("stampUrl => ", stampUrl);
 
   return (
     <WholeWrapper>
@@ -347,7 +348,7 @@ const AccountM: NextPage<any> = (props) => {
             alt="도장 사진"
             width="300px"
             height="300px"
-            src={stampInfo.stampUrL}
+            src={stampData}
           />
 
           <button
