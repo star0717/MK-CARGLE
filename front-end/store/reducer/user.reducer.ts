@@ -211,6 +211,10 @@ const userAll = (
       return {
         ...state,
       };
+    case actionTypesUser.DOWNROAD_STAMP:
+      return {
+        ...state,
+      };
 
     default:
       return state;
