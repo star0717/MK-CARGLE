@@ -152,7 +152,6 @@ const AccountM: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>비밀번호</Text>
-            <TextInput value={userData.password} type="password" disabled />
             <button
               type="button"
               onClick={(e) => {
