@@ -33,7 +33,6 @@ const ChangePassModal: NextPage<modalOption> = (props) => {
     handleSubmit,
     watch,
     register,
-    setValue,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 

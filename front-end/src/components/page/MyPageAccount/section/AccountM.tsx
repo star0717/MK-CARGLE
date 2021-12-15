@@ -8,7 +8,6 @@ import {
   Text,
   TextInput,
   TextInput2,
-  // Image,
   CloseButton,
 } from "../../../styles/CommonComponents";
 import Modal from "react-modal";
@@ -40,8 +39,6 @@ const AccountM: NextPage<any> = (props) => {
 
   // //도장 이미지, 파일명 관련 데이터
   const [stampNum, setStampNum] = useState(0);
-
-  // const [stampName, setStampName] = useState("");
 
   //accountinfo.user 데이터
   const [userData, setUserData] = useState(accountInfo.user);
@@ -90,6 +87,7 @@ const AccountM: NextPage<any> = (props) => {
   const closeModal = () => {
     setModalOpen(false);
   };
+
   useEffect(() => {
     modalOpen === true
       ? (document.body.style.overflow = "hidden")
@@ -114,13 +112,14 @@ const AccountM: NextPage<any> = (props) => {
     }
 
     setUserData({ ...userData, address1: fullAddress, postcode: zonecode });
-    setValue("address", fullAddress, { shouldValidate: true });
+    setValue("address1", fullAddress, { shouldValidate: true });
     setModalOpen(false);
   };
 
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
+
   const onInputComHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
   };
@@ -149,21 +148,11 @@ const AccountM: NextPage<any> = (props) => {
           <Text>계정정보</Text>
           <Wrapper dr={`row`}>
             <Text>아이디</Text>
-            <TextInput
-              value={userData.email}
-              type="text"
-              readOnly
-              disabled={true}
-            />
+            <TextInput value={userData.email} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>비밀번호</Text>
-            <TextInput
-              value={userData.password}
-              type="password"
-              readOnly
-              disabled={true}
-            />
+            <TextInput value={userData.password} type="password" readOnly />
             <button
               type="button"
               onClick={(e) => {
@@ -177,7 +166,7 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>이름</Text>
             <TextInput
-              defaultValue={userData.name}
+              value={userData.name}
               type="text"
               name="name"
               onChange={(e: any) => {
@@ -188,7 +177,7 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>전화번호</Text>
             <TextInput
-              defaultValue={userData.hpNumber}
+              value={userData.hpNumber}
               type="tel"
               name="hpNumber"
               onChange={(e: any) => {
@@ -202,6 +191,7 @@ const AccountM: NextPage<any> = (props) => {
               type="text"
               placeholder="주소를 입력해주세요."
               value={userData.address1}
+              readOnly
               name="address1"
             />
             <button
@@ -241,67 +231,51 @@ const AccountM: NextPage<any> = (props) => {
           <Text>사업자 정보</Text>
           <Wrapper dr={`row`}>
             <Text>상호명</Text>
-            <TextInput
-              disabled={true}
-              value={comData.name}
-              type="text"
-              readonly
-            />
+            <TextInput value={comData.name} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>사업자등록번호</Text>
-            <TextInput
-              disabled={true}
-              value={comData.comRegNum}
-              type="text"
-              readonly
-            />
+            <TextInput value={comData.comRegNum} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>정비업 등록번호</Text>
-            <TextInput
-              disabled={true}
-              value={comData.mbRegNum}
-              type="text"
-              readonly
-            />
+            <TextInput value={comData.mbRegNum} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>대표자명</Text>
-            <TextInput
-              disabled={true}
-              value={comData.ownerName}
-              type="text"
-              readonly
-            />
+            <TextInput value={comData.ownerName} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>정비업종</Text>
-            <select name="mbTypeNum">
-              <option>1급 자동차 공업사(자동차 종합 정비소)</option>
-              <option>2급 자동차 공업사(소형 자동차 정비소)</option>
-              <option>3급 자동차 공업사(자동차 전문 정비소)</option>
+            <select
+              name="mbTypeNum"
+              value={comData.mbTypeNum}
+              onChange={(e: any) => {
+                onInputComHandler(e);
+              }}
+            >
+              <option value="1급">1급 자동차 공업사(자동차 종합 정비소)</option>
+              <option value="2급">2급 자동차 공업사(소형 자동차 정비소)</option>
+              <option value="3급">3급 자동차 공업사(자동차 전문 정비소)</option>
             </select>
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>업태</Text>
             <TextInput
-              defaultValue={comData.busType}
+              value={comData.busType}
               type="text"
               name="busType"
               readOnly={readOnly}
-              disabled={readOnly}
               onChange={(e: any) => {
                 onInputComHandler(e);
               }}
             />
             <Text>업종</Text>
             <TextInput
-              defaultValue={comData.busItem}
+              value={comData.busItem}
               type="text"
               name="busItem"
               readOnly={readOnly}
-              disabled={readOnly}
               onChange={(e: any) => {
                 onInputComHandler(e);
               }}
@@ -310,22 +284,20 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>사업자 전화번호</Text>
             <TextInput
-              defaultValue={comData.phoneNum}
+              value={comData.phoneNum}
               type="tel"
               name="phoneNum"
               readOnly={readOnly}
-              disabled={readOnly}
               onChange={(e: any) => {
                 onInputComHandler(e);
               }}
             />
             <Text>사업자팩스번호</Text>
             <TextInput
-              defaultValue={comData.faxNum}
+              value={comData.faxNum}
               type="tel"
               name="faxNum"
               readOnly={readOnly}
-              disabled={readOnly}
               onChange={(e: any) => {
                 onInputComHandler(e);
               }}
@@ -334,21 +306,12 @@ const AccountM: NextPage<any> = (props) => {
           <Wrapper dr={`row`}>
             <Text>사업자 주소</Text>
             <TextInput
-              value={
-                comData.address1 +
-                " " +
-                comData.address2 +
-                ", (" +
-                comData.postcode +
-                ")"
-              }
+              value={`${comData.address1} ${comData.address2}, (${comData.postcode})`}
               type="text"
               readOnly
-              disabled={true}
-            ></TextInput>
+            />
           </Wrapper>
         </form>
-        {/* <form id="stampform" onSubmit={onStampUploadHandler}> */}
         <Wrapper dr={`row`}>
           <Text>사업자 도장</Text>
           <Image
@@ -370,7 +333,6 @@ const AccountM: NextPage<any> = (props) => {
             파일선택
           </button>
         </Wrapper>
-        {/* </form> */}
         <button type="button" onClick={() => setpages(3)}>
           회원탈퇴
         </button>
