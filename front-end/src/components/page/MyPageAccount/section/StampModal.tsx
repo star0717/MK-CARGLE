@@ -1,11 +1,24 @@
 import { NextPage } from "next";
-import { useDispatch } from "react-redux";
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { useDispatch } from "react-redux";
+import {
+  downloadStamp,
+  uploadStamp,
+} from "../../../../../store/action/user.action";
+import {
+  SmallButton,
+  Text,
+  TextInput2,
+  WholeWrapper,
+  Wrapper,
+} from "../../../styles/CommonComponents";
 
 interface modalOption {
-  accountInfo: any;
+  stampNum: number;
+  setStampNum: React.Dispatch<React.SetStateAction<number>>;
+  setStampData: React.Dispatch<React.SetStateAction<string>>;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setModalOption: React.Dispatch<React.SetStateAction<string>>;
   style?: React.CSSProperties;
@@ -13,16 +26,20 @@ interface modalOption {
 
 const StampModal: NextPage<modalOption> = (props) => {
   const dispatch = useDispatch();
+  //필요한 props 재정의
   const setModalOpen = props.setModalOpen;
-  const accountInfo = props.accountInfo;
+  const setStampData = props.setStampData;
+  const stampNum = props.stampNum;
+  const setStampNum = props.setStampNum;
 
+  const [fileName, setFileName] = useState("");
   const [upImg, setUpImg] = useState<any>();
-  const imgRef = useRef(null);
-  const previewCanvasRef = useRef(null);
+  const imgRef = useRef<any>(null);
+  const previewCanvasRef = useRef<any>(null);
   const [crop, setCrop] = useState<any>({
     unit: "%",
     width: 30,
-    aspect: 16 / 9,
+    aspect: 9 / 9,
   });
   const [completedCrop, setCompletedCrop] = useState(null);
 
@@ -33,26 +50,27 @@ const StampModal: NextPage<modalOption> = (props) => {
 
     canvas.toBlob(
       (blob: any) => {
-        // const previewUrl = window.URL.createObjectURL(blob);
-        console.log("블랍 : ", blob);
         const formData = new FormData();
         formData.append("file", blob);
-
-        //   anchor.download = "cropPreview.png";
-        //   anchor.href = URL.createObjectURL(blob);
-        //   anchor.click();
-
-        // window.URL.revokeObjectURL(previewUrl);
+        dispatch(uploadStamp(formData)).then((res: any) => {
+          if (res.payload.length !== 0) {
+            alert("도장이 업로드되었습니다.");
+            setStampData("/api/settings/myinfo/stamp?" + `${stampNum}`);
+            setStampNum(stampNum + 1);
+            setModalOpen(false);
+          } else {
+            alert("업로드에 실패했습니다.");
+          }
+        });
       },
       "image/png",
       1
     );
-    console.log("캔버스 : ", canvas);
-    //   console.log("크롭 : ", crop);
   };
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
+      setFileName(e.target.files[0].name);
       const reader = new FileReader();
       reader.addEventListener("load", () => setUpImg(reader.result));
       reader.readAsDataURL(e.target.files[0]);
@@ -97,41 +115,68 @@ const StampModal: NextPage<modalOption> = (props) => {
   }, [completedCrop]);
 
   return (
-    <div className="App">
-      <div>
-        <input type="file" accept="image/*" onChange={onSelectFile} />
-      </div>
-      <ReactCrop
-        src={upImg}
-        onImageLoaded={onLoad}
-        crop={crop}
-        onChange={(c) => setCrop(c)}
-        onComplete={(c) => setCompletedCrop(c)}
-      />
-      <div>
-        <canvas
-          ref={previewCanvasRef}
-          // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-          style={{
-            width: Math.round(completedCrop?.width ?? 0),
-            height: Math.round(completedCrop?.height ?? 0),
-          }}
+    <WholeWrapper>
+      <Wrapper>
+        <Text margin={`0px 0px 10px`}>도장이미지</Text>
+        <Wrapper>
+          <TextInput2
+            width={`300px`}
+            type="text"
+            placeholder="이미지 파일"
+            value={fileName}
+            required
+            readOnly
+          />
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+          >
+            <label htmlFor="stamp">파일선택</label>
+            <TextInput2
+              style={{ display: "none" }}
+              id="stamp"
+              type="file"
+              onChange={onSelectFile}
+              accept="image/*"
+            />
+          </SmallButton>
+        </Wrapper>
+        <ReactCrop
+          src={upImg}
+          onImageLoaded={onLoad}
+          crop={crop}
+          onChange={(c) => setCrop(c)}
+          onComplete={(c) => setCompletedCrop(c)}
         />
-      </div>
-      <p>
-        Note that the download below won't work in this sandbox due to the
-        iframe missing 'allow-downloads'. It's just for your reference.
-      </p>
-      <button
-        type="button"
-        disabled={!completedCrop?.width || !completedCrop?.height}
-        onClick={() =>
-          generateDownload(previewCanvasRef.current, completedCrop)
-        }
-      >
-        Download cropped image
-      </button>
-    </div>
+        <Wrapper>
+          <canvas
+            ref={previewCanvasRef}
+            // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+            style={{
+              width: Math.round(completedCrop?.width ?? 0),
+              height: Math.round(completedCrop?.height ?? 0),
+            }}
+          />
+        </Wrapper>
+        {completedCrop?.width && completedCrop?.height && (
+          <Wrapper>
+            <Text>선택한 영역이 업로드됩니다.</Text>
+            <SmallButton
+              type="button"
+              kindOf={`default`}
+              margin={`0px 0px 0px 20px`}
+              disabled={!completedCrop?.width || !completedCrop?.height}
+              onClick={() =>
+                generateDownload(previewCanvasRef.current, completedCrop)
+              }
+            >
+              업로드
+            </SmallButton>
+          </Wrapper>
+        )}
+      </Wrapper>
+    </WholeWrapper>
   );
 };
 

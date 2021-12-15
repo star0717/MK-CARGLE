@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
-import React, { ReactPropTypes, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/dist/client/router";
 import {
   WholeWrapper,
   Wrapper,
@@ -7,19 +8,22 @@ import {
   TextInput,
   TextInput2,
   Image,
+  CloseButton,
 } from "../../../styles/CommonComponents";
 import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePassModal from "./ChangePassModal";
 import { useForm } from "react-hook-form";
-import { changePass, setMyInfo } from "../../../../../store/action/user.action";
+import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import StampModal from "./StampModal";
+import { IoIosCloseCircle } from "react-icons/io";
 
 Modal.setAppElement("body");
 
 const AccountM: NextPage<any> = (props) => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   //모달 관련
@@ -34,7 +38,9 @@ const AccountM: NextPage<any> = (props) => {
   const setAccountInfo = props.setAccountInfo;
 
   // //도장 이미지, 파일명 관련 데이터
-  // const [stampFile, setStampFile] = useState("");
+  const [stampData, setStampData] = useState("/api/settings/myinfo/stamp");
+  const [stampNum, setStampNum] = useState(0);
+
   // const [stampName, setStampName] = useState("");
 
   //accountinfo.user 데이터
@@ -61,6 +67,16 @@ const AccountM: NextPage<any> = (props) => {
 
   const AccountModalProps = {
     accountInfo,
+    setModalOpen,
+    setModalOption,
+    setValue,
+    style: { height: "500px" },
+  };
+
+  const StampModalProps = {
+    stampNum,
+    setStampNum,
+    setStampData,
     setModalOpen,
     setModalOption,
     setValue,
@@ -119,13 +135,9 @@ const AccountM: NextPage<any> = (props) => {
         company: comData,
         user: userData,
       });
+      router.push("/v/main");
     });
   };
-
-  // const onStampUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  // };
 
   return (
     <WholeWrapper>
@@ -336,9 +348,14 @@ const AccountM: NextPage<any> = (props) => {
         {/* <form id="stampform" onSubmit={onStampUploadHandler}> */}
         <Wrapper dr={`row`}>
           <Text>사업자 도장</Text>
-          <Image type="image" alt="도장 사진" width="300px" height="300px" />
-          {/* <input type="text" /> */}
-          {/* <input type="file" /> */}
+          <Image
+            type="image"
+            alt="도장 사진"
+            width="300px"
+            height="300px"
+            src={stampData}
+          />
+
           <button
             name="upload"
             type="button"
@@ -362,7 +379,6 @@ const AccountM: NextPage<any> = (props) => {
       <Wrapper>
         <Modal
           isOpen={modalOpen}
-          onRequestClose={() => setModalOpen(false)}
           style={{
             overlay: {
               position: "fixed",
@@ -389,6 +405,11 @@ const AccountM: NextPage<any> = (props) => {
             },
           }}
         >
+          <Wrapper fontSize={`28px`} al={`flex-end`}>
+            <CloseButton onClick={closeModal}>
+              <IoIosCloseCircle color={`#0066ff`} />
+            </CloseButton>
+          </Wrapper>
           {modalOption === "address" ? (
             <DaumPostcode
               onComplete={addressHandler}
@@ -397,7 +418,7 @@ const AccountM: NextPage<any> = (props) => {
           ) : modalOption === "password" ? (
             <ChangePassModal {...AccountModalProps} />
           ) : (
-            <StampModal {...AccountModalProps} />
+            <StampModal {...StampModalProps} />
           )}
         </Modal>
       </Wrapper>

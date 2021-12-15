@@ -7,31 +7,14 @@ interface Propsinterface {
 }
 
 /** Wrapper */
-export const TestDiv = styled.div<any>`
-display: none;
-padding-left: 0px;
-height: 100px;
-transition: all 0.3s;
-`;
-
 export const TestWrapper = styled.div<any>`
 display: none;
-position: absolute;
-top: 90px;
-left: 0;
-width: 100%;
-height: 100px;
-background-color: white;
 `
 
 export const Test = styled.li<any>`
 width: ${(props) => props.width || `100px`};
 padding:0px;
 transition: all 0.3s;
-
-  &:hover ${TestWrapper} {
-    display: block;
-  }
 `
 
 export const WholeWrapper = styled.div<any>`
@@ -39,7 +22,7 @@ export const WholeWrapper = styled.div<any>`
   height: ${(props) => props.height};
   color: ${(props) => props.color};
   display: flex;
-  background: ${(props) => props.bgColor};
+  background-color: ${(props) => props.bgColor};
   color: ${(props) => props.theme.black_C};
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
@@ -842,7 +825,7 @@ export const UlWrapper = styled.ul<any>`
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
   flex-wrap: ${(props) => (props.isWrap ? `wrap` : ``)};
-  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  position: ${(props) => (props.isRelative)};
   background: ${(props) => props.bgColor};
   color: ${(props) => props.color};
   border-right: ${(props) => props.borderRight};
@@ -868,6 +851,12 @@ export const UlWrapper = styled.ul<any>`
   &:hover ${TestWrapper} {
     display:flex;
     transform: translateX(50px);
+    position: absolute;
+top: 0;
+left: 0px;
+width: 100%;
+height: 100px;
+background-color: blue;
   }
 `;
 
@@ -1090,4 +1079,21 @@ position: ${(props) => props.position || `relative`};
 text-decoration: none;
 background-color:${(props) => props.bgColor || `#fff`};
 transition: all 0.3s;
+clear: both;
+`;
+
+export const NavUl = styled.ul<any>`
+position: ${(props) => props.position || `relative`};
+float: left;
+font-size: ${(props) => props.fontSize || `16px`};
+list-style: none;
+text-decoration: none;
+`;
+
+export const NavLi = styled.li<any>`
+height: ${(props) => props.height || `30px`};
+
+&:hover {
+  font-weight: bold;
+}
 `;
