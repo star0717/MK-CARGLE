@@ -32,8 +32,8 @@ const FindEmailPresenter: NextPage<any> = (props) => {
       >
         <CommonTitle textAlign={`center`} margin={`0px`}>
           계정찾기
-          <CommonSubTitle>이메일 찾기</CommonSubTitle>
         </CommonTitle>
+        <CommonSubTitle>이메일 찾기</CommonSubTitle>
         <form onSubmit={onfindEmailHandler}>
           <TextInput2
             value={name}
