@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/dist/client/router";
 import {
   WholeWrapper,
   Wrapper,
@@ -20,6 +21,7 @@ import StampModal from "./StampModal";
 Modal.setAppElement("body");
 
 const AccountM: NextPage<any> = (props) => {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   //모달 관련
@@ -131,6 +133,7 @@ const AccountM: NextPage<any> = (props) => {
         company: comData,
         user: userData,
       });
+      router.push("/v/main");
     });
   };
 
