@@ -6,18 +6,20 @@ module.exports = {
       return [
         {
           source: process.env.SOURCE_PATH,
-          destination: process.env.DESTINATION_URL
-            + process.env.DESTINATION_PORT
-            + process.env.DESTINATION_PATH,
+          destination:
+            process.env.DESTINATION_URL +
+            process.env.DESTINATION_PORT +
+            process.env.DESTINATION_PATH,
         },
       ];
     } else {
       return [
         {
           source: process.env.SOURCE_PATH,
-          destination: process.env.DESTINATION_URL
-            + process.env.DESTINATION_PORT
-            + process.env.DESTINATION_PATH,
+          destination:
+            process.env.DESTINATION_URL +
+            process.env.DESTINATION_PORT +
+            process.env.DESTINATION_PATH,
         },
       ];
     }

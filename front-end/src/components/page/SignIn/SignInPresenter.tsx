@@ -15,8 +15,7 @@ import {
 } from "../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";
-import { Checkbox, Switch } from "@material-ui/core";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 
 const SigninPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
@@ -97,7 +96,6 @@ const SigninPresenter: NextPage<any> = (props) => {
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Label width={`100%`} margin={`4px 0`} ju={`flex-end`}>
                     <FormControlLabel
-                      value="end"
                       control={
                         <Checkbox
                           checked={saveCheck}
@@ -106,12 +104,9 @@ const SigninPresenter: NextPage<any> = (props) => {
                           ) => {
                             setSaveCheck(e.target.checked);
                           }}
-                          color="primary"
                         />
                       }
                       label="아이디 저장"
-                      labelPlacement="end"
-                      // color="success"
                     />
                   </Label>
                 </Wrapper>
