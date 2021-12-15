@@ -32,7 +32,7 @@ export const WholeWrapper = styled.div<any>`
   right: ${(props) => props.right};
   bottom: ${(props) => props.bottom};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `90px 0px 0px 0px`};
+  padding: ${(props) => props.padding || `0px 0px 0px 0px`};
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
   min-height: ${(props) => props.minHeight};
@@ -255,7 +255,7 @@ export const CommonTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin || `0px`};
   margintop: ${(props) => props.marginTop};
-  padding: ${(props) => props.padding || `0px 0px 0px`};
+  padding: ${(props) => props.padding || `90px 0px 0px 0px`};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 34px;
   font-weight: 800;
@@ -1225,7 +1225,7 @@ export const JoinStepBarWrapper = styled.div<any>`
   flex-direction: row;
 `;
 
-export const JoinStepBar = styled.div<any>`
+export const JoinStepBar = styled.p<any>`
   display: flex;
   justify-content: ${(props) => props.ju || `center`};
   align-items: ${(props) => props.al || `center`};

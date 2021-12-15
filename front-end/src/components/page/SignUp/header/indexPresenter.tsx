@@ -72,7 +72,7 @@ const SignUpHeaderPresenter: NextPage<any> = (props) => {
       <Wrapper>
         {stepNumber === 1 && (
           <Wrapper>
-            <CommonTitle padding={`0px`}>회원가입</CommonTitle>
+            <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>가입 유형을 선택해주세요.</CommonSubTitle>
           </Wrapper>
         )}
