@@ -7,15 +7,6 @@ interface Propsinterface {
 }
 
 /** Wrapper */
-export const TestWrapper = styled.div<any>`
-display: none;
-`
-
-export const Test = styled.li<any>`
-width: ${(props) => props.width || `100px`};
-padding:0px;
-transition: all 0.3s;
-`
 
 export const WholeWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
@@ -424,36 +415,36 @@ export const CommonButton = styled.button<any>`
     box-shadow: ${(props) => props.theme.boxShadow};
     ${(props) => !props.kindOf && `background ${props.theme.darkTheme_C};`}
     ${(props) =>
-    props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
+      props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
          ${(props) =>
-    props.kindOf === `white` && `color ${props.theme.white_C};`}
+      props.kindOf === `white` && `color ${props.theme.white_C};`}
 ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
   ${(props) => props.kindOf === `black` && `color : ${props.theme.black_C};`}
   ${(props) =>
-    props.kindOf === `black` &&
-    `border : 1px solid ${props.theme.darkGrey_C};`}
+      props.kindOf === `black` &&
+      `border : 1px solid ${props.theme.darkGrey_C};`}
         ${(props) =>
-    props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
+      props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
           ${(props) =>
-    props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
+      props.kindOf === `subTheme` && `background ${props.theme.subTheme_C};`}
       ${(props) => props.kindOf === `grey` && `color ${props.theme.white_C};`}
           ${(props) =>
-    props.kindOf === `grey` && `background ${props.theme.grey_C};`}
+      props.kindOf === `grey` && `background ${props.theme.grey_C};`}
          ${(props) =>
-    props.kindOf === `create` &&
-    `border :1px solid ${props.theme.create_B_C};`}
+      props.kindOf === `create` &&
+      `border :1px solid ${props.theme.create_B_C};`}
     ${(props) =>
-    props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
+      props.kindOf === `check` && `border :1px solid ${props.theme.check_B_C};`}
     ${(props) =>
-    props.kindOf === `update` &&
-    `border :1px solid ${props.theme.update_B_C};`}
+      props.kindOf === `update` &&
+      `border :1px solid ${props.theme.update_B_C};`}
     ${(props) =>
-    props.kindOf === `delete` &&
-    `border :1px solid ${props.theme.delete_B_C};`}
+      props.kindOf === `delete` &&
+      `border :1px solid ${props.theme.delete_B_C};`}
 
 ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) =>
-    props.kindOf === `naver` && `color : ${props.theme.white_C};`}
+      props.kindOf === `naver` && `color : ${props.theme.white_C};`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
   }
 
@@ -486,9 +477,13 @@ export const SmallButton = styled.button<any>`
   color: #fff;
   cursor: pointer;
 
-  ${(props) => props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
-  ${(props) => props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
-  ${(props) => props.kindOf === `default` && `border : 1px solid ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
+  ${(props) =>
+    props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `default` &&
+    `border : 1px solid ${props.theme.basicTheme_C};`}
   
 
   ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
@@ -504,7 +499,8 @@ export const SmallButton = styled.button<any>`
 
   &:hover {
     box-shadow: ${(props) => props.theme.boxShadowV3};
-    ${(props) => props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
+    ${(props) =>
+      props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
     ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
   }
 `;
@@ -613,21 +609,19 @@ export const TextInput2 = styled.input<any>`
   background-color: ${(props) => props.bgColor};
   font-size: 16px;
 
-width: ${(props) => props.width};
-height: ${(props) => props.height || `40px`};
-border: ${(props) => props.theme.border};
-padding: ${(props) => props.padding || props.theme.inputPadding};
-border-radius: ${(props) => props.theme.radius};
-transition: ${(props) => props.transition || props.theme.transition};
-margin: ${(props) => props.margin};
-background-color: ${(props) => props.bgColor};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.theme.border};
+  padding: ${(props) => props.padding || props.theme.inputPadding};
+  border-radius: ${(props) => props.theme.radius};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
 
-&:focus {
-  outline: none;
-  border: 1px solid ${(props) => props.theme.basicTheme_C};
-}
-
-
+  &:focus {
+    outline: none;
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
+  }
 
   &:read-only:focus {
     box-shadow: none;
@@ -815,6 +809,51 @@ export const TableRowLIST = styled.li<any>`
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
 `;
 
+/* start test */
+
+export const TestWrapper = styled.div<any>`
+  display: none;
+`;
+
+export const Test = styled.li<any>`
+  width: ${(props) => props.width || `100px`};
+  padding: 0px;
+  transition: all 0.3s;
+`;
+
+export const TestDiv2 = styled.div<any>`
+  display: none;
+  transition: all 0.3s;
+`;
+
+export const TestDiv = styled.div<any>`
+  width: 300px;
+  height: 90px;
+  background-color: blue;
+  display: flex;
+  color: #fff;
+  align-items: center;
+  transition: all 0.3s;
+
+  &:hover ${TestDiv2} {
+    display: block;
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: skyblue;
+    transition: all 0.3s;
+  }
+`;
+
+export const TestA = styled.a<any>`
+  color: gray;
+  cursor: pointer;
+`;
+
+/* end test */
+
 export const UlWrapper = styled.ul<any>`
   width: ${(props) => props.width || `100%`};
   min-width: ${(props) => props.minWidth};
@@ -825,7 +864,7 @@ export const UlWrapper = styled.ul<any>`
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
   flex-wrap: ${(props) => (props.isWrap ? `wrap` : ``)};
-  position: ${(props) => (props.isRelative)};
+  position: ${(props) => props.isRelative};
   background: ${(props) => props.bgColor};
   color: ${(props) => props.color};
   border-right: ${(props) => props.borderRight};
@@ -838,8 +877,8 @@ export const UlWrapper = styled.ul<any>`
   padding: ${(props) => props.padding};
   overflow: ${(props) => (props.ishidden ? `hidden` : ``)};
   transition: 0.3s;
-  list-style:none;
-  padding-left:0px;
+  list-style: none;
+  padding-left: 0px;
 
   & .react-reveal {
     width: auto;
@@ -849,14 +888,14 @@ export const UlWrapper = styled.ul<any>`
   }
 
   &:hover ${TestWrapper} {
-    display:flex;
+    display: flex;
     transform: translateX(50px);
     position: absolute;
-top: 0;
-left: 0px;
-width: 100%;
-height: 100px;
-background-color: blue;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: blue;
   }
 `;
 
@@ -906,7 +945,7 @@ export const LiWrapper = styled.li<any>`
 
   &:hover {
     background: ${(props) =>
-    props.isTabHover ? `${props.theme.basicTheme_C}` : ``};
+      props.isTabHover ? `${props.theme.basicTheme_C}` : ``};
     color: ${(props) => (props.isTabHover ? `${props.theme.white_C}` : ``)};
   }
 `;
@@ -1013,28 +1052,27 @@ export const JoinFirstStepSelectText = styled.p<any>`
   margin: 0px;
 `;
 
-
 export const JoinStepBarWrapper = styled.p<any>`
-display:flex;
-width:100%;
-justify-content: ${(props) => props.ju || `center`};
+  display: flex;
+  width: 100%;
+  justify-content: ${(props) => props.ju || `center`};
   align-items: ${(props) => props.al || `center`};
   text-align: center;
   font-size: 18px;
   margin: 0px;
-  padding:0px 0px 30px 0px;
-  flex-direction:row;
+  padding: 0px 0px 30px 0px;
+  flex-direction: row;
 `;
 
 export const JoinStepBar = styled.p<any>`
-display:flex;
-justify-content: ${(props) => props.ju || `center`};
-align-items: ${(props) => props.al || `center`};
+  display: flex;
+  justify-content: ${(props) => props.ju || `center`};
+  align-items: ${(props) => props.al || `center`};
   text-align: center;
   font-size: 18px;
-  font-weight:800;
+  font-weight: 800;
   margin: 0px;
-  padding:0px;
+  padding: 0px;
   width: ${(props) => props.width || `32px`};
   height: ${(props) => props.height || `32px`};
   border-radius: ${(props) => props.radius || `32px`};
@@ -1042,58 +1080,67 @@ align-items: ${(props) => props.al || `center`};
 
   ${(props) => props.kindOf === `line` && `height : 1px;`}
   ${(props) => props.kindOf === `line` && `border-radius : 0px;`}
-  ${(props) => props.kindOf === `line` && `border : 1px solid ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `line` &&
+    `border : 1px solid ${props.theme.basicTheme_C};`}
   
   ${(props) => props.kindOf === `line2` && `height : 1px;`}
   ${(props) => props.kindOf === `line2` && `border-radius : 0px;`}
-  ${(props) => props.kindOf === `line2` && `border : 1px solid ${props.theme.darkGrey_C};`}
+  ${(props) =>
+    props.kindOf === `line2` && `border : 1px solid ${props.theme.darkGrey_C};`}
   
-  ${(props) => props.kindOf === `before` && `background ${props.theme.subWhite_C};`}
+  ${(props) =>
+    props.kindOf === `before` && `background ${props.theme.subWhite_C};`}
   ${(props) => props.kindOf === `before` && `color ${props.theme.darkGrey_C};`}
-  ${(props) => props.kindOf === `before` && `border : 1px solid ${props.theme.darkGrey_C};`}
+  ${(props) =>
+    props.kindOf === `before` &&
+    `border : 1px solid ${props.theme.darkGrey_C};`}
   
   ${(props) => props.kindOf === `progress` && `background : #d2e5ff;`}
-  ${(props) => props.kindOf === `progress` && `color ${props.theme.basicTheme_C};`}
-  ${(props) => props.kindOf === `progress` && `border : 1px solid ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `progress` && `color ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `progress` &&
+    `border : 1px solid ${props.theme.basicTheme_C};`}
 
-    ${(props) => props.kindOf === `complete` && `background ${props.theme.basicTheme_C};`}
+    ${(props) =>
+    props.kindOf === `complete` && `background ${props.theme.basicTheme_C};`}
   ${(props) => props.kindOf === `complete` && `color ${props.theme.white_C};`}
-  
 `;
 
 /*Header */
 
 export const NavWrap = styled.div<any>`
-width: ${(props) => props.width || `100%`};
-height: ${(props) => props.height || `200px`};
-position: ${(props) => props.position || `absolute`};
-z-index: ${(props) => props.zIndex || `100`};
-transition: all 0.3s;
+  width: ${(props) => props.width || `100%`};
+  height: ${(props) => props.height || `200px`};
+  position: ${(props) => props.position || `absolute`};
+  z-index: ${(props) => props.zIndex || `100`};
+  transition: all 0.3s;
 `;
 
 export const NavAll = styled.div<any>`
-width: ${(props) => props.width || `100%`};
-height: ${(props) => props.height || `90px`};
-overflow: ${(props) => props.overflow || `hiedden`};
-position: ${(props) => props.position || `relative`};
-text-decoration: none;
-background-color:${(props) => props.bgColor || `#fff`};
-transition: all 0.3s;
-clear: both;
+  width: ${(props) => props.width || `100%`};
+  height: ${(props) => props.height || `90px`};
+  overflow: ${(props) => props.overflow || `hiedden`};
+  position: ${(props) => props.position || `relative`};
+  text-decoration: none;
+  background-color: ${(props) => props.bgColor || `#fff`};
+  transition: all 0.3s;
+  clear: both;
 `;
 
 export const NavUl = styled.ul<any>`
-position: ${(props) => props.position || `relative`};
-float: left;
-font-size: ${(props) => props.fontSize || `16px`};
-list-style: none;
-text-decoration: none;
+  position: ${(props) => props.position || `relative`};
+  float: left;
+  font-size: ${(props) => props.fontSize || `16px`};
+  list-style: none;
+  text-decoration: none;
 `;
 
 export const NavLi = styled.li<any>`
-height: ${(props) => props.height || `30px`};
+  height: ${(props) => props.height || `30px`};
 
-&:hover {
-  font-weight: bold;
-}
+  &:hover {
+    font-weight: bold;
+  }
 `;

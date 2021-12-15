@@ -15,12 +15,15 @@ import {
   LiWrapper,
   IconButton,
   TestWrapper,
+  TestDiv,
+  TestDiv2,
+  TestA,
 } from "../styles/CommonComponents";
 import { CompanyApproval } from "../../models/company.entity";
 import { MainRoute, SubRoute } from "../../models/router.entity";
 import { useState } from "react";
 import { appearAnimation } from "../styles/AnimationCommon";
-import { FaBell } from 'react-icons/fa';
+import { FaBell } from "react-icons/fa";
 
 interface LayoutProps {
   tokenValue?: any;
@@ -48,18 +51,14 @@ const Header: NextPage<LayoutProps> = (props) => {
   return (
     <WholeWrapper ref={ref} shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}>
       <Wrapper
-      height={`90px`}
-        // isRelative={true}
+        height={`90px`}
         bgColor={`red`}
         ju={`space-between`}
         al={`center`}
         padding={width < 1450 ? `0px 0px 0px 70px` : `0px 0px 0px 100px`}
         dr={`row`}
       >
-        <Wrapper
-          width={`auto`}
-          al={`cneter`}
-        >
+        <Wrapper width={`auto`} al={`cneter`}>
           <Link href="/v/main">
             <a>
               <Image
@@ -70,59 +69,34 @@ const Header: NextPage<LayoutProps> = (props) => {
             </a>
           </Link>
         </Wrapper>
-        <Wrapper
-          dr={`row`}
-          width={`auto`}
-          al={`center`}
-        >
-          <Wrapper
-            width={`auto`}
-            dr={`row`}
-            padding={`0px 100px`}
-          >
-            <UlWrapper
-            height={`90px`}
-            bgColor={`skyblue`}
-              al={`center`}
-              margin={`0px`}
-              width={`100%`}
-            >
-              <Test>
-                <Text>정비</Text>
-              </Test>
-              <Test>
-                <Text>회계</Text>
-              </Test>
-              <TestWrapper>
-                  <ul
-                  >
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                  </ul>
-                  <ul
-                  >
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                    <LiWrapper>
-                      정비등록
-                    </LiWrapper>
-                  </ul>
-              </TestWrapper>
-            </UlWrapper>
-          </Wrapper>
-          <Wrapper
-            width={`auto`}
-            padding={`0px 100px`}
-            dr={`row`}
-          >
-            <IconButton
-            >
+        <Wrapper dr={`row`} width={`auto`} al={`center`}>
+          <TestDiv width={`auto`} dr={`row`} padding={`0px 100px`}>
+            <Text cursor={`pointer`} width={`200px`}>
+              정비
+            </Text>
+            <Text cursor={`pointer`} width={`200px`}>
+              회계
+            </Text>
+            <Text cursor={`pointer`} width={`200px`}>
+              마이페이지
+            </Text>
+            <Text cursor={`pointer`} width={`200px`}>
+              커뮤니티
+            </Text>
+            <Text cursor={`pointer`} width={`200px`}>
+              도움말
+            </Text>
+            <TestDiv2>
+              <Link href="#">
+                <TestA>소메뉴1</TestA>
+              </Link>
+            </TestDiv2>
+          </TestDiv>
+          <Wrapper width={`auto`} padding={`0px 100px`} dr={`row`}>
+            <IconButton>
               <FaBell />
             </IconButton>
-            <IconButton
-            >
+            <IconButton>
               <FaBell />
             </IconButton>
           </Wrapper>
