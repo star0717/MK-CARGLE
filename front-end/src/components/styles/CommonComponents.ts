@@ -506,7 +506,7 @@ export const SmallButton = styled.button<any>`
   }
 `;
 
-export const LabelButton = styled.button<any>`
+export const LabelButton = styled.label<any>`
   width: ${(props) => props.width || `80px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
