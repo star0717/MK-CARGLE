@@ -7,6 +7,7 @@ export const appearAnimation = keyframes`
   100% {
     opacity: 1;
   }
+
 `;
 
 export const fullWidth = keyframes`

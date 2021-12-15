@@ -131,11 +131,11 @@ const Header: NextPage<LayoutProps> = (props) => {
             <IconButton radius={`100px`} al={`center`} margin={`0px 10px`}>
               <FaBell />
             </IconButton>
-            {/* <button onClick={onSignOutHandler}>로그아웃</button> */}
+            <button onClick={onSignOutHandler}>로그아웃</button>
           </Wrapper>
         </Wrapper>
 
-        {tokenValue && tokenValue.cApproval === CompanyApproval.DONE && (
+        {/* {tokenValue && tokenValue.cApproval === CompanyApproval.DONE && (
           <div style={{ width: "80%", display: "flex" }}>
             <div style={{ width: "75%", display: "flex" }}>
               <div style={{ width: "20%", height: "100%" }}>정비</div>
@@ -149,7 +149,7 @@ const Header: NextPage<LayoutProps> = (props) => {
               <button onClick={onSignOutHandler}>로그아웃</button>
             </div>
           </div>
-        )}
+        )} */}
       </Wrapper>
     </WholeWrapper>
   );
