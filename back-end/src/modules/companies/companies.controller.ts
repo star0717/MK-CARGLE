@@ -6,10 +6,7 @@ import {
   Param,
   Patch,
   Post,
-  Req,
-  Res,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SafeControllerFactory } from 'src/lib/safe-crud/safe-crud.controller';
 import { DeleteResult } from 'src/models/base.entity';
