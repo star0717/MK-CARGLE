@@ -99,6 +99,7 @@ const Header: NextPage<LayoutProps> = (props) => {
             <IconButton>
               <FaBell />
             </IconButton>
+            <button onClick={onSignOutHandler}>로그아웃</button>
           </Wrapper>
         </Wrapper>
 
