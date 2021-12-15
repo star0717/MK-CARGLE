@@ -1,12 +1,6 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import { SignUpInfo } from "../../../models/auth.entity";
-import {
-  TextInput,
-  WholeWrapper,
-  Wrapper,
-  Text,
-} from "../../styles/CommonComponents";
 import Account from "./section/AccountM";
 import MyPage from "./section/MyPage";
 import Withdrawal from "./section/Withdrawal";

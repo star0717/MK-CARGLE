@@ -26,11 +26,9 @@ const FindEmailComplete: NextPage<any> = (props) => {
         radius={`5px`}
         margin={`0px 0px 30px`}
       >
-        <Text
-          fontSize={`22px`}
-          fontWeight={`600`}
-          color={`#0066ff`}
-        >{findEmail}</Text>
+        <Text fontSize={`22px`} fontWeight={`600`} color={`#0066ff`}>
+          {findEmail}
+        </Text>
       </Wrapper>
       <Wrapper>
         <CommonButtonWrapper>
@@ -44,9 +42,10 @@ const FindEmailComplete: NextPage<any> = (props) => {
           >
             로그인
           </CommonButton>
-          <CommonButton type="button"
+          <CommonButton
+            type="button"
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              router.push('/sign/findpassword')
+              router.push("/sign/findpassword");
             }}
           >
             비밀번호 찾기

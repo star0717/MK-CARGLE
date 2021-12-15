@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/dist/client/router";
 import {
   WholeWrapper,
@@ -7,7 +8,7 @@ import {
   Text,
   TextInput,
   TextInput2,
-  Image,
+  // Image,
   CloseButton,
 } from "../../../styles/CommonComponents";
 import Modal from "react-modal";
@@ -38,7 +39,6 @@ const AccountM: NextPage<any> = (props) => {
   const setAccountInfo = props.setAccountInfo;
 
   // //도장 이미지, 파일명 관련 데이터
-  const [stampData, setStampData] = useState("/api/settings/myinfo/stamp");
   const [stampNum, setStampNum] = useState(0);
 
   // const [stampName, setStampName] = useState("");
@@ -60,6 +60,10 @@ const AccountM: NextPage<any> = (props) => {
     }
   }, [accountInfo]);
 
+  const myLoader = () => {
+    return `/api/settings/myinfo/stamp?num=${stampNum}`;
+  };
+
   const {
     setValue,
     formState: { errors },
@@ -76,7 +80,6 @@ const AccountM: NextPage<any> = (props) => {
   const StampModalProps = {
     stampNum,
     setStampNum,
-    setStampData,
     setModalOpen,
     setModalOption,
     setValue,
@@ -349,11 +352,11 @@ const AccountM: NextPage<any> = (props) => {
         <Wrapper dr={`row`}>
           <Text>사업자 도장</Text>
           <Image
-            type="image"
+            loader={myLoader}
             alt="도장 사진"
-            width="300px"
-            height="300px"
-            src={stampData}
+            width={300}
+            height={300}
+            src="/api/settings/myinfo/stamp"
           />
 
           <button
