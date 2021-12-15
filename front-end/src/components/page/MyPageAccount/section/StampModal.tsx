@@ -117,7 +117,7 @@ const StampModal: NextPage<modalOption> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper>
-        <Text margin={`0px 0px 10px`}>정비업등록증</Text>
+        <Text margin={`0px 0px 10px`}>도장이미지</Text>
         <Wrapper>
           <TextInput2
             width={`300px`}

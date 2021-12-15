@@ -8,6 +8,7 @@ import {
   TextInput,
   TextInput2,
   Image,
+  CloseButton,
 } from "../../../styles/CommonComponents";
 import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
@@ -17,6 +18,7 @@ import { setMyInfo } from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import StampModal from "./StampModal";
+import { IoIosCloseCircle } from "react-icons/io";
 
 Modal.setAppElement("body");
 
@@ -377,7 +379,6 @@ const AccountM: NextPage<any> = (props) => {
       <Wrapper>
         <Modal
           isOpen={modalOpen}
-          onRequestClose={() => setModalOpen(false)}
           style={{
             overlay: {
               position: "fixed",
@@ -404,6 +405,11 @@ const AccountM: NextPage<any> = (props) => {
             },
           }}
         >
+          <Wrapper fontSize={`28px`} al={`flex-end`}>
+            <CloseButton onClick={closeModal}>
+              <IoIosCloseCircle color={`#0066ff`} />
+            </CloseButton>
+          </Wrapper>
           {modalOption === "address" ? (
             <DaumPostcode
               onComplete={addressHandler}
