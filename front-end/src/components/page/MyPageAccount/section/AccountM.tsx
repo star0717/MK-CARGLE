@@ -220,7 +220,7 @@ const AccountM: NextPage<any> = (props) => {
             <Text>입사일자</Text>
             <TextInput2
               type="date"
-              value={userData.joinDate.slice(0, 10)}
+              value={userData.joinDate && userData.joinDate.slice(0, 10)}
               name="joinDate"
               onChange={(e: any) => {
                 onInputUserHandler(e);

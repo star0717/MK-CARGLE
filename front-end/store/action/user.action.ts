@@ -253,3 +253,18 @@ export async function downloadStamp() {
     payload: req,
   };
 }
+
+/**
+ * 회원 탈퇴 기능
+ * @returns
+ */
+export async function withdrawal(dateToSubmit: any) {
+  const req = await axios
+    .post(`/api/auth/withdrawal`, dateToSubmit)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  return {
+    type: actionTypesUser.WITHDRAWAL,
+    payload: req,
+  };
+}

@@ -23,11 +23,14 @@ interface modalOption {
 
 const ChangePassModal: NextPage<modalOption> = (props) => {
   const dispatch = useDispatch();
+
   const setModalOpen = props.setModalOpen;
+
+  const accountInfo = props.accountInfo;
+
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
-  const accountInfo = props.accountInfo;
 
   const {
     handleSubmit,
