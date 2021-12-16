@@ -3,9 +3,7 @@ import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
   Wrapper,
-  TextInput,
   Text,
-  SmallButton,
   TableWrapper,
   TableHead,
   TableHeadLIST,
@@ -14,18 +12,17 @@ import {
   TableRowLIST,
   CommonForm,
   SearchInput,
-  SearchInputWrapper,
-  Pagenation,
-  PagenationWrapper,
-  PagenationBtn,
   IconButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
 import { BsSearch } from "react-icons/bs";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
 
+/**
+ * 회원가입: 업체 검색 모달 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
 const ComFindModalPresenter: NextPage<any> = (props) => {
   // props 재정의
   const setModalOpen = props.setModalOpen;

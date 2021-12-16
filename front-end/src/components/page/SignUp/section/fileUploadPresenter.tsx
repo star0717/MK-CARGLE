@@ -1,30 +1,21 @@
 import { NextPage } from "next";
 import { useResizeDetector } from "react-resize-detector";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faQuestionCircle,
-  faExclamationCircle,
-} from "@fortawesome/free-solid-svg-icons";
 import {
   WholeWrapper,
   Wrapper,
   Text,
   TextInput2,
-  SmallButton,
   CommonButton,
-  JoinStepBarWrapper,
-  JoinStepBar,
   LabelButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
-import {
-  BsExclamationCircleFill,
-  BsFillLightbulbFill,
-  BsFillQuestionCircleFill,
-} from "react-icons/bs";
-import { IoIosCloseCircle } from "react-icons/io";
-import { GoCheck } from "react-icons/go";
+import { BsFillLightbulbFill, BsFillQuestionCircleFill } from "react-icons/bs";
 
+/**
+ * 회원가입 - 파일 업로드 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
 const FileUploadPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
   const fileName = props.fileName;

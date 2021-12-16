@@ -12,6 +12,10 @@ import { WholeWrapper } from "../../styles/CommonComponents";
 // modal setting
 Modal.setAppElement("body");
 
+/**
+ * 회원가입: Index 컴포넌트(기능)
+ * @returns
+ */
 const SignUp: NextPage<any> = () => {
   // redux store에서 user, company 정보 가져옴
   const { user, company, formInput, formCheck } = useSelector(
@@ -26,7 +30,7 @@ const SignUp: NextPage<any> = () => {
     { key: 4, value: "daum.net", text: "daum.net" },
   ];
 
-  const [userAuth, setUserAuth] = useState(UserAuthority.WORKER); // 유저 권한 종류
+  const [userAuth, setUserAuth] = useState<UserAuthority>(UserAuthority.WORKER); // 유저 권한 종류
   const [stepNumber, setStepNumber] = useState<number>(1); // 스텝 숫자
 
   // component에 전달할 props들 정의

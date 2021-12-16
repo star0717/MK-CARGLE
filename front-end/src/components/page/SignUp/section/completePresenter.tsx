@@ -7,9 +7,14 @@ import {
   CommonButton,
   CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
-import { BsFillCheckCircleFill } from 'react-icons/bs';
+import { BsFillCheckCircleFill } from "react-icons/bs";
 import React from "react";
 
+/**
+ * 회원가입: 완료 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
 const CompletePresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
   const onSignOutHandler = props.onSignOutHandler;

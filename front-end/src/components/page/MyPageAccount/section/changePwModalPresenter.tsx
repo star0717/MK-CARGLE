@@ -1,84 +1,42 @@
-import React, { useState } from "react";
 import { NextPage } from "next";
-import { useDispatch } from "react-redux";
-import { formRegEx } from "../../../../validation/regEx";
-import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  changePass,
-  passwordCheck,
-} from "../../../../../store/action/user.action";
+import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
   Wrapper,
   Text,
   TextInput,
+  SmallButton,
 } from "../../../styles/CommonComponents";
+import React from "react";
+import { formRegEx } from "../../../../validation/regEx";
 
-interface modalOption {
-  accountInfo: any;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalOption: React.Dispatch<React.SetStateAction<string>>;
-  style?: React.CSSProperties;
-}
-
-const ChangePassModal: NextPage<modalOption> = (props) => {
-  const dispatch = useDispatch();
-
+/**
+ * 마이 페이지: 계정관리 비밀번호 변경 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
+const ChangePwModalPresenter: NextPage<any> = (props) => {
+  // 필요한 props 재정의
   const setModalOpen = props.setModalOpen;
+  const handleSubmit = props.handleSubmit;
+  const register = props.register;
+  const watch = props.watch;
+  const errors = props.errors;
+  const onChangePwHandler = props.onChangePwHandler;
+  const password = props.password;
+  const setPassword = props.setPassword;
+  const newPassword = props.newPassword;
+  const setNewPassword = props.setNewPassword;
+  const newPasswordCheck = props.newPasswordCheck;
+  const setNewPasswordCheck = props.setNewPasswordCheck;
 
-  const accountInfo = props.accountInfo;
-
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordCheck, setNewPasswordCheck] = useState("");
-
-  const {
-    handleSubmit,
-    watch,
-    register,
-    formState: { errors },
-  } = useForm({ criteriaMode: "all", mode: "onChange" });
-
-  {
-    /* 비밀번호 확인용 */
-  }
-  const confirmPWD = {
-    _id: accountInfo.user._uID,
-    PWD: password,
-  };
-  {
-    /* 비밀번호 변경용 */
-  }
-  const HelpChangePWD = {
-    _id: accountInfo.user._uID,
-    oldPWD: password,
-    newPWD: newPassword,
-  };
-
-  {
-    /* 비밀번호 변경 함수 */
-  }
-  const pass: SubmitHandler<any> = (data) => {
-    dispatch(passwordCheck(confirmPWD)).then((res: any) => {
-      if (res.payload === true) {
-        dispatch(changePass(HelpChangePWD)).then((res: any) => {
-          if (res.payload === true) {
-            alert("비밀번호가 변경되었습니다.");
-            setModalOpen(false);
-          } else {
-            alert("변경 실패");
-          }
-        });
-      } else {
-        alert("현재 비밀번호가 틀립니다.");
-      }
-    });
-  };
+  // resize 변수 선언
+  const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper>
+    <WholeWrapper ref={ref}>
       <Wrapper>
-        <form onSubmit={handleSubmit(pass)}>
+        <form onSubmit={handleSubmit(onChangePwHandler)}>
           <Wrapper>
             <Text>비밀번호 변경</Text>
           </Wrapper>
@@ -86,6 +44,7 @@ const ChangePassModal: NextPage<modalOption> = (props) => {
             <Text>현재 비밀번호</Text>
             <TextInput
               type="password"
+              value={password}
               placeholder="현재 비밀번호를 입력하세요."
               {...register("password", {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,10 +105,18 @@ const ChangePassModal: NextPage<modalOption> = (props) => {
               )}
           </Wrapper>
           <Wrapper dr={`row`}>
-            <button type="submit">확인</button>
-            <button type="button" onClick={(e) => setModalOpen(false)}>
+            <SmallButton type="submit" kindOf={`default`}>
+              확인
+            </SmallButton>
+            <SmallButton
+              type="button"
+              kindOf={`default`}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                setModalOpen(false)
+              }
+            >
               취소
-            </button>
+            </SmallButton>
           </Wrapper>
         </form>
       </Wrapper>
@@ -157,4 +124,4 @@ const ChangePassModal: NextPage<modalOption> = (props) => {
   );
 };
 
-export default ChangePassModal;
+export default ChangePwModalPresenter;

@@ -17,6 +17,11 @@ import Link from "next/link";
 import React from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 
+/**
+ * 로그인 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
 const SigninPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
   const onSignInHandler = props.onSignInHandler;

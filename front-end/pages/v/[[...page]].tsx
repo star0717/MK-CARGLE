@@ -21,7 +21,7 @@ interface ViewProps {
 }
 
 /**
- * cApproval에 따른 메인 컴포넌트
+ * 메인: cApproval에 따른 메인 컴포넌트
  * @param props
  * @returns
  */
@@ -42,7 +42,7 @@ const MainComponent: NextPage<ViewProps> = (props) => {
 };
 
 /**
- * url query에 따른 서브 컴포넌트
+ * 메인: url query에 따른 서브 컴포넌트
  * @param props
  * @returns
  */
@@ -72,13 +72,11 @@ const SubComponent: NextPage<ViewProps> = (props) => {
 };
 
 /**
- * 실제 페이지를 구성하는 컴포넌트
+ * 메인: 페이지
  * @param props
  * @returns
  */
 const MainPage: NextPage<ViewProps> = (props) => {
-  console.log("아호이");
-
   return (
     <>
       <Head>

@@ -19,12 +19,21 @@ interface modalOption {
   setValue: UseFormSetValue<FieldValues>;
 }
 
+/**
+ * 회원가입: 업체 검색 모달 컴포넌트(기능)
+ * @param props
+ * @returns
+ */
 const ComFindModal: NextPage<modalOption> = (props) => {
   const dispatch = useDispatch();
 
   const [companyList, setCompanyList] = useState<any>([]); // 검색해서 받아온 업체 리스트 state
   const [searchText, setSearchText] = useState<string>(""); // 검색 input state(업체명 or 사업자번호)
 
+  /**
+   * 업체 조회 handler
+   * @param e
+   */
   const findCompanyHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 먼저 사업자번호로 검색

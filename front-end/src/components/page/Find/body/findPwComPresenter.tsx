@@ -7,8 +7,13 @@ import {
   WholeWrapper,
   Wrapper,
 } from "../../../styles/CommonComponents";
-import { FaPaperPlane } from 'react-icons/fa';
+import { FaPaperPlane } from "react-icons/fa";
 
+/**
+ * 계정찾기: 비밀번호 찾기 완료(화면)
+ * @param props
+ * @returns
+ */
 const FindPwComPresenter: NextPage<any> = (props) => {
   const router = useRouter();
 
@@ -26,7 +31,8 @@ const FindPwComPresenter: NextPage<any> = (props) => {
         </Text>
       </Wrapper>
       <Text padding={`0px 0px 50px`} fontSize={`22px`}>
-        입력된 이메일 주소로 <br />임시 비밀번호가 발송되었습니다.
+        입력된 이메일 주소로 <br />
+        임시 비밀번호가 발송되었습니다.
       </Text>
       <Wrapper>
         <CommonButtonWrapper>

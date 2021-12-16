@@ -17,7 +17,7 @@ import DaumPostcode from "react-daum-postcode";
 import CompanyFindModal from "./comFindModal";
 import { User, UserAuthority } from "../../../../models/user.entity";
 import { initialState } from "../../../../../store/reducer/user.reducer";
-import AccountPresenter from "./accountPresenter";
+import SignAccountPresenter from "./signAccountPresenter";
 import {
   CloseButton,
   WholeWrapper,
@@ -28,7 +28,12 @@ import { IoIosCloseCircle } from "react-icons/io";
 // modal setting
 Modal.setAppElement("body");
 
-const Account: NextPage<any> = (props) => {
+/**
+ * 회원가입: 계정정보 컴포넌트(기능)
+ * @param props
+ * @returns
+ */
+const SignAccount: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   // props 재정의
@@ -57,7 +62,9 @@ const Account: NextPage<any> = (props) => {
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
-  // modal 창 닫기 기능
+  /**
+   * modal 창 닫기 기능
+   */
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -69,22 +76,29 @@ const Account: NextPage<any> = (props) => {
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
 
-  // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
-  // 사용자 정보
+  /**
+   * 인풋 텍스트 변환 handler
+   * @param e
+   */
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "hpNumber") {
       e.target.value = CHAR_DEL(e.target.value);
     }
     setInputUser({ ...inputUser, [e.target.name]: e.target.value });
   };
-  // 그 외 form 정보
+  /**
+   * 그 외 form 정보
+   * @param e
+   */
   const onInputFormHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputForm({ ...inputForm, [e.target.name]: e.target.value });
   };
 
-  // 이메일 인증번호 전송 handler
+  /**
+   * 이메일 인증번호 전송 handler
+   * @param e
+   */
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // const email = `${inputForm.emailAddress}@${inputForm.emailDomain}`;
     if (formRegEx.EMAIL.test(inputUser.email)) {
       dispatch(emailSendAction(inputUser.email)).then((res: any) => {
         if (res.payload) {
@@ -136,7 +150,10 @@ const Account: NextPage<any> = (props) => {
     }
   }, [timer, formCheck]);
 
-  // 인증번호 검사 handler
+  /**
+   * 인증번호 검사 handler
+   * @param e
+   */
   const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (authNum) {
       dispatch(authNumCheckAction(authNum)).then((res: any) => {
@@ -157,7 +174,10 @@ const Account: NextPage<any> = (props) => {
     }
   };
 
-  // 주소 검색 api handler
+  /**
+   * 주소 검색 api handler
+   * @param data
+   */
   const addressHandler = (data: any) => {
     let fullAddress = data.address;
     let zonecode = data.zonecode;
@@ -179,7 +199,10 @@ const Account: NextPage<any> = (props) => {
     setModalOpen(false);
   };
 
-  // 직원(worker) 회원가입 form submit handler
+  /**
+   * 직원(worker) 회원가입 form submit handler
+   * @param data
+   */
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
     if (!formCheck.authNumCheck) {
       alert("이메일 인증을 해주세요.");
@@ -210,8 +233,6 @@ const Account: NextPage<any> = (props) => {
       }
     }
   };
-
-  console.log(inputUser);
 
   // MODAL에 넘길 props
   const ComfindModalProps = {
@@ -255,7 +276,7 @@ const Account: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper>
-      <AccountPresenter {...fProps} />
+      <SignAccountPresenter {...fProps} />
       <Wrapper>
         <Modal
           isOpen={modalOpen}
@@ -304,4 +325,4 @@ const Account: NextPage<any> = (props) => {
   );
 };
 
-export default Account;
+export default SignAccount;

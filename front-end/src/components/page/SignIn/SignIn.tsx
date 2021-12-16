@@ -8,7 +8,13 @@ import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { signInUserAction } from "../../../../store/action/user.action";
 import { formRegEx } from "../../../validation/regEx";
 import SigninPresenter from "./SignInPresenter";
+import { UserInfo } from "../../../models/auth.entity";
 
+/**
+ * 로그인 컴포넌트(기능)
+ * @param props
+ * @returns
+ */
 const SignIn: NextPage<any> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -20,19 +26,25 @@ const SignIn: NextPage<any> = (props) => {
 
   // input 값을 위한 state
   // 가져온 signIn 값과 props의 id 값을 input state의 초기값으로 세팅
-  const [inputSignIn, setInputSignIn] = useState({
+  const [inputSignIn, setInputSignIn] = useState<UserInfo>({
     ...signInInfo,
     id: props.saveId,
   });
 
-  const [saveCheck, setSaveCheck] = useState(props.saveCheck); // 아이디 저장 체크 여부를 위한 state
+  const [saveCheck, setSaveCheck] = useState<boolean>(props.saveCheck); // 아이디 저장 체크 여부를 위한 state
 
-  // input 값 입력 시 텍스트 변환을 위한 handler
+  /**
+   * 인풋 값 변환 handler
+   * @param e
+   */
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputSignIn({ ...inputSignIn, [e.target.name]: e.target.value });
   };
 
-  // 로그인 시 handler
+  /**
+   * 로그인 시 handler
+   * @param e
+   */
   const onSignInHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputSignIn.id === "" || !formRegEx.EMAIL.test(inputSignIn.id)) {
@@ -67,7 +79,10 @@ const SignIn: NextPage<any> = (props) => {
     }
   };
 
-  // 회원가입 state 초기화
+  /**
+   * 회원가입 state 초기화
+   * @param e
+   */
   const userInit = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch({ type: actionTypesUser.USER_INIT });
   };

@@ -3,7 +3,6 @@ import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
   Wrapper,
-  Text,
   CommonTitle,
   CommonSubTitle,
   JoinStepBarWrapper,
@@ -12,6 +11,11 @@ import {
 import React from "react";
 import { GoCheck } from "react-icons/go";
 
+/**
+ * 회원가입: 공통 헤더 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
 const SignUpHeaderPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
   const stepNumber = props.stepNumber;
@@ -23,52 +27,6 @@ const SignUpHeaderPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      {/* <JoinStepBar
-          kindOf={`complete`}
-        >
-          <GoCheck />
-        </JoinStepBar>
-        <JoinStepBar
-          kindOf={`line`}
-        ></JoinStepBar>
-        <JoinStepBar
-          kindOf={`progress`}
-        >2</JoinStepBar>
-        <JoinStepBar
-          kindOf={`line2`}
-        ></JoinStepBar>
-        <JoinStepBar
-          kindOf={`before`}
-        >3</JoinStepBar>
-        <JoinStepBar
-          kindOf={`line2`}
-        ></JoinStepBar>
-        <JoinStepBar
-          kindOf={`before`}
-        >4</JoinStepBar> */}
-      {/*          
-      <Wrapper>
-        {userAuth === "owner" &&
-          (stepNumber === 3 || stepNumber === 4 || stepNumber === 5) && (
-            <Wrapper>
-              <Text
-                style={{ backgroundColor: stepNumber === 3 ? "red" : null }}
-              >
-                1
-              </Text>
-              <Text
-                style={{ backgroundColor: stepNumber === 4 ? "red" : null }}
-              >
-                2
-              </Text>
-              <Text
-                style={{ backgroundColor: stepNumber === 5 ? "red" : null }}
-              >
-                3
-              </Text>
-            </Wrapper>
-          )}
-          */}
       <Wrapper>
         {stepNumber === 1 && (
           <Wrapper>

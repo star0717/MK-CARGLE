@@ -8,6 +8,10 @@ import MyPageAccount from "../MyPageAccount";
 import Link from "next/link";
 import { Text, Wrapper } from "../../styles/CommonComponents";
 
+/**
+ * 메인: index 컴포넌트(기능)
+ * @returns
+ */
 const Main: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();

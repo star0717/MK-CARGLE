@@ -12,7 +12,7 @@ import {
   signUpUserAction,
 } from "../../../../../store/action/user.action";
 import { initialState } from "../../../../../store/reducer/user.reducer";
-import CompanyPresenter from "./companyPresenter";
+import SignCompanyPresenter from "./signCompanyPresenter";
 import {
   CloseButton,
   WholeWrapper,
@@ -20,11 +20,17 @@ import {
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
 import { CHAR_DEL } from "../../../../validation/regEx";
+import { Company } from "../../../../models/company.entity";
 
 // modal setting
 Modal.setAppElement("body");
 
-const Company: NextPage<any> = (props) => {
+/**
+ * 회원가입: 업체정보 컴포넌트(기능)
+ * @param props
+ * @returns
+ */
+const SignCompany: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   // props 재정의
@@ -35,12 +41,12 @@ const Company: NextPage<any> = (props) => {
   const stepNumber = props.stepNumber;
   const setStepNumber = props.setStepNumber;
 
-  const [inputCompany, setInputCompany] = useState({
+  const [inputCompany, setInputCompany] = useState<Company>({
     ...company,
     ownerName: user.name,
   }); // 업체 정보
   const [inputForm, setInputForm] = useState<FormInput>(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
-  const [modalOpen, setModalOpen] = useState(false); // 모달창 open 여부
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달창 open 여부
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -52,7 +58,9 @@ const Company: NextPage<any> = (props) => {
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
-  // modal 창 닫기 기능
+  /**
+   * modal 창 닫기 기능
+   */
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -64,8 +72,10 @@ const Company: NextPage<any> = (props) => {
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
 
-  // 회원가입 - input 값 입력 시 텍스트 변환을 위한 handler
-  // 업체 정보
+  /**
+   * 회원가입 - input 텍스트 변환 handler
+   * @param e
+   */
   const onInputCompanyHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (
       e.target.name === "comRegNum" ||
@@ -78,7 +88,10 @@ const Company: NextPage<any> = (props) => {
     setInputCompany({ ...inputCompany, [e.target.name]: e.target.value });
   };
 
-  // 사업자번호 유효성 검사 handler
+  /**
+   * 사업자번호 유효성 검사 handler
+   * @param e
+   */
   const onComRegNumCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (inputCompany.comRegNum) {
       dispatch(companyFindAction(inputCompany.comRegNum)).then(
@@ -117,7 +130,10 @@ const Company: NextPage<any> = (props) => {
     }
   };
 
-  // 주소 검색 api handler
+  /**
+   * 주소 검색 api handler
+   * @param data
+   */
   const addressHandler = (data: any) => {
     let fullAddress = data.address;
     let zonecode = data.zonecode;
@@ -143,7 +159,10 @@ const Company: NextPage<any> = (props) => {
     setModalOpen(false);
   };
 
-  // 사업자(owner) 회원가입 form submit handler
+  /**
+   * 사업자(owner) 회원가입 form submit handler
+   * @param data
+   */
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
     dispatch({ type: actionTypesUser.INPUT_COMPANY, payload: inputCompany });
     dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
@@ -194,7 +213,7 @@ const Company: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper>
-      <CompanyPresenter {...fProps} />
+      <SignCompanyPresenter {...fProps} />
       <Wrapper>
         <Modal
           isOpen={modalOpen}
@@ -239,4 +258,4 @@ const Company: NextPage<any> = (props) => {
   );
 };
 
-export default Company;
+export default SignCompany;

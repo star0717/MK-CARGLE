@@ -12,6 +12,11 @@ interface SignInProps {
   saveCheck: boolean;
 }
 
+/**
+ * Index: 로그인 페이지
+ * @param props
+ * @returns
+ */
 const Home: NextPage<SignInProps> = (props) => {
   return (
     <>

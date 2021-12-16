@@ -13,6 +13,11 @@ import {
 import React from "react";
 import { useRouter } from "next/dist/client/router";
 
+/**
+ * 계정찾기: 비밀번호 찾기(화면)
+ * @param props
+ * @returns
+ */
 const FindPasswordPresenter: NextPage<any> = (props) => {
   const router = useRouter();
   // 필요한 props 재정의

@@ -4,11 +4,16 @@ import TermSignUp from "./section/term";
 import FileUpload from "./section/fileUpload";
 import SignupComplete from "./section/complete";
 import SelectUser from "./section/selectUser";
-import InputAccount from "./section/account";
-import InputCompany from "./section/company";
+import SignAccount from "./section/signAccount";
+import SignCompany from "./section/signCompany";
 import { WholeWrapper, Wrapper } from "../../styles/CommonComponents";
 import React from "react";
 
+/**
+ * 회원가입: Index 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
 const SignUpPresenter: NextPage<any> = (props) => {
   // 필요한 props 재정의
   const stepNumber = props.stepNumber;
@@ -26,10 +31,10 @@ const SignUpPresenter: NextPage<any> = (props) => {
           <Wrapper>
             {stepNumber === 1 && <SelectUser {...props} />}
             {stepNumber === 2 && <TermSignUp {...props} />}
-            {stepNumber === 3 && <InputAccount {...props} />}
+            {stepNumber === 3 && <SignAccount {...props} />}
             {stepNumber === 4 &&
               (userAuth === "owner" ? (
-                <InputCompany {...props} />
+                <SignCompany {...props} />
               ) : (
                 <SignupComplete />
               ))}

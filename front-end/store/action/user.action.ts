@@ -169,8 +169,12 @@ export async function approvalReqAction(dataToSubmit: any) {
   };
 }
 
-// 비밀번호 확인 action
-export async function passwordCheck(dataToSubmit: ConfirmPWD) {
+/**
+ * 비밀번호 확인 action
+ * @param dataToSubmit
+ * @returns
+ */
+export async function pwCheckAction(dataToSubmit: ConfirmPWD) {
   const req = await axios
     .post(`/api/settings/myinfo/confirm/password`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -181,10 +185,10 @@ export async function passwordCheck(dataToSubmit: ConfirmPWD) {
 }
 
 /**
- * user와 company정보 가져오기
+ * user와 company정보 가져오기 action
  * @returns
  */
-export async function getMyInfo() {
+export async function getMyInfoAction() {
   const req = await axios
     .get(`/api/settings/myinfo`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -195,10 +199,10 @@ export async function getMyInfo() {
 }
 
 /**
- * user와 company정보 업데이트
+ * user와 company정보 업데이트 action
  * @returns
  */
-export async function setMyInfo(dataToSubmit: any) {
+export async function setMyInfoAction(dataToSubmit: any) {
   const req = await axios
     .patch(`/api/settings/myinfo`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -209,10 +213,10 @@ export async function setMyInfo(dataToSubmit: any) {
 }
 
 /**
- * 비밀번호 변경
+ * 비밀번호 변경 action
  * @returns
  */
-export async function changePass(dataToSubmit: HelpChangePWD) {
+export async function changePwAction(dataToSubmit: HelpChangePWD) {
   const req = await axios
     .patch(
       `/api/settings/myinfo/change/password/${dataToSubmit._id}`,
@@ -226,10 +230,10 @@ export async function changePass(dataToSubmit: HelpChangePWD) {
 }
 
 /**
- * 도장 업로드
+ * 도장 업로드 action
  * @returns
  */
-export async function uploadStamp(dateToSubmit: any) {
+export async function uploadStampAction(dateToSubmit: any) {
   const req = await axios
     .patch(`/api/settings/myinfo/stamp`, dateToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -240,10 +244,10 @@ export async function uploadStamp(dateToSubmit: any) {
 }
 
 /**
- * 도장 이미지 반환
+ * 도장 이미지 반환 action
  * @returns
  */
-export async function downloadStamp() {
+export async function downloadStampAction() {
   const req = await axios
     .get(`/api/settings/myinfo/stamp`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -255,10 +259,10 @@ export async function downloadStamp() {
 }
 
 /**
- * 회원 탈퇴 기능
+ * 회원 탈퇴 기능 action
  * @returns
  */
-export async function withdrawal(dateToSubmit: any) {
+export async function withdrawalAction(dateToSubmit: any) {
   const req = await axios
     .post(`/api/auth/withdrawal`, dateToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);

@@ -10,6 +10,10 @@ import {
   RsWrapper,
 } from "../../../n2server/front-end/src/components/styles/CommonComponents";
 
+/**
+ * 404 에러 페이지
+ * @returns
+ */
 const Custom404: NextPage = () => {
   const router = useRouter();
   return (

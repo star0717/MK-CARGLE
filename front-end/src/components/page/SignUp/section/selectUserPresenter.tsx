@@ -16,15 +16,23 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { IoIosArrowForward } from "react-icons/io";
+import { NextPage } from "next";
 
-const SelectUserPresenter = ({
-  user,
-  stepNumber,
-  setStepNumber,
-  setUserAuth,
-  UserAuthority,
-}: any) => {
+/**
+ * 회원가입: 가입유형 선택 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
+const SelectUserPresenter: NextPage<any> = (props) => {
   const dispatch = useDispatch();
+
+  // 필요한 props 재정의
+  const user = props.user;
+  const stepNumber = props.stepNumber;
+  const setStepNumber = props.setStepNumber;
+  const setUserAuth = props.setUserAuth;
+  const UserAuthority = props.UserAuthority;
+
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 

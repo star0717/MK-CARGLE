@@ -8,6 +8,11 @@ import {
   Wrapper,
 } from "../../../styles/CommonComponents";
 
+/**
+ * 계정찾기: 이메일 찾기 완료(화면)
+ * @param props
+ * @returns
+ */
 const FindEmailComplete: NextPage<any> = (props) => {
   const router = useRouter();
 

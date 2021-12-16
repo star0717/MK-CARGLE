@@ -9,16 +9,16 @@ import {
   Wrapper,
   Text,
   TextInput2,
-  Combo,
   SmallButton,
   CommonButton,
-  JoinStepBarWrapper,
-  JoinStepBar,
-  TextInput,
 } from "../../../styles/CommonComponents";
-import { GoCheck } from "react-icons/go";
 
-const AccountPresenter: NextPage<any> = (props) => {
+/**
+ * 회원가입: 계정정보 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
+const SignAccountPresenter: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   // 필요한 props 재정의
@@ -441,4 +441,4 @@ const AccountPresenter: NextPage<any> = (props) => {
   );
 };
 
-export default AccountPresenter;
+export default SignAccountPresenter;

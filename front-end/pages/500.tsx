@@ -7,6 +7,10 @@ import {
   CommonButton,
 } from "../../../n2server/front-end/src/components/styles/CommonComponents";
 
+/**
+ * 500 에러 페이지
+ * @returns
+ */
 const Custom500: NextPage = () => {
   return (
     <WholeWrapper>

@@ -7,6 +7,10 @@ import { WholeWrapper } from "../../../styles/CommonComponents";
 import FindPasswordPresenter from "./findPasswordPresenter";
 import FindPwComPresenter from "./findPwComPresenter";
 
+/**
+ * 계정찾기: 비밀번호 찾기(기능)
+ * @returns
+ */
 const FindPassword: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();

@@ -4,15 +4,17 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  TextInput,
   CommonButton,
-  JoinStepBarWrapper,
-  JoinStepBar,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 
+/**
+ * 회원가입: 이용약관 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
 const TermPresenter: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 

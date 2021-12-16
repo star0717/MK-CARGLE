@@ -1,10 +1,12 @@
 import { NextPage } from "next";
-import { useDispatch } from "react-redux";
 import SelectUserPresenter from "./selectUserPresenter";
 
+/**
+ * 회원가입: 가입유형 선택 컴포넌트(기능)
+ * @param props
+ * @returns
+ */
 const SelectUser: NextPage<any> = (props) => {
-  const dispatch = useDispatch();
-
   // props 재정의
   const user = props.user;
   const stepNumber = props.stepNumber;
@@ -12,6 +14,7 @@ const SelectUser: NextPage<any> = (props) => {
   const setUserAuth = props.setUserAuth;
   const UserAuthority = props.UserAuthority;
 
+  // 화면구성에 넘길 props
   const fProps = {
     user,
     stepNumber,

@@ -8,16 +8,18 @@ import {
   SmallButton,
   CommonButton,
   Combo,
-  JoinStepBarWrapper,
-  JoinStepBar,
 } from "../../../styles/CommonComponents";
 import React from "react";
-import { basicRegEx, formRegEx } from "../../../../validation/regEx";
+import { formRegEx } from "../../../../validation/regEx";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
-import { GoCheck } from "react-icons/go";
 
-const CompanyPresenter: NextPage<any> = (props) => {
+/**
+ * 회원가입: 업체정보 컴포넌트(화면)
+ * @param props
+ * @returns
+ */
+const SignCompanyPresenter: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   // 필요한 props 재정의
@@ -382,4 +384,4 @@ const CompanyPresenter: NextPage<any> = (props) => {
   );
 };
 
-export default CompanyPresenter;
+export default SignCompanyPresenter;

@@ -10,6 +10,11 @@ interface TermData {
   privacyTerm: Boolean;
 }
 
+/**
+ * 회원가입: 이용약관 컴포넌트(기능)
+ * @param props
+ * @returns
+ */
 const Term: NextPage<any> = (props) => {
   // props 재정의
   // const formCheck = props.formCheck;
@@ -23,7 +28,10 @@ const Term: NextPage<any> = (props) => {
     formState: { errors },
   } = useForm({ criteriaMode: "all" });
 
-  // 이용약관 form submit handler
+  /**
+   * 이용약관 form submit handler
+   * @param data
+   */
   const agreeTermHandler: SubmitHandler<TermData> = (data) => {
     setStepNumber(stepNumber + 1);
   };

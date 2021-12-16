@@ -1,5 +1,3 @@
-import { setMyInfo } from "../../action/user.action";
-
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
   INPUT_ACCOUNT = "INPUT_ACCOUNT",

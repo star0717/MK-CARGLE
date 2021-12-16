@@ -1,29 +1,31 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import { SignUpInfo } from "../../../models/auth.entity";
-import Account from "./section/AccountM";
-import MyPage from "./section/MyPage";
-import Withdrawal from "./section/Withdrawal";
+import { WholeWrapper } from "../../styles/CommonComponents";
+import MyPageAcccountPresenter from "./indexPresenter";
 
+/**
+ * 마이 페이지: 계정관리 index 컴포넌트(기능)
+ * @param props
+ * @returns
+ */
 const MyPageAccount: NextPage<any> = (props) => {
-  const [pages, setPages] = useState<number>(1);
-  const [accountInfo, setAccountInfo] = useState<SignUpInfo>();
+  const [step, setStep] = useState<number>(1); // 페이지 step state
+  const [accountInfo, setAccountInfo] = useState<SignUpInfo>(); // 로그인 계정 정보 state
 
-  //console.log(props);
-
-  const MyPageProps = {
+  // 화면 구성에 넘길 props
+  const fProps = {
     ...props,
-    setPages,
+    step,
+    setStep,
     accountInfo,
     setAccountInfo,
   };
 
   return (
-    <div>
-      {pages === 1 && <MyPage {...MyPageProps} />}
-      {pages === 2 && <Account {...MyPageProps} />}
-      {pages === 3 && <Withdrawal {...MyPageProps} />}
-    </div>
+    <WholeWrapper>
+      <MyPageAcccountPresenter {...fProps} />
+    </WholeWrapper>
   );
 };
 

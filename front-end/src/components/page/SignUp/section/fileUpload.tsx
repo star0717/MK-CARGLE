@@ -17,11 +17,19 @@ interface FileUploadProps {
   setStepNumber?: any;
 }
 
+/**
+ * 파일 데이터 초기화
+ */
 const fileInit = {
   comFile: "",
   manFile: "",
 };
 
+/**
+ * 회원가입: 파일 업로드 컴포넌트(기능)
+ * @param props
+ * @returns
+ */
 const FileUpload: NextPage<FileUploadProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -30,17 +38,23 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
   const stepNumber = props?.stepNumber;
   const setStepNumber = props?.setStepNumber;
 
-  const [file, setFile] = useState(fileInit); // 업로드할 파일 state
-  const [fileName, setFileName] = useState(fileInit); // 업로드할 파일명 state
+  const [file, setFile] = useState<any>(fileInit); // 업로드할 파일 state
+  const [fileName, setFileName] = useState<any>(fileInit); // 업로드할 파일명 state
 
-  // 파일 선택 시 파일명 state 변경
+  /**
+   * 파일 선택 시 파일명 state 변경
+   * @param e
+   */
   const onFileSelectHandler = (e: any) => {
     let fileData = e.target.files[0];
     setFile({ ...file, [e.target.name]: fileData });
     setFileName({ ...fileName, [e.target.name]: fileData.name });
   };
 
-  // 다음에 하기(logout 같은 기능) handler
+  /**
+   * 다음에 하기(logout 같은 기능) handler
+   * @param e
+   */
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     alert("입력하신 계정정보로 로그인하시면 서류제출이 가능합니다.");
     dispatch(signOutUserAction()).then((res: any) => {
@@ -49,7 +63,10 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
     });
   };
 
-  // 파일 업로드 handler
+  /**
+   * 파일 업로드 handler
+   * @param e
+   */
   const onFileUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const comFormData = new FormData();
@@ -105,6 +122,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
     );
   };
 
+  // 화면구성에 넘길 props
   const fProps = {
     fileName,
     file,

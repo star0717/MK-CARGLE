@@ -6,6 +6,10 @@ import { WholeWrapper } from "../../../styles/CommonComponents";
 import FindEmailComplete from "./findEmailComPresenter";
 import FindEmailPresenter from "./findEmailPresenter";
 
+/**
+ * 계정찾기: 이메일 찾기(기능)
+ * @returns
+ */
 const FindEmail: NextPage = () => {
   const dispatch = useDispatch();
 

@@ -9,7 +9,7 @@ import { SignRoute } from "../../src/models/router.entity";
 import Find from "../../src/components/page/Find";
 
 /**
- * sign: url에 따른 컴포넌트
+ * 계정관련: url에 따른 컴포넌트
  */
 const SignComponent: NextPage = () => {
   const router = useRouter();
@@ -27,6 +27,10 @@ const SignComponent: NextPage = () => {
   }
 };
 
+/**
+ * 계정관련: 페이지
+ * @returns
+ */
 const SignUpPage: NextPage = () => {
   return (
     <>
