@@ -1,9 +1,16 @@
 import axios, { AxiosResponse } from "axios";
-import { ConfirmPWD, HelpChangePWD } from "../../src/models/auth.entity";
+import {
+  ConfirmPWD,
+  HelpChangePWD,
+  HelpFindEmail,
+  HelpFindPWD,
+  SignUpInfo,
+  UserInfo,
+} from "../../src/models/auth.entity";
 import { actionTypesUser } from "../interfaces";
 
 // 로그인 action
-export async function signInUserAction(dataToSubmit: any) {
+export async function signInUserAction(dataToSubmit: UserInfo) {
   const req = await axios
     .post(`/api/auth/signin`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -73,7 +80,7 @@ export async function authNumCheckAction(dataToSubmit: string) {
 }
 
 // 이메일 찾기 action
-export async function findEmailAction(dataToSubmit: any) {
+export async function findEmailAction(dataToSubmit: HelpFindEmail) {
   const req = await axios
     .post(`/api/auth/help/email`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -84,7 +91,7 @@ export async function findEmailAction(dataToSubmit: any) {
 }
 
 // 패스워드 찾기 action
-export async function findPWAction(dataToSubmit: any) {
+export async function findPWAction(dataToSubmit: HelpFindPWD) {
   const req = await axios
     .post(`/api/auth/help/pwd`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -129,7 +136,7 @@ export async function companyFindbyNameAction(dataToSubmit: string) {
 }
 
 // 사업자등록증 업로드 action
-export async function comFileUploadAction(dataToSubmit: any) {
+export async function comFileUploadAction(dataToSubmit: FormData) {
   const req = await axios
     .post(`/api/auth/upload/com-reg-doc`, dataToSubmit, {
       headers: {
@@ -144,7 +151,7 @@ export async function comFileUploadAction(dataToSubmit: any) {
 }
 
 // 정비업등록증 업로드 action
-export async function manFileUploadAction(dataToSubmit: any) {
+export async function manFileUploadAction(dataToSubmit: FormData) {
   const req = await axios
     .post(`/api/auth/upload/man-reg-doc`, dataToSubmit, {
       headers: {
@@ -159,7 +166,7 @@ export async function manFileUploadAction(dataToSubmit: any) {
 }
 
 // 가입 심사 요청 action (업체)
-export async function approvalReqAction(dataToSubmit: any) {
+export async function approvalReqAction(dataToSubmit: string) {
   const req = await axios
     .patch(`/api/auth/request/company/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -202,7 +209,7 @@ export async function getMyInfoAction() {
  * user와 company정보 업데이트 action
  * @returns
  */
-export async function setMyInfoAction(dataToSubmit: any) {
+export async function setMyInfoAction(dataToSubmit: SignUpInfo) {
   const req = await axios
     .patch(`/api/settings/myinfo`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -233,7 +240,7 @@ export async function changePwAction(dataToSubmit: HelpChangePWD) {
  * 도장 업로드 action
  * @returns
  */
-export async function uploadStampAction(dateToSubmit: any) {
+export async function uploadStampAction(dateToSubmit: FormData) {
   const req = await axios
     .patch(`/api/settings/myinfo/stamp`, dateToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -262,7 +269,7 @@ export async function downloadStampAction() {
  * 회원 탈퇴 기능 action
  * @returns
  */
-export async function withdrawalAction(dateToSubmit: any) {
+export async function withdrawalAction(dateToSubmit: ConfirmPWD) {
   const req = await axios
     .post(`/api/auth/withdrawal`, dateToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);

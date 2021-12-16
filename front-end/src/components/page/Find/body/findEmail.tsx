@@ -25,7 +25,11 @@ const FindEmail: NextPage = () => {
   const onfindEmailHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch(findEmailAction({ name, hpNumber })).then((res: any) => {
+    const findEmailInfo = {
+      name: name,
+      hpNumber: hpNumber,
+    };
+    dispatch(findEmailAction(findEmailInfo)).then((res: any) => {
       if (res.payload) {
         setFindEmail(res.payload);
         setComplete(true);

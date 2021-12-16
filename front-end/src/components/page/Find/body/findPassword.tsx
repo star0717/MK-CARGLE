@@ -27,13 +27,12 @@ const FindPassword: NextPage = () => {
   const onFindPwHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch(
-      findPWAction({
-        name,
-        hpNumber,
-        email,
-      })
-    ).then(
+    const findPwInfo = {
+      name: name,
+      hpNumber: hpNumber,
+      email: email,
+    };
+    dispatch(findPWAction(findPwInfo)).then(
       (req: any) => {
         if (req.payload) {
           setComplete(true);

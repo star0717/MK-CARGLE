@@ -46,6 +46,7 @@ const StampModal: NextPage<modalOption> = (props) => {
    * @returns
    */
   const stampFileUpload = (canvas: any, crop: any) => {
+    console.log("확인");
     if (!crop || !canvas) {
       return;
     }
