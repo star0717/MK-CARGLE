@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 /**
  * jwt를 json으로 만드는 함수
  * @param token
@@ -9,4 +11,22 @@ export const parseJwt = (token: string) => {
   var result = JSON.parse(payload.toString());
 
   return result;
+};
+
+export interface RoutePages {
+  mainRoute: string;
+  subRoute: string;
+}
+
+export const initPage = (): RoutePages => {
+  const router = useRouter();
+
+  const { page } = router.query; // page url query
+
+  const pages: RoutePages = {
+    mainRoute: page && page[0],
+    subRoute: page && page[1],
+  };
+
+  return pages;
 };

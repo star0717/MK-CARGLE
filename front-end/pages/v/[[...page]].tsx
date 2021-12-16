@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Footer from "../../src/components/layout/Footer";
 import Header from "../../src/components/layout/Header";
-import { parseJwt } from "../../src/modules/commonModule";
+import { initPage, parseJwt, RoutePages } from "../../src/modules/commonModule";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
 import { CompanyApproval } from "../../src/models/company.entity";
@@ -27,7 +27,7 @@ interface ViewProps {
  */
 const MainComponent: NextPage<ViewProps> = (props) => {
   // 필요한 props 재정의
-  const tokenValue = props.tokenValue;
+  const tokenValue: AuthTokenInfo = props.tokenValue;
 
   switch (tokenValue.cApproval) {
     case CompanyApproval.BEFORE:
@@ -47,22 +47,24 @@ const MainComponent: NextPage<ViewProps> = (props) => {
  * @returns
  */
 const SubComponent: NextPage<ViewProps> = (props) => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const { page } = router.query; // page url query
+  // const { page } = router.query; // page url query
 
-  const mainRoute = page && page[0];
-  const subRoute = page && page[1];
+  // const mainRoute = page && page[0];
+  // const subRoute = page && page[1];
 
-  switch (mainRoute) {
+  const routePages: RoutePages = initPage();
+
+  switch (routePages.mainRoute) {
     case MainRoute.MAIN:
       return <Main {...props} />;
 
     case MainRoute.MYPAGE:
-      if (subRoute === SubRoute.ACCOUNT) {
+      if (routePages.subRoute === SubRoute.ACCOUNT) {
         return <MyPageAccount {...props} />;
       }
-      if (subRoute === SubRoute.WORKER) {
+      if (routePages.subRoute === SubRoute.WORKER) {
         return <MyPageWorker {...props} />;
       }
 
