@@ -24,7 +24,7 @@ import { Company } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
 import { CompaniesService } from '../companies/companies.service';
 import { UsersService } from '../users/users.service';
-import { MongoError } from 'mongodb';
+import { MongoError, MongoServerError } from 'mongodb';
 
 @Injectable()
 export class SettingsService {
@@ -144,7 +144,20 @@ export class SettingsService {
     if (user.joinDate) pUser.joinDate = user.joinDate;
     try {
       return await this.usersService.findByIdAndUpdate(token, id, pUser);
-    } catch (err) {
+    } catch (err: unknown) {
+      const me = err as MongoError;
+      const mse = err as MongoServerError;
+      // console.log('1: ' + me.code);
+      // console.log('2: ' + me.errmsg);
+      // console.log('3: ' + me.errorLabels);
+      // console.log('4: ' + me.message);
+      // console.log('5: ' + me.name);
+      // console.log('6: ' + me.stack);
+      console.log(mse);
+      console.log(mse.code);
+      console.log(mse.name);
+      console.log(mse.message);
+
       throw new HttpException(
         {
           status: HttpStatus.FORBIDDEN,

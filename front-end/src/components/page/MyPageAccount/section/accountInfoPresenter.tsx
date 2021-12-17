@@ -197,9 +197,9 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 required: true,
               })}
             >
-              {/* <option value="1급">1급 자동차 공업사(자동차 종합 정비소)</option>
+              <option value="1급">1급 자동차 공업사(자동차 종합 정비소)</option>
               <option value="2급">2급 자동차 공업사(소형 자동차 정비소)</option>
-              <option value="3급">3급 자동차 공업사(자동차 전문 정비소)</option> */}
+              <option value="3급">3급 자동차 공업사(자동차 전문 정비소)</option>
               {/* mbType.map(item => ) */}
             </Combo>
             {errors.mbTypeNum?.type === "required" && (
