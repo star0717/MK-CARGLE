@@ -22,7 +22,7 @@ import {
   HeaderIconAlarmWrapper,
 } from "../styles/CommonComponents";
 import { CompanyApproval } from "../../models/company.entity";
-import { MainRoute, SubRoute } from "../../configure/router.entity";
+import { MainRoute, SubRoute, UseLink } from "../../configure/router.entity";
 import { useState } from "react";
 import { appearAnimation } from "../styles/AnimationCommon";
 import { FaBell } from "react-icons/fa";
@@ -76,7 +76,7 @@ const Header: NextPage<LayoutProps> = (props) => {
         bgColor={`#fafafa`}
       >
         <Wrapper width={`auto`} al={`cneter`}>
-          <Link href="/v/main">
+          <Link href={UseLink.MAIN}>
             <a>
               <Image
                 src="/images/cargle.png"
