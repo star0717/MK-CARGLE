@@ -115,7 +115,7 @@ export class AuthController {
     this.comService.clearToken(res);
   }
 
-  @ApiOperation({ summary: `[WORKER] 프로필 확인 (토큰 정보 확인)` })
+  @ApiOperation({ summary: `[개발전용][WORKER] 프로필 확인 (토큰 정보 확인)` })
   @Get('profile')
   getProfile(
     @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,

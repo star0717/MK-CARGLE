@@ -144,4 +144,14 @@ export class User extends BaseEntity {
     default: false,
   })
   public approval: boolean;
+
+  @ApiProperty({ description: '마켓팅 정보 수신 동의여부', default: false })
+  @IsOptional()
+  @IsBoolean()
+  @prop({
+    unique: false,
+    required: true,
+    default: false,
+  })
+  public confirm_rcv_mktInfo: boolean;
 }

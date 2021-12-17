@@ -937,6 +937,7 @@ export const Test = styled.li<any>`
 
 export const TestDiv2 = styled.div<any>`
   display: none;
+  transition: 0.5s;
 
   box-shadow: ${(props) => props.shadow};
   position: absolute;
@@ -959,6 +960,7 @@ export const TestDiv = styled.div<any>`
     background-color: #fafafa;
     height: 180px;
     position: absolute;
+    transition: 0.5s;
   }
 `;
 

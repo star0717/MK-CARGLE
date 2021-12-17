@@ -22,7 +22,7 @@ import {
   HeaderIconAlarmWrapper,
 } from "../styles/CommonComponents";
 import { CompanyApproval } from "../../models/company.entity";
-import { MainRoute, SubRoute } from "../../models/router.entity";
+import { MainRoute, SubRoute } from "../../configure/router.entity";
 import { useState } from "react";
 import { appearAnimation } from "../styles/AnimationCommon";
 import { FaBell } from "react-icons/fa";
