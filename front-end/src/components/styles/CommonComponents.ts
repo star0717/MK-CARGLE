@@ -938,9 +938,10 @@ export const Test = styled.li<any>`
 export const TestDiv2 = styled.div<any>`
   display: none;
   transition: 0.5s;
-
+  flex-direction: ${(props) => props.dr};
   box-shadow: ${(props) => props.shadow};
   position: absolute;
+  flex-direction: ${(props) => props.dr};
 `;
 
 export const TestDiv = styled.div<any>`
@@ -961,6 +962,7 @@ export const TestDiv = styled.div<any>`
     height: 180px;
     position: absolute;
     transition: 0.5s;
+    flex-direction: ${(props) => props.dr};
   }
 `;
 
