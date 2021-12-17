@@ -4,6 +4,7 @@ import Footer from "../src/components/layout/Footer";
 import Header from "../src/components/layout/Header";
 import SignIn from "../src/components/page/SignIn/SignIn";
 import { WholeWrapper } from "../src/components/styles/CommonComponents";
+import { UseLink } from "../src/configure/router.entity";
 
 //SCSS
 
@@ -45,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/v/main",
+        destination: UseLink.MAIN,
       },
     };
   }

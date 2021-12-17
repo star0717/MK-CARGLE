@@ -22,4 +22,5 @@ export declare class User extends BaseEntity {
   address2: string;
   joinDate: Date;
   approval: boolean;
+  confirm_rcv_mktInfo: boolean;
 }

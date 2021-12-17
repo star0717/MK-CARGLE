@@ -9,6 +9,7 @@ import {
   CommonButton,
   RsWrapper,
 } from "../../../n2server/front-end/src/components/styles/CommonComponents";
+import { UseLink } from "../src/configure/router.entity";
 
 /**
  * 404 에러 페이지
@@ -57,7 +58,7 @@ const Custom404: NextPage = () => {
             type="button"
             margin={` 10px`}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              router.push("/v/main");
+              router.push(UseLink.MAIN);
             }}
           >
             홈으로 돌아가기

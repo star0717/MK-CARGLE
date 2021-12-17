@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import {
   WholeWrapper,
   Wrapper,
@@ -6,12 +7,15 @@ import {
   Image,
   CommonButton,
 } from "../../../n2server/front-end/src/components/styles/CommonComponents";
+import { UseLink } from "../src/configure/router.entity";
 
 /**
  * 500 에러 페이지
  * @returns
  */
 const Custom500: NextPage = () => {
+  const router = useRouter();
+
   return (
     <WholeWrapper>
       <Wrapper padding={`150px 0px 0px`}>
@@ -44,7 +48,25 @@ const Custom500: NextPage = () => {
           주말 및 공휴일 휴무
         </Text>
         <Wrapper padding={`10px 0px 0px`}>
-          <CommonButton>홈으로 돌아가기</CommonButton>
+          <CommonButton
+            type="button"
+            margin={`10px`}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              router.back();
+            }}
+            kindOf={`white`}
+          >
+            이전페이지
+          </CommonButton>
+          <CommonButton
+            type="button"
+            margin={` 10px`}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              router.push(UseLink.MAIN);
+            }}
+          >
+            홈으로 돌아가기
+          </CommonButton>
         </Wrapper>
       </Wrapper>
     </WholeWrapper>
