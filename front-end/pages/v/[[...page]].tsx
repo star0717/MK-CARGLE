@@ -116,27 +116,44 @@ const MainPage: NextPage<ViewProps> = (props) => {
 export default MainPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const route = context.query;
-  console.log("컨택스트", context);
-  const mainRoute = route.page ? route.page[0] : null;
-  const subRoute = route.page ? route.page[1] : null;
+  // const route = context.query;
+  // const mainRoute = route.page ? route.page[0] : null;
+  // const subRoute = route.page ? route.page[1] : null;
 
-  const mItem: any = Object.values(MainRoute); // page first query array
-  const sItem: any = Object.values(SubRoute); // page second query array
+  // const mItem: any = Object.values(MainRoute); // page first query array
+  // const sItem: any = Object.values(SubRoute); // page second query array
+
+  console.log("컨택스트", context);
+  console.log("유알엘", context.resolvedUrl);
+  const url: string = context.resolvedUrl;
+
+  const useUrlArray = Object.values(UseLink);
+  console.log("확인", useUrlArray);
 
   if (context.req.cookies.mk_token) {
     const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
 
-    if (mItem.indexOf(mainRoute) === -1) {
+    // if (mItem.indexOf(mainRoute) === -1) {
+    //   return {
+    //     notFound: true,
+    //   };
+    // } else {
+    //   if (mainRoute === "mypage" && sItem.indexOf(subRoute) === -1) {
+    //     return {
+    //       notFound: true,
+    //     };
+    //   }
+    //   return {
+    //     props: {
+    //       tokenValue,
+    //     },
+    //   };
+    // }
+    if (useUrlArray.indexOf(url) === -1) {
       return {
         notFound: true,
       };
     } else {
-      if (mainRoute === "mypage" && sItem.indexOf(subRoute) === -1) {
-        return {
-          notFound: true,
-        };
-      }
       return {
         props: {
           tokenValue,
