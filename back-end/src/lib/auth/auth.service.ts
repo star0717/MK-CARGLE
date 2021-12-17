@@ -99,7 +99,7 @@ export class AuthService {
       if (signUpInfo.user.auth == UserAuthority.OWNER && company) {
         this.companiesService.findByIdAndRemoveForAuth(company._id);
       }
-      throw new BadRequestException();
+      throw new BadRequestException(err);
     }
 
     const newSignUpInfo: SignUpInfo = {
