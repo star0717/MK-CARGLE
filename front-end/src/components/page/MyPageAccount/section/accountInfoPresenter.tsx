@@ -43,7 +43,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
       <Wrapper>
         <form id="saveform" onSubmit={handleSubmit(onChangeInfoHandler)}>
           <Text>계정정보</Text>
-          <Wrapper dr={`row`} margin={`100px 0px 0px`}>
+          <Wrapper dr={`row`}>
             <Text>아이디</Text>
             <TextInput value={userData.email} type="text" readOnly />
           </Wrapper>

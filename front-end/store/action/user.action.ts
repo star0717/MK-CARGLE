@@ -279,3 +279,18 @@ export async function withdrawalAction(dateToSubmit: ConfirmPWD) {
     payload: req,
   };
 }
+
+/**
+ * 작업자 조회 기능 action
+ * @returns
+ */
+export async function getWorkersListAction(dateToSubmit: ConfirmPWD) {
+  const req = await axios
+    .get(`/api/settings/management/workers/${dateToSubmit}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  return {
+    type: actionTypesUser.GET_WORKERS_LIST,
+    payload: req,
+  };
+}

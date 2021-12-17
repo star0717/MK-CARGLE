@@ -22,7 +22,7 @@ import {
   HeaderIconAlarmWrapper,
 } from "../styles/CommonComponents";
 import { CompanyApproval } from "../../models/company.entity";
-import { MainRoute, SubRoute } from "../../configure/router.entity";
+import { MainRoute, SubRoute, UseLink } from "../../configure/router.entity";
 import { useState } from "react";
 import { appearAnimation } from "../styles/AnimationCommon";
 import { FaBell } from "react-icons/fa";
@@ -45,7 +45,7 @@ const Header: NextPage<LayoutProps> = (props) => {
    */
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
-      router.push("/");
+      router.push(UseLink.INDEX);
     });
   };
 
@@ -76,7 +76,7 @@ const Header: NextPage<LayoutProps> = (props) => {
         bgColor={`#fafafa`}
       >
         <Wrapper width={`auto`} al={`cneter`}>
-          <Link href="/v/main">
+          <Link href={UseLink.MAIN}>
             <a>
               <Image
                 src="/images/cargle.png"
@@ -148,27 +148,196 @@ const Header: NextPage<LayoutProps> = (props) => {
               fontWeight={`800`}
               padding={width < 1510 ? `0px 30px` : `0px 50px`}
             >
-              도움말
+              고객센터
             </Text>
-            <TestDiv2 shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}>
-              <Wrapper></Wrapper>
+            <TestDiv2
+              ju={`space-between`}
+              al={`center`}
+              padding={
+                width < 1510
+                  ? width < 1080
+                    ? `0px 20px`
+                    : `0px 50px`
+                  : `0px 100px`
+              }
+              dr={`row`}
+              shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
+              bgColor={`#fafafa`}
+            >
+              <Wrapper dr={`row`}>
+                <Wrapper
+                  width={width < 1450 ? `133px` : `153px`}
+                  bgColor={`#000`}
+                >
+                  dsdfdf
+                </Wrapper>
+                <Wrapper width={`auto`}>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>부품 관리</a>
+                    </Link>
+                  </TestA>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>세트 관리</a>
+                    </Link>
+                  </TestA>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>거래처 관리</a>
+                    </Link>
+                  </TestA>
+                </Wrapper>
 
-              <Wrapper>
-                <TestA fontWeight={`600`}>
-                  <Link href="#">
-                    <a>소메뉴1</a>
-                  </Link>
-                </TestA>
-                <TestA fontWeight={`600`}>
-                  <Link href="#">
-                    <a>소메뉴1</a>
-                  </Link>
-                </TestA>
-                <TestA fontWeight={`600`}>
-                  <Link href="#">
-                    <a>소메뉴1</a>
-                  </Link>
-                </TestA>
+                <Wrapper width={`auto`}>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>정비장부</a>
+                    </Link>
+                  </TestA>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>고객/차량 관리</a>
+                    </Link>
+                  </TestA>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>예약관리</a>
+                    </Link>
+                  </TestA>
+                </Wrapper>
+
+                <Wrapper width={`auto`}>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>매입/매출 현황</a>
+                    </Link>
+                  </TestA>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>결산 리포트</a>
+                    </Link>
+                  </TestA>
+                </Wrapper>
+
+                <Wrapper width={`auto`}>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>연합회 소식</a>
+                    </Link>
+                  </TestA>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>정비정보 공유</a>
+                    </Link>
+                  </TestA>
+                </Wrapper>
+
+                <Wrapper width={`auto`}>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>계정 관리</a>
+                    </Link>
+                  </TestA>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>직원 관리</a>
+                    </Link>
+                  </TestA>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>포인트 관리</a>
+                    </Link>
+                  </TestA>
+                </Wrapper>
+
+                <Wrapper width={`auto`}>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>공지사항</a>
+                    </Link>
+                  </TestA>
+                  <TestA
+                    cursor={`pointer`}
+                    fontSize={width < 1510 ? `16px` : `18px`}
+                    fontWeight={`600`}
+                    padding={width < 1510 ? `0px 30px` : `0px 50px`}
+                  >
+                    <Link href="#">
+                      <a>사용 설명서</a>
+                    </Link>
+                  </TestA>
+                </Wrapper>
               </Wrapper>
             </TestDiv2>
           </TestDiv>
@@ -197,7 +366,7 @@ const Header: NextPage<LayoutProps> = (props) => {
               >
                 <FaBell />
               </HeaderIconButton>
-              <HeaderIconAlarmWrapper>
+              {/* <HeaderIconAlarmWrapper>
                 <HeaderIconAlarm>
                   <Wrapper al={`flex-start`}>
                     <Text>나는 안읽은 알림이야.</Text>
@@ -218,7 +387,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                     </Text>
                   </Wrapper>
                 </HeaderIconAlarm>
-              </HeaderIconAlarmWrapper>
+              </HeaderIconAlarmWrapper> */}
             </Wrapper>
 
             <HeaderIconButton

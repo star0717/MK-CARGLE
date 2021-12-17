@@ -3,6 +3,7 @@ import { useRouter } from "next/dist/client/router";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import { UseLink } from "../../../../configure/router.entity";
 import CompletePresenter from "./completePresenter";
 
 /**
@@ -21,7 +22,7 @@ const Complete: NextPage<any> = (props) => {
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
       dispatch({ type: actionTypesUser.USER_INIT });
-      router.push("/");
+      router.push(UseLink.INDEX);
     });
   };
 

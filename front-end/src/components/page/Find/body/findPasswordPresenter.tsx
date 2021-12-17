@@ -12,6 +12,7 @@ import {
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { useRouter } from "next/dist/client/router";
+import { UseLink } from "../../../../configure/router.entity";
 
 /**
  * 계정찾기: 비밀번호 찾기(화면)
@@ -87,7 +88,7 @@ const FindPasswordPresenter: NextPage<any> = (props) => {
               <CommonButton
                 type="button"
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  router.push("/sign/findemail");
+                  router.push(UseLink.FIND_EMAIL);
                 }}
               >
                 이메일 찾기

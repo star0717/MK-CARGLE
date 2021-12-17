@@ -9,6 +9,7 @@ import { signInUserAction } from "../../../../store/action/user.action";
 import { formRegEx } from "../../../validation/regEx";
 import SigninPresenter from "./SignInPresenter";
 import { UserInfo } from "../../../models/auth.entity";
+import { UseLink } from "../../../configure/router.entity";
 
 /**
  * 로그인 컴포넌트(기능)
@@ -63,7 +64,7 @@ const SignIn: NextPage<any> = (props) => {
           } else {
             Cookies.remove("saveId");
           }
-          router.push("/v/main");
+          router.push(UseLink.MAIN);
         },
         (err) => {
           // 입력 값이 계정과 다를 경우 에러

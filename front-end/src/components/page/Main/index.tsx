@@ -7,6 +7,7 @@ import Calendar from "../../common/calendar";
 import MyPageAccount from "../MyPageAccount";
 import Link from "next/link";
 import { Text, Wrapper } from "../../styles/CommonComponents";
+import { UseLink } from "../../../configure/router.entity";
 
 /**
  * 메인: index 컴포넌트(기능)
@@ -48,9 +49,14 @@ const Main: NextPage = () => {
           <div
             style={{ width: "100%", height: "40%", backgroundColor: "maroon" }}
           >
-            <Link href="/v/mypage/account">
+            <Link href={UseLink.MYPAGE_ACCOUNT}>
               <a>
                 <button>마이페이지</button>
+              </a>
+            </Link>
+            <Link href={UseLink.MYPAGE_WORKER}>
+              <a>
+                <button>직원관리</button>
               </a>
             </Link>
             <form id="stampform" onSubmit={onStampUploadHandler}>

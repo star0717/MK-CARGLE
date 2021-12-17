@@ -16,6 +16,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { UseLink } from "../../../configure/router.entity";
 
 /**
  * 로그인 컴포넌트(화면)
@@ -140,7 +141,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   아직 회원이 아니신가요?
                 </Text>
                 <Text decoration={`underline`}>
-                  <Link href="/sign/signup">
+                  <Link href={UseLink.SIGNUP}>
                     <a
                       style={{ fontWeight: "bold", fontSize: "16px" }}
                       onClick={userInit}
@@ -159,7 +160,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   계정을 찾고 싶으신가요?
                 </Text>
                 <Text decoration={`underline`}>
-                  <Link href="/sign/findemail">
+                  <Link href={UseLink.FIND_EMAIL}>
                     <a style={{ fontWeight: "bold", fontSize: "16px" }}>
                       계정찾기
                     </a>

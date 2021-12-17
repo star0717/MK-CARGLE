@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
+import { UseLink } from "../../../../configure/router.entity";
 import {
   CommonButton,
   CommonButtonWrapper,
@@ -40,7 +41,7 @@ const FindEmailComplete: NextPage<any> = (props) => {
           <CommonButton
             type="button"
             onClick={() => {
-              router.push("/");
+              router.push(UseLink.INDEX);
             }}
             kindOf={`white`}
             margin={`0px 0px 20px`}
@@ -50,7 +51,7 @@ const FindEmailComplete: NextPage<any> = (props) => {
           <CommonButton
             type="button"
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              router.push("/sign/findpassword");
+              router.push(UseLink.FIND_PASSWORD);
             }}
           >
             비밀번호 찾기
