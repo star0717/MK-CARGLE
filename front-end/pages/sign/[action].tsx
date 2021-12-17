@@ -1,14 +1,19 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextPage,
+  PreviewData,
+} from "next";
 import Head from "next/head";
 import { NextRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 import Footer from "../../src/components/layout/Footer";
 import Header from "../../src/components/layout/Header";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import SignUp from "../../src/components/page/SignUp";
 import { useRouter } from "next/dist/client/router";
-import { SignRoute, UseLink } from "../../src/configure/router.entity";
+import { UseLink } from "../../src/configure/router.entity";
 import Find from "../../src/components/page/Find";
-import { ParsedUrlQuery } from "querystring";
 import { getPathName } from "../../src/modules/commonModule";
 
 /**
@@ -53,7 +58,9 @@ const SignUpPage: NextPage = () => {
 
 export default SignUpPage;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+) => {
   const url: string = context.resolvedUrl; // 현재 url (query 제외)
   const useUrlArray: string[] = Object.values(UseLink); // 사용가능한 url 배열
   const pathName: string = getPathName(url); // pathName 가져오기

@@ -1,6 +1,12 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextPage,
+  PreviewData,
+} from "next";
 import Head from "next/head";
 import { NextRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 import Footer from "../../src/components/layout/Footer";
 import Header from "../../src/components/layout/Header";
 import { getPathName, parseJwt } from "../../src/modules/commonModule";
@@ -10,11 +16,7 @@ import { CompanyApproval } from "../../src/models/company.entity";
 import FileUpload from "../../src/components/page/SignUp/section/fileUpload";
 import Approval from "../../src/components/page/SignUp/section/approval";
 import Main from "../../src/components/page/Main";
-import {
-  MainRoute,
-  SubRoute,
-  UseLink,
-} from "../../src/configure/router.entity";
+import { UseLink } from "../../src/configure/router.entity";
 import { useRouter } from "next/dist/client/router";
 import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
@@ -94,7 +96,9 @@ const MainPage: NextPage<ViewProps> = (props) => {
 
 export default MainPage;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+) => {
   const url: string = context.resolvedUrl; // 현재 url (query 제외)
   const useUrlArray: string[] = Object.values(UseLink); // 사용가능한 url 배열
   const pathName: string = getPathName(url); // pathName 가져오기
