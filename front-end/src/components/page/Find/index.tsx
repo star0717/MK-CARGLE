@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useState } from "react";
 import { WholeWrapper } from "../../styles/CommonComponents";
-import { SignRoute } from "../../../models/router.entity";
+import { SignRoute } from "../../../configure/router.entity";
 import FindEmail from "./body/findEmail";
 import FindPassword from "./body/findPassword";
 
