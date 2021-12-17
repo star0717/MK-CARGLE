@@ -128,15 +128,21 @@ const AccountInfo: NextPage<any> = (props) => {
       company: comData,
       user: userData,
     };
-    dispatch(setMyInfoAction(changeData)).then((res: any) => {
-      alert("저장되었습니다.");
-      setAccountInfo({
-        ...accountInfo,
-        company: comData,
-        user: userData,
+    dispatch(setMyInfoAction(changeData))
+      .then((res: any) => {
+        alert("저장되었습니다.");
+        setAccountInfo({
+          ...accountInfo,
+          company: comData,
+          user: userData,
+        });
+        router.push(UseLink.MAIN);
+      })
+      .catch((err) => {
+        console.log("에러: " + err);
+        console.log("에러: " + err.message);
+        console.log("에러: " + err.name);
       });
-      router.push(UseLink.MAIN);
-    });
   };
 
   /**
