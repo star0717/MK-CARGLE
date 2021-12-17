@@ -21,7 +21,6 @@ export const parseJwt = (token: string): AuthTokenInfo => {
  */
 export const getPathName = (url: string): string => {
   const pathName: string = parse(url).pathname;
-  console.log("패쓰", pathName);
 
   return pathName;
 };
