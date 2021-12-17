@@ -100,7 +100,8 @@ export class SettingsController {
       token,
       data,
     );
-    this.comService.injectToken(newSignInfo, res);
+    
+     this.comService.injectToken(newSignInfo, res);
     return newSignInfo;
   }
 

@@ -1,5 +1,11 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
+import { Exception } from 'handlebars';
 import { getStampPath } from 'src/config/configuration';
 import { CommonService } from 'src/lib/common/common.service';
 import {
@@ -135,7 +141,11 @@ export class SettingsService {
     if (user.address1) pUser.address1 = user.address1;
     if (user.address2) pUser.address2 = user.address2;
     if (user.joinDate) pUser.joinDate = user.joinDate;
-    return await this.usersService.findByIdAndUpdate(token, id, pUser);
+    try {
+      return await this.usersService.findByIdAndUpdate(token, id, pUser);
+    } catch (err) {
+      throw new HttpException('asdfasdf', HttpStatus.NOT_MODIFIED);
+    }
   }
 
   async updateMyCompanyInfo(
@@ -161,7 +171,7 @@ export class SettingsService {
 
     console.log(info.user);
     const user = await this.updateMyUserInfo(token, token.uID, info.user);
-    if (!user) throw new UnauthorizedException();
+    // if (!user) throw new UnauthorizedException('에러');
 
     var company: Company;
     if (token.uAuth == UserAuthority.WORKER) {
@@ -169,7 +179,7 @@ export class SettingsService {
     } else {
       company = await this.updateMyCompanyInfo(token, token.cID, info.company);
     }
-    if (!company) throw new UnauthorizedException();
+    // if (!company) throw new UnauthorizedException();
 
     const myInfo: SignUpInfo = {
       company,
