@@ -49,12 +49,12 @@ export declare class ConfirmPWD {
   PWD: string;
 }
 
-/**
- * worker정보 받기에 사용될 데이터 모델
- */
-export declare class FindResult {
-  docs: [];
-  totalDocs: number;
-  currentPage: number;
-  lastPage: number;
-}
+// /**
+//  * worker정보 받기에 사용될 데이터 모델
+//  */
+// export declare class FindResult {
+//   docs: [];
+//   totalDocs: number;
+//   currentPage: number;
+//   lastPage: number;
+// }

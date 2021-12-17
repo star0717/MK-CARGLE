@@ -7,6 +7,7 @@ import {
   SignUpInfo,
   UserInfo,
 } from "../../src/models/auth.entity";
+import { FindResult } from "../../src/models/base.entity";
 import { actionTypesUser } from "../interfaces";
 
 // 로그인 action
@@ -284,9 +285,9 @@ export async function withdrawalAction(dateToSubmit: ConfirmPWD) {
  * 작업자 조회 기능 action
  * @returns
  */
-export async function getWorkersListAction(dateToSubmit: ConfirmPWD) {
+export async function getWorkersListAction() {
   const req = await axios
-    .get(`/api/settings/management/workers/${dateToSubmit}`)
+    .get(`/api/settings/management/workers`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
