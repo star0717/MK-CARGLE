@@ -57,22 +57,36 @@ const SubComponent: NextPage<ViewProps> = (props) => {
 
   // const mainRoute = page && page[0];
   // const subRoute = page && page[1];
+  const router = useRouter();
 
-  const routePages: RoutePages = initPage();
+  // const routePages: RoutePages = initPage();
 
-  switch (routePages.mainRoute) {
-    case MainRoute.MAIN:
+  // switch (routePages.mainRoute) {
+  //   case MainRoute.MAIN:
+  //     return <Main {...props} />;
+
+  //   case MainRoute.MYPAGE:
+  //     if (routePages.subRoute === SubRoute.ACCOUNT) {
+  //       return <MyPageAccount {...props} />;
+  //     }
+  //     if (routePages.subRoute === SubRoute.WORKER) {
+  //       return <MyPageWorker {...props} />;
+  //     }
+
+  //   case MainRoute.TEST:
+  //     return <Test {...props} />;
+  // }
+  switch (router.asPath) {
+    case UseLink.MAIN:
       return <Main {...props} />;
 
-    case MainRoute.MYPAGE:
-      if (routePages.subRoute === SubRoute.ACCOUNT) {
-        return <MyPageAccount {...props} />;
-      }
-      if (routePages.subRoute === SubRoute.WORKER) {
-        return <MyPageWorker {...props} />;
-      }
+    case UseLink.MYPAGE_ACCOUNT:
+      return <MyPageAccount {...props} />;
 
-    case MainRoute.TEST:
+    case UseLink.MYPAGE_WORKER:
+      return <MyPageWorker {...props} />;
+
+    case UseLink.TEST:
       return <Test {...props} />;
   }
 };
@@ -103,6 +117,7 @@ export default MainPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const route = context.query;
+  console.log("컨택스트", context);
   const mainRoute = route.page ? route.page[0] : null;
   const subRoute = route.page ? route.page[1] : null;
 
