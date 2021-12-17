@@ -1,11 +1,12 @@
-import { useRouter } from "next/router";
+import parse from "url-parse";
+import { AuthTokenInfo } from "../models/auth.entity";
 
 /**
  * jwt를 json으로 만드는 함수
  * @param token
  * @returns
  */
-export const parseJwt = (token: string) => {
+export const parseJwt = (token: string): AuthTokenInfo => {
   var base64Payload = token.split(".")[1];
   var payload = Buffer.from(base64Payload, "base64");
   var result = JSON.parse(payload.toString());
@@ -13,20 +14,14 @@ export const parseJwt = (token: string) => {
   return result;
 };
 
-export interface RoutePages {
-  mainRoute: string;
-  subRoute: string;
-}
+/**
+ * url 파싱하여 pathName 얻는 함수
+ * @param url
+ * @returns
+ */
+export const getPathName = (url: string): string => {
+  const pathName: string = parse(url).pathname;
+  console.log("패쓰", pathName);
 
-export const initPage = (): RoutePages => {
-  const router = useRouter();
-
-  const { page } = router.query; // page url query
-
-  const pages: RoutePages = {
-    mainRoute: page && page[0],
-    subRoute: page && page[1],
-  };
-
-  return pages;
+  return pathName;
 };

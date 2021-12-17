@@ -1,8 +1,9 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
+import { NextRouter } from "next/router";
 import Footer from "../../src/components/layout/Footer";
 import Header from "../../src/components/layout/Header";
-import { initPage, parseJwt, RoutePages } from "../../src/modules/commonModule";
+import { getPathName, parseJwt } from "../../src/modules/commonModule";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
 import { CompanyApproval } from "../../src/models/company.entity";
@@ -51,32 +52,10 @@ const MainComponent: NextPage<ViewProps> = (props) => {
  * @returns
  */
 const SubComponent: NextPage<ViewProps> = (props) => {
-  // const router = useRouter();
+  const router: NextRouter = useRouter();
+  const pathName: string = getPathName(router.asPath);
 
-  // const { page } = router.query; // page url query
-
-  // const mainRoute = page && page[0];
-  // const subRoute = page && page[1];
-  const router = useRouter();
-
-  // const routePages: RoutePages = initPage();
-
-  // switch (routePages.mainRoute) {
-  //   case MainRoute.MAIN:
-  //     return <Main {...props} />;
-
-  //   case MainRoute.MYPAGE:
-  //     if (routePages.subRoute === SubRoute.ACCOUNT) {
-  //       return <MyPageAccount {...props} />;
-  //     }
-  //     if (routePages.subRoute === SubRoute.WORKER) {
-  //       return <MyPageWorker {...props} />;
-  //     }
-
-  //   case MainRoute.TEST:
-  //     return <Test {...props} />;
-  // }
-  switch (router.asPath.split("?")[0]) {
+  switch (pathName) {
     case UseLink.MAIN:
       return <Main {...props} />;
 
@@ -116,36 +95,14 @@ const MainPage: NextPage<ViewProps> = (props) => {
 export default MainPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // const route = context.query;
-  // const mainRoute = route.page ? route.page[0] : null;
-  // const subRoute = route.page ? route.page[1] : null;
-
-  // const mItem: any = Object.values(MainRoute); // page first query array
-  // const sItem: any = Object.values(SubRoute); // page second query array
-
-  const url: string = context.resolvedUrl.split("?")[0]; // 현재 url (query 제외)
+  const url: string = context.resolvedUrl; // 현재 url (query 제외)
   const useUrlArray: string[] = Object.values(UseLink); // 사용가능한 url 배열
+  const pathName: string = getPathName(url); // pathName 가져오기
 
   if (context.req.cookies.mk_token) {
     const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
 
-    // if (mItem.indexOf(mainRoute) === -1) {
-    //   return {
-    //     notFound: true,
-    //   };
-    // } else {
-    //   if (mainRoute === "mypage" && sItem.indexOf(subRoute) === -1) {
-    //     return {
-    //       notFound: true,
-    //     };
-    //   }
-    //   return {
-    //     props: {
-    //       tokenValue,
-    //     },
-    //   };
-    // }
-    if (useUrlArray.indexOf(url) === -1) {
+    if (useUrlArray.indexOf(pathName) === -1) {
       return {
         notFound: true,
       };
