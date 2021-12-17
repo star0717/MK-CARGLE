@@ -9,6 +9,7 @@ import {
 import { UserInfo } from "../../src/models/auth.entity";
 import { User, UserAuthority } from "../../src/models/user.entity";
 import { Company, CompanyApproval } from "../../src/models/company.entity";
+import { getWorkersListAction } from "../action/user.action";
 
 export const initialState: UserState = {
   signInInfo: <UserInfo>{
@@ -219,6 +220,11 @@ const userAll = (
       };
     //회원 탈퇴
     case actionTypesUser.WITHDRAWAL:
+      return {
+        ...state,
+      };
+    //작업자 조회
+    case actionTypesUser.GET_WORKERS_LIST:
       return {
         ...state,
       };

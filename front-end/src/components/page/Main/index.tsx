@@ -53,6 +53,11 @@ const Main: NextPage = () => {
                 <button>마이페이지</button>
               </a>
             </Link>
+            <Link href="/v/mypage/worker">
+              <a>
+                <button>직원관리</button>
+              </a>
+            </Link>
             <form id="stampform" onSubmit={onStampUploadHandler}>
               <Wrapper dr={`row`}>
                 <Text>사업자 도장</Text>

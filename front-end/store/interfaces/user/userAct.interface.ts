@@ -24,6 +24,7 @@ export enum actionTypesUser {
   UPROAD_STAMP = "UPROAD_STAMP",
   DOWNROAD_STAMP = "DOWNROAD_STAMP",
   WITHDRAWAL = "WITHDRAWAL",
+  GET_WORKERS_LIST = "GET_WORKERS_LIST",
 }
 
 export type ActionsUser =
@@ -51,7 +52,8 @@ export type ActionsUser =
   | ChangePassword
   | UproadStamp
   | DownroadStamp
-  | Withdrawal;
+  | Withdrawal
+  | GetWorkersList;
 
 // 초기화
 export interface UserInit {
@@ -199,5 +201,10 @@ export interface DownroadStamp {
 //회원탈퇴
 export interface Withdrawal {
   type: actionTypesUser.WITHDRAWAL;
+  payload: any;
+}
+//작업자 조회
+export interface GetWorkersList {
+  type: actionTypesUser.GET_WORKERS_LIST;
   payload: any;
 }
