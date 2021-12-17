@@ -9,7 +9,11 @@ import { CompanyApproval } from "../../src/models/company.entity";
 import FileUpload from "../../src/components/page/SignUp/section/fileUpload";
 import Approval from "../../src/components/page/SignUp/section/approval";
 import Main from "../../src/components/page/Main";
-import { MainRoute, SubRoute } from "../../src/configure/router.entity";
+import {
+  MainRoute,
+  SubRoute,
+  UseLink,
+} from "../../src/configure/router.entity";
 import { useRouter } from "next/dist/client/router";
 import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
@@ -129,7 +133,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/",
+        destination: UseLink.INDEX,
       },
     };
   }

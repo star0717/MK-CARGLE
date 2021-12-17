@@ -51,7 +51,7 @@ const FindEmailComplete: NextPage<any> = (props) => {
           <CommonButton
             type="button"
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              router.push("/sign/findpassword");
+              router.push(UseLink.FIND_PASSWORD);
             }}
           >
             비밀번호 찾기
