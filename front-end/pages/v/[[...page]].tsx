@@ -76,7 +76,7 @@ const SubComponent: NextPage<ViewProps> = (props) => {
   //   case MainRoute.TEST:
   //     return <Test {...props} />;
   // }
-  switch (router.asPath) {
+  switch (router.asPath.split("?")[0]) {
     case UseLink.MAIN:
       return <Main {...props} />;
 
@@ -123,12 +123,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // const mItem: any = Object.values(MainRoute); // page first query array
   // const sItem: any = Object.values(SubRoute); // page second query array
 
-  console.log("컨택스트", context);
-  console.log("유알엘", context.resolvedUrl);
-  const url: string = context.resolvedUrl;
-
-  const useUrlArray = Object.values(UseLink);
-  console.log("확인", useUrlArray);
+  const url: string = context.resolvedUrl.split("?")[0]; // 현재 url (query 제외)
+  const useUrlArray: string[] = Object.values(UseLink); // 사용가능한 url 배열
 
   if (context.req.cookies.mk_token) {
     const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);

@@ -51,9 +51,12 @@ const SignUpPage: NextPage = () => {
 export default SignUpPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const route = context.query;
-  const signRoute = route.action ? route.action : null;
-  const signItem: any = Object.values(SignRoute); // page first query array
+  // const route = context.query;
+  // const signRoute = route.action ? route.action : null;
+  // const signItem: any = Object.values(SignRoute); // page first query array
+
+  const url: string = context.resolvedUrl.split("?")[0]; // 현재 url (query 제외)
+  const useUrlArray: string[] = Object.values(UseLink); // 사용가능한 url 배열
 
   if (context.req.cookies.mk_token) {
     return {
@@ -63,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } else {
-    if (signItem.indexOf(signRoute) === -1) {
+    if (useUrlArray.indexOf(url) === -1) {
       return {
         notFound: true,
       };
@@ -72,5 +75,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {},
       };
     }
+    // if (signItem.indexOf(signRoute) === -1) {
+    //   return {
+    //     notFound: true,
+    //   };
+    // } else {
+    //   return {
+    //     props: {},
+    //   };
+    // }
   }
 };
