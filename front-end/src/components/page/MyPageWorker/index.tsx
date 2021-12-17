@@ -21,7 +21,7 @@ const MyPageWorker: NextPage = () => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalOption, setModalOption] = useState<string>("");
-  const [docs, setDocs] = useState([]);
+  const [docs, setDocs] = useState<any>([]);
   const [totalDocs, setTotalDocs] = useState<number>();
   const [currentPage, setCurrentPage] = useState<number>();
   const [lastPage, setLastPage] = useState<number>();
@@ -35,6 +35,12 @@ const MyPageWorker: NextPage = () => {
 
   const getDate = () => {
     dispatch(getWorkersListAction()).then((res: any) => {
+      const workerData: FindResult<any> = {
+        docs: [docs],
+        totalDocs: totalDocs,
+        currentPage: currentPage,
+        lastPage: lastPage,
+      };
       setDocs(res.payload.docs);
       setTotalDocs(res.payload.totalDocs);
       setCurrentPage(res.payload.currentPage);
@@ -55,6 +61,17 @@ const MyPageWorker: NextPage = () => {
   //   const tablerow = docs.map((_id, name) => <li key={_id}>{name}</li>);
   //   console.log("함수 실행");
   // };
+
+  // function Tablerow({docs}) {
+  //   return(
+  //     <TableRow>
+  //        <TableRowLIST>{docs.name}</TableRowLIST>
+  //        <TableRowLIST>{docs.hpNumber}</TableRowLIST>
+  //        <TableRowLIST>{docs.joinDate}</TableRowLIST>
+  //        <TableRowLIST>{docs.approval}</TableRowLIST>
+  //      </TableRow>
+  //   );
+  // }
 
   // const Tablerow = docs.map((_id, name) => <li key={_id}>{name}</li>);
 
@@ -91,7 +108,8 @@ const MyPageWorker: NextPage = () => {
             </TableRow>
           </TableBody>
         </TableWrapper> */}
-        {/* // {docs.map(doc => (<render doc = {doc} key={doc._id}/>))} */}
+        {/* {docs.map(doc => (<render doc = {doc} key={doc._id}/>))} */}
+        {/* {docs.map(doc => (<Tablerow doc = {docs}/>))} */}
       </Wrapper>
       <Button
         type="button"
