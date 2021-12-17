@@ -946,20 +946,19 @@ export const TestDiv2 = styled.div<any>`
 
 export const TestDiv = styled.div<any>`
   width: ${(props) => props.width || ``};
-  height: 90px;
+  height: 80px;
   display: flex;
   align-items: center;
 
   &:hover ${TestDiv2} {
     display: block;
-    top: 90px;
+    top: 55px;
     left: 0;
     width: 100%;
-    height: 100px;
     animation: ${appearAnimation} 0.5s forwards;
     padding: 20px 0px;
     background-color: #fafafa;
-    height: 180px;
+    height: 150px;
     position: absolute;
     transition: 0.5s;
     flex-direction: ${(props) => props.dr};
@@ -981,7 +980,7 @@ export const TestA = styled.p<any>`
   line-height: ${(props) => props.lineHeight || `1.6`};
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.padding || `20px 0px`};
   background: ${(props) => props.bgColor};
   text-align: ${(props) => props.textAlign || `center`};
   transition: 0.5s;

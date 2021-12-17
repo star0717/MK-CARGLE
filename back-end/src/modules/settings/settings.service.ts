@@ -24,6 +24,7 @@ import { Company } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
 import { CompaniesService } from '../companies/companies.service';
 import { UsersService } from '../users/users.service';
+import { MongoError } from 'mongodb';
 
 @Injectable()
 export class SettingsService {
@@ -144,7 +145,13 @@ export class SettingsService {
     try {
       return await this.usersService.findByIdAndUpdate(token, id, pUser);
     } catch (err) {
-      throw new HttpException('asdfasdf', HttpStatus.NOT_MODIFIED);
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: '니문제다',
+        },
+        HttpStatus.FORBIDDEN,
+      );
     }
   }
 
