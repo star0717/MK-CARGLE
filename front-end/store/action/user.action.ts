@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import {
   ConfirmPWD,
   HelpChangePWD,
@@ -36,6 +36,7 @@ export async function signUpUserAction(dataToSubmit: any) {
   const req = await axios
     .post(`/api/auth/signup`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
+
   return {
     type: actionTypesUser.USER_SIGNUP,
     payload: req,
@@ -213,6 +214,13 @@ export async function setMyInfoAction(dataToSubmit: SignUpInfo) {
   const req = await axios
     .patch(`/api/settings/myinfo`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
+  // .catch((err: AxiosError) => {
+  //   console.log("==================");
+  //   console.log("err");
+  //   console.log(err);
+  //   console.log(err.response.data.error);
+  // });
+
   return {
     type: actionTypesUser.SET_MY_INFO,
     payload: req,

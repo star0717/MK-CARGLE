@@ -18,6 +18,7 @@ import { useRouter } from "next/dist/client/router";
 import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
+import { NextRouter } from "next/router";
 
 interface ViewProps {
   route: any;
@@ -57,7 +58,7 @@ const SubComponent: NextPage<ViewProps> = (props) => {
 
   // const mainRoute = page && page[0];
   // const subRoute = page && page[1];
-  const router = useRouter();
+  const router: NextRouter = useRouter();
 
   // const routePages: RoutePages = initPage();
 
