@@ -18,6 +18,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import AccountInfoPresenter from "./accountInfoPresenter";
 import { User, UserAuthority } from "../../../../models/user.entity";
 import { Company } from "../../../../models/company.entity";
+import { UseLink } from "../../../../configure/router.entity";
 
 Modal.setAppElement("body");
 
@@ -134,7 +135,7 @@ const AccountInfo: NextPage<any> = (props) => {
         company: comData,
         user: userData,
       });
-      router.push("/v/main");
+      router.push(UseLink.MAIN);
     });
   };
 

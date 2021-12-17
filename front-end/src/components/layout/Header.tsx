@@ -45,7 +45,7 @@ const Header: NextPage<LayoutProps> = (props) => {
    */
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(signOutUserAction()).then((res: any) => {
-      router.push("/");
+      router.push(UseLink.INDEX);
     });
   };
 

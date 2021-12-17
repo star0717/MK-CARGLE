@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { IoIosArrowForward } from "react-icons/io";
 import { NextPage } from "next";
+import { UseLink } from "../../../../configure/router.entity";
 
 /**
  * 회원가입: 가입유형 선택 컴포넌트(화면)
@@ -102,7 +103,7 @@ const SelectUserPresenter: NextPage<any> = (props) => {
         </Wrapper>
       </Wrapper>
       <CommonButton>
-        <Link href="/">
+        <Link href={UseLink.INDEX}>
           <a>다음에 가입하기</a>
         </Link>
         <IoIosArrowForward />

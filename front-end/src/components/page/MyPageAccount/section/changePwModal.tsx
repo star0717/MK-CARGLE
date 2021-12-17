@@ -16,6 +16,7 @@ import {
 import { WholeWrapper } from "../../../styles/CommonComponents";
 import ChangePwModalPresenter from "./changePwModalPresenter";
 import { useRouter } from "next/router";
+import { UseLink } from "../../../../configure/router.entity";
 
 interface modalOption {
   handleSubmit: UseFormHandleSubmit<FieldValues>;
@@ -51,7 +52,7 @@ const ChangePwModal: NextPage<modalOption> = (props) => {
    */
   const onSignOutHandler = () => {
     dispatch(signOutUserAction()).then((res: any) => {
-      router.push("/");
+      router.push(UseLink.INDEX);
     });
   };
 

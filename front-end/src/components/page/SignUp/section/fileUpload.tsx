@@ -10,6 +10,7 @@ import {
   tokenCheckAction,
 } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import { UseLink } from "../../../../configure/router.entity";
 import FileUploadPresenter from "./fileUploadPresenter";
 
 interface FileUploadProps {
@@ -59,7 +60,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
     alert("입력하신 계정정보로 로그인하시면 서류제출이 가능합니다.");
     dispatch(signOutUserAction()).then((res: any) => {
       dispatch({ type: actionTypesUser.USER_INIT });
-      router.push("/");
+      router.push(UseLink.INDEX);
     });
   };
 
@@ -90,7 +91,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
                         );
                         dispatch(signOutUserAction()).then((res: any) => {
                           dispatch({ type: actionTypesUser.USER_INIT });
-                          router.push("/");
+                          router.push(UseLink.INDEX);
                         });
                       }
                     } else {

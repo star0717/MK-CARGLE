@@ -8,6 +8,7 @@ import {
   Wrapper,
 } from "../../../styles/CommonComponents";
 import { FaPaperPlane } from "react-icons/fa";
+import { UseLink } from "../../../../configure/router.entity";
 
 /**
  * 계정찾기: 비밀번호 찾기 완료(화면)
@@ -38,7 +39,7 @@ const FindPwComPresenter: NextPage<any> = (props) => {
         <CommonButtonWrapper>
           <CommonButton
             onClick={() => {
-              router.push("/");
+              router.push(UseLink.INDEX);
             }}
           >
             로그인

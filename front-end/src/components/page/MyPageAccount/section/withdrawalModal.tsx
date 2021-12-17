@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { withdrawalAction } from "../../../../../store/action/user.action";
+import { UseLink } from "../../../../configure/router.entity";
 import { WholeWrapper } from "../../../styles/CommonComponents";
 import WithdrawalModalPresenter from "./withdrawalModalPresenter";
 
@@ -37,7 +38,7 @@ const WithdrawalModal: NextPage<modalOption> = (props) => {
     dispatch(withdrawalAction(ConfirmPWD)).then(
       (res: any) => {
         alert("정상적으로 탈퇴 되었습니다.");
-        router.push("/");
+        router.push(UseLink.INDEX);
       },
       (err) => {
         alert("예상치 못한 오류로 인해 회원 탈퇴에 실패했습니다.");

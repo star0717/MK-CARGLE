@@ -32,11 +32,11 @@ export const BaseLink = {
 
 export const UseLink = {
   INDEX: BaseLink.INDEX,
-  SIGNUP: BaseLink.SIGN + "/" + SignRoute.SIGNUP,
-  FIND_EMAIL: BaseLink.SIGN + "/" + SignRoute.FINDEMAIL,
-  FIND_PASSWORD: BaseLink.SIGN + "/" + SignRoute.FINDPASSWORD,
-  MAIN: BaseLink.V + "/" + MainRoute.MAIN,
-  MYPAGE_ACCOUNT: BaseLink.V + "/" + MainRoute.MYPAGE + "/" + SubRoute.ACCOUNT,
-  MYPAGE_WORKER: BaseLink.V + "/" + MainRoute.MYPAGE + "/" + SubRoute.WORKER,
-  TEST: BaseLink.V + "/" + MainRoute.TEST,
+  SIGNUP: `${BaseLink.SIGN}/${SignRoute.SIGNUP}`,
+  FIND_EMAIL: `${BaseLink.SIGN}/${SignRoute.FINDEMAIL}`,
+  FIND_PASSWORD: `${BaseLink.SIGN}/${SignRoute.FINDPASSWORD}`,
+  MAIN: `${BaseLink.V}/${MainRoute.MAIN}`,
+  MYPAGE_ACCOUNT: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.ACCOUNT}`,
+  MYPAGE_WORKER: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.WORKER}`,
+  TEST: `${BaseLink.V}/${MainRoute.TEST}`,
 };
