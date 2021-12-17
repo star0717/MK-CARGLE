@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { getWorkersListAction } from "../../../../store/action/user.action";
 import {
   WholeWrapper,
   Wrapper,
@@ -17,7 +18,7 @@ const MyPageWorker: NextPage = () => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalOption, setModalOption] = useState<string>("");
-
+  // dispatch(getWorkersListAction())
   const closeModal = () => {
     setModalOpen(false);
   };

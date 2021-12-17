@@ -19,6 +19,7 @@ import AccountInfoPresenter from "./accountInfoPresenter";
 import { User, UserAuthority } from "../../../../models/user.entity";
 import { Company } from "../../../../models/company.entity";
 import { UseLink } from "../../../../configure/router.entity";
+import { AxiosError } from "axios";
 
 Modal.setAppElement("body");
 
@@ -128,15 +129,24 @@ const AccountInfo: NextPage<any> = (props) => {
       company: comData,
       user: userData,
     };
-    dispatch(setMyInfoAction(changeData)).then((res: any) => {
-      alert("저장되었습니다.");
-      setAccountInfo({
-        ...accountInfo,
-        company: comData,
-        user: userData,
+    dispatch(setMyInfoAction(changeData))
+      .then((res: any) => {
+        alert("저장되었습니다.");
+        setAccountInfo({
+          ...accountInfo,
+          company: comData,
+          user: userData,
+        });
+        // router.push(UseLink.MAIN);
+      })
+      .catch((err: AxiosError<any, any>) => {
+        console.log("==================");
+        console.log("에러1: " + err);
+        console.log("에러2: " + err.response.data.error);
+        console.log("에러3: " + err.message);
+        console.log("에러4: " + err.name);
+        alert("저장에 실패했습니다.");
       });
-      router.push(UseLink.MAIN);
-    });
   };
 
   /**
