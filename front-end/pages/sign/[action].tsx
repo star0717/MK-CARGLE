@@ -5,7 +5,7 @@ import Header from "../../src/components/layout/Header";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import SignUp from "../../src/components/page/SignUp";
 import { useRouter } from "next/dist/client/router";
-import { SignRoute } from "../../src/configure/router.entity";
+import { SignRoute, UseLink } from "../../src/configure/router.entity";
 import Find from "../../src/components/page/Find";
 
 /**
@@ -59,7 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       redirect: {
         permanent: false,
-        destination: "/v/main",
+        destination: UseLink.MAIN,
       },
     };
   } else {
