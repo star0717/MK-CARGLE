@@ -215,12 +215,6 @@ export async function setMyInfoAction(dataToSubmit: SignUpInfo) {
   const req = await axios
     .patch(`/api/settings/myinfo`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
-  // .catch((err: AxiosError) => {
-  //   console.log("==================");
-  //   console.log("err");
-  //   console.log(err);
-  //   console.log(err.response.data.error);
-  // });
 
   return {
     type: actionTypesUser.SET_MY_INFO,
