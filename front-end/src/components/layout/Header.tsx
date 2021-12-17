@@ -92,7 +92,7 @@ const Header: NextPage<LayoutProps> = (props) => {
             dr={`row`}
             padding={width < 1450 ? `0px 50px` : `0px 100px`}
           >
-            <Wrapper width={`160px`}>
+            <Wrapper width={`168px`}>
               <Text
                 cursor={`pointer`}
                 fontSize={width < 1510 ? `16px` : `18px`}
@@ -102,7 +102,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 부품
               </Text>
             </Wrapper>
-            <Wrapper width={`160px`}>
+            <Wrapper width={`168px`}>
               <Text
                 cursor={`pointer`}
                 fontSize={width < 1510 ? `16px` : `18px`}
@@ -112,7 +112,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 정비
               </Text>
             </Wrapper>
-            <Wrapper width={`160px`}>
+            <Wrapper width={`168px`}>
               <Text
                 cursor={`pointer`}
                 fontSize={width < 1510 ? `16px` : `18px`}
@@ -122,7 +122,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 회계
               </Text>
             </Wrapper>
-            <Wrapper width={`160px`}>
+            <Wrapper width={`168px`}>
               <Text
                 cursor={`pointer`}
                 fontSize={width < 1510 ? `16px` : `18px`}
@@ -132,7 +132,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 마이페이지
               </Text>
             </Wrapper>
-            <Wrapper width={`160px`}>
+            <Wrapper width={`168px`}>
               <Text
                 cursor={`pointer`}
                 fontSize={width < 1510 ? `16px` : `18px`}
@@ -143,7 +143,7 @@ const Header: NextPage<LayoutProps> = (props) => {
               </Text>
             </Wrapper>
 
-            <Wrapper width={`160px`}>
+            <Wrapper width={`168px`}>
               <Text
                 cursor={`pointer`}
                 fontSize={width < 1510 ? `16px` : `18px`}
@@ -193,7 +193,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 {/* 서브메뉴 빈 wrapper 끝 */}
 
                 <Wrapper dr={`row`} width={`auto`} al={`flex-start`}>
-                  <Wrapper width={`160px`}>
+                  <Wrapper width={`168px`}>
                     <TestA
                       cursor={`pointer`}
                       fontSize={width < 1510 ? `14px` : `16px`}
@@ -226,7 +226,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                     </TestA>
                   </Wrapper>
 
-                  <Wrapper width={`160px`}>
+                  <Wrapper width={`168px`}>
                     <TestA
                       cursor={`pointer`}
                       fontSize={width < 1510 ? `14px` : `16px`}
@@ -259,7 +259,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                     </TestA>
                   </Wrapper>
 
-                  <Wrapper width={`160px`}>
+                  <Wrapper width={`168px`}>
                     <TestA
                       cursor={`pointer`}
                       fontSize={width < 1510 ? `14px` : `16px`}
@@ -282,7 +282,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                     </TestA>
                   </Wrapper>
 
-                  <Wrapper width={`160px`}>
+                  <Wrapper width={`168px`}>
                     <TestA
                       cursor={`pointer`}
                       fontSize={width < 1510 ? `14px` : `16px`}
@@ -305,7 +305,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                     </TestA>
                   </Wrapper>
 
-                  <Wrapper width={`160px`}>
+                  <Wrapper width={`168px`}>
                     <TestA
                       cursor={`pointer`}
                       fontSize={width < 1510 ? `14px` : `16px`}
@@ -338,7 +338,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                     </TestA>
                   </Wrapper>
 
-                  <Wrapper width={`160px`}>
+                  <Wrapper width={`168px`}>
                     <TestA
                       cursor={`pointer`}
                       fontSize={width < 1510 ? `14px` : `16px`}
