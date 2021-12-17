@@ -353,7 +353,7 @@ const Header: NextPage<LayoutProps> = (props) => {
             dr={`row`}
             al={`flex-start`}
           >
-            {/* <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
+            <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
               <HeaderIconButton
                 radius={`100px`}
                 al={`center`}
@@ -366,7 +366,7 @@ const Header: NextPage<LayoutProps> = (props) => {
               >
                 <FaBell />
               </HeaderIconButton>
-              <HeaderIconAlarmWrapper>
+              {/* <HeaderIconAlarmWrapper>
                 <HeaderIconAlarm>
                   <Wrapper al={`flex-start`}>
                     <Text>나는 안읽은 알림이야.</Text>
@@ -387,7 +387,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                     </Text>
                   </Wrapper>
                 </HeaderIconAlarm>
-              </HeaderIconAlarmWrapper>
+              </HeaderIconAlarmWrapper> */}
             </Wrapper>
 
             <HeaderIconButton
