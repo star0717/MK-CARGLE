@@ -5,7 +5,7 @@ import Header from "../../src/components/layout/Header";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import SignUp from "../../src/components/page/SignUp";
 import { useRouter } from "next/dist/client/router";
-import { SignRoute } from "../../src/models/router.entity";
+import { SignRoute } from "../../src/configure/router.entity";
 import Find from "../../src/components/page/Find";
 
 /**
