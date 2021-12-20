@@ -9,16 +9,14 @@ import {
 } from "../../../styles/CommonComponents";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import React from "react";
+import { _pCompleteProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 완료 컴포넌트(화면)
  * @param props
  * @returns
  */
-const CompletePresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const onSignOutHandler = props.onSignOutHandler;
-
+const CompletePresenter: NextPage<_pCompleteProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
@@ -34,7 +32,7 @@ const CompletePresenter: NextPage<any> = (props) => {
           가입승인 후 정상 이용이 가능합니다.
         </Text>
         <CommonButtonWrapper>
-          <CommonButton type="button" onClick={onSignOutHandler}>
+          <CommonButton type="button" onClick={props.onSignOutHandler}>
             확인
           </CommonButton>
         </CommonButtonWrapper>

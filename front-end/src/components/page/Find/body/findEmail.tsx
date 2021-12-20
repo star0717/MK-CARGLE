@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { findEmailAction } from "../../../../../store/action/user.action";
+import { _pFindEmail } from "../../../../configure/_pProps.entity";
 import { WholeWrapper } from "../../../styles/CommonComponents";
 import FindEmailComplete from "./findEmailComPresenter";
 import FindEmailPresenter from "./findEmailPresenter";
@@ -40,7 +41,7 @@ const FindEmail: NextPage = () => {
   };
 
   // 화면구성에 넘길 props
-  const fProps = {
+  const fProps: _pFindEmail = {
     findEmail,
     name,
     setName,

@@ -1,30 +1,20 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
-import { FieldValues, UseFormSetValue } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import {
   companyFindAction,
   companyFindbyNameAction,
 } from "../../../../../store/action/user.action";
-import { FormInput } from "../../../../../store/interfaces";
-import { User } from "../../../../models/user.entity";
+import { _cComFindModalProps } from "../../../../configure/_cProps.entity";
+import { _pComFindModalProps } from "../../../../configure/_pProps.entity";
 import ComFindModalPresenter from "./comFindModalPresenter";
-
-interface modalOption {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setInputForm: React.Dispatch<React.SetStateAction<FormInput>>;
-  setInputUser: React.Dispatch<React.SetStateAction<User>>;
-  inputForm: any;
-  inputUser: any;
-  setValue: UseFormSetValue<FieldValues>;
-}
 
 /**
  * 회원가입: 업체 검색 모달 컴포넌트(기능)
  * @param props
  * @returns
  */
-const ComFindModal: NextPage<modalOption> = (props) => {
+const ComFindModal: NextPage<_cComFindModalProps> = (props) => {
   const dispatch = useDispatch();
 
   const [companyList, setCompanyList] = useState<any>([]); // 검색해서 받아온 업체 리스트 state
@@ -62,7 +52,7 @@ const ComFindModal: NextPage<modalOption> = (props) => {
   };
 
   // 화면구성에 넘길 props
-  const fProps = {
+  const fProps: _pComFindModalProps = {
     ...props,
     findCompanyHandler,
     searchText,

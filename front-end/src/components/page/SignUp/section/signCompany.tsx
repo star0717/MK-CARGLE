@@ -21,6 +21,8 @@ import {
 import { IoIosCloseCircle } from "react-icons/io";
 import { CHAR_DEL } from "../../../../validation/regEx";
 import { Company } from "../../../../models/company.entity";
+import { _cSignUpProps } from "../../../../configure/_cProps.entity";
+import { _pSignCompanyProps } from "../../../../configure/_pProps.entity";
 
 // modal setting
 Modal.setAppElement("body");
@@ -30,22 +32,15 @@ Modal.setAppElement("body");
  * @param props
  * @returns
  */
-const SignCompany: NextPage<any> = (props) => {
+const SignCompany: NextPage<_cSignUpProps> = (props) => {
   const dispatch = useDispatch();
 
-  // props 재정의
-  const user = props.user;
-  const company = props.company;
-  const formInput = props.formInput;
-  const formCheck = props.formCheck;
-  const stepNumber = props.stepNumber;
-  const setStepNumber = props.setStepNumber;
-
+  // state 관리
   const [inputCompany, setInputCompany] = useState<Company>({
-    ...company,
-    ownerName: user.name,
+    ...props.company,
+    ownerName: props.user.name,
   }); // 업체 정보
-  const [inputForm, setInputForm] = useState<FormInput>(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
+  const [inputForm, setInputForm] = useState<FormInput>(props.formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달창 open 여부
 
   // react-hook-form 사용을 위한 선언
@@ -106,7 +101,7 @@ const SignCompany: NextPage<any> = (props) => {
                   });
                   dispatch({
                     type: actionTypesUser.FORM_CHECK,
-                    payload: { ...formCheck, companyCheck: true },
+                    payload: { ...props.formCheck, companyCheck: true },
                   });
                 } else {
                   setError("comRegNum", {
@@ -166,30 +161,26 @@ const SignCompany: NextPage<any> = (props) => {
   const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
     dispatch({ type: actionTypesUser.INPUT_COMPANY, payload: inputCompany });
     dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
-    if (!formCheck.companyCheck) {
+    if (!props.formCheck.companyCheck) {
       setError("comRegNum", {
         type: "comCheckNeed",
         message: "사업자 등록번호 인증이 필요합니다.",
       });
     } else {
-      delete user._cID;
+      delete props.user._cID;
       dispatch(
         signUpUserAction({
-          user: user,
+          user: props.user,
           company: inputCompany,
         })
       ).then(
         (res: any) => {
-          setStepNumber(stepNumber + 1);
+          props.setStepNumber(props.stepNumber + 1);
         },
         (err) => {
           if (err.response.status === 400) {
             alert("회원가입에 실패했습니다.");
-            setStepNumber(stepNumber - 1);
-            dispatch({
-              type: actionTypesUser.FORM_CHECK,
-              payload: initialState.formCheck,
-            });
+            props.setStepNumber(props.stepNumber - 1);
           }
         }
       );
@@ -197,7 +188,7 @@ const SignCompany: NextPage<any> = (props) => {
   };
 
   // 화면구성에 넘길 props
-  const fProps = {
+  const fProps: _pSignCompanyProps = {
     ...props,
     register,
     handleSubmit,

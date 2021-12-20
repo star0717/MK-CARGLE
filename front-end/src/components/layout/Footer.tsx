@@ -1,15 +1,6 @@
 import { useResizeDetector } from "react-resize-detector";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/dist/client/router";
-import Link from "next/link";
-import {
-  WholeWrapper,
-  RsWrapper,
-  Wrapper,
-  Text,
-  Image,
-} from "../styles/CommonComponents";
+import { WholeWrapper, Wrapper, Text, Image } from "../styles/CommonComponents";
 
 const Footer: NextPage = () => {
   const { width, height, ref } = useResizeDetector();

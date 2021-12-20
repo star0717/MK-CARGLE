@@ -10,21 +10,15 @@ import Footer from "../src/components/layout/Footer";
 import Header from "../src/components/layout/Header";
 import SignIn from "../src/components/page/SignIn/SignIn";
 import { WholeWrapper } from "../src/components/styles/CommonComponents";
+import { _SignInProps } from "../src/configure/_props.entity";
 import { UseLink } from "../src/configure/router.entity";
-
-//SCSS
-
-interface SignInProps {
-  saveId: string;
-  saveCheck: boolean;
-}
 
 /**
  * Index: 로그인 페이지
  * @param props
  * @returns
  */
-const Home: NextPage<SignInProps> = (props) => {
+const Home: NextPage<_SignInProps> = (props) => {
   return (
     <>
       <Head>

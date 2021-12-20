@@ -8,17 +8,14 @@ import SignAccount from "./section/signAccount";
 import SignCompany from "./section/signCompany";
 import { WholeWrapper, Wrapper } from "../../styles/CommonComponents";
 import React from "react";
+import { _cSignUpProps } from "../../../configure/_cProps.entity";
 
 /**
  * 회원가입: Index 컴포넌트(화면)
  * @param props
  * @returns
  */
-const SignUpPresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const stepNumber = props.stepNumber;
-  const userAuth = props.userAuth;
-
+const SignUpPresenter: NextPage<_cSignUpProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
@@ -29,17 +26,17 @@ const SignUpPresenter: NextPage<any> = (props) => {
         <Wrapper>
           {/* 바디 부분 ( 단계별 내용들 ) */}
           <Wrapper>
-            {stepNumber === 1 && <SelectUser {...props} />}
-            {stepNumber === 2 && <TermSignUp {...props} />}
-            {stepNumber === 3 && <SignAccount {...props} />}
-            {stepNumber === 4 &&
-              (userAuth === "owner" ? (
+            {props.stepNumber === 1 && <SelectUser {...props} />}
+            {props.stepNumber === 2 && <TermSignUp {...props} />}
+            {props.stepNumber === 3 && <SignAccount {...props} />}
+            {props.stepNumber === 4 &&
+              (props.userAuth === "owner" ? (
                 <SignCompany {...props} />
               ) : (
-                <SignupComplete />
+                <SignupComplete {...props} />
               ))}
-            {stepNumber === 5 && <FileUpload {...props} />}
-            {stepNumber === 6 && <SignupComplete {...props} />}
+            {props.stepNumber === 5 && <FileUpload {...props} />}
+            {props.stepNumber === 6 && <SignupComplete {...props} />}
           </Wrapper>
         </Wrapper>
       </Wrapper>

@@ -2,25 +2,16 @@ import type { NextPage } from "next";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React from "react";
 import TermPresenter from "./termPresenter";
-
-// react-hook-form을 사용하는 form에서 받는 데이터 타입 정의
-// 이용약관 form
-interface TermData {
-  mkTerm: Boolean;
-  privacyTerm: Boolean;
-}
+import { _cSignUpProps } from "../../../../configure/_cProps.entity";
+import { _fTermData } from "../../../../configure/_fProps.entity";
+import { _pTermProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 이용약관 컴포넌트(기능)
  * @param props
  * @returns
  */
-const Term: NextPage<any> = (props) => {
-  // props 재정의
-  // const formCheck = props.formCheck;
-  const stepNumber = props.stepNumber;
-  const setStepNumber = props.setStepNumber;
-
+const Term: NextPage<_cSignUpProps> = (props) => {
   // react-hook-form 사용을 위한 선언
   const {
     register,
@@ -32,12 +23,12 @@ const Term: NextPage<any> = (props) => {
    * 이용약관 form submit handler
    * @param data
    */
-  const agreeTermHandler: SubmitHandler<TermData> = (data) => {
-    setStepNumber(stepNumber + 1);
+  const agreeTermHandler: SubmitHandler<_fTermData> = (data) => {
+    props.setStepNumber(props.stepNumber + 1);
   };
 
   // 화면구성에 넘겨줄 props
-  const fProps = {
+  const fProps: _pTermProps = {
     ...props,
     register,
     handleSubmit,

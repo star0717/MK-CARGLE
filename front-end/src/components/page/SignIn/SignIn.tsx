@@ -10,13 +10,15 @@ import { formRegEx } from "../../../validation/regEx";
 import SigninPresenter from "./SignInPresenter";
 import { UserInfo } from "../../../models/auth.entity";
 import { UseLink } from "../../../configure/router.entity";
+import { _SignInProps } from "../../../configure/_props.entity";
+import { _pSignInProps } from "../../../configure/_pProps.entity";
 
 /**
  * 로그인 컴포넌트(기능)
  * @param props
  * @returns
  */
-const SignIn: NextPage<any> = (props) => {
+const SignIn: NextPage<_SignInProps> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -84,12 +86,12 @@ const SignIn: NextPage<any> = (props) => {
    * 회원가입 state 초기화
    * @param e
    */
-  const userInit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const userInit = (e: React.MouseEvent<HTMLAnchorElement>) => {
     dispatch({ type: actionTypesUser.USER_INIT });
   };
 
   // 화면 구성에 넘겨줄 props
-  const fProps = {
+  const fProps: _pSignInProps = {
     onSignInHandler,
     inputSignIn,
     onInputHandler,
