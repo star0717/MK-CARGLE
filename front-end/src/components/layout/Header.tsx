@@ -92,7 +92,7 @@ const Header: NextPage<LayoutProps> = (props) => {
           dr={`row`}
           padding={width < 1450 ? `0px 50px` : `0px 100px`}
         >
-          <Wrapper width={`168px`}>
+          <Wrapper width={width < 1510 ? `140px` : `168px`}>
             <Text
               cursor={`pointer`}
               fontSize={width < 1510 ? `16px` : `18px`}
@@ -102,7 +102,7 @@ const Header: NextPage<LayoutProps> = (props) => {
               부품
             </Text>
           </Wrapper>
-          <Wrapper width={`168px`}>
+          <Wrapper width={width < 1510 ? `140px` : `168px`}>
             <Text
               cursor={`pointer`}
               fontSize={width < 1510 ? `16px` : `18px`}
@@ -112,7 +112,7 @@ const Header: NextPage<LayoutProps> = (props) => {
               정비
             </Text>
           </Wrapper>
-          <Wrapper width={`168px`}>
+          <Wrapper width={width < 1510 ? `140px` : `168px`}>
             <Text
               cursor={`pointer`}
               fontSize={width < 1510 ? `16px` : `18px`}
@@ -122,7 +122,7 @@ const Header: NextPage<LayoutProps> = (props) => {
               회계
             </Text>
           </Wrapper>
-          <Wrapper width={`168px`}>
+          <Wrapper width={width < 1510 ? `140px` : `168px`}>
             <Text
               cursor={`pointer`}
               fontSize={width < 1510 ? `16px` : `18px`}
@@ -132,7 +132,7 @@ const Header: NextPage<LayoutProps> = (props) => {
               마이페이지
             </Text>
           </Wrapper>
-          <Wrapper width={`168px`}>
+          <Wrapper width={width < 1510 ? `140px` : `168px`}>
             <Text
               cursor={`pointer`}
               fontSize={width < 1510 ? `16px` : `18px`}
@@ -143,7 +143,7 @@ const Header: NextPage<LayoutProps> = (props) => {
             </Text>
           </Wrapper>
 
-          <Wrapper width={`168px`}>
+          <Wrapper width={width < 1510 ? `140px` : `168px`}>
             <Text
               cursor={`pointer`}
               fontSize={width < 1510 ? `16px` : `18px`}
@@ -168,8 +168,8 @@ const Header: NextPage<LayoutProps> = (props) => {
             bgColor={`#fafafa`}
           >
             <Wrapper
-              dr={`row`}
-              ju={`space-between`}
+              height={`80px`}
+              al={`flex-start`}
               padding={
                 width < 1510
                   ? width < 1080
@@ -177,13 +177,24 @@ const Header: NextPage<LayoutProps> = (props) => {
                     : `0px 50px`
                   : `0px 100px`
               }
+              dr={`row`}
+              bgColor={`#fafafa`}
             >
               {/* 서브메뉴 빈 wrapper */}
-              <Wrapper></Wrapper>
+              <Wrapper width={`auto`} al={`cneter`}>
+                <a>
+                  <Image
+                    src="/images/cargle.png"
+                    alt="Cargle Logo"
+                    width={width < 1450 ? `80px` : `100px`}
+                    isTransparency={`true`}
+                  />
+                </a>
+              </Wrapper>
               {/* 서브메뉴 빈 wrapper 끝 */}
 
               {/* <Wrapper dr={`row`} width={`auto`} al={`flex-start`}> */}
-              <Wrapper width={`168px`}>
+              <Wrapper width={width < 1510 ? `140px` : `168px`}>
                 <TestA
                   cursor={`pointer`}
                   fontSize={width < 1510 ? `14px` : `16px`}
@@ -216,7 +227,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 </TestA>
               </Wrapper>
 
-              <Wrapper width={`168px`}>
+              <Wrapper width={width < 1510 ? `140px` : `168px`}>
                 <TestA
                   cursor={`pointer`}
                   fontSize={width < 1510 ? `14px` : `16px`}
@@ -249,7 +260,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 </TestA>
               </Wrapper>
 
-              <Wrapper width={`168px`}>
+              <Wrapper width={width < 1510 ? `140px` : `168px`}>
                 <TestA
                   cursor={`pointer`}
                   fontSize={width < 1510 ? `14px` : `16px`}
@@ -272,7 +283,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 </TestA>
               </Wrapper>
 
-              <Wrapper width={`168px`}>
+              <Wrapper width={width < 1510 ? `140px` : `168px`}>
                 <TestA
                   cursor={`pointer`}
                   fontSize={width < 1510 ? `14px` : `16px`}
@@ -295,7 +306,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 </TestA>
               </Wrapper>
 
-              <Wrapper width={`168px`}>
+              <Wrapper width={width < 1510 ? `140px` : `168px`}>
                 <TestA
                   cursor={`pointer`}
                   fontSize={width < 1510 ? `14px` : `16px`}
@@ -328,7 +339,7 @@ const Header: NextPage<LayoutProps> = (props) => {
                 </TestA>
               </Wrapper>
 
-              <Wrapper width={`168px`}>
+              <Wrapper width={width < 1510 ? `140px` : `168px`}>
                 <TestA
                   cursor={`pointer`}
                   fontSize={width < 1510 ? `14px` : `16px`}
@@ -352,8 +363,36 @@ const Header: NextPage<LayoutProps> = (props) => {
               </Wrapper>
 
               {/* 서브메뉴 빈 wrapper */}
-              <Wrapper></Wrapper>
-              {/* </Wrapper> */}
+              <Wrapper
+                width={`auto`}
+                padding={
+                  width < 1510
+                    ? width < 1080
+                      ? `0px 10px`
+                      : `0px 10px`
+                    : `0px 20px`
+                }
+                dr={`row`}
+                al={`flex-start`}
+              >
+                <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
+                  <Wrapper
+                    radius={`100px`}
+                    al={`center`}
+                    margin={`0px 10px`}
+                    width={`45px`}
+                    height={`45px`}
+                  ></Wrapper>
+                </Wrapper>
+
+                <Wrapper
+                  radius={`100px`}
+                  al={`center`}
+                  margin={`0px 10px`}
+                  width={`45px`}
+                  height={`45px`}
+                ></Wrapper>
+              </Wrapper>
             </Wrapper>
           </TestDiv2>
         </TestDiv>
