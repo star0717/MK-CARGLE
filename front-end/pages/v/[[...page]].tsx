@@ -22,6 +22,7 @@ import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
+import AdminCompanies from "../../src/components/page/admin/companies";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -62,6 +63,9 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.TEST:
       return <Test {...props} />;
+
+    case UseLink.ADMIN_COMPANIES:
+      return <AdminCompanies {...props} />;
   }
 };
 

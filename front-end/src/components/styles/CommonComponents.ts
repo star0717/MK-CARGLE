@@ -278,6 +278,7 @@ export const CommonSubTitle = styled.h2<any>`
   font-size: 22px;
   color: ${(props) => props.color || `${props.theme.darkGrey_C}`};
   font-weight: ${(props) => props.fontWeight || `700`};
+  text-align: ${(props) => props.textAlign || `center`};
 `;
 
 export const Text = styled.p<any>`
@@ -891,7 +892,7 @@ export const TableHeadLIST = styled.li<any>`
 
 export const TableBody = styled.div<any>`
   width: 100%;
-  height: ${(props) => props.height || `360px`};
+  height: ${(props) => props.height || `auto`};
   margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   padding: ${(props) => props.padding || `0px`};
   overflow: ${(props) => props.overflow || ``};

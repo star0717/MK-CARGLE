@@ -14,6 +14,7 @@ export const MainRoute = {
   MAIN: "main",
   MYPAGE: "mypage",
   TEST: "test",
+  ADMIN: "admin",
 };
 
 /**
@@ -22,6 +23,7 @@ export const MainRoute = {
 export const SubRoute = {
   ACCOUNT: "account",
   WORKER: "worker",
+  COMPANIES: "companies",
 };
 
 export const BaseLink = {
@@ -39,4 +41,5 @@ export const UseLink = {
   MYPAGE_ACCOUNT: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.ACCOUNT}`,
   MYPAGE_WORKER: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.WORKER}`,
   TEST: `${BaseLink.V}/${MainRoute.TEST}`,
+  ADMIN_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.COMPANIES}`,
 };

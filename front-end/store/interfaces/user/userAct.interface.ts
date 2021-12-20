@@ -24,6 +24,7 @@ export enum actionTypesUser {
   DOWNROAD_STAMP = "DOWNROAD_STAMP",
   WITHDRAWAL = "WITHDRAWAL",
   GET_WORKERS_LIST = "GET_WORKERS_LIST",
+  ADMIN_COMPANIES_LIST = "ADMIN_COMPANIES_LIST",
 }
 
 export type ActionsUser =
@@ -51,7 +52,8 @@ export type ActionsUser =
   | UproadStamp
   | DownroadStamp
   | Withdrawal
-  | GetWorkersList;
+  | GetWorkersList
+  | AdminCompaniesList;
 
 // 초기화
 export interface UserInit {
@@ -196,5 +198,10 @@ export interface Withdrawal {
 //작업자 조회
 export interface GetWorkersList {
   type: actionTypesUser.GET_WORKERS_LIST;
+  payload: any;
+}
+// 업체 조회
+export interface AdminCompaniesList {
+  type: actionTypesUser.ADMIN_COMPANIES_LIST;
   payload: any;
 }

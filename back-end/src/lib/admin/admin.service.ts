@@ -164,7 +164,6 @@ export class AdminService {
     if (company.busItem) pUser.busItem = company.busItem;
     if (company.phoneNum) pUser.phoneNum = company.phoneNum;
     if (company.faxNum) pUser.faxNum = company.faxNum;
-    // return await this.companiesService.findByIdAndUpdate(token, id, pUser);
-    return;
+    return await this.companiesService.findByIdAndUpdate(token, id, pUser);
   }
 }

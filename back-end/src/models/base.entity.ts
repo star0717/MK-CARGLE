@@ -194,3 +194,10 @@ export class DeleteResult {
   @ApiProperty({ description: '삭제된 데이터의 수' })
   deletedCount: number;
 }
+
+export class DbErrorInfo {
+  name: string;
+  code: string | number;
+  codeName: string;
+  key?: string;
+}

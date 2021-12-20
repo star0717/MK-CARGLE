@@ -8,7 +8,7 @@ import {
   UserInfo,
 } from "../../src/models/auth.entity";
 import { FindResult } from "../../src/models/base.entity";
-import { actionTypesUser } from "../interfaces";
+import { actionTypesUser, AdminCompaniesList } from "../interfaces";
 
 // 로그인 action
 export async function signInUserAction(dataToSubmit: UserInfo) {
@@ -281,4 +281,22 @@ export async function getWorkersListAction() {
     type: actionTypesUser.GET_WORKERS_LIST,
     payload: req,
   };
+}
+
+/** ADMIN 관련 **/
+
+/**
+ * 업체 리스트 반환 action
+ */
+export async function getCompanies() {
+  const req = await axios
+    .get("/api/companies")
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  console.log(req);
+  const result: AdminCompaniesList = {
+    type: actionTypesUser.ADMIN_COMPANIES_LIST,
+    payload: req,
+  };
+  return result;
 }

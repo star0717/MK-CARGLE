@@ -1,4 +1,11 @@
-import { BadRequestException, Injectable, Req, Res } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { Model, FilterQuery } from 'mongoose';
 import { Request, Response } from 'express';
 import { AuthTokenInfo } from 'src/models/auth.entity';
@@ -7,9 +14,11 @@ import {
   DeleteResult,
   FindParameters,
   FindResult,
+  DbErrorInfo,
 } from 'src/models/base.entity';
 import { UserAuthority } from 'src/models/user.entity';
 import { CommonService } from '../common/common.service';
+import { MongoError, MongoServerError } from 'mongoose/node_modules/mongodb';
 
 /* 확장 서비스 클래스용 패키지 - 아래의 내용을 확장 클래스에 주입
 import { InjectModel } from 'nestjs-typegoose';
@@ -43,7 +52,11 @@ export class SafeService<T extends BaseEntity> {
     // 생성일 주입
     doc.createdAt = new Date(Date.now());
 
-    return await this.model.create(doc);
+    try {
+      return await this.model.create(doc);
+    } catch (err: unknown) {
+      this.handelError(err);
+    }
   }
 
   async create(token: AuthTokenInfo, doc: T): Promise<T> {
@@ -118,7 +131,11 @@ export class SafeService<T extends BaseEntity> {
   }
 
   protected async _findByIdAndUpdate(id: string, doc: Partial<T>): Promise<T> {
-    return await this.model.findByIdAndUpdate(id, doc as any, { new: true });
+    try {
+      return await this.model.findByIdAndUpdate(id, doc as any, { new: true });
+    } catch (err: unknown) {
+      this.handelError(err);
+    }
   }
 
   async findByIdAndUpdate(
@@ -134,11 +151,15 @@ export class SafeService<T extends BaseEntity> {
       fQuery._cID = token.cID;
     }
 
-    return await this.model.findOneAndUpdate(
-      fQuery as FilterQuery<T>,
-      doc as any,
-      { new: true },
-    );
+    try {
+      return await this.model.findOneAndUpdate(
+        fQuery as FilterQuery<T>,
+        doc as any,
+        { new: true },
+      );
+    } catch (err: unknown) {
+      this.handelError(err);
+    }
   }
 
   protected async _findByIdAndRemove(id: string) {
@@ -164,5 +185,25 @@ export class SafeService<T extends BaseEntity> {
       doc._cID = token.cID;
     }
     return await this.model.deleteMany(doc);
+  }
+
+  private handelError(err: any) {
+    if (err.name == 'MongoServerError' && err.code == 11000) {
+      const mse = err as MongoServerError;
+      var info: DbErrorInfo = {
+        name: err.name,
+        code: mse.code,
+        codeName: mse.codeName,
+      };
+
+      for (var i: number = 0; i < this.modelKeys.length; i++) {
+        if (mse.message.includes(this.modelKeys[i])) {
+          info.key = this.modelKeys[i];
+          break;
+        }
+      }
+
+      throw new HttpException(info, HttpStatus.NOT_ACCEPTABLE);
+    }
   }
 }
