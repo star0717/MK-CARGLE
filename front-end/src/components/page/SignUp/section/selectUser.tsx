@@ -1,4 +1,6 @@
 import { NextPage } from "next";
+import { _cSignUpProps } from "../../../../configure/_cProps.entity";
+import { _pSelectUserProps } from "../../../../configure/_pProps.entity";
 import SelectUserPresenter from "./selectUserPresenter";
 
 /**
@@ -6,21 +8,10 @@ import SelectUserPresenter from "./selectUserPresenter";
  * @param props
  * @returns
  */
-const SelectUser: NextPage<any> = (props) => {
-  // props 재정의
-  const user = props.user;
-  const stepNumber = props.stepNumber;
-  const setStepNumber = props.setStepNumber;
-  const setUserAuth = props.setUserAuth;
-  const UserAuthority = props.UserAuthority;
-
+const SelectUser: NextPage<_cSignUpProps> = (props) => {
   // 화면구성에 넘길 props
-  const fProps = {
-    user,
-    stepNumber,
-    setStepNumber,
-    setUserAuth,
-    UserAuthority,
+  const fProps: _pSelectUserProps = {
+    ...props,
   };
 
   return <SelectUserPresenter {...fProps} />;

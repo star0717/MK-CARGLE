@@ -142,30 +142,8 @@ export class SettingsService {
     if (user.address1) pUser.address1 = user.address1;
     if (user.address2) pUser.address2 = user.address2;
     if (user.joinDate) pUser.joinDate = user.joinDate;
-    try {
-      return await this.usersService.findByIdAndUpdate(token, id, pUser);
-    } catch (err: unknown) {
-      const me = err as MongoError;
-      const mse = err as MongoServerError;
-      // console.log('1: ' + me.code);
-      // console.log('2: ' + me.errmsg);
-      // console.log('3: ' + me.errorLabels);
-      // console.log('4: ' + me.message);
-      // console.log('5: ' + me.name);
-      // console.log('6: ' + me.stack);
-      console.log(mse);
-      console.log(mse.code);
-      console.log(mse.name);
-      console.log(mse.message);
 
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: '니문제다',
-        },
-        HttpStatus.FORBIDDEN,
-      );
-    }
+    return await this.usersService.findByIdAndUpdate(token, id, pUser);
   }
 
   async updateMyCompanyInfo(

@@ -7,7 +7,6 @@ export enum actionTypesUser {
   USER_SIGNIN = "USER_SIGNIN",
   USER_SIGNUP = "USER_SIGNUP",
   USER_SIGNOUT = "USER_SIGNOUT",
-  TOKEN_CHECK = "TOKEN_CHECK",
   USER_EMAIL_SEND = "USER_EMAIL_SEND",
   USER_AUTHNUM_CHECK = "USER_AUTHNUM_CHECK",
   USER_COMPANY_CHECK = "USER_COMPANY_CHECK",
@@ -25,6 +24,7 @@ export enum actionTypesUser {
   DOWNROAD_STAMP = "DOWNROAD_STAMP",
   WITHDRAWAL = "WITHDRAWAL",
   GET_WORKERS_LIST = "GET_WORKERS_LIST",
+  ADMIN_COMPANIES_LIST = "ADMIN_COMPANIES_LIST",
 }
 
 export type ActionsUser =
@@ -36,7 +36,6 @@ export type ActionsUser =
   | UserSignIn
   | UserSignUp
   | UserSignOut
-  | TokenCheck
   | UserEmailSend
   | UserAuthNumCheck
   | UserCompanyCheck
@@ -53,7 +52,8 @@ export type ActionsUser =
   | UproadStamp
   | DownroadStamp
   | Withdrawal
-  | GetWorkersList;
+  | GetWorkersList
+  | AdminCompaniesList;
 
 // 초기화
 export interface UserInit {
@@ -100,14 +100,6 @@ export interface UserSignOut {
 // 회원가입
 export interface UserSignUp {
   type: actionTypesUser.USER_SIGNUP;
-  payload: any;
-}
-
-/**
- * 토큰체크
- */
-export interface TokenCheck {
-  type: actionTypesUser.TOKEN_CHECK;
   payload: any;
 }
 
@@ -206,5 +198,10 @@ export interface Withdrawal {
 //작업자 조회
 export interface GetWorkersList {
   type: actionTypesUser.GET_WORKERS_LIST;
+  payload: any;
+}
+// 업체 조회
+export interface AdminCompaniesList {
+  type: actionTypesUser.ADMIN_COMPANIES_LIST;
   payload: any;
 }

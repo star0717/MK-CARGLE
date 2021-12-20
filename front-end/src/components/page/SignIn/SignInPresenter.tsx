@@ -17,21 +17,14 @@ import Link from "next/link";
 import React from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { UseLink } from "../../../configure/router.entity";
+import { _pSignInProps } from "../../../configure/_pProps.entity";
 
 /**
  * 로그인 컴포넌트(화면)
  * @param props
  * @returns
  */
-const SigninPresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const onSignInHandler = props.onSignInHandler;
-  const inputSignIn = props.inputSignIn;
-  const onInputHandler = props.onInputHandler;
-  const saveCheck = props.saveCheck;
-  const setSaveCheck = props.setSaveCheck;
-  const userInit = props.userInit;
-
+const SigninPresenter: NextPage<_pSignInProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
@@ -53,7 +46,7 @@ const SigninPresenter: NextPage<any> = (props) => {
             <Wrapper
               width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             >
-              <form onSubmit={onSignInHandler}>
+              <form onSubmit={props.onSignInHandler}>
                 <TextInput2
                   marginBottom={`10px`}
                   width={
@@ -63,9 +56,9 @@ const SigninPresenter: NextPage<any> = (props) => {
                   placeholder="이메일"
                   type="text"
                   name="id"
-                  value={inputSignIn.id}
+                  value={props.inputSignIn.id}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputHandler(e);
+                    props.onInputHandler(e);
                   }}
                 />
                 <Wrapper>
@@ -91,9 +84,9 @@ const SigninPresenter: NextPage<any> = (props) => {
                   type="password"
                   placeholder="비밀번호"
                   name="pwd"
-                  value={inputSignIn.pwd}
+                  value={props.inputSignIn.pwd}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputHandler(e);
+                    props.onInputHandler(e);
                   }}
                 />
 
@@ -104,11 +97,11 @@ const SigninPresenter: NextPage<any> = (props) => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={saveCheck}
+                          checked={props.saveCheck}
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            setSaveCheck(e.target.checked);
+                            props.setSaveCheck(e.target.checked);
                           }}
                         />
                       }
@@ -144,7 +137,7 @@ const SigninPresenter: NextPage<any> = (props) => {
                   <Link href={UseLink.SIGNUP}>
                     <a
                       style={{ fontWeight: "bold", fontSize: "16px" }}
-                      onClick={userInit}
+                      onClick={props.userInit}
                     >
                       회원가입
                     </a>

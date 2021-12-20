@@ -9,7 +9,6 @@ import {
 import { UserInfo } from "../../src/models/auth.entity";
 import { User, UserAuthority } from "../../src/models/user.entity";
 import { Company, CompanyApproval } from "../../src/models/company.entity";
-import { getWorkersListAction } from "../action/user.action";
 
 export const initialState: UserState = {
   signInInfo: <UserInfo>{
@@ -28,6 +27,7 @@ export const initialState: UserState = {
     address2: "",
     joinDate: null,
     approval: false,
+    confirm_rcv_mktInfo: false,
   },
   company: <Company>{
     name: "",
@@ -106,6 +106,10 @@ const userAll = (
       return {
         ...state,
         formCheck: action.payload,
+        user: {
+          ...state.user,
+          confirm_rcv_mktInfo: action.payload.marketTerm,
+        },
       };
 
     // 로그인 기능
@@ -122,14 +126,6 @@ const userAll = (
 
     // 회원가입 기능
     case actionTypesUser.USER_SIGNUP:
-      return {
-        ...state,
-      };
-
-    /**
-     * 토큰 체크 기능
-     */
-    case actionTypesUser.TOKEN_CHECK:
       return {
         ...state,
       };

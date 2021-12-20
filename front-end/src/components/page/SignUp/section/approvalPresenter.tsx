@@ -7,16 +7,14 @@ import {
   SmallButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
+import { _pApprovalProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 업체 승인 대기 컴포넌트(화면)
  * @param props
  * @returns
  */
-const ApprovalPresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const onSignOutHandler = props.onSignOutHandler;
-
+const ApprovalPresenter: NextPage<_pApprovalProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
@@ -27,7 +25,7 @@ const ApprovalPresenter: NextPage<any> = (props) => {
         <SmallButton
           type="button"
           kindOf={`default`}
-          onClick={onSignOutHandler}
+          onClick={props.onSignOutHandler}
         >
           돌아가기
         </SmallButton>

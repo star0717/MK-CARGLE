@@ -1,8 +1,8 @@
 import { NextPage } from "next";
-import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { findPWAction } from "../../../../../store/action/user.action";
+import { _pFindPassword } from "../../../../configure/_pProps.entity";
 import { WholeWrapper } from "../../../styles/CommonComponents";
 import FindPasswordPresenter from "./findPasswordPresenter";
 import FindPwComPresenter from "./findPwComPresenter";
@@ -13,8 +13,8 @@ import FindPwComPresenter from "./findPwComPresenter";
  */
 const FindPassword: NextPage = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
 
+  // state 관리
   const [email, setEmail] = useState<string>(""); // 이메일 주소
   const [name, setName] = useState<string>(""); // 이름
   const [hpNumber, setHpNumber] = useState<string>(""); // 휴대폰번호
@@ -46,7 +46,7 @@ const FindPassword: NextPage = () => {
     );
   };
 
-  const fProps = {
+  const fProps: _pFindPassword = {
     email,
     setEmail,
     name,

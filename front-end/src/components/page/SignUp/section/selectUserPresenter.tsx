@@ -1,11 +1,8 @@
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
-  RsWrapper,
   Wrapper,
-  CommonTitle,
   CommonButton,
-  TextInput,
   Text,
   JoinFirstStepSelect,
   JoinFirstStepSelectText,
@@ -18,21 +15,15 @@ import { actionTypesUser } from "../../../../../store/interfaces";
 import { IoIosArrowForward } from "react-icons/io";
 import { NextPage } from "next";
 import { UseLink } from "../../../../configure/router.entity";
+import { _pSelectUserProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 가입유형 선택 컴포넌트(화면)
  * @param props
  * @returns
  */
-const SelectUserPresenter: NextPage<any> = (props) => {
+const SelectUserPresenter: NextPage<_pSelectUserProps> = (props) => {
   const dispatch = useDispatch();
-
-  // 필요한 props 재정의
-  const user = props.user;
-  const stepNumber = props.stepNumber;
-  const setStepNumber = props.setStepNumber;
-  const setUserAuth = props.setUserAuth;
-  const UserAuthority = props.UserAuthority;
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
@@ -44,12 +35,12 @@ const SelectUserPresenter: NextPage<any> = (props) => {
         <Wrapper padding={`20px`} width={`auto`} ju={`center`} al={`center`}>
           <JoinFirstStepSelect
             onClick={() => {
-              setStepNumber(stepNumber + 1);
-              setUserAuth(UserAuthority.OWNER);
+              props.setStepNumber(props.stepNumber + 1);
+              props.setUserAuth(props.UserAuthority.OWNER);
               dispatch({ type: actionTypesUser.USER_INIT });
               dispatch({
                 type: actionTypesUser.INPUT_ACCOUNT,
-                payload: { ...user, auth: UserAuthority.OWNER },
+                payload: { ...props.user, auth: props.UserAuthority.OWNER },
               });
             }}
           >
@@ -75,12 +66,12 @@ const SelectUserPresenter: NextPage<any> = (props) => {
         <Wrapper padding={`20px`} width={`auto`}>
           <JoinFirstStepSelect
             onClick={() => {
-              setStepNumber(stepNumber + 1);
-              setUserAuth(UserAuthority.WORKER);
+              props.setStepNumber(props.stepNumber + 1);
+              props.setUserAuth(props.UserAuthority.WORKER);
               dispatch({ type: actionTypesUser.USER_INIT });
               dispatch({
                 type: actionTypesUser.INPUT_ACCOUNT,
-                payload: { ...user, auth: UserAuthority.WORKER },
+                payload: { ...props.user, auth: props.UserAuthority.WORKER },
               });
             }}
           >

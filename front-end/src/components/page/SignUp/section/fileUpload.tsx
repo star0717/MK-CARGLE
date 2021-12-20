@@ -8,23 +8,20 @@ import {
   comFileUploadAction,
   manFileUploadAction,
   signOutUserAction,
-  tokenCheckAction,
 } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
 import FileUploadPresenter from "./fileUploadPresenter";
 import { parseJwt } from "../../../../modules/commonModule";
 import { AuthTokenInfo } from "../../../../models/auth.entity";
-
-interface FileUploadProps {
-  stepNumber?: any;
-  setStepNumber?: any;
-}
+import { _cFileUploadProps } from "../../../../configure/_cProps.entity";
+import { FileInit } from "../../../../configure/etc.entity";
+import { _pFileUploadProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 파일 데이터 초기화
  */
-const fileInit = {
+const fileInit: FileInit = {
   comFile: "",
   manFile: "",
 };
@@ -34,22 +31,19 @@ const fileInit = {
  * @param props
  * @returns
  */
-const FileUpload: NextPage<FileUploadProps> = (props) => {
+const FileUpload: NextPage<_cFileUploadProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // props 재정의
-  const stepNumber = props?.stepNumber;
-  const setStepNumber = props?.setStepNumber;
-
-  const [file, setFile] = useState<any>(fileInit); // 업로드할 파일 state
-  const [fileName, setFileName] = useState<any>(fileInit); // 업로드할 파일명 state
+  // state 관리
+  const [file, setFile] = useState<FileInit>(fileInit); // 업로드할 파일 state
+  const [fileName, setFileName] = useState<FileInit>(fileInit); // 업로드할 파일명 state
 
   /**
    * 파일 선택 시 파일명 state 변경
    * @param e
    */
-  const onFileSelectHandler = (e: any) => {
+  const onFileSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     let fileData = e.target.files[0];
     setFile({ ...file, [e.target.name]: fileData });
     setFileName({ ...fileName, [e.target.name]: fileData.name });
@@ -84,8 +78,8 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
             const tokenInfo: AuthTokenInfo = parseJwt(Cookies.get("mk_token"));
             dispatch(approvalReqAction(tokenInfo.cID)).then((res: any) => {
               if (res.payload) {
-                if (stepNumber) {
-                  setStepNumber(stepNumber + 1);
+                if (props.stepNumber) {
+                  props.setStepNumber(props.stepNumber + 1);
                 } else {
                   alert(
                     "제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다."
@@ -120,7 +114,7 @@ const FileUpload: NextPage<FileUploadProps> = (props) => {
   };
 
   // 화면구성에 넘길 props
-  const fProps = {
+  const fProps: _pFileUploadProps = {
     fileName,
     file,
     onFileUploadHandler,

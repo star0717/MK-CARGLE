@@ -10,26 +10,20 @@ import {
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { BsFillLightbulbFill, BsFillQuestionCircleFill } from "react-icons/bs";
+import { _pFileUploadProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입 - 파일 업로드 컴포넌트(화면)
  * @param props
  * @returns
  */
-const FileUploadPresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const fileName = props.fileName;
-  const file = props.file;
-  const onFileUploadHandler = props.onFileUploadHandler;
-  const onFileSelectHandler = props.onFileSelectHandler;
-  const onSignOutHandler = props.onSignOutHandler;
-
+const FileUploadPresenter: NextPage<_pFileUploadProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper ref={ref}>
-      <form onSubmit={onFileUploadHandler}>
+      <form onSubmit={props.onFileUploadHandler}>
         <Wrapper
           width={`auto`}
           padding={`50px`}
@@ -44,7 +38,7 @@ const FileUploadPresenter: NextPage<any> = (props) => {
                   width={`300px`}
                   type="text"
                   placeholder="jpg, png, pdf 형식"
-                  value={fileName.comFile}
+                  value={props.fileName.comFile}
                   required
                   readOnly
                 />
@@ -60,8 +54,8 @@ const FileUploadPresenter: NextPage<any> = (props) => {
                   type="file"
                   id="comFile"
                   name="comFile"
-                  key={file.comFile}
-                  onChange={onFileSelectHandler}
+                  key={props.file.comFile}
+                  onChange={props.onFileSelectHandler}
                   accept=".jpg, .png, .pdf"
                 />
               </Wrapper>
@@ -73,7 +67,7 @@ const FileUploadPresenter: NextPage<any> = (props) => {
                   width={`300px`}
                   type="text"
                   placeholder="jpg, png, pdf 형식"
-                  value={fileName.manFile}
+                  value={props.fileName.manFile}
                   required
                   readOnly
                 />
@@ -89,8 +83,8 @@ const FileUploadPresenter: NextPage<any> = (props) => {
                   type="file"
                   id="manFile"
                   name="manFile"
-                  key={file.manFile}
-                  onChange={onFileSelectHandler}
+                  key={props.file.manFile}
+                  onChange={props.onFileSelectHandler}
                   accept=".jpg, .png, .pdf"
                 />
               </Wrapper>
@@ -102,7 +96,7 @@ const FileUploadPresenter: NextPage<any> = (props) => {
             type="button"
             margin={`0px 0px 10px 0px`}
             kindOf={`white`}
-            onClick={onSignOutHandler}
+            onClick={props.onSignOutHandler}
           >
             다음에하기
           </CommonButton>
