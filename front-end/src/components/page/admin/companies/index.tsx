@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCompanies } from "../../../../../store/action/user.action";
 import { AdminCompaniesList } from "../../../../../store/interfaces";
@@ -11,9 +11,9 @@ const AdminCompanies: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   const [companies, setCompanies] = useState<Company[]>();
+  const [loadList, setLoadList] = useState(false);
 
-  const getComListHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    // e.preventDefault();
+  const getComListHandler = () => {
     dispatch(getCompanies()).then((res: any) => {
       console.log("hi");
       (res: AdminCompaniesList) => {
@@ -24,10 +24,13 @@ const AdminCompanies: NextPage<any> = (props) => {
     });
   };
 
-  if (companies == null) {
-    console.log("널");
-    getComListHandler;
-  }
+  useEffect(() => {
+    if (loadList == false) {
+      getComListHandler();
+      setLoadList(true);
+    }
+  }, [companies]);
+
   return <WholeWrapper>Hello</WholeWrapper>;
 };
 
