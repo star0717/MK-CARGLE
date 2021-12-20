@@ -12,16 +12,18 @@ import {
   TableBody,
   TableRowLIST,
   TableRow,
+  SmallButton,
 } from "../../styles/CommonComponents";
 import { FindResult } from "../../../models/base.entity";
 import { Button } from "@material-ui/core";
 import { DockSharp, LastPage } from "@material-ui/icons";
+import { User } from "../../../models/user.entity";
 
 const MyPageWorker: NextPage = () => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalOption, setModalOption] = useState<string>("");
-  const [docs, setDocs] = useState<any>([]);
+  const [docs, setDocs] = useState<User[]>([]);
   const [totalDocs, setTotalDocs] = useState<number>();
   const [currentPage, setCurrentPage] = useState<number>();
   const [lastPage, setLastPage] = useState<number>();
@@ -76,7 +78,7 @@ const MyPageWorker: NextPage = () => {
 
   // const Tablerow = docs.map((_id, name) => <li key={_id}>{name}</li>);
 
-  // function render<any>({ doc:any }){
+  // function render<User>({ doc:User}){
   //   return (
   //     <TableRow>
   //       <TableRowLIST>{doc.name}</TableRowLIST>
@@ -89,44 +91,62 @@ const MyPageWorker: NextPage = () => {
 
   // const Tablerow = docs.map((docs) => <render docs={docs} key={docs._id} />);
 
+  const ProfileLink = (doc: User) => <div>{doc.name}</div>;
+
   return (
     <WholeWrapper>
-      <Wrapper>
+      <Wrapper width={`1200px`}>
         <Text>직원관리</Text>
-        {/* <TableWrapper>
+
+        <TableWrapper>
           <TableHead>
-            <TableHeadLIST>직원명</TableHeadLIST>
-            <TableHeadLIST>전화번호</TableHeadLIST>
-            <TableHeadLIST>입사일자</TableHeadLIST>
-            <TableHeadLIST>승인여부</TableHeadLIST>
+            <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
+            <TableHeadLIST width={`300px`}>전화번호</TableHeadLIST>
+            <TableHeadLIST width={`300px`}>입사일자</TableHeadLIST>
+            <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableRowLIST>ㅈㅓㅇ구혁</TableRowLIST>
-              <TableRowLIST>01034244028</TableRowLIST>
-              <TableRowLIST>21.12.05</TableRowLIST>
-              <TableRowLIST>승인</TableRowLIST>
-            </TableRow>
+            {docs.map((doc) => (
+              <TableRow>
+                <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
+                <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
+                <TableRowLIST width={`300px`}>{doc.joinDate}</TableRowLIST>
+                <TableRowLIST width={`300px`}>{doc.approval}</TableRowLIST>
+              </TableRow>
+            ))}
           </TableBody>
-        </TableWrapper> */}
-        {/* {docs.map(doc => (<render doc = {doc} key={doc._id}/>))} */}
-        {/* {docs.map(doc => (<Tablerow doc = {docs}/>))} */}
-
-        {/* {totalDocs === 0 ? (<Text>관리할 직원이 없습니다.</Text>) : 
-        docs.map((_id, name, ))} */}
+        </TableWrapper>
       </Wrapper>
-      <Button
-        type="button"
-        onClick={() => {
-          getDate();
-          console.log("TotalDocs =>", totalDocs);
-          console.log("CurrentPage =>", currentPage);
-          console.log("LastPage => ", lastPage);
-          console.log("Docs => ", docs);
-        }}
-      >
-        ㅈㅓㅇ보
-      </Button>
+
+      {/* {docs.map(doc => (<render doc = {doc} key={doc._id}/>))} */}
+      {/* {docs.map(doc => (<Tablerow doc = {docs}/>))} */}
+
+      {/* {totalDocs === 0 ? (<Text>관리할 직원이 없습니다.</Text>) : 
+        docs.map((_id, name, ))} */}
+
+      {/* <table>
+          <tbody>
+            {docs.map((doc) => (
+              <tr key={doc._id}>
+                <td>{doc.name}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table> */}
+      <Wrapper>
+        <SmallButton
+          type="button"
+          onClick={() => {
+            getDate();
+            console.log("TotalDocs =>", totalDocs);
+            console.log("CurrentPage =>", currentPage);
+            console.log("LastPage => ", lastPage);
+            console.log("Docs => ", docs);
+          }}
+        >
+          ㅈㅓㅇ보
+        </SmallButton>
+      </Wrapper>
     </WholeWrapper>
   );
 };
