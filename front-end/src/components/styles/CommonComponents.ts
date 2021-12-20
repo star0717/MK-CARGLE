@@ -841,8 +841,11 @@ export const Image = styled.img<any>`
   transition: 0.3s;
   padding: ${(props) => props.padding};
   align-items: center;
+  opacity: ${(props) => props.opacity};
 
   filter: ${(props) => (props.isFilter ? `brightness(30%) opacity(0.4)` : ` `)};
+
+  filter: ${(props) => (props.isTransparency ? ` opacity(0)` : ` `)};
 
   &:hover {
     filter: ${(props) => (props.isHover ? `brightness(100%) opacity(1)` : ` `)};
