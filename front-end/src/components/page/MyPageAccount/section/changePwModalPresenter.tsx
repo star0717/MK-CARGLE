@@ -40,7 +40,7 @@ const ChangePwModalPresenter: NextPage<any> = (props) => {
           <Wrapper>
             <Text>비밀번호 변경</Text>
           </Wrapper>
-          <Wrapper dr={`row`}>
+          <Wrapper>
             <Text>현재 비밀번호</Text>
             <TextInput
               type="password"
@@ -53,7 +53,7 @@ const ChangePwModalPresenter: NextPage<any> = (props) => {
               })}
             />
           </Wrapper>
-          <Wrapper dr={`row`}>
+          <Wrapper>
             <Text>새로운 비밀번호</Text>
             <TextInput
               type="password"
@@ -79,7 +79,7 @@ const ChangePwModalPresenter: NextPage<any> = (props) => {
               <Text>현재 비밀번호와 다르게 설정하세요.</Text>
             )}
           </Wrapper>
-          <Wrapper dr={`row`}>
+          <Wrapper dr={`column`}>
             <Text>새로운 비밀번호 확인</Text>
             <TextInput
               type="password"
@@ -101,10 +101,10 @@ const ChangePwModalPresenter: NextPage<any> = (props) => {
             )}
             {watch("newPasswordCheck", "") !== "" &&
               errors.newPasswordCheck?.type !== "validate" && (
-                <Text>비밀번호가 일치합니다.</Text>
+                <Text width={`200px`}>비밀번호가 일치합니다.</Text>
               )}
           </Wrapper>
-          <Wrapper dr={`row`}>
+          <Wrapper>
             <SmallButton type="submit" kindOf={`default`}>
               확인
             </SmallButton>
