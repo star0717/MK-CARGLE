@@ -278,6 +278,7 @@ export const CommonSubTitle = styled.h2<any>`
   font-size: 22px;
   color: ${(props) => props.color || `${props.theme.darkGrey_C}`};
   font-weight: ${(props) => props.fontWeight || `700`};
+  text-align: ${(props) => props.textAlign || `center`};
 `;
 
 export const Text = styled.p<any>`
@@ -841,8 +842,11 @@ export const Image = styled.img<any>`
   transition: 0.3s;
   padding: ${(props) => props.padding};
   align-items: center;
+  opacity: ${(props) => props.opacity};
 
   filter: ${(props) => (props.isFilter ? `brightness(30%) opacity(0.4)` : ` `)};
+
+  filter: ${(props) => (props.isTransparency ? ` opacity(0)` : ` `)};
 
   &:hover {
     filter: ${(props) => (props.isHover ? `brightness(100%) opacity(1)` : ` `)};
@@ -888,7 +892,7 @@ export const TableHeadLIST = styled.li<any>`
 
 export const TableBody = styled.div<any>`
   width: 100%;
-  height: ${(props) => props.height || `360px`};
+  height: ${(props) => props.height || `auto`};
   margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   padding: ${(props) => props.padding || `0px`};
   overflow: ${(props) => props.overflow || ``};
