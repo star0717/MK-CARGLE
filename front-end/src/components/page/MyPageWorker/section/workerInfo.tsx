@@ -16,7 +16,7 @@ import {
 } from "../../../styles/CommonComponents";
 import { User } from "../../../../models/user.entity";
 
-const workerInfo: NextPage<any> = (props) => {
+const WorkerInfo: NextPage<any> = (props) => {
   // const dispatch = useDispatch();
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -107,4 +107,4 @@ const workerInfo: NextPage<any> = (props) => {
   );
 };
 
-export default workerInfo;
+export default WorkerInfo;

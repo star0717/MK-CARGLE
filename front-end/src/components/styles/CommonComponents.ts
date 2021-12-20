@@ -57,7 +57,7 @@ export const RsWrapper = styled.div<any>`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.padding || `80px 0px`};
   overflow: ${(props) => props.overflow};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
@@ -293,7 +293,7 @@ export const Text = styled.p<any>`
   justify-content: ${(props) => props.ju};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || `500`};
-  line-height: ${(props) => props.lineHeight || `1.6`};
+  line-height: ${(props) => props.lineHeight || `16px`};
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
@@ -312,6 +312,7 @@ export const Text = styled.p<any>`
   white-space: pre-wrap;
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
+  letter-spacing: ${(props) => props.letterSpacing || `0px`};
 
   & svg {
     color: ${(props) => props.color};
@@ -740,6 +741,14 @@ export const TextInput2 = styled.input<any>`
 
   &:read-only:focus {
     box-shadow: none;
+    border: ${(props) => props.theme.border};
+  }
+
+  &:read-only {
+    box-shadow: none;
+    border: ${(props) => props.theme.border};
+    background-color: #f5f5f5;
+    cursor: default;
   }
 `;
 
@@ -798,6 +807,7 @@ export const Combo = styled.select<any>`
   color: ${(props) => props.color};
   border-radius: ${(props) => props.theme.radius};
   margin: ${(props) => props.margin || `0px 5px`};
+  font-size: 16px;
 
   &:focus {
     outline: none;

@@ -1,11 +1,25 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getCompanies } from "../../../../../store/action/user.action";
+import {
+  getCompanies,
+  getComRegFile,
+} from "../../../../../store/action/user.action";
 import { AdminCompaniesList } from "../../../../../store/interfaces";
 import { FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
-import { WholeWrapper } from "../../../styles/CommonComponents";
+import {
+  SmallButton,
+  TableBody,
+  TableHead,
+  TableHeadLIST,
+  TableRow,
+  TableRowLIST,
+  TableWrapper,
+  Text,
+  WholeWrapper,
+  Wrapper,
+} from "../../../styles/CommonComponents";
 
 const AdminCompanies: NextPage<any> = (props) => {
   const dispatch = useDispatch();
@@ -15,15 +29,16 @@ const AdminCompanies: NextPage<any> = (props) => {
 
   const getComListHandler = () => {
     dispatch(getCompanies()).then((res: any) => {
-      console.log("hi");
-      (res: AdminCompaniesList) => {
-        const result: FindResult<Company> = res.payload;
-        setCompanies(result.docs);
-        console.log("저장완료");
-      };
+      const result: FindResult<Company> = res.payload;
+      setCompanies(result.docs);
     });
   };
 
+  const downloadComRegFileHandler = (id: string) => {
+    dispatch(getComRegFile(id));
+  };
+
+  // 페이지가 로드될 때 한번만 호출되도록 설정
   useEffect(() => {
     if (loadList == false) {
       getComListHandler();
@@ -31,7 +46,46 @@ const AdminCompanies: NextPage<any> = (props) => {
     }
   }, [companies]);
 
-  return <WholeWrapper>Hello</WholeWrapper>;
+  return (
+    <WholeWrapper>
+      <Wrapper width={"1200px"}>
+        <Text>업체 관리</Text>
+        <TableWrapper>
+          <TableHead>
+            <TableHeadLIST width={`300px`}>업체명</TableHeadLIST>
+            <TableHeadLIST width={`300px`}>사업자등록증</TableHeadLIST>
+            <TableHeadLIST width={`300px`}>정비업등록증</TableHeadLIST>
+            <TableHeadLIST width={`300px`}>상태</TableHeadLIST>
+          </TableHead>
+          <TableBody>
+            {companies?.map((doc) => (
+              <TableRow key={doc._id}>
+                <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
+                <TableRowLIST width={`300px`}>
+                  {/* <SmallButton
+                    type="button"
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      downloadComRegFileHandler(doc._cID);
+                    }}
+                  >
+                    다운로드
+                  </SmallButton> */}
+                  <a
+                    href="/api/admin/review/com-reg-doc/${id}"
+                    target={"_blank"}
+                  >
+                    다운로드
+                  </a>
+                </TableRowLIST>
+                <TableRowLIST width={`300px`}>다운로드</TableRowLIST>
+                <TableRowLIST width={`300px`}>{doc.approval}</TableRowLIST>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableWrapper>
+      </Wrapper>
+    </WholeWrapper>
+  );
 };
 
 export default AdminCompanies;
