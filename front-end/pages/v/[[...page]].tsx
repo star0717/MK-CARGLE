@@ -21,6 +21,7 @@ import { useRouter } from "next/dist/client/router";
 import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
+import AdminCompanies from "../../src/components/page/admin/companies";
 
 interface ViewProps {
   route: any;
@@ -69,6 +70,9 @@ const SubComponent: NextPage<ViewProps> = (props) => {
 
     case UseLink.TEST:
       return <Test {...props} />;
+
+    case UseLink.ADMIN_COMPANIES:
+      return <AdminCompanies {...props} />;
   }
 };
 
