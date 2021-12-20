@@ -8,9 +8,10 @@ import {
   TextInput2,
   SmallButton,
   Combo,
+  Image,
 } from "../../../styles/CommonComponents";
 import React from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import { formRegEx } from "../../../../validation/regEx";
 import { mbType } from "../../../../configure/company.entity";
 
@@ -301,13 +302,20 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
         </form>
         <Wrapper dr={`row`}>
           <Text>사업자 도장</Text>
-          <Image
-            loader={myLoader}
-            alt="도장 사진"
-            width={300}
-            height={300}
-            src="/api/settings/myinfo/stamp"
-          />
+          <Wrapper
+            width={`300px`}
+            border={`1px solid #ccc`}
+            radius={`5px`}
+            padding={`10px 0px`}
+          >
+            <Image
+              loader={myLoader}
+              alt="도장 사진"
+              width={`100 px`}
+              // height={200}
+              src="/api/settings/myinfo/stamp"
+            />
+          </Wrapper>
 
           <SmallButton
             type="button"
