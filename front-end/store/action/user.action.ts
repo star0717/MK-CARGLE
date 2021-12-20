@@ -293,8 +293,19 @@ export async function getCompanies() {
     .get("/api/companies")
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
-  console.log(req);
   const result: AdminCompaniesList = {
+    type: actionTypesUser.ADMIN_COMPANIES_LIST,
+    payload: req,
+  };
+  return result;
+}
+
+export async function getComRegFile(id: string) {
+  const req = await axios
+    .get(`/api/admin/review/com-reg-doc/${id}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  const result = {
     type: actionTypesUser.ADMIN_COMPANIES_LIST,
     payload: req,
   };
