@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { User } from "../../../models/user.entity";
 import { getWorkersListAction } from "../../../../store/action/user.action";
@@ -14,12 +14,15 @@ const MyPageWorker: NextPage<any> = (props) => {
   const [currentPage, setCurrentPage] = useState<number>();
   const [lastPage, setLastPage] = useState<number>();
 
-  dispatch(getWorkersListAction()).then((res: any) => {
-    setDocs(res.payload.docs);
-    setTotalDocs(res.payload.totalDocs);
-    setCurrentPage(res.payload.currentPage);
-    setLastPage(res.payload.lastPage);
-  });
+  // useEffect(() => {
+  //   dispatch(getWorkersListAction()).then((res: any) => {
+  //     setDocs(res.payload.docs);
+  //     setTotalDocs(res.payload.totalDocs);
+  //     setCurrentPage(res.payload.currentPage);
+  //     setLastPage(res.payload.lastPage);
+  //   });
+  //   console.log("ok!");
+  // });
 
   const fprops = {
     ...props,
