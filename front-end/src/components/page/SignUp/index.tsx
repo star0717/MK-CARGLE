@@ -8,6 +8,7 @@ import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { UserState } from "../../../../store/interfaces";
 import SignUpPresenter from "./indexPresenter";
 import { WholeWrapper } from "../../styles/CommonComponents";
+import { _cSignUpProps } from "../../../configure/_cProps.entity";
 
 // modal setting
 Modal.setAppElement("body");
@@ -22,19 +23,11 @@ const SignUp: NextPage<any> = () => {
     (state: RootStateInterface): UserState => state.userAll
   );
 
-  // 이메일 종류ß
-  const emailItem = [
-    { key: 1, value: "", text: "직접 입력" },
-    { key: 2, value: "gmail.com", text: "gmail.com" },
-    { key: 3, value: "naver.com", text: "naver.com" },
-    { key: 4, value: "daum.net", text: "daum.net" },
-  ];
-
   const [userAuth, setUserAuth] = useState<UserAuthority>(UserAuthority.WORKER); // 유저 권한 종류
   const [stepNumber, setStepNumber] = useState<number>(1); // 스텝 숫자
 
   // component에 전달할 props들 정의
-  const SignUpProps = {
+  const SignUpProps: _cSignUpProps = {
     user,
     company,
     formInput,
@@ -44,7 +37,6 @@ const SignUp: NextPage<any> = () => {
     userAuth,
     UserAuthority,
     setUserAuth,
-    emailItem,
   };
 
   return (

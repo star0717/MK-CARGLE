@@ -10,31 +10,27 @@ import {
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { GoCheck } from "react-icons/go";
+import { _cSignUpProps } from "../../../../configure/_cProps.entity";
 
 /**
  * 회원가입: 공통 헤더 컴포넌트(화면)
  * @param props
  * @returns
  */
-const SignUpHeaderPresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const stepNumber = props.stepNumber;
-  const userAuth = props.userAuth;
-  const UserAuthority = props.UserAuthority;
-
+const SignUpHeaderPresenter: NextPage<_cSignUpProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper ref={ref}>
       <Wrapper>
-        {stepNumber === 1 && (
+        {props.stepNumber === 1 && (
           <Wrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>가입 유형을 선택해주세요.</CommonSubTitle>
           </Wrapper>
         )}
-        {stepNumber === 2 && (
+        {props.stepNumber === 2 && (
           <Wrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>
@@ -42,19 +38,20 @@ const SignUpHeaderPresenter: NextPage<any> = (props) => {
             </CommonSubTitle>
           </Wrapper>
         )}
-        {stepNumber === 3 && (
+        {props.stepNumber === 3 && (
           <Wrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>계정 정보를 입력해주세요.</CommonSubTitle>
           </Wrapper>
         )}
-        {stepNumber === 4 && userAuth === UserAuthority.OWNER ? (
+        {props.stepNumber === 4 &&
+        props.userAuth === props.UserAuthority.OWNER ? (
           <Wrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>사업자 정보를 입력해주세요.</CommonSubTitle>
           </Wrapper>
         ) : null}
-        {stepNumber === 5 && (
+        {props.stepNumber === 5 && (
           <Wrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>
@@ -64,47 +61,51 @@ const SignUpHeaderPresenter: NextPage<any> = (props) => {
         )}
       </Wrapper>
 
-      {userAuth === UserAuthority.OWNER &&
-        (stepNumber === 2 ||
-          stepNumber === 3 ||
-          stepNumber === 4 ||
-          stepNumber === 5) && (
+      {props.userAuth === props.UserAuthority.OWNER &&
+        (props.stepNumber === 2 ||
+          props.stepNumber === 3 ||
+          props.stepNumber === 4 ||
+          props.stepNumber === 5) && (
           <JoinStepBarWrapper>
-            <JoinStepBar kindOf={stepNumber === 2 ? `progress` : `complete`}>
-              {stepNumber === 2 ? `1` : <GoCheck />}
+            <JoinStepBar
+              kindOf={props.stepNumber === 2 ? `progress` : `complete`}
+            >
+              {props.stepNumber === 2 ? `1` : <GoCheck />}
             </JoinStepBar>
             <JoinStepBar
-              kindOf={stepNumber > 2 ? `line` : `line2`}
+              kindOf={props.stepNumber > 2 ? `line` : `line2`}
             ></JoinStepBar>
             <JoinStepBar
               kindOf={
-                stepNumber < 3
+                props.stepNumber < 3
                   ? `before`
-                  : stepNumber === 3
+                  : props.stepNumber === 3
                   ? `progress`
                   : `complete`
               }
             >
-              {stepNumber > 3 ? <GoCheck /> : `2`}
+              {props.stepNumber > 3 ? <GoCheck /> : `2`}
             </JoinStepBar>
             <JoinStepBar
-              kindOf={stepNumber > 3 ? `line` : `line2`}
+              kindOf={props.stepNumber > 3 ? `line` : `line2`}
             ></JoinStepBar>
             <JoinStepBar
               kindOf={
-                stepNumber < 4
+                props.stepNumber < 4
                   ? `before`
-                  : stepNumber === 4
+                  : props.stepNumber === 4
                   ? `progress`
                   : `complete`
               }
             >
-              {stepNumber > 4 ? <GoCheck /> : `3`}
+              {props.stepNumber > 4 ? <GoCheck /> : `3`}
             </JoinStepBar>
             <JoinStepBar
-              kindOf={stepNumber > 4 ? `line` : `line2`}
+              kindOf={props.stepNumber > 4 ? `line` : `line2`}
             ></JoinStepBar>
-            <JoinStepBar kindOf={stepNumber === 5 ? `progress` : `before`}>
+            <JoinStepBar
+              kindOf={props.stepNumber === 5 ? `progress` : `before`}
+            >
               4
             </JoinStepBar>
           </JoinStepBarWrapper>

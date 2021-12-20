@@ -24,6 +24,11 @@ import {
   Wrapper,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
+import {
+  _cComFindModalProps,
+  _cSignUpProps,
+} from "../../../../configure/_cProps.entity";
+import { _pSignAccountProps } from "../../../../configure/_pProps.entity";
 
 // modal setting
 Modal.setAppElement("body");
@@ -33,19 +38,12 @@ Modal.setAppElement("body");
  * @param props
  * @returns
  */
-const SignAccount: NextPage<any> = (props) => {
+const SignAccount: NextPage<_cSignUpProps> = (props) => {
   const dispatch = useDispatch();
 
-  // props 재정의
-  const user = props.user;
-  const formInput = props.formInput;
-  const formCheck = props.formCheck;
-  const stepNumber = props.stepNumber;
-  const setStepNumber = props.setStepNumber;
-  const userAuth = props.userAuth;
-
-  const [inputUser, setInputUser] = useState<User>(user); // 사용자 정보
-  const [inputForm, setInputForm] = useState<FormInput>(formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
+  // state 관리
+  const [inputUser, setInputUser] = useState<User>(props.user); // 사용자 정보
+  const [inputForm, setInputForm] = useState<FormInput>(props.formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
   const [timer, setTimer] = useState<number>(0); // 인증번호 유효시간 타이머
   const [authNum, setAuthNum] = useState<string>(""); // 인증번호 input
   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달창 open 여부
@@ -105,7 +103,7 @@ const SignAccount: NextPage<any> = (props) => {
           alert("인증번호가 전송되었습니다.");
           dispatch({
             type: actionTypesUser.FORM_CHECK,
-            payload: { ...formCheck, emailSend: true },
+            payload: { ...props.formCheck, emailSend: true },
           });
           clearErrors("email");
           setTimer(300);
@@ -129,7 +127,7 @@ const SignAccount: NextPage<any> = (props) => {
     () => {
       setTimer(timer - 1);
     },
-    formCheck.emailSend ? 1000 : null
+    props.formCheck.emailSend ? 1000 : null
   );
 
   // 인증번호 만료 시 emailSend state 변경
@@ -137,18 +135,18 @@ const SignAccount: NextPage<any> = (props) => {
     if (timer === 0) {
       if (
         !Cookies.get("mk_amtn") &&
-        formCheck.emailSend &&
-        !formCheck.authNumCheck
+        props.formCheck.emailSend &&
+        !props.formCheck.authNumCheck
       ) {
         alert("인증번호가 만료되었습니다.");
         setAuthNum("");
         dispatch({
           type: actionTypesUser.FORM_CHECK,
-          payload: { ...formCheck, emailSend: false },
+          payload: { ...props.formCheck, emailSend: false },
         });
       }
     }
-  }, [timer, formCheck]);
+  }, [timer, props.formCheck]);
 
   /**
    * 인증번호 검사 handler
@@ -162,7 +160,11 @@ const SignAccount: NextPage<any> = (props) => {
           setTimer(0);
           dispatch({
             type: actionTypesUser.FORM_CHECK,
-            payload: { ...formCheck, authNumCheck: true, emailSend: false },
+            payload: {
+              ...props.formCheck,
+              authNumCheck: true,
+              emailSend: false,
+            },
           });
           setAuthNum("");
           Cookies.remove("mk_amtn");
@@ -205,13 +207,13 @@ const SignAccount: NextPage<any> = (props) => {
    */
   const onSignUpUserHandler: SubmitHandler<SignUpInfo> = (data) => {
     console.log("로그인하자");
-    if (!formCheck.authNumCheck) {
+    if (!props.formCheck.authNumCheck) {
       alert("이메일 인증을 해주세요.");
     } else {
-      if (userAuth === UserAuthority.OWNER) {
+      if (props.userAuth === UserAuthority.OWNER) {
         dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
         dispatch({ type: actionTypesUser.INPUT_ACCOUNT, payload: inputUser });
-        setStepNumber(stepNumber + 1);
+        props.setStepNumber(props.stepNumber + 1);
       } else {
         dispatch(
           signUpUserAction({
@@ -219,15 +221,11 @@ const SignAccount: NextPage<any> = (props) => {
           })
         ).then(
           (res: any) => {
-            setStepNumber(stepNumber + 1);
+            props.setStepNumber(props.stepNumber + 1);
           },
           (err) => {
             if (err.response.status === 400) {
               alert("회원가입에 실패했습니다.");
-              dispatch({
-                type: actionTypesUser.FORM_CHECK,
-                payload: initialState.formCheck,
-              });
             }
           }
         );
@@ -235,8 +233,10 @@ const SignAccount: NextPage<any> = (props) => {
     }
   };
 
-  // MODAL에 넘길 props
-  const ComfindModalProps = {
+  /**
+   * 업체 조회 MODAL에 넘길 props
+   */
+  const ComfindModalProps: _cComFindModalProps = {
     setModalOpen,
     inputForm,
     setInputForm,
@@ -246,7 +246,7 @@ const SignAccount: NextPage<any> = (props) => {
   };
 
   // 화면구성에 넘길 props
-  const fProps = {
+  const fProps: _pSignAccountProps = {
     ...props,
     handleSubmit,
     register,
@@ -255,8 +255,6 @@ const SignAccount: NextPage<any> = (props) => {
     setValue,
     inputForm,
     setInputForm,
-    formInput,
-    formCheck,
     inputUser,
     setInputUser,
     modalOption,
@@ -270,8 +268,6 @@ const SignAccount: NextPage<any> = (props) => {
     authNum,
     setAuthNum,
     onAuthNumCheckHandler,
-    stepNumber,
-    setStepNumber,
     onSignUpUserHandler,
   };
 

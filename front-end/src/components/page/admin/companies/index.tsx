@@ -5,7 +5,15 @@ import { getCompanies } from "../../../../../store/action/user.action";
 import { AdminCompaniesList } from "../../../../../store/interfaces";
 import { FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
-import { WholeWrapper } from "../../../styles/CommonComponents";
+import {
+  TableBody,
+  TableHead,
+  TableHeadLIST,
+  TableWrapper,
+  Text,
+  WholeWrapper,
+  Wrapper,
+} from "../../../styles/CommonComponents";
 
 const AdminCompanies: NextPage<any> = (props) => {
   const dispatch = useDispatch();
@@ -24,14 +32,26 @@ const AdminCompanies: NextPage<any> = (props) => {
     });
   };
 
-  useEffect(() => {
-    if (loadList == false) {
-      getComListHandler();
-      setLoadList(true);
-    }
-  }, [companies]);
+  // useEffect(() => {
+  //   if (loadList == false) {
+  //     // getComListHandler();
+  //     setLoadList(true);
+  //   }
+  // }, [companies]);
 
-  return <WholeWrapper>Hello</WholeWrapper>;
+  return (
+    <WholeWrapper>
+      <Wrapper width={"1200px"}>
+        <Text>업체 관리</Text>
+        <TableWrapper>
+          <TableHead>
+            <TableHeadLIST width={`300px`}>업체명</TableHeadLIST>
+          </TableHead>
+          {/* <TableBody>{companies.map((company) => {})}</TableBody> */}
+        </TableWrapper>
+      </Wrapper>
+    </WholeWrapper>
+  );
 };
 
 export default AdminCompanies;

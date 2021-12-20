@@ -13,37 +13,22 @@ import React from "react";
 import { formRegEx } from "../../../../validation/regEx";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import { _pSignCompanyProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 업체정보 컴포넌트(화면)
  * @param props
  * @returns
  */
-const SignCompanyPresenter: NextPage<any> = (props) => {
+const SignCompanyPresenter: NextPage<_pSignCompanyProps> = (props) => {
   const dispatch = useDispatch();
-
-  // 필요한 props 재정의
-  const register = props.register;
-  const handleSubmit = props.handleSubmit;
-  const errors = props.errors;
-  const onSignUpCompanyHandler = props.onSignUpCompanyHandler;
-  const inputCompany = props.inputCompany;
-  const inputForm = props.inputForm;
-  const onInputCompanyHandler = props.onInputCompanyHandler;
-  const formCheck = props.formCheck;
-  const onComRegNumCheck = props.onComRegNumCheck;
-  // const inputForm = props.inputForm;
-  const modalOpen = props.modalOpen;
-  const setModalOpen = props.setModalOpen;
-  const stepNumber = props.stepNumber;
-  const setStepNumber = props.setStepNumber;
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper ref={ref}>
-      <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
+      <form onSubmit={props.handleSubmit(props.onSignUpCompanyHandler)}>
         <Wrapper
           width={`auto`}
           padding={`50px`}
@@ -65,16 +50,16 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={inputCompany.name}
+                value={props.inputCompany.name}
                 placeholder="상호명을 입력해주세요."
-                {...register("name", {
+                {...props.register("name", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputCompanyHandler(e);
+                    props.onInputCompanyHandler(e);
                   },
                   required: { value: true, message: "필수 입력사항입니다." },
                 })}
               />
-              {errors.name?.type === "required" && (
+              {props.errors.name?.type === "required" && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}
@@ -83,7 +68,7 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   fontSize={`14px`}
                   textAlign={`left`}
                 >
-                  {errors.name.message}
+                  {props.errors.name.message}
                 </Text>
               )}
             </Wrapper>
@@ -104,12 +89,12 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                 <TextInput2
                   width={`300px`}
                   type="text"
-                  value={inputCompany.comRegNum}
-                  readOnly={formCheck.companyCheck}
+                  value={props.inputCompany.comRegNum}
+                  readOnly={props.formCheck.companyCheck}
                   placeholder="사업자 등록번호를 입력해주세요."
-                  {...register("comRegNum", {
+                  {...props.register("comRegNum", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputCompanyHandler(e);
+                      props.onInputCompanyHandler(e);
                     },
                     required: { value: true, message: "필수 입력사항입니다." },
                     pattern: {
@@ -122,17 +107,17 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
                   type="button"
-                  onClick={onComRegNumCheck}
-                  disabled={formCheck.companyCheck}
+                  onClick={props.onComRegNumCheck}
+                  disabled={props.formCheck.companyCheck}
                 >
                   인증
                 </SmallButton>
               </Wrapper>
-              {(errors.comRegNum?.type === "required" ||
-                errors.comRegNum?.type === "pattern" ||
-                errors.comRegNum?.type === "comCheckFalse" ||
-                errors.comRegNum?.type === "comExist" ||
-                errors.comRegNum?.type === "comCheckNeed") && (
+              {(props.errors.comRegNum?.type === "required" ||
+                props.errors.comRegNum?.type === "pattern" ||
+                props.errors.comRegNum?.type === "comCheckFalse" ||
+                props.errors.comRegNum?.type === "comExist" ||
+                props.errors.comRegNum?.type === "comCheckNeed") && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}
@@ -141,10 +126,10 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   fontSize={`14px`}
                   textAlign={`left`}
                 >
-                  {errors.comRegNum.message}
+                  {props.errors.comRegNum.message}
                 </Text>
               )}
-              {errors.comRegNum?.type === "comCheckTrue" && (
+              {props.errors.comRegNum?.type === "comCheckTrue" && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}
@@ -153,7 +138,7 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   fontSize={`14px`}
                   textAlign={`left`}
                 >
-                  {errors.comRegNum.message}
+                  {props.errors.comRegNum.message}
                 </Text>
               )}
             </Wrapper>
@@ -163,11 +148,11 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={inputCompany.mbRegNum}
+                value={props.inputCompany.mbRegNum}
                 placeholder="정비업 등록번호를 입력해주세요."
-                {...register("mbRegNum", {
+                {...props.register("mbRegNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputCompanyHandler(e);
+                    props.onInputCompanyHandler(e);
                   },
                   required: { value: true, message: "필수 입력사항입니다." },
                   pattern: {
@@ -176,8 +161,8 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   },
                 })}
               />
-              {(errors.mbRegNum?.type === "required" ||
-                errors.mbRegNum?.type === "pattern") && (
+              {(props.errors.mbRegNum?.type === "required" ||
+                props.errors.mbRegNum?.type === "pattern") && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}
@@ -186,7 +171,7 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   fontSize={`14px`}
                   textAlign={`left`}
                 >
-                  {errors.mbRegNum.message}
+                  {props.errors.mbRegNum.message}
                 </Text>
               )}
             </Wrapper>
@@ -196,10 +181,10 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
               <Combo
                 width={`400px`}
                 margin={`0px`}
-                value={inputCompany.mbTypeNum}
-                {...register("mbTypeNum", {
+                value={props.inputCompany.mbTypeNum}
+                {...props.register("mbTypeNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputCompanyHandler(e);
+                    props.onInputCompanyHandler(e);
                   },
                   required: true,
                 })}
@@ -207,7 +192,7 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                 <option value="">정비업종 선택</option>
                 <option value="1급">자동차종합정비업</option>
               </Combo>
-              {errors.mbTypeNum?.type === "required" && (
+              {props.errors.mbTypeNum?.type === "required" && (
                 <Text>필수 선택사항입니다.</Text>
               )}
             </Wrapper>
@@ -217,16 +202,16 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={inputCompany.ownerName}
+                value={props.inputCompany.ownerName}
                 placeholder="대표자명을 입력해주세요."
-                {...register("ownerName", {
+                {...props.register("ownerName", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputCompanyHandler(e);
+                    props.onInputCompanyHandler(e);
                   },
                   required: { value: true, message: "필수 입력사항입니다." },
                 })}
               />
-              {errors.ownerName?.type === "required" && (
+              {props.errors.ownerName?.type === "required" && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}
@@ -235,7 +220,7 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   fontSize={`14px`}
                   textAlign={`left`}
                 >
-                  {errors.ownerName.message}
+                  {props.errors.ownerName.message}
                 </Text>
               )}
             </Wrapper>
@@ -245,11 +230,11 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={inputCompany.phoneNum}
+                value={props.inputCompany.phoneNum}
                 placeholder="(- 제외, 지역번호 포함)"
-                {...register("phoneNum", {
+                {...props.register("phoneNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputCompanyHandler(e);
+                    props.onInputCompanyHandler(e);
                   },
                   required: { value: true, message: "필수 입력사항입니다." },
                   pattern: {
@@ -258,8 +243,8 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   },
                 })}
               />
-              {(errors.phoneNum?.type === "required" ||
-                errors.phoneNum?.type === "pattern") && (
+              {(props.errors.phoneNum?.type === "required" ||
+                props.errors.phoneNum?.type === "pattern") && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}
@@ -268,7 +253,7 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   fontSize={`14px`}
                   textAlign={`left`}
                 >
-                  {errors.phoneNum.message}
+                  {props.errors.phoneNum.message}
                 </Text>
               )}
             </Wrapper>
@@ -278,11 +263,11 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                value={inputCompany.faxNum}
+                value={props.inputCompany.faxNum}
                 placeholder="(- 제외)"
-                {...register("faxNum", {
+                {...props.register("faxNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputCompanyHandler(e);
+                    props.onInputCompanyHandler(e);
                   },
                   pattern: {
                     value: formRegEx.FAX_NUM,
@@ -290,7 +275,7 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   },
                 })}
               />
-              {errors.faxNum?.type === "pattern" && (
+              {props.errors.faxNum?.type === "pattern" && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}
@@ -299,7 +284,7 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   fontSize={`14px`}
                   textAlign={`left`}
                 >
-                  {errors.faxNum.message}
+                  {props.errors.faxNum.message}
                 </Text>
               )}
             </Wrapper>
@@ -311,9 +296,9 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   width={`300px`}
                   type="text"
                   placeholder="주소를 입력해주세요."
-                  value={inputCompany.address1}
+                  value={props.inputCompany.address1}
                   readOnly
-                  {...register("address1", {
+                  {...props.register("address1", {
                     required: true,
                   })}
                 />
@@ -322,7 +307,7 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
                   margin={`0px 0px 0px 20px`}
                   type="button"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    setModalOpen(!modalOpen);
+                    props.setModalOpen(!props.modalOpen);
                   }}
                 >
                   주소 검색
@@ -333,17 +318,17 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
               width={`400px`}
               type="text"
               placeholder="상세 주소"
-              value={inputCompany.address2}
-              readOnly={inputCompany.address1 ? false : true}
-              {...register("address2", {
+              value={props.inputCompany.address2}
+              readOnly={props.inputCompany.address1 ? false : true}
+              {...props.register("address2", {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputCompanyHandler(e);
+                  props.onInputCompanyHandler(e);
                 },
                 required: true,
               })}
             />
-            {(errors.address1?.type === "required" ||
-              errors.address2?.type === "required") && (
+            {(props.errors.address1?.type === "required" ||
+              props.errors.address2?.type === "required") && (
               <Text
                 margin={`0px 0px 10px 0px`}
                 width={`100%`}
@@ -362,14 +347,14 @@ const SignCompanyPresenter: NextPage<any> = (props) => {
             kindOf={`white`}
             margin={`0px 0px 10px 0px`}
             onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              setStepNumber(stepNumber - 1);
+              props.setStepNumber(props.stepNumber - 1);
               dispatch({
                 type: actionTypesUser.INPUT_COMPANY,
-                payload: inputCompany,
+                payload: props.inputCompany,
               });
               dispatch({
                 type: actionTypesUser.INPUT_FORM,
-                payload: inputForm,
+                payload: props.inputForm,
               });
             }}
           >

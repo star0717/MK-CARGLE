@@ -44,21 +44,6 @@ export async function signUpUserAction(dataToSubmit: any) {
   };
 }
 
-/**
- *
- * 토큰 체크 기능
- * @returns
- */
-export async function tokenCheckAction() {
-  const req = await axios
-    .get(`/api/auth/profile`)
-    .then((res: AxiosResponse<unknown, any>) => res.data);
-  return {
-    type: actionTypesUser.TOKEN_CHECK,
-    payload: req,
-  };
-}
-
 // 이메일 인증번호 전송 action
 export async function emailSendAction(dataToSubmit: string) {
   const req = await axios

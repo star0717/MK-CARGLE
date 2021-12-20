@@ -21,25 +21,18 @@ import { useRouter } from "next/dist/client/router";
 import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
+import { _MainProps } from "../../src/configure/_props.entity";
 import AdminCompanies from "../../src/components/page/admin/companies";
-
-interface ViewProps {
-  route: any;
-  tokenValue: any;
-}
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
  * @param props
  * @returns
  */
-const MainComponent: NextPage<ViewProps> = (props) => {
-  // 필요한 props 재정의
-  const tokenValue: AuthTokenInfo = props.tokenValue;
-
-  switch (tokenValue.cApproval) {
+const MainComponent: NextPage<_MainProps> = (props) => {
+  switch (props.tokenValue.cApproval) {
     case CompanyApproval.BEFORE:
-      return <FileUpload {...props} />;
+      return <FileUpload />;
 
     case CompanyApproval.ING:
       return <Approval />;
@@ -54,7 +47,7 @@ const MainComponent: NextPage<ViewProps> = (props) => {
  * @param props
  * @returns
  */
-const SubComponent: NextPage<ViewProps> = (props) => {
+const SubComponent: NextPage<_MainProps> = (props) => {
   const router: NextRouter = useRouter();
   const pathName: string = getPathName(router.asPath);
 
@@ -81,7 +74,7 @@ const SubComponent: NextPage<ViewProps> = (props) => {
  * @param props
  * @returns
  */
-const MainPage: NextPage<ViewProps> = (props) => {
+const MainPage: NextPage<_MainProps> = (props) => {
   return (
     <>
       <Head>

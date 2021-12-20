@@ -17,32 +17,21 @@ import {
 import React from "react";
 import { CHAR_DEL } from "../../../../validation/regEx";
 import { BsSearch } from "react-icons/bs";
+import { _pComFindModalProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 업체 검색 모달 컴포넌트(화면)
  * @param props
  * @returns
  */
-const ComFindModalPresenter: NextPage<any> = (props) => {
-  // props 재정의
-  const setModalOpen = props.setModalOpen;
-  const setInputForm = props.setInputForm;
-  const setInputUser = props.setInputUser;
-  const inputForm = props.inputForm;
-  const inputUser = props.inputUser;
-  const setValue = props.setValue;
-  const findCompanyHandler = props.findCompanyHandler;
-  const searchText = props.searchText;
-  const setSearchText = props.setSearchText;
-  const companyList = props.companyList;
-
+const ComFindModalPresenter: NextPage<_pComFindModalProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper ref={ref}>
       <Wrapper height={`500px`} ju={`flex-start`}>
-        <CommonForm ju={`flex-start`} onSubmit={findCompanyHandler}>
+        <CommonForm ju={`flex-start`} onSubmit={props.findCompanyHandler}>
           <Wrapper
             width={`678px`}
             padding={`0px 5px`}
@@ -56,9 +45,9 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                 padding={`0px 5px 0px 5px`}
                 placeholder="업체명 또는 사업자번호 입력"
                 type="text"
-                value={searchText}
+                value={props.searchText}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setSearchText(CHAR_DEL(e.target.value));
+                  props.setSearchText(CHAR_DEL(e.target.value));
                 }}
               />
             </Wrapper>
@@ -77,25 +66,28 @@ const ComFindModalPresenter: NextPage<any> = (props) => {
                 <TableHeadLIST width={`226px`}>대표자명</TableHeadLIST>
                 <TableHeadLIST width={`226px`}>사업자등록번호</TableHeadLIST>
               </TableHead>
-              {companyList.length === 0 ? (
+              {props.companyList.length === 0 ? (
                 <Wrapper>소속 업체를 검색하세요.</Wrapper>
               ) : (
                 <TableBody margin={`0px`} overflow={`auto`}>
-                  {companyList.map((item: any, index: number) => (
+                  {props.companyList.map((item: any, index: number) => (
                     <TableRow
                       margin={`0px`}
                       id={item.comRegNum}
                       key={index}
                       onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                        setInputForm({
-                          ...inputForm,
+                        props.setInputForm({
+                          ...props.inputForm,
                           companyNum: item.comRegNum,
                         });
-                        setInputUser({ ...inputUser, _cID: item._id });
-                        setValue("companyNum", item.comRegNum, {
+                        props.setInputUser({
+                          ...props.inputUser,
+                          _cID: item._id,
+                        });
+                        props.setValue("companyNum", item.comRegNum, {
                           shouldValidate: true,
                         });
-                        setModalOpen(false);
+                        props.setModalOpen(false);
                       }}
                     >
                       <TableRowLIST width={`226px`}>{item.name}</TableRowLIST>

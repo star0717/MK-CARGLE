@@ -3,7 +3,6 @@ import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
   Wrapper,
-  Text,
   CommonButton,
   TextInput2,
   CommonTitle,
@@ -13,22 +12,15 @@ import {
 import React from "react";
 import { useRouter } from "next/dist/client/router";
 import { UseLink } from "../../../../configure/router.entity";
+import { _pFindPassword } from "../../../../configure/_pProps.entity";
 
 /**
  * 계정찾기: 비밀번호 찾기(화면)
  * @param props
  * @returns
  */
-const FindPasswordPresenter: NextPage<any> = (props) => {
+const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
   const router = useRouter();
-  // 필요한 props 재정의
-  const email = props.email;
-  const setEmail = props.setEmail;
-  const name = props.name;
-  const setName = props.setName;
-  const hpNumber = props.hpNumber;
-  const setHpNumber = props.setHpNumber;
-  const onFindPwHandler = props.onFindPwHandler;
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
@@ -42,12 +34,12 @@ const FindPasswordPresenter: NextPage<any> = (props) => {
           계정찾기
         </CommonTitle>
         <CommonSubTitle>패스워드 찾기</CommonSubTitle>
-        <form onSubmit={onFindPwHandler}>
+        <form onSubmit={props.onFindPwHandler}>
           <TextInput2
             type="text"
-            value={name}
+            value={props.name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setName(e.target.value);
+              props.setName(e.target.value);
             }}
             width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             height={`60px`}
@@ -56,9 +48,9 @@ const FindPasswordPresenter: NextPage<any> = (props) => {
           />
           <TextInput2
             type="email"
-            value={email}
+            value={props.email}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setEmail(e.target.value);
+              props.setEmail(e.target.value);
             }}
             width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             height={`60px`}
@@ -67,9 +59,9 @@ const FindPasswordPresenter: NextPage<any> = (props) => {
           />
           <TextInput2
             type="text"
-            value={hpNumber}
+            value={props.hpNumber}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setHpNumber(e.target.value);
+              props.setHpNumber(e.target.value);
             }}
             width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             height={`60px`}

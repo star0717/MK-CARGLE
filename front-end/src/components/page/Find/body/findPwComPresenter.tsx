@@ -15,7 +15,7 @@ import { UseLink } from "../../../../configure/router.entity";
  * @param props
  * @returns
  */
-const FindPwComPresenter: NextPage<any> = (props) => {
+const FindPwComPresenter: NextPage = () => {
   const router = useRouter();
 
   return (

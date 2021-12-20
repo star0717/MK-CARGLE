@@ -9,23 +9,15 @@ import {
 import React from "react";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import { _pTermProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 이용약관 컴포넌트(화면)
  * @param props
  * @returns
  */
-const TermPresenter: NextPage<any> = (props) => {
+const TermPresenter: NextPage<_pTermProps> = (props) => {
   const dispatch = useDispatch();
-
-  // props 재정의
-  const formCheck = props.formCheck;
-  const stepNumber = props.stepNumber;
-  const setStepNumber = props.setStepNumber;
-  const handleSubmit = props.handleSubmit;
-  const agreeTermHandler = props.agreeTermHandler;
-  const register = props.register;
-  const errors = props.errors;
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
@@ -33,7 +25,7 @@ const TermPresenter: NextPage<any> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <Wrapper>
-        <form onSubmit={handleSubmit(agreeTermHandler)}>
+        <form onSubmit={props.handleSubmit(props.agreeTermHandler)}>
           <Wrapper al={`flex-start`}>
             <Text
               fontSize={`18px`}
@@ -70,7 +62,7 @@ const TermPresenter: NextPage<any> = (props) => {
             </Wrapper>
             <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
               <Wrapper width={`auto`}>
-                {errors.mkTerm && (
+                {props.errors.mkTerm && (
                   <Text width={`100%`} textAlign={`right`} color={`#d6263b`}>
                     필수사항입니다.
                   </Text>
@@ -80,12 +72,15 @@ const TermPresenter: NextPage<any> = (props) => {
                 <Text>동의합니다.</Text>
                 <input
                   type="checkbox"
-                  checked={formCheck.mkTerm}
-                  {...register("mkTerm", {
+                  checked={props.formCheck.mkTerm}
+                  {...props.register("mkTerm", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                       dispatch({
                         type: actionTypesUser.FORM_CHECK,
-                        payload: { ...formCheck, mkTerm: e.target.checked },
+                        payload: {
+                          ...props.formCheck,
+                          mkTerm: e.target.checked,
+                        },
                       });
                     },
                     required: true,
@@ -130,7 +125,7 @@ const TermPresenter: NextPage<any> = (props) => {
             </Wrapper>
             <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
               <Wrapper width={`auto`}>
-                {errors.privacyTerm && (
+                {props.errors.privacyTerm && (
                   <Text width={`auto`} al={`flex-start`} color={`#d6263b`}>
                     필수사항입니다.
                   </Text>
@@ -140,13 +135,13 @@ const TermPresenter: NextPage<any> = (props) => {
                 <Text>동의합니다.</Text>
                 <input
                   type="checkbox"
-                  checked={formCheck.privacyTerm}
-                  {...register("privacyTerm", {
+                  checked={props.formCheck.privacyTerm}
+                  {...props.register("privacyTerm", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                       dispatch({
                         type: actionTypesUser.FORM_CHECK,
                         payload: {
-                          ...formCheck,
+                          ...props.formCheck,
                           privacyTerm: e.target.checked,
                         },
                       });
@@ -195,12 +190,15 @@ const TermPresenter: NextPage<any> = (props) => {
               <Text>동의합니다.</Text>
               <input
                 type="checkbox"
-                checked={formCheck.marketTerm}
-                {...register("marketTerm", {
+                checked={props.formCheck.marketTerm}
+                {...props.register("marketTerm", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                     dispatch({
                       type: actionTypesUser.FORM_CHECK,
-                      payload: { ...formCheck, marketTerm: e.target.checked },
+                      payload: {
+                        ...props.formCheck,
+                        marketTerm: e.target.checked,
+                      },
                     });
                   },
                 })}
@@ -215,7 +213,7 @@ const TermPresenter: NextPage<any> = (props) => {
           >
             <CommonButton
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                setStepNumber(stepNumber - 1);
+                props.setStepNumber(props.stepNumber - 1);
               }}
               width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
               kindOf={`white`}

@@ -4,15 +4,15 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import { _pApprovalProps } from "../../../../configure/_pProps.entity";
 import { UseLink } from "../../../../configure/router.entity";
 import ApprovalPresenter from "./approvalPresenter";
 
 /**
  * 회원가입: 업체 승인 대기 컴포넌트(기능)
- * @param props
  * @returns
  */
-const Approval: NextPage<any> = (props) => {
+const Approval: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -28,7 +28,7 @@ const Approval: NextPage<any> = (props) => {
   };
 
   // 화면구성에 넘길 props
-  const fProps = {
+  const fProps: _pApprovalProps = {
     onSignOutHandler,
   };
 

@@ -13,20 +13,15 @@ import {
 import React from "react";
 import { useRouter } from "next/dist/client/router";
 import { UseLink } from "../../../../configure/router.entity";
+import { _pFindEmail } from "../../../../configure/_pProps.entity";
 
 /**
  * 계정찾기: 이메일 찾기(화면)
  * @param props
  * @returns
  */
-const FindEmailPresenter: NextPage<any> = (props) => {
+const FindEmailPresenter: NextPage<_pFindEmail> = (props) => {
   const router = useRouter();
-  // 필요한 props 재정의
-  const name = props.name;
-  const setName = props.setName;
-  const hpNumber = props.hpNumber;
-  const setHpNumber = props.setHpNumber;
-  const onfindEmailHandler = props.onfindEmailHandler;
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
@@ -40,11 +35,11 @@ const FindEmailPresenter: NextPage<any> = (props) => {
           계정찾기
         </CommonTitle>
         <CommonSubTitle>이메일 찾기</CommonSubTitle>
-        <form onSubmit={onfindEmailHandler}>
+        <form onSubmit={props.onfindEmailHandler}>
           <TextInput2
-            value={name}
+            value={props.name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setName(e.target.value);
+              props.setName(e.target.value);
             }}
             width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             height={`60px`}
@@ -52,9 +47,9 @@ const FindEmailPresenter: NextPage<any> = (props) => {
             placeholder="이름"
           />
           <TextInput2
-            value={hpNumber}
+            value={props.hpNumber}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setHpNumber(e.target.value);
+              props.setHpNumber(e.target.value);
             }}
             width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             height={`60px`}

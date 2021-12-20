@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import { UseLink } from "../../../../configure/router.entity";
+import { _pFindEmail } from "../../../../configure/_pProps.entity";
 import {
   CommonButton,
   CommonButtonWrapper,
@@ -14,11 +15,8 @@ import {
  * @param props
  * @returns
  */
-const FindEmailComplete: NextPage<any> = (props) => {
+const FindEmailComplete: NextPage<_pFindEmail> = (props) => {
   const router = useRouter();
-
-  // 필요한 props 재정의
-  const findEmail = props.findEmail;
 
   return (
     <WholeWrapper>
@@ -33,7 +31,7 @@ const FindEmailComplete: NextPage<any> = (props) => {
         margin={`0px 0px 30px`}
       >
         <Text fontSize={`22px`} fontWeight={`600`} color={`#0066ff`}>
-          {findEmail}
+          {props.findEmail}
         </Text>
       </Wrapper>
       <Wrapper>

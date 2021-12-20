@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { _cSignUpProps } from "../../../../configure/_cProps.entity";
 import SignUpHeaderPresenter from "./indexPresenter";
 
 /**
@@ -6,7 +7,7 @@ import SignUpHeaderPresenter from "./indexPresenter";
  * @param props
  * @returns
  */
-const SignUpHeader: NextPage<any> = (props) => {
+const SignUpHeader: NextPage<_cSignUpProps> = (props) => {
   return <SignUpHeaderPresenter {...props} />;
 };
 
