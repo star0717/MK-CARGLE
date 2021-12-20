@@ -1,10 +1,14 @@
 import { NextPage } from "next";
 import { WholeWrapper } from "../../styles/CommonComponents";
 import React from "react";
-import workerInfo from "./section/workerInfo";
+import WorkerInfo from "./section/workerInfo";
 
 const MyPageWorkerPresenter: NextPage<any> = (props) => {
-  return <WholeWrapper>{/* <workerInfo {...props} /> */}</WholeWrapper>;
+  return (
+    <WholeWrapper>
+      <WorkerInfo {...props} />
+    </WholeWrapper>
+  );
 };
 
 export default MyPageWorkerPresenter;
