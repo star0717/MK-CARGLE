@@ -28,7 +28,7 @@ const AdminCompanies: NextPage<any> = (props) => {
     console.log("널");
     getComListHandler;
   }
-  return <WholeWrapper>sex</WholeWrapper>;
+  return <WholeWrapper>Hello</WholeWrapper>;
 };
 
 export default AdminCompanies;
