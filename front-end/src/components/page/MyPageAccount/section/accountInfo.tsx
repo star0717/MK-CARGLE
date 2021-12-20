@@ -53,7 +53,6 @@ const AccountInfo: NextPage<any> = (props) => {
   const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
   const [userData, setUserData] = useState<User>(accountInfo.user); // 불러온 계정정보 - 유저
   const [comData, setComData] = useState<Company>(accountInfo.company); // 불러온 계정정보 - 회사
-
   // useEffect 관리
   // 계정 권한에 따라 readOnly state 변경
   useEffect(() => {

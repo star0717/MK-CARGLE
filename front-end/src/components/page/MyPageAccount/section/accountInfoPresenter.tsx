@@ -110,11 +110,12 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
               </Wrapper>
               <Text
                 padding={`20px 0px`}
-                value={userData.name}
                 fontSize={`18px`}
                 fontWeight={`800`}
                 letterSpacing={`4px`}
-              />
+              >
+                {userData.name}님
+              </Text>
             </Wrapper>
             <Wrapper dr={`column`} width={`auto`} padding={`30px 0px 0px`}>
               <Wrapper dr={`row`} margin={`0px 0px 10px`}>
@@ -168,6 +169,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 </Text>
                 <TextInput2
                   value={userData.name}
+                  readOnly
                   type="text"
                   {...register("name", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -358,7 +360,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 fontWeight={`800`}
                 letterSpacing={`4px`}
               >
-                김대표 회사
+                {comData.name}
               </Text>
             </Wrapper>
             <Wrapper dr={`column`} width={`auto`} padding={`30px 0px 0px`}>
