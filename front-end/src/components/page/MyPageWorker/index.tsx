@@ -13,16 +13,20 @@ const MyPageWorker: NextPage<any> = (props) => {
   const [totalDocs, setTotalDocs] = useState<number>();
   const [currentPage, setCurrentPage] = useState<number>();
   const [lastPage, setLastPage] = useState<number>();
+  const [loadData, setLoadData] = useState(false);
 
-  // useEffect(() => {
-  //   dispatch(getWorkersListAction()).then((res: any) => {
-  //     setDocs(res.payload.docs);
-  //     setTotalDocs(res.payload.totalDocs);
-  //     setCurrentPage(res.payload.currentPage);
-  //     setLastPage(res.payload.lastPage);
-  //   });
-  //   console.log("ok!");
-  // });
+  useEffect(() => {
+    if (loadData === false) {
+      dispatch(getWorkersListAction()).then((res: any) => {
+        setDocs(res.payload.docs);
+        setTotalDocs(res.payload.totalDocs);
+        setCurrentPage(res.payload.currentPage);
+        setLastPage(res.payload.lastPage);
+      });
+      setLoadData(true);
+      console.log("start");
+    }
+  }, [docs]);
 
   const fprops = {
     ...props,
@@ -34,6 +38,7 @@ const MyPageWorker: NextPage<any> = (props) => {
     setCurrentPage,
     lastPage,
     setLastPage,
+    setLoadData,
   };
 
   return (

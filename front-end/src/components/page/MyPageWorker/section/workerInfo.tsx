@@ -16,25 +16,26 @@ import {
 } from "../../../styles/CommonComponents";
 import { User } from "../../../../models/user.entity";
 
-const WorkerInfo: NextPage<any> = (props) => {
+const workerInfo: NextPage<any> = (props) => {
   // const dispatch = useDispatch();
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalOption, setModalOption] = useState<string>("");
 
-  // const docs = props.docs;
-  // const setDocs = props.setDocs;
-  // const totalDocs = props.totalDocs;
-  // const setTotalDocs = props.setTotalDocs;
-  // const currentPage = props.currentPage;
-  // const setCurrentPage = props.setCurrentPage;
-  // const lastPage = props.lastPage;
-  // const setLastPage = props.setLastPage;
+  const docs = props.docs;
+  const setDocs = props.setDocs;
+  const totalDocs = props.totalDocs;
+  const setTotalDocs = props.setTotalDocs;
+  const currentPage = props.currentPage;
+  const setCurrentPage = props.setCurrentPage;
+  const lastPage = props.lastPage;
+  const setLastPage = props.setLastPage;
+  const setLoadData = props.setLoadData;
 
-  const [docs, setDocs] = useState<User[]>(props.docs);
-  const [totalDocs, setTotalDocs] = useState<number>(props.totalDocs);
-  const [currentPage, setCurrentPage] = useState<number>(props.currentPage);
-  const [lastPage, setLastPage] = useState<number>(props.lastPage);
+  // const [docs, setDocs] = useState<User[]>(props.docs);
+  // const [totalDocs, setTotalDocs] = useState<number>(props.totalDocs);
+  // const [currentPage, setCurrentPage] = useState<number>(props.currentPage);
+  // const [lastPage, setLastPage] = useState<number>(props.lastPage);
 
   // const getDate = () => {
   //   dispatch(getWorkersListAction()).then((res: any) => {
@@ -79,7 +80,7 @@ const WorkerInfo: NextPage<any> = (props) => {
             <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
           </TableHead>
           <TableBody>
-            {docs.map((doc) => (
+            {docs.map((doc: any) => (
               <TableRow>
                 <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
                 <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
@@ -107,4 +108,4 @@ const WorkerInfo: NextPage<any> = (props) => {
   );
 };
 
-export default WorkerInfo;
+export default workerInfo;
