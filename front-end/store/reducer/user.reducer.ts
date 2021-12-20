@@ -55,6 +55,7 @@ export const initialState: UserState = {
     emailReadOnly: false,
     emailSend: false,
     authNumCheck: false,
+    companyCheck: false,
   },
 };
 

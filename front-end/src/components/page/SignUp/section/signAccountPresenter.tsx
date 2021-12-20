@@ -91,6 +91,7 @@ const SignAccountPresenter: NextPage<_pSignAccountProps> = (props) => {
                   width={`300px`}
                   type="email"
                   value={props.inputUser.email}
+                  readOnly={props.formCheck.emailReadOnly}
                   placeholder="이메일을 입력해주세요."
                   {...props.register("email", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {

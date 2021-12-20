@@ -5,3 +5,11 @@ export interface FileInit {
   comFile: string;
   manFile: string;
 }
+
+/**
+ * 회원가입 및 마이페이지: 업종
+ */
+export interface MbType {
+  value: string;
+  text: string;
+}

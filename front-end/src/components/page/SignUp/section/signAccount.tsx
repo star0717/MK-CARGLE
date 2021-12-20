@@ -163,6 +163,7 @@ const SignAccount: NextPage<_cSignUpProps> = (props) => {
             payload: {
               ...props.formCheck,
               authNumCheck: true,
+              emailReadOnly: true,
               emailSend: false,
             },
           });
@@ -226,6 +227,16 @@ const SignAccount: NextPage<_cSignUpProps> = (props) => {
           (err) => {
             if (err.response.status === 400) {
               alert("회원가입에 실패했습니다.");
+              dispatch({
+                type: actionTypesUser.FORM_CHECK,
+                payload: {
+                  ...props.formCheck,
+                  emailReadOnly: false,
+                  emailSend: false,
+                  authNumCheck: false,
+                  companyCheck: false,
+                },
+              });
             }
           }
         );

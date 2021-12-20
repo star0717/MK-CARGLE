@@ -16,7 +16,7 @@ import {
 import React from "react";
 // import Image from "next/image";
 import { formRegEx } from "../../../../validation/regEx";
-import { mbType } from "../../../../configure/company.entity";
+import { mbTypeOption } from "../../../../configure/list.entity";
 import {
   IoIosArrowDropupCircle,
   IoIosArrowDropdownCircle,
