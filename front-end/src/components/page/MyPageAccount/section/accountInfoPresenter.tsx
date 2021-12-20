@@ -61,11 +61,8 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
           <Wrapper
             dr={`row`}
             ju={`space-between`}
-            bgColor={`#f5f5f5`}
-            padding={`15px`}
             radius={`5px`}
             margin={`0px 0px 5px 0px`}
-            border={`1px solid #9d9d9d`}
           >
             <Wrapper dr={`row`} width={`auto`}>
               <Text fontSize={`8px`} padding={`0px 5px 0px`}>
@@ -80,9 +77,11 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 사용자 정보
               </Text>
             </Wrapper>
-            <Text fontSize={`28px`} lineHeight={`28px`} margin={`8px 0px 0px`}>
-              <IoIosArrowDropupCircle />
-            </Text>
+            <Text
+              fontSize={`28px`}
+              lineHeight={`28px`}
+              margin={`8px 0px 0px`}
+            ></Text>
           </Wrapper>
           <Wrapper
             dr={`row`}
@@ -111,12 +110,11 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
               </Wrapper>
               <Text
                 padding={`20px 0px`}
+                value={userData.name}
                 fontSize={`18px`}
                 fontWeight={`800`}
                 letterSpacing={`4px`}
-              >
-                김대표
-              </Text>
+              />
             </Wrapper>
             <Wrapper dr={`column`} width={`auto`} padding={`30px 0px 0px`}>
               <Wrapper dr={`row`} margin={`0px 0px 10px`}>
@@ -307,11 +305,8 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
           <Wrapper
             dr={`row`}
             ju={`space-between`}
-            bgColor={`#f5f5f5`}
-            padding={`15px`}
             radius={`5px`}
             margin={`0px 0px 5px 0px`}
-            border={`1px solid #9d9d9d`}
           >
             <Wrapper dr={`row`} width={`auto`}>
               <Text fontSize={`8px`} padding={`0px 5px 0px`}>
@@ -326,9 +321,11 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 사업자 정보
               </Text>
             </Wrapper>
-            <Text fontSize={`28px`} lineHeight={`28px`} margin={`8px 0px 0px`}>
-              <IoIosArrowDropupCircle />
-            </Text>
+            <Text
+              fontSize={`28px`}
+              lineHeight={`28px`}
+              margin={`8px 0px 0px`}
+            ></Text>
           </Wrapper>
           <Wrapper
             dr={`row`}
