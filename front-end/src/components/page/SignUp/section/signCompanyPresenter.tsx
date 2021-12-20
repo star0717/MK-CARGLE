@@ -192,9 +192,9 @@ const SignCompanyPresenter: NextPage<_pSignCompanyProps> = (props) => {
               >
                 <option value="">정비업종 선택</option>
                 {/* <option value="1급">자동차종합정비업</option> */}
-                {mbTypeOption.map((item, idx) => {
+                {mbTypeOption.map((item) => {
                   return (
-                    <option key={idx} value={item.value}>
+                    <option key={item.value} value={item.value}>
                       {item.text}
                     </option>
                   );

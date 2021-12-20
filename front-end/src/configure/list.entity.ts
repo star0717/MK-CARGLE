@@ -15,90 +15,111 @@ export const mbTypeOption: MbType[] = [
  */
 export const menuList = [
   {
+    key: "1",
     menuName: "부품",
     subMenu: [
       {
+        key: "1.1",
         subMenuName: "부품 관리",
         subMenuLink: "#",
       },
       {
+        key: "1.2",
         subMenuName: "세트 관리",
         subMenuLink: "#",
       },
       {
+        key: "1.3",
         subMenuName: "거래처 관리",
         subMenuLink: "#",
       },
     ],
   },
   {
+    key: "2",
     menuName: "정비",
     subMenu: [
       {
+        key: "2.1",
         subMenuName: "정비장부",
         subMenuLink: "#",
       },
       {
+        key: "2.2",
         subMenuName: "고객/차량 관리",
         subMenuLink: "#",
       },
       {
+        key: "2.3",
         subMenuName: "예약관리",
         subMenuLink: "#",
       },
     ],
   },
   {
+    key: "3",
     menuName: "회계",
     subMenu: [
       {
+        key: "3.1",
         subMenuName: "매입/매출 현황",
         subMenuLink: "#",
       },
       {
+        key: "3.2",
         subMenuName: "결산 리포트",
         subMenuLink: "#",
       },
     ],
   },
   {
+    key: "4",
     menuName: "커뮤니티",
     subMenu: [
       {
+        key: "4.1",
         subMenuName: "연합회 소식",
         subMenuLink: "#",
       },
       {
+        key: "4.2",
         subMenuName: "정비정보 공유",
         subMenuLink: "#",
       },
     ],
   },
   {
+    key: "5",
     menuName: "마이페이지",
     subMenu: [
       {
+        key: "5.1",
         subMenuName: "계정 관리",
         subMenuLink: UseLink.MYPAGE_ACCOUNT,
       },
       {
+        key: "5.2",
         subMenuName: "직원 관리",
         subMenuLink: UseLink.MYPAGE_WORKER,
       },
       {
+        key: "5.3",
         subMenuName: "포인트 관리",
         subMenuLink: "#",
       },
     ],
   },
   {
+    key: "6",
     menuName: "고객센터",
     subMenu: [
       {
+        key: "6.1",
         subMenuName: "공지사항",
         subMenuLink: "#",
       },
       {
+        key: "6.2",
         subMenuName: "사용 설명서",
         subMenuLink: "#",
       },
