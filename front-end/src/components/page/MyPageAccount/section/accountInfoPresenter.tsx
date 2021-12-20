@@ -4,11 +4,11 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  TextInput,
   TextInput2,
   SmallButton,
   Combo,
   Image,
+  CommonTitle,
 } from "../../../styles/CommonComponents";
 import React from "react";
 // import Image from "next/image";
@@ -44,10 +44,10 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
     <WholeWrapper ref={ref}>
       <Wrapper>
         <form id="saveform" onSubmit={handleSubmit(onChangeInfoHandler)}>
-          <Text>계정정보</Text>
+          <CommonTitle>계정정보</CommonTitle>
           <Wrapper dr={`row`}>
             <Text>아이디</Text>
-            <TextInput value={userData.email} type="text" readOnly />
+            <TextInput2 value={userData.email} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>비밀번호</Text>
@@ -59,12 +59,12 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 setModalOption("password");
               }}
             >
-              비밀번호변경
+              변경하기
             </SmallButton>
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>이름</Text>
-            <TextInput
+            <TextInput2
               value={userData.name}
               type="text"
               {...register("name", {
@@ -92,7 +92,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>전화번호</Text>
-            <TextInput
+            <TextInput2
               value={userData.hpNumber}
               type="tel"
               {...register("hpNumber", {
@@ -122,7 +122,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>주소</Text>
-            <TextInput
+            <TextInput2
               type="text"
               placeholder="주소를 입력해주세요."
               value={userData.address1}
@@ -141,7 +141,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
             </SmallButton>
           </Wrapper>
           <Wrapper dr={`row`}>
-            <TextInput
+            <TextInput2
               type="text"
               name="address2"
               placeholder="상세주소를 입력해 주세요."
@@ -170,19 +170,19 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
           <Text>사업자 정보</Text>
           <Wrapper dr={`row`}>
             <Text>상호명</Text>
-            <TextInput value={comData.name} type="text" readOnly />
+            <TextInput2 value={comData.name} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>사업자등록번호</Text>
-            <TextInput value={comData.comRegNum} type="text" readOnly />
+            <TextInput2 value={comData.comRegNum} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>정비업 등록번호</Text>
-            <TextInput value={comData.mbRegNum} type="text" readOnly />
+            <TextInput2 value={comData.mbRegNum} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>대표자명</Text>
-            <TextInput value={comData.ownerName} type="text" readOnly />
+            <TextInput2 value={comData.ownerName} type="text" readOnly />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>정비업종</Text>
@@ -209,7 +209,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>업태</Text>
-            <TextInput
+            <TextInput2
               value={comData.busType}
               type="text"
               readOnly={readOnly}
@@ -220,7 +220,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
               })}
             />
             <Text>업종</Text>
-            <TextInput
+            <TextInput2
               value={comData.busItem}
               type="text"
               readOnly={readOnly}
@@ -233,7 +233,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>업체 전화번호</Text>
-            <TextInput
+            <TextInput2
               value={comData.phoneNum}
               type="text"
               placeholder="(- 제외, 지역번호 포함)"
@@ -263,7 +263,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
               </Text>
             )}
             <Text>업체 팩스번호(선택)</Text>
-            <TextInput
+            <TextInput2
               value={comData.faxNum}
               type="text"
               readOnly={readOnly}
@@ -293,7 +293,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>사업자 주소</Text>
-            <TextInput
+            <TextInput2
               value={`${comData.address1} ${comData.address2}, (${comData.postcode})`}
               type="text"
               readOnly

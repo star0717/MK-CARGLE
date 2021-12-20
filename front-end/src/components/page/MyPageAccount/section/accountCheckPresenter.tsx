@@ -5,8 +5,11 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  TextInput,
+  TextInput2,
   SmallButton,
+  CommonButton,
+  CommonTitle,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 
 /**
@@ -25,22 +28,28 @@ const AccountCheckPresenter: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper>
+      <Wrapper
+        width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
+      >
         <form onSubmit={pwCheckHandler}>
-          <Text>계정 관리를 위해 비밀번호를 입력해주세요.</Text>
+          <CommonTitle textAlign={`center`} margin={`0px`}>
+            계정관리
+          </CommonTitle>
+          <CommonSubTitle>비밀번호를 입력해주세요.</CommonSubTitle>
 
-          <TextInput
+          <TextInput2
             type="password"
             value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setPassword(e.target.value);
             }}
             placeholder="비밀번호를 입력하세요."
+            width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
+            height={`60px`}
+            margin={`0px 0px 10px 0px`}
           />
 
-          <SmallButton type="submit" kindOf={`default`}>
-            확인
-          </SmallButton>
+          <CommonButton type="submit">확인</CommonButton>
         </form>
       </Wrapper>
     </WholeWrapper>

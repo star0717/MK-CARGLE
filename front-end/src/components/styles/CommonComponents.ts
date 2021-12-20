@@ -278,6 +278,7 @@ export const CommonSubTitle = styled.h2<any>`
   font-size: 22px;
   color: ${(props) => props.color || `${props.theme.darkGrey_C}`};
   font-weight: ${(props) => props.fontWeight || `700`};
+  text-align: ${(props) => props.textAlign || `center`};
 `;
 
 export const Text = styled.p<any>`
