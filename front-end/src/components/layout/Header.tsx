@@ -141,11 +141,10 @@ const Header: NextPage<_cLayoutProps> = (props) => {
                   고객센터
                 </Text>
               </Wrapper> */}
-              {menuList.map((menu) => {
+              {menuList.map((menu, idx) => {
                 return (
-                  <Wrapper width={width < 1510 ? `140px` : `168px`}>
+                  <Wrapper key={idx} width={width < 1510 ? `140px` : `168px`}>
                     <Text
-                      cursor={`pointer`}
                       fontSize={width < 1510 ? `16px` : `18px`}
                       fontWeight={`800`}
                       padding={width < 1510 ? `5px 15px` : `5px 30px`}
@@ -366,9 +365,10 @@ const Header: NextPage<_cLayoutProps> = (props) => {
                   {menuList.map((menu) => {
                     return (
                       <Wrapper width={width < 1510 ? `140px` : `168px`}>
-                        {menu.subMenu.map((sub) => {
+                        {menu.subMenu.map((sub, idx) => {
                           return (
                             <TestA
+                              key={idx}
                               cursor={`pointer`}
                               fontSize={width < 1510 ? `14px` : `16px`}
                               fontWeight={`600`}
