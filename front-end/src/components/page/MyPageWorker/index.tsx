@@ -15,7 +15,7 @@ import {
 } from "../../styles/CommonComponents";
 import { FindResult } from "../../../models/base.entity";
 import { Button } from "@material-ui/core";
-import { LastPage } from "@material-ui/icons";
+import { DockSharp, LastPage } from "@material-ui/icons";
 
 const MyPageWorker: NextPage = () => {
   const dispatch = useDispatch();
@@ -35,12 +35,12 @@ const MyPageWorker: NextPage = () => {
 
   const getDate = () => {
     dispatch(getWorkersListAction()).then((res: any) => {
-      const workerData: FindResult<any> = {
-        docs: [docs],
-        totalDocs: totalDocs,
-        currentPage: currentPage,
-        lastPage: lastPage,
-      };
+      // const workerData: FindResult<any> = {
+      //   docs: [docs],
+      //   totalDocs: totalDocs,
+      //   currentPage: currentPage,
+      //   lastPage: lastPage,
+      // };
       setDocs(res.payload.docs);
       setTotalDocs(res.payload.totalDocs);
       setCurrentPage(res.payload.currentPage);
@@ -57,6 +57,7 @@ const MyPageWorker: NextPage = () => {
     setModalOption,
     style: { height: "500px" },
   };
+
   // const Tablerow = () => {
   //   const tablerow = docs.map((_id, name) => <li key={_id}>{name}</li>);
   //   console.log("함수 실행");
@@ -110,6 +111,9 @@ const MyPageWorker: NextPage = () => {
         </TableWrapper> */}
         {/* {docs.map(doc => (<render doc = {doc} key={doc._id}/>))} */}
         {/* {docs.map(doc => (<Tablerow doc = {docs}/>))} */}
+
+        {/* {totalDocs === 0 ? (<Text>관리할 직원이 없습니다.</Text>) : 
+        docs.map((_id, name, ))} */}
       </Wrapper>
       <Button
         type="button"
@@ -118,7 +122,7 @@ const MyPageWorker: NextPage = () => {
           console.log("TotalDocs =>", totalDocs);
           console.log("CurrentPage =>", currentPage);
           console.log("LastPage => ", lastPage);
-          console.log("Docs => ", docs[0].name);
+          console.log("Docs => ", docs);
         }}
       >
         ㅈㅓㅇ보
