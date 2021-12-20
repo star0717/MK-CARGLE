@@ -13,7 +13,7 @@ import {
 import React from "react";
 // import Image from "next/image";
 import { formRegEx } from "../../../../validation/regEx";
-import { mbType } from "../../../../configure/company.entity";
+import { mbTypeOption } from "../../../../configure/list.entity";
 
 /**
  * 마이 페이지: 계정관리 확인 컴포넌트(화면)

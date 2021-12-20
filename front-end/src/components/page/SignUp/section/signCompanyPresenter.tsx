@@ -14,6 +14,7 @@ import { formRegEx } from "../../../../validation/regEx";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { _pSignCompanyProps } from "../../../../configure/_pProps.entity";
+import { mbTypeOption } from "../../../../configure/list.entity";
 
 /**
  * 회원가입: 업체정보 컴포넌트(화면)
@@ -190,10 +191,22 @@ const SignCompanyPresenter: NextPage<_pSignCompanyProps> = (props) => {
                 })}
               >
                 <option value="">정비업종 선택</option>
-                <option value="1급">자동차종합정비업</option>
+                {/* <option value="1급">자동차종합정비업</option> */}
+                {mbTypeOption.map((item) => {
+                  return <option value={item.value}>{item.text}</option>;
+                })}
               </Combo>
               {props.errors.mbTypeNum?.type === "required" && (
-                <Text>필수 선택사항입니다.</Text>
+                <Text
+                  margin={`0px 0px 10px 0px`}
+                  width={`100%`}
+                  color={`#d6263b`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  필수 선택사항입니다.
+                </Text>
               )}
             </Wrapper>
             {/* 대표자명 */}

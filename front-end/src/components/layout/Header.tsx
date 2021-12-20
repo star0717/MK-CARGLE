@@ -19,6 +19,7 @@ import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { _cLayoutProps } from "../../configure/_cProps.entity";
+import { menuList } from "../../configure/list.entity";
 
 const Header: NextPage<_cLayoutProps> = (props) => {
   const dispatch = useDispatch();
@@ -79,7 +80,7 @@ const Header: NextPage<_cLayoutProps> = (props) => {
               dr={`row`}
               padding={width < 1450 ? `0px 50px` : `0px 100px`}
             >
-              <Wrapper width={width < 1510 ? `140px` : `168px`}>
+              {/* <Wrapper width={width < 1510 ? `140px` : `168px`}>
                 <Text
                   cursor={`pointer`}
                   fontSize={width < 1510 ? `16px` : `18px`}
@@ -139,7 +140,21 @@ const Header: NextPage<_cLayoutProps> = (props) => {
                 >
                   고객센터
                 </Text>
-              </Wrapper>
+              </Wrapper> */}
+              {menuList.map((menu) => {
+                return (
+                  <Wrapper width={width < 1510 ? `140px` : `168px`}>
+                    <Text
+                      cursor={`pointer`}
+                      fontSize={width < 1510 ? `16px` : `18px`}
+                      fontWeight={`800`}
+                      padding={width < 1510 ? `5px 15px` : `5px 30px`}
+                    >
+                      {menu.menuName}
+                    </Text>
+                  </Wrapper>
+                );
+              })}
               <TestDiv2
                 ju={``}
                 al={`center`}
@@ -181,7 +196,7 @@ const Header: NextPage<_cLayoutProps> = (props) => {
                   {/* 서브메뉴 빈 wrapper 끝 */}
 
                   {/* <Wrapper dr={`row`} width={`auto`} al={`flex-start`}> */}
-                  <Wrapper width={width < 1510 ? `140px` : `168px`}>
+                  {/* <Wrapper width={width < 1510 ? `140px` : `168px`}>
                     <TestA
                       cursor={`pointer`}
                       fontSize={width < 1510 ? `14px` : `16px`}
@@ -347,8 +362,27 @@ const Header: NextPage<_cLayoutProps> = (props) => {
                         <a>사용 설명서</a>
                       </Link>
                     </TestA>
-                  </Wrapper>
-
+                  </Wrapper> */}
+                  {menuList.map((menu) => {
+                    return (
+                      <Wrapper width={width < 1510 ? `140px` : `168px`}>
+                        {menu.subMenu.map((sub) => {
+                          return (
+                            <TestA
+                              cursor={`pointer`}
+                              fontSize={width < 1510 ? `14px` : `16px`}
+                              fontWeight={`600`}
+                              padding={width < 1510 ? `5px 15px` : `5px 30px`}
+                            >
+                              <Link href={sub.subMenuLink}>
+                                <a>{sub.subMenuName}</a>
+                              </Link>
+                            </TestA>
+                          );
+                        })}
+                      </Wrapper>
+                    );
+                  })}
                   {/* 서브메뉴 빈 wrapper */}
                   <Wrapper
                     width={`auto`}

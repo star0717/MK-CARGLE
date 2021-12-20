@@ -181,6 +181,16 @@ const SignCompany: NextPage<_cSignUpProps> = (props) => {
           if (err.response.status === 400) {
             alert("회원가입에 실패했습니다.");
             props.setStepNumber(props.stepNumber - 1);
+            dispatch({
+              type: actionTypesUser.FORM_CHECK,
+              payload: {
+                ...props.formCheck,
+                emailReadOnly: false,
+                emailSend: false,
+                authNumCheck: false,
+                companyCheck: false,
+              },
+            });
           }
         }
       );
