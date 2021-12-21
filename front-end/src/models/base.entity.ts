@@ -31,23 +31,27 @@ export declare class BaseEntity {
 }
 export class FindParameters {
   page?: number;
-  take: number;
-  filterKey: string;
-  filterValue: string;
-  useRegSearch: boolean;
-  filter: Object;
-  projection: string;
-  getQuery() {
-    let query = "?page=" + this.page;
-    if (this.filterKey && this.filterValue) {
+  take?: number;
+  filterKey?: string;
+  filterValue?: string;
+  useRegSearch?: boolean;
+  filter?: Object;
+  projection?: string;
+
+  static getQuery(data: FindParameters) {
+    let query = "";
+    if (data.page) query = query + "?page=" + data.page;
+    else query = query + "?page=1";
+    if (data.take) query = query + "&take=" + data.take;
+    if (data.filterKey && data.filterValue) {
       query =
         query +
         "&searchField=" +
-        this.filterKey +
+        data.filterKey +
         "&searchKeyword=" +
-        this.filterValue;
-      if (this.useRegSearch == true) {
-        query = query + "&useRegSearch=" + this.useRegSearch;
+        data.filterValue;
+      if (data.useRegSearch == true) {
+        query = query + "&useRegSearch=" + data.useRegSearch;
       }
     }
     return query;

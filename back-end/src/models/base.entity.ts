@@ -91,15 +91,15 @@ export class FindParameters {
   })
   @IsOptional()
   @Transform(getValidTakeNumber)
-  take: number = defTakeNum;
+  take?: number = defTakeNum;
 
   @ApiProperty({ description: '검색 조건 필드', required: false })
   @IsOptional()
-  filterKey: string;
+  filterKey?: string;
 
   @ApiProperty({ description: '검색어', required: false })
   @IsOptional()
-  filterValue: string;
+  filterValue?: string;
 
   @ApiProperty({
     description: '검색어 포함 정규식 사용 여부',
@@ -108,25 +108,28 @@ export class FindParameters {
   })
   @IsOptional()
   @Transform(strToBoolean)
-  useRegSearch: boolean = false;
+  useRegSearch?: boolean = false;
 
   // Back-end 전용. 내부 필요로 활용
-  filter: Object = null;
+  filter?: Object = null;
 
   // Back-end 전용. 프로젝션으로 활용
-  projection: string = null;
+  projection?: string = null;
 
-  getQuery() {
-    let query = '?page=' + this.page;
-    if (this.filterKey && this.filterValue) {
+  static getQuery(data: FindParameters) {
+    let query = '';
+    if (data.page) query = query + '?page=' + data.page;
+    else query = query + '?page=1';
+    if (data.take) query = query + '&take=' + data.take;
+    if (data.filterKey && data.filterValue) {
       query =
         query +
         '&searchField=' +
-        this.filterKey +
+        data.filterKey +
         '&searchKeyword=' +
-        this.filterValue;
-      if (this.useRegSearch == true) {
-        query = query + '&useRegSearch=' + this.useRegSearch;
+        data.filterValue;
+      if (data.useRegSearch == true) {
+        query = query + '&useRegSearch=' + data.useRegSearch;
       }
     }
     return query;

@@ -7,7 +7,7 @@ import {
   SignUpInfo,
   UserInfo,
 } from "../../src/models/auth.entity";
-import { FindResult } from "../../src/models/base.entity";
+import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { actionTypesUser, AdminCompaniesList } from "../interfaces";
 
 // 로그인 action
@@ -272,10 +272,13 @@ export async function withdrawalAction(dataToSubmit: ConfirmPWD) {
  * 작업자 조회 기능 action
  * @returns
  */
-export async function getWorkersListAction(dataToSubmit: any) {
-  console.log(dataToSubmit);
+export async function getWorkersListAction(dataToSubmit: FindParameters) {
   const req = await axios
-    .get(`/api/settings/management/workers?${dataToSubmit}`)
+    .get(
+      `/api/settings/management/workers?${FindParameters.getQuery(
+        dataToSubmit
+      )}`
+    )
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
