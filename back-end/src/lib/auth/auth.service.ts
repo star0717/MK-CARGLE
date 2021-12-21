@@ -56,9 +56,9 @@ export class AuthService {
         // 신규 사업자 등록
         company = await this.companiesService.createForAuth(signUpInfo.company);
 
-        if (!company) {
-          throw new BadRequestException();
-        }
+        // if (!company) {
+        //   throw new BadRequestException();
+        // }
         // 업주 정보에 업체의 ID 주입
         signUpInfo.user._cID = company._id;
       }
@@ -69,9 +69,9 @@ export class AuthService {
         company = await this.companiesService.findByIdForAuth(
           signUpInfo.user._cID,
         );
-        if (!company) {
-          throw new BadRequestException();
-        }
+        // if (!company) {
+        //   throw new BadRequestException();
+        // }
       }
 
       user = await this.usersService.signUp(signUpInfo.user);
@@ -95,11 +95,10 @@ export class AuthService {
         _uID: user._id,
       });
     } catch (err) {
-      console.log(err);
       if (signUpInfo.user.auth == UserAuthority.OWNER && company) {
         this.companiesService.findByIdAndRemoveForAuth(company._id);
       }
-      throw new BadRequestException(err);
+      this.usersService.handelError(err);
     }
 
     const newSignUpInfo: SignUpInfo = {

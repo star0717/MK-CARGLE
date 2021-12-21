@@ -6,7 +6,11 @@ import SignupComplete from "./section/complete";
 import SelectUser from "./section/selectUser";
 import SignAccount from "./section/signAccount";
 import SignCompany from "./section/signCompany";
-import { WholeWrapper, Wrapper } from "../../styles/CommonComponents";
+import {
+  WholeWrapper,
+  Wrapper,
+  RsWrapper,
+} from "../../styles/CommonComponents";
 import React from "react";
 import { _cSignUpProps } from "../../../configure/_cProps.entity";
 
@@ -21,25 +25,27 @@ const SignUpPresenter: NextPage<_cSignUpProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper>
-        {/* 바디 부분 ( 가운데 전체 영역 ) */}
+      <RsWrapper>
         <Wrapper>
-          {/* 바디 부분 ( 단계별 내용들 ) */}
+          {/* 바디 부분 ( 가운데 전체 영역 ) */}
           <Wrapper>
-            {props.stepNumber === 1 && <SelectUser {...props} />}
-            {props.stepNumber === 2 && <TermSignUp {...props} />}
-            {props.stepNumber === 3 && <SignAccount {...props} />}
-            {props.stepNumber === 4 &&
-              (props.userAuth === "owner" ? (
-                <SignCompany {...props} />
-              ) : (
-                <SignupComplete {...props} />
-              ))}
-            {props.stepNumber === 5 && <FileUpload {...props} />}
-            {props.stepNumber === 6 && <SignupComplete {...props} />}
+            {/* 바디 부분 ( 단계별 내용들 ) */}
+            <Wrapper>
+              {props.stepNumber === 1 && <SelectUser {...props} />}
+              {props.stepNumber === 2 && <TermSignUp {...props} />}
+              {props.stepNumber === 3 && <SignAccount {...props} />}
+              {props.stepNumber === 4 &&
+                (props.userAuth === "owner" ? (
+                  <SignCompany {...props} />
+                ) : (
+                  <SignupComplete {...props} />
+                ))}
+              {props.stepNumber === 5 && <FileUpload {...props} />}
+              {props.stepNumber === 6 && <SignupComplete {...props} />}
+            </Wrapper>
           </Wrapper>
         </Wrapper>
-      </Wrapper>
+      </RsWrapper>
     </WholeWrapper>
   );
 };

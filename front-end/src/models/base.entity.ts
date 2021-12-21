@@ -66,6 +66,5 @@ export declare class DeleteResult {
 export declare class DbErrorInfo {
   name: string;
   code: string | number;
-  codeName: string;
   key?: string;
 }

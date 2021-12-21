@@ -57,7 +57,7 @@ export const RsWrapper = styled.div<any>`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `80px 0px`};
+  padding: ${(props) => props.padding || `0px 0px 100px`};
   overflow: ${(props) => props.overflow};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
@@ -255,7 +255,7 @@ export const CommonTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin || `0px`};
   margintop: ${(props) => props.marginTop};
-  padding: ${(props) => props.padding || `0px 0px 0px`};
+  padding: ${(props) => props.padding || `50px 0px 0px`};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 34px;
   font-weight: 800;
@@ -293,7 +293,7 @@ export const Text = styled.p<any>`
   justify-content: ${(props) => props.ju};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || `500`};
-  line-height: ${(props) => props.lineHeight || `16px`};
+  line-height: ${(props) => props.lineHeight || `1.6`};
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
