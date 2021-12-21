@@ -228,9 +228,9 @@ export async function changePwAction(dataToSubmit: HelpChangePWD) {
  * 도장 업로드 action
  * @returns
  */
-export async function uploadStampAction(dateToSubmit: FormData) {
+export async function uploadStampAction(dataToSubmit: FormData) {
   const req = await axios
-    .patch(`/api/settings/myinfo/stamp`, dateToSubmit)
+    .patch(`/api/settings/myinfo/stamp`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.UPROAD_STAMP,
@@ -257,9 +257,9 @@ export async function downloadStampAction() {
  * 회원 탈퇴 기능 action
  * @returns
  */
-export async function withdrawalAction(dateToSubmit: ConfirmPWD) {
+export async function withdrawalAction(dataToSubmit: ConfirmPWD) {
   const req = await axios
-    .post(`/api/auth/withdrawal`, dateToSubmit)
+    .post(`/api/auth/withdrawal`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
@@ -272,9 +272,10 @@ export async function withdrawalAction(dateToSubmit: ConfirmPWD) {
  * 작업자 조회 기능 action
  * @returns
  */
-export async function getWorkersListAction() {
+export async function getWorkersListAction(dataToSubmit: any) {
+  console.log(dataToSubmit);
   const req = await axios
-    .get(`/api/settings/management/workers`)
+    .get(`/api/settings/management/workers?${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
