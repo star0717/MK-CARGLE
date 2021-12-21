@@ -25,16 +25,20 @@ const StampModalPresenter: NextPage<_pStampModalProps> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <Wrapper>
-        <Text margin={`0px 0px 10px`}>도장이미지</Text>
+        <Text fontSize={`18px`} fontWeight={`800`} padding={`0px 0px 20px`}>
+          도장이미지
+        </Text>
         <Wrapper>
           <TextInput2
-            width={`300px`}
+            width={`500px`}
+            height={`60px`}
             type="text"
-            placeholder="이미지 파일"
+            placeholder="이미지 파일을 선택해주세요 (png,jpg)"
             value={props.fileName}
             required
             readOnly
           />
+
           <LabelButton
             kindOf={`default`}
             margin={`20px 0px 0px 20px`}
@@ -42,6 +46,7 @@ const StampModalPresenter: NextPage<_pStampModalProps> = (props) => {
           >
             파일선택
           </LabelButton>
+
           <TextInput2
             style={{ display: "none" }}
             id="stamp"
@@ -56,6 +61,13 @@ const StampModalPresenter: NextPage<_pStampModalProps> = (props) => {
           crop={props.crop}
           onChange={(c) => props.setCrop(c)}
           onComplete={(c) => props.setCompletedCrop(c)}
+          style={{
+            width: "500px",
+            height: "300px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         />
         <Wrapper>
           <canvas

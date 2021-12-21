@@ -232,19 +232,21 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
             content: {
               background: "white",
               width: "45rem",
+              height: "575px",
               maxWidth: "calc(100vw - 2rem)",
               maxHeight: "calc(100vh - 2rem)",
               overflowY: "auto",
               position: "relative",
               border: "1px solid #ccc",
               borderRadius: "0.3rem",
+              boxShadow: "0px 10px 15px rgba(220,220,220,1)",
               inset: 0,
             },
           }}
         >
           <Wrapper fontSize={`28px`} al={`flex-end`}>
             <CloseButton onClick={closeModal}>
-              <IoIosCloseCircle color={`#0066ff`} />
+              <IoIosCloseCircle />
             </CloseButton>
           </Wrapper>
           {modalOption === "address" ? (

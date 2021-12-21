@@ -36,6 +36,7 @@ export const WholeWrapper = styled.div<any>`
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
   min-height: ${(props) => props.minHeight};
+  box-shadow: ${(props) => props.shadow};
 
   & .MuiCheckbox-root,
   & .MuiCheckbox-colorSecondary.Mui-checked {
@@ -488,6 +489,12 @@ export const SmallButton = styled.button<any>`
   ${(props) =>
     props.kindOf === `default` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
+
+    ${(props) =>
+    props.kindOf === `cancle` && `background ${props.theme.subWhite_C};`}
+    ${(props) => props.kindOf === `cancle` && `color ${props.theme.red_C};`}
+    ${(props) =>
+    props.kindOf === `cancle` && `border : 1px solid ${props.theme.red_C};`}
   
 
   ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
@@ -506,6 +513,10 @@ export const SmallButton = styled.button<any>`
     ${(props) =>
       props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
     ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
+
+    ${(props) =>
+      props.kindOf === `cancle` && `background ${props.theme.red_C};`}
+    ${(props) => props.kindOf === `cancle` && `color ${props.theme.white_C};`}
   }
 `;
 
@@ -588,12 +599,12 @@ export const CloseButton = styled.button<any>`
   align-items: ${(props) => props.al || `flex-end`};
   justify-content: ${(props) => props.ju || `center`};
   background-color: ${(props) => props.bgColor || `#fff`};
-  color: ${(props) => props.color || props.basicTheme_C};
+  color: ${(props) => props.color || props.black_C};
   cursor: pointer;
   border: none;
 
   & svg {
-    color: ${(props) => props.color || props.basicTheme_C};
+    color: ${(props) => props.color || props.black_C};
     font-size: 28px;
   }
 `;
