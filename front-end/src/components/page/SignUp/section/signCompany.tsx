@@ -207,6 +207,7 @@ const SignCompany: NextPage<_cSignUpProps> = (props) => {
               companyCheck: false,
             },
           });
+          props.setStepNumber(props.stepNumber - 1);
         });
     }
   };
