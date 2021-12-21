@@ -184,7 +184,8 @@ export interface _pAccountInfoProps extends _cMyPageAccount {
   comData: Company;
   onInputComHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   readOnly: boolean;
-  myLoader: () => string;
+  stampImgSrc: string;
+  setStampImgSrc: React.Dispatch<React.SetStateAction<string>>;
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setModalOption: React.Dispatch<React.SetStateAction<string>>;

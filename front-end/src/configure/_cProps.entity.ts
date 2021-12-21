@@ -75,6 +75,8 @@ export interface _cStampModalProps {
   stampNum: number;
   setStampNum: React.Dispatch<React.SetStateAction<number>>;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  stampImgSrc: string;
+  setStampImgSrc: React.Dispatch<React.SetStateAction<string>>;
   style: {
     height: string;
   };

@@ -53,6 +53,9 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
   const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
   const [userData, setUserData] = useState<User>(props.accountInfo.user); // 불러온 계정정보 - 유저
   const [comData, setComData] = useState<Company>(props.accountInfo.company); // 불러온 계정정보 - 회사
+  const [stampImgSrc, setStampImgSrc] = useState<string>(
+    "/api/settings/myinfo/stamp"
+  ); // url src 설정
 
   // useEffect 관리
   // 계정 권한에 따라 readOnly state 변경
@@ -152,13 +155,6 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
       });
   };
 
-  /**
-   * next 이미지 로더 시 url 재생성 함수
-   */
-  const myLoader = () => {
-    return `/api/settings/myinfo/stamp?num=${stampNum}`;
-  };
-
   // 비밀번호 변경 modal props
   const ChangePwModalProps: _cChangePwModalProps = {
     ...props,
@@ -171,6 +167,8 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
     stampNum,
     setStampNum,
     setModalOpen,
+    stampImgSrc,
+    setStampImgSrc,
     style: { height: "500px" },
   };
 
@@ -186,7 +184,8 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
     comData,
     onInputComHandler,
     readOnly,
-    myLoader,
+    stampImgSrc,
+    setStampImgSrc,
     modalOpen,
     setModalOpen,
     setModalOption,

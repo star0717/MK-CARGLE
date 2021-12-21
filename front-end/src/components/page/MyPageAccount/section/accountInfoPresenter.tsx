@@ -602,11 +602,10 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                     padding={`10px 0px`}
                   >
                     <Image
-                      loader={props.myLoader}
                       alt="도장 사진"
                       width={`100 px`}
                       // height={200}
-                      src="/api/settings/myinfo/stamp"
+                      src={props.stampImgSrc}
                     />
                   </Wrapper>
 

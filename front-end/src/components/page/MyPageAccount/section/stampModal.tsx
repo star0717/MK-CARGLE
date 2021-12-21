@@ -48,6 +48,7 @@ const StampModal: NextPage<_cStampModalProps> = (props) => {
           if (res.payload.length !== 0) {
             alert("도장이 업로드되었습니다.");
             props.setStampNum(props.stampNum + 1);
+            props.setStampImgSrc(`${props.stampImgSrc}?num=${props.stampNum}`);
             props.setModalOpen(false);
           } else {
             alert("업로드에 실패했습니다.");
