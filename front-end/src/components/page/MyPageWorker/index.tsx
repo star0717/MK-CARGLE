@@ -6,6 +6,7 @@ import { getWorkersListAction } from "../../../../store/action/user.action";
 import { WholeWrapper } from "../../styles/CommonComponents";
 import MyPageWorkerPresenter from "./indexPresenter";
 import { _pTermProps, _pWorkerData } from "../../../configure/_pProps.entity";
+import { FindParameters, FindResult } from "../../../models/base.entity";
 
 const MyPageWorker: NextPage<_pWorkerData> = (props) => {
   const dispatch = useDispatch();
@@ -16,16 +17,22 @@ const MyPageWorker: NextPage<_pWorkerData> = (props) => {
   const [lastPage, setLastPage] = useState<number>();
   const [loadData, setLoadData] = useState(false);
 
+  const FindWorker = {
+    page: 2,
+    take: 30,
+    useRegSearch: false,
+  };
+  const query = `page=${FindWorker.page}&take=${FindWorker.take}&useRegSearch=${FindWorker.useRegSearch}`;
+
   useEffect(() => {
     if (loadData === false) {
-      dispatch(getWorkersListAction()).then((res: any) => {
+      dispatch(getWorkersListAction(query)).then((res: any) => {
         setDocs(res.payload.docs);
         setTotalDocs(res.payload.totalDocs);
         setCurrentPage(res.payload.currentPage);
         setLastPage(res.payload.lastPage);
       });
       setLoadData(true);
-      console.log("start");
     }
   }, [docs]);
 
