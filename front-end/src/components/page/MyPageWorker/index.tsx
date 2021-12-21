@@ -36,9 +36,9 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
     projection: "",
   });
 
-  console.log();
+  // console.log();
 
-  console.log(pageData.getQuery());
+  // console.log(pageData.getQuery());
 
   // const query: FindParameters = {
   //   page: pageData.page,
