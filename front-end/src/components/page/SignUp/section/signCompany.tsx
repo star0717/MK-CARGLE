@@ -11,7 +11,6 @@ import {
   companyFindAction,
   signUpUserAction,
 } from "../../../../../store/action/user.action";
-import { initialState } from "../../../../../store/reducer/user.reducer";
 import SignCompanyPresenter from "./signCompanyPresenter";
 import {
   CloseButton,
@@ -23,6 +22,8 @@ import { CHAR_DEL } from "../../../../validation/regEx";
 import { Company } from "../../../../models/company.entity";
 import { _cSignUpProps } from "../../../../configure/_cProps.entity";
 import { _pSignCompanyProps } from "../../../../configure/_pProps.entity";
+import { AxiosError } from "axios";
+import { DbErrorInfo } from "../../../../models/base.entity";
 
 // modal setting
 Modal.setAppElement("body");
@@ -173,27 +174,40 @@ const SignCompany: NextPage<_cSignUpProps> = (props) => {
           user: props.user,
           company: inputCompany,
         })
-      ).then(
-        (res: any) => {
+      )
+        .then((res: any) => {
           props.setStepNumber(props.stepNumber + 1);
-        },
-        (err) => {
-          if (err.response.status === 400) {
-            alert("회원가입에 실패했습니다.");
-            props.setStepNumber(props.stepNumber - 1);
-            dispatch({
-              type: actionTypesUser.FORM_CHECK,
-              payload: {
-                ...props.formCheck,
-                emailReadOnly: false,
-                emailSend: false,
-                authNumCheck: false,
-                companyCheck: false,
-              },
-            });
+        })
+        .catch((err: AxiosError<any, any>) => {
+          const errInfo: DbErrorInfo = err.response.data;
+          switch (errInfo.key) {
+            case "email":
+              alert("이미 가입된 이메일입니다.");
+              break;
+            case "hpNumber":
+              alert("이미 가입된 휴대폰 번호입니다.");
+              break;
+            case "mbRegNum":
+              alert("이미 가입된 정비업등록번호입니다.");
+              break;
+            case "phoneNum":
+              alert("이미 가입된 업체 전화번호입니다.");
+              break;
+            default:
+              alert("회원가입에 실패했습니다.");
+              break;
           }
-        }
-      );
+          dispatch({
+            type: actionTypesUser.FORM_CHECK,
+            payload: {
+              ...props.formCheck,
+              emailReadOnly: false,
+              emailSend: false,
+              authNumCheck: false,
+              companyCheck: false,
+            },
+          });
+        });
     }
   };
 

@@ -6,7 +6,7 @@ import {
   pwCheckAction,
 } from "../../../../../store/action/user.action";
 import { _cMyPageAccount } from "../../../../configure/_cProps.entity";
-import { _pAccountCheck } from "../../../../configure/_pProps.entity";
+import { _pAccountCheckProps } from "../../../../configure/_pProps.entity";
 import { WholeWrapper } from "../../../styles/CommonComponents";
 import AccountCheckPresenter from "./accountCheckPresenter";
 
@@ -53,7 +53,7 @@ const AccountCheck: NextPage<_cMyPageAccount> = (props) => {
   };
 
   // 화면구성에 넘길 props
-  const fProps: _pAccountCheck = {
+  const fProps: _pAccountCheckProps = {
     pwCheckHandler,
     password,
     setPassword,

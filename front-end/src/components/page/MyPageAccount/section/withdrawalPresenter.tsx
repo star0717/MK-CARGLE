@@ -8,30 +8,21 @@ import {
   SmallButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
+import { _pWithdrawalProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 마이 페이지: 계정관리 회원탈퇴 컴포넌트(화면)
  * @param props
  * @returns
  */
-const WithdrawalPresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const setStep = props.setStep;
-  const handleSubmit = props.handleSubmit;
-  const register = props.register;
-  const errors = props.errors;
-  const setPassword = props.setPassword;
-  const pwCheckHandler = props.pwCheckHandler;
-  const termCheck = props.termCheck;
-  const setTermCheck = props.setTermCheck;
-
+const WithdrawalPresenter: NextPage<_pWithdrawalProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper ref={ref}>
       <Wrapper>
-        <form onSubmit={handleSubmit(pwCheckHandler)}>
+        <form onSubmit={props.handleSubmit(props.pwCheckHandler)}>
           <Text>회원탈퇴를 위해 약관동의 후 비밀번호를 입력해주세요.</Text>
           <Wrapper
             width={width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`}
@@ -61,15 +52,15 @@ const WithdrawalPresenter: NextPage<any> = (props) => {
             <Text>회원탈퇴 약관을 상세히 읽고 숙지하였으며, 동의합니다.</Text>
             <input
               type="checkbox"
-              checked={termCheck}
-              {...register("withdrawalTerm", {
+              checked={props.termCheck}
+              {...props.register("withdrawalTerm", {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  setTermCheck(e.target.checked);
+                  props.setTermCheck(e.target.checked);
                 },
                 required: { value: true, message: "약관에 동의해주세요." },
               })}
             />
-            {errors.withdrawalTerm?.type === "required" && (
+            {props.errors.withdrawalTerm?.type === "required" && (
               <Text
                 margin={`0px 0px 10px`}
                 width={`100%`}
@@ -78,21 +69,21 @@ const WithdrawalPresenter: NextPage<any> = (props) => {
                 fontSize={`14px`}
                 textAlign={`left`}
               >
-                {errors.withdrawalTerm.message}
+                {props.errors.withdrawalTerm.message}
               </Text>
             )}
           </Wrapper>
           <TextInput
             type="password"
             placeholder="비밀번호를 입력하세요"
-            {...register("password", {
+            {...props.register("password", {
               onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                setPassword(e.target.value);
+                props.setPassword(e.target.value);
               },
               required: { value: true, message: "필수 입력사항입니다." },
             })}
           />
-          {errors.password?.type === "required" && (
+          {props.errors.password?.type === "required" && (
             <Text
               margin={`0px 0px 10px`}
               width={`100%`}
@@ -101,14 +92,14 @@ const WithdrawalPresenter: NextPage<any> = (props) => {
               fontSize={`14px`}
               textAlign={`left`}
             >
-              {errors.password.message}
+              {props.errors.password.message}
             </Text>
           )}
           <Wrapper dr={`row`}>
             <SmallButton
               type="button"
               kindOf={`default`}
-              onClick={() => setStep(2)}
+              onClick={() => props.setStep(2)}
             >
               돌아가기
             </SmallButton>
