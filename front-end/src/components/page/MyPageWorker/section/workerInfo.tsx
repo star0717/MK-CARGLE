@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import dayjs from "dayjs";
 import { useState } from "react";
 import {
   WholeWrapper,
@@ -60,7 +61,9 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
                 <TableRow>
                   <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
                   <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>{doc.joinDate}</TableRowLIST>
+                  <TableRowLIST width={`300px`}>
+                    {dayjs(doc.joinDate).format("YYYY-MM-DD")}
+                  </TableRowLIST>
                   {doc.approval ? (
                     <TableRowLIST width={`300px`}>승인</TableRowLIST>
                   ) : (
