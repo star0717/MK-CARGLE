@@ -20,6 +20,7 @@ import {
   _cWithdrawalModalProps,
 } from "./_cProps.entity";
 import { _fTermData, _fWithdrawal } from "./_fProps.entity";
+import { _MainProps } from "./_props.entity";
 
 // 화면구성(presenter) props //
 
@@ -250,7 +251,7 @@ export interface _pWithdrawalModalProps extends _cWithdrawalModalProps {
 /**
  * 마이페이지(직원관리): 직원 데이터 props
  */
-export interface _pWorkerData {
+export interface _pWorkerData extends _MainProps {
   docs: User[];
   setDocs: React.Dispatch<React.SetStateAction<User[]>>;
   totalDocs: number;

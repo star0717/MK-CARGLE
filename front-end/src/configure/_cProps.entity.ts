@@ -91,18 +91,3 @@ export interface _cWithdrawalModalProps {
     height: string;
   };
 }
-
-/**
- * 마이페이지(직원관리): 공통사용 props
- */
-export interface _cMyPageWorker extends _MainProps {
-  docs: User[];
-  setDocs: React.Dispatch<React.SetStateAction<User[]>>;
-  totalDocs: number;
-  setTotalDocs: React.Dispatch<React.SetStateAction<number>>;
-  currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  lastPage: number;
-  setLastPage: React.Dispatch<React.SetStateAction<number>>;
-  setLoadData: React.Dispatch<React.SetStateAction<boolean>>;
-}

@@ -7,8 +7,9 @@ import { WholeWrapper } from "../../styles/CommonComponents";
 import MyPageWorkerPresenter from "./indexPresenter";
 import { _pTermProps, _pWorkerData } from "../../../configure/_pProps.entity";
 import { FindParameters, FindResult } from "../../../models/base.entity";
+import { _MainProps } from "../../../configure/_props.entity";
 
-const MyPageWorker: NextPage<_pWorkerData> = (props) => {
+const MyPageWorker: NextPage<_MainProps> = (props) => {
   const dispatch = useDispatch();
 
   const [docs, setDocs] = useState<User[]>([]);
