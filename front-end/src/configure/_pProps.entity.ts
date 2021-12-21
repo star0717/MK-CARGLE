@@ -261,5 +261,6 @@ export interface _pWorkerData extends _MainProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   lastPage: number;
   setLastPage: React.Dispatch<React.SetStateAction<number>>;
+  setPageData: React.Dispatch<React.SetStateAction<Object>>;
   setLoadData: React.Dispatch<React.SetStateAction<boolean>>;
 }
