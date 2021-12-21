@@ -111,6 +111,13 @@ const StampModal: NextPage<_cStampModalProps> = (props) => {
       crop.width * scaleX,
       crop.height * scaleY
     );
+
+    console.log("이미지", image.width);
+    console.log("이미지", image.height);
+    console.log("스케일", crop.width);
+    console.log("스케일", crop.width);
+    console.log("캔버스", canvas.width);
+    console.log("캔버스", canvas.height);
   }, [completedCrop]);
 
   // 화면 구성에 넘길 props

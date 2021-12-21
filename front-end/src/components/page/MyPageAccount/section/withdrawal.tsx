@@ -115,12 +115,14 @@ const Withdrawal: NextPage<_cMyPageAccount> = (props) => {
             content: {
               background: "white",
               width: "45rem",
+              height: "575px",
               maxWidth: "calc(100vw - 2rem)",
               maxHeight: "calc(100vh - 2rem)",
               overflowY: "auto",
               position: "relative",
               border: "1px solid #ccc",
               borderRadius: "0.3rem",
+              boxShadow: "0px 10px 15px rgba(220,220,220,1)",
               inset: 0,
             },
           }}

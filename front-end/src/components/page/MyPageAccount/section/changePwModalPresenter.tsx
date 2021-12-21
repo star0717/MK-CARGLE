@@ -4,7 +4,7 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  TextInput,
+  TextInput2,
   SmallButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
@@ -25,11 +25,15 @@ const ChangePwModalPresenter: NextPage<_pChangePwModalProps> = (props) => {
       <Wrapper>
         <form onSubmit={props.handleSubmit(props.onChangePwHandler)}>
           <Wrapper>
-            <Text>비밀번호 변경</Text>
+            <Text fontSize={`18px`} fontWeight={`800`} padding={`0px 0px 20px`}>
+              비밀번호 변경
+            </Text>
           </Wrapper>
           <Wrapper>
-            <Text>현재 비밀번호</Text>
-            <TextInput
+            <Text margin={`10px 0px 5px`}>현재 비밀번호</Text>
+            <TextInput2
+              width={`500px`}
+              height={`60px`}
               type="password"
               value={props.password}
               placeholder="현재 비밀번호를 입력하세요."
@@ -41,8 +45,10 @@ const ChangePwModalPresenter: NextPage<_pChangePwModalProps> = (props) => {
             />
           </Wrapper>
           <Wrapper>
-            <Text>새로운 비밀번호</Text>
-            <TextInput
+            <Text margin={`10px 0px 5px`}>새로운 비밀번호</Text>
+            <TextInput2
+              width={`500px`}
+              height={`60px`}
               type="password"
               value={props.newPassword}
               placeholder="새로운 비밀번호를 입력하세요."
@@ -60,15 +66,35 @@ const ChangePwModalPresenter: NextPage<_pChangePwModalProps> = (props) => {
             />
             {(props.errors.newPassword?.type === "required" ||
               props.errors.newPassword?.type === "pattern") && (
-              <Text>{props.errors.newPassword.message}</Text>
+              <Text
+                margin={`0px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {props.errors.newPassword.message}
+              </Text>
             )}
             {props.errors.newPassword?.type === "validate" && (
-              <Text>현재 비밀번호와 다르게 설정하세요.</Text>
+              <Text
+                margin={`0px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                현재 비밀번호와 다르게 설정하세요.
+              </Text>
             )}
           </Wrapper>
           <Wrapper dr={`column`}>
-            <Text>새로운 비밀번호 확인</Text>
-            <TextInput
+            <Text margin={`10px 0px 5px`}>새로운 비밀번호 확인</Text>
+            <TextInput2
+              width={`500px`}
+              height={`60px`}
               type="password"
               value={props.newPasswordCheck}
               placeholder="비밀번호 확인을 위해 다시 입력해주세요."
@@ -82,28 +108,66 @@ const ChangePwModalPresenter: NextPage<_pChangePwModalProps> = (props) => {
               })}
             />
             {props.errors.newPasswordCheck?.type === "required" && (
-              <Text>8~16자 영문, 숫자, 특수문자를 사용하세요.</Text>
+              <Text
+                margin={`0px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                8~16자 영문, 숫자, 특수문자를 사용하세요.
+              </Text>
             )}
             {props.errors.newPasswordCheck?.type === "validate" && (
-              <Text>비밀번호가 일치하지 않습니다.</Text>
+              <Text
+                margin={`0px 0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                비밀번호가 일치하지 않습니다.
+              </Text>
             )}
             {props.watch("newPasswordCheck", "") !== "" &&
               props.errors.newPasswordCheck?.type !== "validate" && (
-                <Text width={`200px`}>비밀번호가 일치합니다.</Text>
+                <Text
+                  margin={`0px 0px`}
+                  width={`100%`}
+                  color={`#51b351`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  비밀번호가 일치합니다.
+                </Text>
               )}
           </Wrapper>
-          <Wrapper>
-            <SmallButton type="submit" kindOf={`default`}>
-              확인
-            </SmallButton>
+          <Wrapper padding={` 30px 0px 0px`} dr={`row`}>
             <SmallButton
+              width={`240px`}
+              fontSize={`16px`}
+              height={`40px`}
               type="button"
-              kindOf={`default`}
+              kindOf={`cancle`}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                 props.setModalOpen(false)
               }
+              margin={`0px 10px 0px 0px`}
             >
               취소
+            </SmallButton>
+            <SmallButton
+              width={`240px`}
+              fontSize={`16px`}
+              height={`40px`}
+              type="submit"
+              kindOf={`default`}
+              margin={`0px 0px 0px 10px`}
+            >
+              확인
             </SmallButton>
           </Wrapper>
         </form>
