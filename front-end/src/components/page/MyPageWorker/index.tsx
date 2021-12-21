@@ -21,27 +21,12 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
   //컴포넌트 전환시 1번만 실행
   const [loadData, setLoadData] = useState<boolean>(false);
 
-  //직원 명단 출력 관련
-  // const [page, setPage] = useState<number>(1);
-  // const [take, setTake] = useState<number>(30);
-  // const [useRegSearch, setUseRegSearch] = useState<boolean>(false);
-
-  const [pageData, setPageData] = useState<FindParameters>({});
-
-  // console.log();
-
-  // console.log(pageData.getQuery());
-
-  // const query: FindParameters = {
-  //   page: pageData.page,
-  //   take: pageData.pagetake,
-  //   useRegSearch: useRegSearch,
-  //   filterKey: "",
-  //   filterValue: "",
-  //   filter: undefined,
-  //   projection: "",
-  // };
-  // console.log(query.getQuery());
+  //직원 관리 page 설정 관련
+  const [pageData, setPageData] = useState<FindParameters>({
+    page: 1,
+    take: 30,
+    useRegSearch: false,
+  });
 
   useEffect(() => {
     if (loadData === false) {
@@ -65,6 +50,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
     setCurrentPage,
     lastPage,
     setLastPage,
+    setPageData,
     setLoadData,
   };
 
