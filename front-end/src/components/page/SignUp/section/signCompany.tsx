@@ -43,6 +43,7 @@ const SignCompany: NextPage<_cSignUpProps> = (props) => {
   }); // 업체 정보
   const [inputForm, setInputForm] = useState<FormInput>(props.formInput); // 폼에만 있는 인풋(ex. 이메일 도메인)
   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달창 open 여부
+  const [errBorder, setErrBorder] = useState<string>(""); // 중복에러 표시
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -207,6 +208,7 @@ const SignCompany: NextPage<_cSignUpProps> = (props) => {
               companyCheck: false,
             },
           });
+          props.setStepNumber(props.stepNumber - 1);
         });
     }
   };
