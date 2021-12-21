@@ -255,7 +255,7 @@ export const CommonTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin || `0px`};
   margintop: ${(props) => props.marginTop};
-  padding: ${(props) => props.padding || `0px 0px 0px`};
+  padding: ${(props) => props.padding || `50px 0px 0px`};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 34px;
   font-weight: 800;
