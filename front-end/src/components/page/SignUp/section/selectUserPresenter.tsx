@@ -7,6 +7,7 @@ import {
   JoinFirstStepSelect,
   JoinFirstStepSelectText,
   Image,
+  RsWrapper,
 } from "../../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";
@@ -30,75 +31,77 @@ const SelectUserPresenter: NextPage<_pSelectUserProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper dr={`row`} padding={`0px 0px 40px 0px`}>
-        {/* 사업자 회원가입 버튼 */}
-        <Wrapper padding={`20px`} width={`auto`} ju={`center`} al={`center`}>
-          <JoinFirstStepSelect
-            onClick={() => {
-              props.setStepNumber(props.stepNumber + 1);
-              props.setUserAuth(props.UserAuthority.OWNER);
-              dispatch({ type: actionTypesUser.USER_INIT });
-              dispatch({
-                type: actionTypesUser.INPUT_ACCOUNT,
-                payload: { ...props.user, auth: props.UserAuthority.OWNER },
-              });
-            }}
-          >
-            <Image
-              position={`relative`}
-              src="/images/JoinSelectIcon01.png"
-              alt="Cargle Logo"
-              padding={`20px`}
-              width={`120px`}
-              display={`flex`}
-              margin={`0 auto`}
-            />
-            <JoinFirstStepSelectText>
-              카센터를 운영하고 계신가요?
-            </JoinFirstStepSelectText>
-            <Text fontSize={`24px`} fontWeight={`700`}>
-              사업자
-            </Text>
-          </JoinFirstStepSelect>
-        </Wrapper>
+      <RsWrapper>
+        <Wrapper dr={`row`} padding={`0px 0px 40px 0px`}>
+          {/* 사업자 회원가입 버튼 */}
+          <Wrapper padding={`20px`} width={`auto`} ju={`center`} al={`center`}>
+            <JoinFirstStepSelect
+              onClick={() => {
+                props.setStepNumber(props.stepNumber + 1);
+                props.setUserAuth(props.UserAuthority.OWNER);
+                dispatch({ type: actionTypesUser.USER_INIT });
+                dispatch({
+                  type: actionTypesUser.INPUT_ACCOUNT,
+                  payload: { ...props.user, auth: props.UserAuthority.OWNER },
+                });
+              }}
+            >
+              <Image
+                position={`relative`}
+                src="/images/JoinSelectIcon01.png"
+                alt="Cargle Logo"
+                padding={`20px`}
+                width={`120px`}
+                display={`flex`}
+                margin={`0 auto`}
+              />
+              <JoinFirstStepSelectText>
+                카센터를 운영하고 계신가요?
+              </JoinFirstStepSelectText>
+              <Text fontSize={`24px`} fontWeight={`700`}>
+                사업자
+              </Text>
+            </JoinFirstStepSelect>
+          </Wrapper>
 
-        {/* 직원 회원가입 버튼 */}
-        <Wrapper padding={`20px`} width={`auto`}>
-          <JoinFirstStepSelect
-            onClick={() => {
-              props.setStepNumber(props.stepNumber + 1);
-              props.setUserAuth(props.UserAuthority.WORKER);
-              dispatch({ type: actionTypesUser.USER_INIT });
-              dispatch({
-                type: actionTypesUser.INPUT_ACCOUNT,
-                payload: { ...props.user, auth: props.UserAuthority.WORKER },
-              });
-            }}
-          >
-            <Image
-              position={`relative`}
-              src="/images/JoinSelectIcon02.png"
-              alt="Cargle Logo"
-              padding={`20px`}
-              width={`120px`}
-              display={`flex`}
-              margin={`0 auto`}
-            />
-            <JoinFirstStepSelectText>
-              카센터에서 근무하고 계신가요?
-            </JoinFirstStepSelectText>
-            <Text color={`0066FF`} fontSize={`24px`} fontWeight={`700`}>
-              직원
-            </Text>
-          </JoinFirstStepSelect>
+          {/* 직원 회원가입 버튼 */}
+          <Wrapper padding={`20px`} width={`auto`}>
+            <JoinFirstStepSelect
+              onClick={() => {
+                props.setStepNumber(props.stepNumber + 1);
+                props.setUserAuth(props.UserAuthority.WORKER);
+                dispatch({ type: actionTypesUser.USER_INIT });
+                dispatch({
+                  type: actionTypesUser.INPUT_ACCOUNT,
+                  payload: { ...props.user, auth: props.UserAuthority.WORKER },
+                });
+              }}
+            >
+              <Image
+                position={`relative`}
+                src="/images/JoinSelectIcon02.png"
+                alt="Cargle Logo"
+                padding={`20px`}
+                width={`120px`}
+                display={`flex`}
+                margin={`0 auto`}
+              />
+              <JoinFirstStepSelectText>
+                카센터에서 근무하고 계신가요?
+              </JoinFirstStepSelectText>
+              <Text color={`0066FF`} fontSize={`24px`} fontWeight={`700`}>
+                직원
+              </Text>
+            </JoinFirstStepSelect>
+          </Wrapper>
         </Wrapper>
-      </Wrapper>
-      <CommonButton>
-        <Link href={UseLink.INDEX}>
-          <a>다음에 가입하기</a>
-        </Link>
-        <IoIosArrowForward />
-      </CommonButton>
+        <CommonButton>
+          <Link href={UseLink.INDEX}>
+            <a>다음에 가입하기</a>
+          </Link>
+          <IoIosArrowForward />
+        </CommonButton>
+      </RsWrapper>
     </WholeWrapper>
   );
 };

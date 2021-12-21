@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/dist/client/router";
 import {
   WholeWrapper,
   Wrapper,
@@ -18,9 +17,15 @@ import { IoIosCloseCircle } from "react-icons/io";
 import AccountInfoPresenter from "./accountInfoPresenter";
 import { User, UserAuthority } from "../../../../models/user.entity";
 import { Company } from "../../../../models/company.entity";
-import { UseLink } from "../../../../configure/router.entity";
 import { AxiosError } from "axios";
 import { DbErrorInfo } from "../../../../models/base.entity";
+import { mbTypeOption } from "../../../../configure/list.entity";
+import {
+  _cChangePwModalProps,
+  _cMyPageAccount,
+  _cStampModalProps,
+} from "../../../../configure/_cProps.entity";
+import { _pAccountInfoProps } from "../../../../configure/_pProps.entity";
 
 Modal.setAppElement("body");
 
@@ -29,13 +34,8 @@ Modal.setAppElement("body");
  * @param props
  * @returns
  */
-const AccountInfo: NextPage<any> = (props) => {
-  const router = useRouter();
+const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
   const dispatch = useDispatch();
-
-  // 필요한 props 재정의
-  const accountInfo = props.accountInfo;
-  const setAccountInfo = props.setAccountInfo;
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -51,17 +51,21 @@ const AccountInfo: NextPage<any> = (props) => {
   const [modalOption, setModalOption] = useState<string>(""); // modal 내용
   const [readOnly, setReadOnly] = useState<boolean>(true); // 계정 권한에 따른 readonly
   const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
-  const [userData, setUserData] = useState<User>(accountInfo.user); // 불러온 계정정보 - 유저
-  const [comData, setComData] = useState<Company>(accountInfo.company); // 불러온 계정정보 - 회사
+  const [userData, setUserData] = useState<User>(props.accountInfo.user); // 불러온 계정정보 - 유저
+  const [comData, setComData] = useState<Company>(props.accountInfo.company); // 불러온 계정정보 - 회사
+  const [stampImgSrc, setStampImgSrc] = useState<string>(
+    "/api/settings/myinfo/stamp"
+  ); // url src 설정
+
   // useEffect 관리
   // 계정 권한에 따라 readOnly state 변경
   useEffect(() => {
-    if (accountInfo.user.auth === UserAuthority.WORKER) {
+    if (props.accountInfo.user.auth === UserAuthority.WORKER) {
       setReadOnly(true);
     } else {
       setReadOnly(false);
     }
-  }, [accountInfo]);
+  }, [props.accountInfo]);
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
@@ -94,6 +98,13 @@ const AccountInfo: NextPage<any> = (props) => {
   const onInputComHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
   };
+
+  /**
+   * 정비업종 readOnly일 경우 해당하는 text 출력
+   */
+  const textMbType = mbTypeOption.find((item) => {
+    return item.value === comData.mbTypeNum;
+  });
 
   /**
    * 주소 검색 api handler
@@ -132,51 +143,43 @@ const AccountInfo: NextPage<any> = (props) => {
     dispatch(setMyInfoAction(changeData))
       .then((res: any) => {
         alert("저장되었습니다.");
-        setAccountInfo({
-          ...accountInfo,
+        props.setAccountInfo({
+          ...props.accountInfo,
           company: comData,
           user: userData,
         });
-        // router.push(UseLink.MAIN);
       })
       .catch((err: AxiosError<any, any>) => {
         const errInfo: DbErrorInfo = err.response.data;
-        alert(JSON.stringify(errInfo));
+        console.log(JSON.stringify(errInfo));
+        if (errInfo.key === "email") {
+          alert("이미 가입된 이메일입니다.");
+        }
+        if (errInfo.key === "hpNumber") {
+          alert("이미 가입된 휴대폰 번호입니다.");
+        }
       });
   };
 
-  /**
-   * next 이미지 로더 시 url 재생성 함수
-   */
-  const myLoader = () => {
-    return `/api/settings/myinfo/stamp?num=${stampNum}`;
-  };
-
   // 비밀번호 변경 modal props
-  const ChangePwModalProps = {
-    handleSubmit,
-    register,
-    errors,
-    watch,
-    accountInfo,
+  const ChangePwModalProps: _cChangePwModalProps = {
+    ...props,
     setModalOpen,
-    setModalOption,
-    setValue,
     style: { height: "500px" },
   };
 
   // 도장 modal props
-  const StampModalProps = {
+  const StampModalProps: _cStampModalProps = {
     stampNum,
     setStampNum,
     setModalOpen,
-    setModalOption,
-    setValue,
+    stampImgSrc,
+    setStampImgSrc,
     style: { height: "500px" },
   };
 
   // 화면구성에 넘길 props
-  const fProps = {
+  const fProps: _pAccountInfoProps = {
     ...props,
     handleSubmit,
     register,
@@ -187,10 +190,12 @@ const AccountInfo: NextPage<any> = (props) => {
     comData,
     onInputComHandler,
     readOnly,
-    myLoader,
+    stampImgSrc,
+    setStampImgSrc,
     modalOpen,
     setModalOpen,
     setModalOption,
+    textMbType,
   };
 
   return (

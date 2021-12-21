@@ -5,6 +5,8 @@ import {
   getMyInfoAction,
   pwCheckAction,
 } from "../../../../../store/action/user.action";
+import { _cMyPageAccount } from "../../../../configure/_cProps.entity";
+import { _pAccountCheckProps } from "../../../../configure/_pProps.entity";
 import { WholeWrapper } from "../../../styles/CommonComponents";
 import AccountCheckPresenter from "./accountCheckPresenter";
 
@@ -13,12 +15,8 @@ import AccountCheckPresenter from "./accountCheckPresenter";
  * @param props
  * @returns
  */
-const AccountCheck: NextPage<any> = (props) => {
+const AccountCheck: NextPage<_cMyPageAccount> = (props) => {
   const dispatch = useDispatch();
-
-  // 필요한 props 재정의
-  const setStep = props.setStep;
-  const setAccountInfo = props.setAccountInfo;
 
   // state 관리
   const [password, setPassword] = useState<string>(""); // 비밀번호 입력 state
@@ -38,8 +36,8 @@ const AccountCheck: NextPage<any> = (props) => {
         if (res.payload === true) {
           dispatch(getMyInfoAction()).then((res: any) => {
             if (res.payload) {
-              setAccountInfo(res.payload);
-              setStep(2);
+              props.setAccountInfo(res.payload);
+              props.setStep(2);
             }
           });
         } else {
@@ -55,7 +53,7 @@ const AccountCheck: NextPage<any> = (props) => {
   };
 
   // 화면구성에 넘길 props
-  const fProps = {
+  const fProps: _pAccountCheckProps = {
     pwCheckHandler,
     password,
     setPassword,

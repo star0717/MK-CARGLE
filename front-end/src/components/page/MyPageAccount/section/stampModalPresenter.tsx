@@ -11,25 +11,14 @@ import {
 import React from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { _pStampModalProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(화면)
  * @param props
  * @returns
  */
-const StampModalPresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const fileName = props.fileName;
-  const onSelectFile = props.onSelectFile;
-  const upImg = props.upImg;
-  const onLoad = props.onLoad;
-  const crop = props.crop;
-  const setCrop = props.setCrop;
-  const completedCrop = props.completedCrop;
-  const setCompletedCrop = props.setCompletedCrop;
-  const previewCanvasRef = props.previewCanvasRef;
-  const stampFileUpload = props.stampFileUpload;
-
+const StampModalPresenter: NextPage<_pStampModalProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
@@ -42,7 +31,7 @@ const StampModalPresenter: NextPage<any> = (props) => {
             width={`300px`}
             type="text"
             placeholder="이미지 파일"
-            value={fileName}
+            value={props.fileName}
             required
             readOnly
           />
@@ -57,37 +46,42 @@ const StampModalPresenter: NextPage<any> = (props) => {
             style={{ display: "none" }}
             id="stamp"
             type="file"
-            onChange={onSelectFile}
+            onChange={props.onSelectFile}
             accept="image/*"
           />
         </Wrapper>
         <ReactCrop
-          src={upImg}
-          onImageLoaded={onLoad}
-          crop={crop}
-          onChange={(c) => setCrop(c)}
-          onComplete={(c) => setCompletedCrop(c)}
+          src={props.upImg}
+          onImageLoaded={props.onLoad}
+          crop={props.crop}
+          onChange={(c) => props.setCrop(c)}
+          onComplete={(c) => props.setCompletedCrop(c)}
         />
         <Wrapper>
           <canvas
-            ref={previewCanvasRef}
+            ref={props.previewCanvasRef}
             // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
             style={{
-              width: Math.round(completedCrop?.width ?? 0),
-              height: Math.round(completedCrop?.height ?? 0),
+              width: Math.round(props.completedCrop?.width ?? 0),
+              height: Math.round(props.completedCrop?.height ?? 0),
             }}
           />
         </Wrapper>
-        {completedCrop?.width && completedCrop?.height && (
+        {props.completedCrop?.width && props.completedCrop?.height && (
           <Wrapper>
             <Text>선택한 영역이 업로드됩니다.</Text>
             <SmallButton
               type="button"
               kindOf={`default`}
               margin={`0px 0px 0px 20px`}
-              disabled={!completedCrop?.width || !completedCrop?.height}
+              disabled={
+                !props.completedCrop?.width || !props.completedCrop?.height
+              }
               onClick={() =>
-                stampFileUpload(previewCanvasRef.current, completedCrop)
+                props.stampFileUpload(
+                  props.previewCanvasRef.current,
+                  props.completedCrop
+                )
               }
             >
               업로드
