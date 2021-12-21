@@ -16,7 +16,6 @@ import { SignUpInfo } from "../../../../models/auth.entity";
 import DaumPostcode from "react-daum-postcode";
 import CompanyFindModal from "./comFindModal";
 import { User, UserAuthority } from "../../../../models/user.entity";
-import { initialState } from "../../../../../store/reducer/user.reducer";
 import SignAccountPresenter from "./signAccountPresenter";
 import {
   CloseButton,

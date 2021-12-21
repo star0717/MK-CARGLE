@@ -11,7 +11,6 @@ import {
   companyFindAction,
   signUpUserAction,
 } from "../../../../../store/action/user.action";
-import { initialState } from "../../../../../store/reducer/user.reducer";
 import SignCompanyPresenter from "./signCompanyPresenter";
 import {
   CloseButton,

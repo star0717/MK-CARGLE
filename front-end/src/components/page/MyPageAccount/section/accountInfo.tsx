@@ -151,7 +151,13 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
       })
       .catch((err: AxiosError<any, any>) => {
         const errInfo: DbErrorInfo = err.response.data;
-        alert(JSON.stringify(errInfo));
+        console.log(JSON.stringify(errInfo));
+        if (errInfo.key === "email") {
+          alert("이미 가입된 이메일입니다.");
+        }
+        if (errInfo.key === "hpNumber") {
+          alert("이미 가입된 휴대폰 번호입니다.");
+        }
       });
   };
 
