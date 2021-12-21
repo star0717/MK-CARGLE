@@ -52,24 +52,18 @@ const AdminCompanies: NextPage<any> = (props) => {
         <Text>업체 관리</Text>
         <TableWrapper>
           <TableHead>
+            <TableHeadLIST width={`300px`}>가입일</TableHeadLIST>
             <TableHeadLIST width={`300px`}>업체명</TableHeadLIST>
             <TableHeadLIST width={`300px`}>사업자등록증</TableHeadLIST>
             <TableHeadLIST width={`300px`}>정비업등록증</TableHeadLIST>
-            <TableHeadLIST width={`300px`}>상태</TableHeadLIST>
+            <TableHeadLIST width={`300px`}>대표자명</TableHeadLIST>
           </TableHead>
           <TableBody>
             {companies?.map((doc) => (
               <TableRow key={doc._id}>
+                <TableRowLIST width={`300px`}>{doc.createdAt}</TableRowLIST>
                 <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
                 <TableRowLIST width={`300px`}>
-                  {/* <SmallButton
-                    type="button"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      downloadComRegFileHandler(doc._cID);
-                    }}
-                  >
-                    다운로드
-                  </SmallButton> */}
                   <a
                     href="/api/admin/review/com-reg-doc/${id}"
                     target={"_blank"}
@@ -86,7 +80,7 @@ const AdminCompanies: NextPage<any> = (props) => {
                     다운로드
                   </a>
                 </TableRowLIST>
-                <TableRowLIST width={`300px`}>{doc.approval}</TableRowLIST>
+                <TableRowLIST width={`300px`}>{doc.ownerName}</TableRowLIST>
               </TableRow>
             ))}
           </TableBody>
