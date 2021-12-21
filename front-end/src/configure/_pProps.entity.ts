@@ -1,3 +1,4 @@
+import React from "react";
 import {
   FieldValues,
   SubmitHandler,
@@ -150,4 +151,19 @@ export interface _pFindPassword {
   hpNumber: string;
   setHpNumber: React.Dispatch<React.SetStateAction<string>>;
   onFindPwHandler: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+/**
+ * 직원관리: 직원 데이터 props
+ */
+export interface _pWorkerData {
+  docs: User[];
+  setDocs: React.Dispatch<React.SetStateAction<User[]>>;
+  totalDocs: number;
+  setTotalDocs: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  lastPage: number;
+  setLastPage: React.Dispatch<React.SetStateAction<number>>;
+  setLoadData: React.Dispatch<React.SetStateAction<boolean>>;
 }
