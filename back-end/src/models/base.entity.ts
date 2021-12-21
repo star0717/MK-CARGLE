@@ -198,6 +198,5 @@ export class DeleteResult {
 export class DbErrorInfo {
   name: string;
   code: string | number;
-  codeName: string;
   key?: string;
 }

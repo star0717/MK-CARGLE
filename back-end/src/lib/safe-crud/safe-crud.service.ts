@@ -187,13 +187,12 @@ export class SafeService<T extends BaseEntity> {
     return await this.model.deleteMany(doc);
   }
 
-  private handelError(err: any) {
+  handelError(err: any) {
     if (err.name == 'MongoServerError' && err.code == 11000) {
       const mse = err as MongoServerError;
       var info: DbErrorInfo = {
         name: err.name,
         code: mse.code,
-        codeName: mse.codeName,
       };
 
       for (var i: number = 0; i < this.modelKeys.length; i++) {
@@ -202,8 +201,13 @@ export class SafeService<T extends BaseEntity> {
           break;
         }
       }
-
       throw new HttpException(info, HttpStatus.NOT_ACCEPTABLE);
+    } else if (
+      err.name == 'HttpException' &&
+      err?.response.name == 'MongoServerError' &&
+      err?.response.code == 11000
+    ) {
+      throw new HttpException(err.response, HttpStatus.NOT_ACCEPTABLE);
     }
   }
 }
