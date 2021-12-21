@@ -17,6 +17,7 @@ export const menuList = [
   {
     key: "1",
     menuName: "부품",
+    link: "#",
     subMenu: [
       {
         key: "1.1",
@@ -38,6 +39,7 @@ export const menuList = [
   {
     key: "2",
     menuName: "정비",
+    link: "#",
     subMenu: [
       {
         key: "2.1",
@@ -59,6 +61,7 @@ export const menuList = [
   {
     key: "3",
     menuName: "회계",
+    link: "#",
     subMenu: [
       {
         key: "3.1",
@@ -75,6 +78,7 @@ export const menuList = [
   {
     key: "4",
     menuName: "커뮤니티",
+    link: "#",
     subMenu: [
       {
         key: "4.1",
@@ -91,6 +95,7 @@ export const menuList = [
   {
     key: "5",
     menuName: "마이페이지",
+    link: UseLink.MYPAGE_ACCOUNT,
     subMenu: [
       {
         key: "5.1",
@@ -112,6 +117,7 @@ export const menuList = [
   {
     key: "6",
     menuName: "고객센터",
+    link: "#",
     subMenu: [
       {
         key: "6.1",

@@ -152,7 +152,9 @@ const Header: NextPage<_cLayoutProps> = (props) => {
                       fontWeight={`800`}
                       padding={width < 1510 ? `5px 15px` : `5px 30px`}
                     >
-                      {menu.menuName}
+                      <Link href={menu.link}>
+                        <a>{menu.menuName}</a>
+                      </Link>
                     </Text>
                   </Wrapper>
                 );
