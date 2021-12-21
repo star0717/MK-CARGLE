@@ -60,11 +60,11 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 사용자 정보
               </Text>
             </Wrapper>
-            <Text
+            {/* <Text
               fontSize={`28px`}
               lineHeight={`28px`}
               margin={`8px 0px 0px`}
-            ></Text>
+            ></Text> */}
           </Wrapper>
           <Wrapper
             dr={`row`}
@@ -72,15 +72,10 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
             borderBottom={`2px solid #000`}
             width={`1200px`}
             ju={`space-between`}
-            al={`flex-start`}
+            al={`center`}
             margin={`0px 0px 50px`}
           >
-            <Wrapper
-              width={`270px`}
-              height={`380px`}
-              bgColor={`#f5f5f5`}
-              padding={`30px 0px`}
-            >
+            <Wrapper width={`270px`} bgColor={`#f5f5f5`} padding={`163px 0px`}>
               <Wrapper
                 width={`80px`}
                 height={`80px`}
@@ -92,7 +87,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 </Text>
               </Wrapper>
               <Text
-                padding={`20px 0px`}
+                padding={`20px 0px 0px`}
                 fontSize={`18px`}
                 fontWeight={`800`}
                 letterSpacing={`4px`}
@@ -100,7 +95,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 {props.userData.name}님
               </Text>
             </Wrapper>
-            <Wrapper dr={`column`} width={`auto`} padding={`30px 0px 0px`}>
+            <Wrapper dr={`column`} width={`auto`} padding={`30px 0px`}>
               <Wrapper dr={`row`} margin={`0px 0px 10px`}>
                 <Text
                   width={`110px`}
@@ -145,33 +140,36 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 >
                   이름
                 </Text>
-                <TextInput2
-                  value={props.userData.name}
-                  readOnly
-                  type="text"
-                  {...props.register("name", {
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      props.onInputUserHandler(e);
-                    },
-                    required: {
-                      value: true,
-                      message: "필수 입력사항입니다.",
-                    },
-                  })}
-                  width={`800px`}
-                />
-                {props.errors.name?.type === "required" && (
-                  <Text
-                    margin={`0px 0px 10px`}
-                    width={`100%`}
-                    color={`#d6263b`}
-                    al={`flex-start`}
-                    fontSize={`14px`}
-                    textAlign={`left`}
-                  >
-                    {props.errors.name.message}
-                  </Text>
-                )}
+                <Wrapper width={`auto`}>
+                  <TextInput2
+                    value={props.userData.name}
+                    // readOnly
+                    type="text"
+                    {...props.register("name", {
+                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        props.onInputUserHandler(e);
+                      },
+                      required: {
+                        value: true,
+                        message: "필수 입력사항입니다.",
+                      },
+                    })}
+                    width={`800px`}
+                  />
+
+                  {props.errors.name?.type === "required" && (
+                    <Text
+                      margin={`0px`}
+                      width={`800px`}
+                      color={`#d6263b`}
+                      al={`flex-start`}
+                      fontSize={`14px`}
+                      textAlign={`left`}
+                    >
+                      {props.errors.name.message}
+                    </Text>
+                  )}
+                </Wrapper>
               </Wrapper>
               <Wrapper dr={`row`} margin={`0px 0px 10px`}>
                 <Text
@@ -181,34 +179,39 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 >
                   휴대폰 번호
                 </Text>
-                <TextInput2
-                  value={props.userData.hpNumber}
-                  type="tel"
-                  {...props.register("hpNumber", {
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      props.onInputUserHandler(e);
-                    },
-                    required: { value: true, message: "필수 입력사항입니다." },
-                    pattern: {
-                      value: formRegEx.HP_NUM,
-                      message: "형식에 맞게 입력하세요.",
-                    },
-                  })}
-                  width={`800px`}
-                />
-                {(props.errors.hpNumber?.type === "required" ||
-                  props.errors.hpNumber?.type === "pattern") && (
-                  <Text
-                    margin={`0px 0px 10px`}
-                    width={`100%`}
-                    color={`#d6263b`}
-                    al={`flex-start`}
-                    fontSize={`14px`}
-                    textAlign={`left`}
-                  >
-                    {props.errors.hpNumber.message}
-                  </Text>
-                )}
+                <Wrapper width={`auto`}>
+                  <TextInput2
+                    value={props.userData.hpNumber}
+                    type="tel"
+                    {...props.register("hpNumber", {
+                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        props.onInputUserHandler(e);
+                      },
+                      required: {
+                        value: true,
+                        message: "필수 입력사항입니다.",
+                      },
+                      pattern: {
+                        value: formRegEx.HP_NUM,
+                        message: "형식에 맞게 입력하세요.",
+                      },
+                    })}
+                    width={`800px`}
+                  />
+                  {(props.errors.hpNumber?.type === "required" ||
+                    props.errors.hpNumber?.type === "pattern") && (
+                    <Text
+                      margin={`0px`}
+                      width={`800px`}
+                      color={`#d6263b`}
+                      al={`flex-start`}
+                      fontSize={`14px`}
+                      textAlign={`left`}
+                    >
+                      {props.errors.hpNumber.message}
+                    </Text>
+                  )}
+                </Wrapper>
               </Wrapper>
               <Wrapper dr={`row`} margin={`0px 0px 10px`}>
                 <Text
@@ -258,7 +261,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                   width={`800px`}
                 />
               </Wrapper>
-              <Wrapper dr={`row`} margin={`0px 0px 10px`}>
+              <Wrapper dr={`row`}>
                 <Text
                   width={`110px`}
                   textAlign={`end`}
@@ -315,15 +318,10 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
             borderBottom={`2px solid #000`}
             width={`1200px`}
             ju={`space-between`}
-            al={`flex-start`}
+            al={`center`}
             margin={`0px 0px 10px`}
           >
-            <Wrapper
-              width={`270px`}
-              height={`690px`}
-              bgColor={`#f5f5f5`}
-              padding={`30px 0px`}
-            >
+            <Wrapper width={`270px`} bgColor={`#f5f5f5`} padding={`311px 0px`}>
               <Wrapper
                 width={`80px`}
                 height={`80px`}
@@ -335,7 +333,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 </Text>
               </Wrapper>
               <Text
-                padding={`20px 0px`}
+                padding={`20px 0px 0px`}
                 fontSize={`18px`}
                 fontWeight={`800`}
                 letterSpacing={`4px`}
@@ -343,7 +341,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 {props.comData.name}
               </Text>
             </Wrapper>
-            <Wrapper dr={`column`} width={`auto`} padding={`30px 0px 0px`}>
+            <Wrapper dr={`column`} width={`auto`} padding={`30px 0px`}>
               <Wrapper dr={`row`} margin={`0px 0px 10px`}>
                 <Text
                   width={`110px`}
@@ -443,7 +441,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 )}
                 {props.errors.mbTypeNum?.type === "required" && (
                   <Text
-                    margin={`0px 0px 10px 0px`}
+                    margin={`0px 0px`}
                     width={`100%`}
                     color={`#d6263b`}
                     al={`flex-start`}
@@ -502,36 +500,41 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 >
                   업체 전화번호
                 </Text>
-                <TextInput2
-                  value={props.comData.phoneNum}
-                  type="text"
-                  placeholder="(- 제외, 지역번호 포함)"
-                  readOnly={props.readOnly}
-                  {...props.register("phoneNum", {
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      props.onInputComHandler(e);
-                    },
-                    required: { value: true, message: "필수 입력사항입니다." },
-                    pattern: {
-                      value: formRegEx.PH_NUM,
-                      message: "형식에 맞게 입력하세요.",
-                    },
-                  })}
-                  width={`800px`}
-                />
-                {(props.errors.phoneNum?.type === "required" ||
-                  props.errors.phoneNum?.type === "pattern") && (
-                  <Text
-                    margin={`0px 0px 10px 0px`}
-                    width={`100%`}
-                    color={`#d6263b`}
-                    al={`flex-start`}
-                    fontSize={`14px`}
-                    textAlign={`left`}
-                  >
-                    {props.errors.phoneNum.message}
-                  </Text>
-                )}
+                <Wrapper width={`auto`}>
+                  <TextInput2
+                    value={props.comData.phoneNum}
+                    type="text"
+                    placeholder="(- 제외, 지역번호 포함)"
+                    readOnly={props.readOnly}
+                    {...props.register("phoneNum", {
+                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        props.onInputComHandler(e);
+                      },
+                      required: {
+                        value: true,
+                        message: "필수 입력사항입니다.",
+                      },
+                      pattern: {
+                        value: formRegEx.PH_NUM,
+                        message: "형식에 맞게 입력하세요.",
+                      },
+                    })}
+                    width={`800px`}
+                  />
+                  {(props.errors.phoneNum?.type === "required" ||
+                    props.errors.phoneNum?.type === "pattern") && (
+                    <Text
+                      margin={`0px 0px`}
+                      width={`100%`}
+                      color={`#d6263b`}
+                      al={`flex-start`}
+                      fontSize={`14px`}
+                      textAlign={`left`}
+                    >
+                      {props.errors.phoneNum.message}
+                    </Text>
+                  )}
+                </Wrapper>
               </Wrapper>
               <Wrapper dr={`row`} margin={`0px 0px 10px`}>
                 <Text
@@ -541,34 +544,36 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                 >
                   업체 팩스번호
                 </Text>
-                <TextInput2
-                  value={props.comData.faxNum}
-                  type="text"
-                  readOnly={props.readOnly}
-                  placeholder="(- 제외)"
-                  {...props.register("faxNum", {
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      props.onInputComHandler(e);
-                    },
-                    pattern: {
-                      value: formRegEx.FAX_NUM,
-                      message: "형식에 맞게 입력하세요.",
-                    },
-                  })}
-                  width={`800px`}
-                />
-                {props.errors.faxNum?.type === "pattern" && (
-                  <Text
-                    margin={`0px 0px 10px 0px`}
-                    width={`100%`}
-                    color={`#d6263b`}
-                    al={`flex-start`}
-                    fontSize={`14px`}
-                    textAlign={`left`}
-                  >
-                    {props.errors.faxNum.message}
-                  </Text>
-                )}
+                <Wrapper width={`auto`}>
+                  <TextInput2
+                    value={props.comData.faxNum}
+                    type="text"
+                    readOnly={props.readOnly}
+                    placeholder="(- 제외)"
+                    {...props.register("faxNum", {
+                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        props.onInputComHandler(e);
+                      },
+                      pattern: {
+                        value: formRegEx.FAX_NUM,
+                        message: "형식에 맞게 입력하세요.",
+                      },
+                    })}
+                    width={`800px`}
+                  />
+                  {props.errors.faxNum?.type === "pattern" && (
+                    <Text
+                      margin={`0px 0px`}
+                      width={`100%`}
+                      color={`#d6263b`}
+                      al={`flex-start`}
+                      fontSize={`14px`}
+                      textAlign={`left`}
+                    >
+                      {props.errors.faxNum.message}
+                    </Text>
+                  )}
+                </Wrapper>
               </Wrapper>
               <Wrapper dr={`row`} margin={`0px 0px 10px`}>
                 <Text
@@ -585,7 +590,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                   width={`800px`}
                 />
               </Wrapper>
-              <Wrapper dr={`row`} margin={`0px 0px 10px`}>
+              <Wrapper dr={`row`}>
                 <Text
                   width={`110px`}
                   textAlign={`end`}

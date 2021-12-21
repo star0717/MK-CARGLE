@@ -37,7 +37,7 @@ export class FindParameters {
   useRegSearch: boolean;
   filter: Object;
   projection: string;
-  getQuery() {
+  getQuery?() {
     let query = "?page=" + this.page;
     if (this.filterKey && this.filterValue) {
       query =
