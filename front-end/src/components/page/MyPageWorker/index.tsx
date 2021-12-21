@@ -5,8 +5,9 @@ import { User } from "../../../models/user.entity";
 import { getWorkersListAction } from "../../../../store/action/user.action";
 import { WholeWrapper } from "../../styles/CommonComponents";
 import MyPageWorkerPresenter from "./indexPresenter";
+import { _pTermProps, _pWorkerData } from "../../../configure/_pProps.entity";
 
-const MyPageWorker: NextPage<any> = (props) => {
+const MyPageWorker: NextPage<_pWorkerData> = (props) => {
   const dispatch = useDispatch();
 
   const [docs, setDocs] = useState<User[]>([]);
@@ -28,7 +29,7 @@ const MyPageWorker: NextPage<any> = (props) => {
     }
   }, [docs]);
 
-  const fprops = {
+  const fprops: _pWorkerData = {
     ...props,
     docs,
     setDocs,
