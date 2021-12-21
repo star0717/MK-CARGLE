@@ -151,12 +151,22 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
       })
       .catch((err: AxiosError<any, any>) => {
         const errInfo: DbErrorInfo = err.response.data;
-        console.log(JSON.stringify(errInfo));
-        if (errInfo.key === "email") {
-          alert("이미 가입된 이메일입니다.");
-        }
-        if (errInfo.key === "hpNumber") {
-          alert("이미 가입된 휴대폰 번호입니다.");
+        switch (errInfo.key) {
+          case "email":
+            alert("이미 가입된 이메일입니다.");
+            break;
+          case "hpNumber":
+            alert("이미 가입된 휴대폰 번호입니다.");
+            break;
+          case "mbRegNum":
+            alert("이미 가입된 정비업등록번호입니다.");
+            break;
+          case "phoneNum":
+            alert("이미 가입된 업체 전화번호입니다.");
+            break;
+          default:
+            alert("회원정보 수정에 실패했습니다.");
+            break;
         }
       });
   };
