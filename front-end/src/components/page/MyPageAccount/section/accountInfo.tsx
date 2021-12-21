@@ -21,6 +21,7 @@ import { Company } from "../../../../models/company.entity";
 import { UseLink } from "../../../../configure/router.entity";
 import { AxiosError } from "axios";
 import { DbErrorInfo } from "../../../../models/base.entity";
+import { mbTypeOption } from "../../../../configure/list.entity";
 
 Modal.setAppElement("body");
 
@@ -53,6 +54,7 @@ const AccountInfo: NextPage<any> = (props) => {
   const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
   const [userData, setUserData] = useState<User>(accountInfo.user); // 불러온 계정정보 - 유저
   const [comData, setComData] = useState<Company>(accountInfo.company); // 불러온 계정정보 - 회사
+
   // useEffect 관리
   // 계정 권한에 따라 readOnly state 변경
   useEffect(() => {
@@ -96,6 +98,13 @@ const AccountInfo: NextPage<any> = (props) => {
   };
 
   /**
+   * 정비업종 readOnly일 경우 해당하는 text 출력
+   */
+  const textMbType = mbTypeOption.find((item) => {
+    return item.value === comData.mbTypeNum;
+  });
+
+  /**
    * 주소 검색 api handler
    * @param data
    */
@@ -137,7 +146,6 @@ const AccountInfo: NextPage<any> = (props) => {
           company: comData,
           user: userData,
         });
-        // router.push(UseLink.MAIN);
       })
       .catch((err: AxiosError<any, any>) => {
         const errInfo: DbErrorInfo = err.response.data;
@@ -191,6 +199,7 @@ const AccountInfo: NextPage<any> = (props) => {
     modalOpen,
     setModalOpen,
     setModalOption,
+    textMbType,
   };
 
   return (

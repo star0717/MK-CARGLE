@@ -141,12 +141,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 >
                   비밀번호
                 </Text>
-                <TextInput2
-                  value={userData.email}
-                  type="password"
-                  readOnly
-                  width={`700px`}
-                />
+                <TextInput2 type="password" readOnly width={`700px`} />
                 <SmallButton
                   type="button"
                   kindOf={`default`}
@@ -432,31 +427,46 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 >
                   정비업종
                 </Text>
-                <Combo
-                  width={`800px`}
-                  margin={`0px`}
-                  value={comData.mbTypeNum}
-                  disabled={readOnly}
-                  {...register("mbTypeNum", {
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputComHandler(e);
-                    },
-                    required: true,
-                  })}
-                >
-                  <option value="1급">
-                    1급 자동차 공업사(자동차 종합 정비소)
-                  </option>
-                  <option value="2급">
-                    2급 자동차 공업사(소형 자동차 정비소)
-                  </option>
-                  <option value="3급">
-                    3급 자동차 공업사(자동차 전문 정비소)
-                  </option>
-                  {/* mbType.map(item => ) */}
-                </Combo>
+                {readOnly ? (
+                  <TextInput2
+                    value={props.textMbType.text}
+                    type="text"
+                    readOnly={readOnly}
+                    {...register("mbTypeNum")}
+                    width={`800px`}
+                  />
+                ) : (
+                  <Combo
+                    width={`800px`}
+                    margin={`0px`}
+                    value={comData.mbTypeNum}
+                    {...register("mbTypeNum", {
+                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        onInputComHandler(e);
+                      },
+                      required: true,
+                    })}
+                  >
+                    {mbTypeOption.map((item) => {
+                      return (
+                        <option key={item.value} value={item.value}>
+                          {item.text}
+                        </option>
+                      );
+                    })}
+                  </Combo>
+                )}
                 {errors.mbTypeNum?.type === "required" && (
-                  <Text>필수 선택사항입니다.</Text>
+                  <Text
+                    margin={`0px 0px 10px 0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    필수 선택사항입니다.
+                  </Text>
                 )}
               </Wrapper>
               <Wrapper dr={`row`} margin={`0px 0px 10px`}>
