@@ -11,14 +11,14 @@ import {
   CommonTitle,
   CommonSubTitle,
 } from "../../../styles/CommonComponents";
-import { _pAccountCheck } from "../../../../configure/_pProps.entity";
+import { _pAccountCheckProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 마이 페이지: 계정관리 확인 컴포넌트(화면)
  * @param props
  * @returns
  */
-const AccountCheckPresenter: NextPage<_pAccountCheck> = (props) => {
+const AccountCheckPresenter: NextPage<_pAccountCheckProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 

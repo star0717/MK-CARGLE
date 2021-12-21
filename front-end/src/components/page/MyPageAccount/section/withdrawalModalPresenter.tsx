@@ -7,17 +7,14 @@ import {
   SmallButton,
 } from "../../../styles/CommonComponents";
 import React from "react";
+import { _pWithdrawalModalProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 마이 페이지: 계정관리 회원탈퇴 모달 컴포넌트(화면)
  * @param props
  * @returns
  */
-const WithdrawalModalPresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const setModalOpen = props.setModalOpen;
-  const withdrawalHandler = props.withdrawalHandler;
-
+const WithdrawalModalPresenter: NextPage<_pWithdrawalModalProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
@@ -31,7 +28,7 @@ const WithdrawalModalPresenter: NextPage<any> = (props) => {
             type="button"
             kindOf={`default`}
             onClick={() => {
-              withdrawalHandler();
+              props.withdrawalHandler();
             }}
           >
             회원 탈퇴
@@ -40,7 +37,7 @@ const WithdrawalModalPresenter: NextPage<any> = (props) => {
             type="button"
             kindOf={`default`}
             onClick={() => {
-              setModalOpen(false);
+              props.setModalOpen(false);
             }}
           >
             취소

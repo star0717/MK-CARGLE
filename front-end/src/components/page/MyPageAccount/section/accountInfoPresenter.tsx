@@ -19,14 +19,14 @@ import { formRegEx } from "../../../../validation/regEx";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { AiTwotoneCopyrightCircle } from "react-icons/ai";
 import { BusinessCenter, Person } from "@material-ui/icons";
-import { _pAccountInfo } from "../../../../configure/_pProps.entity";
+import { _pAccountInfoProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 마이 페이지: 계정관리 확인 컴포넌트(화면)
  * @param props
  * @returns
  */
-const AccountInfoPresenter: NextPage<_pAccountInfo> = (props) => {
+const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
@@ -627,7 +627,13 @@ const AccountInfoPresenter: NextPage<_pAccountInfo> = (props) => {
           </Wrapper>
         </form>
         <Wrapper al={`flex-end`} margin={`0px 0px 30px`}>
-          <SmallButton type="button" kindOf={`default`}>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            onClick={() => {
+              props.setStep(3);
+            }}
+          >
             회원탈퇴
           </SmallButton>
         </Wrapper>

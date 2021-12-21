@@ -17,11 +17,14 @@ import { IoIosCloseCircle } from "react-icons/io";
 import AccountInfoPresenter from "./accountInfoPresenter";
 import { User, UserAuthority } from "../../../../models/user.entity";
 import { Company } from "../../../../models/company.entity";
-import { UseLink } from "../../../../configure/router.entity";
 import { AxiosError } from "axios";
 import { DbErrorInfo } from "../../../../models/base.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
-import { _cMyPageAccount } from "../../../../configure/_cProps.entity";
+import {
+  _cChangePwModalProps,
+  _cMyPageAccount,
+  _cStampModalProps,
+} from "../../../../configure/_cProps.entity";
 import { _pAccountInfo } from "../../../../configure/_pProps.entity";
 
 Modal.setAppElement("body");
@@ -157,25 +160,17 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
   };
 
   // 비밀번호 변경 modal props
-  const ChangePwModalProps = {
+  const ChangePwModalProps: _cChangePwModalProps = {
     ...props,
-    handleSubmit,
-    register,
-    errors,
-    watch,
     setModalOpen,
-    setModalOption,
-    setValue,
     style: { height: "500px" },
   };
 
   // 도장 modal props
-  const StampModalProps = {
+  const StampModalProps: _cStampModalProps = {
     stampNum,
     setStampNum,
     setModalOpen,
-    setModalOption,
-    setValue,
     style: { height: "500px" },
   };
 

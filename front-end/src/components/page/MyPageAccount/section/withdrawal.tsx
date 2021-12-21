@@ -12,6 +12,12 @@ import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { pwCheckAction } from "../../../../../store/action/user.action";
 import WithdrawalPresenter from "./withdrawalPresenter";
+import {
+  _cMyPageAccount,
+  _cWithdrawalModalProps,
+} from "../../../../configure/_cProps.entity";
+import { _fWithdrawal } from "../../../../configure/_fProps.entity";
+import { _pWithdrawalProps } from "../../../../configure/_pProps.entity";
 
 Modal.setAppElement("body");
 
@@ -20,7 +26,7 @@ Modal.setAppElement("body");
  * @param props
  * @returns
  */
-const Withdrawal: NextPage<any> = (props) => {
+const Withdrawal: NextPage<_cMyPageAccount> = (props) => {
   const dispatch = useDispatch();
 
   // react-hook-form 사용을 위한 선언
@@ -55,7 +61,7 @@ const Withdrawal: NextPage<any> = (props) => {
    * 비밀번호 체크 및 회원탈퇴 모달 open handler
    * @param data
    */
-  const pwCheckHandler: SubmitHandler<any> = (data) => {
+  const pwCheckHandler: SubmitHandler<_fWithdrawal> = (data) => {
     const confirmPWD = {
       _id: accountInfo.user._uID,
       PWD: password,
@@ -70,7 +76,7 @@ const Withdrawal: NextPage<any> = (props) => {
   };
 
   // 회원탈퇴 모달 props
-  const WithdrawalModalProps = {
+  const WithdrawalModalProps: _cWithdrawalModalProps = {
     password,
     accountInfo,
     setModalOpen,
@@ -78,7 +84,7 @@ const Withdrawal: NextPage<any> = (props) => {
   };
 
   // 화면구성에 넘길 props
-  const fProps = {
+  const fProps: _pWithdrawalProps = {
     ...props,
     handleSubmit,
     register,
