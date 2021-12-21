@@ -6,12 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthToken } from 'src/lib/decorators/decorators';
 import { SafeControllerFactory } from 'src/lib/safe-crud/safe-crud.controller';
 import { AuthTokenInfo } from 'src/models/auth.entity';
-import { DeleteResult } from 'src/models/base.entity';
+import {
+  DeleteResult,
+  FindParameters,
+  FindResult,
+} from 'src/models/base.entity';
 import { User } from 'src/models/user.entity';
 import { UsersService } from './users.service';
 
@@ -33,6 +39,17 @@ export class UsersController extends SafeControllerFactory<User>(User) {
     @Body() doc: User,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<User> {
+    throw new NotAcceptableException();
+  }
+
+  @Get()
+  @ApiOperation({
+    summary: `[DISABLED]`,
+  })
+  async findByOptions(
+    @Query() fParams: FindParameters,
+    @AuthToken() token: AuthTokenInfo,
+  ): Promise<FindResult<User>> {
     throw new NotAcceptableException();
   }
 
