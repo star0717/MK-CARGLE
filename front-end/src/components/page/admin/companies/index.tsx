@@ -25,10 +25,10 @@ const AdminCompanies: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   const [companies, setCompanies] = useState<Company[]>();
-  const [loadList, setLoadList] = useState(false);
+  const [loadList, setLoadList] = useState<boolean>(false);
 
   const getComListHandler = () => {
-    dispatch(getCompanies()).then((res: any) => {
+    dispatch(getCompanies()).then((res: AdminCompaniesList) => {
       const result: FindResult<Company> = res.payload;
       setCompanies(result.docs);
     });
@@ -77,7 +77,15 @@ const AdminCompanies: NextPage<any> = (props) => {
                     다운로드
                   </a>
                 </TableRowLIST>
-                <TableRowLIST width={`300px`}>다운로드</TableRowLIST>
+                <TableRowLIST width={`300px`}>
+                  {" "}
+                  <a
+                    href="/api/admin/review/main-reg-doc/${id}"
+                    target={"_blank"}
+                  >
+                    다운로드
+                  </a>
+                </TableRowLIST>
                 <TableRowLIST width={`300px`}>{doc.approval}</TableRowLIST>
               </TableRow>
             ))}
