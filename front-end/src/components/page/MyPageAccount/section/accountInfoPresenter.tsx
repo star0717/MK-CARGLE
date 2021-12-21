@@ -179,7 +179,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                   textAlign={`end`}
                   padding={`0px 10px 0px 0px`}
                 >
-                  전화번호
+                  휴대폰 번호
                 </Text>
                 <TextInput2
                   value={props.userData.hpNumber}

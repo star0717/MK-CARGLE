@@ -28,6 +28,8 @@ import {
   _cSignUpProps,
 } from "../../../../configure/_cProps.entity";
 import { _pSignAccountProps } from "../../../../configure/_pProps.entity";
+import { AxiosError } from "axios";
+import { DbErrorInfo } from "../../../../models/base.entity";
 
 // modal setting
 Modal.setAppElement("body");
@@ -219,26 +221,44 @@ const SignAccount: NextPage<_cSignUpProps> = (props) => {
           signUpUserAction({
             user: inputUser,
           })
-        ).then(
-          (res: any) => {
+        )
+          .then((res: any) => {
             props.setStepNumber(props.stepNumber + 1);
-          },
-          (err) => {
-            if (err.response.status === 400) {
-              alert("회원가입에 실패했습니다.");
-              dispatch({
-                type: actionTypesUser.FORM_CHECK,
-                payload: {
-                  ...props.formCheck,
-                  emailReadOnly: false,
-                  emailSend: false,
-                  authNumCheck: false,
-                  companyCheck: false,
-                },
-              });
+          })
+          // (err) => {
+          //   if (err.response.status === 400) {
+          //     alert("회원가입에 실패했습니다.");
+          //     dispatch({
+          //       type: actionTypesUser.FORM_CHECK,
+          //       payload: {
+          //         ...props.formCheck,
+          //         emailReadOnly: false,
+          //         emailSend: false,
+          //         authNumCheck: false,
+          //         companyCheck: false,
+          //       },
+          //     });
+          //   }
+          // }
+          .catch((err: AxiosError<any, any>) => {
+            const errInfo: DbErrorInfo = err.response.data;
+            if (errInfo.key === "email") {
+              alert("이미 가입된 이메일입니다.");
             }
-          }
-        );
+            if (errInfo.key === "hpNumber") {
+              alert("이미 가입된 휴대폰 번호입니다.");
+            }
+            dispatch({
+              type: actionTypesUser.FORM_CHECK,
+              payload: {
+                ...props.formCheck,
+                emailReadOnly: false,
+                emailSend: false,
+                authNumCheck: false,
+                companyCheck: false,
+              },
+            });
+          });
       }
     }
   };
