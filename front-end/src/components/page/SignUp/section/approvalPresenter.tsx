@@ -5,6 +5,7 @@ import {
   Wrapper,
   Text,
   SmallButton,
+  RsWrapper,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { _pApprovalProps } from "../../../../configure/_pProps.entity";
@@ -20,16 +21,18 @@ const ApprovalPresenter: NextPage<_pApprovalProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper>
-        <Text>가입 심사가 진행 중입니다.</Text>
-        <SmallButton
-          type="button"
-          kindOf={`default`}
-          onClick={props.onSignOutHandler}
-        >
-          돌아가기
-        </SmallButton>
-      </Wrapper>
+      <RsWrapper>
+        <Wrapper>
+          <Text>가입 심사가 진행 중입니다.</Text>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            onClick={props.onSignOutHandler}
+          >
+            돌아가기
+          </SmallButton>
+        </Wrapper>
+      </RsWrapper>
     </WholeWrapper>
   );
 };

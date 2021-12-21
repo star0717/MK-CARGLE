@@ -6,6 +6,7 @@ import {
   Text,
   CommonButton,
   CommonButtonWrapper,
+  RsWrapper,
 } from "../../../styles/CommonComponents";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import React from "react";
@@ -22,21 +23,23 @@ const CompletePresenter: NextPage<_pCompleteProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <Wrapper>
-        <Text color={`#0066ff`} fontSize={`60px`}>
-          <BsFillCheckCircleFill />
-        </Text>
-        <Text padding={`0px 0px 50px`} fontSize={`22px`}>
-          회원가입이 완료되었습니다.
-          <br />
-          가입승인 후 정상 이용이 가능합니다.
-        </Text>
-        <CommonButtonWrapper>
-          <CommonButton type="button" onClick={props.onSignOutHandler}>
-            확인
-          </CommonButton>
-        </CommonButtonWrapper>
-      </Wrapper>
+      <RsWrapper>
+        <Wrapper>
+          <Text color={`#0066ff`} fontSize={`60px`}>
+            <BsFillCheckCircleFill />
+          </Text>
+          <Text padding={`0px 0px 50px`} fontSize={`22px`}>
+            회원가입이 완료되었습니다.
+            <br />
+            가입승인 후 정상 이용이 가능합니다.
+          </Text>
+          <CommonButtonWrapper>
+            <CommonButton type="button" onClick={props.onSignOutHandler}>
+              확인
+            </CommonButton>
+          </CommonButtonWrapper>
+        </Wrapper>
+      </RsWrapper>
     </WholeWrapper>
   );
 };
