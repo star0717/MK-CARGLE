@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import React, { useState } from "react";
+import { _cMyPageAccount } from "../../../configure/_cProps.entity";
 import { SignUpInfo } from "../../../models/auth.entity";
 import { WholeWrapper } from "../../styles/CommonComponents";
 import MyPageAcccountPresenter from "./indexPresenter";
@@ -14,7 +15,7 @@ const MyPageAccount: NextPage<any> = (props) => {
   const [accountInfo, setAccountInfo] = useState<SignUpInfo>(); // 로그인 계정 정보 state
 
   // 화면 구성에 넘길 props
-  const fProps = {
+  const fProps: _cMyPageAccount = {
     ...props,
     step,
     setStep,

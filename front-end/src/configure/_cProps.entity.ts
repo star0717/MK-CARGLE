@@ -1,8 +1,9 @@
 import { FieldValues, UseFormSetValue } from "react-hook-form";
-import { AuthTokenInfo } from "../../src/models/auth.entity";
+import { AuthTokenInfo, SignUpInfo } from "../../src/models/auth.entity";
 import { FormCheck, FormInput } from "../../store/interfaces";
 import { Company } from "../models/company.entity";
 import { User, UserAuthority } from "../models/user.entity";
+import { _MainProps } from "./_props.entity";
 
 // 컴포넌트 props //
 /**
@@ -46,3 +47,17 @@ export interface _cFileUploadProps {
   stepNumber?: number;
   setStepNumber?: React.Dispatch<React.SetStateAction<number>>;
 }
+
+/**
+ * 마이페이지(계정관리): 공통사용 props
+ */
+export interface _cMyPageAccount extends _MainProps {
+  step: number;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  accountInfo: SignUpInfo;
+  setAccountInfo: React.Dispatch<React.SetStateAction<SignUpInfo>>;
+}
+
+/**
+ * 마이페이지(계정관리): 비밀번호 변경 modal props
+ */

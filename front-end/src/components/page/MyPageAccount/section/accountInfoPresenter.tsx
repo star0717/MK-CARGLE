@@ -17,43 +17,26 @@ import React from "react";
 // import Image from "next/image";
 import { formRegEx } from "../../../../validation/regEx";
 import { mbTypeOption } from "../../../../configure/list.entity";
-import {
-  IoIosArrowDropupCircle,
-  IoIosArrowDropdownCircle,
-} from "react-icons/io";
-import { MdBusinessCenter } from "react-icons/md";
 import { AiTwotoneCopyrightCircle } from "react-icons/ai";
 import { BusinessCenter, Person } from "@material-ui/icons";
+import { _pAccountInfo } from "../../../../configure/_pProps.entity";
 
 /**
  * 마이 페이지: 계정관리 확인 컴포넌트(화면)
  * @param props
  * @returns
  */
-const AccountInfoPresenter: NextPage<any> = (props) => {
-  // 필요한 props 재정의
-  const setStep = props.setStep;
-  const handleSubmit = props.handleSubmit;
-  const register = props.register;
-  const errors = props.errors;
-  const onChangeInfoHandler = props.onChangeInfoHandler;
-  const userData = props.userData;
-  const onInputUserHandler = props.onInputUserHandler;
-  const comData = props.comData;
-  const onInputComHandler = props.onInputComHandler;
-  const readOnly = props.readOnly;
-  const myLoader = props.myLoader;
-  const modalOpen = props.modalOpen;
-  const setModalOpen = props.setModalOpen;
-  const setModalOption = props.setModalOption;
-
+const AccountInfoPresenter: NextPage<_pAccountInfo> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
-        <form id="saveform" onSubmit={handleSubmit(onChangeInfoHandler)}>
+        <form
+          id="saveform"
+          onSubmit={props.handleSubmit(props.onChangeInfoHandler)}
+        >
           <CommonTitle>계정정보</CommonTitle>
           <CommonSubTitle>
             이곳에서 계정정보를 확인 및 수정할 수 있습니다.
@@ -114,7 +97,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 fontWeight={`800`}
                 letterSpacing={`4px`}
               >
-                {userData.name}님
+                {props.userData.name}님
               </Text>
             </Wrapper>
             <Wrapper dr={`column`} width={`auto`} padding={`30px 0px 0px`}>
@@ -127,7 +110,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   아이디
                 </Text>
                 <TextInput2
-                  value={userData.email}
+                  value={props.userData.email}
                   type="text"
                   readOnly
                   width={`800px`}
@@ -147,8 +130,8 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    setModalOpen(!modalOpen);
-                    setModalOption("password");
+                    props.setModalOpen(!props.modalOpen);
+                    props.setModalOption("password");
                   }}
                 >
                   변경하기
@@ -163,12 +146,12 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   이름
                 </Text>
                 <TextInput2
-                  value={userData.name}
+                  value={props.userData.name}
                   readOnly
                   type="text"
-                  {...register("name", {
+                  {...props.register("name", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputUserHandler(e);
+                      props.onInputUserHandler(e);
                     },
                     required: {
                       value: true,
@@ -177,7 +160,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   })}
                   width={`800px`}
                 />
-                {errors.name?.type === "required" && (
+                {props.errors.name?.type === "required" && (
                   <Text
                     margin={`0px 0px 10px`}
                     width={`100%`}
@@ -186,7 +169,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                     fontSize={`14px`}
                     textAlign={`left`}
                   >
-                    {errors.name.message}
+                    {props.errors.name.message}
                   </Text>
                 )}
               </Wrapper>
@@ -199,11 +182,11 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   전화번호
                 </Text>
                 <TextInput2
-                  value={userData.hpNumber}
+                  value={props.userData.hpNumber}
                   type="tel"
-                  {...register("hpNumber", {
+                  {...props.register("hpNumber", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputUserHandler(e);
+                      props.onInputUserHandler(e);
                     },
                     required: { value: true, message: "필수 입력사항입니다." },
                     pattern: {
@@ -213,8 +196,8 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   })}
                   width={`800px`}
                 />
-                {(errors.hpNumber?.type === "required" ||
-                  errors.hpNumber?.type === "pattern") && (
+                {(props.errors.hpNumber?.type === "required" ||
+                  props.errors.hpNumber?.type === "pattern") && (
                   <Text
                     margin={`0px 0px 10px`}
                     width={`100%`}
@@ -223,7 +206,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                     fontSize={`14px`}
                     textAlign={`left`}
                   >
-                    {errors.hpNumber.message}
+                    {props.errors.hpNumber.message}
                   </Text>
                 )}
               </Wrapper>
@@ -238,9 +221,9 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 <TextInput2
                   type="text"
                   placeholder="주소를 입력해주세요."
-                  value={userData.address1}
+                  value={props.userData.address1}
                   readOnly
-                  {...register("address1")}
+                  {...props.register("address1")}
                   width={`700px`}
                 />
                 <SmallButton
@@ -248,8 +231,8 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    setModalOpen(!modalOpen);
-                    setModalOption("address");
+                    props.setModalOpen(!props.modalOpen);
+                    props.setModalOption("address");
                   }}
                 >
                   주소 검색
@@ -265,11 +248,11 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   type="text"
                   name="address2"
                   placeholder="상세주소를 입력해 주세요."
-                  readOnly={userData.address1 ? false : true}
-                  value={userData.address2}
-                  {...register("address2", {
+                  readOnly={props.userData.address1 ? false : true}
+                  value={props.userData.address2}
+                  {...props.register("address2", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputUserHandler(e);
+                      props.onInputUserHandler(e);
                     },
                   })}
                   width={`800px`}
@@ -286,11 +269,13 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 <TextInput2
                   type="date"
                   value={
-                    userData.joinDate ? userData.joinDate.slice(0, 10) : ""
+                    props.userData.joinDate
+                      ? props.userData.joinDate.toString().slice(0, 10)
+                      : ""
                   }
-                  {...register("joinDate", {
+                  {...props.register("joinDate", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputUserHandler(e);
+                      props.onInputUserHandler(e);
                     },
                   })}
                   width={`800px`}
@@ -355,7 +340,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 fontWeight={`800`}
                 letterSpacing={`4px`}
               >
-                {comData.name}
+                {props.comData.name}
               </Text>
             </Wrapper>
             <Wrapper dr={`column`} width={`auto`} padding={`30px 0px 0px`}>
@@ -368,7 +353,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   상호명
                 </Text>
                 <TextInput2
-                  value={comData.name}
+                  value={props.comData.name}
                   type="text"
                   readOnly
                   width={`800px`}
@@ -383,7 +368,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   사업자등록번호
                 </Text>
                 <TextInput2
-                  value={comData.comRegNum}
+                  value={props.comData.comRegNum}
                   type="text"
                   readOnly
                   width={`800px`}
@@ -398,7 +383,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   정비업등록번호
                 </Text>
                 <TextInput2
-                  value={comData.mbRegNum}
+                  value={props.comData.mbRegNum}
                   type="text"
                   readOnly
                   width={`800px`}
@@ -413,7 +398,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   대표자명
                 </Text>
                 <TextInput2
-                  value={comData.ownerName}
+                  value={props.comData.ownerName}
                   type="text"
                   readOnly
                   width={`800px`}
@@ -427,22 +412,22 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                 >
                   정비업종
                 </Text>
-                {readOnly ? (
+                {props.readOnly ? (
                   <TextInput2
                     value={props.textMbType.text}
                     type="text"
-                    readOnly={readOnly}
-                    {...register("mbTypeNum")}
+                    readOnly={props.readOnly}
+                    {...props.register("mbTypeNum")}
                     width={`800px`}
                   />
                 ) : (
                   <Combo
                     width={`800px`}
                     margin={`0px`}
-                    value={comData.mbTypeNum}
-                    {...register("mbTypeNum", {
+                    value={props.comData.mbTypeNum}
+                    {...props.register("mbTypeNum", {
                       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                        onInputComHandler(e);
+                        props.onInputComHandler(e);
                       },
                       required: true,
                     })}
@@ -456,7 +441,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                     })}
                   </Combo>
                 )}
-                {errors.mbTypeNum?.type === "required" && (
+                {props.errors.mbTypeNum?.type === "required" && (
                   <Text
                     margin={`0px 0px 10px 0px`}
                     width={`100%`}
@@ -478,12 +463,12 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   업태
                 </Text>
                 <TextInput2
-                  value={comData.busType}
+                  value={props.comData.busType}
                   type="text"
-                  readOnly={readOnly}
-                  {...register("busType", {
+                  readOnly={props.readOnly}
+                  {...props.register("busType", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputComHandler(e);
+                      props.onInputComHandler(e);
                     },
                   })}
                   width={`800px`}
@@ -498,12 +483,12 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   업종
                 </Text>
                 <TextInput2
-                  value={comData.busItem}
+                  value={props.comData.busItem}
                   type="text"
-                  readOnly={readOnly}
-                  {...register("busItem", {
+                  readOnly={props.readOnly}
+                  {...props.register("busItem", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputComHandler(e);
+                      props.onInputComHandler(e);
                     },
                   })}
                   width={`800px`}
@@ -518,13 +503,13 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   업체 전화번호
                 </Text>
                 <TextInput2
-                  value={comData.phoneNum}
+                  value={props.comData.phoneNum}
                   type="text"
                   placeholder="(- 제외, 지역번호 포함)"
-                  readOnly={readOnly}
-                  {...register("phoneNum", {
+                  readOnly={props.readOnly}
+                  {...props.register("phoneNum", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputComHandler(e);
+                      props.onInputComHandler(e);
                     },
                     required: { value: true, message: "필수 입력사항입니다." },
                     pattern: {
@@ -534,8 +519,8 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   })}
                   width={`800px`}
                 />
-                {(errors.phoneNum?.type === "required" ||
-                  errors.phoneNum?.type === "pattern") && (
+                {(props.errors.phoneNum?.type === "required" ||
+                  props.errors.phoneNum?.type === "pattern") && (
                   <Text
                     margin={`0px 0px 10px 0px`}
                     width={`100%`}
@@ -544,7 +529,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                     fontSize={`14px`}
                     textAlign={`left`}
                   >
-                    {errors.phoneNum.message}
+                    {props.errors.phoneNum.message}
                   </Text>
                 )}
               </Wrapper>
@@ -557,13 +542,13 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   업체 팩스번호
                 </Text>
                 <TextInput2
-                  value={comData.faxNum}
+                  value={props.comData.faxNum}
                   type="text"
-                  readOnly={readOnly}
+                  readOnly={props.readOnly}
                   placeholder="(- 제외)"
-                  {...register("faxNum", {
+                  {...props.register("faxNum", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputComHandler(e);
+                      props.onInputComHandler(e);
                     },
                     pattern: {
                       value: formRegEx.FAX_NUM,
@@ -572,7 +557,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   })}
                   width={`800px`}
                 />
-                {errors.faxNum?.type === "pattern" && (
+                {props.errors.faxNum?.type === "pattern" && (
                   <Text
                     margin={`0px 0px 10px 0px`}
                     width={`100%`}
@@ -581,7 +566,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                     fontSize={`14px`}
                     textAlign={`left`}
                   >
-                    {errors.faxNum.message}
+                    {props.errors.faxNum.message}
                   </Text>
                 )}
               </Wrapper>
@@ -594,7 +579,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                   사업자 주소
                 </Text>
                 <TextInput2
-                  value={`${comData.address1} ${comData.address2}, (${comData.postcode})`}
+                  value={`${props.comData.address1} ${props.comData.address2}, (${props.comData.postcode})`}
                   type="text"
                   readOnly
                   width={`800px`}
@@ -617,7 +602,7 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                     padding={`10px 0px`}
                   >
                     <Image
-                      loader={myLoader}
+                      loader={props.myLoader}
                       alt="도장 사진"
                       width={`100 px`}
                       // height={200}
@@ -630,8 +615,8 @@ const AccountInfoPresenter: NextPage<any> = (props) => {
                     kindOf={`default`}
                     margin={`0px 0px 0px 20px`}
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                      setModalOpen(!modalOpen);
-                      setModalOption("stamp");
+                      props.setModalOpen(!props.modalOpen);
+                      props.setModalOption("stamp");
                     }}
                   >
                     파일선택
