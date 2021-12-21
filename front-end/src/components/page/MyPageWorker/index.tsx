@@ -26,15 +26,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
   // const [take, setTake] = useState<number>(30);
   // const [useRegSearch, setUseRegSearch] = useState<boolean>(false);
 
-  const [pageData, setPageData] = useState<FindParameters>({
-    page: 1,
-    take: 30,
-    useRegSearch: false,
-    filterKey: "",
-    filterValue: "",
-    filter: undefined,
-    projection: "",
-  });
+  const [pageData, setPageData] = useState<FindParameters>({});
 
   // console.log();
 
@@ -53,7 +45,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
 
   useEffect(() => {
     if (loadData === false) {
-      dispatch(getWorkersListAction(pageData.getQuery())).then((res: any) => {
+      dispatch(getWorkersListAction(pageData)).then((res: any) => {
         setDocs(res.payload.docs);
         setTotalDocs(res.payload.totalDocs);
         setCurrentPage(res.payload.currentPage);
