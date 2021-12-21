@@ -225,28 +225,18 @@ const SignAccount: NextPage<_cSignUpProps> = (props) => {
           .then((res: any) => {
             props.setStepNumber(props.stepNumber + 1);
           })
-          // (err) => {
-          //   if (err.response.status === 400) {
-          //     alert("회원가입에 실패했습니다.");
-          //     dispatch({
-          //       type: actionTypesUser.FORM_CHECK,
-          //       payload: {
-          //         ...props.formCheck,
-          //         emailReadOnly: false,
-          //         emailSend: false,
-          //         authNumCheck: false,
-          //         companyCheck: false,
-          //       },
-          //     });
-          //   }
-          // }
           .catch((err: AxiosError<any, any>) => {
             const errInfo: DbErrorInfo = err.response.data;
-            if (errInfo.key === "email") {
-              alert("이미 가입된 이메일입니다.");
-            }
-            if (errInfo.key === "hpNumber") {
-              alert("이미 가입된 휴대폰 번호입니다.");
+            switch (errInfo.key) {
+              case "email":
+                alert("이미 가입된 이메일입니다.");
+                break;
+              case "hpNumber":
+                alert("이미 가입된 휴대폰 번호입니다.");
+                break;
+              default:
+                alert("회원가입에 실패했습니다.");
+                break;
             }
             dispatch({
               type: actionTypesUser.FORM_CHECK,
