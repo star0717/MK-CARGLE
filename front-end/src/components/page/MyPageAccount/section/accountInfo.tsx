@@ -25,7 +25,7 @@ import {
   _cMyPageAccount,
   _cStampModalProps,
 } from "../../../../configure/_cProps.entity";
-import { _pAccountInfo } from "../../../../configure/_pProps.entity";
+import { _pAccountInfoProps } from "../../../../configure/_pProps.entity";
 
 Modal.setAppElement("body");
 
@@ -175,7 +175,7 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
   };
 
   // 화면구성에 넘길 props
-  const fProps: _pAccountInfo = {
+  const fProps: _pAccountInfoProps = {
     ...props,
     handleSubmit,
     register,

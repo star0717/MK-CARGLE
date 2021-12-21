@@ -2,12 +2,7 @@ import type { NextPage } from "next";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import WithdrawalModal from "./withdrawalModal";
-import {
-  WholeWrapper,
-  Wrapper,
-  Text,
-  TextInput,
-} from "../../../styles/CommonComponents";
+import { WholeWrapper, Wrapper } from "../../../styles/CommonComponents";
 import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { pwCheckAction } from "../../../../../store/action/user.action";
