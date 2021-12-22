@@ -1243,7 +1243,7 @@ export const PagenationWrapper = styled.div<any>`
   padding: ${(props) => props.padding};
 `;
 
-export const Pagenation = styled.div<any>`
+export const Pagenation = styled.button<any>`
   width: 30px;
   height: 30px;
   display: flex;
@@ -1252,29 +1252,17 @@ export const Pagenation = styled.div<any>`
   justify-content: ${(props) => props.ju || `center`};
   cursor: pointer;
   padding-top: 3px;
+  background-color: ${(props) => props.theme.basicTheme_C};
+  color: ${(props) => props.theme.white_C};
+  border-radius: 30px;
+  margin: 0px 3px;
+  border: none;
 
   &.active {
-    background-color: ${(props) => props.theme.basicTheme_C};
-    color: ${(props) => props.theme.white_C};
     border-radius: 30px;
     box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
+    border: none;
   }
-`;
-
-export const PagenationBtn = styled.div<any>`
-  text-align: center;
-  font-size: 18px;
-  width: 25px;
-  height: 25px;
-  color: ${(props) => props.color || `#292929`};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 25px;
-  margin: 0px 3px;
-  background-color: ${(props) => props.theme.subWhite_C};
-  border: 1px solid #ddd;
 
   &:first-child,
   &:last-child {
@@ -1287,6 +1275,33 @@ export const PagenationBtn = styled.div<any>`
     box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
   }
 `;
+
+// export const PagenationBtn = styled.div<any>`
+//   text-align: center;
+//   font-size: 18px;
+//   width: 25px;
+//   height: 25px;
+//   color: ${(props) => props.color || `#fff`};
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   border-radius: 25px;
+//   margin: 0px 3px;
+//   background-color: ${(props) => props.theme.basicTheme_C};
+//   border: 1px solid #ddd;
+
+//   &:first-child,
+//   &:last-child {
+//     background-color: ${(props) => props.theme.subWhite_C};
+//     border: 1px solid #ddd;
+//     color: ${(props) => props.theme.black_C};
+//   }
+
+//   &:hover {
+//     box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
+//   }
+// `;
 
 /** 회원가입 */
 

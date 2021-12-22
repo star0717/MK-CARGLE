@@ -8,6 +8,7 @@ import {
   UserInfo,
 } from "../../src/models/auth.entity";
 import { FindParameters, FindResult } from "../../src/models/base.entity";
+import { User } from "../../src/models/user.entity";
 import { actionTypesUser, AdminCompaniesList } from "../interfaces";
 
 // 로그인 action
@@ -273,13 +274,15 @@ export async function withdrawalAction(dataToSubmit: ConfirmPWD) {
  * @returns
  */
 export async function getWorkersListAction(dataToSubmit: FindParameters) {
-  const req = await axios
+  const req: FindResult<User> = await axios
     .get(
       `/api/settings/management/workers?${FindParameters.getQuery(
         dataToSubmit
       )}`
     )
-    .then((res: AxiosResponse<unknown, any>) => res.data);
+    .then((res: AxiosResponse<FindResult<User>, any>): FindResult<User> => {
+      return res.data;
+    });
 
   return {
     type: actionTypesUser.GET_WORKERS_LIST,

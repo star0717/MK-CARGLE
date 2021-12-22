@@ -9,6 +9,7 @@ import {
 } from "react-hook-form";
 import { SignUpInfo, UserInfo } from "../../src/models/auth.entity";
 import { FormInput } from "../../store/interfaces";
+import { FindParameters, FindResult } from "../models/base.entity";
 import { Company } from "../models/company.entity";
 import { User } from "../models/user.entity";
 import { FileInit, MbType } from "./etc.entity";
@@ -253,14 +254,6 @@ export interface _pWithdrawalModalProps extends _cWithdrawalModalProps {
  * 마이페이지(직원관리): 직원 데이터 props
  */
 export interface _pWorkerData extends _MainProps {
-  docs: User[];
-  setDocs: React.Dispatch<React.SetStateAction<User[]>>;
-  totalDocs: number;
-  setTotalDocs: React.Dispatch<React.SetStateAction<number>>;
-  currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  lastPage: number;
-  setLastPage: React.Dispatch<React.SetStateAction<number>>;
-  setPageData: React.Dispatch<React.SetStateAction<Object>>;
-  setLoadData: React.Dispatch<React.SetStateAction<boolean>>;
+  findResult: FindResult<User>;
+  setFindResult: React.Dispatch<React.SetStateAction<FindResult<User>>>;
 }

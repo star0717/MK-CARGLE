@@ -15,4 +15,5 @@ export interface _SignInProps {
  */
 export interface _MainProps {
   tokenValue: AuthTokenInfo;
+  data?: any;
 }
