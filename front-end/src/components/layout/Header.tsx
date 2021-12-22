@@ -20,7 +20,7 @@ import { FaBell } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { _cLayoutProps } from "../../configure/_cProps.entity";
 import { menuList } from "../../configure/list.entity";
-import { User, UserAuthority } from "../../models/user.entity";
+import { UserAuthority } from "../../models/user.entity";
 
 const Header: NextPage<_cLayoutProps> = (props) => {
   const dispatch = useDispatch();
@@ -36,8 +36,11 @@ const Header: NextPage<_cLayoutProps> = (props) => {
     });
   };
 
-  const test = menuList.filter((menu) => {
-    switch (props.tokenValue.uAuth) {
+  /**
+   * Auth 별 메인 메뉴
+   */
+  const mainMenu = menuList.filter((menu) => {
+    switch (props.tokenValue?.uAuth) {
       case UserAuthority.ADMIN:
         return menu.auth === UserAuthority.ADMIN;
       case UserAuthority.OWNER:
@@ -50,29 +53,27 @@ const Header: NextPage<_cLayoutProps> = (props) => {
     }
   });
 
-  const tt = Object.values(test);
-
-  const test2 = test.map((menu) => {
-    // menu.subMenu.filter((sub) => {
-    //   switch (props.tokenValue.uAuth) {
-    //     case UserAuthority.ADMIN:
-    //       return sub.subMenuAuth === UserAuthority.ADMIN;
-    //     case UserAuthority.OWNER:
-    //       return (
-    //         sub.subMenuAuth === UserAuthority.OWNER ||
-    //         sub.subMenuAuth === UserAuthority.WORKER
-    //       );
-    //     case UserAuthority.WORKER:
-    //       return sub.subMenuAuth === UserAuthority.WORKER;
-    //   }
-    // });
-    menu.subMenu.map((sub) => {
-      console.log("!!!", sub);
+  /**
+   * Auth 별 서브 메뉴
+   */
+  const subMenu = mainMenu.map((menu) => {
+    return menu.subMenu.filter((sub) => {
+      switch (props.tokenValue?.uAuth) {
+        case UserAuthority.ADMIN:
+          return sub.subMenuAuth === UserAuthority.ADMIN;
+        case UserAuthority.OWNER:
+          return (
+            sub.subMenuAuth === UserAuthority.OWNER ||
+            sub.subMenuAuth === UserAuthority.WORKER
+          );
+        case UserAuthority.WORKER:
+          return sub.subMenuAuth === UserAuthority.WORKER;
+      }
     });
   });
 
-  console.log(test);
-  console.log("###", test2);
+  // console.log("@@", mainMenu);
+  // console.log("##", subMenu);
 
   const { width, height, ref } = useResizeDetector();
 
@@ -118,7 +119,7 @@ const Header: NextPage<_cLayoutProps> = (props) => {
               dr={`row`}
               padding={width < 1450 ? `0px 50px` : `0px 100px`}
             >
-              {menuList.map((menu) => {
+              {mainMenu.map((menu) => {
                 return (
                   <Wrapper
                     key={menu.key}
@@ -176,7 +177,8 @@ const Header: NextPage<_cLayoutProps> = (props) => {
                   </Wrapper>
                   {/* 서브메뉴 빈 wrapper 끝 */}
 
-                  {menuList.map((menu) => {
+                  {/* 서브메뉴 시작 */}
+                  {/* {mainMenu.map((menu) => {
                     return (
                       <Wrapper
                         key={menu.key}
@@ -199,7 +201,33 @@ const Header: NextPage<_cLayoutProps> = (props) => {
                         })}
                       </Wrapper>
                     );
+                  })} */}
+                  {subMenu.map((menu, idx) => {
+                    return (
+                      <Wrapper
+                        key={idx}
+                        width={width < 1510 ? `140px` : `168px`}
+                      >
+                        {menu.map((sub) => {
+                          return (
+                            <TestA
+                              key={sub.key}
+                              cursor={`pointer`}
+                              fontSize={width < 1510 ? `14px` : `16px`}
+                              fontWeight={`600`}
+                              padding={width < 1510 ? `5px 15px` : `5px 30px`}
+                            >
+                              <Link href={sub.subMenuLink}>
+                                <a>{sub.subMenuName}</a>
+                              </Link>
+                            </TestA>
+                          );
+                        })}
+                      </Wrapper>
+                    );
                   })}
+                  {/* 서브메뉴 끝 */}
+
                   {/* 서브메뉴 빈 wrapper */}
                   <Wrapper
                     width={`auto`}

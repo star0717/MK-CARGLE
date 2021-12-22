@@ -1,5 +1,6 @@
 import parse from "url-parse";
 import { AuthTokenInfo } from "../models/auth.entity";
+import { UserAuthority } from "../models/user.entity";
 
 /**
  * jwt를 json으로 만드는 함수
