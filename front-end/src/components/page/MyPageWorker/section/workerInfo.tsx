@@ -102,6 +102,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
           <Pagenation>
             <IoIosArrowBack />
           </Pagenation>
+
           {/* <script>
             var lastData = props.lastPage;
             for (let index = 0; index < ; index++) {
@@ -109,6 +110,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
               
             }
           </script> */}
+
           {/* <Pagenation
             type="button"
             onClick={() => {

@@ -8,6 +8,7 @@ import MyPageWorkerPresenter from "./indexPresenter";
 import { _pTermProps, _pWorkerData } from "../../../configure/_pProps.entity";
 import { _MainProps } from "../../../configure/_props.entity";
 import { FindParameters } from "../../../models/base.entity";
+import { LastPage } from "@material-ui/icons";
 
 const MyPageWorker: NextPage<_MainProps> = (props) => {
   const dispatch = useDispatch();
@@ -18,13 +19,15 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
   const [currentPage, setCurrentPage] = useState<number>();
   const [lastPage, setLastPage] = useState<number>();
 
+  const [pageNation, setPageNation] = useState([]);
+
   //컴포넌트 전환시 1번만 실행
   const [loadData, setLoadData] = useState<boolean>(false);
 
   //직원 관리 page 설정 관련
   const [pageData, setPageData] = useState<FindParameters>({
     page: 1,
-    take: 30,
+    take: 10,
     useRegSearch: false,
   });
 
@@ -35,11 +38,19 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
         setTotalDocs(res.payload.totalDocs);
         setCurrentPage(res.payload.currentPage);
         setLastPage(res.payload.lastPage);
+
+        for (var i = 0; i < res.payload.lastPage; i++) {
+          //setPageNation()
+        }
       });
+
       setLoadData(true);
     }
+
     console.log("ok!");
-    console.log(pageData);
+    console.log("pageData =>", pageData);
+    console.log("pageNation => ", pageNation);
+    console.log("result=>", lastPage);
   }, [loadData]);
 
   const fprops: _pWorkerData = {
