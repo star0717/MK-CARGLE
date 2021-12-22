@@ -13,8 +13,11 @@ import {
   TableRow,
   SmallButton,
   RsWrapper,
+  PagenationWrapper,
+  Pagenation,
 } from "../../../styles/CommonComponents";
 import { _pWorkerData } from "../../../../configure/_pProps.entity";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 const workerInfo: NextPage<_pWorkerData> = (props) => {
   // const dispatch = useDispatch();
@@ -42,6 +45,8 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
     //   [approval] : !prevDocs[approval]
     // }));
   };
+
+  const Pagenationbtn = () => {};
 
   return (
     <WholeWrapper>
@@ -78,15 +83,44 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
           <SmallButton
             type="button"
             onClick={() => {
+              props.setPageData({
+                ...props.pageData,
+                [`page`]: 2,
+              });
+              props.setLoadData(false);
+
               console.log("TotalDocs =>", props.totalDocs);
               console.log("CurrentPage =>", props.currentPage);
               console.log("LastPage => ", props.lastPage);
               console.log("Docs => ", props.docs);
             }}
           >
-            ㅈㅓㅇ보
+            정보
           </SmallButton>
         </Wrapper>
+        <PagenationWrapper>
+          <Pagenation>
+            <IoIosArrowBack />
+          </Pagenation>
+          {/* <script>
+            var lastData = props.lastPage;
+            for (let index = 0; index < ; index++) {
+              const element = array[index];
+              
+            }
+          </script> */}
+          {/* <Pagenation
+            type="button"
+            onClick={() => {
+              console.log("pagenation!!");
+            }}
+          >
+            1
+          </Pagenation> */}
+          <Pagenation>
+            <IoIosArrowForward />
+          </Pagenation>
+        </PagenationWrapper>
       </RsWrapper>
     </WholeWrapper>
   );

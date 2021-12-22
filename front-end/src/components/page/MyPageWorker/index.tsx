@@ -38,7 +38,9 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
       });
       setLoadData(true);
     }
-  }, [docs]);
+    console.log("ok!");
+    console.log(pageData);
+  }, [loadData]);
 
   const fprops: _pWorkerData = {
     ...props,
@@ -50,6 +52,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
     setCurrentPage,
     lastPage,
     setLastPage,
+    pageData,
     setPageData,
     setLoadData,
   };

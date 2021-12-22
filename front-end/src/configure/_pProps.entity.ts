@@ -9,6 +9,7 @@ import {
 } from "react-hook-form";
 import { SignUpInfo, UserInfo } from "../../src/models/auth.entity";
 import { FormInput } from "../../store/interfaces";
+import { FindParameters } from "../models/base.entity";
 import { Company } from "../models/company.entity";
 import { User } from "../models/user.entity";
 import { FileInit, MbType } from "./etc.entity";
@@ -261,6 +262,7 @@ export interface _pWorkerData extends _MainProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   lastPage: number;
   setLastPage: React.Dispatch<React.SetStateAction<number>>;
+  pageData: FindParameters;
   setPageData: React.Dispatch<React.SetStateAction<Object>>;
   setLoadData: React.Dispatch<React.SetStateAction<boolean>>;
 }
