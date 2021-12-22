@@ -72,9 +72,6 @@ const Header: NextPage<_cLayoutProps> = (props) => {
     });
   });
 
-  // console.log("@@", mainMenu);
-  // console.log("##", subMenu);
-
   const { width, height, ref } = useResizeDetector();
 
   return (
@@ -100,6 +97,7 @@ const Header: NextPage<_cLayoutProps> = (props) => {
         right={`0`}
         shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
         bgColor={`#fafafa`}
+        wrap={`no-wrap`}
       >
         <Wrapper width={`auto`} al={`cneter`}>
           <Link href={UseLink.MAIN}>
@@ -276,6 +274,7 @@ const Header: NextPage<_cLayoutProps> = (props) => {
               }
               dr={`row`}
               al={`flex-start`}
+              wrap={`no-wrap`}
             >
               <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
                 <HeaderIconButton
