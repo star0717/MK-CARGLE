@@ -56,26 +56,26 @@ const Header: NextPage<_cLayoutProps> = (props) => {
     return menu.subMenu.filter((sub) => {
       switch (props.tokenValue?.uAuth) {
         case UserAuthority.ADMIN:
-          console.log(sub.subMenuAuth === UserAuthority.ADMIN);
+          // console.log(sub.subMenuAuth === UserAuthority.ADMIN);
           return sub.subMenuAuth === UserAuthority.ADMIN;
         case UserAuthority.OWNER:
-          console.log(
-            sub.subMenuAuth === UserAuthority.OWNER ||
-              sub.subMenuAuth === UserAuthority.WORKER
-          );
+          // console.log(
+          //   sub.subMenuAuth === UserAuthority.OWNER ||
+          //     sub.subMenuAuth === UserAuthority.WORKER
+          // );
           return (
             sub.subMenuAuth === UserAuthority.OWNER ||
             sub.subMenuAuth === UserAuthority.WORKER
           );
         case UserAuthority.WORKER:
-          console.log(sub.subMenuAuth === UserAuthority.WORKER);
+          // console.log(sub.subMenuAuth === UserAuthority.WORKER);
           return sub.subMenuAuth === UserAuthority.WORKER;
       }
     });
   });
 
-  console.log("@@@", test);
-  console.log("###", test2);
+  // console.log("@@@", test);
+  // console.log("###", test2);
 
   const { width, height, ref } = useResizeDetector();
 
