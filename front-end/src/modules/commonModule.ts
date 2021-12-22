@@ -25,20 +25,3 @@ export const getPathName = (url: string): string => {
 
   return pathName;
 };
-
-export const AuthMenuList = (menu: any, token: AuthTokenInfo) => {
-  const MainMenu = menu.filter((item: any) => {
-    switch (token?.uAuth) {
-      case UserAuthority.ADMIN:
-        return item.auth === UserAuthority.ADMIN;
-      case UserAuthority.OWNER:
-        return (
-          item.auth === UserAuthority.OWNER ||
-          item.auth === UserAuthority.WORKER
-        );
-      case UserAuthority.WORKER:
-        return item.auth === UserAuthority.WORKER;
-    }
-  });
-  return MainMenu;
-};
