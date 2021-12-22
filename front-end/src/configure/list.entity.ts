@@ -156,18 +156,18 @@ export const menuList = [
   {
     key: "7",
     menuName: "관리자",
-    link: "#",
+    link: UseLink.ADMIN_COMPANIES,
     auth: UserAuthority.ADMIN,
     subMenu: [
       {
         key: "7.1",
         subMenuName: "승인관리",
-        subMenuLink: "#",
+        subMenuLink: UseLink.ADMIN_COMPANIES,
         subMenuAuth: UserAuthority.ADMIN,
       },
       {
         key: "7.2",
-        subMenuName: "???",
+        subMenuName: "업체관리",
         subMenuLink: "#",
         subMenuAuth: UserAuthority.ADMIN,
       },

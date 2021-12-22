@@ -23,6 +23,7 @@ import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
 import AdminCompanies from "../../src/components/page/admin/companies";
+import axios, { AxiosResponse } from "axios";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -108,11 +109,30 @@ export const getServerSideProps: GetServerSideProps = async (
         notFound: true,
       };
     } else {
-      return {
-        props: {
-          tokenValue,
-        },
-      };
+      switch (pathName) {
+        case UseLink.TEST:
+          const res = await axios
+            .get(`http://172.30.1.9:5001/settings/myinfo/stamp`)
+            .then((res: AxiosResponse<unknown, any>) => res.data);
+          console.log("!!!", res);
+          return {
+            props: {
+              tokenValue,
+            },
+          };
+
+        default:
+          return {
+            props: {
+              tokenValue,
+            },
+          };
+      }
+      // return {
+      //   props: {
+      //     tokenValue,
+      //   },
+      // };
     }
     // 토큰 확인 - 없을 경우, 로그인 화면으로 리디렉트
   } else {

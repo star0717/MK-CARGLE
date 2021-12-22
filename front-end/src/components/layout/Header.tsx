@@ -72,9 +72,6 @@ const Header: NextPage<_cLayoutProps> = (props) => {
     });
   });
 
-  // console.log("@@", mainMenu);
-  // console.log("##", subMenu);
-
   const { width, height, ref } = useResizeDetector();
 
   return (
