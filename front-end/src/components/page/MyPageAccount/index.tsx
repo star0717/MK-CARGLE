@@ -23,11 +23,7 @@ const MyPageAccount: NextPage<any> = (props) => {
     setAccountInfo,
   };
 
-  return (
-    <WholeWrapper>
-      <MyPageAcccountPresenter {...fProps} />
-    </WholeWrapper>
-  );
+  return <MyPageAcccountPresenter {...fProps} />;
 };
 
 export default MyPageAccount;

@@ -13,6 +13,7 @@ import {
   CommonSubTitle,
   CommonButton,
   CommonSmallTitle,
+  CommonTitleWrapper,
 } from "../../../styles/CommonComponents";
 import React from "react";
 // import Image from "next/image";
@@ -33,15 +34,17 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper>
+      <CommonTitleWrapper>
+        <CommonTitle>계정정보</CommonTitle>
+        <CommonSubTitle>
+          이곳에서 계정정보를 확인 및 수정할 수 있습니다.
+        </CommonSubTitle>
+      </CommonTitleWrapper>
+      <RsWrapper wrap={`no-wrap`}>
         <form
           id="saveform"
           onSubmit={props.handleSubmit(props.onChangeInfoHandler)}
         >
-          <CommonTitle>계정정보</CommonTitle>
-          <CommonSubTitle>
-            이곳에서 계정정보를 확인 및 수정할 수 있습니다.
-          </CommonSubTitle>
           <Wrapper
             border={`1px solid #ccc`}
             radius={`5px`}
@@ -133,7 +136,11 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                   <Text
                     width={`130px`}
                     textAlign={`end`}
-                    padding={`0px 10px 0px 0px`}
+                    padding={
+                      props.errors.name?.type === "required"
+                        ? `0px 10px 20px 0px`
+                        : `0px 10px 0px 0px`
+                    }
                   >
                     이름
                   </Text>
@@ -172,7 +179,13 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                   <Text
                     width={`130px`}
                     textAlign={`end`}
-                    padding={`0px 10px 0px 0px`}
+                    // padding={`0px 10px 0px 0px`}
+                    padding={
+                      props.errors.hpNumber?.type === "required" ||
+                      props.errors.hpNumber?.type === "pattern"
+                        ? `0px 10px 20px 0px`
+                        : `0px 10px 0px 0px`
+                    }
                   >
                     휴대폰 번호
                   </Text>
@@ -289,7 +302,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
             border={`1px solid #ccc`}
             radius={`5px`}
             shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
-            margin={`0px 0px 30px`}
+            margin={`0px 0px 50px`}
           >
             <Wrapper
               dr={`row`}
@@ -497,7 +510,13 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                   <Text
                     width={`130px`}
                     textAlign={`end`}
-                    padding={`0px 10px 0px 0px`}
+                    // padding={`0px 10px 0px 0px`}
+                    padding={
+                      props.errors.phoneNum?.type === "required" ||
+                      props.errors.phoneNum?.type === "pattern"
+                        ? `0px 10px 20px 0px`
+                        : `0px 10px 0px 0px`
+                    }
                   >
                     업체 전화번호
                   </Text>
@@ -541,7 +560,12 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                   <Text
                     width={`130px`}
                     textAlign={`end`}
-                    padding={`0px 10px 0px 0px`}
+                    // padding={`0px 10px 0px 0px`}
+                    padding={
+                      props.errors.faxNum?.type === "pattern"
+                        ? `0px 10px 20px 0px`
+                        : `0px 10px 0px 0px`
+                    }
                   >
                     업체 팩스번호
                   </Text>
@@ -632,20 +656,26 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
             </Wrapper>
           </Wrapper>
         </form>
-        <Wrapper al={`flex-end`} margin={`0px 0px 30px`}>
-          <SmallButton
+        <Wrapper
+          width={`1070px`}
+          al={`flex-end`}
+          margin={`0px 0px 30px`}
+          dr={`row`}
+          ju={`space-between`}
+        >
+          <CommonButton
             type="button"
-            kindOf={`default`}
+            kindOf={`white`}
             onClick={() => {
               props.setStep(3);
             }}
           >
             회원탈퇴
-          </SmallButton>
+          </CommonButton>
+          <CommonButton form="saveform" type="submit">
+            저장
+          </CommonButton>
         </Wrapper>
-        <CommonButton form="saveform" type="submit">
-          저 장
-        </CommonButton>
       </RsWrapper>
     </WholeWrapper>
   );

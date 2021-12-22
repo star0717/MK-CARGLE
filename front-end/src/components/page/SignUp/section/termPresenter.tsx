@@ -6,12 +6,15 @@ import {
   Text,
   CommonButton,
   RsWrapper,
+  CommonSmallTitle,
+  CommonButtonWrapper,
+  Label,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { _pTermProps } from "../../../../configure/_pProps.entity";
-
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 /**
  * 회원가입: 이용약관 컴포넌트(화면)
  * @param props
@@ -26,20 +29,18 @@ const TermPresenter: NextPage<_pTermProps> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
-        <Wrapper>
+        <Wrapper width={`1070px`}>
           <form onSubmit={props.handleSubmit(props.agreeTermHandler)}>
             <Wrapper al={`flex-start`}>
-              <Text
-                fontSize={`18px`}
-                fontWeight={`700`}
-                padding={`10px 0px 10px 0px`}
-              >
-                CARGLE 서비스 이용 약관(필수)
-              </Text>
+              <Wrapper>
+                <CommonSmallTitle>
+                  CARGLE 서비스 이용약관(필수)
+                </CommonSmallTitle>
+              </Wrapper>
               <Wrapper
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                // width={
+                //   width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+                // }
                 height={`150px`}
                 border={`1px solid #ccc`}
                 al={`flex-start`}
@@ -47,6 +48,7 @@ const TermPresenter: NextPage<_pTermProps> = (props) => {
                 padding={`10px`}
                 radius={`5px`}
                 overflow={`auto`}
+                shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               >
                 <Text textAlign={`flex-start`}>
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
@@ -72,38 +74,44 @@ const TermPresenter: NextPage<_pTermProps> = (props) => {
                   )}
                 </Wrapper>
                 <Wrapper dr={`row`} width={`auto`}>
-                  <Text>동의합니다.</Text>
-                  <input
-                    type="checkbox"
-                    checked={props.formCheck.mkTerm}
-                    {...props.register("mkTerm", {
-                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                        dispatch({
-                          type: actionTypesUser.FORM_CHECK,
-                          payload: {
-                            ...props.formCheck,
-                            mkTerm: e.target.checked,
-                          },
-                        });
-                      },
-                      required: true,
-                    })}
-                  />
+                  <Label width={`auto`} ju={`flex-end`}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={props.formCheck.mkTerm}
+                          {...props.register("mkTerm", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              dispatch({
+                                type: actionTypesUser.FORM_CHECK,
+                                payload: {
+                                  ...props.formCheck,
+                                  mkTerm: e.target.checked,
+                                },
+                              });
+                            },
+                            required: true,
+                          })}
+                        />
+                      }
+                      labelPlacement="start"
+                      label="이용약관에 동의합니다."
+                    />
+                  </Label>
                 </Wrapper>
               </Wrapper>
             </Wrapper>
             <Wrapper al={`flex-start`}>
-              <Text
-                fontSize={`18px`}
-                fontWeight={`700`}
-                padding={`10px 0px 10px 0px`}
-              >
-                개인정보 수집 및 이용 약관(필수)
-              </Text>
+              <Wrapper>
+                <CommonSmallTitle>
+                  개인정보 수집 및 이용약관(필수)
+                </CommonSmallTitle>
+              </Wrapper>
               <Wrapper
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
+                // width={
+                //   width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+                // }
                 height={`150px`}
                 border={`1px solid #ccc`}
                 al={`flex-start`}
@@ -111,6 +119,7 @@ const TermPresenter: NextPage<_pTermProps> = (props) => {
                 padding={`10px`}
                 radius={`5px`}
                 overflow={`auto`}
+                shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               >
                 <Text textAlign={`flex-start`}>
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
@@ -135,7 +144,7 @@ const TermPresenter: NextPage<_pTermProps> = (props) => {
                     </Text>
                   )}
                 </Wrapper>
-                <Wrapper dr={`row`} width={`auto`}>
+                {/* <Wrapper dr={`row`} width={`auto`}>
                   <Text>동의합니다.</Text>
                   <input
                     type="checkbox"
@@ -153,21 +162,39 @@ const TermPresenter: NextPage<_pTermProps> = (props) => {
                       required: true,
                     })}
                   />
-                </Wrapper>
+                </Wrapper> */}
+                <Label width={`auto`} ju={`flex-end`}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={props.formCheck.privacyTerm}
+                        {...props.register("privacyTerm", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            dispatch({
+                              type: actionTypesUser.FORM_CHECK,
+                              payload: {
+                                ...props.formCheck,
+                                privacyTerm: e.target.checked,
+                              },
+                            });
+                          },
+                          required: true,
+                        })}
+                      />
+                    }
+                    labelPlacement="start"
+                    label="이용약관에 동의합니다."
+                  />
+                </Label>
               </Wrapper>
             </Wrapper>
             <Wrapper al={`flex-start`}>
-              <Text
-                fontSize={`18px`}
-                fontWeight={`700`}
-                padding={`10px 0px 10px 0px`}
-              >
-                마케팅 정보 수신 동의(선택)
-              </Text>
+              <Wrapper>
+                <CommonSmallTitle>마케팅 정보 수신 동의(선택)</CommonSmallTitle>
+              </Wrapper>
               <Wrapper
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
                 height={`150px`}
                 border={`1px solid #ccc`}
                 al={`flex-start`}
@@ -175,6 +202,7 @@ const TermPresenter: NextPage<_pTermProps> = (props) => {
                 padding={`10px`}
                 radius={`5px`}
                 overflow={`auto`}
+                shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               >
                 <Text textAlign={`flex-start`}>
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
@@ -191,7 +219,7 @@ const TermPresenter: NextPage<_pTermProps> = (props) => {
                   repellat
                 </Text>
               </Wrapper>
-              <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
+              {/* <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
                 <Text>동의합니다.</Text>
                 <input
                   type="checkbox"
@@ -208,34 +236,55 @@ const TermPresenter: NextPage<_pTermProps> = (props) => {
                     },
                   })}
                 />
+              </Wrapper> */}
+              <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
+                <Label width={`auto`} ju={`flex-end`}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={props.formCheck.marketTerm}
+                        {...props.register("marketTerm", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            dispatch({
+                              type: actionTypesUser.FORM_CHECK,
+                              payload: {
+                                ...props.formCheck,
+                                marketTerm: e.target.checked,
+                              },
+                            });
+                          },
+                        })}
+                      />
+                    }
+                    labelPlacement="start"
+                    label="마케팅 정보 수신에 동의합니다."
+                  />
+                </Label>
               </Wrapper>
             </Wrapper>
-            <Wrapper
-              textAlign={`center`}
-              dr={`row`}
-              ju={`space-around`}
-              padding={`50px 0px 100px 0px`}
-            >
+            <CommonButtonWrapper textAlign={`center`}>
               <CommonButton
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                   props.setStepNumber(props.stepNumber - 1);
                 }}
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`
-                }
+                // width={
+                //   width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`
+                // }
                 kindOf={`white`}
               >
                 이전
               </CommonButton>
               <CommonButton
                 type="submit"
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`
-                }
+                // width={
+                //   width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`
+                // }
               >
                 다음
               </CommonButton>
-            </Wrapper>
+            </CommonButtonWrapper>
           </form>
         </Wrapper>
       </RsWrapper>

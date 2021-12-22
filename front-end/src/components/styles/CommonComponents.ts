@@ -32,7 +32,7 @@ export const WholeWrapper = styled.div<any>`
   right: ${(props) => props.right};
   bottom: ${(props) => props.bottom};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `0px 0px 0px 0px`};
+  padding: ${(props) => props.padding || `0px 0px 0px 150px`};
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
   min-height: ${(props) => props.minHeight};
@@ -99,7 +99,7 @@ export const Wrapper = styled.div<any>`
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
-  flex-wrap: ${(props) => props.wrap || `wrap`};
+  flex-wrap: ${(props) => props.wrap || `no-wrap`};
   background: ${(props) => props.white_C};
   color: ${(props) => props.color};
   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
@@ -166,6 +166,41 @@ export const Wrapper = styled.div<any>`
     & svg {
       font-size: 20px;
     }
+  }
+`;
+
+export const FooterWrapper = styled.div<any>`
+  width: ${(props) => props.width || `100%`};
+  height: ${(props) => props.height || `150px`};
+  color: ${(props) => props.color};
+  display: flex;
+  background-color: ${(props) => props.bgColor};
+  color: ${(props) => props.theme.black_C};
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-image: ${(props) => props.bgImg};
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  box-shadow: ${(props) => props.shadow};
+  z-index: ${(props) => props.index};
+  position: ${(props) => (props.isRelative ? `relative` : `absolute`)};
+  position: ${(props) => (props.isFixed ? `fixed` : ``)};
+  top: ${(props) => props.top};
+  left: ${(props) => props.left || `0`};
+  right: ${(props) => props.right};
+  bottom: ${(props) => props.bottom || `0`};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding || `0px 0px 0px 0px`};
+  animation: ${appearAnimation} 1s forwards;
+  overflow-x: hidden;
+  min-height: ${(props) => props.minHeight};
+  box-shadow: ${(props) => props.shadow};
+
+  & .MuiCheckbox-root,
+  & .MuiCheckbox-colorSecondary.Mui-checked {
+    color: ${(props) => props.theme.black_C} !important;
   }
 `;
 
@@ -250,17 +285,32 @@ export const CommonForm = styled.form<any>`
 
 /**text */
 
+export const CommonTitleWrapper = styled.div<any>`
+  width: ${(props) => props.width || `100%`};
+  display: ${(props) => props.display};
+  position: relative;
+  margin: ${(props) => props.margin || `0px 0px 80px`};
+  margintop: ${(props) => props.marginTop};
+  padding: ${(props) => props.padding || `50px 0px 30px`};
+  padding-bottom: ${(props) => props.paddingBottom};
+  font-size: 34px;
+  font-weight: 800;
+  color: ${(props) => props.color};
+  text-align: ${(props) => props.textAlign || `center`};
+  background-color: #292929;
+`;
+
 export const CommonTitle = styled.h2<any>`
   width: ${(props) => props.width};
   display: ${(props) => props.display};
   position: relative;
   margin: ${(props) => props.margin || `0px`};
   margintop: ${(props) => props.marginTop};
-  padding: ${(props) => props.padding || `50px 0px 0px`};
+  padding: ${(props) => props.padding || ` 0px 0px`};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 34px;
   font-weight: 800;
-  color: ${(props) => props.color};
+  color: ${(props) => props.color || `#fff`};
   text-align: ${(props) => props.textAlign || `center`};
   @media (max-width: 1439px) {
     font-size: 32px;
@@ -277,8 +327,8 @@ export const CommonSubTitle = styled.h2<any>`
   margin: ${(props) => props.margin || `0px`};
   padding-bottom: 40px;
   font-size: 22px;
-  color: ${(props) => props.color || `${props.theme.darkGrey_C}`};
-  font-weight: ${(props) => props.fontWeight || `700`};
+  color: ${(props) => props.color || `${props.theme.lightGrey_C}`};
+  font-weight: ${(props) => props.fontWeight || `400`};
   text-align: ${(props) => props.textAlign || `center`};
 `;
 
@@ -360,14 +410,14 @@ export const CommonButtonWrapper = styled.div<any>`
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
   transition: ${(props) => props.transition || props.theme.transition};
-  margin: ${(props) => props.margin || `0px`};
-  padding: ${(props) => props.padding || `0px 0px 70px 0px`};
+  margin: ${(props) => props.margin || `50px 0px 0px`};
+  padding: ${(props) => props.padding || `0px`};
   border-radius: ${(props) => props.radius};
   font-size: ${(props) => props.fontSize};
   display: flex;
-  flex-direction: ${(props) => props.dr || `column`};
+  flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `space-between`};
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
   cursor: pointer;
@@ -475,15 +525,15 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
   }
 
-  @media (max-width: 1439px) {
-    font-size: 18px;
-    width: 400px;
-  }
+  // @media (max-width: 1439px) {
+  //   font-size: 18px;
+  //   width: 400px;
+  // }
 
-  @media (max-width: 500px) {
-    font-size: 18px;
-    width: 300px;
-  }
+  // @media (max-width: 500px) {
+  //   font-size: 18px;
+  //   width: 300px;
+  // }
 `;
 
 export const SmallButton = styled.button<any>`
@@ -852,6 +902,8 @@ export const Label = styled.label<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   margin: ${(props) => props.margin};
+  font-size: ${(props) => props.fontSize || `16px`};
+  font-weight: ${(props) => props.fontWeight || `600`};
   cursor: pointer;
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
@@ -864,6 +916,14 @@ export const Label = styled.label<any>`
   }
   & .main.MuiFormControlLabel-root svg {
     color: #fff;
+  }
+  & .MuiCheckbox-root svg {
+    margin: 0px;
+    color: #0066ff;
+  }
+  & .MuiCheckbox-root hover {
+    margin: 0px;
+    color: black;
   }
 `;
 

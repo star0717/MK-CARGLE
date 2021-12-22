@@ -17,11 +17,11 @@ const MyPageAcccountPresenter: NextPage<_cMyPageAccount> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref}>
+    <>
       {props.step === 1 && <AccountCheck {...props} />}
       {props.step === 2 && <AccountInfo {...props} />}
       {props.step === 3 && <Withdrawal {...props} />}
-    </WholeWrapper>
+    </>
   );
 };
 
