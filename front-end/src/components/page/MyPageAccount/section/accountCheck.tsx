@@ -59,11 +59,7 @@ const AccountCheck: NextPage<_cMyPageAccount> = (props) => {
     setPassword,
   };
 
-  return (
-    <WholeWrapper>
-      <AccountCheckPresenter {...fProps} />
-    </WholeWrapper>
-  );
+  return <AccountCheckPresenter {...fProps} />;
 };
 
 export default AccountCheck;

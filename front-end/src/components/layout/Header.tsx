@@ -81,7 +81,7 @@ const Header: NextPage<_cLayoutProps> = (props) => {
       isAsolute={true}
       index={`9999`}
       padding={`0px`}
-      margin={`0px 0px 100px`}
+      margin={`0px 0px 80px`}
     >
       <Wrapper
         height={`80px`}

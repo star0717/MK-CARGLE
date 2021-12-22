@@ -5,6 +5,7 @@ import {
   Wrapper,
   CommonTitle,
   CommonSubTitle,
+  CommonTitleWrapper,
   JoinStepBarWrapper,
   JoinStepBar,
 } from "../../../styles/CommonComponents";
@@ -25,39 +26,39 @@ const SignUpHeaderPresenter: NextPage<_cSignUpProps> = (props) => {
     <WholeWrapper ref={ref}>
       <Wrapper>
         {props.stepNumber === 1 && (
-          <Wrapper>
+          <CommonTitleWrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>가입 유형을 선택해주세요.</CommonSubTitle>
-          </Wrapper>
+          </CommonTitleWrapper>
         )}
         {props.stepNumber === 2 && (
-          <Wrapper>
+          <CommonTitleWrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>
               서비스 이용을 위해 약관 동의가 필요해요.
             </CommonSubTitle>
-          </Wrapper>
+          </CommonTitleWrapper>
         )}
         {props.stepNumber === 3 && (
-          <Wrapper>
+          <CommonTitleWrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>계정 정보를 입력해주세요.</CommonSubTitle>
-          </Wrapper>
+          </CommonTitleWrapper>
         )}
         {props.stepNumber === 4 &&
         props.userAuth === props.UserAuthority.OWNER ? (
-          <Wrapper>
+          <CommonTitleWrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>사업자 정보를 입력해주세요.</CommonSubTitle>
-          </Wrapper>
+          </CommonTitleWrapper>
         ) : null}
         {props.stepNumber === 5 && (
-          <Wrapper>
+          <CommonTitleWrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>
-              가입 승인을 위해 서류를 제출해주세요.
+              가입 승인을 위해 서류를 제출해주세요
             </CommonSubTitle>
-          </Wrapper>
+          </CommonTitleWrapper>
         )}
       </Wrapper>
 
