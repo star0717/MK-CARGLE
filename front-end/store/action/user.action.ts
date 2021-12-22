@@ -9,7 +9,11 @@ import {
 } from "../../src/models/auth.entity";
 import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
-import { actionTypesUser, AdminCompaniesList } from "../interfaces";
+import {
+  actionTypesUser,
+  AdminCompaniesList,
+  GetWorkersList,
+} from "../interfaces";
 
 // 로그인 action
 export async function signInUserAction(dataToSubmit: UserInfo) {
@@ -284,10 +288,11 @@ export async function getWorkersListAction(dataToSubmit: FindParameters) {
       return res.data;
     });
 
-  return {
+  const result: GetWorkersList = {
     type: actionTypesUser.GET_WORKERS_LIST,
     payload: req,
   };
+  return result;
 }
 
 /** ADMIN 관련 **/

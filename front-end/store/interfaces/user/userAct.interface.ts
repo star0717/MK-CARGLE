@@ -1,3 +1,6 @@
+import { FindResult } from "../../../src/models/base.entity";
+import { User } from "../../../src/models/user.entity";
+
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
   INPUT_ACCOUNT = "INPUT_ACCOUNT",
@@ -198,7 +201,7 @@ export interface Withdrawal {
 //작업자 조회
 export interface GetWorkersList {
   type: actionTypesUser.GET_WORKERS_LIST;
-  payload: any;
+  payload: FindResult<User>;
 }
 // 업체 조회
 export interface AdminCompaniesList {
