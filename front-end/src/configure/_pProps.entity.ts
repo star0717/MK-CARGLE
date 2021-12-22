@@ -254,17 +254,6 @@ export interface _pWithdrawalModalProps extends _cWithdrawalModalProps {
  * 마이페이지(직원관리): 직원 데이터 props
  */
 export interface _pWorkerData extends _MainProps {
-  docs: User[];
-  setDocs: React.Dispatch<React.SetStateAction<User[]>>;
-  totalDocs: number;
-  setTotalDocs: React.Dispatch<React.SetStateAction<number>>;
-  currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  lastPage: number;
-  setLastPage: React.Dispatch<React.SetStateAction<number>>;
-  pageData: FindParameters;
-  setPageData: React.Dispatch<React.SetStateAction<Object>>;
-  setLoadData: React.Dispatch<React.SetStateAction<boolean>>;
   findResult: FindResult<User>;
   setFindResult: React.Dispatch<React.SetStateAction<FindResult<User>>>;
 }

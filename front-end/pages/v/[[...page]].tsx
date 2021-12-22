@@ -24,6 +24,8 @@ import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
 import AdminCompanies from "../../src/components/page/admin/companies";
 import axios, { AxiosResponse } from "axios";
+import { FindResult } from "../../src/models/base.entity";
+import { User } from "../../src/models/user.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -132,11 +134,29 @@ export const getServerSideProps: GetServerSideProps = async (
       const apiUrl: string =
         process.env.DESTINATION_API + process.env.DESTINATION_PORT;
 
+      let data: any;
+
       // 렌더링 시 데이터가 필요한 페이지만 URL 및 API 추가
       switch (pathName) {
         case UseLink.TEST:
-          const data = await axios
+          data = await axios
             .get(`${apiUrl}/auth/profile`, {
+              headers: {
+                Cookie: `mk_token=${context.req.cookies.mk_token}`,
+              },
+              withCredentials: true,
+            })
+            .then((res: AxiosResponse<unknown, any>) => res.data);
+          return {
+            props: {
+              tokenValue,
+              data,
+            },
+          };
+
+        case UseLink.MYPAGE_WORKER:
+          data = await axios
+            .get(`${apiUrl}/settings/management/workers`, {
               headers: {
                 Cookie: `mk_token=${context.req.cookies.mk_token}`,
               },

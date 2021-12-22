@@ -35,17 +35,6 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
     style: { height: "500px" },
   };
 
-  const toggleComment = () => {
-    // setDocs(prevDocs => ({
-    //   ...docs,
-    //   [docs.approval] :
-    // }));
-    // setDocs(prevDocs => ({
-    //   ...docs,
-    //   [approval] : !prevDocs[approval]
-    // }));
-  };
-
   const Pagenationbtn = () => {
     const result = [];
 
@@ -75,7 +64,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
               <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
             </TableHead>
             <TableBody>
-              {props.docs.map((doc: any) => (
+              {props.findResult.docs.map((doc: any) => (
                 <TableRow>
                   <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
                   <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
@@ -96,16 +85,10 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
           <SmallButton
             type="button"
             onClick={() => {
-              props.setPageData({
-                ...props.pageData,
-                [`page`]: 2,
-              });
-              props.setLoadData(false);
-
-              console.log("TotalDocs =>", props.totalDocs);
-              console.log("CurrentPage =>", props.currentPage);
-              console.log("LastPage => ", props.lastPage);
-              console.log("Docs => ", props.docs);
+              console.log("TotalDocs =>", props.findResult.totalDocs);
+              console.log("CurrentPage =>", props.findResult.currentPage);
+              console.log("LastPage => ", props.findResult.lastPage);
+              console.log("Docs => ", props.findResult.docs);
             }}
           >
             정보
