@@ -46,7 +46,20 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
     // }));
   };
 
-  const Pagenationbtn = () => {};
+  const Pagenationbtn = () => {
+    const result = [];
+
+    if (props.findResult) {
+      for (
+        let i = Math.ceil(props.findResult.currentPage / 10);
+        i <= props.findResult.lastPage;
+        i++
+      ) {
+        result.push(<Pagenation>{i}</Pagenation>);
+      }
+      return result;
+    }
+  };
 
   return (
     <WholeWrapper>
@@ -103,22 +116,8 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
             <IoIosArrowBack />
           </Pagenation>
 
-          {/* <script>
-            var lastData = props.lastPage;
-            for (let index = 0; index < ; index++) {
-              const element = array[index];
-              
-            }
-          </script> */}
+          {Pagenationbtn()}
 
-          {/* <Pagenation
-            type="button"
-            onClick={() => {
-              console.log("pagenation!!");
-            }}
-          >
-            1
-          </Pagenation> */}
           <Pagenation>
             <IoIosArrowForward />
           </Pagenation>
