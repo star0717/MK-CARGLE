@@ -23,7 +23,7 @@ import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
 import AdminCompanies from "../../src/components/page/admin/companies";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -111,9 +111,20 @@ export const getServerSideProps: GetServerSideProps = async (
     } else {
       switch (pathName) {
         case UseLink.TEST:
+          // console.log(context.req.cookies.mk_token);
           const res = await axios
-            .get(`http://172.30.1.9:5001/settings/myinfo/stamp`)
+            .get(`http://172.30.1.9:7001/auth/profile`, {
+              headers: {
+                Cookie: `mk_token=${context.req.cookies.mk_token}`,
+              },
+              withCredentials: true,
+            })
             .then((res: AxiosResponse<unknown, any>) => res.data);
+          // .catch((err: AxiosError) => {
+          //   console.log("err =========================");
+          //   console.log(err.code);
+          // });
+
           console.log("!!!", res);
           return {
             props: {
