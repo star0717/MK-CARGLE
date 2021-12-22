@@ -23,7 +23,7 @@ import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
 import AdminCompanies from "../../src/components/page/admin/companies";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -94,14 +94,31 @@ const MainPage: NextPage<_MainProps> = (props) => {
 
 export default MainPage;
 
+/**
+ * pre-rendering: 서버사이드 렌더링
+ * @param context
+ * @returns
+ */
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
 ) => {
-  const url: string = context.resolvedUrl; // 현재 url (query 제외)
-  const useUrlArray: string[] = Object.values(UseLink); // 사용가능한 url 배열
-  const pathName: string = getPathName(url); // pathName 가져오기
+  /**
+   * 현재 url (query 제외)
+   */
+  const url: string = context.resolvedUrl;
+  /**
+   * 사용가능한 url 배열
+   */
+  const useUrlArray: string[] = Object.values(UseLink);
+  /**
+   * pathName 가져오기
+   */
+  const pathName: string = getPathName(url);
 
   if (context.req.cookies.mk_token) {
+    /**
+     * 로그인 토큰
+     */
     const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
 
     if (useUrlArray.indexOf(pathName) === -1) {
@@ -109,26 +126,27 @@ export const getServerSideProps: GetServerSideProps = async (
         notFound: true,
       };
     } else {
+      /**
+       * Axios URL
+       */
+      const apiUrl: string =
+        process.env.DESTINATION_API + process.env.DESTINATION_PORT;
+
+      // 렌더링 시 데이터가 필요한 페이지만 URL 및 API 추가
       switch (pathName) {
         case UseLink.TEST:
-          // console.log(context.req.cookies.mk_token);
-          const res = await axios
-            .get(`http://172.30.1.9:7001/auth/profile`, {
+          const data = await axios
+            .get(`${apiUrl}/auth/profile`, {
               headers: {
                 Cookie: `mk_token=${context.req.cookies.mk_token}`,
               },
               withCredentials: true,
             })
             .then((res: AxiosResponse<unknown, any>) => res.data);
-          // .catch((err: AxiosError) => {
-          //   console.log("err =========================");
-          //   console.log(err.code);
-          // });
-
-          console.log("!!!", res);
           return {
             props: {
               tokenValue,
+              data,
             },
           };
 
@@ -139,11 +157,6 @@ export const getServerSideProps: GetServerSideProps = async (
             },
           };
       }
-      // return {
-      //   props: {
-      //     tokenValue,
-      //   },
-      // };
     }
     // 토큰 확인 - 없을 경우, 로그인 화면으로 리디렉트
   } else {
