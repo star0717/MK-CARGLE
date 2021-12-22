@@ -282,6 +282,27 @@ export const CommonSubTitle = styled.h2<any>`
   text-align: ${(props) => props.textAlign || `center`};
 `;
 
+export const CommonSmallTitle = styled.h2<any>`
+  width: ${(props) => props.width};
+  position: relative;
+  margin: 30px 0px;
+  padding-bottom: 10px;
+  font-size: 20px;
+  font-weight: 800;
+  color: ${(props) => props.color};
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    margin-left: -20px;
+    width: 30px;
+    height: 100%;
+    border-bottom: 6px solid ${(props) => props.theme.basicTheme_C};
+  }
+`;
+
 export const Text = styled.p<any>`
   overflow: ${(props) => props.overflow};
   width: ${(props) => props.width};
@@ -373,7 +394,8 @@ export const CommonButton = styled.button<any>`
   ${(props) => !props.kindOf && `background : ${props.theme.basicTheme_C};`}
   ${(props) =>
     props.kindOf === `white` && `background : ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `white` && `color : ${props.theme.black_C};`}
+  ${(props) =>
+    props.kindOf === `white` && `color : ${props.theme.basicTheme_C};`}
       ${(props) =>
     props.kindOf === `white` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
@@ -418,9 +440,9 @@ export const CommonButton = styled.button<any>`
     background: #fff;
     color: ${(props) => props.theme.white_C};
     box-shadow: ${(props) => props.theme.boxShadow};
-    ${(props) => !props.kindOf && `background ${props.theme.darkTheme_C};`}
+    ${(props) => !props.kindOf && `background ${props.theme.lightTheme_C};`}
     ${(props) =>
-      props.kindOf === `white` && `background ${props.theme.basicTheme_C};`}
+      props.kindOf === `white` && `background ${props.theme.lightTheme_C};`}
          ${(props) =>
       props.kindOf === `white` && `color ${props.theme.white_C};`}
 ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
