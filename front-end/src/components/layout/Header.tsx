@@ -21,6 +21,7 @@ import { MdLogout } from "react-icons/md";
 import { _cLayoutProps } from "../../configure/_cProps.entity";
 import { menuList } from "../../configure/list.entity";
 import { User, UserAuthority } from "../../models/user.entity";
+import { AuthMenuList } from "../../modules/commonModule";
 
 const Header: NextPage<_cLayoutProps> = (props) => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const Header: NextPage<_cLayoutProps> = (props) => {
   };
 
   const test = menuList.filter((menu) => {
-    switch (props.tokenValue.uAuth) {
+    switch (props.tokenValue?.uAuth) {
       case UserAuthority.ADMIN:
         return menu.auth === UserAuthority.ADMIN;
       case UserAuthority.OWNER:
@@ -49,29 +50,31 @@ const Header: NextPage<_cLayoutProps> = (props) => {
         return menu.auth === UserAuthority.WORKER;
     }
   });
-
-  const tt = Object.values(test);
+  // const test = AuthMenuList(menuList, props.tokenValue);
 
   const test2 = test.map((menu) => {
-    // menu.subMenu.filter((sub) => {
-    //   switch (props.tokenValue.uAuth) {
-    //     case UserAuthority.ADMIN:
-    //       return sub.subMenuAuth === UserAuthority.ADMIN;
-    //     case UserAuthority.OWNER:
-    //       return (
-    //         sub.subMenuAuth === UserAuthority.OWNER ||
-    //         sub.subMenuAuth === UserAuthority.WORKER
-    //       );
-    //     case UserAuthority.WORKER:
-    //       return sub.subMenuAuth === UserAuthority.WORKER;
-    //   }
-    // });
-    menu.subMenu.map((sub) => {
-      console.log("!!!", sub);
+    return menu.subMenu.filter((sub) => {
+      switch (props.tokenValue?.uAuth) {
+        case UserAuthority.ADMIN:
+          console.log(sub.subMenuAuth === UserAuthority.ADMIN);
+          return sub.subMenuAuth === UserAuthority.ADMIN;
+        case UserAuthority.OWNER:
+          console.log(
+            sub.subMenuAuth === UserAuthority.OWNER ||
+              sub.subMenuAuth === UserAuthority.WORKER
+          );
+          return (
+            sub.subMenuAuth === UserAuthority.OWNER ||
+            sub.subMenuAuth === UserAuthority.WORKER
+          );
+        case UserAuthority.WORKER:
+          console.log(sub.subMenuAuth === UserAuthority.WORKER);
+          return sub.subMenuAuth === UserAuthority.WORKER;
+      }
     });
   });
 
-  console.log(test);
+  console.log("@@@", test);
   console.log("###", test2);
 
   const { width, height, ref } = useResizeDetector();
@@ -118,7 +121,7 @@ const Header: NextPage<_cLayoutProps> = (props) => {
               dr={`row`}
               padding={width < 1450 ? `0px 50px` : `0px 100px`}
             >
-              {menuList.map((menu) => {
+              {/* {menuList.map((menu) => {
                 return (
                   <Wrapper
                     key={menu.key}
@@ -135,7 +138,39 @@ const Header: NextPage<_cLayoutProps> = (props) => {
                     </Text>
                   </Wrapper>
                 );
-              })}
+              })} */}
+              {menuList
+                .filter((menu) => {
+                  switch (props.tokenValue?.uAuth) {
+                    case UserAuthority.ADMIN:
+                      return menu.auth === UserAuthority.ADMIN;
+                    case UserAuthority.OWNER:
+                      return (
+                        menu.auth === UserAuthority.OWNER ||
+                        menu.auth === UserAuthority.WORKER
+                      );
+                    case UserAuthority.WORKER:
+                      return menu.auth === UserAuthority.WORKER;
+                  }
+                })
+                .map((menu) => {
+                  return (
+                    <Wrapper
+                      key={menu.key}
+                      width={width < 1510 ? `140px` : `168px`}
+                    >
+                      <Text
+                        fontSize={width < 1510 ? `16px` : `18px`}
+                        fontWeight={`800`}
+                        padding={width < 1510 ? `5px 15px` : `5px 30px`}
+                      >
+                        <Link href={menu.link}>
+                          <a>{menu.menuName}</a>
+                        </Link>
+                      </Text>
+                    </Wrapper>
+                  );
+                })}
               <TestDiv2
                 ju={``}
                 al={`center`}
