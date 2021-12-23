@@ -183,6 +183,12 @@ export const getServerSideProps: GetServerSideProps = async (
           const params: FindParameters = {
             take: 10,
           };
+
+          data = await axios.get(
+            `${apiUrl}/settings/management/workers?${FindParameters.getQuery(
+              params
+            )}`
+          );
         }
         default:
           return {
