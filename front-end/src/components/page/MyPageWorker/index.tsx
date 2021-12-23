@@ -33,7 +33,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
   const findWorksHandler = (page: number) => {
     const param: FindParameters = {
       page,
-      take: 15,
+      take: 1,
     };
     dispatch(getWorkersListAction(param)).then((res: GetWorkersList) => {
       setFindResult(res.payload);
