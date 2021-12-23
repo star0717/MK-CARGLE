@@ -93,3 +93,14 @@ export interface _cWithdrawalModalProps {
     height: string;
   };
 }
+
+/**
+ * 마이페이지(직원관리): 직원정보 modal props
+ */
+export interface _cWorkerInfoModalProps {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  clickDoc: User;
+  style: {
+    height: string;
+  };
+}

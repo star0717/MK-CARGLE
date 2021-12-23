@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import dayjs from "dayjs";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   WholeWrapper,
   Wrapper,
@@ -30,6 +30,7 @@ import { getWorkersListAction } from "../../../../../store/action/user.action";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { GetWorkersList } from "../../../../../store/interfaces";
 import WorkerInfoModal from "./workerInfoModal";
+import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
 
 const workerInfo: NextPage<_pWorkerData> = (props) => {
   const dispatch = useDispatch();
@@ -93,7 +94,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
   /**
    * 화면구성에 넘길 props
    */
-  const WorkerModalProps = {
+  const WorkerModalProps: _cWorkerInfoModalProps = {
     setModalOpen,
     clickDoc,
     style: { height: "500px" },

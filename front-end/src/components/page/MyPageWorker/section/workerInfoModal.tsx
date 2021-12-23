@@ -1,10 +1,16 @@
 import type { NextPage } from "next";
-import { WholeWrapper, Wrapper, Text } from "../../../styles/CommonComponents";
+import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
+import {
+  WholeWrapper,
+  RsWrapper,
+  Wrapper,
+  Text,
+} from "../../../styles/CommonComponents";
 
-const WorkerInfoModal: NextPage<any> = () => {
+const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = () => {
   return (
     <WholeWrapper>
-      <Wrapper></Wrapper>
+      <RsWrapper></RsWrapper>
     </WholeWrapper>
   );
 };
