@@ -72,7 +72,16 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
         i++
       ) {
         result.push(
-          <Pagenation key={i} type="button" onClick={() => findWorksHandler(i)}>
+          <Pagenation
+            key={i}
+            theme={{
+              basicTheme_C: cPage === i ? "#0066ff" : "#fff",
+              white_C: cPage === i ? "#fff" : "#0066ff",
+            }}
+            border={cPage === i ? "1px solid #fff" : "1px solid #0066ff"}
+            type="button"
+            onClick={() => findWorksHandler(i)}
+          >
             {i}
           </Pagenation>
         );

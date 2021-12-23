@@ -1256,7 +1256,7 @@ export const Pagenation = styled.button<any>`
   color: ${(props) => props.theme.white_C};
   border-radius: 30px;
   margin: 0px 3px;
-  border: none;
+  border: ${(props) => props.border || `none`};
 
   &.active {
     border-radius: 30px;
