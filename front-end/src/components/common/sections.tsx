@@ -52,17 +52,41 @@ export const PagenationSection: NextPage<any> = (props) => {
 
   return (
     <PagenationWrapper>
-      <Pagenation>
+      <Pagenation
+        type="button"
+        onClick={() => {
+          if (props.findResult.currentPage < 10) {
+            props.findWorksHandler(1);
+          } else {
+            props.findWorksHandler(props.findResult.currentPage - 10);
+          }
+        }}
+      >
         <BsChevronDoubleLeft />
       </Pagenation>
-      <Pagenation>
+      <Pagenation
+        type="button"
+        onClick={() => props.findWorksHandler(props.findResult.currentPage - 1)}
+      >
         <IoIosArrowBack />
       </Pagenation>
       {pagenationBtn()}
-      <Pagenation>
+      <Pagenation
+        type="button"
+        onClick={() => props.findWorksHandler(props.findResult.currentPage + 1)}
+      >
         <IoIosArrowForward />
       </Pagenation>
-      <Pagenation>
+      <Pagenation
+        type="button"
+        onClick={() => {
+          if (props.findResult.currentPage + 10 > props.findResult.lastPage) {
+            props.findWorksHandler(props.findResult.lastPage);
+          } else {
+            props.findWorksHandler(props.findResult.currentPage + 10);
+          }
+        }}
+      >
         <BsChevronDoubleRight />
       </Pagenation>
     </PagenationWrapper>
