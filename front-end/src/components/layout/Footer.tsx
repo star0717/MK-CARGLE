@@ -1,6 +1,12 @@
 import { useResizeDetector } from "react-resize-detector";
 import type { NextPage } from "next";
-import { WholeWrapper, Wrapper, Text, Image } from "../styles/CommonComponents";
+import {
+  WholeWrapper,
+  Wrapper,
+  Text,
+  Image,
+  FooterWrapper,
+} from "../styles/CommonComponents";
 
 const Footer: NextPage = () => {
   const { width, height, ref } = useResizeDetector();
@@ -38,6 +44,7 @@ const Footer: NextPage = () => {
           </Wrapper>
         </Wrapper>
       </Wrapper>
+      {/* <FooterWrapper bgColor={`#ddd`}>Hi, I'm Footer</FooterWrapper> */}
     </WholeWrapper>
   );
 };

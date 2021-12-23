@@ -8,6 +8,7 @@ import {
   CommonButton,
   RsWrapper,
   Test,
+  FooterWrapper,
 } from "../../../n2server/front-end/src/components/styles/CommonComponents";
 import Header from "../src/components/layout/Header";
 import Footer from "../src/components/layout/Footer";
@@ -22,10 +23,10 @@ const ByeolTest: NextPage = () => {
       style={{
         height: `100%`,
         // position: `relative`,
-        backgroundColor: `blue`,
+        backgroundColor: `#000`,
       }}
     >
-      <div style={{ minHeight: `100%` }}>
+      <div style={{ minHeight: `100%`, backgroundColor: `#000` }}>
         <div
           style={{
             width: `100%`,
@@ -36,18 +37,7 @@ const ByeolTest: NextPage = () => {
           컨텐츠
         </div>
       </div>
-      <div
-        style={{
-          width: `100%`,
-          height: `150px`,
-          position: `absolute`,
-          bottom: `0`,
-          left: `0`,
-          backgroundColor: `green`,
-        }}
-      >
-        푸터랍니다.
-      </div>
+      <FooterWrapper bgColor={`#ddd`}>I'm Footer</FooterWrapper>
     </div>
   );
 };
