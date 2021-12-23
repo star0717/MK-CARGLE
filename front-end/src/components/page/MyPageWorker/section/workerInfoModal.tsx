@@ -1,12 +1,18 @@
 import type { NextPage } from "next";
-import { WholeWrapper, Wrapper, Text } from "../../../styles/CommonComponents";
+import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
+import {
+  WholeWrapper,
+  RsWrapper,
+  Wrapper,
+  Text,
+} from "../../../styles/CommonComponents";
 
-const workerInfoModal: NextPage = () => {
+const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
   return (
     <WholeWrapper>
-      <Wrapper></Wrapper>
+      <RsWrapper>{JSON.stringify(props.clickDoc)}</RsWrapper>
     </WholeWrapper>
   );
 };
 
-export default workerInfoModal;
+export default WorkerInfoModal;

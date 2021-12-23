@@ -24,7 +24,7 @@ import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
 import AdminCompanies from "../../src/components/page/admin/companies";
 import axios, { AxiosResponse } from "axios";
-import { FindResult } from "../../src/models/base.entity";
+import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 
 /**
@@ -155,13 +155,22 @@ export const getServerSideProps: GetServerSideProps = async (
           };
 
         case UseLink.MYPAGE_WORKER:
+          const params: FindParameters = {
+            take: 15,
+          };
+
           data = await axios
-            .get(`${apiUrl}/settings/management/workers`, {
-              headers: {
-                Cookie: `mk_token=${context.req.cookies.mk_token}`,
-              },
-              withCredentials: true,
-            })
+            .get(
+              `${apiUrl}/settings/management/workers?${FindParameters.getQuery(
+                params
+              )}`,
+              {
+                headers: {
+                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                },
+                withCredentials: true,
+              }
+            )
             .then((res: AxiosResponse<unknown, any>) => res.data);
           return {
             props: {
