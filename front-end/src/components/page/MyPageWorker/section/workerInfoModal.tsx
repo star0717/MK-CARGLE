@@ -7,10 +7,10 @@ import {
   Text,
 } from "../../../styles/CommonComponents";
 
-const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = () => {
+const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
   return (
     <WholeWrapper>
-      <RsWrapper></RsWrapper>
+      <RsWrapper>{JSON.stringify(props.clickDoc)}</RsWrapper>
     </WholeWrapper>
   );
 };
