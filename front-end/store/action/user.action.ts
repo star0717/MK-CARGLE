@@ -13,6 +13,7 @@ import {
   actionTypesUser,
   AdminCompaniesList,
   GetWorkersList,
+  PatchWorkersApprove,
 } from "../interfaces";
 
 // 로그인 action
@@ -319,6 +320,18 @@ export async function getComRegFile(id: string) {
 
   const result = {
     type: actionTypesUser.ADMIN_COMPANIES_LIST,
+    payload: req,
+  };
+  return result;
+}
+
+export async function patchWorkerApproveAction(dataToSubmit: string) {
+  const req = await axios
+    .patch(`/api/settings/management/approve/workers/${dataToSubmit}`)
+    .then((res: AxiosResponse<User, any>) => res.data);
+
+  const result: PatchWorkersApprove = {
+    type: actionTypesUser.PATCH_WORKERS_APPROVE,
     payload: req,
   };
   return result;
