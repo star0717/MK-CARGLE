@@ -41,7 +41,7 @@ const StampModal: NextPage<_cStampModalProps> = (props) => {
 
     canvas.toBlob(
       (blob: any) => {
-        const formData = new FormData();
+        const formData: FormData = new FormData();
         formData.append("file", blob);
         dispatch(uploadStampAction(formData)).then((res: any) => {
           if (res.payload.length !== 0) {

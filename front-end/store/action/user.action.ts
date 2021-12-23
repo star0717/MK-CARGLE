@@ -371,9 +371,9 @@ export async function patchWorkerRejectAction(dataToSubmit: string) {
  * @param dataToSubmit
  * @returns
  */
-export async function patchWorkerChangeAction(dataToSubmit: string) {
+export async function patchWorkerChangeAction(dataToSubmit: any) {
   const req = await axios
-    .patch(`/api/settings/management/workers/${dataToSubmit}`)
+    .patch(`/api/settings/management/workers/${dataToSubmit._id}`, dataToSubmit)
     .then((res: AxiosResponse<User, any>) => res.data);
 
   const result: PatchWorkersChange = {
