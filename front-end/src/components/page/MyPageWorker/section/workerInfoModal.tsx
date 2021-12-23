@@ -2,7 +2,10 @@ import { Switch } from "@material-ui/core";
 import type { NextPage } from "next";
 import { useState } from "react";
 import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
-import { makeFullAddress } from "../../../../modules/commonModule";
+import {
+  dateToString,
+  makeFullAddress,
+} from "../../../../modules/commonModule";
 import {
   WholeWrapper,
   RsWrapper,
@@ -58,11 +61,12 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
           <TextInput2
             type="date"
             name="joinDate"
-            value={
-              props.clickDoc.joinDate
-                ? props.clickDoc.joinDate.toString().slice(0, 10)
-                : ""
-            }
+            // value={
+            //   props.clickDoc.joinDate
+            //     ? props.clickDoc.joinDate.toString().slice(0, 10)
+            //     : ""
+            // }
+            value={dateToString(props.clickDoc.joinDate)}
           />
         </Wrapper>
         <Wrapper>
