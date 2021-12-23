@@ -26,6 +26,7 @@ import {
   dateToString,
   makeFullAddress,
 } from "../../../../modules/commonModule";
+import dayjs from "dayjs";
 
 /**
  * 마이 페이지: 계정관리 확인 컴포넌트(화면)
@@ -285,7 +286,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                   </Text>
                   <TextInput2
                     type="date"
-                    value={dateToString(props.userData.joinDate)}
+                    value={dayjs(props.userData.joinDate).format("YYYY-MM-DD")}
                     {...props.register("joinDate", {
                       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                         props.onInputUserHandler(e);

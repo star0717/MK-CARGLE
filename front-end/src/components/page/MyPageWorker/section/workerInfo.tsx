@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import { useState } from "react";
+import Modal from "react-modal";
 import {
   WholeWrapper,
   Wrapper,
@@ -13,89 +14,21 @@ import {
   TableRow,
   SmallButton,
   RsWrapper,
-  PagenationWrapper,
-  Pagenation,
   CloseButton,
 } from "../../../styles/CommonComponents";
-import Modal from "react-modal";
 import { _pWorkerData } from "../../../../configure/_pProps.entity";
-import {
-  IoIosArrowForward,
-  IoIosArrowBack,
-  IoIosCloseCircle,
-} from "react-icons/io";
 import { User } from "../../../../models/user.entity";
-import { useDispatch } from "react-redux";
-import { getWorkersListAction } from "../../../../../store/action/user.action";
-import { FindParameters, FindResult } from "../../../../models/base.entity";
-import { GetWorkersList } from "../../../../../store/interfaces";
-import WorkerInfoModal from "./workerInfoModal";
 import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
-import { ThemeColors } from "../../../../../styles/Theme";
+import { PagenationSection } from "../../../common/sections";
+import { IoIosCloseCircle } from "react-icons/io";
+import WorkerInfoModal from "./workerInfoModal";
 
 const workerInfo: NextPage<_pWorkerData> = (props) => {
-  const dispatch = useDispatch();
-
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [clickDoc, setClickDoc] = useState<User>();
 
   const closeModal = () => {
     setModalOpen(false);
-  };
-
-  /** 핸들러 */
-  const findWorksHandler = (page: number) => {
-    const param: FindParameters = {
-      page,
-      take: 15,
-    };
-    dispatch(getWorkersListAction(param)).then((res: GetWorkersList) => {
-      console.log(res);
-      props.setFindResult(res.payload);
-    });
-  };
-
-  const Pagenationbtn = () => {
-    const result = [];
-
-    const cPage = props.findResult.currentPage;
-    var sPage: number, lPage: number;
-    sPage =
-      cPage % 10 == 0
-        ? Math.round(cPage / 10) * 10 - 9
-        : Math.round(cPage / 10) * 10 + 1;
-    lPage = sPage + 9;
-    if (lPage > props.findResult.lastPage) lPage = props.findResult.lastPage;
-
-    if (props.findResult) {
-      for (
-        let i = Math.ceil(props.findResult.currentPage / 10);
-        i <= lPage;
-        i++
-      ) {
-        result.push(
-          <Pagenation
-            key={i}
-            theme={{
-              basicTheme_C:
-                cPage === i ? ThemeColors.white_C : ThemeColors.basicTheme_C,
-              white_C:
-                cPage === i ? ThemeColors.basicTheme_C : ThemeColors.white_C,
-            }}
-            border={
-              cPage === i
-                ? `1px solid ${ThemeColors.white_C}`
-                : "1px solid #0066ff"
-            }
-            type="button"
-            onClick={() => findWorksHandler(i)}
-          >
-            {i}
-          </Pagenation>
-        );
-      }
-      return result;
-    }
   };
 
   /**
@@ -110,7 +43,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        <Wrapper ju={`flex-start`}>
+        <Wrapper width={`1200px`}>
           <Text>직원관리</Text>
 
           <TableWrapper>
@@ -157,17 +90,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
             정보
           </SmallButton>
         </Wrapper>
-        <PagenationWrapper>
-          <Pagenation>
-            <IoIosArrowBack />
-          </Pagenation>
-
-          {Pagenationbtn()}
-
-          <Pagenation>
-            <IoIosArrowForward />
-          </Pagenation>
-        </PagenationWrapper>
+        <PagenationSection {...props} />
       </RsWrapper>
       <Wrapper>
         <Modal

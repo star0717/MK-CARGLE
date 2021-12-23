@@ -100,8 +100,8 @@ export class SettingsController {
       token,
       data,
     );
-    
-     this.comService.injectToken(newSignInfo, res);
+
+    this.comService.injectToken(newSignInfo, res);
     return newSignInfo;
   }
 
@@ -238,5 +238,18 @@ export class SettingsController {
     @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
   ): Promise<DeleteResult> {
     return await this.settingsService.deleteWorker(token, id);
+  }
+
+  @ApiOperation({ summary: '[OWNER] 작업자 정보 수정' })
+  @ApiParam({ name: 'id', description: '수정할 작업자의 오브젝트ID' })
+  @ApiBody({ description: '수정할 작업자의 정보. joinDate만 허용', type: User })
+  @ApiResponse({ description: '수정된 작업자의 정보', type: User })
+  @Patch('/management/workers/:id')
+  async updateWorkerInfo(
+    @Param('id') id: string,
+    @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
+    @Body() user: Partial<User>,
+  ): Promise<User> {
+    return await this.settingsService.updateWorkerInfo(token, id, user);
   }
 }
