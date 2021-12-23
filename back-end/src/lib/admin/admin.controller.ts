@@ -8,12 +8,14 @@ import {
   Res,
   StreamableFile,
   NotFoundException,
+  Query,
 } from '@nestjs/common';
 import { Response } from 'express';
 import {
   ApiBody,
   ApiOperation,
   ApiParam,
+  ApiResponse,
   ApiTags,
   PartialType,
 } from '@nestjs/swagger';
@@ -26,6 +28,7 @@ import { UserAuthority } from 'src/models/user.entity';
 import { createReadStream } from 'fs';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
 import { join } from 'path';
+import { FindParameters, FindResult } from 'src/models/base.entity';
 
 @Controller('admin')
 @ApiTags('시스템 관리자 API')
@@ -62,6 +65,21 @@ export class AdminController {
   @ApiOperation({ summary: '[PUBLIC] 어드민 계정 생성' })
   async createAdmin() {
     return await this.service.createAdmin();
+  }
+
+  @Get('review/companies')
+  @ApiOperation({
+    summary: `[WORKER] 승인 요청 업체 정보를 페이징 정보와 함께 반환`,
+  })
+  @ApiResponse({
+    description: `검색된 Company 배열 데이터와 페이징 정보`,
+    type: FindResult,
+  })
+  async findReqReviewCompanies(
+    @Query() fParams: FindParameters,
+    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
+  ): Promise<FindResult<Company>> {
+    return await this.service.findReqReviewCompanies(token, fParams);
   }
 
   @Patch('review/approve/companies/:id')

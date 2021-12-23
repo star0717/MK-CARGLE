@@ -22,7 +22,7 @@ import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
-import AdminCompanies from "../../src/components/page/admin/companies";
+import AdminCompanies from "../../src/components/page/admin/review_companies";
 import axios, { AxiosResponse } from "axios";
 import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
@@ -67,7 +67,7 @@ const SubComponent: NextPage<_MainProps> = (props) => {
     case UseLink.TEST:
       return <Test {...props} />;
 
-    case UseLink.ADMIN_COMPANIES:
+    case UseLink.ADMIN_REVIEW_COMPANIES:
       return <AdminCompanies {...props} />;
   }
 };
@@ -154,7 +154,7 @@ export const getServerSideProps: GetServerSideProps = async (
             },
           };
 
-        case UseLink.MYPAGE_WORKER:
+        case UseLink.MYPAGE_WORKER: {
           const params: FindParameters = {
             take: 10,
           };
@@ -178,7 +178,12 @@ export const getServerSideProps: GetServerSideProps = async (
               data,
             },
           };
-
+        }
+        case UseLink.ADMIN_MAN_COMPANIES: {
+          const params: FindParameters = {
+            take: 10,
+          };
+        }
         default:
           return {
             props: {

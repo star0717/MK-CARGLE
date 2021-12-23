@@ -23,7 +23,8 @@ export const MainRoute = {
 export const SubRoute = {
   ACCOUNT: "account",
   WORKER: "worker",
-  COMPANIES: "companies",
+  REVIEW_COMPANIES: "review_companies",
+  MAN_COMPANIES: "man_companies",
 };
 
 export const BaseLink = {
@@ -41,5 +42,6 @@ export const UseLink = {
   MYPAGE_ACCOUNT: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.ACCOUNT}`,
   MYPAGE_WORKER: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.WORKER}`,
   TEST: `${BaseLink.V}/${MainRoute.TEST}`,
-  ADMIN_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.COMPANIES}`,
+  ADMIN_REVIEW_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.REVIEW_COMPANIES}`,
+  ADMIN_MAN_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.MAN_COMPANIES}`,
 };

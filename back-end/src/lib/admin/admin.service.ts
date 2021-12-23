@@ -7,6 +7,7 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
 import { AuthTokenInfo } from 'src/models/auth.entity';
+import { FindParameters, FindResult } from 'src/models/base.entity';
 import { Company, CompanyApproval } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
 import { CompaniesService } from 'src/modules/companies/companies.service';
@@ -78,6 +79,13 @@ export class AdminService {
       user,
       company,
     };
+  }
+
+  async findReqReviewCompanies(
+    token: AuthTokenInfo,
+    fParams: FindParameters,
+  ): Promise<FindResult<Company>> {
+    return this.companiesService.findByOptions(token, fParams);
   }
 
   async approveCompany(id: string, doc: Partial<Company>): Promise<Company> {
