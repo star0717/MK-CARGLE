@@ -225,4 +225,15 @@ export class SettingsService {
     this.commonService.sendMail(user.email, email.title, email.content);
     return result;
   }
+
+  async updateWorkerInfo(
+    token: AuthTokenInfo,
+    id: string,
+    user: Partial<User>,
+  ): Promise<User> {
+    var pUser: Partial<User> = {};
+    if (user.joinDate) pUser.joinDate = user.joinDate;
+
+    return await this.usersService.findByIdAndUpdate(token, id, pUser);
+  }
 }
