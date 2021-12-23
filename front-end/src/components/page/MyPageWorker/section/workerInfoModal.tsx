@@ -8,10 +8,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   patchWorkerApproveAction,
+  patchWorkerDeleteAction,
   patchWorkerRejectAction,
 } from "../../../../../store/action/user.action";
 import {
   PatchWorkersApprove,
+  PatchWorkersDelete,
   PatchWorkersReject,
 } from "../../../../../store/interfaces";
 import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
@@ -37,21 +39,19 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
   const [docInfo, setDocInfo] = useState<User>(props.clickDoc); //해당 직원 정보
 
   /**
-   * Worker 승인 handler
+   * 직원(worker) 승인 handler
    * @param e
    */
   const onChangeApproval = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (approval) {
       dispatch(patchWorkerRejectAction(props.clickDoc._id)).then(
         (res: PatchWorkersReject) => {
-          console.log(res.payload.approval);
           setApproval(res.payload.approval);
         }
       );
     } else {
       dispatch(patchWorkerApproveAction(props.clickDoc._id)).then(
         (res: PatchWorkersApprove) => {
-          console.log(res.payload.approval);
           setApproval(res.payload.approval);
         }
       );
@@ -59,14 +59,23 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
   };
 
   /**
-   * Worker 유저정보 수정 handler
+   * 직원(worker) 정보수정 handler
    * @param e
    */
   const onChangeWorkerInfo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
-  const workerDelete = () => {};
+  /**
+   * 직원(worker) 삭제
+   */
+  const workerDelete = () => {
+    dispatch(patchWorkerDeleteAction(props.clickDoc._id)).then(
+      (res: PatchWorkersDelete) => {
+        console.log(res);
+      }
+    );
+  };
 
   return (
     <WholeWrapper>

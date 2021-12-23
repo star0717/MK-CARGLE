@@ -18,6 +18,7 @@ import {
   AdminCompaniesList,
   GetWorkersList,
   PatchWorkersApprove,
+  PatchWorkersDelete,
   PatchWorkersReject,
 } from "../interfaces";
 
@@ -364,19 +365,19 @@ export async function patchWorkerRejectAction(dataToSubmit: string) {
   return result;
 }
 
-// /**
-//  * 작업자 삭제 action
-//  * @param dataToSubmit
-//  * @returns
-//  */
-// export async function patchWorkerDeleteAction(dataToSubmit: string) {
-//   const req = await axios
-//     .patch(`/api/settings/management/reject/workers/${dataToSubmit}`)
-//     .then((res: AxiosResponse<DeleteResult, any>) => res.data);
+/**
+ * 작업자 삭제 action
+ * @param dataToSubmit
+ * @returns
+ */
+export async function patchWorkerDeleteAction(dataToSubmit: string) {
+  const req = await axios
+    .patch(`/api/settings/management/delete/workers/${dataToSubmit}`)
+    .then((res: AxiosResponse<DeleteResult, any>) => res.data);
 
-//   const result: PatchWorkersReject = {
-//     type: actionTypesUser.PATCH_WORKERS_DELETE,
-//     payload: req,
-//   };
-//   return result;
-// }
+  const result: PatchWorkersDelete = {
+    type: actionTypesUser.PATCH_WORKERS_DELETE,
+    payload: req,
+  };
+  return result;
+}
