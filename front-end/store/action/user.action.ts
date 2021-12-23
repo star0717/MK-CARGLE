@@ -7,13 +7,18 @@ import {
   SignUpInfo,
   UserInfo,
 } from "../../src/models/auth.entity";
-import { FindParameters, FindResult } from "../../src/models/base.entity";
+import {
+  DeleteResult,
+  FindParameters,
+  FindResult,
+} from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 import {
   actionTypesUser,
   AdminCompaniesList,
   GetWorkersList,
   PatchWorkersApprove,
+  PatchWorkersDelete,
   PatchWorkersReject,
 } from "../interfaces";
 
@@ -326,6 +331,11 @@ export async function getComRegFile(id: string) {
   return result;
 }
 
+/**
+ * 작업자 승인 허가 action
+ * @param dataToSubmit
+ * @returns
+ */
 export async function patchWorkerApproveAction(dataToSubmit: string) {
   const req = await axios
     .patch(`/api/settings/management/approve/workers/${dataToSubmit}`)
@@ -338,6 +348,11 @@ export async function patchWorkerApproveAction(dataToSubmit: string) {
   return result;
 }
 
+/**
+ * 작업자 승인 거부 action
+ * @param dataToSubmit
+ * @returns
+ */
 export async function patchWorkerRejectAction(dataToSubmit: string) {
   const req = await axios
     .patch(`/api/settings/management/reject/workers/${dataToSubmit}`)
@@ -345,6 +360,23 @@ export async function patchWorkerRejectAction(dataToSubmit: string) {
 
   const result: PatchWorkersReject = {
     type: actionTypesUser.PATCH_WORKERS_REJECT,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 작업자 삭제 action
+ * @param dataToSubmit
+ * @returns
+ */
+export async function patchWorkerDeleteAction(dataToSubmit: string) {
+  const req = await axios
+    .patch(`/api/settings/management/delete/workers/${dataToSubmit}`)
+    .then((res: AxiosResponse<DeleteResult, any>) => res.data);
+
+  const result: PatchWorkersDelete = {
+    type: actionTypesUser.PATCH_WORKERS_DELETE,
     payload: req,
   };
   return result;
