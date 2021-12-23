@@ -1,21 +1,13 @@
 import type { NextPage } from "next";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  getCompanies,
-  getComRegFile,
-} from "../../../../../store/action/user.action";
-import { AdminCompaniesList } from "../../../../../store/interfaces";
 import { _pADMIN_REVIEW_COMPANIES } from "../../../../configure/_pProps.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
 import {
-  SmallButton,
   TableBody,
   TableHead,
   TableHeadLIST,
-  TableRow,
-  TableRowLIST,
   TableWrapper,
   Text,
   WholeWrapper,
