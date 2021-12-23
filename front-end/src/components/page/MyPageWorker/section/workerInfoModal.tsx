@@ -67,14 +67,22 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
   };
 
   /**
-   * 직원(worker) 삭제
+   * 직원(worker) 삭제 handler
    */
   const workerDelete = () => {
-    dispatch(patchWorkerDeleteAction(props.clickDoc._id)).then(
-      (res: PatchWorkersDelete) => {
-        console.log(res);
-      }
-    );
+    if (window.confirm("삭제하시겠습니까?")) {
+      dispatch(patchWorkerDeleteAction(props.clickDoc._id)).then(
+        (res: PatchWorkersDelete) => {
+          if (res.payload.deletedCount === 1) {
+            props.setModalOpen(false);
+          } else {
+            alert("삭제 실패");
+          }
+        }
+      );
+    } else {
+      return false;
+    }
   };
 
   return (
