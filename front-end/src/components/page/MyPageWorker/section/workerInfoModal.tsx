@@ -4,7 +4,7 @@ import "dayjs/locale/ko";
 
 dayjs.locale("ko");
 import type { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   patchWorkerApproveAction,
@@ -34,23 +34,25 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
   const dispatch = useDispatch();
   // state 관리
   const [approval, setApproval] = useState<boolean>(props.clickDoc.approval); // 직원 승인여부
-  const [docInfo, setDocInfo] = useState<User>(props.clickDoc);
+  const [docInfo, setDocInfo] = useState<User>(props.clickDoc); //해당 직원 정보
 
   /**
-   *
+   * Worker 승인 handler
    * @param e
    */
   const onChangeApproval = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (approval) {
-      dispatch(patchWorkerApproveAction(props.clickDoc._id)).then(
-        (res: PatchWorkersApprove) => {
-          console.log(res.payload.approval);
-        }
-      );
-    } else {
       dispatch(patchWorkerRejectAction(props.clickDoc._id)).then(
         (res: PatchWorkersReject) => {
           console.log(res.payload.approval);
+          setApproval(res.payload.approval);
+        }
+      );
+    } else {
+      dispatch(patchWorkerApproveAction(props.clickDoc._id)).then(
+        (res: PatchWorkersApprove) => {
+          console.log(res.payload.approval);
+          setApproval(res.payload.approval);
         }
       );
     }
@@ -64,6 +66,8 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
     e.preventDefault();
   };
 
+  const workerDelete = () => {};
+
   return (
     <WholeWrapper>
       <RsWrapper>
@@ -75,6 +79,7 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
             checked={approval}
             onChange={onChangeApproval}
           />
+          {approval ? <Text>승인</Text> : <Text>미승인</Text>}
         </Wrapper>
         <form onSubmit={onChangeWorkerInfo}>
           <Wrapper dr={`row`}>
@@ -124,6 +129,7 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
               type="button"
               kindOf={`default`}
               margin={`0px 0px 0px 20px`}
+              onClick={workerDelete}
             >
               직원삭제
             </SmallButton>
