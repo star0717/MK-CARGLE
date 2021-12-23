@@ -1,6 +1,7 @@
 import { Switch } from "@material-ui/core";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+
 dayjs.locale("ko");
 import type { NextPage } from "next";
 import React, { useState } from "react";
@@ -31,6 +32,7 @@ import {
 
 const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
   const dispatch = useDispatch();
+
   // state 관리
   const [approval, setApproval] = useState<boolean>(props.clickDoc.approval); // 직원 승인여부
   const [docInfo, setDocInfo] = useState<User>(props.clickDoc); //해당 직원 정보
@@ -44,12 +46,32 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
       dispatch(patchWorkerRejectAction(docInfo._id)).then(
         (res: PatchWorkersReject) => {
           setApproval(res.payload.approval);
+          const newList: User[] = [];
+          props.findResult.docs.forEach((item) => {
+            if (item._id === res.payload._id) {
+              item.approval = res.payload.approval;
+              newList.push(item);
+            } else {
+              newList.push(item);
+            }
+          });
+          props.setFindResult({ ...props.findResult, docs: newList });
         }
       );
     } else {
       dispatch(patchWorkerApproveAction(docInfo._id)).then(
         (res: PatchWorkersApprove) => {
           setApproval(res.payload.approval);
+          const newList: User[] = [];
+          props.findResult.docs.forEach((item) => {
+            if (item._id === res.payload._id) {
+              item.approval = res.payload.approval;
+              newList.push(item);
+            } else {
+              newList.push(item);
+            }
+          });
+          props.setFindResult({ ...props.findResult, docs: newList });
         }
       );
     }
@@ -69,6 +91,16 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
       dispatch(patchWorkerChangeAction(docInfo._id, changeInfo)).then(
         (res: PatchWorkersChange) => {
           props.setModalOpen(false);
+          const newList: User[] = [];
+          props.findResult.docs.forEach((item) => {
+            if (item._id === res.payload._id) {
+              item.joinDate = res.payload.joinDate;
+              newList.push(item);
+            } else {
+              newList.push(item);
+            }
+          });
+          props.setFindResult({ ...props.findResult, docs: newList });
         }
       );
     } else {
@@ -85,6 +117,13 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
         (res: PatchWorkersDelete) => {
           if (res.payload.deletedCount === 1) {
             props.setModalOpen(false);
+            const newList: User[] = [];
+            props.findResult.docs.forEach((item) => {
+              if (item._id !== docInfo._id) {
+                newList.push(item);
+              }
+            });
+            props.setFindResult({ ...props.findResult, docs: newList });
           } else {
             alert("삭제 실패");
           }
