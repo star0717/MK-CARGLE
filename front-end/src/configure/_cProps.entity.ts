@@ -3,6 +3,7 @@ import { AuthTokenInfo, SignUpInfo } from "../../src/models/auth.entity";
 import { FormCheck, FormInput } from "../../store/interfaces";
 import { Company } from "../models/company.entity";
 import { User, UserAuthority } from "../models/user.entity";
+import { _pWorkerData } from "./_pProps.entity";
 import { _MainProps } from "./_props.entity";
 
 // 컴포넌트 props //
@@ -97,7 +98,7 @@ export interface _cWithdrawalModalProps {
 /**
  * 마이페이지(직원관리): 직원정보 modal props
  */
-export interface _cWorkerInfoModalProps {
+export interface _cWorkerInfoModalProps extends _pWorkerData {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   clickDoc: User;
   style: {

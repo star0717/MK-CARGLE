@@ -156,7 +156,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
         case UseLink.MYPAGE_WORKER: {
           const params: FindParameters = {
-            take: 1,
+            take: 10,
           };
 
           data = await axios
