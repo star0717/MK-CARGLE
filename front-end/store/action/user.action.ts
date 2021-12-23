@@ -14,6 +14,7 @@ import {
   AdminCompaniesList,
   GetWorkersList,
   PatchWorkersApprove,
+  PatchWorkersReject,
 } from "../interfaces";
 
 // 로그인 action
@@ -332,6 +333,18 @@ export async function patchWorkerApproveAction(dataToSubmit: string) {
 
   const result: PatchWorkersApprove = {
     type: actionTypesUser.PATCH_WORKERS_APPROVE,
+    payload: req,
+  };
+  return result;
+}
+
+export async function patchWorkerRejectAction(dataToSubmit: string) {
+  const req = await axios
+    .patch(`/api/settings/management/reject/workers/${dataToSubmit}`)
+    .then((res: AxiosResponse<User, any>) => res.data);
+
+  const result: PatchWorkersReject = {
+    type: actionTypesUser.PATCH_WORKERS_REJECT,
     payload: req,
   };
   return result;
