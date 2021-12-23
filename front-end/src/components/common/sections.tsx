@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { ThemeColors } from "../../../styles/Theme";
 import { Pagenation, PagenationWrapper } from "../styles/CommonComponents";
@@ -44,6 +45,7 @@ export const PagenationSection: NextPage<any> = (props) => {
           </Pagenation>
         );
       }
+      console.log("sections!!");
       return result;
     }
   };
@@ -51,11 +53,17 @@ export const PagenationSection: NextPage<any> = (props) => {
   return (
     <PagenationWrapper>
       <Pagenation>
+        <BsChevronDoubleLeft />
+      </Pagenation>
+      <Pagenation>
         <IoIosArrowBack />
       </Pagenation>
       {pagenationBtn()}
       <Pagenation>
         <IoIosArrowForward />
+      </Pagenation>
+      <Pagenation>
+        <BsChevronDoubleRight />
       </Pagenation>
     </PagenationWrapper>
   );
