@@ -171,7 +171,7 @@ export const getServerSideProps: GetServerSideProps = async (
                 withCredentials: true,
               }
             )
-            .then((res: AxiosResponse<unknown, any>) => res.data);
+            .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
           return {
             props: {
               tokenValue,
