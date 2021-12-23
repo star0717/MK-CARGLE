@@ -14,14 +14,11 @@ export const PagenationSection: NextPage<any> = (props) => {
       cPage % 10 == 0
         ? Math.round(cPage / 10) * 10 - 9
         : Math.floor(cPage / 10) * 10 + 1;
-    console.log("sPage => ", sPage);
 
     lPage = sPage + 9;
     if (lPage > props.findResult.lastPage) lPage = props.findResult.lastPage;
-    console.log("lPage =>", lPage);
     if (props.findResult) {
       for (let i = sPage; i <= lPage; i++) {
-        console.log(i);
         result.push(
           <Pagenation
             key={i}
@@ -43,7 +40,6 @@ export const PagenationSection: NextPage<any> = (props) => {
           </Pagenation>
         );
       }
-      console.log(result);
       return result;
     }
   };
@@ -64,14 +60,22 @@ export const PagenationSection: NextPage<any> = (props) => {
       </Pagenation>
       <Pagenation
         type="button"
-        onClick={() => props.findWorksHandler(props.findResult.currentPage - 1)}
+        onClick={() => {
+          if (props.findResult.currentPage != 1) {
+            props.findWorksHandler(props.findResult.currentPage - 1);
+          }
+        }}
       >
         <IoIosArrowBack />
       </Pagenation>
       {pagenationBtn()}
       <Pagenation
         type="button"
-        onClick={() => props.findWorksHandler(props.findResult.currentPage + 1)}
+        onClick={() => {
+          if (props.findResult.currentPage != props.findResult.lastPage) {
+            props.findWorksHandler(props.findResult.currentPage + 1);
+          }
+        }}
       >
         <IoIosArrowForward />
       </Pagenation>
