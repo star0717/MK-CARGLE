@@ -22,6 +22,10 @@ import { mbTypeOption } from "../../../../configure/list.entity";
 import { AiTwotoneCopyrightCircle, AiOutlineLine } from "react-icons/ai";
 import { BusinessCenter, Person } from "@material-ui/icons";
 import { _pAccountInfoProps } from "../../../../configure/_pProps.entity";
+import {
+  dateToString,
+  makeFullAddress,
+} from "../../../../modules/commonModule";
 
 /**
  * 마이 페이지: 계정관리 확인 컴포넌트(화면)
@@ -281,11 +285,7 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                   </Text>
                   <TextInput2
                     type="date"
-                    value={
-                      props.userData.joinDate
-                        ? props.userData.joinDate.toString().slice(0, 10)
-                        : ""
-                    }
+                    value={dateToString(props.userData.joinDate)}
                     {...props.register("joinDate", {
                       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                         props.onInputUserHandler(e);
@@ -609,7 +609,11 @@ const AccountInfoPresenter: NextPage<_pAccountInfoProps> = (props) => {
                     사업자 주소
                   </Text>
                   <TextInput2
-                    value={`${props.comData.address1} ${props.comData.address2}, (${props.comData.postcode})`}
+                    value={makeFullAddress(
+                      props.comData.address1,
+                      props.comData.address2,
+                      props.comData.postcode
+                    )}
                     type="text"
                     readOnly
                     width={`800px`}

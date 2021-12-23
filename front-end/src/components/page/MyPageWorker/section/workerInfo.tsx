@@ -23,6 +23,8 @@ import { useDispatch } from "react-redux";
 import { getWorkersListAction } from "../../../../../store/action/user.action";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { GetWorkersList } from "../../../../../store/interfaces";
+import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
+import { ThemeColors } from "../../../../../styles/Theme";
 
 const workerInfo: NextPage<_pWorkerData> = (props) => {
   const dispatch = useDispatch();
@@ -61,17 +63,33 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
       cPage % 10 == 0
         ? Math.round(cPage / 10) * 10 - 9
         : Math.round(cPage / 10) * 10 + 1;
-    lPage = Math.min(props.findResult.lastPage, sPage + 9);
-    // console.log(`sPage: ${sPage}`, `cPage: ${cPage}`, `lPage: ${lPage}`);
+
+    lPage = sPage + 9;
+    if (lPage > props.findResult.lastPage) lPage = props.findResult.lastPage;
 
     if (props.findResult) {
       for (
         let i = Math.ceil(props.findResult.currentPage / 10);
-        i <= props.findResult.lastPage;
-
+        i <= lPage;
+        i++
       ) {
         result.push(
-          <Pagenation key={i} type="button" onClick={() => findWorksHandler(i)}>
+          <Pagenation
+            key={i}
+            theme={{
+              basicTheme_C:
+                cPage === i ? ThemeColors.white_C : ThemeColors.basicTheme_C,
+              white_C:
+                cPage === i ? ThemeColors.basicTheme_C : ThemeColors.white_C,
+            }}
+            border={
+              cPage === i
+                ? `1px solid ${ThemeColors.white_C}`
+                : "1px solid #0066ff"
+            }
+            type="button"
+            onClick={() => findWorksHandler(i)}
+          >
             {i}
           </Pagenation>
         );
