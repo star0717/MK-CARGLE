@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import {
   WholeWrapper,
@@ -30,14 +30,11 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
     setModalOpen(false);
   };
 
-  useEffect(() => {
-    console.log("hi");
-  }, [modalOpen]);
-
   /**
    * 화면구성에 넘길 props
    */
   const WorkerModalProps: _cWorkerInfoModalProps = {
+    ...props,
     setModalOpen,
     clickDoc,
     style: { height: "500px" },
