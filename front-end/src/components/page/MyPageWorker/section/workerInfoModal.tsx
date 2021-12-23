@@ -50,6 +50,7 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
       dispatch(patchWorkerRejectAction(docInfo._id)).then(
         (res: PatchWorkersReject) => {
           setApproval(res.payload.approval);
+          console.log("???", props.findResult.docs);
           // for (let i = 0; i < props.findResult.docs.length; i++) {
           //   if (props.findResult.docs[i]._id === res.payload._id) {
           //     props.setFindResult({
