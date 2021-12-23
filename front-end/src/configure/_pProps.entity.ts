@@ -256,4 +256,5 @@ export interface _pWithdrawalModalProps extends _cWithdrawalModalProps {
 export interface _pWorkerData extends _MainProps {
   findResult: FindResult<User>;
   setFindResult: React.Dispatch<React.SetStateAction<FindResult<User>>>;
+  findWorksHandler: (page: number) => void;
 }

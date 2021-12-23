@@ -156,7 +156,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
         case UseLink.MYPAGE_WORKER:
           const params: FindParameters = {
-            take: 15,
+            take: 10,
           };
 
           data = await axios
@@ -171,7 +171,7 @@ export const getServerSideProps: GetServerSideProps = async (
                 withCredentials: true,
               }
             )
-            .then((res: AxiosResponse<unknown, any>) => res.data);
+            .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
           return {
             props: {
               tokenValue,

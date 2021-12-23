@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   WholeWrapper,
   Wrapper,
@@ -13,100 +13,30 @@ import {
   TableRow,
   SmallButton,
   RsWrapper,
-  PagenationWrapper,
-  Pagenation,
-  CloseButton,
 } from "../../../styles/CommonComponents";
-import Modal from "react-modal";
 import { _pWorkerData } from "../../../../configure/_pProps.entity";
-import {
-  IoIosArrowForward,
-  IoIosArrowBack,
-  IoIosCloseCircle,
-} from "react-icons/io";
 import { User } from "../../../../models/user.entity";
-import { useDispatch } from "react-redux";
-import { getWorkersListAction } from "../../../../../store/action/user.action";
-import { FindParameters, FindResult } from "../../../../models/base.entity";
-import { GetWorkersList } from "../../../../../store/interfaces";
-import WorkerInfoModal from "./workerInfoModal";
 import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
-import { ThemeColors } from "../../../../../styles/Theme";
+import { PagenationSection } from "../../../common/sections";
 
 const workerInfo: NextPage<_pWorkerData> = (props) => {
-  const dispatch = useDispatch();
-
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [clickDoc, setClickDoc] = useState<User>();
+  const [modalOption, setModalOption] = useState<string>("");
 
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  /** 핸들러 */
-  const findWorksHandler = (page: number) => {
-    const param: FindParameters = {
-      page,
-      take: 15,
-    };
-    dispatch(getWorkersListAction(param)).then((res: GetWorkersList) => {
-      console.log(res);
-      props.setFindResult(res.payload);
-    });
-  };
-
-  const Pagenationbtn = () => {
-    const result = [];
-
-    const cPage = props.findResult.currentPage;
-    var sPage: number, lPage: number;
-    sPage =
-      cPage % 10 == 0
-        ? Math.round(cPage / 10) * 10 - 9
-        : Math.round(cPage / 10) * 10 + 1;
-    lPage = sPage + 9;
-    // console.log(`sPage: ${sPage}`, `cPage: ${cPage}`, `lPage: ${lPage}`);
-
-    if (props.findResult) {
-      for (
-        let i = Math.ceil(props.findResult.currentPage / 10);
-        i <= props.findResult.lastPage;
-        i++
-      ) {
-        result.push(
-          <Pagenation
-            key={i}
-            theme={{
-              basicTheme_C:
-                cPage === i ? ThemeColors.white_C : ThemeColors.basicTheme_C,
-              white_C:
-                cPage === i ? ThemeColors.basicTheme_C : ThemeColors.white_C,
-            }}
-            border={cPage === i ? "1px solid #fff" : "1px solid #0066ff"}
-            type="button"
-            onClick={() => findWorksHandler(i)}
-          >
-            {i}
-          </Pagenation>
-        );
-      }
-      return result;
-    }
-  };
-
-  /**
-   * 화면구성에 넘길 props
-   */
-  const WorkerModalProps: _cWorkerInfoModalProps = {
+  const WorkerModalProps = {
     setModalOpen,
-    clickDoc,
+    setModalOption,
     style: { height: "500px" },
   };
 
   return (
     <WholeWrapper>
       <RsWrapper>
-        <Wrapper width={`1200px`} ju={`flex-start`}>
+        <Wrapper width={`1200px`}>
           <Text>직원관리</Text>
 
           <TableWrapper>
@@ -118,13 +48,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
             </TableHead>
             <TableBody>
               {props.findResult.docs.map((doc: User) => (
-                <TableRow
-                  key={doc._id}
-                  onClick={() => {
-                    setModalOpen(!modalOpen);
-                    setClickDoc(doc);
-                  }}
-                >
+                <TableRow key={doc._id}>
                   <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
                   <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
                   <TableRowLIST width={`300px`}>
@@ -153,57 +77,8 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
             정보
           </SmallButton>
         </Wrapper>
-        <PagenationWrapper>
-          <Pagenation>
-            <IoIosArrowBack />
-          </Pagenation>
-
-          {Pagenationbtn()}
-
-          <Pagenation>
-            <IoIosArrowForward />
-          </Pagenation>
-        </PagenationWrapper>
+        <PagenationSection {...props} />
       </RsWrapper>
-      <Wrapper>
-        <Modal
-          isOpen={modalOpen}
-          style={{
-            overlay: {
-              position: "fixed",
-              zIndex: 1020,
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
-              background: "rgba(255, 255, 255, 0.75)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            },
-            content: {
-              background: "white",
-              width: "45rem",
-              height: "575px",
-              maxWidth: "calc(100vw - 2rem)",
-              maxHeight: "calc(100vh - 2rem)",
-              overflowY: "auto",
-              position: "relative",
-              border: "1px solid #ccc",
-              borderRadius: "0.3rem",
-              boxShadow: "0px 10px 15px rgba(220,220,220,1)",
-              inset: 0,
-            },
-          }}
-        >
-          <Wrapper fontSize={`28px`} al={`flex-end`}>
-            <CloseButton onClick={closeModal}>
-              <IoIosCloseCircle />
-            </CloseButton>
-            <WorkerInfoModal {...WorkerModalProps} />
-          </Wrapper>
-        </Modal>
-      </Wrapper>
     </WholeWrapper>
   );
 };
