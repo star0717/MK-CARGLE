@@ -31,6 +31,7 @@ import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { GetWorkersList } from "../../../../../store/interfaces";
 import WorkerInfoModal from "./workerInfoModal";
 import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
+import { ThemeColors } from "../../../../../styles/Theme";
 
 const workerInfo: NextPage<_pWorkerData> = (props) => {
   const dispatch = useDispatch();
@@ -76,8 +77,10 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
           <Pagenation
             key={i}
             theme={{
-              basicTheme_C: cPage === i ? "#fff" : "#0066ff",
-              white_C: cPage === i ? "#0066ff" : "#fff",
+              basicTheme_C:
+                cPage === i ? ThemeColors.white_C : ThemeColors.basicTheme_C,
+              white_C:
+                cPage === i ? ThemeColors.basicTheme_C : ThemeColors.white_C,
             }}
             border={cPage === i ? "1px solid #fff" : "1px solid #0066ff"}
             type="button"
