@@ -32,7 +32,7 @@ export const WholeWrapper = styled.div<any>`
   right: ${(props) => props.right};
   bottom: ${(props) => props.bottom};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `0px 0px 0px 150px`};
+  padding: ${(props) => props.padding || `0px`};
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
   min-height: ${(props) => props.minHeight};
@@ -1252,11 +1252,11 @@ export const Pagenation = styled.button<any>`
   justify-content: ${(props) => props.ju || `center`};
   cursor: pointer;
   padding-top: 3px;
-  background-color: ${(props) => props.theme.basicTheme_C};
-  color: ${(props) => props.theme.white_C};
+  background-color: ${(props) => props.theme.white_C};
+  color: ${(props) => props.theme.basicTheme_C};
+  border: 1px solid #0066ff;
   border-radius: 30px;
   margin: 0px 3px;
-  border: ${(props) => props.border || `none`};
 
   &.active {
     border-radius: 30px;
@@ -1270,11 +1270,10 @@ export const Pagenation = styled.button<any>`
     border: 1px solid #ddd;
     color: ${(props) => props.theme.black_C};
   }
-
-  &:hover {
-    box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
-  }
 `;
+// &:hover {
+//   box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
+// }
 
 // export const PagenationBtn = styled.div<any>`
 //   text-align: center;
