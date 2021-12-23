@@ -6,8 +6,14 @@ dayjs.locale("ko");
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { patchWorkerApproveAction } from "../../../../../store/action/user.action";
-import { PatchWorkersApprove } from "../../../../../store/interfaces";
+import {
+  patchWorkerApproveAction,
+  patchWorkerRejectAction,
+} from "../../../../../store/action/user.action";
+import {
+  PatchWorkersApprove,
+  PatchWorkersReject,
+} from "../../../../../store/interfaces";
 import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import { User } from "../../../../models/user.entity";
@@ -38,7 +44,13 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
     if (approval) {
       dispatch(patchWorkerApproveAction(props.clickDoc._id)).then(
         (res: PatchWorkersApprove) => {
-          console.log(res.payload);
+          console.log(res.payload.approval);
+        }
+      );
+    } else {
+      dispatch(patchWorkerRejectAction(props.clickDoc._id)).then(
+        (res: PatchWorkersReject) => {
+          console.log(res.payload.approval);
         }
       );
     }
