@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { WholeWrapper, Wrapper, Text } from "../../../styles/CommonComponents";
 
-const workerInfoModal: NextPage = () => {
+const WorkerInfoModal: NextPage<any> = () => {
   return (
     <WholeWrapper>
       <Wrapper></Wrapper>
@@ -9,4 +9,4 @@ const workerInfoModal: NextPage = () => {
   );
 };
 
-export default workerInfoModal;
+export default WorkerInfoModal;
