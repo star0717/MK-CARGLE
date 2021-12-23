@@ -32,7 +32,7 @@ export const WholeWrapper = styled.div<any>`
   right: ${(props) => props.right};
   bottom: ${(props) => props.bottom};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `0px 0px 0px 150px`};
+  padding: ${(props) => props.padding || `0px`};
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
   min-height: ${(props) => props.minHeight};
@@ -1269,11 +1269,6 @@ export const Pagenation = styled.button<any>`
     background-color: ${(props) => props.theme.subWhite_C};
     border: 1px solid #ddd;
     color: ${(props) => props.theme.black_C};
-  }
-
-  &:focus {
-    background-color: ${(props) => props.theme.basicTheme_C};
-    color: ${(props) => props.theme.white_C};
   }
 `;
 // &:hover {

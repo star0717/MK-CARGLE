@@ -76,8 +76,8 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
           <Pagenation
             key={i}
             theme={{
-              basicTheme_C: cPage === i ? "#0066ff" : "#fff",
-              white_C: cPage === i ? "#fff" : "#0066ff",
+              basicTheme_C: cPage === i ? "#fff" : "#0066ff",
+              white_C: cPage === i ? "#0066ff" : "#fff",
             }}
             border={cPage === i ? "1px solid #fff" : "1px solid #0066ff"}
             type="button"
@@ -103,7 +103,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        <Wrapper width={`1200px`}>
+        <Wrapper width={`1200px`} ju={`flex-start`}>
           <Text>직원관리</Text>
 
           <TableWrapper>
