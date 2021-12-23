@@ -25,3 +25,17 @@ export const getPathName = (url: string): string => {
 
   return pathName;
 };
+
+export const makeFullAddress = (main: string, sub: string, post: string) => {
+  let fullAddress: string = "";
+  if (main) {
+    if (sub) {
+      fullAddress = `${main} ${sub}, (${post})`;
+    } else {
+      fullAddress = `${main}, (${post})`;
+    }
+  } else {
+    fullAddress = `-`;
+  }
+  return fullAddress;
+};
