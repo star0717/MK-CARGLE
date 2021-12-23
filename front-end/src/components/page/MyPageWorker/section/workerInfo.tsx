@@ -103,7 +103,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        <Wrapper width={`1200px`} ju={`flex-start`}>
+        <Wrapper ju={`flex-start`}>
           <Text>직원관리</Text>
 
           <TableWrapper>
