@@ -236,6 +236,11 @@ const userAll = (
       return {
         ...state,
       };
+    //작업자 정보 변경
+    case actionTypesUser.PATCH_WORKERS_CHANGE:
+      return {
+        ...state,
+      };
     //작업자 삭제
     case actionTypesUser.PATCH_WORKERS_DELETE:
       return {
