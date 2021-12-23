@@ -66,14 +66,12 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
    */
   const onChangeWorkerInfo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const workerChangeInfo = {
-    //   joinDate: docInfo.joinDate,
-    // };
-    const user: Partial<User> = {
+
+    const changeInfo: Partial<User> = {
       joinDate: docInfo.joinDate,
     };
     if (window.confirm("저장하시겠습니까?")) {
-      dispatch(patchWorkerChangeAction(docInfo._id, user)).then(
+      dispatch(patchWorkerChangeAction(docInfo._id, changeInfo)).then(
         (res: PatchWorkersChange) => {
           props.setModalOpen(false);
         }
