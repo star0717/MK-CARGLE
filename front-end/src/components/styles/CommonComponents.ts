@@ -18,7 +18,7 @@ export const WholeWrapper = styled.div<any>`
   color: ${(props) => props.theme.black_C};
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
   background-image: ${(props) => props.bgImg};
   background-size: cover;
   background-position: 50% 50%;
@@ -287,8 +287,10 @@ export const CommonForm = styled.form<any>`
 
 export const CommonTitleWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
-  display: ${(props) => props.display};
-  position: relative;
+  display: ${(props) => props.display || `flex`};
+  flex-direction: ${(props) => props.dr || `column`};
+  position: ${(props) => (props.isAbsolute ? `absolute` : `relatuve`)};
+  top: 80px;
   margin: ${(props) => props.margin || `0px 0px 80px`};
   margintop: ${(props) => props.marginTop};
   padding: ${(props) => props.padding || `50px 0px 30px`};

@@ -26,12 +26,6 @@ const AccountCheckPresenter: NextPage<_pAccountCheckProps> = (props) => {
 
   return (
     <>
-      <CommonTitleWrapper>
-        <CommonTitle>회원탈퇴</CommonTitle>
-        <CommonSubTitle>
-          회원탈퇴를 위해 약관 동의 후 비밀번호를 입력해주세요.
-        </CommonSubTitle>
-      </CommonTitleWrapper>
       <WholeWrapper ref={ref}>
         {/* <CommonTitleWrapper>
         <CommonTitle>회원탈퇴</CommonTitle>
@@ -39,6 +33,12 @@ const AccountCheckPresenter: NextPage<_pAccountCheckProps> = (props) => {
           회원탈퇴를 위해 약관 동의 후 비밀번호를 입력해주세요.
         </CommonSubTitle>
       </CommonTitleWrapper> */}
+        <CommonTitleWrapper>
+          <CommonTitle>계정관리</CommonTitle>
+          <CommonSubTitle>
+            계정관리를 위해 비밀번호를 입력해주세요.
+          </CommonSubTitle>
+        </CommonTitleWrapper>
         <RsWrapper>
           <Wrapper
             width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
