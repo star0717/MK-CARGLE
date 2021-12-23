@@ -47,7 +47,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
     ...props,
     findResult,
     setFindResult,
-    findWorksHandler,
+    findDocHandler: findWorksHandler,
   };
 
   /*********************************************************************
