@@ -18,6 +18,7 @@ import {
   AdminCompaniesList,
   GetWorkersList,
   PatchWorkersApprove,
+  PatchWorkersChange,
   PatchWorkersDelete,
   PatchWorkersReject,
 } from "../interfaces";
@@ -360,6 +361,23 @@ export async function patchWorkerRejectAction(dataToSubmit: string) {
 
   const result: PatchWorkersReject = {
     type: actionTypesUser.PATCH_WORKERS_REJECT,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 작업자 정보 변경 action
+ * @param dataToSubmit
+ * @returns
+ */
+export async function patchWorkerChangeAction(dataToSubmit: string) {
+  const req = await axios
+    .patch(`/api/settings/management/workers/${dataToSubmit}`)
+    .then((res: AxiosResponse<User, any>) => res.data);
+
+  const result: PatchWorkersChange = {
+    type: actionTypesUser.PATCH_WORKERS_CHANGE,
     payload: req,
   };
   return result;

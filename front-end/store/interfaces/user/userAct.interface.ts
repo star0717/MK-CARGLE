@@ -30,6 +30,7 @@ export enum actionTypesUser {
   ADMIN_COMPANIES_LIST = "ADMIN_COMPANIES_LIST",
   PATCH_WORKERS_APPROVE = "PATCH_WORKERS_APPROVE",
   PATCH_WORKERS_REJECT = "PATCH_WORKERS_REJECT",
+  PATCH_WORKERS_CHANGE = "PATCH_WORKERS_CHANGE",
   PATCH_WORKERS_DELETE = "PATCH_WORKERS_DELETE",
 }
 
@@ -62,6 +63,7 @@ export type ActionsUser =
   | AdminCompaniesList
   | PatchWorkersApprove
   | PatchWorkersReject
+  | PatchWorkersChange
   | PatchWorkersDelete;
 
 // 초기화
@@ -222,6 +224,11 @@ export interface PatchWorkersApprove {
 //작업자 승인 거부
 export interface PatchWorkersReject {
   type: actionTypesUser.PATCH_WORKERS_REJECT;
+  payload: User;
+}
+//작업자 정보 변경
+export interface PatchWorkersChange {
+  type: actionTypesUser.PATCH_WORKERS_CHANGE;
   payload: User;
 }
 //작업자 삭제
