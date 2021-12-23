@@ -12,7 +12,6 @@ import {
   TableBody,
   TableRowLIST,
   TableRow,
-  SmallButton,
   RsWrapper,
   CloseButton,
 } from "../../../styles/CommonComponents";
@@ -45,7 +44,6 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
       <RsWrapper>
         <Wrapper width={`1200px`}>
           <Text>직원관리</Text>
-
           <TableWrapper>
             <TableHead>
               <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
@@ -76,19 +74,6 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
               ))}
             </TableBody>
           </TableWrapper>
-        </Wrapper>
-        <Wrapper>
-          <SmallButton
-            type="button"
-            onClick={() => {
-              console.log("TotalDocs =>", props.findResult.totalDocs);
-              console.log("CurrentPage =>", props.findResult.currentPage);
-              console.log("LastPage => ", props.findResult.lastPage);
-              console.log("Docs => ", props.findResult.docs);
-            }}
-          >
-            정보
-          </SmallButton>
         </Wrapper>
         <PagenationSection {...props} />
       </RsWrapper>
