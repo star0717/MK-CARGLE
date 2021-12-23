@@ -8,11 +8,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   patchWorkerApproveAction,
+  patchWorkerChangeAction,
   patchWorkerDeleteAction,
   patchWorkerRejectAction,
 } from "../../../../../store/action/user.action";
 import {
   PatchWorkersApprove,
+  PatchWorkersChange,
   PatchWorkersDelete,
   PatchWorkersReject,
 } from "../../../../../store/interfaces";
@@ -44,13 +46,13 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
    */
   const onChangeApproval = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (approval) {
-      dispatch(patchWorkerRejectAction(props.clickDoc._id)).then(
+      dispatch(patchWorkerRejectAction(docInfo._id)).then(
         (res: PatchWorkersReject) => {
           setApproval(res.payload.approval);
         }
       );
     } else {
-      dispatch(patchWorkerApproveAction(props.clickDoc._id)).then(
+      dispatch(patchWorkerApproveAction(docInfo._id)).then(
         (res: PatchWorkersApprove) => {
           setApproval(res.payload.approval);
         }
@@ -64,6 +66,19 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
    */
   const onChangeWorkerInfo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const workerChangeInfo = {
+      _id: docInfo._id,
+      joinDate: docInfo.joinDate,
+    };
+    if (window.confirm("저장하시겠습니까?")) {
+      dispatch(patchWorkerChangeAction(workerChangeInfo)).then(
+        (res: PatchWorkersChange) => {
+          props.setModalOpen(false);
+        }
+      );
+    } else {
+      return false;
+    }
   };
 
   /**
@@ -71,7 +86,7 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
    */
   const workerDelete = () => {
     if (window.confirm("삭제하시겠습니까?")) {
-      dispatch(patchWorkerDeleteAction(props.clickDoc._id)).then(
+      dispatch(patchWorkerDeleteAction(docInfo._id)).then(
         (res: PatchWorkersDelete) => {
           if (res.payload.deletedCount === 1) {
             props.setModalOpen(false);
