@@ -117,6 +117,13 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
         (res: PatchWorkersDelete) => {
           if (res.payload.deletedCount === 1) {
             props.setModalOpen(false);
+            const newList: User[] = [];
+            props.findResult.docs.forEach((item) => {
+              if (item._id !== docInfo._id) {
+                newList.push(item);
+              }
+            });
+            props.setFindResult({ ...props.findResult, docs: newList });
           } else {
             alert("삭제 실패");
           }
