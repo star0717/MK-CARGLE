@@ -6,6 +6,8 @@ dayjs.locale("ko");
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { patchWorkerApproveAction } from "../../../../../store/action/user.action";
+import { PatchWorkersApprove } from "../../../../../store/interfaces";
 import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import { User } from "../../../../models/user.entity";
@@ -28,6 +30,24 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
   const [approval, setApproval] = useState<boolean>(props.clickDoc.approval); // 직원 승인여부
   const [docInfo, setDocInfo] = useState<User>(props.clickDoc);
 
+  /**
+   *
+   * @param e
+   */
+  const onChangeApproval = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (approval) {
+      dispatch(patchWorkerApproveAction(props.clickDoc._id)).then(
+        (res: PatchWorkersApprove) => {
+          console.log(res.payload);
+        }
+      );
+    }
+  };
+
+  /**
+   * Worker 유저정보 수정 handler
+   * @param e
+   */
   const onChangeWorkerInfo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
@@ -41,7 +61,7 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
           <Switch
             color="primary"
             checked={approval}
-            onChange={() => setApproval(!approval)}
+            onChange={onChangeApproval}
           />
         </Wrapper>
         <form onSubmit={onChangeWorkerInfo}>

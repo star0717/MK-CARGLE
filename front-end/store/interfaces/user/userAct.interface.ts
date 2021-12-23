@@ -28,6 +28,8 @@ export enum actionTypesUser {
   WITHDRAWAL = "WITHDRAWAL",
   GET_WORKERS_LIST = "GET_WORKERS_LIST",
   ADMIN_COMPANIES_LIST = "ADMIN_COMPANIES_LIST",
+  PATCH_WORKERS_APPROVE = "PATCH_WORKERS_APPROVE",
+  PATCH_WORKERS_REJECT = "PATCH_WORKERS_REJECT",
 }
 
 export type ActionsUser =
@@ -56,7 +58,9 @@ export type ActionsUser =
   | DownroadStamp
   | Withdrawal
   | GetWorkersList
-  | AdminCompaniesList;
+  | AdminCompaniesList
+  | PatchWorkersApprove
+  | PatchWorkersReject;
 
 // 초기화
 export interface UserInit {
@@ -207,4 +211,14 @@ export interface GetWorkersList {
 export interface AdminCompaniesList {
   type: actionTypesUser.ADMIN_COMPANIES_LIST;
   payload: any;
+}
+// 작업자 승인 허가
+export interface PatchWorkersApprove {
+  type: actionTypesUser.PATCH_WORKERS_APPROVE;
+  payload: User;
+}
+// 작업자 승인 거부
+export interface PatchWorkersReject {
+  type: actionTypesUser.PATCH_WORKERS_REJECT;
+  payload: User;
 }

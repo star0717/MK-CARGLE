@@ -226,6 +226,17 @@ const userAll = (
         ...state,
       };
 
+    //작업자 승인 허가
+    case actionTypesUser.PATCH_WORKERS_APPROVE:
+      return {
+        ...state,
+      };
+    //작업자 승인 거부
+    case actionTypesUser.PATCH_WORKERS_REJECT:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }
