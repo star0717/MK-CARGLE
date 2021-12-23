@@ -13,18 +13,14 @@ export const PagenationSection: NextPage<any> = (props) => {
     sPage =
       cPage % 10 == 0
         ? Math.round(cPage / 10) * 10 - 9
-        : Math.round(cPage / 10) * 10 + 1;
+        : Math.floor(cPage / 10) * 10 + 1;
     console.log("sPage => ", sPage);
 
     lPage = sPage + 9;
     if (lPage > props.findResult.lastPage) lPage = props.findResult.lastPage;
     console.log("lPage =>", lPage);
     if (props.findResult) {
-      for (
-        let i = Math.ceil(props.findResult.currentPage / 10);
-        i <= lPage;
-        i++
-      ) {
+      for (let i = sPage; i <= lPage; i++) {
         console.log(i);
         result.push(
           <Pagenation
