@@ -2,9 +2,10 @@ import { NextPage } from "next";
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { ThemeColors } from "../../../styles/Theme";
+import { _pFindDocs } from "../../configure/_pProps.entity";
 import { Pagenation, PagenationWrapper } from "../styles/CommonComponents";
 
-export const PagenationSection: NextPage<any> = (props) => {
+export const PagenationSection: NextPage<_pFindDocs<any>> = (props) => {
   const pagenationBtn = () => {
     const result = [];
 
@@ -34,7 +35,11 @@ export const PagenationSection: NextPage<any> = (props) => {
                 : `1px solid ${ThemeColors.basicTheme_C}`
             }
             type="button"
-            onClick={() => props.findWorksHandler(i)}
+            onClick={() => {
+              if (props.findResult.currentPage != i) {
+                props.findDocHandler(i);
+              }
+            }}
           >
             {i}
           </Pagenation>
@@ -50,9 +55,9 @@ export const PagenationSection: NextPage<any> = (props) => {
         type="button"
         onClick={() => {
           if (props.findResult.currentPage < 10) {
-            props.findWorksHandler(1);
+            props.findDocHandler(1);
           } else {
-            props.findWorksHandler(props.findResult.currentPage - 10);
+            props.findDocHandler(props.findResult.currentPage - 10);
           }
         }}
       >
@@ -62,18 +67,20 @@ export const PagenationSection: NextPage<any> = (props) => {
         type="button"
         onClick={() => {
           if (props.findResult.currentPage != 1) {
-            props.findWorksHandler(props.findResult.currentPage - 1);
+            props.findDocHandler(props.findResult.currentPage - 1);
           }
         }}
       >
         <IoIosArrowBack />
       </Pagenation>
+
       {pagenationBtn()}
+
       <Pagenation
         type="button"
         onClick={() => {
           if (props.findResult.currentPage != props.findResult.lastPage) {
-            props.findWorksHandler(props.findResult.currentPage + 1);
+            props.findDocHandler(props.findResult.currentPage + 1);
           }
         }}
       >
@@ -83,9 +90,9 @@ export const PagenationSection: NextPage<any> = (props) => {
         type="button"
         onClick={() => {
           if (props.findResult.currentPage + 10 > props.findResult.lastPage) {
-            props.findWorksHandler(props.findResult.lastPage);
+            props.findDocHandler(props.findResult.lastPage);
           } else {
-            props.findWorksHandler(props.findResult.currentPage + 10);
+            props.findDocHandler(props.findResult.currentPage + 10);
           }
         }}
       >

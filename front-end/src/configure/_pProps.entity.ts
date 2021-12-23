@@ -253,8 +253,14 @@ export interface _pWithdrawalModalProps extends _cWithdrawalModalProps {
 /**
  * 마이페이지(직원관리): 직원 데이터 props
  */
-export interface _pWorkerData extends _MainProps {
-  findResult: FindResult<User>;
-  setFindResult: React.Dispatch<React.SetStateAction<FindResult<User>>>;
-  findWorksHandler: (page: number) => void;
+
+export interface _pFindDocs<T> extends _MainProps {
+  findResult: FindResult<T>;
+  setFindResult: React.Dispatch<React.SetStateAction<FindResult<T>>>;
+  findDocHandler: (page: number) => void;
 }
+
+export interface _pWorkerData extends _pFindDocs<User> {}
+
+// ADMIN_REVIEW_COMPANIES용 props
+export interface _pADMIN_REVIEW_COMPANIES extends _pFindDocs<Company> {}

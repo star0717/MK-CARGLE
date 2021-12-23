@@ -1,71 +1,54 @@
-import type { NextPage } from "next";
 import dayjs from "dayjs";
-import React, { useState } from "react";
-import Modal from "react-modal";
+import { NextPage } from "next";
+import { _pADMIN_REVIEW_COMPANIES } from "../../../../configure/_pProps.entity";
+import { Company } from "../../../../models/company.entity";
+import { PagenationSection } from "../../../common/sections";
 import {
-  WholeWrapper,
-  Wrapper,
-  Text,
-  TableWrapper,
+  RsWrapper,
+  TableBody,
   TableHead,
   TableHeadLIST,
-  TableBody,
-  TableRowLIST,
   TableRow,
-  RsWrapper,
-  CloseButton,
+  TableRowLIST,
+  TableWrapper,
+  Text,
+  WholeWrapper,
+  Wrapper,
 } from "../../../styles/CommonComponents";
-import { _pWorkerData } from "../../../../configure/_pProps.entity";
-import { User } from "../../../../models/user.entity";
-import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
-import { PagenationSection } from "../../../common/sections";
-import { IoIosCloseCircle } from "react-icons/io";
-import WorkerInfoModal from "./workerInfoModal";
 
-const workerInfo: NextPage<_pWorkerData> = (props) => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [clickDoc, setClickDoc] = useState<User>();
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  /**
-   * 화면구성에 넘길 props
-   */
-  const WorkerModalProps: _cWorkerInfoModalProps = {
-    ...props,
-    setModalOpen,
-    clickDoc,
-    style: { height: "500px" },
-  };
-
+const AdminReviewCompaniesPresenter: NextPage<_pADMIN_REVIEW_COMPANIES> = (
+  props
+) => {
   return (
     <WholeWrapper>
       <RsWrapper>
         <Wrapper width={`1200px`}>
-          <Text>직원관리</Text>
+          <Text>승인 관리</Text>
           <TableWrapper>
             <TableHead>
-              <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>전화번호</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>입사일자</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>가입일</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>상호명</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>사업자등록증</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>정비업등록증</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>대표자명</TableHeadLIST>
               <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
             </TableHead>
             <TableBody>
-              {props.findResult.docs.map((doc: User) => (
+              {props.findResult.docs.map((doc: Company) => (
                 <TableRow
                   key={doc._id}
-                  onClick={() => {
-                    setModalOpen(!modalOpen);
-                    setClickDoc(doc);
-                  }}
+                  //   onClick={() => {
+                  //     setModalOpen(!modalOpen);
+                  //     setClickDoc(doc);
+                  //   }}
                 >
-                  <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
                   <TableRowLIST width={`300px`}>
-                    {dayjs(doc.joinDate).format("YYYY-MM-DD")}
+                    {dayjs(doc.createdAt).format("YYYY-MM-DD")}
                   </TableRowLIST>
+                  <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`300px`}>{doc.comRegNum}</TableRowLIST>
+                  <TableRowLIST width={`300px`}>{doc.mbRegNum}</TableRowLIST>
+                  <TableRowLIST width={`300px`}>{doc.ownerName}</TableRowLIST>
                   {doc.approval ? (
                     <TableRowLIST width={`300px`}>승인</TableRowLIST>
                   ) : (
@@ -79,7 +62,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
         <PagenationSection {...props} />
       </RsWrapper>
       <Wrapper>
-        <Modal
+        {/* <Modal
           isOpen={modalOpen}
           style={{
             overlay: {
@@ -115,10 +98,10 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
             </CloseButton>
             <WorkerInfoModal {...WorkerModalProps} />
           </Wrapper>
-        </Modal>
+        </Modal> */}
       </Wrapper>
     </WholeWrapper>
   );
 };
 
-export default workerInfo;
+export default AdminReviewCompaniesPresenter;

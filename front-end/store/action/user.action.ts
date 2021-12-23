@@ -12,8 +12,10 @@ import {
   FindParameters,
   FindResult,
 } from "../../src/models/base.entity";
+import { Company } from "../../src/models/company.entity";
 import { User } from "../../src/models/user.entity";
 import {
+  actionAPIs,
   actionTypesUser,
   AdminCompaniesList,
   GetWorkersList,
@@ -21,6 +23,7 @@ import {
   PatchWorkersChange,
   PatchWorkersDelete,
   PatchWorkersReject,
+  _iFindCompanies,
 } from "../interfaces";
 
 // 로그인 action
@@ -303,7 +306,27 @@ export async function getWorkersListAction(dataToSubmit: FindParameters) {
   return result;
 }
 
-/** ADMIN 관련 **/
+/*****************************************************
+ * ADMIN
+ *****************************************************/
+
+export async function _aGetAdminReivewCompanies(findParams: FindParameters) {
+  const req: FindResult<Company> = await axios
+    .get(`/api/admin/review/companies?${FindParameters.getQuery(findParams)}`)
+    .then(
+      (
+        res: AxiosResponse<FindResult<Company>, Company>
+      ): FindResult<Company> => {
+        return res.data;
+      }
+    );
+
+  const result: _iFindCompanies = {
+    type: actionAPIs.FIND_COMPANIES,
+    payload: req,
+  };
+  return result;
+}
 
 /**
  * 업체 리스트 반환 action
@@ -371,9 +394,12 @@ export async function patchWorkerRejectAction(dataToSubmit: string) {
  * @param dataToSubmit
  * @returns
  */
-export async function patchWorkerChangeAction(dataToSubmit: string) {
+export async function patchWorkerChangeAction(
+  id: string,
+  dataToSubmit: Partial<User>
+) {
   const req = await axios
-    .patch(`/api/settings/management/workers/${dataToSubmit}`)
+    .patch(`/api/settings/management/workers/${id}`, dataToSubmit)
     .then((res: AxiosResponse<User, any>) => res.data);
 
   const result: PatchWorkersChange = {

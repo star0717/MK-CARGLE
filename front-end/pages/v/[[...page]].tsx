@@ -12,7 +12,7 @@ import Header from "../../src/components/layout/Header";
 import { getPathName, parseJwt } from "../../src/modules/commonModule";
 import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
-import { CompanyApproval } from "../../src/models/company.entity";
+import { Company, CompanyApproval } from "../../src/models/company.entity";
 import FileUpload from "../../src/components/page/SignUp/section/fileUpload";
 import Approval from "../../src/components/page/SignUp/section/approval";
 import Main from "../../src/components/page/Main";
@@ -22,7 +22,7 @@ import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
-import AdminCompanies from "../../src/components/page/admin/review_companies";
+import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
 import axios, { AxiosResponse } from "axios";
 import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
@@ -68,7 +68,7 @@ const SubComponent: NextPage<_MainProps> = (props) => {
       return <Test {...props} />;
 
     case UseLink.ADMIN_REVIEW_COMPANIES:
-      return <AdminCompanies {...props} />;
+      return <AdminReviewCompaniesPage {...props} />;
   }
 };
 
@@ -156,7 +156,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
         case UseLink.MYPAGE_WORKER: {
           const params: FindParameters = {
-            take: 1,
+            take: 10,
           };
 
           data = await axios
@@ -172,6 +172,33 @@ export const getServerSideProps: GetServerSideProps = async (
               }
             )
             .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
+          return {
+            props: {
+              tokenValue,
+              data,
+            },
+          };
+        }
+        case UseLink.ADMIN_REVIEW_COMPANIES: {
+          const params: FindParameters = {
+            take: 1,
+          };
+
+          data = await axios
+            .get(
+              `${apiUrl}/admin/review/companies?${FindParameters.getQuery(
+                params
+              )}`,
+              {
+                headers: {
+                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                },
+                withCredentials: true,
+              }
+            )
+            .then(
+              (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+            );
           return {
             props: {
               tokenValue,

@@ -1,4 +1,5 @@
 import { DeleteResult, FindResult } from "../../../src/models/base.entity";
+import { Company } from "../../../src/models/company.entity";
 import { User } from "../../../src/models/user.entity";
 
 export enum actionTypesUser {
@@ -236,3 +237,29 @@ export interface PatchWorkersDelete {
   type: actionTypesUser.PATCH_WORKERS_DELETE;
   payload: DeleteResult;
 }
+
+/******************************************
+ *  모델별 FindResult
+ ******************************************/
+
+export enum actionAPIs {
+  FIND_COMPANIES = "FIND_COMPANIES", // 업체 검색
+  FIND_USERS = "FIND_USERS",
+}
+
+export interface baseActionInterface {
+  type: actionAPIs;
+  payload: any;
+}
+
+export class _iFindCompanies implements baseActionInterface {
+  type: actionAPIs.FIND_COMPANIES;
+  payload: FindResult<Company>;
+}
+
+export class _iFindUsers implements baseActionInterface {
+  type: actionAPIs.FIND_USERS;
+  payload: FindResult<User>;
+}
+
+export type ActionInterfaces = _iFindCompanies | _iFindUsers;
