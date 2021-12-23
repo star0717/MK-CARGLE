@@ -7,20 +7,34 @@ const BOX_SHADOW = "0px 10px 15px rgba(220,220,220,1)";
 const BOX_SHADOW_V2 = "0px 5px 10px rgba(220,220,220,1)";
 const BOX_SHADOW_DARK = "0px 10px  rgba(70,70,70,1)";
 
-export default {
+export const ThemeColors = {
   basicTheme_C: "#0066ff",
   lightTheme_C: "#448fff",
   darkTheme_C: "#0052ce",
-
-  //
   black_C: "#292929",
-  white_C: "#FFF",
+  white_C: "#fff",
   subWhite_C: "#f5f5f5",
   red_C: "#d6263b",
   green_C: "#51b351",
   grey_C: "#c4c4c4",
   darkGrey_C: "#9d9d9d",
   lightGrey_C: "#ddd",
+};
+
+const Theme = {
+  basicTheme_C: ThemeColors.basicTheme_C,
+  lightTheme_C: ThemeColors.lightTheme_C,
+  darkTheme_C: ThemeColors.darkTheme_C,
+
+  //
+  black_C: ThemeColors.black_C,
+  white_C: ThemeColors.white_C,
+  subWhite_C: ThemeColors.subWhite_C,
+  red_C: ThemeColors.red_C,
+  green_C: ThemeColors.green_C,
+  grey_C: ThemeColors.grey_C,
+  darkGrey_C: ThemeColors.darkGrey_C,
+  lightGrey_C: ThemeColors.lightGrey_C,
   border: `${BOX_BORDER}`,
   radius: `${BORDER_RADIUS}`,
   tableRadius: `${TABLE_RADIUS}`,
@@ -31,3 +45,30 @@ export default {
   boxShadowDark: `${BOX_SHADOW_DARK}`,
   transition: "0.4s",
 };
+
+// const cccd = {
+//   basicTheme_C: "#0066ff",
+//   lightTheme_C: "#448fff",
+//   darkTheme_C: "#0052ce",
+
+//   //
+//   black_C: "#292929",
+//   white_C: "#fff",
+//   subWhite_C: "#f5f5f5",
+//   red_C: "#d6263b",
+//   green_C: "#51b351",
+//   grey_C: "#c4c4c4",
+//   darkGrey_C: "#9d9d9d",
+//   lightGrey_C: "#ddd",
+//   border: `${BOX_BORDER}`,
+//   radius: `${BORDER_RADIUS}`,
+//   tableRadius: `${TABLE_RADIUS}`,
+//   inputPadding: `${INPUT_PADDING}`,
+//   textPadding: `${TEXT_PADDING}`,
+//   boxShadow: `${BOX_SHADOW}`,
+//   boxShadowV2: `${BOX_SHADOW_V2}`,
+//   boxShadowDark: `${BOX_SHADOW_DARK}`,
+//   transition: "0.4s",
+// };
+
+export default Theme;
