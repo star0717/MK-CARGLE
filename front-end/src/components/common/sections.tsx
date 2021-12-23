@@ -34,7 +34,11 @@ export const PagenationSection: NextPage<any> = (props) => {
                 : `1px solid ${ThemeColors.basicTheme_C}`
             }
             type="button"
-            onClick={() => props.findWorksHandler(i)}
+            onClick={() => {
+              if (props.findResult.currentPage != i) {
+                props.findWorksHandler(i);
+              }
+            }}
           >
             {i}
           </Pagenation>
@@ -68,7 +72,9 @@ export const PagenationSection: NextPage<any> = (props) => {
       >
         <IoIosArrowBack />
       </Pagenation>
+
       {pagenationBtn()}
+
       <Pagenation
         type="button"
         onClick={() => {
