@@ -32,7 +32,7 @@ const AdminCompanies: NextPage<any> = (props) => {
    * 2. State settings
    *********************************************************************/
   //직원 명단 API Result 관련
-  const [findResult, setFindResult] = useState<FindResult<User>>(props.data);
+  const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
 
   /*********************************************************************
    * 3. Handlers
@@ -46,9 +46,9 @@ const AdminCompanies: NextPage<any> = (props) => {
       page,
       take: 10,
     };
-    dispatch(getWorkersListAction(param)).then((res: GetWorkersList) => {
-      setFindResult(res.payload);
-    });
+    // dispatch(getWorkersListAction(param)).then((res: GetWorkersList) => {
+    //   setFindResult(res.payload);
+    // });
   };
 
   /*********************************************************************
@@ -98,7 +98,7 @@ const AdminCompanies: NextPage<any> = (props) => {
             <TableHeadLIST width={`300px`}>대표자명</TableHeadLIST>
           </TableHead>
           <TableBody>
-            {companies?.map((doc) => (
+            {/* {companies?.map((doc) => (
               <TableRow key={doc._id}>
                 <TableRowLIST width={`300px`}>{doc.createdAt}</TableRowLIST>
                 <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
@@ -121,7 +121,7 @@ const AdminCompanies: NextPage<any> = (props) => {
                 </TableRowLIST>
                 <TableRowLIST width={`300px`}>{doc.ownerName}</TableRowLIST>
               </TableRow>
-            ))}
+            ))} */}
           </TableBody>
         </TableWrapper>
       </Wrapper>
