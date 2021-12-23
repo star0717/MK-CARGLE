@@ -1265,11 +1265,13 @@ export const Pagenation = styled.button<any>`
   }
 
   &:first-child,
+  &:nth-child(2),
+  &:nth-last-child(2),
   &:last-child {
     background-color: ${(props) => props.theme.subWhite_C};
     border: 1px solid #ddd;
     color: ${(props) => props.theme.black_C};
-  }
+  },
 `;
 // &:hover {
 //   box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
