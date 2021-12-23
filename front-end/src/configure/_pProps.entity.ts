@@ -258,3 +258,10 @@ export interface _pWorkerData extends _MainProps {
   setFindResult: React.Dispatch<React.SetStateAction<FindResult<User>>>;
   findWorksHandler: (page: number) => void;
 }
+
+// ADMIN_REVIEW_COMPANIES용 props
+export interface _pADMIN_REVIEW_COMPANIES extends _MainProps {
+  findResult: FindResult<Company>;
+  setFindResult: React.Dispatch<React.SetStateAction<FindResult<Company>>>;
+  findCompaniesHandler: (page: number) => void;
+}

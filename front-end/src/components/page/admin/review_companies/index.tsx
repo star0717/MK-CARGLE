@@ -6,7 +6,8 @@ import {
   getComRegFile,
 } from "../../../../../store/action/user.action";
 import { AdminCompaniesList } from "../../../../../store/interfaces";
-import { FindResult } from "../../../../models/base.entity";
+import { _pADMIN_REVIEW_COMPANIES } from "../../../../configure/_pProps.entity";
+import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
 import {
   SmallButton,
@@ -22,29 +23,67 @@ import {
 } from "../../../styles/CommonComponents";
 
 const AdminCompanies: NextPage<any> = (props) => {
+  /*********************************************************************
+   * 1. Init Libs
+   *********************************************************************/
   const dispatch = useDispatch();
 
-  const [companies, setCompanies] = useState<Company[]>();
-  const [loadList, setLoadList] = useState<boolean>(false);
+  /*********************************************************************
+   * 2. State settings
+   *********************************************************************/
+  //직원 명단 API Result 관련
+  const [findResult, setFindResult] = useState<FindResult<User>>(props.data);
 
-  const getComListHandler = () => {
-    dispatch(getCompanies()).then((res: AdminCompaniesList) => {
-      const result: FindResult<Company> = res.payload;
-      setCompanies(result.docs);
+  /*********************************************************************
+   * 3. Handlers
+   *********************************************************************/
+  /**
+   * 작업자의 정보를 조회함
+   * @param page 조회할 페이지
+   */
+  const findWorksHandler = (page: number) => {
+    const param: FindParameters = {
+      page,
+      take: 10,
+    };
+    dispatch(getWorkersListAction(param)).then((res: GetWorkersList) => {
+      setFindResult(res.payload);
     });
   };
 
-  const downloadComRegFileHandler = (id: string) => {
-    dispatch(getComRegFile(id));
+  /*********************************************************************
+   * 4. Props settings
+   *********************************************************************/
+  const fprops: _pADMIN_REVIEW_COMPANIES = {
+    ...props,
+    findResult,
+    setFindResult,
+    findWorksHandler,
   };
 
-  // 페이지가 로드될 때 한번만 호출되도록 설정
-  useEffect(() => {
-    if (loadList == false) {
-      getComListHandler();
-      setLoadList(true);
-    }
-  }, [companies]);
+  // const dispatch = useDispatch();
+
+  // const [companies, setCompanies] = useState<Company[]>();
+  // const [loadList, setLoadList] = useState<boolean>(false);
+
+  // const getComListHandler = () => {
+  //   dispatch(getCompanies()).then((res: AdminCompaniesList) => {
+  //     const result: FindResult<Company> = res.payload;
+  //     setCompanies(result.docs);
+  //   });
+  // };
+
+  // const downloadComRegFileHandler = (id: string) => {
+  //   dispatch(getComRegFile(id));
+  // };
+
+  // // 페이지가 로드될 때 한번만 호출되도록 설정
+  // useEffect(() => {
+  //   if (loadList == false) {
+  //     getComListHandler();
+  //     setLoadList(true);
+  //   }
+  // }, [companies]);
 
   return (
     <WholeWrapper>
