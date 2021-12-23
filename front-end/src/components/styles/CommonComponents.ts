@@ -1252,11 +1252,11 @@ export const Pagenation = styled.button<any>`
   justify-content: ${(props) => props.ju || `center`};
   cursor: pointer;
   padding-top: 3px;
-  background-color: ${(props) => props.theme.basicTheme_C};
-  color: ${(props) => props.theme.white_C};
+  background-color: ${(props) => props.theme.white_C};
+  color: ${(props) => props.theme.basicTheme_C};
+  border: 1px solid #0066ff;
   border-radius: 30px;
   margin: 0px 3px;
-  border: none;
 
   &.active {
     border-radius: 30px;
@@ -1271,10 +1271,14 @@ export const Pagenation = styled.button<any>`
     color: ${(props) => props.theme.black_C};
   }
 
-  &:hover {
-    box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
+  &:focus {
+    background-color: ${(props) => props.theme.basicTheme_C};
+    color: ${(props) => props.theme.white_C};
   }
 `;
+// &:hover {
+//   box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
+// }
 
 // export const PagenationBtn = styled.div<any>`
 //   text-align: center;
