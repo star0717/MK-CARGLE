@@ -1,10 +1,9 @@
 import { Switch } from "@material-ui/core";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-
 dayjs.locale("ko");
 import type { NextPage } from "next";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   patchWorkerApproveAction,
@@ -19,12 +18,8 @@ import {
   PatchWorkersReject,
 } from "../../../../../store/interfaces";
 import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
-import { SignUpInfo } from "../../../../models/auth.entity";
 import { User } from "../../../../models/user.entity";
-import {
-  dateToString,
-  makeFullAddress,
-} from "../../../../modules/commonModule";
+import { makeFullAddress } from "../../../../modules/commonModule";
 import {
   WholeWrapper,
   RsWrapper,
@@ -40,7 +35,6 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
   const [approval, setApproval] = useState<boolean>(props.clickDoc.approval); // 직원 승인여부
   const [docInfo, setDocInfo] = useState<User>(props.clickDoc); //해당 직원 정보
 
-  console.log("!!!", props.findResult.docs);
   /**
    * 직원(worker) 승인 handler
    * @param e
@@ -50,38 +44,12 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
       dispatch(patchWorkerRejectAction(docInfo._id)).then(
         (res: PatchWorkersReject) => {
           setApproval(res.payload.approval);
-          console.log("???", props.findResult.docs);
-          // for (let i = 0; i < props.findResult.docs.length; i++) {
-          //   if (props.findResult.docs[i]._id === res.payload._id) {
-          //     props.setFindResult({
-          //       ...props.findResult,
-          //       docs: {
-          //         ...props.findResult.docs,
-          //         [i]: {
-          //           ...props.findResult.docs[i],
-          //           approval: res.payload.approval,
-          //         },
-          //       },
-          //     });
-          //   }
-          // }
         }
       );
     } else {
       dispatch(patchWorkerApproveAction(docInfo._id)).then(
         (res: PatchWorkersApprove) => {
           setApproval(res.payload.approval);
-          // for (var i = 0; i < props.findResult.docs.length; i++) {
-          //   if (props.findResult.docs[i]._id === res.payload._id) {
-          //     props.setFindResult({
-          //       ...props.findResult,
-          //       docs: {
-          //         ...props.findResult.docs,
-          //         [i]: { ...res.payload, approval: res.payload.approval },
-          //       },
-          //     });
-          //   }
-          // }
         }
       );
     }

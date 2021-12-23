@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import {
   WholeWrapper,
@@ -29,8 +29,6 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  console.log("@@@", props.findResult);
 
   /**
    * 화면구성에 넘길 props
