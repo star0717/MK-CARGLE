@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { User } from "../../../models/user.entity";
 import { getWorkersListAction } from "../../../../store/action/user.action";
-import MyPageWorkerPresenter from "./indexPresenter";
 import { _pTermProps, _pWorkerData } from "../../../configure/_pProps.entity";
 import { _MainProps } from "../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../models/base.entity";
 import { GetWorkersList } from "../../../../store/interfaces";
+import WorkerInfo from "./section/workerInfo";
 
 const MyPageWorker: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -41,7 +41,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const fprops: _pWorkerData = {
+  const myPageWorkerProps: _pWorkerData = {
     ...props,
     findResult,
     setFindResult,
@@ -51,7 +51,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return <MyPageWorkerPresenter {...fprops} />;
+  return <WorkerInfo {...myPageWorkerProps} />;
 };
 
 export default MyPageWorker;

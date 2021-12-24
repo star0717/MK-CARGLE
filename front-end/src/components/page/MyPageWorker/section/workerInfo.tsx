@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { Wrapper, CloseButton } from "../../../styles/CommonComponents";
 import {
   _pWorkerData,
   _pWorkerInfoProps,
@@ -11,9 +10,23 @@ import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
 import { PagenationSection } from "../../../common/sections";
 import { IoIosCloseCircle } from "react-icons/io";
 import WorkerInfoModal from "./workerInfoModal";
-import WorkerInfoPresenter from "./workerInfoPresenter";
+import { useResizeDetector } from "react-resize-detector";
+import {
+  CloseButton,
+  RsWrapper,
+  TableBody,
+  TableHead,
+  TableHeadLIST,
+  TableRow,
+  TableRowLIST,
+  TableWrapper,
+  Text,
+  WholeWrapper,
+  Wrapper,
+} from "../../../styles/CommonComponents";
+import dayjs from "dayjs";
 
-const workerInfo: NextPage<_pWorkerData> = (props) => {
+const WorkerInfo: NextPage<_pWorkerData> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [clickDoc, setClickDoc] = useState<User>();
 
@@ -32,19 +45,49 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
     style: { height: "500px" },
   };
 
-  /**
-   * 화면구성에 넘길 props
-   */
-  const fProps: _pWorkerInfoProps = {
-    ...props,
-    modalOpen,
-    setModalOpen,
-    setClickDoc,
-  };
+  // resize 변수 선언
+  const { width, height, ref } = useResizeDetector();
 
   return (
     <>
-      <WorkerInfoPresenter {...fProps} />
+      <WholeWrapper ref={ref}>
+        <RsWrapper>
+          <Wrapper width={`1200px`}>
+            <Text>직원관리</Text>
+            <TableWrapper>
+              <TableHead>
+                <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
+                <TableHeadLIST width={`300px`}>전화번호</TableHeadLIST>
+                <TableHeadLIST width={`300px`}>입사일자</TableHeadLIST>
+                <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
+              </TableHead>
+              <TableBody>
+                {props.findResult.docs.map((doc: User) => (
+                  <TableRow
+                    key={doc._id}
+                    onClick={() => {
+                      setModalOpen(!modalOpen);
+                      setClickDoc(doc);
+                    }}
+                  >
+                    <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
+                    <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
+                    <TableRowLIST width={`300px`}>
+                      {dayjs(doc.joinDate).format("YYYY-MM-DD")}
+                    </TableRowLIST>
+                    {doc.approval ? (
+                      <TableRowLIST width={`300px`}>승인</TableRowLIST>
+                    ) : (
+                      <TableRowLIST width={`300px`}>미승인</TableRowLIST>
+                    )}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </TableWrapper>
+          </Wrapper>
+          <PagenationSection {...props} />
+        </RsWrapper>
+      </WholeWrapper>
       <Modal
         isOpen={modalOpen}
         style={{
@@ -86,4 +129,4 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
   );
 };
 
-export default workerInfo;
+export default WorkerInfo;
