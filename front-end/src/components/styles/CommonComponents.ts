@@ -305,7 +305,7 @@ export const CommonTitleWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
-  position: ${(props) => (props.isAbsolute ? `absolute` : `relatuve`)};
+  position: ${(props) => props.position || `absolute`};
   top: 80px;
   margin: ${(props) => props.margin || `0px 0px 80px`};
   margintop: ${(props) => props.marginTop};

@@ -34,7 +34,12 @@ const SigninPresenter: NextPage<_pSignInProps> = (props) => {
         <Wrapper
           width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
         >
-          <CommonTitle textAlign={`center`} margin={`0px`} padding={`0px`}>
+          <CommonTitle
+            textAlign={`center`}
+            margin={`0px`}
+            padding={`0px`}
+            color={`#292929`}
+          >
             CARGLE
           </CommonTitle>
           <CommonSubTitle color={`#000`}>
