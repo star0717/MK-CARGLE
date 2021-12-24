@@ -17,18 +17,17 @@ import {
 } from "../../../styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "../../../../configure/router.entity";
-import { _cChangePwModalProps } from "../../../../configure/_cProps.entity";
 import { _fChangePw } from "../../../../configure/_fProps.entity";
-import { _pChangePwModalProps } from "../../../../configure/_pProps.entity";
 import { ConfirmPWD } from "../../../../models/auth.entity";
 import { formRegEx } from "../../../../validation/regEx";
+import { _pChangePwModalProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 마이 페이지: 계정관리 비밀번호 변경 컴포넌트(기능)
  * @param props
  * @returns
  */
-const ChangePwModal: NextPage<_cChangePwModalProps> = (props) => {
+const ChangePwModal: NextPage<_pChangePwModalProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 

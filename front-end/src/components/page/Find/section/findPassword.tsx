@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
 import { _pFindPassword } from "../../../../configure/_pProps.entity";
-import { WholeWrapper } from "../../../styles/CommonComponents";
 import FindPasswordCheck from "./findPasswordCheck";
 import FindPasswordComplete from "./findPasswordComplete";
 

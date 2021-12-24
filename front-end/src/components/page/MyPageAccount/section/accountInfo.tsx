@@ -14,11 +14,6 @@ import { Company } from "../../../../models/company.entity";
 import { AxiosError } from "axios";
 import { DbErrorInfo } from "../../../../models/base.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
-import {
-  _cChangePwModalProps,
-  _cMyPageAccount,
-  _cStampModalProps,
-} from "../../../../configure/_cProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
@@ -36,10 +31,14 @@ import {
   CommonTitleWrapper,
   CloseButton,
 } from "../../../styles/CommonComponents";
-import { _pAccountInfoProps } from "../../../../configure/_pProps.entity";
 import { formRegEx } from "../../../../validation/regEx";
 import dayjs from "dayjs";
 import { makeFullAddress } from "../../../../modules/commonModule";
+import {
+  _pChangePwModalProps,
+  _pMyPageAccountProps,
+  _pStampModalProps,
+} from "../../../../configure/_pProps.entity";
 
 Modal.setAppElement("body");
 
@@ -48,7 +47,7 @@ Modal.setAppElement("body");
  * @param props
  * @returns
  */
-const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
+const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   const dispatch = useDispatch();
 
   // react-hook-form 사용을 위한 선언
@@ -186,14 +185,14 @@ const AccountInfo: NextPage<_cMyPageAccount> = (props) => {
   };
 
   // 비밀번호 변경 modal props
-  const ChangePwModalProps: _cChangePwModalProps = {
+  const ChangePwModalProps: _pChangePwModalProps = {
     ...props,
     setModalOpen,
     style: { height: "500px" },
   };
 
   // 도장 modal props
-  const StampModalProps: _cStampModalProps = {
+  const StampModalProps: _pStampModalProps = {
     stampNum,
     setStampNum,
     setModalOpen,

@@ -2,7 +2,6 @@ import { NextPage } from "next";
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { uploadStampAction } from "../../../../../store/action/user.action";
-import { _cStampModalProps } from "../../../../configure/_cProps.entity";
 import { _pStampModalProps } from "../../../../configure/_pProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -20,7 +19,7 @@ import ReactCrop from "react-image-crop";
  * @param props
  * @returns
  */
-const StampModal: NextPage<_cStampModalProps> = (props) => {
+const StampModal: NextPage<_pStampModalProps> = (props) => {
   const dispatch = useDispatch();
 
   // state 관리

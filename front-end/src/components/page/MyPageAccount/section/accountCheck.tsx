@@ -5,8 +5,6 @@ import {
   getMyInfoAction,
   pwCheckAction,
 } from "../../../../../store/action/user.action";
-import { _cMyPageAccount } from "../../../../configure/_cProps.entity";
-import { _pAccountCheckProps } from "../../../../configure/_pProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
@@ -18,13 +16,14 @@ import {
   CommonTitleWrapper,
   RsWrapper,
 } from "../../../styles/CommonComponents";
+import { _pMyPageAccountProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 마이 페이지: 계정관리 확인 컴포넌트(기능)
  * @param props
  * @returns
  */
-const AccountCheck: NextPage<_cMyPageAccount> = (props) => {
+const AccountCheck: NextPage<_pMyPageAccountProps> = (props) => {
   const dispatch = useDispatch();
 
   // state 관리

@@ -4,8 +4,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { withdrawalAction } from "../../../../../store/action/user.action";
 import { UseLink } from "../../../../configure/router.entity";
-import { _cWithdrawalModalProps } from "../../../../configure/_cProps.entity";
-import { _pWithdrawalModalProps } from "../../../../configure/_pProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
@@ -13,13 +11,14 @@ import {
   Text,
   SmallButton,
 } from "../../../styles/CommonComponents";
+import { _pWithdrawalModalProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 마이 페이지: 계정관리 회원탈퇴 모달 컴포넌트(기능)
  * @param props
  * @returns
  */
-const WithdrawalModal: NextPage<_cWithdrawalModalProps> = (props) => {
+const WithdrawalModal: NextPage<_pWithdrawalModalProps> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 

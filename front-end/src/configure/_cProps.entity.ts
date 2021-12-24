@@ -33,30 +33,6 @@ export interface _cMyPageAccount extends _MainProps {
 }
 
 /**
- * 마이페이지(계정관리): 비밀번호 변경 modal props
- */
-export interface _cChangePwModalProps extends _cMyPageAccount {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  style: {
-    height: string;
-  };
-}
-
-/**
- * 마이페이지(계정관리): 도장 업로드 modal props
- */
-export interface _cStampModalProps {
-  stampNum: number;
-  setStampNum: React.Dispatch<React.SetStateAction<number>>;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  stampImgSrc: string;
-  setStampImgSrc: React.Dispatch<React.SetStateAction<string>>;
-  style: {
-    height: string;
-  };
-}
-
-/**
  * 마이페이지(계정관리): 회원탈퇴 modal props
  */
 export interface _cWithdrawalModalProps {

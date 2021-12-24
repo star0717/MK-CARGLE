@@ -13,11 +13,7 @@ import { FindParameters, FindResult } from "../models/base.entity";
 import { Company } from "../models/company.entity";
 import { User, UserAuthority } from "../models/user.entity";
 import { FileInit, MbType } from "./etc.entity";
-import {
-  _cChangePwModalProps,
-  _cMyPageAccount,
-  _cWithdrawalModalProps,
-} from "./_cProps.entity";
+import { _cWithdrawalModalProps } from "./_cProps.entity";
 import { _fTermData, _fWithdrawal } from "./_fProps.entity";
 import { _MainProps } from "./_props.entity";
 
@@ -94,11 +90,41 @@ export interface _pFindPassword {
  ***********************************************************************/
 
 // 계정 관리 props
-export interface _pMyAccountProps extends _MainProps {
+export interface _pMyPageAccountProps extends _MainProps {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
   accountInfo: SignUpInfo;
   setAccountInfo: React.Dispatch<React.SetStateAction<SignUpInfo>>;
+}
+
+// 비밀번호 변경 modal props
+export interface _pChangePwModalProps extends _pMyPageAccountProps {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  style: {
+    height: string;
+  };
+}
+
+// 도장 업로드 modal props
+export interface _pStampModalProps {
+  stampNum: number;
+  setStampNum: React.Dispatch<React.SetStateAction<number>>;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  stampImgSrc: string;
+  setStampImgSrc: React.Dispatch<React.SetStateAction<string>>;
+  style: {
+    height: string;
+  };
+}
+
+// 회원탈퇴 modal props
+export interface _pWithdrawalModalProps {
+  password: string;
+  accountInfo: SignUpInfo;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  style: {
+    height: string;
+  };
 }
 
 // 직원 관리용 props

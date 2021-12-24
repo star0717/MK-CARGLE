@@ -5,12 +5,7 @@ import WithdrawalModal from "./withdrawalModal";
 import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { pwCheckAction } from "../../../../../store/action/user.action";
-import {
-  _cMyPageAccount,
-  _cWithdrawalModalProps,
-} from "../../../../configure/_cProps.entity";
 import { _fWithdrawal } from "../../../../configure/_fProps.entity";
-import { _pWithdrawalProps } from "../../../../configure/_pProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
@@ -23,6 +18,10 @@ import {
   CommonTitleWrapper,
   RsWrapper,
 } from "../../../styles/CommonComponents";
+import {
+  _pMyPageAccountProps,
+  _pWithdrawalModalProps,
+} from "../../../../configure/_pProps.entity";
 
 Modal.setAppElement("body");
 
@@ -31,7 +30,7 @@ Modal.setAppElement("body");
  * @param props
  * @returns
  */
-const Withdrawal: NextPage<_cMyPageAccount> = (props) => {
+const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
   const dispatch = useDispatch();
 
   // react-hook-form 사용을 위한 선언
@@ -81,7 +80,7 @@ const Withdrawal: NextPage<_cMyPageAccount> = (props) => {
   };
 
   // 회원탈퇴 모달 props
-  const WithdrawalModalProps: _cWithdrawalModalProps = {
+  const WithdrawalModalProps: _pWithdrawalModalProps = {
     password,
     accountInfo,
     setModalOpen,

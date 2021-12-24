@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
 import { _pFindEmail } from "../../../../configure/_pProps.entity";
-import { WholeWrapper } from "../../../styles/CommonComponents";
 import FindEmailCheck from "./findEmailCheck";
 import FindEmailComplete from "./findEmailComplete";
 
