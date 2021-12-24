@@ -1,11 +1,28 @@
+import { Modal } from "@material-ui/core";
+import dayjs from "dayjs";
 import type { NextPage } from "next";
 import React, { useState } from "react";
+import { IoIosCloseCircle } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { _aGetAdminReivewCompanies } from "../../../../../store/action/user.action";
 import { _iFindCompanies } from "../../../../../store/interfaces";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
-import { Company } from "../../../../models/company.entity";
+import { Company, CompanyApproval } from "../../../../models/company.entity";
+import { PagenationSection } from "../../../common/sections";
+import {
+  CloseButton,
+  RsWrapper,
+  TableBody,
+  TableHead,
+  TableHeadLIST,
+  TableRow,
+  TableRowLIST,
+  TableWrapper,
+  Text,
+  WholeWrapper,
+  Wrapper,
+} from "../../../styles/CommonComponents";
 import AdminReviewCompaniesPresenter from "./presenter";
 
 const AdminReviewCompaniesPage: NextPage<any> = (props) => {
@@ -19,6 +36,8 @@ const AdminReviewCompaniesPage: NextPage<any> = (props) => {
    *********************************************************************/
   //직원 명단 API Result 관련
   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedDoc, setSelectedDoc] = useState<Company>();
 
   /*********************************************************************
    * 3. Handlers
