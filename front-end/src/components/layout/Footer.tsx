@@ -1,7 +1,6 @@
 import { useResizeDetector } from "react-resize-detector";
 import type { NextPage } from "next";
 import {
-  WholeWrapper,
   Wrapper,
   Text,
   Image,

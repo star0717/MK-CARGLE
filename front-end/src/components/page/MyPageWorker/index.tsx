@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { User } from "../../../models/user.entity";
 import { getWorkersListAction } from "../../../../store/action/user.action";
-import { _pTermProps, _pWorkerData } from "../../../configure/_pProps.entity";
+import { _pWorkerData } from "../../../configure/_pProps.entity";
 import { _MainProps } from "../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../models/base.entity";
 import { GetWorkersList } from "../../../../store/interfaces";

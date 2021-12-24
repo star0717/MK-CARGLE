@@ -1,19 +1,10 @@
 import React from "react";
-import {
-  FieldValues,
-  SubmitHandler,
-  UseFormHandleSubmit,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from "react-hook-form";
-import { SignUpInfo, UserInfo } from "../../src/models/auth.entity";
+import { FieldValues, UseFormSetValue } from "react-hook-form";
+import { AuthTokenInfo, SignUpInfo } from "../../src/models/auth.entity";
 import { FormCheck, FormInput } from "../../store/interfaces";
-import { FindParameters, FindResult } from "../models/base.entity";
+import { FindResult } from "../models/base.entity";
 import { Company } from "../models/company.entity";
 import { User, UserAuthority } from "../models/user.entity";
-import { FileInit, MbType } from "./etc.entity";
-import { _cWithdrawalModalProps } from "./_cProps.entity";
 import { _fTermData, _fWithdrawal } from "./_fProps.entity";
 import { _MainProps } from "./_props.entity";
 
@@ -24,6 +15,13 @@ export interface _pFindDocs<T> extends _MainProps {
   findResult: FindResult<T>;
   setFindResult: React.Dispatch<React.SetStateAction<FindResult<T>>>;
   findDocHandler: (page: number) => void;
+}
+
+/***********************************************************************
+ * 레이아웃
+ ***********************************************************************/
+export interface _pLayoutProps {
+  tokenValue?: AuthTokenInfo;
 }
 
 /***********************************************************************
@@ -129,6 +127,15 @@ export interface _pWithdrawalModalProps {
 
 // 직원 관리용 props
 export interface _pWorkerData extends _pFindDocs<User> {}
+
+// 직원정보 modal props
+export interface _pWorkerInfoModalProps extends _pWorkerData {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  clickDoc: User;
+  style: {
+    height: string;
+  };
+}
 
 /***********************************************************************
  * Admin

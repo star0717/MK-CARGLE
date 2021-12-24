@@ -18,11 +18,11 @@ import { CompanyApproval } from "../../models/company.entity";
 import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
-import { _cLayoutProps } from "../../configure/_cProps.entity";
 import { menuList } from "../../configure/list.entity";
 import { UserAuthority } from "../../models/user.entity";
+import { _pLayoutProps } from "../../configure/_pProps.entity";
 
-const Header: NextPage<_cLayoutProps> = (props) => {
+const Header: NextPage<_pLayoutProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 

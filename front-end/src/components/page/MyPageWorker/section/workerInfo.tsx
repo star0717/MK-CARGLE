@@ -3,10 +3,9 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import {
   _pWorkerData,
-  _pWorkerInfoProps,
+  _pWorkerInfoModalProps,
 } from "../../../../configure/_pProps.entity";
 import { User } from "../../../../models/user.entity";
-import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
 import { PagenationSection } from "../../../common/sections";
 import { IoIosCloseCircle } from "react-icons/io";
 import WorkerInfoModal from "./workerInfoModal";
@@ -38,7 +37,7 @@ const WorkerInfo: NextPage<_pWorkerData> = (props) => {
   /**
    * Worker Info modal props
    */
-  const WorkerModalProps: _cWorkerInfoModalProps = {
+  const WorkerModalProps: _pWorkerInfoModalProps = {
     ...props,
     setModalOpen,
     clickDoc,

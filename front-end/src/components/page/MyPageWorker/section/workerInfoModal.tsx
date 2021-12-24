@@ -16,8 +16,6 @@ import {
   PatchWorkersDelete,
   PatchWorkersReject,
 } from "../../../../../store/interfaces";
-import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
-import { _pWorkerInfoModalProps } from "../../../../configure/_pProps.entity";
 import { User } from "../../../../models/user.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -30,8 +28,9 @@ import {
 } from "../../../styles/CommonComponents";
 import { Switch } from "@material-ui/core";
 import { makeFullAddress } from "../../../../modules/commonModule";
+import { _pWorkerInfoModalProps } from "../../../../configure/_pProps.entity";
 
-const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
+const WorkerInfoModal: NextPage<_pWorkerInfoModalProps> = (props) => {
   const dispatch = useDispatch();
 
   // state 관리
