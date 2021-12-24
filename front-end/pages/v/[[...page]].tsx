@@ -26,6 +26,7 @@ import AdminReviewCompaniesPage from "../../src/components/page/admin/review_com
 import axios, { AxiosResponse } from "axios";
 import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
+import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -69,6 +70,9 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.ADMIN_REVIEW_COMPANIES:
       return <AdminReviewCompaniesPage {...props} />;
+
+    case UseLink.ADMIN_MAN_COMPANIES:
+      return <AdminManCompaniesPage {...props} />;
   }
 };
 
@@ -208,14 +212,28 @@ export const getServerSideProps: GetServerSideProps = async (
         }
         case UseLink.ADMIN_MAN_COMPANIES: {
           const params: FindParameters = {
-            take: 10,
+            take: 5,
           };
 
-          data = await axios.get(
-            `${apiUrl}/settings/management/workers?${FindParameters.getQuery(
-              params
-            )}`
-          );
+          data = await axios
+            .get(
+              `${apiUrl}/admin/companies?${FindParameters.getQuery(params)}`,
+              {
+                headers: {
+                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                },
+                withCredentials: true,
+              }
+            )
+            .then(
+              (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+            );
+          return {
+            props: {
+              tokenValue,
+              data,
+            },
+          };
         }
         default:
           return {
