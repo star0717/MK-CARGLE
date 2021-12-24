@@ -69,7 +69,7 @@ export class AdminController {
 
   @Get('review/companies')
   @ApiOperation({
-    summary: `[WORKER] 승인 요청 업체 정보를 페이징 정보와 함께 반환`,
+    summary: `[ADMIN] 승인 요청 업체 정보를 페이징 정보와 함께 반환`,
   })
   @ApiResponse({
     description: `검색된 Company 배열 데이터와 페이징 정보`,
@@ -199,6 +199,21 @@ export class AdminController {
 
     const file = createReadStream(join(process.cwd(), getMrnPath() + fileName));
     return new StreamableFile(file);
+  }
+
+  @Get('companies')
+  @ApiOperation({
+    summary: `[ADMIN] 업체 정보를 페이징 정보와 함께 반환`,
+  })
+  @ApiResponse({
+    description: `검색된 Company 배열 데이터와 페이징 정보`,
+    type: FindResult,
+  })
+  async findCompanies(
+    @Query() fParams: FindParameters,
+    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
+  ): Promise<FindResult<Company>> {
+    return await this.service.findReqReviewCompanies(token, fParams);
   }
 
   @Patch('companies/:id')
