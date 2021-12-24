@@ -85,6 +85,7 @@ export class AdminService {
     token: AuthTokenInfo,
     fParams: FindParameters,
   ): Promise<FindResult<Company>> {
+    fParams.filter = { approval: CompanyApproval.ING } as Partial<Company>;
     return this.companiesService.findByOptions(token, fParams);
   }
 
@@ -159,6 +160,13 @@ export class AdminService {
     }
 
     return fileList[0];
+  }
+
+  async findCompanies(
+    token: AuthTokenInfo,
+    fParams: FindParameters,
+  ): Promise<FindResult<Company>> {
+    return this.companiesService.findByOptions(token, fParams);
   }
 
   async updateCompanyInfo(
