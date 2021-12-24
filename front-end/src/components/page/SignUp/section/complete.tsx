@@ -3,7 +3,6 @@ import { useRouter } from "next/dist/client/router";
 import React from "react";
 import { signOutUserAction } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
-import { _cSignUpProps } from "../../../../configure/_cProps.entity";
 import { UseLink } from "../../../../configure/router.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -15,15 +14,15 @@ import {
   RsWrapper,
 } from "../../../styles/CommonComponents";
 import { BsFillCheckCircleFill } from "react-icons/bs";
-import { _pCompleteProps } from "../../../../configure/_pProps.entity";
 import { useDispatch } from "react-redux";
+import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 완료 컴포넌트(기능)
  * @param props
  * @returns
  */
-const Complete: NextPage<_cSignUpProps> = (props) => {
+const Complete: NextPage<_pSignUpProps> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 

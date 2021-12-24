@@ -1,10 +1,7 @@
 import type { NextPage } from "next";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React from "react";
-// import TermPresenter from "./termPresenter";
-import { _cSignUpProps } from "../../../../configure/_cProps.entity";
 import { _fTermData } from "../../../../configure/_fProps.entity";
-import { _pTermProps } from "../../../../configure/_pProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
@@ -22,13 +19,14 @@ import {
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
+import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 이용약관 컴포넌트(기능)
  * @param props
  * @returns
  */
-const Term: NextPage<_cSignUpProps> = (props) => {
+const Term: NextPage<_pSignUpProps> = (props) => {
   const dispatch = useDispatch();
 
   // react-hook-form 사용을 위한 선언

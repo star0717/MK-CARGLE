@@ -12,7 +12,7 @@ import SignupComplete from "./section/complete";
 import SelectUser from "./section/selectUser";
 import SignAccount from "./section/signAccount";
 import SignCompany from "./section/signCompany";
-import { _cSignUpProps } from "../../../configure/_cProps.entity";
+import { _pSignUpProps } from "../../../configure/_pProps.entity";
 
 // modal setting
 Modal.setAppElement("body");
@@ -21,7 +21,7 @@ Modal.setAppElement("body");
  * 회원가입: Index 컴포넌트(기능)
  * @returns
  */
-const SignUp: NextPage<any> = () => {
+const SignUp: NextPage = () => {
   // redux store에서 user, company 정보 가져옴
   const { user, company, formInput, formCheck } = useSelector(
     (state: RootStateInterface): UserState => state.userAll
@@ -31,7 +31,7 @@ const SignUp: NextPage<any> = () => {
   const [stepNumber, setStepNumber] = useState<number>(1); // 스텝 숫자
 
   // component에 전달할 props들 정의
-  const SignUpProps: _cSignUpProps = {
+  const SignUpProps: _pSignUpProps = {
     user,
     company,
     formInput,

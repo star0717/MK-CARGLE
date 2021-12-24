@@ -24,7 +24,6 @@ import {
 import { BsFillLightbulbFill, BsFillQuestionCircleFill } from "react-icons/bs";
 import { parseJwt } from "../../../../modules/commonModule";
 import { AuthTokenInfo } from "../../../../models/auth.entity";
-import { _cFileUploadProps } from "../../../../configure/_cProps.entity";
 import { FileInit } from "../../../../configure/etc.entity";
 import { _pFileUploadProps } from "../../../../configure/_pProps.entity";
 
@@ -41,7 +40,7 @@ const fileInit: FileInit = {
  * @param props
  * @returns
  */
-const FileUpload: NextPage<_cFileUploadProps> = (props) => {
+const FileUpload: NextPage<_pFileUploadProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 

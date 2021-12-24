@@ -27,14 +27,13 @@ import {
   RsWrapper,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
-import {
-  _cComFindModalProps,
-  _cSignUpProps,
-} from "../../../../configure/_cProps.entity";
-import { _pSignAccountProps } from "../../../../configure/_pProps.entity";
 import { AxiosError } from "axios";
 import { DbErrorInfo } from "../../../../models/base.entity";
 import { useResizeDetector } from "react-resize-detector";
+import {
+  _pComFindModalProps,
+  _pSignUpProps,
+} from "../../../../configure/_pProps.entity";
 
 // modal setting
 Modal.setAppElement("body");
@@ -44,7 +43,7 @@ Modal.setAppElement("body");
  * @param props
  * @returns
  */
-const SignAccount: NextPage<_cSignUpProps> = (props) => {
+const SignAccount: NextPage<_pSignUpProps> = (props) => {
   const dispatch = useDispatch();
 
   // state 관리
@@ -261,7 +260,7 @@ const SignAccount: NextPage<_cSignUpProps> = (props) => {
   /**
    * 업체 조회 MODAL에 넘길 props
    */
-  const ComfindModalProps: _cComFindModalProps = {
+  const ComfindModalProps: _pComFindModalProps = {
     setModalOpen,
     inputForm,
     setInputForm,

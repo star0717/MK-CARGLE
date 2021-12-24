@@ -1,6 +1,4 @@
 import { NextPage } from "next";
-import { _cSignUpProps } from "../../../../configure/_cProps.entity";
-import { _pSelectUserProps } from "../../../../configure/_pProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
@@ -18,13 +16,14 @@ import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
 import { IoIosArrowForward } from "react-icons/io";
+import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 가입유형 선택 컴포넌트(기능)
  * @param props
  * @returns
  */
-const SelectUser: NextPage<_cSignUpProps> = (props) => {
+const SelectUser: NextPage<_pSignUpProps> = (props) => {
   const dispatch = useDispatch();
 
   // resize 변수 선언

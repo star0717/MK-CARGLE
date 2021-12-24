@@ -4,7 +4,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
-import { _pApprovalProps } from "../../../../configure/_pProps.entity";
 import { UseLink } from "../../../../configure/router.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
