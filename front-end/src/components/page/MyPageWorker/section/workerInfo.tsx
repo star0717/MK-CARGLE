@@ -1,21 +1,11 @@
 import type { NextPage } from "next";
-import dayjs from "dayjs";
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { Wrapper, CloseButton } from "../../../styles/CommonComponents";
 import {
-  WholeWrapper,
-  Wrapper,
-  Text,
-  TableWrapper,
-  TableHead,
-  TableHeadLIST,
-  TableBody,
-  TableRowLIST,
-  TableRow,
-  RsWrapper,
-  CloseButton,
-} from "../../../styles/CommonComponents";
-import { _pWorkerData } from "../../../../configure/_pProps.entity";
+  _pWorkerData,
+  _pWorkerInfoProps,
+} from "../../../../configure/_pProps.entity";
 import { User } from "../../../../models/user.entity";
 import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
 import { PagenationSection } from "../../../common/sections";
@@ -45,9 +35,10 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
   /**
    * 화면구성에 넘길 props
    */
-  const fProps = {
-    setModalOpen,
+  const fProps: _pWorkerInfoProps = {
+    ...props,
     modalOpen,
+    setModalOpen,
     setClickDoc,
   };
 

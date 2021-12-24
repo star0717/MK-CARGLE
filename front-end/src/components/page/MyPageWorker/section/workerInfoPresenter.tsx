@@ -16,8 +16,9 @@ import React from "react";
 import { User } from "../../../../models/user.entity";
 import { PagenationSection } from "../../../common/sections";
 import dayjs from "dayjs";
+import { _pWorkerInfoProps } from "../../../../configure/_pProps.entity";
 
-const WorkerInfoPresenter: NextPage<any> = (props) => {
+const WorkerInfoPresenter: NextPage<_pWorkerInfoProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
@@ -38,8 +39,8 @@ const WorkerInfoPresenter: NextPage<any> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    setModalOpen(!modalOpen);
-                    setClickDoc(doc);
+                    props.setModalOpen(!props.modalOpen);
+                    props.setClickDoc(doc);
                   }}
                 >
                   <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
