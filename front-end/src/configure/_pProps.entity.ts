@@ -251,6 +251,11 @@ export interface _pWithdrawalModalProps extends _cWithdrawalModalProps {
 }
 
 /**
+ * 마이페이지(직원관리): 직원 리스트 props
+ */
+export interface _pWorkerInfoProps extends _pWorkerData {}
+
+/**
  * 마이페이지(직원관리): 직원 데이터 props
  */
 

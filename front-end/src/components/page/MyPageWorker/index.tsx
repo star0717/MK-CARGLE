@@ -1,14 +1,12 @@
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { User } from "../../../models/user.entity";
 import { getWorkersListAction } from "../../../../store/action/user.action";
-import { WholeWrapper } from "../../styles/CommonComponents";
 import MyPageWorkerPresenter from "./indexPresenter";
 import { _pTermProps, _pWorkerData } from "../../../configure/_pProps.entity";
 import { _MainProps } from "../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../models/base.entity";
-import { LastPage } from "@material-ui/icons";
 import { GetWorkersList } from "../../../../store/interfaces";
 
 const MyPageWorker: NextPage<_MainProps> = (props) => {
@@ -53,11 +51,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return (
-    <WholeWrapper>
-      <MyPageWorkerPresenter {...fprops} />
-    </WholeWrapper>
-  );
+  return <MyPageWorkerPresenter {...fprops} />;
 };
 
 export default MyPageWorker;
