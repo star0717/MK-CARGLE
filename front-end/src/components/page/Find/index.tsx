@@ -3,8 +3,8 @@ import { useRouter } from "next/dist/client/router";
 import React, { useState } from "react";
 import { WholeWrapper } from "../../styles/CommonComponents";
 import { SignRoute } from "../../../configure/router.entity";
-import FindEmail from "./body/findEmail";
-import FindPassword from "./body/findPassword";
+import FindEmail from "./section/findEmail";
+import FindPassword from "./section/findPassword";
 
 /**
  * 계정찾기: 라우터에 따른 컴포넌트 구분
