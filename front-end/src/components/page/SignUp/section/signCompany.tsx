@@ -26,11 +26,10 @@ import {
 import { IoIosCloseCircle } from "react-icons/io";
 import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
 import { Company } from "../../../../models/company.entity";
-import { _cSignUpProps } from "../../../../configure/_cProps.entity";
-import { _pSignCompanyProps } from "../../../../configure/_pProps.entity";
 import { AxiosError } from "axios";
 import { DbErrorInfo } from "../../../../models/base.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
+import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 
 // modal setting
 Modal.setAppElement("body");
@@ -40,7 +39,7 @@ Modal.setAppElement("body");
  * @param props
  * @returns
  */
-const SignCompany: NextPage<_cSignUpProps> = (props) => {
+const SignCompany: NextPage<_pSignUpProps> = (props) => {
   const dispatch = useDispatch();
 
   // state 관리

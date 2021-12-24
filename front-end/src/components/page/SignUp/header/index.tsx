@@ -11,14 +11,14 @@ import {
   JoinStepBar,
 } from "../../../styles/CommonComponents";
 import { GoCheck } from "react-icons/go";
-import { _cSignUpProps } from "../../../../configure/_cProps.entity";
+import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 공통 헤더 컴포넌트(기능)
  * @param props
  * @returns
  */
-const SignUpHeader: NextPage<_cSignUpProps> = (props) => {
+const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 

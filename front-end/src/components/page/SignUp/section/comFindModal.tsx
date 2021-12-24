@@ -5,8 +5,6 @@ import {
   companyFindAction,
   companyFindbyNameAction,
 } from "../../../../../store/action/user.action";
-import { _cComFindModalProps } from "../../../../configure/_cProps.entity";
-import { _pComFindModalProps } from "../../../../configure/_pProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
@@ -25,13 +23,14 @@ import {
 } from "../../../styles/CommonComponents";
 import { CHAR_DEL } from "../../../../validation/regEx";
 import { BsSearch } from "react-icons/bs";
+import { _pComFindModalProps } from "../../../../configure/_pProps.entity";
 
 /**
  * 회원가입: 업체 검색 모달 컴포넌트(기능)
  * @param props
  * @returns
  */
-const ComFindModal: NextPage<_cComFindModalProps> = (props) => {
+const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
   const dispatch = useDispatch();
 
   const [companyList, setCompanyList] = useState<any>([]); // 검색해서 받아온 업체 리스트 state
