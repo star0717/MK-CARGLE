@@ -58,7 +58,7 @@ export const RsWrapper = styled.div<any>`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `0px 0px 100px`};
+  padding: ${(props) => props.padding || `120px 0px 50px`};
   overflow: ${(props) => props.overflow};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
@@ -305,7 +305,7 @@ export const CommonTitleWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
-  position: ${(props) => (props.isAbsolute ? `absolute` : `relatuve`)};
+  position: ${(props) => props.position || `absolute`};
   top: 80px;
   margin: ${(props) => props.margin || `0px 0px 80px`};
   margintop: ${(props) => props.marginTop};

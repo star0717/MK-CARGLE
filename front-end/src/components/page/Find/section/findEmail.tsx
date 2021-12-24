@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
-import { WholeWrapper } from "../../../styles/CommonComponents";
-import FindEmailComplete from "./findEmailComplete";
-import FindEmailCheck from "./findEmailCheck";
 import { _pFindEmail } from "../../../../configure/_pProps.entity";
+import { WholeWrapper } from "../../../styles/CommonComponents";
+import FindEmailCheck from "./findEmailCheck";
+import FindEmailComplete from "./findEmailComplete";
 
 /**
  * 계정찾기: 이메일 찾기(기능)
@@ -15,9 +15,7 @@ const FindEmail: NextPage = () => {
   const [findEmail, setFindEmail] = useState<string>(""); // 찾은 이메일
   const [complete, setComplete] = useState<boolean>(false); // 조회 완료여부
 
-  /**
-   * 계정찾기(이메일) props
-   */
+  // 화면구성에 넘길 props
   const findEmailProps: _pFindEmail = {
     findEmail,
     setFindEmail,
