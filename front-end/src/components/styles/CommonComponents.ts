@@ -11,7 +11,7 @@ interface Propsinterface {
 
 export const WholeWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
-  height: ${(props) => props.height};
+  height: ${(props) => props.height || `100%`};
   color: ${(props) => props.color};
   display: flex;
   background-color: ${(props) => props.bgColor};
@@ -64,31 +64,48 @@ export const RsWrapper = styled.div<any>`
   border: ${(props) => props.border};
   font-size: ${(props) => props.fontSize};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
-
-  @media (max-width: 1500px) {
-    width: 1350px;
-  }
-  @media (max-width: 1350px) {
-    width: 1280px;
-  }
-  @media (max-width: 1350px) {
-    width: 1100px;
-  }
-  @media (max-width: 1100px) {
-    width: 900px;
-  }
-  @media (max-width: 900px) {
-    width: 800px;
-  }
-  @media (max-width: 800px) {
-    width: 700px;
-  }
-  @media (max-width: 700px) {
-    width: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
 `;
+
+// export const CommonTitleWrapper = styled.div<any>`
+//   width: ${(props) => props.width || `100%`};
+//   display: ${(props) => props.display || `flex`};
+//   flex-direction: ${(props) => props.dr || `column`};
+//   position: ${(props) => (props.isAbsolute ? `absolute` : `relatuve`)};
+//   top: 80px;
+//   margin: ${(props) => props.margin || `0px 0px 80px`};
+//   margintop: ${(props) => props.marginTop};
+//   padding: ${(props) => props.padding || `50px 0px 30px`};
+//   padding-bottom: ${(props) => props.paddingBottom};
+//   font-size: 34px;
+//   font-weight: 800;
+//   color: ${(props) => props.color};
+//   text-align: ${(props) => props.textAlign || `center`};
+//   background-color: #292929;
+// `;
+
+// @media (max-width: 1500px) {
+//   width: 1350px;
+// }
+// @media (max-width: 1350px) {
+//   width: 1280px;
+// }
+// @media (max-width: 1350px) {
+//   width: 1100px;
+// }
+// @media (max-width: 1100px) {
+//   width: 900px;
+// }
+// @media (max-width: 900px) {
+//   width: 800px;
+// }
+// @media (max-width: 800px) {
+//   width: 700px;
+// }
+// @media (max-width: 700px) {
+//   width: 100%;
+//   padding-left: 10px;
+//   padding-right: 10px;
+// }
 
 export const Wrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};

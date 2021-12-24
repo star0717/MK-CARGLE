@@ -51,9 +51,7 @@ const AccountCheckPresenter: NextPage<_pAccountCheckProps> = (props) => {
                   props.setPassword(e.target.value);
                 }}
                 placeholder="비밀번호를 입력하세요."
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`
-                }
+                width={`500px`}
                 height={`60px`}
                 margin={`0px 0px 10px 0px`}
               />
