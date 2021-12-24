@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { SubmitHandler, useForm } from "react-hook-form";
 import React from "react";
-import TermPresenter from "./termPresenter";
+// import TermPresenter from "./termPresenter";
 import { _cSignUpProps } from "../../../../configure/_cProps.entity";
 import { _fTermData } from "../../../../configure/_fProps.entity";
 import { _pTermProps } from "../../../../configure/_pProps.entity";
@@ -14,6 +14,9 @@ import {
   RsWrapper,
   CommonSmallTitle,
   CommonButtonWrapper,
+  CommonSubTitle,
+  CommonTitle,
+  CommonTitleWrapper,
   Label,
 } from "../../../styles/CommonComponents";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
@@ -48,6 +51,12 @@ const Term: NextPage<_cSignUpProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
+      <CommonTitleWrapper>
+        <CommonTitle>회원가입</CommonTitle>
+        <CommonSubTitle>
+          서비스 이용을 위해 약관 동의가 필요해요.
+        </CommonSubTitle>
+      </CommonTitleWrapper>
       <RsWrapper>
         <Wrapper width={`1070px`}>
           <form onSubmit={handleSubmit(agreeTermHandler)}>

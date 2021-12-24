@@ -109,7 +109,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper>
+      <RsWrapper padding={`0px 0px 40px`}>
         <Wrapper
           width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
         >
