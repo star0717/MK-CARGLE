@@ -6,18 +6,12 @@ import Header from "./header";
 import { useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
 import { UserState } from "../../../../store/interfaces";
-import { useResizeDetector } from "react-resize-detector";
 import TermSignUp from "./section/term";
 import FileUpload from "./section/fileUpload";
 import SignupComplete from "./section/complete";
 import SelectUser from "./section/selectUser";
 import SignAccount from "./section/signAccount";
 import SignCompany from "./section/signCompany";
-import {
-  WholeWrapper,
-  Wrapper,
-  RsWrapper,
-} from "../../styles/CommonComponents";
 import { _cSignUpProps } from "../../../configure/_cProps.entity";
 
 // modal setting
@@ -49,34 +43,21 @@ const SignUp: NextPage<any> = () => {
     setUserAuth,
   };
 
-  // resize 변수 선언
-  const { width, height, ref } = useResizeDetector();
-
   return (
-    <WholeWrapper>
-      <RsWrapper>
-        <Header {...SignUpProps} />
-        <Wrapper>
-          {/* 바디 부분 ( 가운데 전체 영역 ) */}
-          <Wrapper>
-            {/* 바디 부분 ( 단계별 내용들 ) */}
-            <Wrapper>
-              {stepNumber === 1 && <SelectUser {...SignUpProps} />}
-              {stepNumber === 2 && <TermSignUp {...SignUpProps} />}
-              {stepNumber === 3 && <SignAccount {...SignUpProps} />}
-              {stepNumber === 4 &&
-                (userAuth === "owner" ? (
-                  <SignCompany {...SignUpProps} />
-                ) : (
-                  <SignupComplete {...SignUpProps} />
-                ))}
-              {stepNumber === 5 && <FileUpload {...SignUpProps} />}
-              {stepNumber === 6 && <SignupComplete {...SignUpProps} />}
-            </Wrapper>
-          </Wrapper>
-        </Wrapper>
-      </RsWrapper>
-    </WholeWrapper>
+    <>
+      <Header {...SignUpProps} />
+      {stepNumber === 1 && <SelectUser {...SignUpProps} />}
+      {stepNumber === 2 && <TermSignUp {...SignUpProps} />}
+      {stepNumber === 3 && <SignAccount {...SignUpProps} />}
+      {stepNumber === 4 &&
+        (userAuth === "owner" ? (
+          <SignCompany {...SignUpProps} />
+        ) : (
+          <SignupComplete {...SignUpProps} />
+        ))}
+      {stepNumber === 5 && <FileUpload {...SignUpProps} />}
+      {stepNumber === 6 && <SignupComplete {...SignUpProps} />}
+    </>
   );
 };
 

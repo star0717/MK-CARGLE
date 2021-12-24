@@ -4,6 +4,7 @@ import { User } from "../../../src/models/user.entity";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
+  USER_SELECT = "USER_SELECT",
   INPUT_ACCOUNT = "INPUT_ACCOUNT",
   INPUT_COMPANY = "INPUT_COMPANY",
   INPUT_FORM = "INPUT_FORM",
@@ -37,6 +38,7 @@ export enum actionTypesUser {
 
 export type ActionsUser =
   | UserInit
+  | UserSelect
   | InputAccount
   | InputCompany
   | InputForm
@@ -70,6 +72,12 @@ export type ActionsUser =
 // 초기화
 export interface UserInit {
   type: actionTypesUser.USER_INIT;
+  payload: any;
+}
+
+// 유저 종류 선택
+export interface UserSelect {
+  type: actionTypesUser.USER_SELECT;
   payload: any;
 }
 

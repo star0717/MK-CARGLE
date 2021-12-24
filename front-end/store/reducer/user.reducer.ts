@@ -81,6 +81,15 @@ const userAll = (
         formCheck: initialState.formCheck,
       };
 
+    case actionTypesUser.USER_SELECT:
+      return {
+        ...state,
+        user: { ...initialState.user, auth: action.payload },
+        company: initialState.company,
+        formInput: initialState.formInput,
+        formCheck: initialState.formCheck,
+      };
+
     // 계정 정보 state 변환
     case actionTypesUser.INPUT_ACCOUNT:
       return {
