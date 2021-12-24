@@ -271,16 +271,20 @@ export interface _pWorkerInfoModalProps {
   workerDelete: () => boolean;
 }
 
-/**
- * 마이페이지(직원관리): 직원 데이터 props
- */
-
+/***********************************************************************
+ * 기본
+ ***********************************************************************/
 export interface _pFindDocs<T> extends _MainProps {
   findResult: FindResult<T>;
   setFindResult: React.Dispatch<React.SetStateAction<FindResult<T>>>;
   findDocHandler: (page: number) => void;
 }
 
+/***********************************************************************
+ * MyPage(마이페이지)
+ ***********************************************************************/
+
+// 직원 관리용 props
 export interface _pWorkerData extends _pFindDocs<User> {}
 
 /***********************************************************************

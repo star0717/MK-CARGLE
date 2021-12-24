@@ -1,14 +1,20 @@
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { _aGetAdminReivewCompanies } from "../../../../../store/action/user.action";
+import {
+  _aGetAdminManCompanies,
+  _aGetAdminReivewCompanies,
+} from "../../../../../store/action/user.action";
 import { _iFindCompanies } from "../../../../../store/interfaces";
-import { _pADMIN_REVIEW_COMPANIES } from "../../../../configure/_pProps.entity";
+import {
+  _pAdminManCompanies,
+  _pAdminReviewCompanies,
+} from "../../../../configure/_pProps.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
-import AdminReviewCompaniesPresenter from "./presenter";
+import AdminManCompaniesPresenter from "./presenter";
 
-const AdminReviewCompaniesPage: NextPage<any> = (props) => {
+const AdminManCompaniesPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -32,7 +38,7 @@ const AdminReviewCompaniesPage: NextPage<any> = (props) => {
       page,
       take: 1,
     };
-    dispatch(_aGetAdminReivewCompanies(param)).then((res: _iFindCompanies) => {
+    dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
       setFindResult(res.payload);
     });
   };
@@ -40,7 +46,7 @@ const AdminReviewCompaniesPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const fprops: _pADMIN_REVIEW_COMPANIES = {
+  const fprops: _pAdminManCompanies = {
     ...props,
     findResult,
     setFindResult,
@@ -51,7 +57,7 @@ const AdminReviewCompaniesPage: NextPage<any> = (props) => {
    * 5. Page configuration
    *********************************************************************/
 
-  return <AdminReviewCompaniesPresenter {...fprops} />;
+  return <AdminManCompaniesPresenter {...fprops} />;
 };
 
-export default AdminReviewCompaniesPage;
+export default AdminManCompaniesPage;
