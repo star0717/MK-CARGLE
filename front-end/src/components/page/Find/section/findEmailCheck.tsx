@@ -10,6 +10,7 @@ import {
   CommonButtonWrapper,
   CommonTitleWrapper,
   RsWrapper,
+  Text,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { useRouter } from "next/dist/client/router";
@@ -63,52 +64,54 @@ const FindEmailCheck: NextPage<_pFindEmail> = (props) => {
         <CommonTitle textAlign={`center`} margin={`0px`}>
           계정찾기
         </CommonTitle>
+        <CommonSubTitle>
+          이메일 찾기를 위하여 계정 정보를 입력해주세요.
+        </CommonSubTitle>
       </CommonTitleWrapper>
       <RsWrapper>
         <Wrapper
-          width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
+          width={`auto`}
+          padding={`50px`}
+          border={`1px solid #ccc`}
+          radius={`5px`}
         >
-          <CommonSubTitle>이메일 찾기</CommonSubTitle>
           <form onSubmit={onfindEmailHandler}>
-            <TextInput2
-              value={props.name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                props.setName(e.target.value);
-              }}
-              width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
-              height={`60px`}
-              margin={`0px 0px 10px 0px`}
-              placeholder="이름"
-            />
-            <TextInput2
-              value={props.hpNumber}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                props.setHpNumber(e.target.value);
-              }}
-              width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
-              height={`60px`}
-              margin={`10px 0px 20px`}
-              placeholder="휴대전화번호"
-            />
-            <CommonButtonWrapper>
-              <CommonButton
-                type="submit"
-                kindOf={`white`}
-                margin={`0px 0px 20px`}
-              >
-                다음
-              </CommonButton>
-              <CommonButton
-                type="button"
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  router.push(UseLink.FIND_PASSWORD);
+            <Wrapper al={`flex-start`}>
+              <Text margin={`0px 0px 10px`}>이름</Text>
+              <TextInput2
+                value={props.name}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  props.setName(e.target.value);
                 }}
-              >
-                비밀번호 찾기
-              </CommonButton>
-            </CommonButtonWrapper>
+                width={`400px`}
+                margin={`0px 0px 10px 0px`}
+              />
+            </Wrapper>
+            <Wrapper al={`flex-start`}>
+              <Text margin={`0px 0px 10px`}>휴대전화번호</Text>
+              <TextInput2
+                value={props.hpNumber}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  props.setHpNumber(e.target.value);
+                }}
+                width={`400px`}
+              />
+            </Wrapper>
           </form>
         </Wrapper>
+        <CommonButtonWrapper kindOf={`column`}>
+          <CommonButton type="submit" kindOf={`white`} margin={`0px 0px 20px`}>
+            다음
+          </CommonButton>
+          <CommonButton
+            type="button"
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              router.push(UseLink.FIND_PASSWORD);
+            }}
+          >
+            비밀번호 찾기
+          </CommonButton>
+        </CommonButtonWrapper>
       </RsWrapper>
     </WholeWrapper>
   );
