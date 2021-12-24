@@ -27,13 +27,13 @@ const FindEmail: NextPage = () => {
   };
 
   return (
-    <WholeWrapper>
+    <>
       {complete ? (
         <FindEmailComplete {...findEmailProps} />
       ) : (
         <FindEmailCheck {...findEmailProps} />
       )}
-    </WholeWrapper>
+    </>
   );
 };
 

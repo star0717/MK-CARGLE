@@ -30,13 +30,13 @@ const FindPassword: NextPage = () => {
   };
 
   return (
-    <WholeWrapper>
+    <>
       {complete ? (
         <FindPasswordComplete />
       ) : (
         <FindPasswordCheck {...findPasswordProps} />
       )}
-    </WholeWrapper>
+    </>
   );
 };
 
