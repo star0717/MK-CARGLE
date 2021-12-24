@@ -94,7 +94,7 @@ const Footer: NextPage = () => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper padding={`15px 0px 20px`} bgColor={`#292929`} color={`#fff`}>
+    <FooterWrapper padding={`15px 0px 20px`} bgColor={`#292929`} color={`#fff`}>
       <RsWrapper dr={`row`} ju={`space-around`} padding={`0px 0px 30px`}>
         <Image
           src="/images/logoWhite.png"
@@ -116,7 +116,7 @@ const Footer: NextPage = () => {
           </Wrapper>
         </Wrapper>
       </RsWrapper>
-    </WholeWrapper>
+    </FooterWrapper>
   );
 };
 
