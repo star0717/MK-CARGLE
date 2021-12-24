@@ -66,6 +66,9 @@ export const RsWrapper = styled.div<any>`
   font-size: ${(props) => props.fontSize};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
 }
+
+${(props) => props.kindOf === `OverRsWrapper` && `padding:180px 0px 50px`}
+
 `;
 
 // export const CommonTitleWrapper = styled.div<any>`
