@@ -28,6 +28,7 @@ const workerInfo: NextPage<_pWorkerData> = (props) => {
 
   const closeModal = () => {
     setModalOpen(false);
+    props.findDocHandler(props.findResult.currentPage);
   };
 
   /**
