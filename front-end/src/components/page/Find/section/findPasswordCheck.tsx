@@ -13,14 +13,43 @@ import React from "react";
 import { useRouter } from "next/dist/client/router";
 import { UseLink } from "../../../../configure/router.entity";
 import { _pFindPassword } from "../../../../configure/_pProps.entity";
+import { useDispatch } from "react-redux";
+import { findPWAction } from "../../../../../store/action/user.action";
 
 /**
  * 계정찾기: 비밀번호 찾기(화면)
  * @param props
  * @returns
  */
-const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
+const FindPasswordCheck: NextPage<_pFindPassword> = (props) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  /**
+   * 비밀번호 찾기 handler
+   * @param e
+   */
+  const onFindPwHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const findPwInfo = {
+      name: props.name,
+      hpNumber: props.hpNumber,
+      email: props.email,
+    };
+    dispatch(findPWAction(findPwInfo)).then(
+      (req: any) => {
+        if (req.payload) {
+          props.setComplete(true);
+        } else {
+          alert("존재하지 않는 사용자입니다.");
+        }
+      },
+      (err) => {
+        alert("존재하지 않는 사용자입니다.");
+      }
+    );
+  };
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
@@ -34,7 +63,7 @@ const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
           계정찾기
         </CommonTitle>
         <CommonSubTitle>패스워드 찾기</CommonSubTitle>
-        <form onSubmit={props.onFindPwHandler}>
+        <form onSubmit={onFindPwHandler}>
           <TextInput2
             type="text"
             value={props.name}
@@ -93,4 +122,4 @@ const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
   );
 };
 
-export default FindPasswordPresenter;
+export default FindPasswordCheck;

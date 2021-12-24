@@ -137,31 +137,6 @@ export interface _pCompleteProps {
 }
 
 /**
- * 계정찾기: 이메일 props
- */
-export interface _pFindEmail {
-  findEmail: string;
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  hpNumber: string;
-  setHpNumber: React.Dispatch<React.SetStateAction<string>>;
-  onfindEmailHandler: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-}
-
-/**
- * 계정찾기: 비밀번호 props
- */
-export interface _pFindPassword {
-  email: string;
-  setEmail: React.Dispatch<React.SetStateAction<string>>;
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  hpNumber: string;
-  setHpNumber: React.Dispatch<React.SetStateAction<string>>;
-  onFindPwHandler: (e: React.FormEvent<HTMLFormElement>) => void;
-}
-
-/**
  * 마이페이지(계정관리): 비밀번호 확인 props
  */
 export interface _pAccountCheckProps {
@@ -278,6 +253,32 @@ export interface _pFindDocs<T> extends _MainProps {
   findResult: FindResult<T>;
   setFindResult: React.Dispatch<React.SetStateAction<FindResult<T>>>;
   findDocHandler: (page: number) => void;
+}
+
+/***********************************************************************
+ * FindEmail & FindPassword(계정찾기)
+ ***********************************************************************/
+
+// 계정찾기(이메일) props
+export interface _pFindEmail {
+  findEmail: string;
+  setFindEmail: React.Dispatch<React.SetStateAction<string>>;
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  hpNumber: string;
+  setHpNumber: React.Dispatch<React.SetStateAction<string>>;
+  setComplete: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+// 계정찾기(비밀번호) props
+export interface _pFindPassword {
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  hpNumber: string;
+  setHpNumber: React.Dispatch<React.SetStateAction<string>>;
+  setComplete: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /***********************************************************************
