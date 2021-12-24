@@ -126,16 +126,22 @@ export interface _pWithdrawalModalProps {
 }
 
 // 직원 관리용 props
-export interface _pWorkerData extends _pFindDocs<User> {}
-
-// 직원정보 modal props
-export interface _pWorkerInfoModalProps extends _pWorkerData {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  clickDoc: User;
-  style: {
+export interface _pWorkerDataProps extends _pFindDocs<User> {
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  clickDoc?: User;
+  style?: {
     height: string;
   };
 }
+
+// // 직원정보 modal props
+// export interface _pWorkerInfoModalProps extends _pWorkerDataProps {
+//   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+//   clickDoc: User;
+//   style: {
+//     height: string;
+//   };
+// }
 
 /***********************************************************************
  * Admin

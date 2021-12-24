@@ -1,10 +1,7 @@
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import Modal from "react-modal";
-import {
-  _pWorkerData,
-  _pWorkerInfoModalProps,
-} from "../../../../configure/_pProps.entity";
+import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
 import { User } from "../../../../models/user.entity";
 import { PagenationSection } from "../../../common/sections";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -25,7 +22,7 @@ import {
 } from "../../../styles/CommonComponents";
 import dayjs from "dayjs";
 
-const WorkerInfo: NextPage<_pWorkerData> = (props) => {
+const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [clickDoc, setClickDoc] = useState<User>();
 
@@ -37,7 +34,7 @@ const WorkerInfo: NextPage<_pWorkerData> = (props) => {
   /**
    * Worker Info modal props
    */
-  const WorkerModalProps: _pWorkerInfoModalProps = {
+  const WorkerModalProps: _pWorkerDataProps = {
     ...props,
     setModalOpen,
     clickDoc,
