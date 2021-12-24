@@ -251,6 +251,27 @@ export interface _pWithdrawalModalProps extends _cWithdrawalModalProps {
 }
 
 /**
+ * 마이페이지(직원관리): 직원 리스트 props
+ */
+export interface _pWorkerInfoProps extends _pWorkerData {
+  modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickDoc: React.Dispatch<React.SetStateAction<User>>;
+}
+
+/**
+ * 마이페이지(직원관리): 직원 정보 수정 modal props
+ */
+export interface _pWorkerInfoModalProps {
+  approval: boolean;
+  onChangeApproval: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeWorkerInfo: (e: React.FormEvent<HTMLFormElement>) => boolean;
+  docInfo: User;
+  setDocInfo: React.Dispatch<React.SetStateAction<User>>;
+  workerDelete: () => boolean;
+}
+
+/**
  * 마이페이지(직원관리): 직원 데이터 props
  */
 
