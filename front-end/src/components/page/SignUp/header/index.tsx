@@ -60,13 +60,22 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
             </CommonSubTitle>
           </CommonTitleWrapper>
         )}
+        {props.stepNumber === 6 && (
+          <CommonTitleWrapper>
+            <CommonTitle>회원가입</CommonTitle>
+            <CommonSubTitle>
+              가입 승인을 위해 서류를 제출해주세요
+            </CommonSubTitle>
+          </CommonTitleWrapper>
+        )}
       </Wrapper>
 
       {props.userAuth === props.UserAuthority.OWNER &&
         (props.stepNumber === 2 ||
           props.stepNumber === 3 ||
           props.stepNumber === 4 ||
-          props.stepNumber === 5) && (
+          props.stepNumber === 5 ||
+          props.stepNumber === 6) && (
           <JoinStepBarWrapper>
             <JoinStepBar
               kindOf={props.stepNumber === 2 ? `progress` : `complete`}

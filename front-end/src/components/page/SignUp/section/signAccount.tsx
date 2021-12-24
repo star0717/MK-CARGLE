@@ -275,7 +275,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
   return (
     <>
       <WholeWrapper ref={ref}>
-        <RsWrapper>
+        <RsWrapper kindOf={`OverRsWrapper`}>
           <form onSubmit={handleSubmit(onSignUpUserHandler)}>
             <Wrapper
               width={`auto`}

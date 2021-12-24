@@ -49,13 +49,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <CommonTitleWrapper>
-        <CommonTitle>회원가입</CommonTitle>
-        <CommonSubTitle>
-          서비스 이용을 위해 약관 동의가 필요해요.
-        </CommonSubTitle>
-      </CommonTitleWrapper>
-      <RsWrapper>
+      <RsWrapper kindOf={`OverRsWrapper`}>
         <Wrapper width={`1070px`}>
           <form onSubmit={handleSubmit(agreeTermHandler)}>
             <Wrapper al={`flex-start`}>
