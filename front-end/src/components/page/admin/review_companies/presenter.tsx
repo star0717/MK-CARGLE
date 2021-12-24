@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import { _pADMIN_REVIEW_COMPANIES } from "../../../../configure/_pProps.entity";
-import { Company } from "../../../../models/company.entity";
+import { Company, CompanyApproval } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
   RsWrapper,
@@ -26,12 +26,12 @@ const AdminReviewCompaniesPresenter: NextPage<_pADMIN_REVIEW_COMPANIES> = (
           <Text>승인 관리</Text>
           <TableWrapper>
             <TableHead>
-              <TableHeadLIST width={`300px`}>가입일</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>상호명</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>사업자등록증</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>정비업등록증</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>대표자명</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>상호명</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>사업자등록증</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>정비업등록증</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>대표자명</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
             </TableHead>
             <TableBody>
               {props.findResult.docs.map((doc: Company) => (
@@ -42,17 +42,22 @@ const AdminReviewCompaniesPresenter: NextPage<_pADMIN_REVIEW_COMPANIES> = (
                   //     setClickDoc(doc);
                   //   }}
                 >
-                  <TableRowLIST width={`300px`}>
+                  <TableRowLIST width={`200px`}>
                     {dayjs(doc.createdAt).format("YYYY-MM-DD")}
                   </TableRowLIST>
-                  <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>{doc.comRegNum}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>{doc.mbRegNum}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>{doc.ownerName}</TableRowLIST>
-                  {doc.approval ? (
-                    <TableRowLIST width={`300px`}>승인</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.approval}</TableRowLIST>
+                  {doc.approval == CompanyApproval.BEFORE ? (
+                    <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.ING ? (
+                    <TableRowLIST width={`200px`}>요청 중</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.DONE ? (
+                    <TableRowLIST width={`200px`}>승인완료</TableRowLIST>
                   ) : (
-                    <TableRowLIST width={`300px`}>미승인</TableRowLIST>
+                    <TableRowLIST width={`200px`}>이상업체</TableRowLIST>
                   )}
                 </TableRow>
               ))}

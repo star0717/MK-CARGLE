@@ -54,8 +54,9 @@ const ByeolTest: NextPage = () => {
             <CommonButton type="submit">확인</CommonButton>
           </form>
         </Wrapper>
+        <Wrapper bgColor={`#000`} height={`1000px`}></Wrapper>
       </RsWrapper>
-      <FooterWrapper bgColor={`#ddd`}>I'm Footer</FooterWrapper>
+      <FooterWrapper></FooterWrapper>
     </WholeWrapper>
   );
 };
