@@ -8,7 +8,7 @@ import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
 import Footer from "../src/components/layout/Footer";
 import Header from "../src/components/layout/Header";
-import SignIn from "../src/components/page/SignIn/SignIn";
+import SignIn from "../src/components/page/SignIn";
 import { WholeWrapper } from "../src/components/styles/CommonComponents";
 import { _SignInProps } from "../src/configure/_props.entity";
 import { UseLink } from "../src/configure/router.entity";

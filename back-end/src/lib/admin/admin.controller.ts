@@ -213,7 +213,7 @@ export class AdminController {
     @Query() fParams: FindParameters,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<FindResult<Company>> {
-    return await this.service.findReqReviewCompanies(token, fParams);
+    return await this.service.findCompanies(token, fParams);
   }
 
   @Patch('companies/:id')

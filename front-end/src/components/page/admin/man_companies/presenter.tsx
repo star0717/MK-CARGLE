@@ -16,14 +16,14 @@ import {
   Wrapper,
 } from "../../../styles/CommonComponents";
 
-const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
+const AdminManCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
   props
 ) => {
   return (
     <WholeWrapper>
       <RsWrapper>
         <Wrapper width={`1200px`}>
-          <Text>승인 관리</Text>
+          <Text>업체 관리</Text>
           <TableWrapper>
             <TableHead>
               <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
@@ -109,4 +109,4 @@ const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
   );
 };
 
-export default AdminReviewCompaniesPresenter;
+export default AdminManCompaniesPresenter;
