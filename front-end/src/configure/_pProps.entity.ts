@@ -262,5 +262,12 @@ export interface _pFindDocs<T> extends _MainProps {
 
 export interface _pWorkerData extends _pFindDocs<User> {}
 
-// ADMIN_REVIEW_COMPANIES용 props
-export interface _pADMIN_REVIEW_COMPANIES extends _pFindDocs<Company> {}
+/***********************************************************************
+ * Admin
+ ***********************************************************************/
+
+// 승인관리용 props
+export interface _pAdminReviewCompanies extends _pFindDocs<Company> {}
+
+// 업체관리용 props
+export interface _pAdminManCompanies extends _pFindDocs<Company> {}

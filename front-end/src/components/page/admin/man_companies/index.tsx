@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { _aGetAdminReivewCompanies } from "../../../../../store/action/user.action";
 import { _iFindCompanies } from "../../../../../store/interfaces";
-import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
+import { _pADMIN_REVIEW_COMPANIES } from "../../../../configure/_pProps.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
 import AdminReviewCompaniesPresenter from "./presenter";
@@ -40,7 +40,7 @@ const AdminReviewCompaniesPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const fprops: _pAdminReviewCompanies = {
+  const fprops: _pADMIN_REVIEW_COMPANIES = {
     ...props,
     findResult,
     setFindResult,
