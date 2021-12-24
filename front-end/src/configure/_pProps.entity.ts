@@ -285,6 +285,14 @@ export interface _pFindPassword {
  * MyPage(마이페이지)
  ***********************************************************************/
 
+// 계정 관리 props
+export interface _pMyAccountProps extends _MainProps {
+  step: number;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  accountInfo: SignUpInfo;
+  setAccountInfo: React.Dispatch<React.SetStateAction<SignUpInfo>>;
+}
+
 // 직원 관리용 props
 export interface _pWorkerData extends _pFindDocs<User> {}
 

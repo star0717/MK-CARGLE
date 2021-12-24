@@ -6,8 +6,13 @@ import { withdrawalAction } from "../../../../../store/action/user.action";
 import { UseLink } from "../../../../configure/router.entity";
 import { _cWithdrawalModalProps } from "../../../../configure/_cProps.entity";
 import { _pWithdrawalModalProps } from "../../../../configure/_pProps.entity";
-import { WholeWrapper } from "../../../styles/CommonComponents";
-import WithdrawalModalPresenter from "./withdrawalModalPresenter";
+import { useResizeDetector } from "react-resize-detector";
+import {
+  WholeWrapper,
+  Wrapper,
+  Text,
+  SmallButton,
+} from "../../../styles/CommonComponents";
 
 /**
  * 마이 페이지: 계정관리 회원탈퇴 모달 컴포넌트(기능)
@@ -37,15 +42,35 @@ const WithdrawalModal: NextPage<_cWithdrawalModalProps> = (props) => {
     );
   };
 
-  // 화면구성에 넘길 props
-  const fProps: _pWithdrawalModalProps = {
-    ...props,
-    withdrawalHandler,
-  };
+  // resize 변수 선언
+  const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper>
-      <WithdrawalModalPresenter {...fProps} />
+    <WholeWrapper ref={ref}>
+      <Wrapper>
+        <Text>모든 데이터가 삭제됩니다.</Text>
+        <Text>정말로 탈퇴 하시겠습니까?</Text>
+        <Wrapper dr={`row`}>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            onClick={() => {
+              withdrawalHandler();
+            }}
+          >
+            회원 탈퇴
+          </SmallButton>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
+            취소
+          </SmallButton>
+        </Wrapper>
+      </Wrapper>
     </WholeWrapper>
   );
 };

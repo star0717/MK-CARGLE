@@ -4,8 +4,16 @@ import { useDispatch } from "react-redux";
 import { uploadStampAction } from "../../../../../store/action/user.action";
 import { _cStampModalProps } from "../../../../configure/_cProps.entity";
 import { _pStampModalProps } from "../../../../configure/_pProps.entity";
-import { WholeWrapper } from "../../../styles/CommonComponents";
-import StampModalPresenter from "./stampModalPresenter";
+import { useResizeDetector } from "react-resize-detector";
+import {
+  WholeWrapper,
+  Wrapper,
+  Text,
+  TextInput2,
+  LabelButton,
+  SmallButton,
+} from "../../../styles/CommonComponents";
+import ReactCrop from "react-image-crop";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -111,32 +119,78 @@ const StampModal: NextPage<_cStampModalProps> = (props) => {
       crop.width * scaleX,
       crop.height * scaleY
     );
-
-    console.log("이미지", image.width);
-    console.log("이미지", image.height);
-    console.log("스케일", crop.width);
-    console.log("스케일", crop.width);
-    console.log("캔버스", canvas.width);
-    console.log("캔버스", canvas.height);
   }, [completedCrop]);
 
-  // 화면 구성에 넘길 props
-  const fProps: _pStampModalProps = {
-    fileName,
-    onSelectFile,
-    upImg,
-    onLoad,
-    crop,
-    setCrop,
-    completedCrop,
-    setCompletedCrop,
-    previewCanvasRef,
-    stampFileUpload,
-  };
+  // resize 변수 선언
+  const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper>
-      <StampModalPresenter {...fProps} />
+    <WholeWrapper ref={ref}>
+      <Wrapper>
+        <Text fontSize={`18px`} fontWeight={`800`} padding={`0px 0px 20px`}>
+          도장이미지
+        </Text>
+        <Wrapper>
+          <TextInput2
+            width={`500px`}
+            height={`60px`}
+            type="text"
+            placeholder="이미지 파일을 선택해주세요 (png,jpg)"
+            value={fileName}
+            required
+            readOnly
+          />
+
+          <LabelButton
+            kindOf={`default`}
+            margin={`20px 0px 0px 20px`}
+            htmlFor="stamp"
+          >
+            파일선택
+          </LabelButton>
+
+          <TextInput2
+            style={{ display: "none" }}
+            id="stamp"
+            type="file"
+            onChange={onSelectFile}
+            accept="image/*"
+          />
+        </Wrapper>
+        <ReactCrop
+          src={upImg}
+          onImageLoaded={onLoad}
+          crop={crop}
+          onChange={(c) => setCrop(c)}
+          onComplete={(c) => setCompletedCrop(c)}
+        />
+        <Wrapper>
+          <canvas
+            ref={previewCanvasRef}
+            // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+            style={{
+              width: Math.round(completedCrop?.width ?? 0),
+              height: Math.round(completedCrop?.height ?? 0),
+            }}
+          />
+        </Wrapper>
+        {completedCrop?.width && completedCrop?.height && (
+          <Wrapper>
+            <Text>선택한 영역이 업로드됩니다.</Text>
+            <SmallButton
+              type="button"
+              kindOf={`default`}
+              margin={`0px 0px 0px 20px`}
+              disabled={!completedCrop?.width || !completedCrop?.height}
+              onClick={() =>
+                stampFileUpload(previewCanvasRef.current, completedCrop)
+              }
+            >
+              업로드
+            </SmallButton>
+          </Wrapper>
+        )}
+      </Wrapper>
     </WholeWrapper>
   );
 };
