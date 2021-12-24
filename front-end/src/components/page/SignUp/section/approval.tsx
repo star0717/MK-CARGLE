@@ -6,7 +6,14 @@ import { signOutUserAction } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { _pApprovalProps } from "../../../../configure/_pProps.entity";
 import { UseLink } from "../../../../configure/router.entity";
-import ApprovalPresenter from "./approvalPresenter";
+import { useResizeDetector } from "react-resize-detector";
+import {
+  WholeWrapper,
+  Wrapper,
+  Text,
+  SmallButton,
+  RsWrapper,
+} from "../../../styles/CommonComponents";
 
 /**
  * 회원가입: 업체 승인 대기 컴포넌트(기능)
@@ -27,12 +34,25 @@ const Approval: NextPage = () => {
     });
   };
 
-  // 화면구성에 넘길 props
-  const fProps: _pApprovalProps = {
-    onSignOutHandler,
-  };
+  // resize 변수 선언
+  const { width, height, ref } = useResizeDetector();
 
-  return <ApprovalPresenter {...fProps} />;
+  return (
+    <WholeWrapper ref={ref}>
+      <RsWrapper>
+        <Wrapper>
+          <Text>가입 심사가 진행 중입니다.</Text>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            onClick={onSignOutHandler}
+          >
+            돌아가기
+          </SmallButton>
+        </Wrapper>
+      </RsWrapper>
+    </WholeWrapper>
+  );
 };
 
 export default Approval;
