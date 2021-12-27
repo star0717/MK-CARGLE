@@ -35,7 +35,6 @@ import { formRegEx } from "../../../../validation/regEx";
 import dayjs from "dayjs";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import {
-  _pChangePwModalProps,
   _pMyPageAccountProps,
   _pStampModalProps,
 } from "../../../../configure/_pProps.entity";
@@ -185,7 +184,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   };
 
   // 비밀번호 변경 modal props
-  const ChangePwModalProps: _pChangePwModalProps = {
+  const ChangePwModalProps: _pMyPageAccountProps = {
     ...props,
     setModalOpen,
     style: { height: "500px" },

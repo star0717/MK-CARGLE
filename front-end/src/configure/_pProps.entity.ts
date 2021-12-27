@@ -92,12 +92,8 @@ export interface _pMyPageAccountProps extends _MainProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   accountInfo: SignUpInfo;
   setAccountInfo: React.Dispatch<React.SetStateAction<SignUpInfo>>;
-}
-
-// 비밀번호 변경 modal props
-export interface _pChangePwModalProps extends _pMyPageAccountProps {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  style: {
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  style?: {
     height: string;
   };
 }
@@ -132,15 +128,6 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
     height: string;
   };
 }
-
-// // 직원정보 modal props
-// export interface _pWorkerInfoModalProps extends _pWorkerDataProps {
-//   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-//   clickDoc: User;
-//   style: {
-//     height: string;
-//   };
-// }
 
 /***********************************************************************
  * Admin
