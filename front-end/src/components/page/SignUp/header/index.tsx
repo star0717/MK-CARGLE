@@ -12,6 +12,7 @@ import {
 } from "../../../styles/CommonComponents";
 import { GoCheck } from "react-icons/go";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
+import { UserAuthority } from "../../../../models/user.entity";
 
 /**
  * 회원가입: 공통 헤더 컴포넌트(기능)
@@ -45,8 +46,7 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
             <CommonSubTitle>계정 정보를 입력해주세요.</CommonSubTitle>
           </CommonTitleWrapper>
         )}
-        {props.stepNumber === 4 &&
-        props.userAuth === props.UserAuthority.OWNER ? (
+        {props.stepNumber === 4 && props.userAuth === UserAuthority.OWNER ? (
           <CommonTitleWrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>사업자 정보를 입력해주세요.</CommonSubTitle>
@@ -60,22 +60,13 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
             </CommonSubTitle>
           </CommonTitleWrapper>
         )}
-        {props.stepNumber === 6 && (
-          <CommonTitleWrapper>
-            <CommonTitle>회원가입</CommonTitle>
-            <CommonSubTitle>
-              가입 승인을 위해 서류를 제출해주세요
-            </CommonSubTitle>
-          </CommonTitleWrapper>
-        )}
       </Wrapper>
 
-      {props.userAuth === props.UserAuthority.OWNER &&
+      {props.userAuth === UserAuthority.OWNER &&
         (props.stepNumber === 2 ||
           props.stepNumber === 3 ||
           props.stepNumber === 4 ||
-          props.stepNumber === 5 ||
-          props.stepNumber === 6) && (
+          props.stepNumber === 5) && (
           <JoinStepBarWrapper>
             <JoinStepBar
               kindOf={props.stepNumber === 2 ? `progress` : `complete`}

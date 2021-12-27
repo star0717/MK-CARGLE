@@ -17,6 +17,7 @@ import { actionTypesUser } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
 import { IoIosArrowForward } from "react-icons/io";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
+import { UserAuthority } from "../../../../models/user.entity";
 
 /**
  * 회원가입: 가입유형 선택 컴포넌트(기능)
@@ -38,10 +39,10 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
             <JoinFirstStepSelect
               onClick={() => {
                 props.setStepNumber(props.stepNumber + 1);
-                props.setUserAuth(props.UserAuthority.OWNER);
+                props.setUserAuth(UserAuthority.OWNER);
                 dispatch({
                   type: actionTypesUser.USER_SELECT,
-                  payload: props.UserAuthority.WORKER,
+                  payload: UserAuthority.WORKER,
                 });
               }}
             >
@@ -68,10 +69,10 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
             <JoinFirstStepSelect
               onClick={() => {
                 props.setStepNumber(props.stepNumber + 1);
-                props.setUserAuth(props.UserAuthority.WORKER);
+                props.setUserAuth(UserAuthority.WORKER);
                 dispatch({
                   type: actionTypesUser.USER_SELECT,
-                  payload: props.UserAuthority.WORKER,
+                  payload: UserAuthority.WORKER,
                 });
               }}
             >
