@@ -74,7 +74,11 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
           props.stepNumber === 3 ||
           props.stepNumber === 4 ||
           props.stepNumber === 5) && (
-          <Wrapper margin={`180px 0px 0px`}>
+          <Wrapper
+            margin={
+              props.userAuth === UserAuthority.OWNER ? `180px 0px 0px` : `0px`
+            }
+          >
             <JoinStepBarWrapper>
               <JoinStepBar
                 kindOf={props.stepNumber === 2 ? `progress` : `complete`}
