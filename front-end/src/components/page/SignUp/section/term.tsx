@@ -49,7 +49,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper kindOf={`OverRsWrapper`}>
+      <RsWrapper padding={`0px 0px 50px`}>
         <Wrapper width={`1070px`}>
           <form onSubmit={handleSubmit(agreeTermHandler)}>
             <Wrapper al={`flex-start`}>
