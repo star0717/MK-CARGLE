@@ -49,7 +49,7 @@ const AdminManCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
                   <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
                   <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
                   <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.approval}</TableRowLIST>
+                  {/* <TableRowLIST width={`200px`}>{doc.approval}</TableRowLIST> */}
                   {doc.approval == CompanyApproval.BEFORE ? (
                     <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
                   ) : doc.approval == CompanyApproval.ING ? (
