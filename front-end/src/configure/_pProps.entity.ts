@@ -52,6 +52,7 @@ export interface _pComFindModalProps {
 
 // 파일업로드 전용 props
 export interface _pFileUploadProps {
+  userAuth?: UserAuthority;
   stepNumber?: number;
   setStepNumber?: React.Dispatch<React.SetStateAction<number>>;
 }

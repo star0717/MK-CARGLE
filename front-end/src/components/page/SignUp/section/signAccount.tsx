@@ -275,7 +275,14 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
   return (
     <>
       <WholeWrapper ref={ref}>
-        <RsWrapper kindOf={`OverRsWrapper`}>
+        <RsWrapper
+          margin={
+            props.userAuth === UserAuthority.OWNER
+              ? `0px 0px 50px`
+              : `180px 0px 50px`
+          }
+          padding={`0px`}
+        >
           <form onSubmit={handleSubmit(onSignUpUserHandler)}>
             <Wrapper
               width={`auto`}

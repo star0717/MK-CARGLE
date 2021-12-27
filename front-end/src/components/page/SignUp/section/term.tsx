@@ -20,6 +20,7 @@ import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
+import { UserAuthority } from "../../../../models/user.entity";
 
 /**
  * 회원가입: 이용약관 컴포넌트(기능)
@@ -49,7 +50,14 @@ const Term: NextPage<_pSignUpProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper padding={`0px 0px 50px`}>
+      <RsWrapper
+        margin={
+          props.userAuth === UserAuthority.OWNER
+            ? `0px 0px 50px`
+            : `180px 0px 50px`
+        }
+        padding={`0px`}
+      >
         <Wrapper width={`1070px`}>
           <form onSubmit={handleSubmit(agreeTermHandler)}>
             <Wrapper al={`flex-start`}>

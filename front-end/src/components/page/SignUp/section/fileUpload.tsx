@@ -26,6 +26,7 @@ import { parseJwt } from "../../../../modules/commonModule";
 import { AuthTokenInfo } from "../../../../models/auth.entity";
 import { FileInit } from "../../../../configure/etc.entity";
 import { _pFileUploadProps } from "../../../../configure/_pProps.entity";
+import { UserAuthority } from "../../../../models/user.entity";
 
 /**
  * 파일 데이터 초기화
@@ -127,72 +128,88 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper>
+      <RsWrapper
+        margin={
+          props.userAuth === UserAuthority.OWNER
+            ? `0px 0px 50px 0px`
+            : `180px 0px 50px 0px`
+        }
+        padding={`0px`}
+      >
         <form onSubmit={onFileUploadHandler}>
           <Wrapper
             width={`auto`}
-            padding={`50px`}
+            margin={`0px`}
+            padding={`50px 0px`}
             border={`1px solid #ccc`}
             radius={`5px`}
           >
-            <Wrapper>
-              <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
-                <Text margin={`0px 0px 10px`}>사업자등록증</Text>
-                <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
-                  <TextInput2
-                    width={`300px`}
-                    type="text"
-                    placeholder="jpg, png, pdf 형식"
-                    value={fileName.comFile}
-                    required
-                    readOnly
-                  />
-                  <LabelButton
-                    kindOf={`default`}
-                    margin={`0px 0px 0px 20px`}
-                    htmlFor="comFile"
-                  >
-                    파일선택
-                  </LabelButton>
-                  <TextInput2
-                    style={{ display: "none" }}
-                    type="file"
-                    id="comFile"
-                    name="comFile"
-                    key={file.comFile}
-                    onChange={onFileSelectHandler}
-                    accept=".jpg, .png, .pdf"
-                  />
-                </Wrapper>
+            <Wrapper
+              ju={`flex-start`}
+              al={`flex-start`}
+              width={`auto`}
+              margin={`0px 0px 10px`}
+            >
+              <Text margin={`0px 0px 10px`}>사업자등록증</Text>
+              <Wrapper
+                dr={`row`}
+                ju={`flex-start`}
+                margin={`0px 0px 10px`}
+                width={`auto`}
+              >
+                <TextInput2
+                  width={`300px`}
+                  type="text"
+                  placeholder="jpg, png, pdf 형식"
+                  value={fileName.comFile}
+                  required
+                  readOnly
+                />
+                <LabelButton
+                  kindOf={`default`}
+                  margin={`0px 0px 0px 20px`}
+                  htmlFor="comFile"
+                >
+                  파일선택
+                </LabelButton>
+                <TextInput2
+                  style={{ display: "none" }}
+                  type="file"
+                  id="comFile"
+                  name="comFile"
+                  key={file.comFile}
+                  onChange={onFileSelectHandler}
+                  accept=".jpg, .png, .pdf"
+                />
               </Wrapper>
-              <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
-                <Text margin={`0px 0px 10px`}>정비업등록증</Text>
-                <Wrapper dr={`row`} ju={`flex-start`} al={`flex-start`}>
-                  <TextInput2
-                    width={`300px`}
-                    type="text"
-                    placeholder="jpg, png, pdf 형식"
-                    value={fileName.manFile}
-                    required
-                    readOnly
-                  />
-                  <LabelButton
-                    kindOf={`default`}
-                    margin={`0px 0px 0px 20px`}
-                    htmlFor="manFile"
-                  >
-                    파일선택
-                  </LabelButton>
-                  <TextInput2
-                    style={{ display: "none" }}
-                    type="file"
-                    id="manFile"
-                    name="manFile"
-                    key={file.manFile}
-                    onChange={onFileSelectHandler}
-                    accept=".jpg, .png, .pdf"
-                  />
-                </Wrapper>
+            </Wrapper>
+            <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
+              <Text margin={`0px 0px 10px`}>정비업등록증</Text>
+              <Wrapper dr={`row`} ju={`flex-start`} al={`flex-start`}>
+                <TextInput2
+                  width={`300px`}
+                  type="text"
+                  placeholder="jpg, png, pdf 형식"
+                  value={fileName.manFile}
+                  required
+                  readOnly
+                />
+                <LabelButton
+                  kindOf={`default`}
+                  margin={`0px 0px 0px 20px`}
+                  htmlFor="manFile"
+                >
+                  파일선택
+                </LabelButton>
+                <TextInput2
+                  style={{ display: "none" }}
+                  type="file"
+                  id="manFile"
+                  name="manFile"
+                  key={file.manFile}
+                  onChange={onFileSelectHandler}
+                  accept=".jpg, .png, .pdf"
+                />
               </Wrapper>
             </Wrapper>
           </Wrapper>
