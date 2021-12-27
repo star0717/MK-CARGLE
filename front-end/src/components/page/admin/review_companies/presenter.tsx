@@ -1,9 +1,15 @@
 import dayjs from "dayjs";
+import Modal from "react-modal";
 import { NextPage } from "next";
+import React, { useState } from "react";
+import { IoIosCloseCircle } from "react-icons/io";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { Company, CompanyApproval } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
+import AdminReviewCompaniesModal from "./modal";
 import {
+  CloseButton,
+  IconButton,
   RsWrapper,
   TableBody,
   TableHead,
@@ -12,17 +18,43 @@ import {
   TableRowLIST,
   TableWrapper,
   Text,
+  TextInput,
   WholeWrapper,
   Wrapper,
 } from "../../../styles/CommonComponents";
+import { BsSearch } from "react-icons/bs";
 
 const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
   props
 ) => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [clickDoc, setClickDoc] = useState<Company>();
+
+  const closeModal = () => {
+    setModalOpen(false);
+    props.findDocHandler(props.findResult.currentPage);
+  };
+
+  const ARCModalProps: any = {
+    ...props,
+    setModalOpen,
+    clickDoc,
+    style: { height: "500px" },
+  };
+
   return (
     <WholeWrapper>
       <RsWrapper>
         <Wrapper width={`1200px`}>
+          <Wrapper dr={`row`}>
+            <TextInput
+              type="text"
+              placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+            />
+            <IconButton>
+              <BsSearch></BsSearch>
+            </IconButton>
+          </Wrapper>
           <Text>승인 관리</Text>
           <TableWrapper>
             <TableHead>
@@ -37,10 +69,10 @@ const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
               {props.findResult.docs.map((doc: Company) => (
                 <TableRow
                   key={doc._id}
-                  //   onClick={() => {
-                  //     setModalOpen(!modalOpen);
-                  //     setClickDoc(doc);
-                  //   }}
+                  onClick={() => {
+                    setModalOpen(!modalOpen);
+                    setClickDoc(doc);
+                  }}
                 >
                   <TableRowLIST width={`200px`}>
                     {dayjs(doc.createdAt).format("YYYY-MM-DD")}
@@ -67,7 +99,7 @@ const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
         <PagenationSection {...props} />
       </RsWrapper>
       <Wrapper>
-        {/* <Modal
+        <Modal
           isOpen={modalOpen}
           style={{
             overlay: {
@@ -101,9 +133,9 @@ const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
             <CloseButton onClick={closeModal}>
               <IoIosCloseCircle />
             </CloseButton>
-            <WorkerInfoModal {...WorkerModalProps} />
+            <AdminReviewCompaniesModal {...ARCModalProps} />
           </Wrapper>
-        </Modal> */}
+        </Modal>
       </Wrapper>
     </WholeWrapper>
   );
