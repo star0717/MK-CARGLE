@@ -213,7 +213,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
             이곳에서 계정정보를 확인 및 수정할 수 있습니다.
           </CommonSubTitle>
         </CommonTitleWrapper>
-        <RsWrapper wrap={`no-wrap`}>
+        <RsWrapper wrap={`no-wrap`} margin={`100px 0px 0px 0px`}>
           <form id="saveform" onSubmit={handleSubmit(onChangeInfoHandler)}>
             <Wrapper
               border={`1px solid #ccc`}

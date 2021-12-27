@@ -19,6 +19,9 @@ import {
   Text,
   WholeWrapper,
   Wrapper,
+  CommonTitle,
+  CommonTitleWrapper,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import dayjs from "dayjs";
 
@@ -47,9 +50,14 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
   return (
     <>
       <WholeWrapper ref={ref}>
-        <RsWrapper>
-          <Wrapper width={`1200px`}>
-            <Text>직원관리</Text>
+        <CommonTitleWrapper>
+          <CommonTitle>직원관리</CommonTitle>
+          <CommonSubTitle>
+            이곳에서 직원 정보를 확인 및 수정할 수 있습니다.
+          </CommonSubTitle>
+        </CommonTitleWrapper>
+        <RsWrapper ju={`flex-start`} margin={`100px 0px 0px`}>
+          <Wrapper height={`630px`} ju={`flex-start`}>
             <TableWrapper>
               <TableHead>
                 <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
