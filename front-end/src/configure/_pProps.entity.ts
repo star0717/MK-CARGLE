@@ -37,7 +37,6 @@ export interface _pSignUpProps {
   stepNumber: number;
   setStepNumber: React.Dispatch<React.SetStateAction<number>>;
   userAuth: UserAuthority;
-  UserAuthority: typeof UserAuthority;
   setUserAuth: React.Dispatch<React.SetStateAction<UserAuthority>>;
 }
 

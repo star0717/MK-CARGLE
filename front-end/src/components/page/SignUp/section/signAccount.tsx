@@ -666,7 +666,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
                 이전
               </CommonButton>
               <CommonButton margin={`10px 0px 0px 0px`} type="submit">
-                {props.userAuth === props.UserAuthority.OWNER ? "다음" : "완료"}
+                {props.userAuth === UserAuthority.OWNER ? "다음" : "완료"}
               </CommonButton>
             </Wrapper>
           </form>
