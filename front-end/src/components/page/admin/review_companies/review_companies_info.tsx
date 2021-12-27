@@ -24,9 +24,7 @@ import {
 } from "../../../styles/CommonComponents";
 import { BsSearch } from "react-icons/bs";
 
-const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
-  props
-) => {
+const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [clickDoc, setClickDoc] = useState<Company>();
 
@@ -141,4 +139,4 @@ const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
   );
 };
 
-export default AdminReviewCompaniesPresenter;
+export default AdminReviewCompaniesinfo;
