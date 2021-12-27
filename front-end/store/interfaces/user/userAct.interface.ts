@@ -4,6 +4,7 @@ import { User } from "../../../src/models/user.entity";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
+  USER_SELECT = "USER_SELECT",
   INPUT_ACCOUNT = "INPUT_ACCOUNT",
   INPUT_COMPANY = "INPUT_COMPANY",
   INPUT_FORM = "INPUT_FORM",
@@ -37,6 +38,7 @@ export enum actionTypesUser {
 
 export type ActionsUser =
   | UserInit
+  | UserSelect
   | InputAccount
   | InputCompany
   | InputForm
@@ -70,6 +72,12 @@ export type ActionsUser =
 // 초기화
 export interface UserInit {
   type: actionTypesUser.USER_INIT;
+  payload: any;
+}
+
+// 유저 종류 선택
+export interface UserSelect {
+  type: actionTypesUser.USER_SELECT;
   payload: any;
 }
 
@@ -238,28 +246,48 @@ export interface PatchWorkersDelete {
   payload: DeleteResult;
 }
 
-/******************************************
- *  모델별 FindResult
- ******************************************/
+/*****************************************************
+ * 1. Action API 정의부
+ * - 호출할 API를 enum 으로 선언
+ *****************************************************/
+export enum ActionAPIs {
+  // 모델 별 공통 API
+  FIND_COMPANIES = "FIND_COMPANIES", // 업체 정보 조회
+  FIND_USERS = "FIND_USERS", // 사용자 정보 조회
 
-export enum actionAPIs {
-  FIND_COMPANIES = "FIND_COMPANIES", // 업체 검색
-  FIND_USERS = "FIND_USERS",
+  // 고유 API
 }
 
+/*****************************************************
+ * 2. Interface 정의부
+ * - 페이지로 전달할 API 호출 결과
+ * - 모든 인터페이스는 baseActionInterface를 구현함
+ *****************************************************/
+
+// 기본 인터페이스. 모든 인터페이스는 이 이턴페이스를 구현함
 export interface baseActionInterface {
-  type: actionAPIs;
+  type: ActionAPIs;
   payload: any;
 }
 
+/** 모델 별 공통 인터페이스 **/
+// 업체 정보 조회 결과
 export class _iFindCompanies implements baseActionInterface {
-  type: actionAPIs.FIND_COMPANIES;
+  type: ActionAPIs.FIND_COMPANIES;
   payload: FindResult<Company>;
 }
 
+// 사용자 정보 조회 결과
 export class _iFindUsers implements baseActionInterface {
-  type: actionAPIs.FIND_USERS;
+  type: ActionAPIs.FIND_USERS;
   payload: FindResult<User>;
 }
 
+/** 고유 API 인터페이스 **/
+
+/*****************************************************
+ * 3. ActionInterfaces 정의부
+ * - store에 등록(Redux???)
+ * => 정의한 인터페이스를 등록
+ *****************************************************/
 export type ActionInterfaces = _iFindCompanies | _iFindUsers;

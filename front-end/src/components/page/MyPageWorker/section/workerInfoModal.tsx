@@ -1,7 +1,5 @@
-import { Switch } from "@material-ui/core";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-
 dayjs.locale("ko");
 import type { NextPage } from "next";
 import React, { useState } from "react";
@@ -18,9 +16,8 @@ import {
   PatchWorkersDelete,
   PatchWorkersReject,
 } from "../../../../../store/interfaces";
-import { _cWorkerInfoModalProps } from "../../../../configure/_cProps.entity";
 import { User } from "../../../../models/user.entity";
-import { makeFullAddress } from "../../../../modules/commonModule";
+import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
   RsWrapper,
@@ -29,8 +26,11 @@ import {
   TextInput2,
   SmallButton,
 } from "../../../styles/CommonComponents";
+import { Switch } from "@material-ui/core";
+import { makeFullAddress } from "../../../../modules/commonModule";
+import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
 
-const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
+const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
   const dispatch = useDispatch();
 
   // state 관리
@@ -46,32 +46,32 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
       dispatch(patchWorkerRejectAction(docInfo._id)).then(
         (res: PatchWorkersReject) => {
           setApproval(res.payload.approval);
-          const newList: User[] = [];
-          props.findResult.docs.forEach((item) => {
-            if (item._id === res.payload._id) {
-              item.approval = res.payload.approval;
-              newList.push(item);
-            } else {
-              newList.push(item);
-            }
-          });
-          props.setFindResult({ ...props.findResult, docs: newList });
+          // const newList: User[] = [];
+          // props.findResult.docs.forEach((item) => {
+          //   if (item._id === res.payload._id) {
+          //     item.approval = res.payload.approval;
+          //     newList.push(item);
+          //   } else {
+          //     newList.push(item);
+          //   }
+          // });
+          // props.setFindResult({ ...props.findResult, docs: newList });
         }
       );
     } else {
       dispatch(patchWorkerApproveAction(docInfo._id)).then(
         (res: PatchWorkersApprove) => {
           setApproval(res.payload.approval);
-          const newList: User[] = [];
-          props.findResult.docs.forEach((item) => {
-            if (item._id === res.payload._id) {
-              item.approval = res.payload.approval;
-              newList.push(item);
-            } else {
-              newList.push(item);
-            }
-          });
-          props.setFindResult({ ...props.findResult, docs: newList });
+          // const newList: User[] = [];
+          // props.findResult.docs.forEach((item) => {
+          //   if (item._id === res.payload._id) {
+          //     item.approval = res.payload.approval;
+          //     newList.push(item);
+          //   } else {
+          //     newList.push(item);
+          //   }
+          // });
+          // props.setFindResult({ ...props.findResult, docs: newList });
         }
       );
     }
@@ -91,16 +91,7 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
       dispatch(patchWorkerChangeAction(docInfo._id, changeInfo)).then(
         (res: PatchWorkersChange) => {
           props.setModalOpen(false);
-          const newList: User[] = [];
-          props.findResult.docs.forEach((item) => {
-            if (item._id === res.payload._id) {
-              item.joinDate = res.payload.joinDate;
-              newList.push(item);
-            } else {
-              newList.push(item);
-            }
-          });
-          props.setFindResult({ ...props.findResult, docs: newList });
+          props.findDocHandler(props.findResult.currentPage);
         }
       );
     } else {
@@ -117,13 +108,7 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
         (res: PatchWorkersDelete) => {
           if (res.payload.deletedCount === 1) {
             props.setModalOpen(false);
-            const newList: User[] = [];
-            props.findResult.docs.forEach((item) => {
-              if (item._id !== docInfo._id) {
-                newList.push(item);
-              }
-            });
-            props.setFindResult({ ...props.findResult, docs: newList });
+            props.findDocHandler(props.findResult.currentPage);
           } else {
             alert("삭제 실패");
           }
@@ -134,8 +119,11 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
     }
   };
 
+  // resize 변수 선언
+  const { width, height, ref } = useResizeDetector();
+
   return (
-    <WholeWrapper>
+    <WholeWrapper ref={ref}>
       <RsWrapper>
         <Text>직원 상세 정보</Text>
         <Wrapper dr={`row`}>
@@ -179,7 +167,10 @@ const WorkerInfoModal: NextPage<_cWorkerInfoModalProps> = (props) => {
               name="joinDate"
               value={dayjs(docInfo.joinDate).format("YYYY-MM-DD")}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setDocInfo({ ...docInfo, joinDate: new Date(e.target.value) });
+                setDocInfo({
+                  ...docInfo,
+                  joinDate: new Date(e.target.value),
+                });
               }}
             />
           </Wrapper>

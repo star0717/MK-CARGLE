@@ -1,156 +1,78 @@
 import React from "react";
-import {
-  FieldValues,
-  SubmitHandler,
-  UseFormHandleSubmit,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from "react-hook-form";
-import { SignUpInfo, UserInfo } from "../../src/models/auth.entity";
-import { FormInput } from "../../store/interfaces";
-import { FindParameters, FindResult } from "../models/base.entity";
+import { FieldValues, UseFormSetValue } from "react-hook-form";
+import { AuthTokenInfo, SignUpInfo } from "../../src/models/auth.entity";
+import { FormCheck, FormInput } from "../../store/interfaces";
+import { FindResult } from "../models/base.entity";
 import { Company } from "../models/company.entity";
-import { User } from "../models/user.entity";
-import { FileInit, MbType } from "./etc.entity";
-import {
-  _cChangePwModalProps,
-  _cComFindModalProps,
-  _cMyPageAccount,
-  _cSignUpProps,
-  _cWithdrawalModalProps,
-} from "./_cProps.entity";
+import { User, UserAuthority } from "../models/user.entity";
 import { _fTermData, _fWithdrawal } from "./_fProps.entity";
 import { _MainProps } from "./_props.entity";
 
-// 화면구성(presenter) props //
-
-/**
- * 로그인 화면구성 props
- */
-export interface _pSignInProps {
-  onSignInHandler: (e: React.FormEvent<HTMLFormElement>) => void;
-  inputSignIn: UserInfo;
-  onInputHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  saveCheck: boolean;
-  setSaveCheck: React.Dispatch<React.SetStateAction<boolean>>;
-  userInit: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+/***********************************************************************
+ * 기본
+ ***********************************************************************/
+export interface _pFindDocs<T> extends _MainProps {
+  findResult: FindResult<T>;
+  setFindResult: React.Dispatch<React.SetStateAction<FindResult<T>>>;
+  findDocHandler: (page: number) => void;
 }
 
-/**
- * 회원가입: 가입유형 화면구성 props
- */
-export interface _pSelectUserProps extends _cSignUpProps {}
-
-/**
- * 회원가입: 이용약관 화면구성 props
- */
-export interface _pTermProps extends _cSignUpProps {
-  register: UseFormRegister<FieldValues>;
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
-  errors: {
-    [x: string]: any;
-  };
-  agreeTermHandler: SubmitHandler<_fTermData>;
+/***********************************************************************
+ * 레이아웃
+ ***********************************************************************/
+export interface _pLayoutProps {
+  tokenValue?: AuthTokenInfo;
 }
 
-/**
- * 회원가입: 계정정보 화면구성 props
- */
-export interface _pSignAccountProps extends _cSignUpProps {
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
-  register: UseFormRegister<FieldValues>;
-  watch: UseFormWatch<FieldValues>;
-  errors: {
-    [x: string]: any;
-  };
-  setValue: UseFormSetValue<FieldValues>;
+/***********************************************************************
+ * 회원가입
+ ***********************************************************************/
+
+// 회원가입 공통사용 props
+export interface _pSignUpProps {
+  user: User;
+  company: Company;
+  formInput: FormInput;
+  formCheck: FormCheck;
+  stepNumber: number;
+  setStepNumber: React.Dispatch<React.SetStateAction<number>>;
+  userAuth: UserAuthority;
+  UserAuthority: typeof UserAuthority;
+  setUserAuth: React.Dispatch<React.SetStateAction<UserAuthority>>;
+}
+
+//업체 조회 modal props
+export interface _pComFindModalProps {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   inputForm: FormInput;
   setInputForm: React.Dispatch<React.SetStateAction<FormInput>>;
-  inputUser: User;
   setInputUser: React.Dispatch<React.SetStateAction<User>>;
-  modalOption: string;
-  setModalOption: React.Dispatch<React.SetStateAction<string>>;
-  modalOpen: boolean;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  addressHandler: (data: any) => void;
-  onInputFormHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onInputUserHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onEmailSendHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  authNum: string;
-  setAuthNum: React.Dispatch<React.SetStateAction<string>>;
-  onAuthNumCheckHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  onSignUpUserHandler: SubmitHandler<SignUpInfo>;
+  inputUser: User;
+  setValue: UseFormSetValue<FieldValues>;
 }
 
-/**
- * 회원가입: 업체검색 모달 화면구성 props
- */
-export interface _pComFindModalProps extends _cComFindModalProps {
-  findCompanyHandler: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-  searchText: string;
-  setSearchText: React.Dispatch<React.SetStateAction<string>>;
-  companyList: any;
-}
-
-/**
- * 회원가입: 업체정보 화면구성 props
- */
-export interface _pSignCompanyProps extends _cSignUpProps {
-  register: UseFormRegister<FieldValues>;
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
-  errors: {
-    [x: string]: any;
-  };
-  onSignUpCompanyHandler: SubmitHandler<SignUpInfo>;
-  inputCompany: Company;
-  onInputCompanyHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onComRegNumCheck: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  inputForm: FormInput;
-  modalOpen: boolean;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-/**
- * 회원가입: 파일업로드 화면구성 props
- */
+// 파일업로드 전용 props
 export interface _pFileUploadProps {
-  fileName: FileInit;
-  file: FileInit;
-  onFileUploadHandler: (e: React.FormEvent<HTMLFormElement>) => void;
-  onFileSelectHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSignOutHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  stepNumber?: number;
+  setStepNumber?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-/**
- * 회원가입: 승인대기 화면구성 props
- */
-export interface _pApprovalProps {
-  onSignOutHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
-}
+/***********************************************************************
+ * FindEmail & FindPassword(계정찾기)
+ ***********************************************************************/
 
-/**
- * 회원가입: 가입완료 화면구성 props
- */
-export interface _pCompleteProps {
-  onSignOutHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
-}
-
-/**
- * 계정찾기: 이메일 props
- */
+// 계정찾기(이메일) props
 export interface _pFindEmail {
   findEmail: string;
+  setFindEmail: React.Dispatch<React.SetStateAction<string>>;
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   hpNumber: string;
   setHpNumber: React.Dispatch<React.SetStateAction<string>>;
-  onfindEmailHandler: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  setComplete: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-/**
- * 계정찾기: 비밀번호 props
- */
+// 계정찾기(비밀번호) props
 export interface _pFindPassword {
   email: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
@@ -158,109 +80,75 @@ export interface _pFindPassword {
   setName: React.Dispatch<React.SetStateAction<string>>;
   hpNumber: string;
   setHpNumber: React.Dispatch<React.SetStateAction<string>>;
-  onFindPwHandler: (e: React.FormEvent<HTMLFormElement>) => void;
+  setComplete: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-/**
- * 마이페이지(계정관리): 비밀번호 확인 props
- */
-export interface _pAccountCheckProps {
-  pwCheckHandler: (e: React.FormEvent<HTMLFormElement>) => void;
-  password: string;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
+/***********************************************************************
+ * MyPage(마이페이지)
+ ***********************************************************************/
+
+// 계정 관리 props
+export interface _pMyPageAccountProps extends _MainProps {
+  step: number;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  accountInfo: SignUpInfo;
+  setAccountInfo: React.Dispatch<React.SetStateAction<SignUpInfo>>;
 }
 
-/**
- * 마이페이지(계정관리): 회원정보 수정 props
- */
-export interface _pAccountInfoProps extends _cMyPageAccount {
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
-  register: UseFormRegister<FieldValues>;
-  errors: {
-    [x: string]: any;
+// 비밀번호 변경 modal props
+export interface _pChangePwModalProps extends _pMyPageAccountProps {
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  style: {
+    height: string;
   };
-  onChangeInfoHandler: SubmitHandler<SignUpInfo>;
-  userData: User;
-  onInputUserHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  comData: Company;
-  onInputComHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  readOnly: boolean;
+}
+
+// 도장 업로드 modal props
+export interface _pStampModalProps {
+  stampNum: number;
+  setStampNum: React.Dispatch<React.SetStateAction<number>>;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   stampImgSrc: string;
   setStampImgSrc: React.Dispatch<React.SetStateAction<string>>;
-  modalOpen: boolean;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setModalOption: React.Dispatch<React.SetStateAction<string>>;
-  textMbType: MbType;
+  style: {
+    height: string;
+  };
 }
 
-/**
- * 마이페이지(계정관리): 비밀번호 변경 modal props
- */
-export interface _pChangePwModalProps extends _cChangePwModalProps {
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
-  register: UseFormRegister<FieldValues>;
-  errors: {
-    [x: string]: any;
-  };
-  watch: UseFormWatch<FieldValues>;
-  onChangePwHandler: SubmitHandler<any>;
+// 회원탈퇴 modal props
+export interface _pWithdrawalModalProps {
   password: string;
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  newPassword: string;
-  setNewPassword: React.Dispatch<React.SetStateAction<string>>;
-  newPasswordCheck: string;
-  setNewPasswordCheck: React.Dispatch<React.SetStateAction<string>>;
-}
-
-/**
- * 마이페이지(계정관리): 도장 업로드 modal props
- */
-export interface _pStampModalProps {
-  fileName: string;
-  onSelectFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  upImg: any;
-  onLoad: (img: any) => void;
-  crop: any;
-  setCrop: React.Dispatch<any>;
-  completedCrop: any;
-  setCompletedCrop: React.Dispatch<any>;
-  previewCanvasRef: React.MutableRefObject<any>;
-  stampFileUpload: (canvas: any, crop: any) => void;
-}
-
-/**
- * 마이페이지(계정관리): 회원탈퇴 props
- */
-export interface _pWithdrawalProps extends _cMyPageAccount {
-  handleSubmit: UseFormHandleSubmit<FieldValues>;
-  register: UseFormRegister<FieldValues>;
-  errors: {
-    [x: string]: any;
+  accountInfo: SignUpInfo;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  style: {
+    height: string;
   };
-  setPassword: React.Dispatch<React.SetStateAction<string>>;
-  pwCheckHandler: SubmitHandler<_fWithdrawal>;
-  termCheck: boolean;
-  setTermCheck: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-/**
- * 마이페이지(계정관리): 회원탈퇴 modal props
- */
-export interface _pWithdrawalModalProps extends _cWithdrawalModalProps {
-  withdrawalHandler: () => void;
+// 직원 관리용 props
+export interface _pWorkerDataProps extends _pFindDocs<User> {
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  clickDoc?: User;
+  style?: {
+    height: string;
+  };
 }
 
-/**
- * 마이페이지(직원관리): 직원 데이터 props
- */
+// // 직원정보 modal props
+// export interface _pWorkerInfoModalProps extends _pWorkerDataProps {
+//   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+//   clickDoc: User;
+//   style: {
+//     height: string;
+//   };
+// }
 
-export interface _pFindDocs<T> extends _MainProps {
-  findResult: FindResult<T>;
-  setFindResult: React.Dispatch<React.SetStateAction<FindResult<T>>>;
-  findDocHandler: (page: number) => void;
-}
+/***********************************************************************
+ * Admin
+ ***********************************************************************/
 
-export interface _pWorkerData extends _pFindDocs<User> {}
+// 승인관리용 props
+export interface _pAdminReviewCompanies extends _pFindDocs<Company> {}
 
-// ADMIN_REVIEW_COMPANIES용 props
-export interface _pADMIN_REVIEW_COMPANIES extends _pFindDocs<Company> {}
+// 업체관리용 props
+export interface _pAdminManCompanies extends _pFindDocs<Company> {}

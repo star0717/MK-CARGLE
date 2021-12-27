@@ -2,17 +2,26 @@ import type { NextPage } from "next";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import WithdrawalModal from "./withdrawalModal";
-import { WholeWrapper, Wrapper } from "../../../styles/CommonComponents";
 import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { pwCheckAction } from "../../../../../store/action/user.action";
-import WithdrawalPresenter from "./withdrawalPresenter";
-import {
-  _cMyPageAccount,
-  _cWithdrawalModalProps,
-} from "../../../../configure/_cProps.entity";
 import { _fWithdrawal } from "../../../../configure/_fProps.entity";
-import { _pWithdrawalProps } from "../../../../configure/_pProps.entity";
+import { useResizeDetector } from "react-resize-detector";
+import {
+  WholeWrapper,
+  Wrapper,
+  Text,
+  TextInput,
+  SmallButton,
+  CommonTitle,
+  CommonSubTitle,
+  CommonTitleWrapper,
+  RsWrapper,
+} from "../../../styles/CommonComponents";
+import {
+  _pMyPageAccountProps,
+  _pWithdrawalModalProps,
+} from "../../../../configure/_pProps.entity";
 
 Modal.setAppElement("body");
 
@@ -21,7 +30,7 @@ Modal.setAppElement("body");
  * @param props
  * @returns
  */
-const Withdrawal: NextPage<_cMyPageAccount> = (props) => {
+const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
   const dispatch = useDispatch();
 
   // react-hook-form 사용을 위한 선언
@@ -71,66 +80,154 @@ const Withdrawal: NextPage<_cMyPageAccount> = (props) => {
   };
 
   // 회원탈퇴 모달 props
-  const WithdrawalModalProps: _cWithdrawalModalProps = {
+  const WithdrawalModalProps: _pWithdrawalModalProps = {
     password,
     accountInfo,
     setModalOpen,
     style: { height: "500px" },
   };
 
-  // 화면구성에 넘길 props
-  const fProps: _pWithdrawalProps = {
-    ...props,
-    handleSubmit,
-    register,
-    errors,
-    setPassword,
-    pwCheckHandler,
-    termCheck,
-    setTermCheck,
-  };
+  // resize 변수 선언
+  const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper>
-      <Wrapper>
-        <WithdrawalPresenter {...fProps} />
-      </Wrapper>
-      <Wrapper>
-        <Modal
-          isOpen={modalOpen}
-          onRequestClose={() => setModalOpen(false)}
-          style={{
-            overlay: {
-              position: "fixed",
-              zIndex: 1020,
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
-              background: "rgba(255, 255, 255, 0.75)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            },
-            content: {
-              background: "white",
-              width: "45rem",
-              height: "575px",
-              maxWidth: "calc(100vw - 2rem)",
-              maxHeight: "calc(100vh - 2rem)",
-              overflowY: "auto",
-              position: "relative",
-              border: "1px solid #ccc",
-              borderRadius: "0.3rem",
-              boxShadow: "0px 10px 15px rgba(220,220,220,1)",
-              inset: 0,
-            },
-          }}
-        >
-          <WithdrawalModal {...WithdrawalModalProps} />
-        </Modal>
-      </Wrapper>
-    </WholeWrapper>
+    <>
+      <WholeWrapper ref={ref}>
+        <CommonTitleWrapper>
+          <CommonTitle>회원탈퇴</CommonTitle>
+          <CommonSubTitle>
+            회원탈퇴를 위해 약관 동의 후 비밀번호를 입력해주세요.
+          </CommonSubTitle>
+        </CommonTitleWrapper>
+        <RsWrapper>
+          <Wrapper>
+            <form onSubmit={handleSubmit(pwCheckHandler)}>
+              <Wrapper
+                width={
+                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
+                }
+                height={`150px`}
+                border={`1px solid #ccc`}
+                al={`flex-start`}
+                ju={`flex-start`}
+                padding={`10px`}
+                radius={`5px`}
+                overflow={`auto`}
+              >
+                <Text textAlign={`flex-start`}>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
+                  modi in exercitationem explicabo, at rem officia autem non
+                  porro soluta dolorum officiis ipsa repellat, laudantium ea
+                  unde labore, temporibus quas?Lorem ipsum dolor sit amet,
+                  consectetur adipisicing elit. Eveniet eius totam quam pariatur
+                  ratione, in voluptatem dignissimos laboriosam sint aut!
+                  Repudiandae consectetur odit quo corrupti quidem perferendis
+                  aut dolores quis?Lorem ipsum dolor sit amet consectetur
+                  adipisicing elit. Placeat nam optio dolore recusandae fuga
+                  voluptatibus. Ea quam deserunt consectetur quo aut eligendi,
+                  molestiae incidunt molestias ullam? Repellendus ratione
+                  repellat
+                </Text>
+              </Wrapper>
+              <Wrapper dr={`row`}>
+                <Text>
+                  회원탈퇴 약관을 상세히 읽고 숙지하였으며, 동의합니다.
+                </Text>
+                <input
+                  type="checkbox"
+                  checked={termCheck}
+                  {...register("withdrawalTerm", {
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                      setTermCheck(e.target.checked);
+                    },
+                    required: { value: true, message: "약관에 동의해주세요." },
+                  })}
+                />
+                {errors.withdrawalTerm?.type === "required" && (
+                  <Text
+                    margin={`0px 0px 10px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    {errors.withdrawalTerm.message}
+                  </Text>
+                )}
+              </Wrapper>
+              <TextInput
+                type="password"
+                placeholder="비밀번호를 입력하세요"
+                {...register("password", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    setPassword(e.target.value);
+                  },
+                  required: { value: true, message: "필수 입력사항입니다." },
+                })}
+              />
+              {errors.password?.type === "required" && (
+                <Text
+                  margin={`0px 0px 10px`}
+                  width={`100%`}
+                  color={`#d6263b`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  {errors.password.message}
+                </Text>
+              )}
+              <Wrapper dr={`row`}>
+                <SmallButton
+                  type="button"
+                  kindOf={`default`}
+                  onClick={() => props.setStep(2)}
+                >
+                  돌아가기
+                </SmallButton>
+                <SmallButton type="submit" kindOf={`default`}>
+                  회원탈퇴
+                </SmallButton>
+              </Wrapper>
+            </form>
+          </Wrapper>
+        </RsWrapper>
+      </WholeWrapper>
+      <Modal
+        isOpen={modalOpen}
+        onRequestClose={() => setModalOpen(false)}
+        style={{
+          overlay: {
+            position: "fixed",
+            zIndex: 1020,
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(255, 255, 255, 0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            background: "white",
+            width: "45rem",
+            height: "575px",
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "calc(100vh - 2rem)",
+            overflowY: "auto",
+            position: "relative",
+            border: "1px solid #ccc",
+            borderRadius: "0.3rem",
+            boxShadow: "0px 10px 15px rgba(220,220,220,1)",
+            inset: 0,
+          },
+        }}
+      >
+        <WithdrawalModal {...WithdrawalModalProps} />
+      </Modal>
+    </>
   );
 };
 

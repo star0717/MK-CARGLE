@@ -1,7 +1,20 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
+import React, { useState } from "react";
+import Link from "next/link";
+import Cookies from "js-cookie";
+import { useRouter } from "next/dist/client/router";
 import { useResizeDetector } from "react-resize-detector";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { actionTypesUser, UserState } from "../../../../store/interfaces";
+import { RootStateInterface } from "../../../../store/interfaces/RootState";
+import { signInUserAction } from "../../../../store/action/user.action";
+import { formRegEx } from "../../../validation/regEx";
+import { UserInfo } from "../../../models/auth.entity";
+import { UseLink } from "../../../configure/router.entity";
+import { _SignInProps } from "../../../configure/_props.entity";
 import {
   WholeWrapper,
   RsWrapper,
@@ -13,28 +26,99 @@ import {
   CommonSubTitle,
   Label,
 } from "../../styles/CommonComponents";
-import Link from "next/link";
-import React from "react";
-import { Checkbox, FormControlLabel } from "@material-ui/core";
-import { UseLink } from "../../../configure/router.entity";
-import { _pSignInProps } from "../../../configure/_pProps.entity";
 
 /**
- * 로그인 컴포넌트(화면)
+ * 로그인 컴포넌트(기능)
  * @param props
  * @returns
  */
-const SigninPresenter: NextPage<_pSignInProps> = (props) => {
+const SignIn: NextPage<_SignInProps> = (props) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  // redux store에서 signIn 정보만 가져옴
+  const { signInInfo } = useSelector(
+    (state: RootStateInterface): UserState => state.userAll
+  );
+
+  // input 값을 위한 state
+  // 가져온 signIn 값과 props의 id 값을 input state의 초기값으로 세팅
+  const [inputSignIn, setInputSignIn] = useState<UserInfo>({
+    ...signInInfo,
+    id: props.saveId,
+  });
+
+  const [saveCheck, setSaveCheck] = useState<boolean>(props.saveCheck); // 아이디 저장 체크 여부를 위한 state
+
+  /**
+   * 인풋 값 변환 handler
+   * @param e
+   */
+  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputSignIn({ ...inputSignIn, [e.target.name]: e.target.value });
+  };
+
+  /**
+   * 로그인 시 handler
+   * @param e
+   */
+  const onSignInHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (inputSignIn.id === "" || !formRegEx.EMAIL.test(inputSignIn.id)) {
+      alert("이메일을 입력해주세요.");
+    } else if (inputSignIn.pwd === "") {
+      alert("비밀번호를 입력해주세요.");
+    } else {
+      // 아이디, 비밀번호 정상 입력 시
+      dispatch(signInUserAction(inputSignIn)).then(
+        (res: any) => {
+          // 아이디 저장할 경우 쿠키로 저장
+          if (saveCheck) {
+            // const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24);
+            Cookies.set("saveId", inputSignIn.id, { expires: 1 });
+            // 아이디 저장안할 경우 쿠키 삭제(이미 생성 후 안할 경우 쿠키는 남아있기 때문에 삭제 진행)
+          } else {
+            Cookies.remove("saveId");
+          }
+          router.push(UseLink.MAIN);
+        },
+        (err) => {
+          // 입력 값이 계정과 다를 경우 에러
+          // Nest에서 전송해주는 status code에 맞게 핸들링
+          if (err.response.status === 401) {
+            setInputSignIn({ ...inputSignIn, pwd: "" });
+            alert(
+              "이메일 또는 비밀번호가 잘못 입력되었습니다.\n이메일과 비밀번호를 정확히 입력해주세요."
+            );
+          }
+        }
+      );
+    }
+  };
+
+  /**
+   * 회원가입 state 초기화
+   * @param e
+   */
+  const userInit = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    dispatch({ type: actionTypesUser.USER_INIT });
+  };
+
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper>
+      <RsWrapper padding={`0px 0px 40px`}>
         <Wrapper
           width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
         >
-          <CommonTitle textAlign={`center`} margin={`0px`} padding={`0px`}>
+          <CommonTitle
+            textAlign={`center`}
+            margin={`0px`}
+            padding={`0px`}
+            color={`#292929`}
+          >
             CARGLE
           </CommonTitle>
           <CommonSubTitle color={`#000`}>
@@ -46,7 +130,7 @@ const SigninPresenter: NextPage<_pSignInProps> = (props) => {
             <Wrapper
               width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
             >
-              <form onSubmit={props.onSignInHandler}>
+              <form onSubmit={onSignInHandler}>
                 <TextInput2
                   marginBottom={`10px`}
                   width={
@@ -56,9 +140,9 @@ const SigninPresenter: NextPage<_pSignInProps> = (props) => {
                   placeholder="이메일"
                   type="text"
                   name="id"
-                  value={props.inputSignIn.id}
+                  value={inputSignIn.id}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    props.onInputHandler(e);
+                    onInputHandler(e);
                   }}
                 />
                 <Wrapper>
@@ -84,9 +168,9 @@ const SigninPresenter: NextPage<_pSignInProps> = (props) => {
                   type="password"
                   placeholder="비밀번호"
                   name="pwd"
-                  value={props.inputSignIn.pwd}
+                  value={inputSignIn.pwd}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    props.onInputHandler(e);
+                    onInputHandler(e);
                   }}
                 />
 
@@ -97,11 +181,11 @@ const SigninPresenter: NextPage<_pSignInProps> = (props) => {
                     <FormControlLabel
                       control={
                         <Checkbox
-                          checked={props.saveCheck}
+                          checked={saveCheck}
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            props.setSaveCheck(e.target.checked);
+                            setSaveCheck(e.target.checked);
                           }}
                         />
                       }
@@ -137,7 +221,7 @@ const SigninPresenter: NextPage<_pSignInProps> = (props) => {
                   <Link href={UseLink.SIGNUP}>
                     <a
                       style={{ fontWeight: "bold", fontSize: "16px" }}
-                      onClick={props.userInit}
+                      onClick={userInit}
                     >
                       회원가입
                     </a>
@@ -168,4 +252,4 @@ const SigninPresenter: NextPage<_pSignInProps> = (props) => {
   );
 };
 
-export default SigninPresenter;
+export default SignIn;

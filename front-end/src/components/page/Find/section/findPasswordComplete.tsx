@@ -9,13 +9,14 @@ import {
 } from "../../../styles/CommonComponents";
 import { FaPaperPlane } from "react-icons/fa";
 import { UseLink } from "../../../../configure/router.entity";
+import { _pFindPassword } from "../../../../configure/_pProps.entity";
 
 /**
  * 계정찾기: 비밀번호 찾기 완료(화면)
  * @param props
  * @returns
  */
-const FindPwComPresenter: NextPage = () => {
+const FindPasswordComplete: NextPage = () => {
   const router = useRouter();
 
   return (
@@ -50,4 +51,4 @@ const FindPwComPresenter: NextPage = () => {
   );
 };
 
-export default FindPwComPresenter;
+export default FindPasswordComplete;

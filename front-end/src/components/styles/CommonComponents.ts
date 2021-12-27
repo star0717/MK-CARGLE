@@ -1,3 +1,4 @@
+import { KingBed } from "@material-ui/icons";
 import { prependOnceListener } from "process";
 import styled from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
@@ -58,12 +59,16 @@ export const RsWrapper = styled.div<any>`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `0px 0px 100px`};
+  padding: ${(props) => props.padding || `120px 0px 50px`};
   overflow: ${(props) => props.overflow};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
   font-size: ${(props) => props.fontSize};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
+}
+
+${(props) => props.kindOf === `OverRsWrapper` && `padding:180px 0px 50px`}
+
 `;
 
 // export const CommonTitleWrapper = styled.div<any>`
@@ -188,28 +193,28 @@ export const Wrapper = styled.div<any>`
 
 export const FooterWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
-  height: ${(props) => props.height || `150px`};
+  height: ${(props) => props.height || `100%`};
   color: ${(props) => props.color};
   display: flex;
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.theme.black_C};
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
   background-image: ${(props) => props.bgImg};
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   box-shadow: ${(props) => props.shadow};
   z-index: ${(props) => props.index};
-  position: ${(props) => (props.isRelative ? `relative` : `absolute`)};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
   position: ${(props) => (props.isFixed ? `fixed` : ``)};
   top: ${(props) => props.top};
-  left: ${(props) => props.left || `0`};
+  left: ${(props) => props.left};
   right: ${(props) => props.right};
-  bottom: ${(props) => props.bottom || `0`};
+  bottom: ${(props) => props.bottom};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `0px 0px 0px 0px`};
+  padding: ${(props) => props.padding || `0px`};
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
   min-height: ${(props) => props.minHeight};
@@ -220,7 +225,6 @@ export const FooterWrapper = styled.div<any>`
     color: ${(props) => props.theme.black_C} !important;
   }
 `;
-
 export const CommonForm = styled.form<any>`
   width: ${(props) => props.width || `100%`};
   min-width: ${(props) => props.minWidth};
@@ -303,14 +307,16 @@ export const CommonForm = styled.form<any>`
 /**text */
 
 export const CommonTitleWrapper = styled.div<any>`
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
   width: ${(props) => props.width || `100%`};
+  height: ${(props) => props.height || `150px`};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
-  position: ${(props) => (props.isAbsolute ? `absolute` : `relatuve`)};
+  position: ${(props) => props.position || `absolute`};
   top: 80px;
-  margin: ${(props) => props.margin || `0px 0px 80px`};
+  margin: ${(props) => props.margin || `0px 0px 0px`};
   margintop: ${(props) => props.marginTop};
-  padding: ${(props) => props.padding || `50px 0px 30px`};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 34px;
   font-weight: 800;
@@ -344,7 +350,6 @@ export const CommonSubTitle = styled.h2<any>`
   display: ${(props) => props.display};
   position: relative;
   margin: ${(props) => props.margin || `0px`};
-  padding-bottom: 40px;
   font-size: 22px;
   color: ${(props) => props.color || `${props.theme.lightGrey_C}`};
   font-weight: ${(props) => props.fontWeight || `400`};
@@ -429,7 +434,7 @@ export const CommonButtonWrapper = styled.div<any>`
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
   transition: ${(props) => props.transition || props.theme.transition};
-  margin: ${(props) => props.margin || `50px 0px 0px`};
+  margin: ${(props) => props.margin || `20px 0px 0px`};
   padding: ${(props) => props.padding || `0px`};
   border-radius: ${(props) => props.radius};
   font-size: ${(props) => props.fontSize};
@@ -441,6 +446,9 @@ export const CommonButtonWrapper = styled.div<any>`
   color: ${(props) => props.color};
   cursor: pointer;
   border: none;
+
+  ${(props) => props.kindOf === `column` && `flex-direction : column;`}
+  ${(props) => props.kindOf === `column` && `padding : 0px 0px 10px 0px;`}
 `;
 
 export const CommonButton = styled.button<any>`

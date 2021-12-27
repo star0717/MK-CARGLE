@@ -55,7 +55,7 @@ const ByeolTest: NextPage = () => {
           </form>
         </Wrapper>
       </RsWrapper>
-      <FooterWrapper bgColor={`#ddd`}>I'm Footer</FooterWrapper>
+      <FooterWrapper></FooterWrapper>
     </WholeWrapper>
   );
 };
