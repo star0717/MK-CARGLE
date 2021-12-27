@@ -24,9 +24,7 @@ import {
 } from "../../../styles/CommonComponents";
 import { BsSearch } from "react-icons/bs";
 
-const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
-  props
-) => {
+const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [clickDoc, setClickDoc] = useState<Company>();
 
@@ -69,10 +67,10 @@ const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
               {props.findResult.docs.map((doc: Company) => (
                 <TableRow
                   key={doc._id}
-                  onClick={() => {
-                    setModalOpen(!modalOpen);
-                    setClickDoc(doc);
-                  }}
+                  // onClick={() => {
+                  //   setModalOpen(!modalOpen);
+                  //   setClickDoc(doc);
+                  // }}
                 >
                   <TableRowLIST width={`200px`}>
                     {dayjs(doc.createdAt).format("YYYY-MM-DD")}
@@ -98,7 +96,7 @@ const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
         </Wrapper>
         <PagenationSection {...props} />
       </RsWrapper>
-      <Wrapper>
+      {/* <Wrapper>
         <Modal
           isOpen={modalOpen}
           style={{
@@ -136,9 +134,9 @@ const AdminReviewCompaniesPresenter: NextPage<_pAdminReviewCompanies> = (
             <AdminReviewCompaniesModal {...ARCModalProps} />
           </Wrapper>
         </Modal>
-      </Wrapper>
+      </Wrapper> */}
     </WholeWrapper>
   );
 };
 
-export default AdminReviewCompaniesPresenter;
+export default AdminReviewCompaniesinfo;

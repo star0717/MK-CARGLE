@@ -41,7 +41,7 @@ const Complete: NextPage<_pSignUpProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref}>
+    <WholeWrapper ref={ref} padding={`0px`}>
       <RsWrapper padding={`0px`}>
         <Wrapper>
           <Text color={`#0066ff`} fontSize={`60px`}>

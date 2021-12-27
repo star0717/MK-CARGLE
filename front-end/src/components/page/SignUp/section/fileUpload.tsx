@@ -139,8 +139,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
         <form onSubmit={onFileUploadHandler}>
           <Wrapper
             width={`auto`}
-            margin={`0px`}
-            padding={`50px 0px`}
+            padding={`50px`}
             border={`1px solid #ccc`}
             radius={`5px`}
           >
@@ -226,11 +225,11 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
               제출하기
             </CommonButton>
           </Wrapper>
-          <Wrapper padding={`0px 0px 100px`}>
+          <Wrapper padding={`0px 0px 0px`}>
             <Wrapper
               borderTop={`1px solid #c4c4c4`}
               al={`flex-start`}
-              width={`auto`}
+              width={`500px`}
             >
               <Wrapper al={`flex-end`} padding={`30px 15px 10px 0px`}></Wrapper>
               <Wrapper padding={`0px 30px 30px`}>
@@ -246,7 +245,9 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                   </Text>
                   <Text textAlign={`start`}>
                     서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
+                    <br />
                     로그인하면 이어서 진행이 가능해요.
+                    <br />
                     <br />
                     서류가 제출되면 최종 가입 심사가 시작됩니다!
                   </Text>
