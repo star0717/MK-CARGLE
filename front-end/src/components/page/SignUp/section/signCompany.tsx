@@ -225,7 +225,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
   return (
     <>
       <WholeWrapper ref={ref}>
-        <RsWrapper kindOf={`OverRsWrapper`}>
+        <RsWrapper padding={`0px 0px 50px`}>
           <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
             <Wrapper
               width={`auto`}

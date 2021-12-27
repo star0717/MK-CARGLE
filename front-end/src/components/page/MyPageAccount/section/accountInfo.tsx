@@ -35,7 +35,6 @@ import { formRegEx } from "../../../../validation/regEx";
 import dayjs from "dayjs";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import {
-  _pChangePwModalProps,
   _pMyPageAccountProps,
   _pStampModalProps,
 } from "../../../../configure/_pProps.entity";
@@ -185,7 +184,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   };
 
   // 비밀번호 변경 modal props
-  const ChangePwModalProps: _pChangePwModalProps = {
+  const ChangePwModalProps: _pMyPageAccountProps = {
     ...props,
     setModalOpen,
     style: { height: "500px" },
@@ -213,7 +212,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
             이곳에서 계정정보를 확인 및 수정할 수 있습니다.
           </CommonSubTitle>
         </CommonTitleWrapper>
-        <RsWrapper wrap={`no-wrap`}>
+        <RsWrapper wrap={`no-wrap`} margin={`100px 0px 0px 0px`}>
           <form id="saveform" onSubmit={handleSubmit(onChangeInfoHandler)}>
             <Wrapper
               border={`1px solid #ccc`}

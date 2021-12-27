@@ -990,8 +990,8 @@ export const TableWrapper = styled.div<any>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: ${(props) => props.margin || `20px 0px 50px`};
-  padding: ${(props) => props.padding || `20px 0px 50px`};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding || `0px`};
 `;
 
 export const TableHead = styled.ul<any>`
@@ -1009,6 +1009,7 @@ export const TableHead = styled.ul<any>`
   background: #fff;
   color: #292929;
   padding: ${(props) => props.padding || `0px`};
+  font-size: ${(props) => props.fontSize || `16px`};
 `;
 
 export const TableHeadLIST = styled.li<any>`
@@ -1018,6 +1019,13 @@ export const TableHeadLIST = styled.li<any>`
   flex-direction: row;
   align-items: center;
   justify-content: ${(props) => props.ju || `center`};
+
+  &:first-child,{
+    border-right: 1px solid #000;
+  },
+  &:last-child {
+    border-left: 1px solid #000;
+  },
 `;
 
 export const TableBody = styled.div<any>`
@@ -1026,6 +1034,7 @@ export const TableBody = styled.div<any>`
   margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   padding: ${(props) => props.padding || `0px`};
   overflow: ${(props) => props.overflow || ``};
+  font-size: ${(props) => props.fontSize || `16px`};
 `;
 export const TableRow = styled.ul<any>`
   width: 100%;
