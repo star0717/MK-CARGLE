@@ -22,13 +22,6 @@ import { UserAuthority } from "../../../../models/user.entity";
 const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
-  console.log(
-    props.userAuth === UserAuthority.OWNER &&
-      (props.stepNumber === 2 ||
-        props.stepNumber === 3 ||
-        props.stepNumber === 4 ||
-        props.stepNumber === 5)
-  );
 
   return (
     <WholeWrapper ref={ref}>
@@ -60,6 +53,14 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
           </CommonTitleWrapper>
         ) : null}
         {props.stepNumber === 5 && (
+          <CommonTitleWrapper>
+            <CommonTitle>회원가입</CommonTitle>
+            <CommonSubTitle>
+              가입 승인을 위해 서류를 제출해주세요
+            </CommonSubTitle>
+          </CommonTitleWrapper>
+        )}
+        {props.stepNumber === 6 && (
           <CommonTitleWrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>

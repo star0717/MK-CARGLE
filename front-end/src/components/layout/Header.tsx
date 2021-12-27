@@ -176,30 +176,6 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                   {/* 서브메뉴 빈 wrapper 끝 */}
 
                   {/* 서브메뉴 시작 */}
-                  {/* {mainMenu.map((menu) => {
-                    return (
-                      <Wrapper
-                        key={menu.key}
-                        width={width < 1510 ? `140px` : `168px`}
-                      >
-                        {menu.subMenu.map((sub) => {
-                          return (
-                            <TestA
-                              key={sub.key}
-                              cursor={`pointer`}
-                              fontSize={width < 1510 ? `14px` : `16px`}
-                              fontWeight={`600`}
-                              padding={width < 1510 ? `5px 15px` : `5px 30px`}
-                            >
-                              <Link href={sub.subMenuLink}>
-                                <a>{sub.subMenuName}</a>
-                              </Link>
-                            </TestA>
-                          );
-                        })}
-                      </Wrapper>
-                    );
-                  })} */}
                   {subMenu.map((menu, idx) => {
                     return (
                       <Wrapper
@@ -325,10 +301,8 @@ const Header: NextPage<_pLayoutProps> = (props) => {
               >
                 <MdLogout />
               </HeaderIconButton>
-              {/* <button onClick={onSignOutHandler}>로그아웃</button> */}
             </Wrapper>
           )}
-        {/* </Wrapper> */}
       </Wrapper>
     </WholeWrapper>
   );

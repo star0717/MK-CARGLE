@@ -242,12 +242,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
               radius={`5px`}
             >
               {/* 상호명 */}
-              <Wrapper
-                al={`flex-start`}
-                ju={`flex-start`}
-                margin={`0px 0px 10px`}
-                width={`500px`}
-              >
+              <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
                 <Text margin={`0px 0px 10px`}>
                   *상호명{" "}
                   <small>(사업자등록증에 등록한 상호명을 입력해주세요.)</small>

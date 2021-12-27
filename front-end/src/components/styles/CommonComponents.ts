@@ -48,7 +48,7 @@ export const WholeWrapper = styled.div<any>`
 export const RsWrapper = styled.div<any>`
   width: 1200px;
   height: ${(props) => props.height || `100%`};
-  ${(props) => props.minHeight && `min-height: ${props.minHeight};`}
+  min-height: ${(props) => props.minHeight && `min-height: ${props.minHeight};`}
   color: ${(props) => props.color};
   display: flex;
   background: ${(props) => props.bgColor};

@@ -55,7 +55,6 @@ const ByeolTest: NextPage = () => {
           </form>
         </Wrapper>
       </RsWrapper>
-      <FooterWrapper></FooterWrapper>
     </WholeWrapper>
   );
 };
