@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { User } from "../../../models/user.entity";
 import { getWorkersListAction } from "../../../../store/action/user.action";
-import { _pWorkerData } from "../../../configure/_pProps.entity";
+import { _pWorkerDataProps } from "../../../configure/_pProps.entity";
 import { _MainProps } from "../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../models/base.entity";
 import { GetWorkersList } from "../../../../store/interfaces";
@@ -41,7 +41,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const myPageWorkerProps: _pWorkerData = {
+  const myPageWorkerProps: _pWorkerDataProps = {
     ...props,
     findResult,
     setFindResult,

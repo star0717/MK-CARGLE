@@ -28,9 +28,9 @@ import {
 } from "../../../styles/CommonComponents";
 import { Switch } from "@material-ui/core";
 import { makeFullAddress } from "../../../../modules/commonModule";
-import { _pWorkerInfoModalProps } from "../../../../configure/_pProps.entity";
+import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
 
-const WorkerInfoModal: NextPage<_pWorkerInfoModalProps> = (props) => {
+const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
   const dispatch = useDispatch();
 
   // state 관리
