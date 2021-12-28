@@ -5,7 +5,7 @@ import React from "react";
 import {
   _aGetAdminManCompanies,
   _aGetAdminReivewCompanies,
-} from "../../../../../store/action/user.action";
+} from "../../../../../store/action/base.action";
 import { _iFindCompanies } from "../../../../../store/interfaces";
 import { StepQuery, UseLink } from "../../../../configure/router.entity";
 import {
@@ -37,38 +37,14 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  //modal 창 여부
-  //   //직원 명단 API Result 관련
-  //   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
-  //   //클릭한 업체정보
-  //   const [clickDoc, setClickDoc] = useState<Company>();
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  //   /**
-  //    * 작업자의 정보를 조회함
-  //    * @param page 조회할 페이지
-  //    */
-  //   const findCompanyHandler = (page: number) => {
-  //     const param: FindParameters = {
-  //       page,
-  //       take: 1,
-  //     };
-  //     dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
-  //       setFindResult(res.payload);
-  //     });
-  //   };
 
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  //   const adminManComProps: _pAdminManCompanies = {
-  //     ...props,
-  //     findResult,
-  //     setFindResult,
-  //     findDocHandler: findCompanyHandler,
-  //   };
 
   /*********************************************************************
    * 5. Page configuration
@@ -94,9 +70,10 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                   key={doc._id}
                   onClick={() => {
                     props.setClickDoc(doc);
-                    router.push(
-                      `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}`
-                    );
+                    props.clickDoc &&
+                      router.push(
+                        `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}`
+                      );
                   }}
                 >
                   <TableRowLIST width={`200px`}>

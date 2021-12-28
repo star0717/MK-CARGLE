@@ -9,6 +9,7 @@ import { PagenationSection } from "../../../common/sections";
 import AdminReviewCompaniesModal from "./modal";
 import {
   CloseButton,
+  Combo,
   IconButton,
   RsWrapper,
   TableBody,
@@ -45,6 +46,27 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
       <RsWrapper>
         <Wrapper width={`1200px`}>
           <Wrapper dr={`row`}>
+            <Combo>
+              {/* width={`800px`}
+                        margin={`0px`}
+                        value={comData.mbTypeNum}
+                        {...register("mbTypeNum", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onInputComHandler(e);
+                          },
+                          required: true,
+                        })}
+                      >
+                        {mbTypeOption.map((item) => {
+                          return (
+                            <option key={item.value} value={item.value}>
+                              {item.text}
+                            </option>
+                          );
+                        })} */}
+            </Combo>
             <TextInput
               type="text"
               placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
