@@ -11,7 +11,6 @@ import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company, CompanyApproval } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
-  CloseButton,
   TextInput,
   IconButton,
   RsWrapper,
@@ -24,6 +23,7 @@ import {
   Text,
   WholeWrapper,
   Wrapper,
+  Combo,
 } from "../../../styles/CommonComponents";
 import AdminReviewCompaniesinfo from "./review_companies_info";
 import { BsSearch } from "react-icons/bs";
@@ -42,6 +42,7 @@ const AdminReviewCompaniesPage: NextPage<_pAdminReviewCompanies> = (props) => {
   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedDoc, setSelectedDoc] = useState<Company>();
+  const [searchOption, setSearchOption] = useState<String>("name");
 
   /*********************************************************************
    * 3. Handlers
@@ -59,6 +60,10 @@ const AdminReviewCompaniesPage: NextPage<_pAdminReviewCompanies> = (props) => {
       setFindResult(res.payload);
       console.log("마! 디스패치 아이가!");
     });
+  };
+
+  const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchOption(e.target.value);
   };
 
   /*********************************************************************
@@ -80,6 +85,15 @@ const AdminReviewCompaniesPage: NextPage<_pAdminReviewCompanies> = (props) => {
       <RsWrapper>
         <Wrapper width={`1200px`}>
           <Wrapper dr={`row`}>
+            <Combo
+              value={searchOption}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onSearchOptionHandler(e);
+              }}
+            >
+              <option value="name">상호명 검색</option>
+              <option value="comRegNum">사업자등록번호 검색</option>
+            </Combo>
             <TextInput
               type="text"
               placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
