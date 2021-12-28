@@ -27,6 +27,21 @@ export const SubRoute = {
   MAN_COMPANIES: "man_companies",
 };
 
+export const Step = {
+  FIRST: "1",
+  SECOND: "2",
+  THIRD: "3",
+};
+
+/**
+ * 컴포넌트 전환을 위한 스탭(Query parse)
+ */
+export const StepQuery = {
+  FIRST: "?step=1",
+  SECOND: "?step=2",
+  THIRD: "?step=3",
+};
+
 /**
  * 페이지 분기를 위한 링크
  */
