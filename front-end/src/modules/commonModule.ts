@@ -26,6 +26,17 @@ export const getPathName = (url: string): string => {
 };
 
 /**
+ * url 파싱하여 query 얻는 함수
+ * @param url
+ * @returns
+ */
+export const getQuery = (url: string): object => {
+  const query: object = parse(url, true).query;
+
+  return query;
+};
+
+/**
  * 주소 한줄로 나타내기
  * @param main
  * @param sub

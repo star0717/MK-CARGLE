@@ -27,12 +27,18 @@ export const SubRoute = {
   MAN_COMPANIES: "man_companies",
 };
 
+/**
+ * 페이지 분기를 위한 링크
+ */
 export const BaseLink = {
   INDEX: "/",
   SIGN: "/sign",
   V: "/v",
 };
 
+/**
+ * 실제 사용되는 전체 링크
+ */
 export const UseLink = {
   INDEX: BaseLink.INDEX,
   SIGNUP: `${BaseLink.SIGN}/${SignRoute.SIGNUP}`,
