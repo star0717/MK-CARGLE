@@ -1,5 +1,8 @@
 import parse from "url-parse";
+import { MbType } from "../configure/etc.entity";
+import { mbTypeOption } from "../configure/list.entity";
 import { AuthTokenInfo } from "../models/auth.entity";
+import { Company } from "../models/company.entity";
 
 /**
  * jwt를 json으로 만드는 함수
@@ -23,6 +26,17 @@ export const getPathName = (url: string): string => {
   const pathName: string = parse(url).pathname;
 
   return pathName;
+};
+
+/**
+ * url 파싱하여 query 얻는 함수
+ * @param url
+ * @returns
+ */
+export const getQuery = (url: string): any => {
+  const query: any = parse(url, true).query;
+
+  return query;
 };
 
 /**
@@ -55,4 +69,14 @@ export const dateToString = (date: Date) => {
   let stringDate: string = "";
   date ? (stringDate = date.toString().slice(0, 10)) : (stringDate = "");
   return stringDate;
+};
+
+/**
+ * 정비업종을 해당하는 string으로 출력
+ */
+export const mbTypeToString = (list: Company) => {
+  const textMbType: MbType = mbTypeOption.find((item) => {
+    return item.value === list.mbTypeNum;
+  });
+  return textMbType.text;
 };

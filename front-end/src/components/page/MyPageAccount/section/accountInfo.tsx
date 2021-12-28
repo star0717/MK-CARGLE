@@ -33,7 +33,10 @@ import {
 } from "../../../styles/CommonComponents";
 import { formRegEx } from "../../../../validation/regEx";
 import dayjs from "dayjs";
-import { makeFullAddress } from "../../../../modules/commonModule";
+import {
+  makeFullAddress,
+  mbTypeToString,
+} from "../../../../modules/commonModule";
 import {
   _pMyPageAccountProps,
   _pStampModalProps,
@@ -110,13 +113,6 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   const onInputComHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
   };
-
-  /**
-   * 정비업종 readOnly일 경우 해당하는 text 출력
-   */
-  const textMbType = mbTypeOption.find((item) => {
-    return item.value === comData.mbTypeNum;
-  });
 
   /**
    * 주소 검색 api handler
@@ -573,7 +569,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                     </Text>
                     {readOnly ? (
                       <TextInput2
-                        value={textMbType.text}
+                        value={mbTypeToString(comData)}
                         type="text"
                         readOnly={readOnly}
                         {...register("mbTypeNum")}
