@@ -10,12 +10,6 @@ interface Propsinterface {
 
 /** Wrapper */
 
-export const PageWrapper = styled.div<any>`
-  width: 100%;
-  min-height: 100vh;
-  position: relative;
-`;
-
 export const WholeWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height || `100%`};
@@ -198,10 +192,6 @@ export const Wrapper = styled.div<any>`
 `;
 
 export const FooterWholeWrapper = styled.div<any>`
-  position: absolute;
-  height: 150px;
-  left: 0;
-  bottom: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
