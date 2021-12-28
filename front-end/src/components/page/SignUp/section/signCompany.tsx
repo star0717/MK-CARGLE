@@ -570,7 +570,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
                 </Text>
               )}
             </Wrapper>
-            <Wrapper padding={`50px 0px 100px 0px`}>
+            <Wrapper padding={`40px 0px 0px`}>
               <CommonButton
                 kindOf={`white`}
                 margin={`0px 0px 10px 0px`}

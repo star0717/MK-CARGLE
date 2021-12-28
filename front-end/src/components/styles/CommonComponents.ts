@@ -329,7 +329,7 @@ export const CommonTitleWrapper = styled.div<any>`
   flex-direction: ${(props) => props.dr || `column`};
   top: 80px;
   margin: ${(props) => props.margin || `0px 0px 0px`};
-  margintop: ${(props) => props.marginTop};
+  margin-top: ${(props) => props.marginTop};
   padding-bottom: ${(props) => props.paddingBottom};
   position: absolute;
   font-size: 34px;
@@ -448,7 +448,7 @@ export const CommonButtonWrapper = styled.div<any>`
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
   transition: ${(props) => props.transition || props.theme.transition};
-  margin: ${(props) => props.margin || `20px 0px 0px`};
+  margin: ${(props) => props.margin || ``};
   padding: ${(props) => props.padding || `0px`};
   border-radius: ${(props) => props.radius};
   font-size: ${(props) => props.fontSize};
