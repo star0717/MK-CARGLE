@@ -15,7 +15,6 @@ import {
 import { Company } from "../../src/models/company.entity";
 import { User } from "../../src/models/user.entity";
 import {
-  ActionAPIs,
   actionTypesUser,
   AdminCompaniesList,
   GetWorkersList,
@@ -23,7 +22,6 @@ import {
   PatchWorkersChange,
   PatchWorkersDelete,
   PatchWorkersReject,
-  _iFindCompanies,
 } from "../interfaces";
 
 // 로그인 action
@@ -377,50 +375,11 @@ export async function patchWorkerDeleteAction(dataToSubmit: string) {
   return result;
 }
 
-/*****************************************************
- * ADMIN
- *****************************************************/
-
-// 승인요청 업체 조회
-export async function _aGetAdminReivewCompanies(findParams: FindParameters) {
-  const req: FindResult<Company> = await axios
-    .get(`/api/admin/review/companies?${FindParameters.getQuery(findParams)}`)
-    .then(
-      (
-        res: AxiosResponse<FindResult<Company>, Company>
-      ): FindResult<Company> => {
-        return res.data;
-      }
-    );
-
-  const result: _iFindCompanies = {
-    type: ActionAPIs.FIND_COMPANIES,
-    payload: req,
-  };
-  return result;
-}
-
 /**
- * 업체 리스트 반환 action
+ * 사업자 등록증 반환
+ * @param id
+ * @returns
  */
-export async function _aGetAdminManCompanies(findParams: FindParameters) {
-  const req: FindResult<Company> = await axios
-    .get(`/api/admin/companies?${FindParameters.getQuery(findParams)}`)
-    .then(
-      (
-        res: AxiosResponse<FindResult<Company>, Company>
-      ): FindResult<Company> => {
-        return res.data;
-      }
-    );
-
-  const result: _iFindCompanies = {
-    type: ActionAPIs.FIND_COMPANIES,
-    payload: req,
-  };
-  return result;
-}
-
 export async function getComRegFile(id: string) {
   const req = await axios
     .get(`/api/admin/review/com-reg-doc/${id}`)

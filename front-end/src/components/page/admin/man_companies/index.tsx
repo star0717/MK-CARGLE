@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
+import { useDispatch, useSelector } from "react-redux";
+import { _aGetAdminManCompanies } from "../../../../../store/action/base.action";
+import { BaseState, _iFindCompanies } from "../../../../../store/interfaces";
+import { RootStateInterface } from "../../../../../store/interfaces/RootState";
 import { Step } from "../../../../configure/router.entity";
 import { _pAdminManCompanies } from "../../../../configure/_pProps.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
@@ -21,6 +22,10 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
   const router = useRouter();
   const routerQuery = getQuery(router.asPath);
 
+  // const { company } = useSelector(
+  //   (state: RootStateInterface): BaseState => state.baseAll
+  // );
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -30,8 +35,6 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
   //클릭한 업체정보
   const [clickDoc, setClickDoc] = useState<Company>();
-
-  console.log(clickDoc);
 
   /*********************************************************************
    * 3. Handlers

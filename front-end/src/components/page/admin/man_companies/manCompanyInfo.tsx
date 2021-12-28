@@ -3,6 +3,7 @@ import { useResizeDetector } from "react-resize-detector";
 import {
   CloseButton,
   RsWrapper,
+  SmallButton,
   Text,
   TextInput2,
   WholeWrapper,
@@ -13,101 +14,111 @@ import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
 import ManComApprovalModal from "./approvalModal";
 import { _pAdminManCompanies } from "../../../../configure/_pProps.entity";
-import { mbTypeToString } from "../../../../modules/commonModule";
+import {
+  makeFullAddress,
+  mbTypeToString,
+} from "../../../../modules/commonModule";
+import { Company } from "../../../../models/company.entity";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  /*********************************************************************
+   * 1. Init Libs
+   *********************************************************************/
 
+  /*********************************************************************
+   * 2. State settings
+   *********************************************************************/
+  const [comData, setComData] = useState<Company>(props.clickDoc); // 클릭한 업체 정보
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달 창 여부
+  // const [busType, setBusType] = useState<string>(props.clickDoc.busType); // 업태
+  // const [busItem, setBusItem] = useState<string>(props.clickDoc.busItem); // 업종
+
+  /*********************************************************************
+   * 3. Handlers
+   *********************************************************************/
+  // 모달 창 닫기
   const closeModal = () => {
     setModalOpen(false);
     props.findDocHandler(props.findResult.currentPage);
   };
 
+  /*********************************************************************
+   * 4. Props settings
+   *********************************************************************/
+
+  /*********************************************************************
+   * 5. Page configuration
+   *********************************************************************/
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
+        <Wrapper>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+            onClick={() => {
+              console.log("ㅎㅎ");
+            }}
+          >
+            승인처리
+          </SmallButton>
+        </Wrapper>
         <Wrapper>이미지</Wrapper>
         <Wrapper>
           <Text>계정정보</Text>
         </Wrapper>
         <Wrapper>
           <Text>사업자정보</Text>
-          <Wrapper dr={`row`} margin={`0px 0px 10px`}>
-            <Text
-              width={`130px`}
-              textAlign={`end`}
-              padding={`0px 10px 0px 0px`}
-            >
-              상호명
-            </Text>
-            <TextInput2
-              value={props.clickDoc.name}
-              type="text"
-              readOnly
-              width={`800px`}
-            />
+          <Wrapper dr={`row`}>
+            <Text>상호명</Text>
+            <TextInput2 value={comData.name} type="text" readOnly />
           </Wrapper>
-          <Wrapper dr={`row`} margin={`0px 0px 10px`}>
-            <Text
-              width={`130px`}
-              textAlign={`end`}
-              padding={`0px 10px 0px 0px`}
-            >
-              사업자등록번호
-            </Text>
-            <TextInput2
-              value={props.clickDoc.comRegNum}
-              type="text"
-              readOnly
-              width={`800px`}
-            />
+          <Wrapper dr={`row`}>
+            <Text width={`130px`}>사업자등록번호</Text>
+            <TextInput2 value={comData.comRegNum} type="text" readOnly />
           </Wrapper>
-          <Wrapper dr={`row`} margin={`0px 0px 10px`}>
-            <Text
-              width={`130px`}
-              textAlign={`end`}
-              padding={`0px 10px 0px 0px`}
-            >
-              정비업등록번호
-            </Text>
-            <TextInput2
-              value={props.clickDoc.mbRegNum}
-              type="text"
-              readOnly
-              width={`800px`}
-            />
+          <Wrapper dr={`row`}>
+            <Text width={`130px`}>정비업등록번호</Text>
+            <TextInput2 value={comData.mbRegNum} type="text" readOnly />
           </Wrapper>
-          <Wrapper dr={`row`} margin={`0px 0px 10px`}>
-            <Text
-              width={`130px`}
-              textAlign={`end`}
-              padding={`0px 10px 0px 0px`}
-            >
-              대표자명
-            </Text>
-            <TextInput2
-              value={props.clickDoc.ownerName}
-              type="text"
-              readOnly
-              width={`800px`}
-            />
+          <Wrapper dr={`row`}>
+            <Text>대표자명</Text>
+            <TextInput2 value={comData.ownerName} type="text" readOnly />
           </Wrapper>
-          <Wrapper dr={`row`} margin={`0px 0px 10px`}>
-            <Text
-              width={`130px`}
-              textAlign={`end`}
-              padding={`0px 10px 0px 0px`}
-            >
-              정비업종
-            </Text>
+          <Wrapper dr={`row`}>
+            <Text>정비업종</Text>
+            <TextInput2 value={mbTypeToString(comData)} type="text" readOnly />
+          </Wrapper>
+          {/* <Wrapper dr={`row`}>
+            <Text>업태</Text>
+            <TextInput2 value={busType} type="text" />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>업종</Text>
+            <TextInput2 value={busItem} type="text" />
+          </Wrapper> */}
+          <Wrapper dr={`row`}>
+            <Text>업체 전화번호</Text>
+            <TextInput2 value={comData.phoneNum} type="text" readOnly />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>업체 팩스번호</Text>
+            <TextInput2 value={comData.faxNum} type="text" readOnly />
+          </Wrapper>
+          <Wrapper dr={`row`}>
+            <Text>사업자 주소</Text>
             <TextInput2
-              value={mbTypeToString(props.clickDoc)}
+              value={makeFullAddress(
+                comData.address1,
+                comData.address2,
+                comData.postcode
+              )}
               type="text"
               readOnly
-              width={`800px`}
             />
           </Wrapper>
         </Wrapper>
