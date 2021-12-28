@@ -13,6 +13,7 @@ import {
   TestDiv,
   TestDiv2,
   TestA,
+  HeaderWrapper,
 } from "../styles/CommonComponents";
 import { CompanyApproval } from "../../models/company.entity";
 import { UseLink } from "../../configure/router.entity";
@@ -75,7 +76,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper
+    <HeaderWrapper
       ref={ref}
       shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
       isAsolute={true}
@@ -304,7 +305,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
             </Wrapper>
           )}
       </Wrapper>
-    </WholeWrapper>
+    </HeaderWrapper>
   );
 };
 

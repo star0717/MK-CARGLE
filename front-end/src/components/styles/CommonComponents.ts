@@ -36,7 +36,7 @@ export const WholeWrapper = styled.div<any>`
   padding: ${(props) => props.padding || `0px`};
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
-  min-height: ${(props) => props.minHeight};
+  min-height: ${(props) => props.minHeight || ``};
   box-shadow: ${(props) => props.shadow};
 
   & .MuiCheckbox-root,
@@ -191,7 +191,21 @@ export const Wrapper = styled.div<any>`
   }
 `;
 
+export const FooterWholeWrapper = styled.div<any>`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
 export const FooterWrapper = styled.div<any>`
+  position: relative;
+  margin-top: auto;
+  height: 150px;
+  background-color: yellow;
+  width: 100%;
+`;
+
+export const HeaderWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height || `100%`};
   color: ${(props) => props.color};
@@ -217,7 +231,6 @@ export const FooterWrapper = styled.div<any>`
   padding: ${(props) => props.padding || `0px`};
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
-  min-height: ${(props) => props.minHeight};
   box-shadow: ${(props) => props.shadow};
 
   & .MuiCheckbox-root,
@@ -225,6 +238,7 @@ export const FooterWrapper = styled.div<any>`
     color: ${(props) => props.theme.black_C} !important;
   }
 `;
+
 export const CommonForm = styled.form<any>`
   width: ${(props) => props.width || `100%`};
   min-width: ${(props) => props.minWidth};
@@ -313,11 +327,11 @@ export const CommonTitleWrapper = styled.div<any>`
   height: ${(props) => props.height || `150px`};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
-  position: ${(props) => props.position || `absolute`};
   top: 80px;
   margin: ${(props) => props.margin || `0px 0px 0px`};
   margintop: ${(props) => props.marginTop};
   padding-bottom: ${(props) => props.paddingBottom};
+  position: absolute;
   font-size: 34px;
   font-weight: 800;
   color: ${(props) => props.color};
