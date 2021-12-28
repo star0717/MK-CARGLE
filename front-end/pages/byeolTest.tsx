@@ -23,38 +23,10 @@ import Footer from "../src/components/layout/Footer";
  */
 const ByeolTest: NextPage = () => {
   return (
-    <WholeWrapper>
-      {/* <div style={{ minHeight: `100%`, backgroundColor: `#000` }}>
-        <div
-          style={{
-            width: `100%`,
-            paddingBottom: `150px`,
-            backgroundColor: `red`,
-          }}
-        >
-          컨텐츠
-        </div>
-      </div> */}
-      <CommonTitleWrapper>
-        <CommonTitle>계정관리</CommonTitle>
-        <CommonSubTitle>
-          계정관리를 위해 비밀번호를 입력해주세요.
-        </CommonSubTitle>
-      </CommonTitleWrapper>
-      <RsWrapper>
-        <Wrapper width={`500px`}>
-          <form>
-            <TextInput2
-              placeholder="비밀번호를 입력하세요."
-              width={`500px`}
-              height={`60px`}
-              margin={`0px 0px 10px 0px`}
-            />
-
-            <CommonButton type="submit">확인</CommonButton>
-          </form>
-        </Wrapper>
-      </RsWrapper>
+    <WholeWrapper minHeight={`100vh`}>
+      <FooterWrapper height={`150px`} bgColor={`#ccc`}>
+        HI, I'm Footerr
+      </FooterWrapper>
     </WholeWrapper>
   );
 };
