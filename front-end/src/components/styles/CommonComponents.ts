@@ -10,6 +10,12 @@ interface Propsinterface {
 
 /** Wrapper */
 
+export const PageWrapper = styled.div<any>`
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+`;
+
 export const WholeWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height || `100%`};
@@ -192,6 +198,10 @@ export const Wrapper = styled.div<any>`
 `;
 
 export const FooterWholeWrapper = styled.div<any>`
+  position: absolute;
+  height: 150px;
+  left: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -329,7 +339,7 @@ export const CommonTitleWrapper = styled.div<any>`
   flex-direction: ${(props) => props.dr || `column`};
   top: 80px;
   margin: ${(props) => props.margin || `0px 0px 0px`};
-  margin-top: ${(props) => props.marginTop};
+  margintop: ${(props) => props.marginTop};
   padding-bottom: ${(props) => props.paddingBottom};
   position: absolute;
   font-size: 34px;
@@ -448,7 +458,7 @@ export const CommonButtonWrapper = styled.div<any>`
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
   transition: ${(props) => props.transition || props.theme.transition};
-  margin: ${(props) => props.margin || ``};
+  margin: ${(props) => props.margin || `20px 0px 0px`};
   padding: ${(props) => props.padding || `0px`};
   border-radius: ${(props) => props.radius};
   font-size: ${(props) => props.fontSize};
