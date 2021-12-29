@@ -42,7 +42,7 @@ const Complete: NextPage<_pSignUpProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref} padding={`0px`}>
-      <RsWrapper padding={`0px`}>
+      <RsWrapper kindOf={`NoneTitleRsWrapper`}>
         <Wrapper>
           <Text color={`#0066ff`} fontSize={`60px`}>
             <BsFillCheckCircleFill />

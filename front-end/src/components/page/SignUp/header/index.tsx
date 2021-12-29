@@ -60,14 +60,14 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
             </CommonSubTitle>
           </CommonTitleWrapper>
         )}
-        {props.stepNumber === 6 && (
+        {/* {props.stepNumber === 6 && (
           <CommonTitleWrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>
               가입 승인을 위해 서류를 제출해주세요
             </CommonSubTitle>
           </CommonTitleWrapper>
-        )}
+        )} */}
       </Wrapper>
 
       {props.userAuth === UserAuthority.OWNER &&

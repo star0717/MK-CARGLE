@@ -59,7 +59,7 @@ export const RsWrapper = styled.div<any>`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `120px 0px 50px`};
+  padding: ${(props) => props.padding || `100px 0px 100px`};
   overflow: ${(props) => props.overflow};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
@@ -68,49 +68,9 @@ export const RsWrapper = styled.div<any>`
 }
 
 ${(props) => props.kindOf === `OverRsWrapper` && `padding:180px 0px 50px`}
+${(props) => props.kindOf === `NoneTitleRsWrapper` && `padding:100px 0px 100px`}
 
 `;
-
-// export const CommonTitleWrapper = styled.div<any>`
-//   width: ${(props) => props.width || `100%`};
-//   display: ${(props) => props.display || `flex`};
-//   flex-direction: ${(props) => props.dr || `column`};
-//   position: ${(props) => (props.isAbsolute ? `absolute` : `relatuve`)};
-//   top: 80px;
-//   margin: ${(props) => props.margin || `0px 0px 80px`};
-//   margintop: ${(props) => props.marginTop};
-//   padding: ${(props) => props.padding || `50px 0px 30px`};
-//   padding-bottom: ${(props) => props.paddingBottom};
-//   font-size: 34px;
-//   font-weight: 800;
-//   color: ${(props) => props.color};
-//   text-align: ${(props) => props.textAlign || `center`};
-//   background-color: #292929;
-// `;
-
-// @media (max-width: 1500px) {
-//   width: 1350px;
-// }
-// @media (max-width: 1350px) {
-//   width: 1280px;
-// }
-// @media (max-width: 1350px) {
-//   width: 1100px;
-// }
-// @media (max-width: 1100px) {
-//   width: 900px;
-// }
-// @media (max-width: 900px) {
-//   width: 800px;
-// }
-// @media (max-width: 800px) {
-//   width: 700px;
-// }
-// @media (max-width: 700px) {
-//   width: 100%;
-//   padding-left: 10px;
-//   padding-right: 10px;
-// }
 
 export const Wrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
@@ -200,7 +160,7 @@ export const FooterWholeWrapper = styled.div<any>`
 export const FooterWrapper = styled.div<any>`
   position: relative;
   margin-top: auto;
-  height: 150px;
+  height: 100px;
   background-color: yellow;
   width: 100%;
 `;
@@ -327,11 +287,9 @@ export const CommonTitleWrapper = styled.div<any>`
   height: ${(props) => props.height || `150px`};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
-  top: 80px;
   margin: ${(props) => props.margin || `0px 0px 0px`};
-  margintop: ${(props) => props.marginTop};
+  margin-top: ${(props) => props.marginTop};
   padding-bottom: ${(props) => props.paddingBottom};
-  position: absolute;
   font-size: 34px;
   font-weight: 800;
   color: ${(props) => props.color};
@@ -801,7 +759,7 @@ export const HeaderIconAlarm = styled.div<any>`
   border-radius: ${(props) => props.radius || props.theme.radius};
   box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
   padding: 0px 20px;
-  margin: 5px 0px;
+  margin: 9px 0px;
   opacity: 0.8;
 
   ${(props) => props.kindOf === `confirm` && `background-color : #f5f5f5;`}
