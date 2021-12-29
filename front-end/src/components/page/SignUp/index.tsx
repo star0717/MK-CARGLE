@@ -13,6 +13,7 @@ import SelectUser from "./section/selectUser";
 import SignAccount from "./section/signAccount";
 import SignCompany from "./section/signCompany";
 import { _pSignUpProps } from "../../../configure/_pProps.entity";
+import { BodyWrapper } from "../../styles/CommonComponents";
 
 // modal setting
 Modal.setAppElement("body");
@@ -28,7 +29,7 @@ const SignUp: NextPage = () => {
   );
 
   const [userAuth, setUserAuth] = useState<UserAuthority>(UserAuthority.OWNER); // 유저 권한 종류
-  const [stepNumber, setStepNumber] = useState<number>(6); // 스텝 숫자
+  const [stepNumber, setStepNumber] = useState<number>(2); // 스텝 숫자
 
   // component에 전달할 props들 정의
   const SignUpProps: _pSignUpProps = {
@@ -43,7 +44,7 @@ const SignUp: NextPage = () => {
   };
 
   return (
-    <>
+    <BodyWrapper>
       <Header {...SignUpProps} />
       {stepNumber === 1 && <SelectUser {...SignUpProps} />}
       {stepNumber === 2 && <TermSignUp {...SignUpProps} />}
@@ -56,7 +57,7 @@ const SignUp: NextPage = () => {
         ))}
       {stepNumber === 5 && <FileUpload {...SignUpProps} />}
       {stepNumber === 6 && <SignupComplete {...SignUpProps} />}
-    </>
+    </BodyWrapper>
   );
 };
 

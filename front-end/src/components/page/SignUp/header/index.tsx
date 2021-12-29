@@ -60,14 +60,6 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
             </CommonSubTitle>
           </CommonTitleWrapper>
         )}
-        {props.stepNumber === 6 && (
-          <CommonTitleWrapper>
-            <CommonTitle>회원가입</CommonTitle>
-            <CommonSubTitle>
-              가입 승인을 위해 서류를 제출해주세요
-            </CommonSubTitle>
-          </CommonTitleWrapper>
-        )}
       </Wrapper>
 
       {props.userAuth === UserAuthority.OWNER &&
@@ -75,55 +67,49 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
           props.stepNumber === 3 ||
           props.stepNumber === 4 ||
           props.stepNumber === 5) && (
-          <Wrapper
-            margin={
-              props.userAuth === UserAuthority.OWNER ? `180px 0px 0px` : `0px`
-            }
-          >
-            <JoinStepBarWrapper>
-              <JoinStepBar
-                kindOf={props.stepNumber === 2 ? `progress` : `complete`}
-              >
-                {props.stepNumber === 2 ? `1` : <GoCheck />}
-              </JoinStepBar>
-              <JoinStepBar
-                kindOf={props.stepNumber > 2 ? `line` : `line2`}
-              ></JoinStepBar>
-              <JoinStepBar
-                kindOf={
-                  props.stepNumber < 3
-                    ? `before`
-                    : props.stepNumber === 3
-                    ? `progress`
-                    : `complete`
-                }
-              >
-                {props.stepNumber > 3 ? <GoCheck /> : `2`}
-              </JoinStepBar>
-              <JoinStepBar
-                kindOf={props.stepNumber > 3 ? `line` : `line2`}
-              ></JoinStepBar>
-              <JoinStepBar
-                kindOf={
-                  props.stepNumber < 4
-                    ? `before`
-                    : props.stepNumber === 4
-                    ? `progress`
-                    : `complete`
-                }
-              >
-                {props.stepNumber > 4 ? <GoCheck /> : `3`}
-              </JoinStepBar>
-              <JoinStepBar
-                kindOf={props.stepNumber > 4 ? `line` : `line2`}
-              ></JoinStepBar>
-              <JoinStepBar
-                kindOf={props.stepNumber === 5 ? `progress` : `before`}
-              >
-                4
-              </JoinStepBar>
-            </JoinStepBarWrapper>
-          </Wrapper>
+          <JoinStepBarWrapper>
+            <JoinStepBar
+              kindOf={props.stepNumber === 2 ? `progress` : `complete`}
+            >
+              {props.stepNumber === 2 ? `1` : <GoCheck />}
+            </JoinStepBar>
+            <JoinStepBar
+              kindOf={props.stepNumber > 2 ? `line` : `line2`}
+            ></JoinStepBar>
+            <JoinStepBar
+              kindOf={
+                props.stepNumber < 3
+                  ? `before`
+                  : props.stepNumber === 3
+                  ? `progress`
+                  : `complete`
+              }
+            >
+              {props.stepNumber > 3 ? <GoCheck /> : `2`}
+            </JoinStepBar>
+            <JoinStepBar
+              kindOf={props.stepNumber > 3 ? `line` : `line2`}
+            ></JoinStepBar>
+            <JoinStepBar
+              kindOf={
+                props.stepNumber < 4
+                  ? `before`
+                  : props.stepNumber === 4
+                  ? `progress`
+                  : `complete`
+              }
+            >
+              {props.stepNumber > 4 ? <GoCheck /> : `3`}
+            </JoinStepBar>
+            <JoinStepBar
+              kindOf={props.stepNumber > 4 ? `line` : `line2`}
+            ></JoinStepBar>
+            <JoinStepBar
+              kindOf={props.stepNumber === 5 ? `progress` : `before`}
+            >
+              4
+            </JoinStepBar>
+          </JoinStepBarWrapper>
         )}
     </WholeWrapper>
   );

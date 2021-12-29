@@ -12,6 +12,9 @@ import {
   CommonButton,
   CommonButtonWrapper,
   RsWrapper,
+  CommonTitleWrapper,
+  CommonTitle,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
@@ -41,7 +44,7 @@ const Complete: NextPage<_pSignUpProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref} padding={`0px`}>
+    <WholeWrapper ref={ref} padding={`0px`} min-width={`100vh`}>
       <RsWrapper padding={`0px`}>
         <Wrapper>
           <Text color={`#0066ff`} fontSize={`60px`}>

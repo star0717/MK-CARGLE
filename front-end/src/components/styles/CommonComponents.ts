@@ -37,6 +37,7 @@ export const WholeWrapper = styled.div<any>`
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
   min-height: ${(props) => props.minHeight || ``};
+  min-width: ${(props) => props.minWidth || ``};
   box-shadow: ${(props) => props.shadow};
 
   & .MuiCheckbox-root,
@@ -59,7 +60,7 @@ export const RsWrapper = styled.div<any>`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `120px 0px 50px`};
+  padding: ${(props) => props.padding || `50px 0px 50px`};
   overflow: ${(props) => props.overflow};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
@@ -67,7 +68,7 @@ export const RsWrapper = styled.div<any>`
   position: ${(props) => (props.isRelative ? `relative` : ``)};
 }
 
-${(props) => props.kindOf === `OverRsWrapper` && `padding:180px 0px 50px`}
+${(props) => props.kindOf === `RsWrapper2` && `padding:120px 0px 120px`}
 
 `;
 
@@ -239,6 +240,11 @@ export const HeaderWrapper = styled.div<any>`
   }
 `;
 
+export const BodyWrapper = styled.div<any>`
+  width: ${(props) => props.width || `100%`};
+  }
+`;
+
 export const CommonForm = styled.form<any>`
   width: ${(props) => props.width || `100%`};
   min-width: ${(props) => props.minWidth};
@@ -327,11 +333,9 @@ export const CommonTitleWrapper = styled.div<any>`
   height: ${(props) => props.height || `150px`};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
-  top: 80px;
   margin: ${(props) => props.margin || `0px 0px 0px`};
   margintop: ${(props) => props.marginTop};
   padding-bottom: ${(props) => props.paddingBottom};
-  position: absolute;
   font-size: 34px;
   font-weight: 800;
   color: ${(props) => props.color};
@@ -449,7 +453,7 @@ export const CommonButtonWrapper = styled.div<any>`
   height: ${(props) => props.height};
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin || `20px 0px 0px`};
-  padding: ${(props) => props.padding || `0px`};
+  padding: ${(props) => props.padding || `20px 0px 60px`};
   border-radius: ${(props) => props.radius};
   font-size: ${(props) => props.fontSize};
   display: flex;
@@ -1397,7 +1401,7 @@ export const JoinStepBarWrapper = styled.div<any>`
   text-align: center;
   font-size: 18px;
   margin: 0px;
-  padding: 0px 0px 30px 0px;
+  padding: 80px 0px 0px 0px;
   flex-direction: row;
 `;
 
