@@ -61,7 +61,7 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
           </CommonTitleWrapper>
         )}
         {props.stepNumber === 6 && (
-          <CommonTitleWrapper display={`none`}>
+          <CommonTitleWrapper>
             <CommonTitle>회원가입</CommonTitle>
             <CommonSubTitle>
               가입 승인을 위해 서류를 제출해주세요
