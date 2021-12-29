@@ -18,7 +18,8 @@ import {
 } from 'src/models/base.entity';
 import { UserAuthority } from 'src/models/user.entity';
 import { CommonService } from '../common/common.service';
-import { MongoError, MongoServerError } from 'mongoose/node_modules/mongodb';
+import { MongoServerError } from 'mongodb';
+// import { MongoError, MongoServerError } from 'mongoose/node_modules/mongodb';
 
 /* 확장 서비스 클래스용 패키지 - 아래의 내용을 확장 클래스에 주입
 import { InjectModel } from 'nestjs-typegoose';

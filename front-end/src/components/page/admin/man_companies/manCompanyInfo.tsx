@@ -19,16 +19,23 @@ import {
   mbTypeToString,
 } from "../../../../modules/commonModule";
 import { Company } from "../../../../models/company.entity";
+import { RootStateInterface } from "../../../../../store/interfaces/RootState";
+import { UserState } from "../../../../../store/interfaces";
+import { useSelector } from "react-redux";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  // redux store에서 user, company 정보 가져옴
+  const { company } = useSelector(
+    (state: RootStateInterface): UserState => state.userAll
+  );
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [comData, setComData] = useState<Company>(props.clickDoc); // 클릭한 업체 정보
+  const [comData, setComData] = useState<Company>(company); // 클릭한 업체 정보
   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달 창 여부
   // const [busType, setBusType] = useState<string>(props.clickDoc.busType); // 업태
   // const [busItem, setBusItem] = useState<string>(props.clickDoc.busItem); // 업종

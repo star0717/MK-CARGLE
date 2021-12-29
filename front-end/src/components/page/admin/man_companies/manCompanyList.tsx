@@ -2,11 +2,13 @@ import dayjs from "dayjs";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  _aGetAdminManCompanies,
-  _aGetAdminReivewCompanies,
-} from "../../../../../store/action/base.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
+  actionTypesUser,
+  UserState,
+  _iFindCompanies,
+} from "../../../../../store/interfaces";
+import { RootStateInterface } from "../../../../../store/interfaces/RootState";
 import { StepQuery, UseLink } from "../../../../configure/router.entity";
 import {
   _pAdminManCompanies,
@@ -33,6 +35,14 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // redux store에서 user, company 정보 가져옴
+  const { company } = useSelector(
+    (state: RootStateInterface): UserState => state.userAll
+  );
+
+  console.log(company);
 
   /*********************************************************************
    * 2. State settings
@@ -69,11 +79,15 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    props.setClickDoc(doc);
-                    props.clickDoc &&
-                      router.push(
-                        `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}`
-                      );
+                    dispatch({
+                      type: actionTypesUser.INPUT_COMPANY,
+                      payload: doc,
+                    });
+                    // props.setClickDoc(doc);
+                    // props.clickDoc &&
+                    // router.push(
+                    //   `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}`
+                    // );
                   }}
                 >
                   <TableRowLIST width={`200px`}>

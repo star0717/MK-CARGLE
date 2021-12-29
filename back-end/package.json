@@ -40,7 +40,7 @@
     "handlebars": "^4.7.7",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.2.2",
-    "mongoose": "^6.0.12",
+    "mongoose": "^6.1.4",
     "nestjs-typegoose": "^7.1.38",
     "nodemailer": "^6.7.0",
     "passport": "^0.4.1",
