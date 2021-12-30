@@ -377,9 +377,22 @@ export async function patchWorkerDeleteAction(dataToSubmit: string) {
   return result;
 }
 
-/*****************************************************
- * ADMIN
- *****************************************************/
+/**
+ * 사업자 등록증 반환
+ * @param id
+ * @returns
+ */
+export async function getComRegFile(id: string) {
+  const req = await axios
+    .get(`/api/admin/review/com-reg-doc/${id}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  const result = {
+    type: actionTypesUser.ADMIN_COMPANIES_LIST,
+    payload: req,
+  };
+  return result;
+}
 
 // 승인요청 업체 조회
 export async function _aGetAdminReivewCompanies(findParams: FindParameters) {
@@ -416,18 +429,6 @@ export async function _aGetAdminManCompanies(findParams: FindParameters) {
 
   const result: _iFindCompanies = {
     type: ActionAPIs.FIND_COMPANIES,
-    payload: req,
-  };
-  return result;
-}
-
-export async function getComRegFile(id: string) {
-  const req = await axios
-    .get(`/api/admin/review/com-reg-doc/${id}`)
-    .then((res: AxiosResponse<unknown, any>) => res.data);
-
-  const result = {
-    type: actionTypesUser.ADMIN_COMPANIES_LIST,
     payload: req,
   };
   return result;

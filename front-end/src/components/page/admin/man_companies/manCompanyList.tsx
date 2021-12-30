@@ -2,11 +2,13 @@ import dayjs from "dayjs";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  _aGetAdminManCompanies,
-  _aGetAdminReivewCompanies,
-} from "../../../../../store/action/user.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
+  actionTypesUser,
+  UserState,
+  _iFindCompanies,
+} from "../../../../../store/interfaces";
+import { RootStateInterface } from "../../../../../store/interfaces/RootState";
 import { StepQuery, UseLink } from "../../../../configure/router.entity";
 import {
   _pAdminManCompanies,
@@ -33,42 +35,26 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // redux store에서 user, company 정보 가져옴
+  const { company } = useSelector(
+    (state: RootStateInterface): UserState => state.userAll
+  );
+
+  console.log(company);
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  //modal 창 여부
-  //   //직원 명단 API Result 관련
-  //   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
-  //   //클릭한 업체정보
-  //   const [clickDoc, setClickDoc] = useState<Company>();
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  //   /**
-  //    * 작업자의 정보를 조회함
-  //    * @param page 조회할 페이지
-  //    */
-  //   const findCompanyHandler = (page: number) => {
-  //     const param: FindParameters = {
-  //       page,
-  //       take: 1,
-  //     };
-  //     dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
-  //       setFindResult(res.payload);
-  //     });
-  //   };
 
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  //   const adminManComProps: _pAdminManCompanies = {
-  //     ...props,
-  //     findResult,
-  //     setFindResult,
-  //     findDocHandler: findCompanyHandler,
-  //   };
 
   /*********************************************************************
    * 5. Page configuration
@@ -93,10 +79,15 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    props.setClickDoc(doc);
-                    router.push(
-                      `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}`
-                    );
+                    dispatch({
+                      type: actionTypesUser.INPUT_COMPANY,
+                      payload: doc,
+                    });
+                    // props.setClickDoc(doc);
+                    // props.clickDoc &&
+                    // router.push(
+                    //   `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}`
+                    // );
                   }}
                 >
                   <TableRowLIST width={`200px`}>

@@ -42,7 +42,7 @@ export type ActionsUser =
   | InputAccount
   | InputCompany
   | InputForm
-  | FormCheck
+  | _iFormCheck
   | UserSignIn
   | UserSignUp
   | UserSignOut
@@ -100,7 +100,7 @@ export interface InputForm {
 }
 
 // form check 여부 변환
-export interface FormCheck {
+export interface _iFormCheck {
   type: actionTypesUser.FORM_CHECK;
   payload: any;
 }
@@ -256,6 +256,7 @@ export enum ActionAPIs {
   FIND_USERS = "FIND_USERS", // 사용자 정보 조회
 
   // 고유 API
+  FIND_COMPANY_CLICK = "FIND_COMPANY_CLICK", // 업체 정보 조회(선택한 업체만)
 }
 
 /*****************************************************
@@ -285,9 +286,18 @@ export class _iFindUsers implements baseActionInterface {
 
 /** 고유 API 인터페이스 **/
 
+// 업체 정보 조회(선택한 업체만)
+export class _iFindCompanyClick implements baseActionInterface {
+  type: ActionAPIs.FIND_COMPANY_CLICK;
+  payload: Company;
+}
+
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
  * => 정의한 인터페이스를 등록
  *****************************************************/
-export type ActionInterfaces = _iFindCompanies | _iFindUsers;
+export type ActionInterfaces =
+  | _iFindCompanies
+  | _iFindUsers
+  | _iFindCompanyClick;

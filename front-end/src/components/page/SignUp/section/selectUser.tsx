@@ -9,6 +9,9 @@ import {
   JoinFirstStepSelectText,
   Image,
   RsWrapper,
+  CommonTitleWrapper,
+  CommonSubTitle,
+  CommonTitle,
 } from "../../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";

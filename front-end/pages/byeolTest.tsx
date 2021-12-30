@@ -12,6 +12,7 @@ import {
   TextInput2,
   CommonTitle,
   CommonSubTitle,
+  FooterWholeWrapper,
   CommonTitleWrapper,
 } from "../../../n2server/front-end/src/components/styles/CommonComponents";
 import Header from "../src/components/layout/Header";
@@ -23,11 +24,15 @@ import Footer from "../src/components/layout/Footer";
  */
 const ByeolTest: NextPage = () => {
   return (
-    <WholeWrapper minHeight={`100vh`}>
-      <FooterWrapper height={`150px`} bgColor={`#ccc`}>
-        HI, I'm Footerr
-      </FooterWrapper>
-    </WholeWrapper>
+    // <WholeWrapper minHeight={`100vh`}>
+    //   <FooterWrapper height={`150px`} bgColor={`#ccc`}>
+    //     HI, I'm Footerr
+    //   </FooterWrapper>
+    // </WholeWrapper>
+
+    <FooterWholeWrapper>
+      <FooterWrapper>나 푸터</FooterWrapper>
+    </FooterWholeWrapper>
   );
 };
 

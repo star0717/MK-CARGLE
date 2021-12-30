@@ -50,14 +50,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper
-        margin={
-          props.userAuth === UserAuthority.OWNER
-            ? `0px 0px 50px`
-            : `180px 0px 50px`
-        }
-        padding={`0px`}
-      >
+      <RsWrapper>
         <Wrapper width={`1070px`}>
           <form onSubmit={handleSubmit(agreeTermHandler)}>
             <Wrapper al={`flex-start`}>

@@ -122,139 +122,139 @@ const userAll = (
         },
       };
 
-    // 로그인 기능
-    case actionTypesUser.USER_SIGNIN:
-      return {
-        ...state,
-      };
+    // // 로그인 기능
+    // case actionTypesUser.USER_SIGNIN:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 로그아웃 기능
-    case actionTypesUser.USER_SIGNOUT:
-      return {
-        ...state,
-      };
+    // // 로그아웃 기능
+    // case actionTypesUser.USER_SIGNOUT:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 회원가입 기능
-    case actionTypesUser.USER_SIGNUP:
-      return {
-        ...state,
-      };
+    // // 회원가입 기능
+    // case actionTypesUser.USER_SIGNUP:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 이메일 인증번호 전송 기능
-    case actionTypesUser.USER_EMAIL_SEND:
-      return {
-        ...state,
-      };
+    // // 이메일 인증번호 전송 기능
+    // case actionTypesUser.USER_EMAIL_SEND:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 이메일 인증번호 체크 기능
-    case actionTypesUser.USER_AUTHNUM_CHECK:
-      return {
-        ...state,
-      };
+    // // 이메일 인증번호 체크 기능
+    // case actionTypesUser.USER_AUTHNUM_CHECK:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 사업자번호 유효성 검사 기능
-    case actionTypesUser.USER_COMPANY_CHECK:
-      return {
-        ...state,
-      };
+    // // 사업자번호 유효성 검사 기능
+    // case actionTypesUser.USER_COMPANY_CHECK:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 사업자번호 검색 기능
-    case actionTypesUser.USER_COMPANY_FIND:
-      return {
-        ...state,
-      };
+    // // 사업자번호 검색 기능
+    // case actionTypesUser.USER_COMPANY_FIND:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 이메일 찾기 기능
-    case actionTypesUser.USER_FIND_EMAIL:
-      return {
-        ...state,
-      };
+    // // 이메일 찾기 기능
+    // case actionTypesUser.USER_FIND_EMAIL:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 비밀번호 찾기 기능
-    case actionTypesUser.USER_FIND_PW:
-      return {
-        ...state,
-      };
+    // // 비밀번호 찾기 기능
+    // case actionTypesUser.USER_FIND_PW:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 사업자등록증 업로드 기능
-    case actionTypesUser.COM_FILE_UPLOAD:
-      return {
-        ...state,
-      };
+    // // 사업자등록증 업로드 기능
+    // case actionTypesUser.COM_FILE_UPLOAD:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 정비업등록증 업로드 기능
-    case actionTypesUser.MAN_FILE_UPLOAD:
-      return {
-        ...state,
-      };
+    // // 정비업등록증 업로드 기능
+    // case actionTypesUser.MAN_FILE_UPLOAD:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 심사요청
-    case actionTypesUser.APPROVAL_REQUEST:
-      return {
-        ...state,
-      };
+    // // 심사요청
+    // case actionTypesUser.APPROVAL_REQUEST:
+    //   return {
+    //     ...state,
+    //   };
 
-    // 비밀번호 체크 기능
-    case actionTypesUser.PASSWORD_CHECK:
-      return {
-        ...state,
-      };
-    // 계정 정보 반환
-    case actionTypesUser.GET_MY_INFO:
-      return {
-        ...state,
-      };
-    // 계정정보 변경
-    case actionTypesUser.SET_MY_INFO:
-      return {
-        ...state,
-      };
-    //비밀번호 변경
-    case actionTypesUser.CHANGE_PASSWORD:
-      return {
-        ...state,
-      };
-    //도장 이미지 업로드
-    case actionTypesUser.UPROAD_STAMP:
-      return {
-        ...state,
-      };
-    //도장 이미지 다운로드
-    case actionTypesUser.DOWNROAD_STAMP:
-      return {
-        ...state,
-      };
-    //회원 탈퇴
-    case actionTypesUser.WITHDRAWAL:
-      return {
-        ...state,
-      };
-    //작업자 조회
-    case actionTypesUser.GET_WORKERS_LIST:
-      return {
-        ...state,
-      };
+    // // 비밀번호 체크 기능
+    // case actionTypesUser.PASSWORD_CHECK:
+    //   return {
+    //     ...state,
+    //   };
+    // // 계정 정보 반환
+    // case actionTypesUser.GET_MY_INFO:
+    //   return {
+    //     ...state,
+    //   };
+    // // 계정정보 변경
+    // case actionTypesUser.SET_MY_INFO:
+    //   return {
+    //     ...state,
+    //   };
+    // //비밀번호 변경
+    // case actionTypesUser.CHANGE_PASSWORD:
+    //   return {
+    //     ...state,
+    //   };
+    // //도장 이미지 업로드
+    // case actionTypesUser.UPROAD_STAMP:
+    //   return {
+    //     ...state,
+    //   };
+    // //도장 이미지 다운로드
+    // case actionTypesUser.DOWNROAD_STAMP:
+    //   return {
+    //     ...state,
+    //   };
+    // //회원 탈퇴
+    // case actionTypesUser.WITHDRAWAL:
+    //   return {
+    //     ...state,
+    //   };
+    // //작업자 조회
+    // case actionTypesUser.GET_WORKERS_LIST:
+    //   return {
+    //     ...state,
+    //   };
 
-    //작업자 승인 허가
-    case actionTypesUser.PATCH_WORKERS_APPROVE:
-      return {
-        ...state,
-      };
-    //작업자 승인 거부
-    case actionTypesUser.PATCH_WORKERS_REJECT:
-      return {
-        ...state,
-      };
-    //작업자 정보 변경
-    case actionTypesUser.PATCH_WORKERS_CHANGE:
-      return {
-        ...state,
-      };
-    //작업자 삭제
-    case actionTypesUser.PATCH_WORKERS_DELETE:
-      return {
-        ...state,
-      };
+    // //작업자 승인 허가
+    // case actionTypesUser.PATCH_WORKERS_APPROVE:
+    //   return {
+    //     ...state,
+    //   };
+    // //작업자 승인 거부
+    // case actionTypesUser.PATCH_WORKERS_REJECT:
+    //   return {
+    //     ...state,
+    //   };
+    // //작업자 정보 변경
+    // case actionTypesUser.PATCH_WORKERS_CHANGE:
+    //   return {
+    //     ...state,
+    //   };
+    // //작업자 삭제
+    // case actionTypesUser.PATCH_WORKERS_DELETE:
+    //   return {
+    //     ...state,
+    //   };
 
     default:
       return state;

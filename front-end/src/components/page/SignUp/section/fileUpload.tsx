@@ -128,14 +128,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper
-        margin={
-          props.userAuth === UserAuthority.OWNER
-            ? `0px 0px 50px 0px`
-            : `180px 0px 50px 0px`
-        }
-        padding={`0px`}
-      >
+      <RsWrapper>
         <form onSubmit={onFileUploadHandler}>
           <Wrapper
             width={`auto`}

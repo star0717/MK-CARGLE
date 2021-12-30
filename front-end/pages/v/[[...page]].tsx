@@ -22,11 +22,11 @@ import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
-import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
 import axios, { AxiosResponse } from "axios";
 import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
+import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트

@@ -27,8 +27,9 @@ import {
 } from "../../../styles/CommonComponents";
 import AdminReviewCompaniesinfo from "./review_companies_info";
 import { BsSearch } from "react-icons/bs";
+import { _MainProps } from "../../../../configure/_props.entity";
 
-const AdminReviewCompaniesPage: NextPage<_pAdminReviewCompanies> = (props) => {
+const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
