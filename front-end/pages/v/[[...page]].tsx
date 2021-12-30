@@ -185,7 +185,7 @@ export const getServerSideProps: GetServerSideProps = async (
         }
         case UseLink.ADMIN_REVIEW_COMPANIES: {
           const params: FindParameters = {
-            take: 5,
+            take: 10,
           };
 
           data = await axios
