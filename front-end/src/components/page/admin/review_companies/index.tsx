@@ -1,7 +1,7 @@
-import { Modal } from "@material-ui/core";
+import Modal from "react-modal";
 import dayjs from "dayjs";
 import type { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { _aGetAdminReivewCompanies } from "../../../../../store/action/user.action";
 import { _iFindCompanies } from "../../../../../store/interfaces";
@@ -9,6 +9,7 @@ import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company, CompanyApproval } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
+import { IoIosCloseCircle } from "react-icons/io";
 import {
   TextInput,
   IconButton,
@@ -23,9 +24,11 @@ import {
   WholeWrapper,
   Wrapper,
   Combo,
+  CloseButton,
 } from "../../../styles/CommonComponents";
 import { BsSearch } from "react-icons/bs";
 import { _MainProps } from "../../../../configure/_props.entity";
+import AdminReviewCompaniesModal from "./modal";
 
 const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -43,6 +46,8 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const [selectedDoc, setSelectedDoc] = useState<Company>();
   const [searchOption, setSearchOption] = useState<string>("name");
   const [filterValue, setFilterValue] = useState<string>("");
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [clickDoc, setClickDoc] = useState<Company>();
 
   /*********************************************************************
    * 3. Handlers
@@ -51,7 +56,7 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
    * 작업자의 정보를 조회함
    * @param page 조회할 페이지
    */
-  const findCompanyHandler = (page: number) => {
+  const findCompanyHandler = (page?: number) => {
     const param: FindParameters = {
       page,
       take: 10,
@@ -59,28 +64,29 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
       filterValue: filterValue,
       useRegSearch: true,
     };
-    console.log(param);
     dispatch(_aGetAdminReivewCompanies(param)).then((res: _iFindCompanies) => {
       setFindResult(res.payload);
-      console.log("res.payload =>", res.payload);
     });
-    console.log(findResult);
+    console.log("Rerendering");
   };
+
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
 
   const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchOption(e.target.value);
   };
 
   const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const searchParam : FindParameters = {
-    //   page,
-    //   take: 10,
-    //   filterKey : searchOption,
-    //   filterValue : e.target.value,
-    //   useRegSearch : true,
-    // }
     setFilterValue(e.target.value);
-    findCompanyHandler(1);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    findCompanyHandler(findResult.currentPage);
   };
 
   /*********************************************************************
@@ -93,11 +99,16 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
     findDocHandler: findCompanyHandler,
   };
 
+  const ARCModalProps: any = {
+    ...props,
+    setModalOpen,
+    clickDoc,
+    style: { height: "500px" },
+  };
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  // console.log("이게 프롭스다마! => ", findResult);
-  // console.log(searchOption);
   return (
     <WholeWrapper>
       <RsWrapper>
@@ -119,7 +130,12 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
                 onInputSearchHandler(e);
               }}
             />
-            <IconButton>
+            <IconButton
+              type="submit"
+              onClick={() => {
+                findCompanyHandler();
+              }}
+            >
               <BsSearch></BsSearch>
             </IconButton>
           </Wrapper>
@@ -137,10 +153,10 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
               {findResult.docs.map((doc: Company) => (
                 <TableRow
                   key={doc._id}
-                  // onClick={() => {
-                  //   setModalOpen(!modalOpen);
-                  //   setClickDoc(doc);
-                  // }}
+                  onClick={() => {
+                    setModalOpen(!modalOpen);
+                    setClickDoc(doc);
+                  }}
                 >
                   <TableRowLIST width={`200px`}>
                     {dayjs(doc.createdAt).format("YYYY-MM-DD")}
@@ -166,45 +182,45 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
         </Wrapper>
         <PagenationSection {...fprops} />
       </RsWrapper>
-      {/* <Wrapper>
-      <Modal
-        isOpen={modalOpen}
-        style={{
-          overlay: {
-            position: "fixed",
-            zIndex: 1020,
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            background: "rgba(255, 255, 255, 0.75)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          content: {
-            background: "white",
-            width: "45rem",
-            height: "575px",
-            maxWidth: "calc(100vw - 2rem)",
-            maxHeight: "calc(100vh - 2rem)",
-            overflowY: "auto",
-            position: "relative",
-            border: "1px solid #ccc",
-            borderRadius: "0.3rem",
-            boxShadow: "0px 10px 15px rgba(220,220,220,1)",
-            inset: 0,
-          },
-        }}
-      >
-        <Wrapper fontSize={`28px`} al={`flex-end`}>
-          <CloseButton onClick={closeModal}>
-            <IoIosCloseCircle />
-          </CloseButton>
-          <AdminReviewCompaniesModal {...ARCModalProps} />
-        </Wrapper>
-      </Modal>
-    </Wrapper> */}
+      <Wrapper>
+        <Modal
+          isOpen={modalOpen}
+          style={{
+            overlay: {
+              position: "fixed",
+              zIndex: 1020,
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(255, 255, 255, 0.75)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            content: {
+              background: "white",
+              width: "45rem",
+              height: "575px",
+              maxWidth: "calc(100vw - 2rem)",
+              maxHeight: "calc(100vh - 2rem)",
+              overflowY: "auto",
+              position: "relative",
+              border: "1px solid #ccc",
+              borderRadius: "0.3rem",
+              boxShadow: "0px 10px 15px rgba(220,220,220,1)",
+              inset: 0,
+            },
+          }}
+        >
+          <Wrapper fontSize={`28px`} al={`flex-end`}>
+            <CloseButton onClick={closeModal}>
+              <IoIosCloseCircle />
+            </CloseButton>
+            <AdminReviewCompaniesModal {...ARCModalProps} />
+          </Wrapper>
+        </Modal>
+      </Wrapper>
     </WholeWrapper>
   );
 };
