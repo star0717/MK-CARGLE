@@ -59,7 +59,7 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const findCompanyHandler = (page?: number) => {
     const param: FindParameters = {
       page,
-      take: 10,
+      take: 5,
       filterKey: searchOption,
       filterValue: filterValue,
       useRegSearch: true,
@@ -67,7 +67,6 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
     dispatch(_aGetAdminReivewCompanies(param)).then((res: _iFindCompanies) => {
       setFindResult(res.payload);
     });
-    console.log("Rerendering");
   };
 
   useEffect(() => {
@@ -87,6 +86,13 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const closeModal = () => {
     setModalOpen(false);
     findCompanyHandler(findResult.currentPage);
+  };
+
+  const handleKeyUp = (e: any) => {
+    if (e.keyCode === 13) {
+      console.log("asd");
+      findCompanyHandler();
+    }
   };
 
   /*********************************************************************
@@ -129,6 +135,7 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputSearchHandler(e);
               }}
+              onKeyUp={handleKeyUp}
             />
             <IconButton
               type="submit"
