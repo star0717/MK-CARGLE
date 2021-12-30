@@ -37,7 +37,6 @@ export class FindParameters {
   useRegSearch?: boolean;
   filter?: Object;
   projection?: string;
-
   static getQuery(data: FindParameters) {
     let query = "";
     if (data.page) query = query + "?page=" + data.page;
@@ -46,9 +45,9 @@ export class FindParameters {
     if (data.filterKey && data.filterValue) {
       query =
         query +
-        "&searchField=" +
+        "&filterKey=" +
         data.filterKey +
-        "&searchKeyword=" +
+        "&filterValue=" +
         data.filterValue;
       if (data.useRegSearch == true) {
         query = query + "&useRegSearch=" + data.useRegSearch;

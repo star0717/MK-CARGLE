@@ -124,9 +124,9 @@ export class FindParameters {
     if (data.filterKey && data.filterValue) {
       query =
         query +
-        '&searchField=' +
+        '&filterKey=' +
         data.filterKey +
-        '&searchKeyword=' +
+        '&filterValue=' +
         data.filterValue;
       if (data.useRegSearch == true) {
         query = query + '&useRegSearch=' + data.useRegSearch;
