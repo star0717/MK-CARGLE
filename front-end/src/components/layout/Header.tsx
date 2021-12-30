@@ -13,8 +13,8 @@ import {
   TestDiv,
   TestDiv2,
   TestA,
-  HeaderWrapper,
 } from "../styles/CommonComponents";
+import { HeaderWrapper } from "../styles/LayoutComponents";
 import { CompanyApproval } from "../../models/company.entity";
 import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";

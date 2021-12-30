@@ -96,7 +96,15 @@ const Footer: NextPage = () => {
 
   return (
     <FooterWholeWrapper minHeight={`100vh`}>
-      <FooterWrapper>HI, I'm Footer</FooterWrapper>
+      <Wrapper
+        isRelative={true}
+        marginTop={`auto`}
+        height={`150px`}
+        bgColor={`#292929`}
+        color={`#fff`}
+      >
+        HI, I'm Footer
+      </Wrapper>
     </FooterWholeWrapper>
   );
 };

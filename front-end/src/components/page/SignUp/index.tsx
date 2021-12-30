@@ -13,7 +13,7 @@ import SelectUser from "./section/selectUser";
 import SignAccount from "./section/signAccount";
 import SignCompany from "./section/signCompany";
 import { _pSignUpProps } from "../../../configure/_pProps.entity";
-import { BodyWrapper } from "../../styles/CommonComponents";
+import { BodyWrapper } from "../../styles/LayoutComponents";
 
 // modal setting
 Modal.setAppElement("body");
