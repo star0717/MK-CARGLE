@@ -396,12 +396,14 @@ export async function getComRegFile(id: string) {
 
 // 승인요청 업체 조회
 export async function _aGetAdminReivewCompanies(findParams: FindParameters) {
+  console.log("getQuery =>", FindParameters.getQuery(findParams));
   const req: FindResult<Company> = await axios
     .get(`/api/admin/review/companies?${FindParameters.getQuery(findParams)}`)
     .then(
       (
         res: AxiosResponse<FindResult<Company>, Company>
       ): FindResult<Company> => {
+        console.log("res.data =>", res.data);
         return res.data;
       }
     );

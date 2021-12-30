@@ -2,7 +2,6 @@ import { Modal } from "@material-ui/core";
 import dayjs from "dayjs";
 import type { NextPage } from "next";
 import React, { useState } from "react";
-import { IoIosCloseCircle } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { _aGetAdminReivewCompanies } from "../../../../../store/action/user.action";
 import { _iFindCompanies } from "../../../../../store/interfaces";
@@ -25,7 +24,6 @@ import {
   Wrapper,
   Combo,
 } from "../../../styles/CommonComponents";
-import AdminReviewCompaniesinfo from "./review_companies_info";
 import { BsSearch } from "react-icons/bs";
 import { _MainProps } from "../../../../configure/_props.entity";
 
@@ -43,7 +41,8 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedDoc, setSelectedDoc] = useState<Company>();
-  const [searchOption, setSearchOption] = useState<String>("name");
+  const [searchOption, setSearchOption] = useState<string>("name");
+  const [filterValue, setFilterValue] = useState<string>("");
 
   /*********************************************************************
    * 3. Handlers
@@ -55,16 +54,33 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const findCompanyHandler = (page: number) => {
     const param: FindParameters = {
       page,
-      take: 1,
+      take: 10,
+      filterKey: searchOption,
+      filterValue: filterValue,
+      useRegSearch: true,
     };
+    console.log(param);
     dispatch(_aGetAdminReivewCompanies(param)).then((res: _iFindCompanies) => {
       setFindResult(res.payload);
-      console.log("마! 디스패치 아이가!");
+      console.log("res.payload =>", res.payload);
     });
+    console.log(findResult);
   };
 
   const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchOption(e.target.value);
+  };
+
+  const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const searchParam : FindParameters = {
+    //   page,
+    //   take: 10,
+    //   filterKey : searchOption,
+    //   filterValue : e.target.value,
+    //   useRegSearch : true,
+    // }
+    setFilterValue(e.target.value);
+    findCompanyHandler(1);
   };
 
   /*********************************************************************
@@ -80,7 +96,8 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  console.log("이게 프롭스다마! => ", findResult);
+  // console.log("이게 프롭스다마! => ", findResult);
+  // console.log(searchOption);
   return (
     <WholeWrapper>
       <RsWrapper>
@@ -98,6 +115,9 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
             <TextInput
               type="text"
               placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputSearchHandler(e);
+              }}
             />
             <IconButton>
               <BsSearch></BsSearch>
