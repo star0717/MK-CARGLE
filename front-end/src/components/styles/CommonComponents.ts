@@ -1,5 +1,3 @@
-import { KingBed } from "@material-ui/icons";
-import { prependOnceListener } from "process";
 import styled from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
 import { translateX } from "./AnimationCommon";
@@ -60,9 +58,7 @@ export const RsWrapper = styled.div<any>`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-
   padding: ${(props) => props.padding || `50px 0px 50px`};
-
   overflow: ${(props) => props.overflow};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
@@ -70,9 +66,50 @@ export const RsWrapper = styled.div<any>`
   position: ${(props) => (props.isRelative ? `relative` : ``)};
 }
 
-
 ${(props) => props.kindOf === `RsWrapper2` && `padding:120px 0px 120px`}
+
 `;
+
+// export const CommonTitleWrapper = styled.div<any>`
+//   width: ${(props) => props.width || `100%`};
+//   display: ${(props) => props.display || `flex`};
+//   flex-direction: ${(props) => props.dr || `column`};
+//   position: ${(props) => (props.isAbsolute ? `absolute` : `relatuve`)};
+//   top: 80px;
+//   margin: ${(props) => props.margin || `0px 0px 80px`};
+//   margintop: ${(props) => props.marginTop};
+//   padding: ${(props) => props.padding || `50px 0px 30px`};
+//   padding-bottom: ${(props) => props.paddingBottom};
+//   font-size: 34px;
+//   font-weight: 800;
+//   color: ${(props) => props.color};
+//   text-align: ${(props) => props.textAlign || `center`};
+//   background-color: #292929;
+// `;
+
+// @media (max-width: 1500px) {
+//   width: 1350px;
+// }
+// @media (max-width: 1350px) {
+//   width: 1280px;
+// }
+// @media (max-width: 1350px) {
+//   width: 1100px;
+// }
+// @media (max-width: 1100px) {
+//   width: 900px;
+// }
+// @media (max-width: 900px) {
+//   width: 800px;
+// }
+// @media (max-width: 800px) {
+//   width: 700px;
+// }
+// @media (max-width: 700px) {
+//   width: 100%;
+//   padding-left: 10px;
+//   padding-right: 10px;
+// }
 
 export const Wrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
@@ -150,59 +187,6 @@ export const Wrapper = styled.div<any>`
     & svg {
       font-size: 20px;
     }
-  }
-`;
-
-export const FooterWholeWrapper = styled.div<any>`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-export const FooterWrapper = styled.div<any>`
-  position: relative;
-  margin-top: auto;
-  height: 100px;
-  background-color: yellow;
-  width: 100%;
-`;
-
-export const HeaderWrapper = styled.div<any>`
-  width: ${(props) => props.width || `100%`};
-  height: ${(props) => props.height || `100%`};
-  color: ${(props) => props.color};
-  display: flex;
-  background-color: ${(props) => props.bgColor};
-  color: ${(props) => props.theme.black_C};
-  flex-direction: ${(props) => props.dr || `column`};
-  align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `flex-start`};
-  background-image: ${(props) => props.bgImg};
-  background-size: cover;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  box-shadow: ${(props) => props.shadow};
-  z-index: ${(props) => props.index};
-  position: ${(props) => (props.isRelative ? `relative` : ``)};
-  position: ${(props) => (props.isFixed ? `fixed` : ``)};
-  top: ${(props) => props.top};
-  left: ${(props) => props.left};
-  right: ${(props) => props.right};
-  bottom: ${(props) => props.bottom};
-  margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `0px`};
-  animation: ${appearAnimation} 1s forwards;
-  overflow-x: hidden;
-  box-shadow: ${(props) => props.shadow};
-
-  & .MuiCheckbox-root,
-  & .MuiCheckbox-colorSecondary.Mui-checked {
-    color: ${(props) => props.theme.black_C} !important;
-  }
-`;
-
-export const BodyWrapper = styled.div<any>`
-  width: ${(props) => props.width || `100%`};
   }
 `;
 
@@ -295,7 +279,7 @@ export const CommonTitleWrapper = styled.div<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
   margin: ${(props) => props.margin || `0px 0px 0px`};
-  margin-top: ${(props) => props.marginTop};
+  margintop: ${(props) => props.marginTop};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 34px;
   font-weight: 800;
@@ -766,7 +750,7 @@ export const HeaderIconAlarm = styled.div<any>`
   border-radius: ${(props) => props.radius || props.theme.radius};
   box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
   padding: 0px 20px;
-  margin: 9px 0px;
+  margin: 5px 0px;
   opacity: 0.8;
 
   ${(props) => props.kindOf === `confirm` && `background-color : #f5f5f5;`}
@@ -1047,17 +1031,17 @@ export const TableRowLIST = styled.li<any>`
 
 /* start test */
 
-export const TestWrapper = styled.div<any>`
-  display: none;
-  height: 0px;
-`;
+// export const TestWrapper = styled.div<any>`
+//   display: none;
+//   height: 0px;
+// `;
 
 export const Test = styled.li<any>`
   width: ${(props) => props.width || `100px`};
   padding: 0px;
 `;
 
-export const TestDiv2 = styled.div<any>`
+export const HeaderHover = styled.div<any>`
   display: none;
   transition: 0.5s;
   flex-direction: ${(props) => props.dr};
@@ -1066,13 +1050,13 @@ export const TestDiv2 = styled.div<any>`
   flex-direction: ${(props) => props.dr};
 `;
 
-export const TestDiv = styled.div<any>`
+export const HeaderFixed = styled.div<any>`
   width: ${(props) => props.width || ``};
   height: 80px;
   display: flex;
   align-items: center;
 
-  &:hover ${TestDiv2} {
+  &:hover ${HeaderHover} {
     display: block;
     top: 55px;
     left: 0;
@@ -1087,7 +1071,7 @@ export const TestDiv = styled.div<any>`
   }
 `;
 
-export const TestA = styled.p<any>`
+export const HeaderText = styled.p<any>`
   overflow: ${(props) => props.overflow};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
@@ -1170,17 +1154,6 @@ export const UlWrapper = styled.ul<any>`
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  &:hover ${TestWrapper} {
-    display: flex;
-    transform: translateX(50px);
-    position: absolute;
-    top: 90px;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background-color: blue;
   }
 `;
 

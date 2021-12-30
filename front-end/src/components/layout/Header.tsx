@@ -4,17 +4,14 @@ import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { signOutUserAction } from "../../../store/action/user.action";
+import { WholeWrapper, Wrapper, Text, Image } from "../styles/CommonComponents";
 import {
-  WholeWrapper,
-  Wrapper,
-  Text,
-  Image,
+  HeaderWrapper,
+  HeaderFixed,
+  HeaderHover,
+  HeaderText,
   HeaderIconButton,
-  TestDiv,
-  TestDiv2,
-  TestA,
-} from "../styles/CommonComponents";
-import { HeaderWrapper } from "../styles/LayoutComponents";
+} from "../styles/LayoutComponents";
 import { CompanyApproval } from "../../models/company.entity";
 import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";
@@ -113,7 +110,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
         </Wrapper>
         {props.tokenValue &&
           props.tokenValue.cApproval === CompanyApproval.DONE && (
-            <TestDiv
+            <HeaderFixed
               width={`auto`}
               dr={`row`}
               padding={width < 1450 ? `0px 50px` : `0px 100px`}
@@ -136,7 +133,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                   </Wrapper>
                 );
               })}
-              <TestDiv2
+              <HeaderHover
                 ju={``}
                 al={`center`}
                 padding={
@@ -185,7 +182,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                       >
                         {menu.map((sub) => {
                           return (
-                            <TestA
+                            <HeaderText
                               key={sub.key}
                               cursor={`pointer`}
                               fontSize={width < 1510 ? `14px` : `16px`}
@@ -195,7 +192,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                               <Link href={sub.subMenuLink}>
                                 <a>{sub.subMenuName}</a>
                               </Link>
-                            </TestA>
+                            </HeaderText>
                           );
                         })}
                       </Wrapper>
@@ -235,8 +232,8 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                     ></Wrapper>
                   </Wrapper>
                 </Wrapper>
-              </TestDiv2>
-            </TestDiv>
+              </HeaderHover>
+            </HeaderFixed>
           )}
         {props.tokenValue &&
           props.tokenValue.cApproval === CompanyApproval.DONE && (
