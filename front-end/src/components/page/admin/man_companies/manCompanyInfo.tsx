@@ -31,13 +31,10 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [load, setLoad] = useState<boolean>(true); // 페이지 첫 로드
   const [comData, setComData] = useState<Company>(); // 클릭한 업체 정보
   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달 창 여부
   // const [busType, setBusType] = useState<string>(props.clickDoc.busType); // 업태
   // const [busItem, setBusItem] = useState<string>(props.clickDoc.busItem); // 업종
-
-  console.log(load);
 
   /*********************************************************************
    * 3. Handlers

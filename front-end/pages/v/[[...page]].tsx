@@ -217,20 +217,20 @@ export const getServerSideProps: GetServerSideProps = async (
         case UseLink.ADMIN_MAN_COMPANIES: {
           const routerQuery = getQuery(url);
           if (routerQuery.step === Step.FIRST) {
-            data = await axios
-              .get(`${apiUrl}`, {
-                headers: {
-                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                },
-                withCredentials: true,
-              })
-              .then(
-                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-              );
+            // data = await axios
+            //   .get(`${apiUrl}`, {
+            //     headers: {
+            //       Cookie: `mk_token=${context.req.cookies.mk_token}`,
+            //     },
+            //     withCredentials: true,
+            //   })
+            //   .then(
+            //     (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+            //   );
             return {
               props: {
                 tokenValue,
-                data,
+                // data,
               },
             };
           } else {
