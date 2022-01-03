@@ -43,7 +43,9 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
 
   return (
     <WholeWrapper>
-      <RsWrapper>sdf</RsWrapper>
+      <RsWrapper>
+        <Wrapper dr={`row`}></Wrapper>
+      </RsWrapper>
     </WholeWrapper>
 
     //*********************************************** */
