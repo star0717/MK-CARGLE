@@ -14,55 +14,59 @@ import {
   WholeWrapper,
   Wrapper,
   Image,
+  Combo,
 } from "../../../styles/CommonComponents";
 import { useResizeDetector } from "react-resize-detector";
-import ManComApprovalModal from "../man_companies/approvalModal";
-import {
-  makeFullAddress,
-  mbTypeToString,
-} from "../../../../modules/commonModule";
+import { makeFullAddress } from "../../../../modules/commonModule";
+import { mbTypeOption } from "../../../../configure/list.entity";
+import { useForm } from "react-hook-form";
 
 const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [clickDoc, setClickDoc] = useState<Company>();
+  // const [clickDoc, setClickDoc] = useState<Company>();
+  console.log("this is props =>", props);
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   const closeModal = () => {
     setModalOpen(false);
     props.findDocHandler(props.findResult.currentPage);
   };
 
+  const onInputComHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("asd");
+    props.setClickDoc({ ...props.clickDoc, [e.target.name]: e.target.value });
+  };
+
   const ARCModalProps: any = {
     ...props,
     setModalOpen,
-    clickDoc,
     style: { height: "500px" },
   };
 
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
-        <Wrapper>
-          <SmallButton
-            type="button"
-            kindOf={`default`}
-            margin={`0px 0px 0px 20px`}
-            onClick={() => {
-              console.log("티모");
-              setModalOpen(true);
-            }}
-          >
-            승인처리
-          </SmallButton>
-          <Wrapper dr={`row`}>
-            <Image alt="사업자, 정비업 등록증 이미지"></Image>
-          </Wrapper>
+        <SmallButton
+          type="button"
+          kindOf={`default`}
+          margin={`0px 0px 0px 20px`}
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          승인처리
+        </SmallButton>
+        <Wrapper dr={`row`}>
+          <Image alt="사업자, 정비업 등록증 이미지"></Image>
           <Wrapper>
             <Text>계정정보</Text>
-          </Wrapper>
-          <Wrapper>
             <Text>사업자정보</Text>
             <Wrapper dr={`row`}>
               <Text>상호명</Text>
@@ -94,20 +98,33 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>정비업종</Text>
-              <TextInput2
-                value={mbTypeToString(props.clickDoc)}
-                type="text"
-                readOnly
-              />
+              <Combo
+                width={`800px`}
+                margin={`0px`}
+                value={props.clickDoc.mbTypeNum}
+                {...register("mbTypeNum", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputComHandler(e);
+                  },
+                  required: true,
+                })}
+              >
+                {mbTypeOption.map((item) => {
+                  return (
+                    <option key={item.value} value={item.value}>
+                      {item.text}
+                    </option>
+                  );
+                })}
+              </Combo>
             </Wrapper>
-            {/* <Wrapper dr={`row`}>
-            <Text>업태</Text>
-            <TextInput2 value={busType} type="text" />
-          </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text>업종</Text>
-            <TextInput2 value={busItem} type="text" />
-          </Wrapper> */}
+            <Wrapper dr={`row`}>
+              <Text>업태</Text>
+              <TextInput2 value={props.clickDoc.busType} type="text" />
+
+              <Text>업종</Text>
+              <TextInput2 value={props.clickDoc.busItem} type="text" />
+            </Wrapper>
             <Wrapper dr={`row`}>
               <Text>업체 전화번호</Text>
               <TextInput2
@@ -170,19 +187,19 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             <CloseButton onClick={closeModal}>
               <IoIosCloseCircle />
             </CloseButton>
-            <AdminReviewCompaniesModal />
+            <AdminReviewCompaniesModal {...ARCModalProps} />
           </Wrapper>
         </Modal>
       </Wrapper>
     </WholeWrapper>
 
-    //*********************************************** */
+    /* //*********************************************** */
     //   <WholeWrapper>
     //     <RsWrapper>
     //       <Wrapper width={`1200px`}>
     //         <Wrapper dr={`row`}>
     //           <Combo>
-    //             {/* width={`800px`}
+    //             {/* width={`800px`} */}
     //                       margin={`0px`}
     //                       value={comData.mbTypeNum}
     //                       {...register("mbTypeNum", {

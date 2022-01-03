@@ -70,12 +70,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
     });
   };
 
-  //   useEffect(() => {
-  //     modalOpen === true
-  //       ? (document.body.style.overflow = "hidden")
-  //       : (document.body.style.overflow = "unset");
-  //   }, [modalOpen]);
-
   const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchOption(e.target.value);
   };
@@ -83,11 +77,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilterValue(e.target.value);
   };
-
-  //   const closeModal = () => {
-  //     setModalOpen(false);
-  //     findCompanyHandler(findResult.currentPage);
-  //   };
 
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
@@ -203,45 +192,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
         </Wrapper>
         <PagenationSection {...props} />
       </RsWrapper>
-      <Wrapper>
-        {/* <Modal
-          isOpen={modalOpen}
-          style={{
-            overlay: {
-              position: "fixed",
-              zIndex: 1020,
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
-              background: "rgba(255, 255, 255, 0.75)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            },
-            content: {
-              background: "white",
-              width: "45rem",
-              height: "575px",
-              maxWidth: "calc(100vw - 2rem)",
-              maxHeight: "calc(100vh - 2rem)",
-              overflowY: "auto",
-              position: "relative",
-              border: "1px solid #ccc",
-              borderRadius: "0.3rem",
-              boxShadow: "0px 10px 15px rgba(220,220,220,1)",
-              inset: 0,
-            },
-          }}
-        >
-          <Wrapper fontSize={`28px`} al={`flex-end`}>
-            <CloseButton onClick={closeModal}>
-              <IoIosCloseCircle />
-            </CloseButton>
-            <AdminReviewCompaniesModal {...ARCModalProps} />
-          </Wrapper>
-        </Modal> */}
-      </Wrapper>
     </WholeWrapper>
   );
 };
