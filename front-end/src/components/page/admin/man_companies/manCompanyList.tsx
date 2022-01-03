@@ -37,13 +37,6 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // redux store에서 user, company 정보 가져옴
-  const { company } = useSelector(
-    (state: RootStateInterface): UserState => state.userAll
-  );
-
-  console.log(company);
-
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -79,15 +72,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    dispatch({
-                      type: actionTypesUser.INPUT_COMPANY,
-                      payload: doc,
-                    });
-                    // props.setClickDoc(doc);
-                    // props.clickDoc &&
-                    // router.push(
-                    //   `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}`
-                    // );
+                    router.push(
+                      `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
+                    );
                   }}
                 >
                   <TableRowLIST width={`200px`}>

@@ -27,18 +27,17 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-  // redux store에서 user, company 정보 가져옴
-  const { company } = useSelector(
-    (state: RootStateInterface): UserState => state.userAll
-  );
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [comData, setComData] = useState<Company>(company); // 클릭한 업체 정보
+  const [load, setLoad] = useState<boolean>(true); // 페이지 첫 로드
+  const [comData, setComData] = useState<Company>(); // 클릭한 업체 정보
   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달 창 여부
   // const [busType, setBusType] = useState<string>(props.clickDoc.busType); // 업태
   // const [busItem, setBusItem] = useState<string>(props.clickDoc.busItem); // 업종
+
+  console.log(load);
 
   /*********************************************************************
    * 3. Handlers
@@ -78,7 +77,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
         <Wrapper>
           <Text>계정정보</Text>
         </Wrapper>
-        <Wrapper>
+        {/* <Wrapper>
           <Text>사업자정보</Text>
           <Wrapper dr={`row`}>
             <Text>상호명</Text>
@@ -100,14 +99,14 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
             <Text>정비업종</Text>
             <TextInput2 value={mbTypeToString(comData)} type="text" readOnly />
           </Wrapper>
-          {/* <Wrapper dr={`row`}>
+          <Wrapper dr={`row`}>
             <Text>업태</Text>
             <TextInput2 value={busType} type="text" />
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text>업종</Text>
             <TextInput2 value={busItem} type="text" />
-          </Wrapper> */}
+          </Wrapper>
           <Wrapper dr={`row`}>
             <Text>업체 전화번호</Text>
             <TextInput2 value={comData.phoneNum} type="text" readOnly />
@@ -128,7 +127,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
               readOnly
             />
           </Wrapper>
-        </Wrapper>
+        </Wrapper> */}
       </RsWrapper>
       <Wrapper>
         <Modal
