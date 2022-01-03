@@ -42,7 +42,6 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
     (state: RootStateInterface): UserState => state.userAll
   );
 
-  console.log(company);
 
   /*********************************************************************
    * 2. State settings
@@ -85,9 +84,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                     });
                     // props.setClickDoc(doc);
                     // props.clickDoc &&
-                    // router.push(
-                    //   `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}`
-                    // );
+                    router.push(
+                      `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}`
+                    );
                   }}
                 >
                   <TableRowLIST width={`200px`}>

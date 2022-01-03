@@ -67,7 +67,7 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
 
   switch (routerQuery.step) {
     case Step.FIRST:
-      return <ManCompanyInfo {...adminManComProps} />;
+      return <ManCompanyInfo {...adminManComProps} />
     default:
       return <ManCompanyList {...adminManComProps} />;
   }
