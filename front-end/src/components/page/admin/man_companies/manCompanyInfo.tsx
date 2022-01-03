@@ -27,15 +27,11 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-  // redux store에서 user, company 정보 가져옴
-  const { company } = useSelector(
-    (state: RootStateInterface): UserState => state.userAll
-  );
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [comData, setComData] = useState<Company>(company); // 클릭한 업체 정보
+  const [comData, setComData] = useState<Company>(props.data); // 클릭한 업체 정보
   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달 창 여부
   // const [busType, setBusType] = useState<string>(props.clickDoc.busType); // 업태
   // const [busItem, setBusItem] = useState<string>(props.clickDoc.busItem); // 업종
@@ -68,7 +64,8 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
             kindOf={`default`}
             margin={`0px 0px 0px 20px`}
             onClick={() => {
-              console.log("ㅎㅎ");
+              console.log("티모");
+              setModalOpen(true);
             }}
           >
             승인처리

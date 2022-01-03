@@ -11,7 +11,7 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
-  console.log(props);
+  console.log("props=>", props);
 
   /*********************************************************************
    * 2. State settings

@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { createWrapper } from "next-redux-wrapper";
 import promiseMiddleware from "redux-promise";
 import ReduxThunk from "redux-thunk";
-import rootReducer from "./reducer/configure.reducer";
+import rootReducer from "./reducer";
 
 const createStoreWithMiddleware = applyMiddleware(
   promiseMiddleware,

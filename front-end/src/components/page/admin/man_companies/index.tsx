@@ -22,10 +22,6 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
   const router = useRouter();
   const routerQuery = getQuery(router.asPath);
 
-  // const { company } = useSelector(
-  //   (state: RootStateInterface): BaseState => state.baseAll
-  // );
-
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -33,8 +29,6 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   //직원 명단 API Result 관련
   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
-  //클릭한 업체정보
-  const [clickDoc, setClickDoc] = useState<Company>();
 
   /*********************************************************************
    * 3. Handlers
@@ -61,8 +55,6 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
     findResult,
     setFindResult,
     findDocHandler: findCompanyHandler,
-    clickDoc,
-    setClickDoc,
   };
 
   switch (routerQuery.step) {

@@ -6,7 +6,7 @@ import {
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
-import { AuthTokenInfo } from 'src/models/auth.entity';
+import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
 import { FindParameters, FindResult } from 'src/models/base.entity';
 import { Company, CompanyApproval } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
@@ -169,17 +169,62 @@ export class AdminService {
     return this.companiesService.findByOptions(token, fParams);
   }
 
-  async updateCompanyInfo(
+  async findSignUpInfo(token: AuthTokenInfo, id: string): Promise<SignUpInfo> {
+    let company: Company = await this.companiesService.findById(token, id);
+    if (!company) throw new BadRequestException();
+    let user: User = await this.usersService.findById(token, company._uID);
+    if (!user) throw new BadRequestException();
+
+    const info: SignUpInfo = {
+      company,
+      user,
+    };
+
+    return info;
+  }
+
+  private async updateCompanyInfo(
     token: AuthTokenInfo,
     id: string,
     company: Partial<Company>,
   ): Promise<Company> {
-    var pUser: Partial<Company> = {};
-    if (company.mbTypeNum) pUser.mbTypeNum = company.mbTypeNum;
-    if (company.busType) pUser.busType = company.busType;
-    if (company.busItem) pUser.busItem = company.busItem;
-    if (company.phoneNum) pUser.phoneNum = company.phoneNum;
-    if (company.faxNum) pUser.faxNum = company.faxNum;
-    return await this.companiesService.findByIdAndUpdate(token, id, pUser);
+    var pDoc: Partial<Company> = {};
+    if (company.mbTypeNum) pDoc.mbTypeNum = company.mbTypeNum;
+    if (company.busType) pDoc.busType = company.busType;
+    if (company.busItem) pDoc.busItem = company.busItem;
+    if (company.phoneNum) pDoc.phoneNum = company.phoneNum;
+    if (company.faxNum) pDoc.faxNum = company.faxNum;
+    return await this.companiesService.findByIdAndUpdate(token, id, pDoc);
+  }
+
+  private async updateUserInfo(
+    token: AuthTokenInfo,
+    id: string,
+    user: Partial<User>,
+  ): Promise<User> {
+    var pDoc: Partial<User> = {};
+    if (user.hpNumber) pDoc.hpNumber = user.hpNumber;
+    return await this.usersService.findByIdAndUpdate(token, id, pDoc);
+  }
+
+  async updateSignUpInfo(
+    token: AuthTokenInfo,
+    id: string,
+    info: Partial<SignUpInfo>,
+  ): Promise<SignUpInfo> {
+    // 누락된 데이터가 있을 경우 익셉션 발생
+    if (!info.company || !info.company._id || !info.user || !info.user._id)
+      throw new BadRequestException();
+    let user: User = info.user;
+    let company: Company = info.company;
+
+    user = await this.updateUserInfo(token, user._id, user);
+    company = await this.updateCompanyInfo(token, company._id, company);
+    const newInfo: SignUpInfo = {
+      company,
+      user,
+    };
+
+    return newInfo;
   }
 }

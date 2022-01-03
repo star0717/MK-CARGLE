@@ -1,14 +1,7 @@
 import { useResizeDetector } from "react-resize-detector";
 import type { NextPage } from "next";
-import {
-  WholeWrapper,
-  Wrapper,
-  Text,
-  Image,
-  FooterWrapper,
-  RsWrapper,
-  FooterWholeWrapper,
-} from "../styles/CommonComponents";
+import { Wrapper, Text, Image } from "../styles/CommonComponents";
+import { FooterWrapper } from "../styles/LayoutComponents";
 
 // import { useResizeDetector } from "react-resize-detector";
 // import type { NextPage } from "next";
@@ -95,9 +88,17 @@ const Footer: NextPage = () => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <FooterWholeWrapper minHeight={`100vh`}>
-      <FooterWrapper>HI, I'm Footer</FooterWrapper>
-    </FooterWholeWrapper>
+    <FooterWrapper minHeight={`100vh`}>
+      <Wrapper
+        isRelative={true}
+        marginTop={`auto`}
+        height={`150px`}
+        bgColor={`#292929`}
+        color={`#fff`}
+      >
+        HI, I'm Footer
+      </Wrapper>
+    </FooterWrapper>
   );
 };
 
