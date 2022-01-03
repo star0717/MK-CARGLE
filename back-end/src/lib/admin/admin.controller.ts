@@ -19,7 +19,7 @@ import {
   ApiTags,
   PartialType,
 } from '@nestjs/swagger';
-import { AuthTokenInfo } from 'src/models/auth.entity';
+import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
 import { Company } from 'src/models/company.entity';
 import { CommonService } from '../common/common.service';
 import { AuthToken, Public } from '../decorators/decorators';
@@ -216,21 +216,33 @@ export class AdminController {
     return await this.service.findCompanies(token, fParams);
   }
 
-  @Patch('companies/:id')
-  @ApiOperation({ summary: '[ADMIN] 회사 정보 수정' })
+  @Get('signup-info/:id')
+  @ApiOperation({ summary: '[ADMIN] 업체 가입 정보 조회' })
+  @ApiParam({ name: 'id', description: '업체의 오브젝트ID' })
+  async findSignUpInfo(
+    @Param('id') id: string,
+    @AuthToken({ auth: UserAuthority.ADMIN })
+    token: AuthTokenInfo,
+  ): Promise<SignUpInfo> {
+    return await this.service.findSignUpInfo(token, id);
+  }
+
+  @Patch('signup-info/:id')
+  @ApiOperation({ summary: '[ADMIN] 업체 가입 정보 수정' })
   @ApiParam({ name: 'id', description: '업체의 오브젝트ID' })
   @ApiBody({
     description:
-      '변경할 업체 정보. mbTypeNum, busType, busItem, phoneNum, faxNum 만 허용',
-    type: PartialType<Company>(Company),
+      '변경할 업체 정보. Company: mbTypeNum, busType, busItem, phoneNum, faxNum 만 허용. User: hpNumber 만 허용',
+    // type: PartialType<Company>(Company),
+    type: SignUpInfo,
   })
-  async updateCompanyInfo(
+  async updateSignUpInfo(
     @Param('id') id: string,
-    @Body() company: Company,
+    @Body() info: SignUpInfo,
     @AuthToken({ auth: UserAuthority.ADMIN })
     token: AuthTokenInfo,
-  ): Promise<Company> {
-    console.log(company);
-    return await this.service.updateCompanyInfo(token, id, company);
+  ): Promise<SignUpInfo> {
+    console.log(info);
+    return await this.service.updateSignUpInfo(token, id, info);
   }
 }
