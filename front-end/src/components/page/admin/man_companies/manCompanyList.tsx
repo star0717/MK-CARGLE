@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
+import { BsSearch } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
 import {
   actionTypesUser,
   UserState,
@@ -14,10 +16,13 @@ import {
   _pAdminManCompanies,
   _pAdminReviewCompanies,
 } from "../../../../configure/_pProps.entity";
+import { FindParameters } from "../../../../models/base.entity";
 import { Company, CompanyApproval } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
   CloseButton,
+  Combo,
+  IconButton,
   RsWrapper,
   TableBody,
   TableHead,
@@ -26,6 +31,7 @@ import {
   TableRowLIST,
   TableWrapper,
   Text,
+  TextInput,
   WholeWrapper,
   Wrapper,
 } from "../../../styles/CommonComponents";
@@ -40,10 +46,55 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
+  const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 작업자의 정보를 조회함
+   * @param page 조회할 페이지
+   */
+  const findCompanyHandler = (page?: number) => {
+    const param: FindParameters = {
+      page,
+      take: 5,
+      filterKey: searchOption,
+      filterValue: filterValue,
+      useRegSearch: true,
+    };
+    dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
+      props.setFindResult(res.payload);
+    });
+  };
+
+  /**
+   * 검색 옵션 handler
+   * @param e
+   */
+  const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchOption(e.target.value);
+  };
+
+  /**
+   *
+   * @param e 검색 내용 handler
+   */
+  const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterValue(e.target.value);
+  };
+
+  /**
+   * 키보드 이벤트 발생
+   * @param e
+   */
+  const handleKeyUp = (e: any) => {
+    if (e.keyCode === 13) {
+      console.log("asd");
+      findCompanyHandler();
+    }
+  };
 
   /*********************************************************************
    * 4. Props settings
@@ -57,7 +108,35 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
     <WholeWrapper>
       <RsWrapper>
         <Wrapper width={`1200px`}>
-          <Text>업체 관리</Text>
+          <Wrapper dr={`row`}>
+            <Combo
+              value={searchOption}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onSearchOptionHandler(e);
+              }}
+            >
+              <option value="name">상호명 검색</option>
+              <option value="comRegNum">사업자등록번호 검색</option>
+            </Combo>
+            <TextInput
+              type="text"
+              placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputSearchHandler(e);
+              }}
+              onKeyUp={handleKeyUp}
+            />
+            <IconButton
+              type="submit"
+              onClick={() => {
+                findCompanyHandler();
+              }}
+            >
+              <BsSearch />
+            </IconButton>
+
+            <Text>승인대기업체수 : {props.findResult.totalDocs}</Text>
+          </Wrapper>
           <TableWrapper>
             <TableHead>
               <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
