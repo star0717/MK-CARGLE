@@ -20,11 +20,15 @@ import { useResizeDetector } from "react-resize-detector";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { useForm } from "react-hook-form";
+import { User } from "../../../../models/user.entity";
 
 const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [comData, setComData] = useState<Company>(props.data.company); // 클릭한 업체 정보
+  const [userData, setUserData] = useState<User>(props.data.user); // 클릭한 유저 정보
   // const [clickDoc, setClickDoc] = useState<Company>();
-  console.log("this is props =>", props);
+
+  // console.log("this is props =>", props);
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
@@ -40,8 +44,8 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   };
 
   const onInputComHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("asd");
-    props.setClickDoc({ ...props.clickDoc, [e.target.name]: e.target.value });
+    // console.log("asd");
+    // props.setClickDoc({ ...props.clickDoc, [e.target.name]: e.target.value });
   };
 
   const ARCModalProps: any = {
@@ -70,38 +74,26 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             <Text>사업자정보</Text>
             <Wrapper dr={`row`}>
               <Text>상호명</Text>
-              <TextInput2 value={props.clickDoc.name} type="text" readOnly />
+              <TextInput2 value={comData.name} type="text" readOnly />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text width={`130px`}>사업자등록번호</Text>
-              <TextInput2
-                value={props.clickDoc.comRegNum}
-                type="text"
-                readOnly
-              />
+              <TextInput2 value={comData.comRegNum} type="text" readOnly />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text width={`130px`}>정비업등록번호</Text>
-              <TextInput2
-                value={props.clickDoc.mbRegNum}
-                type="text"
-                readOnly
-              />
+              <TextInput2 value={comData.mbRegNum} type="text" readOnly />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>대표자명</Text>
-              <TextInput2
-                value={props.clickDoc.ownerName}
-                type="text"
-                readOnly
-              />
+              <TextInput2 value={comData.ownerName} type="text" readOnly />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>정비업종</Text>
               <Combo
                 width={`800px`}
                 margin={`0px`}
-                value={props.clickDoc.mbTypeNum}
+                value={comData.mbTypeNum}
                 {...register("mbTypeNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                     onInputComHandler(e);
@@ -120,30 +112,26 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>업태</Text>
-              <TextInput2 value={props.clickDoc.busType} type="text" />
+              <TextInput2 value={comData.busType} type="text" />
 
               <Text>업종</Text>
-              <TextInput2 value={props.clickDoc.busItem} type="text" />
+              <TextInput2 value={comData.busItem} type="text" />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>업체 전화번호</Text>
-              <TextInput2
-                value={props.clickDoc.phoneNum}
-                type="text"
-                readOnly
-              />
+              <TextInput2 value={comData.phoneNum} type="text" readOnly />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>업체 팩스번호</Text>
-              <TextInput2 value={props.clickDoc.faxNum} type="text" readOnly />
+              <TextInput2 value={comData.faxNum} type="text" readOnly />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>사업자 주소</Text>
               <TextInput2
                 value={makeFullAddress(
-                  props.clickDoc.address1,
-                  props.clickDoc.address2,
-                  props.clickDoc.postcode
+                  comData.address1,
+                  comData.address2,
+                  comData.postcode
                 )}
                 type="text"
                 readOnly

@@ -188,31 +188,55 @@ export const getServerSideProps: GetServerSideProps = async (
           };
         }
         case UseLink.ADMIN_REVIEW_COMPANIES: {
-          const params: FindParameters = {
-            take: 5,
-          };
-
-          data = await axios
-            .get(
-              `${apiUrl}/admin/review/companies?${FindParameters.getQuery(
-                params
-              )}`,
-              {
+          const routerQuery = getQuery(url);
+          if (routerQuery.step === Step.FIRST) {
+            console.log("쿼리쿼리 시발", routerQuery);
+            console.log("아이디", routerQuery.id);
+            data = await axios
+              .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
                 headers: {
                   Cookie: `mk_token=${context.req.cookies.mk_token}`,
                 },
                 withCredentials: true,
-              }
-            )
-            .then(
-              (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-            );
-          return {
-            props: {
-              tokenValue,
-              data,
-            },
-          };
+              })
+              .then(
+                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+              );
+            console.log(data);
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          } else {
+            console.log("routerQuery =>", routerQuery.step);
+            const params: FindParameters = {
+              take: 5,
+            };
+
+            data = await axios
+              .get(
+                `${apiUrl}/admin/review/companies?${FindParameters.getQuery(
+                  params
+                )}`,
+                {
+                  headers: {
+                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                  },
+                  withCredentials: true,
+                }
+              )
+              .then(
+                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+              );
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          }
         }
         case UseLink.ADMIN_MAN_COMPANIES: {
           const routerQuery = getQuery(url);
