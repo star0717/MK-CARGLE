@@ -80,7 +80,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
 
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      console.log("asd");
       findCompanyHandler();
     }
   };
@@ -155,7 +154,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    console.log("dak.gg", doc);
                     router.push(
                       `${UseLink.ADMIN_REVIEW_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
                     );
@@ -168,7 +166,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                   <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
                   <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
                   <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
-                  {/* <TableRowLIST width={`200px`}>{doc.approval}</TableRowLIST> */}
                   {doc.approval == CompanyApproval.BEFORE ? (
                     <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
                   ) : doc.approval == CompanyApproval.ING ? (
