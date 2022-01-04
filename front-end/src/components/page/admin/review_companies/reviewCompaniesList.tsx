@@ -156,9 +156,9 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                   key={doc._id}
                   onClick={() => {
                     console.log("dak.gg", doc);
-                    // router.push(
-                    //   `${UseLink.ADMIN_REVIEW_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
-                    // );
+                    router.push(
+                      `${UseLink.ADMIN_REVIEW_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
+                    );
                   }}
                 >
                   <TableRowLIST width={`200px`}>
