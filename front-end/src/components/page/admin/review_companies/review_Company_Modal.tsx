@@ -71,7 +71,7 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`}>
                 <Text width={`130px`}>E-Mail</Text>
-                <TextInput2 value='{E-Mail}' type="text" readOnly />
+                <TextInput2 value={props.data.user.email} type="text" readOnly />
                 </Wrapper>
               <Wrapper dr={`row`}>
                 <SmallButton
