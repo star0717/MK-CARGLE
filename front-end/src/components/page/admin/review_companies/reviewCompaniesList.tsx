@@ -49,7 +49,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   const [filterValue, setFilterValue] = useState<string>("");
   //   const [modalOpen, setModalOpen] = useState<boolean>(false);
   //   const [clickDoc, setClickDoc] = useState<Company>();
-  console.log(props);
+  //   console.log("props =>", props);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -155,17 +155,10 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    dispatch({
-                      type: actionTypesUser.INPUT_COMPANY,
-                      payload: doc,
-                    });
-                    props.setClickDoc(doc);
-                    props.clickDoc &&
-                      router.push(
-                        `${UseLink.ADMIN_REVIEW_COMPANIES}${StepQuery.FIRST}`
-                      );
-                    // setModalOpen(!modalOpen);
-                    // setClickDoc(doc);
+                    console.log("dak.gg", doc);
+                    router.push(
+                      `${UseLink.ADMIN_REVIEW_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
+                    );
                   }}
                 >
                   <TableRowLIST width={`200px`}>

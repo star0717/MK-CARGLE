@@ -27,15 +27,10 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달 창 여부
+ 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  // 모달 창 닫기
-  const closeModal = () => {
-    setModalOpen(false);
-    props.findDocHandler(props.findResult.currentPage);
-  };
 
   /*********************************************************************
    * 4. Props settings
@@ -44,7 +39,8 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return <WholeWrapper ref={ref}>
+  return (
+        <WholeWrapper ref={ref}>
           <RsWrapper>
             <Wrapper>
               <Text>승인처리</Text>
@@ -75,8 +71,8 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`}>
                 <Text width={`130px`}>E-Mail</Text>
-                <TextInput2 value='{comData.ownerName}' type="text" readOnly />
-              </Wrapper>
+                <TextInput2 value='{E-Mail}' type="text" readOnly />
+                </Wrapper>
               <Wrapper dr={`row`}>
                 <SmallButton
                   type="button"
@@ -90,14 +86,15 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
                   type="button"
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
-                  onClick={() => {closeModal}}
+                  onClick={() => {props.setModalOpen(false)}}
                 >
-                  취소
+                취소
                 </SmallButton>
+                </Wrapper>
               </Wrapper>
-            </Wrapper>
             </RsWrapper>
-          </WholeWrapper>;
+          </WholeWrapper>
+  );
 };
 
 export default AdminReviewCompaniesModal;

@@ -135,10 +135,7 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
  ***********************************************************************/
 
 // 승인관리용 props
-export interface _pAdminReviewCompanies extends _pFindDocs<Company> {
-  clickDoc: Company;
-  setClickDoc: React.Dispatch<React.SetStateAction<Company>>;
-}
+export interface _pAdminReviewCompanies extends _pFindDocs<Company> {}
 
 // 업체관리용 props
 export interface _pAdminManCompanies extends _pFindDocs<Company> {}

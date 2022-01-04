@@ -35,8 +35,6 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   //직원 명단 API Result 관련
   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
-  //클릭한 업체정보
-  const [clickDoc, setClickDoc] = useState<Company>();
 
   /*********************************************************************
    * 3. Handlers
@@ -63,10 +61,8 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
     findResult,
     setFindResult,
     findDocHandler: findCompanyHandler,
-    clickDoc,
-    setClickDoc,
   };
-
+  console.log(routerQuery);
   switch (routerQuery.step) {
     case Step.FIRST:
       return <AdminReviewCompaniesinfo {...adminReviewComProps} />;
