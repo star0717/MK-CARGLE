@@ -45,7 +45,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
                 props.setUserAuth(UserAuthority.OWNER);
                 dispatch({
                   type: actionTypesUser.USER_SELECT,
-                  payload: UserAuthority.WORKER,
+                  payload: UserAuthority.OWNER,
                 });
               }}
             >
