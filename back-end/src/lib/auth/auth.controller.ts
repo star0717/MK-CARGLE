@@ -59,19 +59,23 @@ export class AuthController {
     @Body() signUpInfo: SignUpInfo,
     @Res({ passthrough: true }) res: Response,
   ) {
+    console.log(signUpInfo);
     // 데이터 유효성 검증
     if (signUpInfo.user.auth == UserAuthority.OWNER) {
       if (!signUpInfo.company || signUpInfo.user._cID) {
         // 업주가 업체정보를 포함하지 않으면 에러 발생
+        console.log('1');
         throw new BadRequestException();
       }
     } else if (signUpInfo.user.auth == UserAuthority.WORKER) {
       // 직원이 업체정보를 포함하면 에러 발생
       if (signUpInfo.company || !signUpInfo.user._cID) {
+        console.log('2');
         throw new BadRequestException();
       }
     } else {
       throw new BadRequestException();
+      console.log('3');
     }
 
     const newSignInfo: SignUpInfo = await this.authService.signUp(signUpInfo);
