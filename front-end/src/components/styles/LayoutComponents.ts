@@ -9,6 +9,8 @@ export const PageWrapper = styled.div<any>`
   position: relative;
   display: flex;
   flex-direction: ${(props) => props.dr || `column`};
+  align-items: center;
+  justify-content: flex-between;
 `;
 
 // -----------Head----------- //
@@ -188,7 +190,7 @@ export const BodyWrapper = styled.div<any>`
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  padding-bottom: 150px;
+  padding-bottom: 80px;
   padding-top:80px;
   
 
