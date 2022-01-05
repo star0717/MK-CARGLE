@@ -1,3 +1,4 @@
+import { SignUpInfo } from "../../../src/models/auth.entity";
 import { DeleteResult, FindResult } from "../../../src/models/base.entity";
 import { Company } from "../../../src/models/company.entity";
 import { User } from "../../../src/models/user.entity";
@@ -256,6 +257,7 @@ export enum ActionAPIs {
   FIND_USERS = "FIND_USERS", // 사용자 정보 조회
 
   // 고유 API
+  ADMIN_PATCH_SINGUP_INFO = "ADMIN_PATCH_SINGUP_INFO", // 업체 가입 정보 수정
 }
 
 /*****************************************************
@@ -284,10 +286,17 @@ export class _iFindUsers implements baseActionInterface {
 }
 
 /** 고유 API 인터페이스 **/
+export class _iPatchAdminSignUpInfo implements baseActionInterface {
+  type: ActionAPIs.ADMIN_PATCH_SINGUP_INFO;
+  payload: FindResult<SignUpInfo>;
+}
 
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
  * => 정의한 인터페이스를 등록
  *****************************************************/
-export type ActionInterfaces = _iFindCompanies | _iFindUsers;
+export type ActionInterfaces =
+  | _iFindCompanies
+  | _iFindUsers
+  | _iPatchAdminSignUpInfo;
