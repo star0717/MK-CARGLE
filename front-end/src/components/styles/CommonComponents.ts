@@ -17,7 +17,7 @@ export const WholeWrapper = styled.div<any>`
   color: ${(props) => props.theme.black_C};
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `flex-start`};
+  justify-content: ${(props) => props.ju || `center`};
   background-image: ${(props) => props.bgImg};
   background-size: cover;
   background-position: 50% 50%;
