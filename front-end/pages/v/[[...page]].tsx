@@ -31,6 +31,7 @@ import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
+import AdminTestPage from "../../src/components/page/admin/test";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -77,6 +78,9 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.ADMIN_MAN_COMPANIES:
       return <AdminManCompaniesPage {...props} />;
+
+    case UseLink.ADMIN_TEST:
+      return <AdminTestPage {...props} />;
   }
 };
 
@@ -273,6 +277,54 @@ export const getServerSideProps: GetServerSideProps = async (
             //   );
             // console.log(test);
 
+            data = await axios
+              .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
+                headers: {
+                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                },
+                withCredentials: true,
+              })
+              .then(
+                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+              );
+            console.log(data);
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          } else {
+            const params: FindParameters = {
+              take: 5,
+              filterKey: "approval",
+              filterValue: "done",
+            };
+
+            data = await axios
+              .get(
+                `${apiUrl}/admin/companies?${FindParameters.getQuery(params)}`,
+                {
+                  headers: {
+                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                  },
+                  withCredentials: true,
+                }
+              )
+              .then(
+                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+              );
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          }
+        }
+        case UseLink.ADMIN_TEST: {
+          const routerQuery = getQuery(url);
+          if (routerQuery.step === Step.FIRST) {
             data = await axios
               .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
                 headers: {
