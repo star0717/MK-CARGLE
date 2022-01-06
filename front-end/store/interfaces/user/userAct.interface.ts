@@ -258,6 +258,7 @@ export enum ActionAPIs {
   FIND_COMPANIES = "FIND_COMPANIES", // 업체 정보 조회
   FIND_USERS = "FIND_USERS", // 사용자 정보 조회
   APPROVE_COMPANY = "APPROVE_COMPANY", //업체 승인
+  REJECT_COMPANY = "REJECT_COMPANY", //업체 승인요청 반려
 
   // 고유 API
   ADMIN_PATCH_SINGUP_INFO = "ADMIN_PATCH_SINGUP_INFO", // 업체 가입 정보 수정
@@ -294,10 +295,16 @@ export class ApproveCompany implements baseActionInterface {
   payload: any;
 }
 
+//업체 승인요청 반려
+export class RejectCompany implements baseActionInterface {
+  type: ActionAPIs.REJECT_COMPANY;
+  payload: any;
+}
+
 /** 고유 API 인터페이스 **/
 export class _iPatchAdminSignUpInfo implements baseActionInterface {
   type: ActionAPIs.ADMIN_PATCH_SINGUP_INFO;
-  payload: FindResult<SignUpInfo>;
+  payload: SignUpInfo;
 }
 
 /*****************************************************

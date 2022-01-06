@@ -7,7 +7,11 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
-import { FindParameters, FindResult } from 'src/models/base.entity';
+import {
+  OptionalInfo,
+  FindParameters,
+  FindResult,
+} from 'src/models/base.entity';
 import { Company, CompanyApproval } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
 import { CompaniesService } from 'src/modules/companies/companies.service';
@@ -108,9 +112,9 @@ export class AdminService {
     return company;
   }
 
-  async rejectCompany(id: string): Promise<Company> {
+  async rejectCompany(id: string, addInfo: OptionalInfo): Promise<Company> {
     const company = await this.companiesService.findByIdAndUpdateForAuth(id, {
-      approval: CompanyApproval.ING,
+      approval: CompanyApproval.BEFORE,
     });
     if (!company) throw new BadRequestException();
     const user = await this.usersService.findByIdAndUpdateForAuth(
@@ -120,7 +124,7 @@ export class AdminService {
       },
     );
     if (!user) throw new BadRequestException();
-    const mailData = this.commonService.emailDataToRejectOwner();
+    const mailData = this.commonService.emailDataToRejectOwner(addInfo);
     this.commonService.sendMail(user.email, mailData.title, mailData.content);
     return company;
   }
@@ -213,13 +217,22 @@ export class AdminService {
     info: Partial<SignUpInfo>,
   ): Promise<SignUpInfo> {
     // 누락된 데이터가 있을 경우 익셉션 발생
-    if (!info.company || !info.company._id || !info.user || !info.user._id)
+    if (!info.company || !info.user) {
       throw new BadRequestException();
+    }
+
     let user: User = info.user;
     let company: Company = info.company;
 
-    user = await this.updateUserInfo(token, user._id, user);
-    company = await this.updateCompanyInfo(token, company._id, company);
+    const signUpInfo = await this.findSignUpInfo(token, id);
+    if (!signUpInfo) throw new BadRequestException();
+
+    user = await this.updateUserInfo(token, signUpInfo.user._id, user);
+    company = await this.updateCompanyInfo(
+      token,
+      signUpInfo.company._id,
+      company,
+    );
     const newInfo: SignUpInfo = {
       company,
       user,

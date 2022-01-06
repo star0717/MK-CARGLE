@@ -11,6 +11,7 @@ import {
   DeleteResult,
   FindParameters,
   FindResult,
+  OptionalInfo,
 } from "../../src/models/base.entity";
 import { Company } from "../../src/models/company.entity";
 import { User } from "../../src/models/user.entity";
@@ -19,12 +20,14 @@ import {
   actionTypesUser,
   AdminCompaniesList,
   ApproveCompany,
+  RejectCompany,
   GetWorkersList,
   PatchWorkersApprove,
   PatchWorkersChange,
   PatchWorkersDelete,
   PatchWorkersReject,
   _iFindCompanies,
+  _iPatchAdminSignUpInfo,
 } from "../interfaces";
 
 // 로그인 action
@@ -445,18 +448,14 @@ export async function _aPatchAdminSignUpInfo(
   id: string,
   dataToSubmit: SignUpInfo
 ) {
-  const req: FindResult<Company> = await axios
+  const req: SignUpInfo = await axios
     .patch(`/api/admin/signup-info/${id}`, dataToSubmit)
-    .then(
-      (
-        res: AxiosResponse<FindResult<Company>, Company>
-      ): FindResult<Company> => {
-        return res.data;
-      }
-    );
+    .then((res: AxiosResponse<SignUpInfo, SignUpInfo>): SignUpInfo => {
+      return res.data;
+    });
 
-  const result: _iFindCompanies = {
-    type: ActionAPIs.FIND_COMPANIES,
+  const result: _iPatchAdminSignUpInfo = {
+    type: ActionAPIs.ADMIN_PATCH_SINGUP_INFO,
     payload: req,
   };
   return result;
@@ -464,16 +463,35 @@ export async function _aPatchAdminSignUpInfo(
 
 /**
  * 업체와 대표자 사용 승인
- * busItem, busType도 동시변경 가능
+ * /busItem, busType도 동시변경 가능
+ * @param id _cID
  */
-export async function approveCompany(findParams: string) {
-  console.log(findParams);
+export async function approveCompany(id: string) {
   const req = await axios
-    .patch(`/api/admin/review/approve/companies/${findParams}`)
+    .patch(`/api/admin/review/approve/companies/${id}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   const result: ApproveCompany = {
     type: ActionAPIs.APPROVE_COMPANY,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 업체 승인요청 거절
+ * /대표자의 승인도 동시 취소
+ * /e-mail 로 반려 사유 전송
+ * @param id _cID
+ * @param dataToSubmit OptionalInfo
+ */
+export async function rejectCompany(id: string, dataToSubmit: OptionalInfo) {
+  const req = await axios
+    .patch(`/api/admin/review/reject/companies/${id}`, dataToSubmit)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  const result: RejectCompany = {
+    type: ActionAPIs.REJECT_COMPANY,
     payload: req,
   };
   return result;

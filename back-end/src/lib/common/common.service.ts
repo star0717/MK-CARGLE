@@ -5,6 +5,7 @@ import { Response } from 'express';
 import { readdirSync, rmSync, writeFileSync } from 'fs';
 import { Address } from 'nodemailer/lib/mailer';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
+import { OptionalInfo } from 'src/models/base.entity';
 
 @Injectable()
 export class CommonService {
@@ -137,10 +138,15 @@ export class CommonService {
   }
 
   // 심사 승인 결과 통보 안내 메일
-  emailDataToRejectOwner() {
+  emailDataToRejectOwner(addInfo: OptionalInfo) {
+    let content: string =
+      '회원가입이 승인거부되었습니다. 제출서류를 보완해주세요.';
+    if (addInfo.info1) {
+      content = content + `\n 거절사유: ${addInfo.info1}`;
+    }
     return {
       title: '기입 승인거부 메일',
-      content: '회원가입이 승인거부되었습니다. 제출서류를 보완해주세요.',
+      content,
     };
   }
 

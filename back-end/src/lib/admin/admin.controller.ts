@@ -28,7 +28,11 @@ import { UserAuthority } from 'src/models/user.entity';
 import { createReadStream } from 'fs';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
 import { join } from 'path';
-import { FindParameters, FindResult } from 'src/models/base.entity';
+import {
+  OptionalInfo,
+  FindParameters,
+  FindResult,
+} from 'src/models/base.entity';
 
 @Controller('admin')
 @ApiTags('시스템 관리자 API')
@@ -110,12 +114,17 @@ export class AdminController {
     summary: '[ADMIN] 업체 승인요청 거부. 대표자의 승인도 동시 취소',
   })
   @ApiParam({ name: 'id', description: '거부할 업체의 오브젝트ID' })
+  @ApiBody({
+    description: '거절 사유가 있을 시 info1에 기입하여 전송',
+    type: OptionalInfo,
+  })
   async rejectCompany(
     @Param('id') id: string,
+    @Body() addInfo: OptionalInfo,
     @AuthToken({ auth: UserAuthority.ADMIN })
     token: AuthTokenInfo,
   ): Promise<Company> {
-    return await this.service.rejectCompany(id);
+    return await this.service.rejectCompany(id, addInfo);
   }
 
   @Delete('review/delete/companies/:id')
