@@ -67,12 +67,12 @@ export class AdminService {
       _cID: company._id,
     };
 
-    console.log(user);
-    console.log(updateDoc);
+    // console.log(user);
+    // console.log(updateDoc);
     user = await this.userModel.findByIdAndUpdate(user._id, updateDoc, {
       new: true,
     });
-    console.log(user);
+    // console.log(user);
     company = await this.companyModel.findByIdAndUpdate(
       company._id,
       updateDoc,
@@ -130,6 +130,7 @@ export class AdminService {
   }
 
   async deleteCompany(token: AuthTokenInfo, id: string) {
+    console.log(id);
     await this.usersService.deleteAllByComID(token, id);
     await this.companiesService.findByIdAndRemoveForAuth(id);
   }
