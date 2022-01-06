@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { ThemeColors } from "../../../styles/Theme";
+import { CustomThemeColors } from "../styles/CustomTheme";
 import { _pFindDocs } from "../../configure/_pProps.entity";
 import { Pagenation, PagenationWrapper } from "../styles/CommonComponents";
 
@@ -25,14 +25,18 @@ export const PagenationSection: NextPage<_pFindDocs<any>> = (props) => {
             key={i}
             theme={{
               basicTheme_C:
-                cPage === i ? ThemeColors.white_C : ThemeColors.basicTheme_C,
+                cPage === i
+                  ? CustomThemeColors.white_C
+                  : CustomThemeColors.basicTheme_C,
               white_C:
-                cPage === i ? ThemeColors.basicTheme_C : ThemeColors.white_C,
+                cPage === i
+                  ? CustomThemeColors.basicTheme_C
+                  : CustomThemeColors.white_C,
             }}
             border={
               cPage === i
-                ? `1px solid ${ThemeColors.white_C}`
-                : `1px solid ${ThemeColors.basicTheme_C}`
+                ? `1px solid ${CustomThemeColors.white_C}`
+                : `1px solid ${CustomThemeColors.basicTheme_C}`
             }
             type="button"
             onClick={() => {

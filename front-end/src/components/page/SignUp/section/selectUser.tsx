@@ -12,6 +12,7 @@ import {
   CommonTitleWrapper,
   CommonSubTitle,
   CommonTitle,
+  CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";
@@ -21,6 +22,7 @@ import { UseLink } from "../../../../configure/router.entity";
 import { IoIosArrowForward } from "react-icons/io";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { UserAuthority } from "../../../../models/user.entity";
+import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 /**
  * 회원가입: 가입유형 선택 컴포넌트(기능)
@@ -97,12 +99,14 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
             </JoinFirstStepSelect>
           </Wrapper>
         </Wrapper>
-        <CommonButton>
-          <Link href={UseLink.INDEX}>
-            <a>다음에 가입하기</a>
-          </Link>
-          <IoIosArrowForward />
-        </CommonButton>
+        <CommonButtonWrapper>
+          <CommonButton>
+            <Link href={UseLink.INDEX}>
+              <a>다음에 가입하기</a>
+            </Link>
+            <IoIosArrowForward />
+          </CommonButton>
+        </CommonButtonWrapper>
       </RsWrapper>
     </WholeWrapper>
   );

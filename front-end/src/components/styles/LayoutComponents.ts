@@ -1,25 +1,27 @@
 import styled from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
+import CustomTheme from "./CustomTheme";
 
 // -----------PageWrapper----------- //
 
 export const PageWrapper = styled.div<any>`
-  display: flex;
-  flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  justify-content: space-between;
+  position: relative;
+  display: flex;
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: center;
+  justify-content: flex-between;
 `;
 
 // -----------Head----------- //
 
 export const HeaderWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
-  height: ${(props) => props.height || `100%`};
   color: ${(props) => props.color};
   display: flex;
   background-color: ${(props) => props.bgColor};
-  color: ${(props) => props.theme.black_C};
+  color: ${(props) => CustomTheme.black_C};
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
@@ -43,7 +45,7 @@ export const HeaderWrapper = styled.div<any>`
 
   & .MuiCheckbox-root,
   & .MuiCheckbox-colorSecondary.Mui-checked {
-    color: ${(props) => props.theme.black_C} !important;
+    color: ${(props) => CustomTheme.black_C} !important;
   }
 `;
 
@@ -121,7 +123,7 @@ export const HeaderIconButton = styled.button<any>`
   width: ${(props) => props.width || `34px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `34px`};
-  transition: ${(props) => props.transition || props.theme.transition};
+  transition: ${(props) => props.transition || CustomTheme.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -134,8 +136,8 @@ export const HeaderIconButton = styled.button<any>`
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
   border: ${(props) => props.border || `none`};
-  border-radius: ${(props) => props.radius || props.theme.radius};
-  box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
+  border-radius: ${(props) => props.radius || CustomTheme.radius};
+  box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
 
   &:hover {
     color: #0066ff;
@@ -154,7 +156,7 @@ export const HeaderIconAlarm = styled.div<any>`
   width: ${(props) => props.width || `300px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `100px`};
-  transition: ${(props) => props.transition || props.theme.transition};
+  transition: ${(props) => props.transition || CustomTheme.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -167,8 +169,8 @@ export const HeaderIconAlarm = styled.div<any>`
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
   border: ${(props) => props.border || `1px solid #0066ff`};
-  border-radius: ${(props) => props.radius || props.theme.radius};
-  box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
+  border-radius: ${(props) => props.radius || CustomTheme.radius};
+  box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
   padding: 0px 20px;
   margin: 5px 0px;
   opacity: 0.8;
@@ -185,13 +187,26 @@ export const HeaderIconAlarm = styled.div<any>`
 
 export const BodyWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
+  height: ${(props) => props.height || `100%`};
+  display: flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:${(props) => props.padding || ` 80px 0px 150px`};
+  
+  
+  
+
+  ${(props) => props.kindOf === `BodyWrapper2` && `height:100vh;`}
   }
 `;
 
 // -----------Footer----------- //
 
 export const FooterWrapper = styled.div<any>`
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  height: 150px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 `;

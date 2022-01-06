@@ -181,10 +181,13 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
                 <Wrapper dr={`row`}>
                   <Text>정비업종</Text>
                   <Combo
-                    name="mbTypeNum"
                     value={comData.mbTypeNum}
-                    onChange={onComChangeHandler}
-                    required
+                    {...register("mbTypeNum", {
+                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        onComChangeHandler(e);
+                      },
+                      required: true,
+                    })}
                   >
                     {mbTypeOption.map((item) => {
                       return (
@@ -194,6 +197,18 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
                       );
                     })}
                   </Combo>
+                  {errors.mbTypeNum?.type === "required" && (
+                    <Text
+                      margin={`0px 0px 10px 0px`}
+                      width={`100%`}
+                      color={`#d6263b`}
+                      al={`flex-start`}
+                      fontSize={`14px`}
+                      textAlign={`left`}
+                    >
+                      필수 선택사항입니다.
+                    </Text>
+                  )}
                 </Wrapper>
                 <Wrapper dr={`row`}>
                   <Text>업태</Text>

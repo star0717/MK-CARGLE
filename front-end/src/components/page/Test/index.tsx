@@ -1,11 +1,8 @@
 import { NextPage } from "next";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { _MainProps } from "../../../configure/_props.entity";
 import {
   RsWrapper,
-  SmallButton,
-  Text,
-  TextInput2,
   WholeWrapper,
   Wrapper,
 } from "../../styles/CommonComponents";
@@ -17,6 +14,8 @@ const Test: NextPage<_MainProps> = (props) => {
       <RsWrapper>
         <Wrapper>테스트</Wrapper>
         <Wrapper>{JSON.stringify(props.data)}</Wrapper>
+        {/* <ThemeProvider theme={theme}> */}
+        {/* </ThemeProvider> */}
       </RsWrapper>
     </WholeWrapper>
   );

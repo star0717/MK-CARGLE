@@ -7,7 +7,7 @@ const BOX_SHADOW = "0px 10px 15px rgba(220,220,220,1)";
 const BOX_SHADOW_V2 = "0px 5px 10px rgba(220,220,220,1)";
 const BOX_SHADOW_DARK = "0px 10px  rgba(70,70,70,1)";
 
-export const ThemeColors = {
+export const CustomThemeColors = {
   basicTheme_C: "#0066ff",
   lightTheme_C: "#448fff",
   darkTheme_C: "#0052ce",
@@ -21,20 +21,20 @@ export const ThemeColors = {
   lightGrey_C: "#ddd",
 };
 
-const Theme = {
-  basicTheme_C: ThemeColors.basicTheme_C,
-  lightTheme_C: ThemeColors.lightTheme_C,
-  darkTheme_C: ThemeColors.darkTheme_C,
+const CustomTheme = {
+  basicTheme_C: CustomThemeColors.basicTheme_C,
+  lightTheme_C: CustomThemeColors.lightTheme_C,
+  darkTheme_C: CustomThemeColors.darkTheme_C,
 
   //
-  black_C: ThemeColors.black_C,
-  white_C: ThemeColors.white_C,
-  subWhite_C: ThemeColors.subWhite_C,
-  red_C: ThemeColors.red_C,
-  green_C: ThemeColors.green_C,
-  grey_C: ThemeColors.grey_C,
-  darkGrey_C: ThemeColors.darkGrey_C,
-  lightGrey_C: ThemeColors.lightGrey_C,
+  black_C: CustomThemeColors.black_C,
+  white_C: CustomThemeColors.white_C,
+  subWhite_C: CustomThemeColors.subWhite_C,
+  red_C: CustomThemeColors.red_C,
+  green_C: CustomThemeColors.green_C,
+  grey_C: CustomThemeColors.grey_C,
+  darkGrey_C: CustomThemeColors.darkGrey_C,
+  lightGrey_C: CustomThemeColors.lightGrey_C,
   border: `${BOX_BORDER}`,
   radius: `${BORDER_RADIUS}`,
   tableRadius: `${TABLE_RADIUS}`,
@@ -71,4 +71,4 @@ const Theme = {
 //   transition: "0.4s",
 // };
 
-export default Theme;
+export default CustomTheme;
