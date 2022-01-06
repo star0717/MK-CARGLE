@@ -1,38 +1,61 @@
 import { NextPage } from "next";
-import React from "react";
-import {
-  WholeWrapper,
-  Wrapper,
-  Text,
-  Image,
-  CommonButton,
-  RsWrapper,
-  Test,
-  FooterWrapper,
-  TextInput2,
-  CommonTitle,
-  CommonSubTitle,
-  FooterWholeWrapper,
-  CommonTitleWrapper,
-} from "../../../n2server/front-end/src/components/styles/CommonComponents";
-import Header from "../src/components/layout/Header";
-import Footer from "../src/components/layout/Footer";
+import Button from "@mui/material/Button";
+import { SmallButton } from "../src/components/styles/CommonComponents";
+import { Alert, Checkbox } from "@mui/material";
+import { pink } from "@mui/material/colors";
+import useStyles from "../src/components/styles/MuiTheme";
+
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 /**
  * 404 에러 페이지
  * @returns
  */
 const ByeolTest: NextPage = () => {
-  return (
-    // <WholeWrapper minHeight={`100vh`}>
-    //   <FooterWrapper height={`150px`} bgColor={`#ccc`}>
-    //     HI, I'm Footerr
-    //   </FooterWrapper>
-    // </WholeWrapper>
+  const classes = useStyles();
 
-    <FooterWholeWrapper>
-      <FooterWrapper>나 푸터</FooterWrapper>
-    </FooterWholeWrapper>
+  return (
+    <div>
+      {/* <Button variant="contained" sx={{ background: "#000", width: "100px" }}>
+        ddd
+      </Button> */}
+      <Button
+        variant="contained"
+        className={classes.hi}
+        type="button"
+        onClick={() => {
+          alert(
+            `<Alert severity="success" color="warning">
+              This is a success alert — check it out!
+            </Alert>`
+          );
+        }}
+      >
+        클래스
+      </Button>
+      <Button color="secondary">Secondary</Button>
+      <Button variant="contained" color="success">
+        hi
+      </Button>
+      <Button variant="outlined" color="error">
+        hi
+      </Button>
+      {/* <Checkbox {...label} defaultChecked color="primary" /> */}
+      <Checkbox {...label} defaultChecked color="primary" />
+      {/* <Checkbox {...label} defaultChecked color="success" />
+      <Checkbox {...label} defaultChecked color="default" />
+      <Checkbox
+        {...label}
+        defaultChecked
+        sx={{
+          color: "primary.light",
+          "&.Mui-checked": {
+            color: pink[600],
+          },
+        }}
+      /> */}
+      <SmallButton kindOf={`default`}>hi</SmallButton>
+    </div>
   );
 };
 

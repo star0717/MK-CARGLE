@@ -26,9 +26,10 @@ import {
   TextInput2,
   SmallButton,
 } from "../../../styles/CommonComponents";
-import { Switch } from "@material-ui/core";
+// import { Switch } from "@material-ui/core";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
+import { Switch } from "@mui/material";
 
 const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
   const dispatch = useDispatch();
@@ -128,6 +129,11 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
         <Text>직원 상세 정보</Text>
         <Wrapper dr={`row`}>
           <Text>승인상태</Text>
+          {/* <Switch
+            color="primary"
+            checked={approval}
+            onChange={onChangeApproval}
+          /> */}
           <Switch
             color="primary"
             checked={approval}

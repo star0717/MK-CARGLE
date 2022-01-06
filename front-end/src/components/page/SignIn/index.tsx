@@ -6,7 +6,6 @@ import { useRouter } from "next/dist/client/router";
 import { useResizeDetector } from "react-resize-detector";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
-import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { actionTypesUser, UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
@@ -27,6 +26,7 @@ import {
   Label,
 } from "../../styles/CommonComponents";
 import { BodyWrapper } from "../../styles/LayoutComponents";
+import { Checkbox } from "@mui/material";
 
 /**
  * 로그인 컴포넌트(기능)
@@ -181,21 +181,14 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   {/* 체크박스 div */}
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
-                    <Label width={`100%`} margin={`4px 0`} ju={`flex-end`}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={saveCheck}
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              setSaveCheck(e.target.checked);
-                            }}
-                          />
-                        }
-                        label="아이디 저장"
-                      />
-                    </Label>
+                    <Checkbox
+                      color="secondary"
+                      checked={saveCheck}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setSaveCheck(e.target.checked);
+                      }}
+                    />
+                    <Text>아이디 저장</Text>
                   </Wrapper>
                   {/* 로그인 버튼 */}
                   <CommonButton
