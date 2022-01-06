@@ -22,6 +22,7 @@ import {
   CommonButton,
   Combo,
   RsWrapper,
+  CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
 import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
@@ -31,6 +32,7 @@ import { DbErrorInfo } from "../../../../models/base.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { UserAuthority } from "../../../../models/user.entity";
+import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 // modal setting
 Modal.setAppElement("body");
@@ -225,8 +227,8 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <>
-      <WholeWrapper ref={ref}>
+    <BodyWrapper ref={ref}>
+      <WholeWrapper>
         <RsWrapper>
           <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
             <Wrapper
@@ -564,7 +566,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
                 </Text>
               )}
             </Wrapper>
-            <Wrapper padding={`50px 0px 100px 0px`}>
+            <CommonButtonWrapper kindOf={`column`}>
               <CommonButton
                 kindOf={`white`}
                 margin={`0px 0px 10px 0px`}
@@ -585,7 +587,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
               <CommonButton margin={`10px 0px 0px 0px`} type="submit">
                 완료
               </CommonButton>
-            </Wrapper>
+            </CommonButtonWrapper>
           </form>
         </RsWrapper>
       </WholeWrapper>
@@ -626,7 +628,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
         </Wrapper>
         <DaumPostcode onComplete={addressHandler} style={{ height: "500px" }} />
       </Modal>
-    </>
+    </BodyWrapper>
   );
 };
 

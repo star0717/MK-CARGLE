@@ -436,6 +436,33 @@ export async function _aGetAdminManCompanies(findParams: FindParameters) {
 }
 
 /**
+ * 업체와 대표자 정보 변경
+ * @param id
+ * @param dataToSubmit
+ * @returns
+ */
+export async function _aPatchAdminSignUpInfo(
+  id: string,
+  dataToSubmit: SignUpInfo
+) {
+  const req: FindResult<Company> = await axios
+    .patch(`/api/admin/signup-info/${id}`, dataToSubmit)
+    .then(
+      (
+        res: AxiosResponse<FindResult<Company>, Company>
+      ): FindResult<Company> => {
+        return res.data;
+      }
+    );
+
+  const result: _iFindCompanies = {
+    type: ActionAPIs.FIND_COMPANIES,
+    payload: req,
+  };
+  return result;
+}
+
+/**
  * 업체와 대표자 사용 승인
  * busItem, busType도 동시변경 가능
  */

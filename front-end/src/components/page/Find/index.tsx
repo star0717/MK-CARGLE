@@ -5,6 +5,8 @@ import { WholeWrapper } from "../../styles/CommonComponents";
 import { SignRoute } from "../../../configure/router.entity";
 import FindEmail from "./section/findEmail";
 import FindPassword from "./section/findPassword";
+import { BodyWrapper, PageWrapper } from "../../styles/LayoutComponents";
+import FindHeader from "./header";
 
 /**
  * 계정찾기: 라우터에 따른 컴포넌트 구분
@@ -32,9 +34,10 @@ const FindBody: NextPage = () => {
  */
 const Find: NextPage = () => {
   return (
-    <WholeWrapper>
+    <BodyWrapper>
+      <FindHeader />
       <FindBody />
-    </WholeWrapper>
+    </BodyWrapper>
   );
 };
 

@@ -151,9 +151,10 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    router.push(
-                      `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
-                    );
+                    console.log("닥", doc);
+                    // router.push(
+                    //   `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
+                    // );
                   }}
                 >
                   <TableRowLIST width={`200px`}>
