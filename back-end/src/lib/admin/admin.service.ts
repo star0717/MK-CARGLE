@@ -114,7 +114,7 @@ export class AdminService {
 
   async rejectCompany(id: string, addInfo: OptionalInfo): Promise<Company> {
     const company = await this.companiesService.findByIdAndUpdateForAuth(id, {
-      approval: CompanyApproval.ING,
+      approval: CompanyApproval.BEFORE,
     });
     if (!company) throw new BadRequestException();
     const user = await this.usersService.findByIdAndUpdateForAuth(
