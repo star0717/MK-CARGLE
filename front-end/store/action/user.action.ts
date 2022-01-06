@@ -462,9 +462,14 @@ export async function _aPatchAdminSignUpInfo(
   return result;
 }
 
+/**
+ * 업체, 직원 정보 삭제
+ * @param id
+ * @returns
+ */
 export async function _aDeleteAdminCompanies(id: string) {
   const req: DeleteResult = await axios
-    .patch(`/api/admin/signup-info/${id}`)
+    .delete(`/api/admin/review/delete/companies/${id}`)
     .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
       return res.data;
     });

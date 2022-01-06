@@ -110,6 +110,8 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
     ) {
       dispatch(_aDeleteAdminCompanies(comData._id)).then(
         (res: _iDeleteAdminCompanies) => {
+          alert("삭제되었습니다.");
+          props.findDocHandler(props.findResult.currentPage);
           router.push(UseLink.ADMIN_MAN_COMPANIES);
         },
         (err) => {
