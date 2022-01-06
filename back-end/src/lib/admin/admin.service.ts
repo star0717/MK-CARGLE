@@ -7,7 +7,11 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
-import { FindParameters, FindResult } from 'src/models/base.entity';
+import {
+  OptionalInfo,
+  FindParameters,
+  FindResult,
+} from 'src/models/base.entity';
 import { Company, CompanyApproval } from 'src/models/company.entity';
 import { User, UserAuthority } from 'src/models/user.entity';
 import { CompaniesService } from 'src/modules/companies/companies.service';
@@ -108,7 +112,7 @@ export class AdminService {
     return company;
   }
 
-  async rejectCompany(id: string): Promise<Company> {
+  async rejectCompany(id: string, addInfo: OptionalInfo): Promise<Company> {
     const company = await this.companiesService.findByIdAndUpdateForAuth(id, {
       approval: CompanyApproval.ING,
     });
@@ -120,7 +124,7 @@ export class AdminService {
       },
     );
     if (!user) throw new BadRequestException();
-    const mailData = this.commonService.emailDataToRejectOwner();
+    const mailData = this.commonService.emailDataToRejectOwner(addInfo);
     this.commonService.sendMail(user.email, mailData.title, mailData.content);
     return company;
   }

@@ -1,17 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { prop } from '@typegoose/typegoose';
 import { Transform, TransformFnParams } from 'class-transformer';
-import {
-  isBoolean,
-  IsBoolean,
-  isBooleanString,
-  IsBooleanString,
-  IsNotEmpty,
-  isNumber,
-  isNumberString,
-  IsNumberString,
-  IsOptional,
-} from 'class-validator';
+import { isNumber, IsOptional, IsString } from 'class-validator';
 import { TypegooseModule } from 'nestjs-typegoose';
 
 /**
@@ -202,4 +192,22 @@ export class DbErrorInfo {
   name: string;
   code: string | number;
   key?: string;
+}
+
+// 부가정보. Post나 Patch시 전달할 정보
+export class OptionalInfo {
+  @ApiProperty({ description: '부가정보1' })
+  @IsOptional()
+  @IsString()
+  public info1?: string | null;
+
+  @ApiProperty({ description: '부가정보2' })
+  @IsOptional()
+  @IsString()
+  public info2?: string | null;
+
+  @ApiProperty({ description: '부가정보3' })
+  @IsOptional()
+  @IsString()
+  public info3?: string | null;
 }
