@@ -58,7 +58,7 @@ export const RsWrapper = styled.div<any>`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `50px 0px 50px`};
+  padding: ${(props) => props.padding || ``};
   overflow: ${(props) => props.overflow};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
@@ -297,7 +297,7 @@ export const CommonTitle = styled.h2<any>`
   padding: ${(props) => props.padding || ` 0px 0px`};
   padding-bottom: ${(props) => props.paddingBottom};
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 600;
   color: ${(props) => props.color || `#fff`};
   text-align: ${(props) => props.textAlign || `center`};
   @media (max-width: 1439px) {
@@ -325,7 +325,7 @@ export const CommonSmallTitle = styled.h2<any>`
   margin: 30px 0px;
   padding-bottom: 10px;
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 300;
   color: ${(props) => props.color};
 
   &:before {
@@ -397,8 +397,8 @@ export const CommonButtonWrapper = styled.div<any>`
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
   transition: ${(props) => props.transition || props.theme.transition};
-  margin: ${(props) => props.margin || `20px 0px 0px`};
-  padding: ${(props) => props.padding || `20px 0px 60px`};
+  margin: ${(props) => props.margin || ``};
+  padding: ${(props) => props.padding || `40px 0px 0px`};
   border-radius: ${(props) => props.radius};
   font-size: ${(props) => props.fontSize};
   display: flex;
@@ -411,7 +411,7 @@ export const CommonButtonWrapper = styled.div<any>`
   border: none;
 
   ${(props) => props.kindOf === `column` && `flex-direction : column;`}
-  ${(props) => props.kindOf === `column` && `padding : 0px 0px 10px 0px;`}
+  ${(props) => props.kindOf === `column` && `padding : 40px 0px 0px;`}
 `;
 
 export const CommonButton = styled.button<any>`
