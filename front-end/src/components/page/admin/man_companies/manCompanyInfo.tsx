@@ -27,13 +27,24 @@ import { mbTypeOption } from "../../../../configure/list.entity";
 import { formRegEx } from "../../../../validation/regEx";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import { useDispatch } from "react-redux";
-import { _aPatchAdminSignUpInfo } from "../../../../../store/action/user.action";
+import {
+  _aDeleteAdminCompanies,
+  _aPatchAdminSignUpInfo,
+} from "../../../../../store/action/user.action";
+import {
+  _iDeleteAdminCompanies,
+  _iPatchAdminSignUpInfo,
+} from "../../../../../store/interfaces";
+import { useRouter } from "next/router";
+import { UseLink } from "../../../../configure/router.entity";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+  const router = useRouter();
+
   // react-hook-form 사용을 위한 선언
   const {
     register,
@@ -80,7 +91,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
     };
 
     dispatch(_aPatchAdminSignUpInfo(comData._id, changeData)).then(
-      (res: any) => {
+      (res: _iPatchAdminSignUpInfo) => {
         alert("정보가 수정되었습니다.");
         setComData(res.payload.company);
         setUserData(res.payload.user);
@@ -92,7 +103,22 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   };
 
   const onDeleteCompany = () => {
-    console.log("hi");
+    if (
+      window.confirm(
+        "삭제할 경우 업체, 소속 직원 정보가 모두 삭제됩니다.\n삭제하시겠습니까?"
+      )
+    ) {
+      dispatch(_aDeleteAdminCompanies(comData._id)).then(
+        (res: _iDeleteAdminCompanies) => {
+          router.push(UseLink.ADMIN_MAN_COMPANIES);
+        },
+        (err) => {
+          alert("삭제에 실패했습니다.");
+        }
+      );
+    } else {
+      return false;
+    }
   };
 
   // 모달 창 닫기
