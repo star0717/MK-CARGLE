@@ -194,8 +194,6 @@ export const getServerSideProps: GetServerSideProps = async (
         case UseLink.ADMIN_REVIEW_COMPANIES: {
           const routerQuery = getQuery(url);
           if (routerQuery.step === Step.FIRST) {
-            console.log("쿼리쿼리 시발", routerQuery);
-            console.log("아이디", routerQuery.id);
             data = await axios
               .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
                 headers: {

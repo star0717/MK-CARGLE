@@ -71,3 +71,8 @@ export declare class DbErrorInfo {
   code: string | number;
   key?: string;
 }
+export declare class OptionalInfo {
+  info1?: string | null;
+  info2?: string | null;
+  info3?: string | null;
+}
