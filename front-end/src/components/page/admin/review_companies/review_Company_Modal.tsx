@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useDispatch } from "react-redux";
 import { useResizeDetector } from "react-resize-detector";
+import { useRouter } from "next/router";
 import {
   RsWrapper,
   SmallButton,
@@ -10,27 +11,34 @@ import {
   Wrapper,
 } from "../../../styles/CommonComponents";
 import React, { useState } from "react";
-import { approveCompany } from "../../../../../store/action/user.action";
+import {
+  approveCompany,
+  rejectCompany,
+} from "../../../../../store/action/user.action";
+import { OptionalInfo } from "../../../../models/base.entity";
+import { StepQuery, UseLink } from "../../../../configure/router.entity";
 
 const AdminReviewCompaniesModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+  const router = useRouter();
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
-
-  console.log(props);
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [approval, setApproval] = useState<boolean>(false);
+  const [reason, setReason] = useState<string>("");
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  const onInputreasonHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setReason(reason);
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -38,6 +46,10 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
+  const RejectReason: OptionalInfo = {
+    info1: reason,
+  };
+
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
@@ -78,6 +90,9 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
               placeholder="반려 사유를 입력하세요."
               type="text"
               readOnly={approval}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputreasonHandler(e);
+              }}
             />
           </Wrapper>
           <Wrapper dr={`row`}>
@@ -90,9 +105,6 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
               kindOf={`default`}
               margin={`0px 0px 0px 20px`}
               onClick={() => {
-                // {
-                //   console.log("cID =>", props.data.company._cID);
-                // }
                 if (approval === true) {
                   dispatch(approveCompany(props.data.company._cID)).then(
                     (res: any) => {
@@ -100,9 +112,17 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
                     }
                   );
                   props.setModalOpen(false);
+                  props.findDocHandler(props.findResult.currentPage); //리렌더링
+                  router.push(`${UseLink.ADMIN_REVIEW_COMPANIES}`); //list page 전환
                 } else if (approval == false) {
-                  alert("반려처리 되었습니다.");
+                  dispatch(
+                    rejectCompany(props.data.company._cID, RejectReason)
+                  ).then((res: any) => {
+                    alert("반려처리 되었습니다.");
+                  });
                   props.setModalOpen(false);
+                  props.findDocHandler(props.findResult.currentPage); //리렌더링
+                  router.push(`${UseLink.ADMIN_REVIEW_COMPANIES}`); //list page 전환
                 }
               }}
             >

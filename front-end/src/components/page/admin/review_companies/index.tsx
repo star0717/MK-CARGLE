@@ -48,6 +48,7 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
       page,
       take: 5,
     };
+    console.log("새로 렌더링 했습니다.2");
     dispatch(_aGetAdminReivewCompanies(param)).then((res: _iFindCompanies) => {
       setFindResult(res.payload);
     });
@@ -62,7 +63,6 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
     setFindResult,
     findDocHandler: findCompanyHandler,
   };
-  console.log(routerQuery);
   switch (routerQuery.step) {
     case Step.FIRST:
       return <AdminReviewCompaniesinfo {...adminReviewComProps} />;

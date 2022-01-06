@@ -204,7 +204,6 @@ export const getServerSideProps: GetServerSideProps = async (
               .then(
                 (res: AxiosResponse<FindResult<Company>, Company>) => res.data
               );
-            console.log(data);
             return {
               props: {
                 tokenValue,
@@ -212,7 +211,6 @@ export const getServerSideProps: GetServerSideProps = async (
               },
             };
           } else {
-            console.log("routerQuery =>", routerQuery.step);
             const params: FindParameters = {
               take: 5,
             };

@@ -57,16 +57,6 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
-        <SmallButton
-          type="button"
-          kindOf={`default`}
-          margin={`0px 0px 0px 20px`}
-          onClick={() => {
-            setModalOpen(true);
-          }}
-        >
-          승인처리
-        </SmallButton>
         <Wrapper dr={`row`}>
           <Image alt="사업자, 정비업 등록증 이미지"></Image>
           <Wrapper>
@@ -139,6 +129,16 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             </Wrapper>
           </Wrapper>
         </Wrapper>
+        <SmallButton
+          type="button"
+          kindOf={`default`}
+          margin={`0px 0px 0px 20px`}
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          승인처리
+        </SmallButton>
       </RsWrapper>
       <Wrapper>
         <Modal
