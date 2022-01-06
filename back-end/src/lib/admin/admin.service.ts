@@ -217,13 +217,22 @@ export class AdminService {
     info: Partial<SignUpInfo>,
   ): Promise<SignUpInfo> {
     // 누락된 데이터가 있을 경우 익셉션 발생
-    if (!info.company || !info.company._id || !info.user || !info.user._id)
+    if (!info.company || !info.user) {
       throw new BadRequestException();
+    }
+
     let user: User = info.user;
     let company: Company = info.company;
 
-    user = await this.updateUserInfo(token, user._id, user);
-    company = await this.updateCompanyInfo(token, company._id, company);
+    const signUpInfo = await this.findSignUpInfo(token, id);
+    if (!signUpInfo) throw new BadRequestException();
+
+    user = await this.updateUserInfo(token, signUpInfo.user._id, user);
+    company = await this.updateCompanyInfo(
+      token,
+      signUpInfo.company._id,
+      company,
+    );
     const newInfo: SignUpInfo = {
       company,
       user,
