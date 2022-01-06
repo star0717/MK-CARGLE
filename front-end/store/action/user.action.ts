@@ -27,6 +27,7 @@ import {
   PatchWorkersDelete,
   PatchWorkersReject,
   _iFindCompanies,
+  _iPatchAdminSignUpInfo,
 } from "../interfaces";
 
 // 로그인 action
@@ -447,18 +448,14 @@ export async function _aPatchAdminSignUpInfo(
   id: string,
   dataToSubmit: SignUpInfo
 ) {
-  const req: FindResult<Company> = await axios
+  const req: SignUpInfo = await axios
     .patch(`/api/admin/signup-info/${id}`, dataToSubmit)
-    .then(
-      (
-        res: AxiosResponse<FindResult<Company>, Company>
-      ): FindResult<Company> => {
-        return res.data;
-      }
-    );
+    .then((res: AxiosResponse<SignUpInfo, SignUpInfo>): SignUpInfo => {
+      return res.data;
+    });
 
-  const result: _iFindCompanies = {
-    type: ActionAPIs.FIND_COMPANIES,
+  const result: _iPatchAdminSignUpInfo = {
+    type: ActionAPIs.ADMIN_PATCH_SINGUP_INFO,
     payload: req,
   };
   return result;

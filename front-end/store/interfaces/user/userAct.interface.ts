@@ -304,7 +304,7 @@ export class RejectCompany implements baseActionInterface {
 /** 고유 API 인터페이스 **/
 export class _iPatchAdminSignUpInfo implements baseActionInterface {
   type: ActionAPIs.ADMIN_PATCH_SINGUP_INFO;
-  payload: FindResult<SignUpInfo>;
+  payload: SignUpInfo;
 }
 
 /*****************************************************

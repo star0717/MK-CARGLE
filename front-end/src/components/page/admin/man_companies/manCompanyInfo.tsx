@@ -26,11 +26,14 @@ import { User } from "../../../../models/user.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { formRegEx } from "../../../../validation/regEx";
 import { SignUpInfo } from "../../../../models/auth.entity";
+import { useDispatch } from "react-redux";
+import { _aPatchAdminSignUpInfo } from "../../../../../store/action/user.action";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const dispatch = useDispatch();
   // react-hook-form 사용을 위한 선언
   const {
     register,
@@ -59,19 +62,28 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   };
 
   /**
-   * 사용자 input 변경 handler
+   * 대표자 input 변경 handler
    * @param e
    */
   const onUserChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+  /**
+   * 업체와 대표자 정보 변경
+   * @param data
+   */
   const onChangeComHandler: SubmitHandler<SignUpInfo> = (data) => {
     const changeData: SignUpInfo = {
       company: comData,
       user: userData,
     };
     console.log("체인지", changeData);
+    dispatch(_aPatchAdminSignUpInfo(comData._id, changeData)).then(
+      (res: any) => {
+        console.log(res);
+      }
+    );
   };
 
   // 모달 창 닫기
@@ -91,7 +103,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref}>
+    <WholeWrapper ref={ref} margin={`100px 0`}>
       <RsWrapper>
         <Wrapper>
           <SmallButton
@@ -99,7 +111,6 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
             kindOf={`default`}
             margin={`0px 0px 0px 20px`}
             onClick={() => {
-              console.log("티모");
               setModalOpen(true);
             }}
           >
