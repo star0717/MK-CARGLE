@@ -36,6 +36,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
+<<<<<<< HEAD
     <BodyWrapper ref={ref}>
       <WholeWrapper>
         <RsWrapper>
@@ -46,6 +47,22 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
               width={`auto`}
               ju={`center`}
               al={`center`}
+=======
+    <WholeWrapper ref={ref}>
+      <RsWrapper>
+        <Wrapper dr={`row`} padding={`0px 0px 40px 0px`}>
+          {/* 사업자 회원가입 버튼 */}
+          <Wrapper padding={`20px`} width={`auto`} ju={`center`} al={`center`}>
+            <JoinFirstStepSelect
+              onClick={() => {
+                props.setStepNumber(props.stepNumber + 1);
+                props.setUserAuth(UserAuthority.OWNER);
+                dispatch({
+                  type: actionTypesUser.USER_SELECT,
+                  payload: UserAuthority.OWNER,
+                });
+              }}
+>>>>>>> fdf8a7a38f0118f5e836055d18d5a631f678f156
             >
               <JoinFirstStepSelect
                 onClick={() => {

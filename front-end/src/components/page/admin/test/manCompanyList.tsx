@@ -1,9 +1,11 @@
 import dayjs from "dayjs";
+import { useAtomValue, useUpdateAtom } from "jotai/utils";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { nameState } from ".";
 import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
 import {
   actionTypesUser,
@@ -24,6 +26,7 @@ import {
   Combo,
   IconButton,
   RsWrapper,
+  SmallButton,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -48,6 +51,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    *********************************************************************/
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
+
+  const name = useAtomValue(nameState);
+  const setName = useUpdateAtom(nameState);
 
   /*********************************************************************
    * 3. Handlers
@@ -106,6 +112,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
 
   return (
     <WholeWrapper>
+      {/* Jotai 테스트 */}
+      atomValue: {name}
+      <SmallButton onClick={() => setName("list")}>이름변경</SmallButton>
       <RsWrapper>
         <Wrapper width={`1200px`}>
           <Wrapper dr={`row`}>
@@ -152,7 +161,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                   key={doc._id}
                   onClick={() => {
                     router.push(
-                      `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
+                      `${UseLink.ADMIN_TEST}${StepQuery.FIRST}&id=${doc._id}`
                     );
                   }}
                 >

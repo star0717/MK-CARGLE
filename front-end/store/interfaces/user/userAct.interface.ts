@@ -67,7 +67,8 @@ export type ActionsUser =
   | PatchWorkersApprove
   | PatchWorkersReject
   | PatchWorkersChange
-  | PatchWorkersDelete;
+  | PatchWorkersDelete
+  | ApproveCompany;
 
 // 초기화
 export interface UserInit {
@@ -225,6 +226,7 @@ export interface AdminCompaniesList {
   type: actionTypesUser.ADMIN_COMPANIES_LIST;
   payload: any;
 }
+
 //작업자 승인 허가
 export interface PatchWorkersApprove {
   type: actionTypesUser.PATCH_WORKERS_APPROVE;
@@ -254,9 +256,9 @@ export enum ActionAPIs {
   // 모델 별 공통 API
   FIND_COMPANIES = "FIND_COMPANIES", // 업체 정보 조회
   FIND_USERS = "FIND_USERS", // 사용자 정보 조회
+  APPROVE_COMPANY = "APPROVE_COMPANY", //업체 승인
 
   // 고유 API
-  FIND_COMPANY_CLICK = "FIND_COMPANY_CLICK", // 업체 정보 조회(선택한 업체만)
 }
 
 /*****************************************************
@@ -284,20 +286,17 @@ export class _iFindUsers implements baseActionInterface {
   payload: FindResult<User>;
 }
 
-/** 고유 API 인터페이스 **/
-
-// 업체 정보 조회(선택한 업체만)
-export class _iFindCompanyClick implements baseActionInterface {
-  type: ActionAPIs.FIND_COMPANY_CLICK;
-  payload: Company;
+//업체 승인
+export class ApproveCompany implements baseActionInterface {
+  type: ActionAPIs.APPROVE_COMPANY;
+  payload: any;
 }
+
+/** 고유 API 인터페이스 **/
 
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
  * => 정의한 인터페이스를 등록
  *****************************************************/
-export type ActionInterfaces =
-  | _iFindCompanies
-  | _iFindUsers
-  | _iFindCompanyClick;
+export type ActionInterfaces = _iFindCompanies | _iFindUsers;

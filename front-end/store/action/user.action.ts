@@ -18,6 +18,7 @@ import {
   ActionAPIs,
   actionTypesUser,
   AdminCompaniesList,
+  ApproveCompany,
   GetWorkersList,
   PatchWorkersApprove,
   PatchWorkersChange,
@@ -429,6 +430,23 @@ export async function _aGetAdminManCompanies(findParams: FindParameters) {
 
   const result: _iFindCompanies = {
     type: ActionAPIs.FIND_COMPANIES,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 업체와 대표자 사용 승인
+ * busItem, busType도 동시변경 가능
+ */
+export async function approveCompany(findParams: string) {
+  console.log(findParams);
+  const req = await axios
+    .patch(`/api/admin/review/approve/companies/${findParams}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  const result: ApproveCompany = {
+    type: ActionAPIs.APPROVE_COMPANY,
     payload: req,
   };
   return result;

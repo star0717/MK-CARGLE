@@ -26,6 +26,8 @@ import { User } from "../../../../models/user.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { formRegEx } from "../../../../validation/regEx";
 import { SignUpInfo } from "../../../../models/auth.entity";
+import { useAtomValue, useUpdateAtom } from "jotai/utils";
+import { nameState } from ".";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
@@ -46,6 +48,8 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달 창 여부
   // const [busType, setBusType] = useState<string>(props.clickDoc.busType); // 업태
   // const [busItem, setBusItem] = useState<string>(props.clickDoc.busItem); // 업종
+  const name = useAtomValue(nameState);
+  const setName = useUpdateAtom(nameState);
 
   /*********************************************************************
    * 3. Handlers
@@ -93,6 +97,9 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
+        {/* Jotai 테스트 */}
+        atomValue: {name}
+        <SmallButton onClick={() => setName("info")}>이름변경</SmallButton>
         <Wrapper>
           <SmallButton
             type="button"

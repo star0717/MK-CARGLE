@@ -78,5 +78,6 @@ export const mbTypeToString = (list: Company) => {
   const textMbType: MbType = mbTypeOption.find((item) => {
     return item.value === list.mbTypeNum;
   });
-  return textMbType.text;
+  if(textMbType == null) return;
+  else textMbType.text;
 };

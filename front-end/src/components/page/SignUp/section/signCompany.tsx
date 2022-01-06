@@ -190,6 +190,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
         })
         .catch((err: AxiosError<any, any>) => {
           const errInfo: DbErrorInfo = err.response.data;
+          console.log(err);
           switch (errInfo.key) {
             case "email":
               alert("이미 가입된 이메일입니다.");
