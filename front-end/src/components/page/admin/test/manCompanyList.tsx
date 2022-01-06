@@ -40,6 +40,7 @@ import {
 } from "../../../styles/CommonComponents";
 
 const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
+  console.log("리스트");
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/

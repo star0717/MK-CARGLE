@@ -33,6 +33,8 @@ import AdminManCompaniesPage from "../../src/components/page/admin/man_companies
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
 import AdminTestPage from "../../src/components/page/admin/test";
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
+import { NextResponse } from "next/server";
+import { redirect } from "next/dist/server/api-utils";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -290,6 +292,7 @@ export const getServerSideProps: GetServerSideProps = async (
           }
         }
         case UseLink.ADMIN_TEST: {
+          console.log("타는가");
           const routerQuery = getQuery(url);
           if (routerQuery.step === Step.FIRST) {
             data = await axios
@@ -301,8 +304,12 @@ export const getServerSideProps: GetServerSideProps = async (
               })
               .then(
                 (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-              );
-            console.log(data);
+              )
+              .catch((error) => {
+                return null;
+              });
+
+            console.log("타는가2");
             return {
               props: {
                 tokenValue,
