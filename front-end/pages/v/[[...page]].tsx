@@ -241,56 +241,26 @@ export const getServerSideProps: GetServerSideProps = async (
         }
         case UseLink.ADMIN_MAN_COMPANIES: {
           const routerQuery = getQuery(url);
-          if (routerQuery.step === Step.FIRST) {
-            // data = {
-            //   _id: "61b9a13b8c179628017295a4",
-            //   createdAt: "2021-12-15T08:03:07.734Z",
-            //   name: "김대표 회사",
-            //   comRegNum: "3388800960",
-            //   mbRegNum: "121548421235",
-            //   mbTypeNum: "3급",
-            //   ownerName: "김대표",
-            //   busType: "ㅇㅌ",
-            //   busItem: "ㅇㅈ",
-            //   phoneNum: "0423334444",
-            //   faxNum: "1547879",
-            //   postcode: "34087",
-            //   address1: "대전 유성구 은구비로 8 (지족동)",
-            //   address2: "보광빌딩 402호 엠케이",
-            //   approval: "done",
-            //   _cID: "61b9a13b8c179628017295a4",
-            //   _uID: "61b9a13b8c179628017295a6",
-            //   updatedAt: "2021-12-24T06:33:47.837Z",
-            // };
-            // const test = await axios
-            //   .get(`${apiUrl}/admin/review/com-reg-doc/${routerQuery.id}`, {
-            //     headers: {
-            //       Cookie: `mk_token=${context.req.cookies.mk_token}`,
-            //     },
-            //     withCredentials: true,
-            //   })
-            //   .then(
-            //     (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-            //   );
-            // console.log(test);
-
-            data = await axios
-              .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
-                headers: {
-                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
+          if (routerQuery.step) {
+            if (routerQuery.step === Step.FIRST) {
+              data = await axios
+                .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
+                  headers: {
+                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                  },
+                  withCredentials: true,
+                })
+                .then(
+                  (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+                );
+              console.log(data);
+              return {
+                props: {
+                  tokenValue,
+                  data,
                 },
-                withCredentials: true,
-              })
-              .then(
-                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-              );
-            console.log(data);
-            return {
-              props: {
-                tokenValue,
-                data,
-              },
-            };
+              };
+            }
           } else {
             const params: FindParameters = {
               take: 5,

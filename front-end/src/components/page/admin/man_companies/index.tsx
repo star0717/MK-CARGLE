@@ -39,8 +39,9 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
    */
   const findCompanyHandler = (page: number) => {
     const param: FindParameters = {
-      page,
-      take: 1,
+      take: 5,
+      filterKey: "approval",
+      filterValue: "done",
     };
     dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
       setFindResult(res.payload);
