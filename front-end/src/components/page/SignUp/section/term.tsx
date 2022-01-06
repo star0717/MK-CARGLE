@@ -55,12 +55,8 @@ const Term: NextPage<_pSignUpProps> = (props) => {
         <RsWrapper>
           <Wrapper>
             <form onSubmit={handleSubmit(agreeTermHandler)}>
-              <Wrapper
-                al={`flex-start`}
-                width={`500px`}
-                padding={`0px 0px 30px`}
-              >
-                <Wrapper>
+              <Wrapper al={`flex-start`} width={`500px`}>
+                <Wrapper padding={`0px 0px 30px`}>
                   <CommonSmallTitle>
                     CARGLE 서비스 이용약관(필수)
                   </CommonSmallTitle>

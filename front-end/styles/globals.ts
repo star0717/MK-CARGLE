@@ -26,6 +26,10 @@ body {
   font-family: "Noto Sans KR", sans-serif;
 }
 
+#__next {
+  height: 100%;
+}
+
 a {
   color: inherit;
   text-decoration: none;

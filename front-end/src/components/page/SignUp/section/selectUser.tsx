@@ -38,7 +38,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
-        <Wrapper dr={`row`} padding={`0px 0px 40px 0px`}>
+        <Wrapper dr={`row`}>
           {/* 사업자 회원가입 버튼 */}
           <Wrapper padding={`20px`} width={`auto`} ju={`center`} al={`center`}>
             <JoinFirstStepSelect

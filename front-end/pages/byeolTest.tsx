@@ -25,9 +25,9 @@ const ByeolTest: NextPage = () => {
         type="button"
         onClick={() => {
           alert(
-            `<Alert severity="success" color="warning">
+            <Alert severity="success" color="warning">
               This is a success alert — check it out!
-            </Alert>`
+            </Alert>
           );
         }}
       >
