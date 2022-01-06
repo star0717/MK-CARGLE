@@ -48,50 +48,48 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <>
-      <WholeWrapper ref={ref}>
-        <CommonTitleWrapper>
-          <CommonTitle>직원관리</CommonTitle>
-          <CommonSubTitle>
-            이곳에서 직원 정보를 확인 및 수정할 수 있습니다.
-          </CommonSubTitle>
-        </CommonTitleWrapper>
-        <RsWrapper ju={`flex-start`} margin={`100px 0px 0px`}>
-          <Wrapper height={`630px`} ju={`flex-start`}>
-            <TableWrapper>
-              <TableHead>
-                <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
-                <TableHeadLIST width={`300px`}>전화번호</TableHeadLIST>
-                <TableHeadLIST width={`300px`}>입사일자</TableHeadLIST>
-                <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
-              </TableHead>
-              <TableBody>
-                {props.findResult.docs.map((doc: User) => (
-                  <TableRow
-                    key={doc._id}
-                    onClick={() => {
-                      setModalOpen(!modalOpen);
-                      setClickDoc(doc);
-                    }}
-                  >
-                    <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
-                    <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
-                    <TableRowLIST width={`300px`}>
-                      {dayjs(doc.joinDate).format("YYYY-MM-DD")}
-                    </TableRowLIST>
-                    {doc.approval ? (
-                      <TableRowLIST width={`300px`}>승인</TableRowLIST>
-                    ) : (
-                      <TableRowLIST width={`300px`}>미승인</TableRowLIST>
-                    )}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </TableWrapper>
-          </Wrapper>
-          <PagenationSection {...props} />
-        </RsWrapper>
-      </WholeWrapper>
+    <WholeWrapper ref={ref} padding={`0px`}>
+      <CommonTitleWrapper>
+        <CommonTitle>직원관리</CommonTitle>
+        <CommonSubTitle>
+          이곳에서 직원 정보를 확인 및 수정할 수 있습니다.
+        </CommonSubTitle>
+      </CommonTitleWrapper>
+      <RsWrapper ju={`flex-start`} margin={`100px 0px 0px`}>
+        <Wrapper height={`630px`} ju={`flex-start`}>
+          <TableWrapper>
+            <TableHead>
+              <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>전화번호</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>입사일자</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
+            </TableHead>
+            <TableBody>
+              {props.findResult.docs.map((doc: User) => (
+                <TableRow
+                  key={doc._id}
+                  onClick={() => {
+                    setModalOpen(!modalOpen);
+                    setClickDoc(doc);
+                  }}
+                >
+                  <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
+                  <TableRowLIST width={`300px`}>
+                    {dayjs(doc.joinDate).format("YYYY-MM-DD")}
+                  </TableRowLIST>
+                  {doc.approval ? (
+                    <TableRowLIST width={`300px`}>승인</TableRowLIST>
+                  ) : (
+                    <TableRowLIST width={`300px`}>미승인</TableRowLIST>
+                  )}
+                </TableRow>
+              ))}
+            </TableBody>
+          </TableWrapper>
+        </Wrapper>
+        <PagenationSection {...props} />
+      </RsWrapper>
       <Modal
         isOpen={modalOpen}
         style={{
@@ -129,7 +127,7 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
           <WorkerInfoModal {...WorkerModalProps} />
         </Wrapper>
       </Modal>
-    </>
+    </WholeWrapper>
   );
 };
 

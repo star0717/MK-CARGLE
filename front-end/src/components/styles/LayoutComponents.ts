@@ -10,8 +10,6 @@ export const PageWrapper = styled.div<any>`
   position: relative;
   display: flex;
   flex-direction: ${(props) => props.dr || `column`};
-  align-items: center;
-  justify-content: flex-between;
 `;
 
 // -----------Head----------- //
@@ -186,19 +184,15 @@ export const HeaderIconAlarm = styled.div<any>`
 // -----------Body----------- //
 
 export const BodyWrapper = styled.div<any>`
-  width: ${(props) => props.width || `100%`};
-  height: ${(props) => props.height || `100%`};
+  min-height: 100vh;
   display: flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:space-between;
-  padding:${(props) => props.padding || ` 80px 0px 150px`};
-  
-  
-  
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 80px 0 150px;
 
-  ${(props) => props.kindOf === `BodyWrapper2` && `height:100vh;`}
-  }
+  ${(props) =>
+    props.kindOf === `NoneTitleBodyWrapper` && `justify-content:center`}
 `;
 
 // -----------Footer----------- //

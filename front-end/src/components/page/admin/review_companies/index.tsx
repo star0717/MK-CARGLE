@@ -62,7 +62,6 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
     setFindResult,
     findDocHandler: findCompanyHandler,
   };
-  console.log(routerQuery);
   switch (routerQuery.step) {
     case Step.FIRST:
       return <AdminReviewCompaniesinfo {...adminReviewComProps} />;

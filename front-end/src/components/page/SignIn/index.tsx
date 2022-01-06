@@ -109,23 +109,25 @@ const SignIn: NextPage<_SignInProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <BodyWrapper ref={ref} kindOf={`BodyWrapper2`}>
-      <WholeWrapper>
-        <RsWrapper padding={`0px 0px 40px`}>
+    <BodyWrapper ref={ref} kindOf={`NoneTitleBodyWrapper`}>
+      <WholeWrapper padding={`0px`}>
+        <RsWrapper>
           <Wrapper
             width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
           >
-            <CommonTitle
+            <Text
               textAlign={`center`}
               margin={`0px`}
               padding={`0px`}
               color={`#292929`}
+              fontSize={`34px`}
+              fontWeight={`800`}
             >
               CARGLE
-            </CommonTitle>
-            <CommonSubTitle color={`#000`}>
+            </Text>
+            <Text color={`#292929`} fontSize={`22px`} fontWeight={`400`}>
               정비관리도 이젠 편리하게
-            </CommonSubTitle>
+            </Text>
 
             <Wrapper margin={`20px 0px 0px`}>
               {/* 로그인 입력 form */}
