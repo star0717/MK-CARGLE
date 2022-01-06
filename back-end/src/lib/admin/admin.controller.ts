@@ -115,7 +115,7 @@ export class AdminController {
   })
   @ApiParam({ name: 'id', description: '거부할 업체의 오브젝트ID' })
   @ApiBody({
-    description: '변경 사유가 있을 시 info1에 기입하여 전송',
+    description: '거절 사유가 있을 시 info1에 기입하여 전송',
     type: OptionalInfo,
   })
   async rejectCompany(
