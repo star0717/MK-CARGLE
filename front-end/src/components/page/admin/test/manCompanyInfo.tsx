@@ -33,7 +33,7 @@ import { Router, useRouter } from "next/router";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   const router = useRouter();
-  console.log("조회", props.data);
+  console.log("조회");
   if (props.data == null) {
     // return {
     //   redirect: {
