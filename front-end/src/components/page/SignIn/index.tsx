@@ -109,7 +109,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <BodyWrapper ref={ref}>
+    <BodyWrapper ref={ref} kindOf={`BodyWrapper2`}>
       <WholeWrapper>
         <RsWrapper padding={`0px 0px 40px`}>
           <Wrapper

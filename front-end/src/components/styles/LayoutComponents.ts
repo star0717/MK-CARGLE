@@ -186,15 +186,17 @@ export const HeaderIconAlarm = styled.div<any>`
 
 export const BodyWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
+  height: ${(props) => props.height || `100%`};
   display: flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
-  padding-bottom: 80px;
-  padding-top:80px;
+  justify-content:space-between;
+  padding:${(props) => props.padding || ` 80px 0px 150px`};
+  
+  
   
 
-  ${(props) => props.kindOf === `NoneTitle` && `padding : 80px 0px`}
+  ${(props) => props.kindOf === `BodyWrapper2` && `height:100vh;`}
   }
 `;
 
