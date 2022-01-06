@@ -31,13 +31,18 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [approval, setApproval] = useState<boolean>(false);
-  const [reason, setReason] = useState<string>("");
+  const [reason, setReason] = useState<OptionalInfo>({
+    info1: "",
+    info2: "",
+    info3: "",
+  });
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
   const onInputreasonHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReason(reason);
+    setReason({ ...reason, info1: e.target.value });
+    console.log(reason);
   };
   /*********************************************************************
    * 4. Props settings
@@ -46,10 +51,6 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  const RejectReason: OptionalInfo = {
-    info1: reason,
-  };
-
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
@@ -115,11 +116,12 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
                   props.findDocHandler(props.findResult.currentPage); //리렌더링
                   router.push(`${UseLink.ADMIN_REVIEW_COMPANIES}`); //list page 전환
                 } else if (approval == false) {
-                  dispatch(
-                    rejectCompany(props.data.company._cID, RejectReason)
-                  ).then((res: any) => {
-                    alert("반려처리 되었습니다.");
-                  });
+                  console.log(reason);
+                  dispatch(rejectCompany(props.data.company._cID, reason)).then(
+                    (res: any) => {
+                      alert("반려처리 되었습니다.");
+                    }
+                  );
                   props.setModalOpen(false);
                   props.findDocHandler(props.findResult.currentPage); //리렌더링
                   router.push(`${UseLink.ADMIN_REVIEW_COMPANIES}`); //list page 전환
