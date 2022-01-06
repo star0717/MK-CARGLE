@@ -105,7 +105,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    *********************************************************************/
 
   return (
-    <WholeWrapper>
+    <WholeWrapper margin={`100px 0`}>
       <RsWrapper>
         <Wrapper width={`1200px`}>
           <Wrapper dr={`row`}>
@@ -152,9 +152,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                   key={doc._id}
                   onClick={() => {
                     console.log("닥", doc);
-                    // router.push(
-                    //   `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
-                    // );
+                    router.push(
+                      `${UseLink.ADMIN_MAN_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
+                    );
                   }}
                 >
                   <TableRowLIST width={`200px`}>
