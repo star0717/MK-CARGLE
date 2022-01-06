@@ -1,21 +1,32 @@
 import dayjs from "dayjs";
+import { useAtomValue, useUpdateAtom } from "jotai/utils";
 import type { NextPage } from "next";
-import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { _aGetAdminReivewCompanies } from "../../../../../store/action/user.action";
+import React, { useState } from "react";
+import { BsSearch } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { nameState } from ".";
+import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
 import {
   actionTypesUser,
+  UserState,
   _iFindCompanies,
 } from "../../../../../store/interfaces";
-import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
-import { FindParameters, FindResult } from "../../../../models/base.entity";
+import { RootStateInterface } from "../../../../../store/interfaces/RootState";
+import { StepQuery, UseLink } from "../../../../configure/router.entity";
+import {
+  _pAdminManCompanies,
+  _pAdminReviewCompanies,
+} from "../../../../configure/_pProps.entity";
+import { FindParameters } from "../../../../models/base.entity";
 import { Company, CompanyApproval } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
-  TextInput,
+  CloseButton,
+  Combo,
   IconButton,
   RsWrapper,
+  SmallButton,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -23,15 +34,12 @@ import {
   TableRowLIST,
   TableWrapper,
   Text,
+  TextInput,
   WholeWrapper,
   Wrapper,
-  Combo,
 } from "../../../styles/CommonComponents";
-import { BsSearch } from "react-icons/bs";
-import { _MainProps } from "../../../../configure/_props.entity";
-import { StepQuery, UseLink } from "../../../../configure/router.entity";
 
-const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
+const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -41,15 +49,12 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  //직원 명단 API Result 관련
-  //   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
-  //   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  //   const [selectedDoc, setSelectedDoc] = useState<Company>();
-  const [searchOption, setSearchOption] = useState<string>("name");
-  const [filterValue, setFilterValue] = useState<string>("");
-  //   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  //   const [clickDoc, setClickDoc] = useState<Company>();
-  //   console.log("props =>", props);
+  const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
+  const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
+
+  const name = useAtomValue(nameState);
+  const setName = useUpdateAtom(nameState);
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -65,21 +70,34 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
       filterValue: filterValue,
       useRegSearch: true,
     };
-    dispatch(_aGetAdminReivewCompanies(param)).then((res: _iFindCompanies) => {
+    dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
       props.setFindResult(res.payload);
     });
   };
 
+  /**
+   * 검색 옵션 handler
+   * @param e
+   */
   const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchOption(e.target.value);
   };
 
+  /**
+   *
+   * @param e 검색 내용 handler
+   */
   const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilterValue(e.target.value);
   };
 
+  /**
+   * 키보드 이벤트 발생
+   * @param e
+   */
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
+      console.log("asd");
       findCompanyHandler();
     }
   };
@@ -87,27 +105,16 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  //   const fprops: _pAdminReviewCompanies = {
-  //     ...props,
-  //     findResult,
-  //     setFindResult,
-  //     findDocHandler: findCompanyHandler,
-  //     clickDoc,
-  //     setClickDoc,
-  //   };
-
-  //   const ARCModalProps: any = {
-  //     ...props,
-  //     setModalOpen,
-  //     clickDoc,
-  //     style: { height: "500px" },
-  //   };
 
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
+
   return (
     <WholeWrapper>
+      {/* Jotai 테스트 */}
+      atomValue: {name}
+      <SmallButton onClick={() => setName("list")}>이름변경</SmallButton>
       <RsWrapper>
         <Wrapper width={`1200px`}>
           <Wrapper dr={`row`}>
@@ -134,12 +141,11 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                 findCompanyHandler();
               }}
             >
-              <BsSearch></BsSearch>
+              <BsSearch />
             </IconButton>
 
             <Text>승인대기업체수 : {props.findResult.totalDocs}</Text>
           </Wrapper>
-          <Text>승인 관리</Text>
           <TableWrapper>
             <TableHead>
               <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
@@ -155,7 +161,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                   key={doc._id}
                   onClick={() => {
                     router.push(
-                      `${UseLink.ADMIN_REVIEW_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
+                      `${UseLink.ADMIN_TEST}${StepQuery.FIRST}&id=${doc._id}`
                     );
                   }}
                 >
@@ -166,6 +172,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                   <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
                   <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
                   <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
+                  {/* <TableRowLIST width={`200px`}>{doc.approval}</TableRowLIST> */}
                   {doc.approval == CompanyApproval.BEFORE ? (
                     <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
                   ) : doc.approval == CompanyApproval.ING ? (
@@ -186,4 +193,4 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   );
 };
 
-export default AdminReviewCompaniesList;
+export default ManCompanyList;

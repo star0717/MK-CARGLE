@@ -1,32 +1,28 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  _aGetAdminManCompanies,
-  _aGetAdminReivewCompanies,
-} from "../../../../../store/action/user.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
-import { Step } from "../../../../configure/router.entity";
-import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
+import { NextPage } from "next";
 import { _MainProps } from "../../../../configure/_props.entity";
+import { atom } from "jotai";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { getQuery } from "../../../../modules/commonModule";
+import { useState } from "react";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
-import { getQuery } from "../../../../modules/commonModule";
-import AdminReviewCompaniesinfo from "./reviewCompaniesInfo";
-import AdminReviewCompaniesList from "./reviewCompaniesList";
+import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
+import { _iFindCompanies } from "../../../../../store/interfaces";
+import { _pAdminManCompanies } from "../../../../configure/_pProps.entity";
+import { Step } from "../../../../configure/router.entity";
+import ManCompanyInfo from "./manCompanyInfo";
+import ManCompanyList from "./manCompanyList";
 
-const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
+export const nameState = atom<string>("index");
+
+const AdminTestPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Page configuration
    *********************************************************************/
   const dispatch = useDispatch();
   const router = useRouter();
   const routerQuery = getQuery(router.asPath);
-
-  // const { company } = useSelector(
-  //   (state: RootStateInterface): BaseState => state.baseAll
-  // );
 
   /*********************************************************************
    * 2. State settings
@@ -46,9 +42,9 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const findCompanyHandler = (page: number) => {
     const param: FindParameters = {
       page,
-      take: 5,
+      take: 1,
     };
-    dispatch(_aGetAdminReivewCompanies(param)).then((res: _iFindCompanies) => {
+    dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
       setFindResult(res.payload);
     });
   };
@@ -56,19 +52,19 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const adminReviewComProps: _pAdminReviewCompanies = {
+  const adminManComProps: _pAdminManCompanies = {
     ...props,
     findResult,
     setFindResult,
     findDocHandler: findCompanyHandler,
   };
-  console.log(routerQuery);
+
   switch (routerQuery.step) {
     case Step.FIRST:
-      return <AdminReviewCompaniesinfo {...adminReviewComProps} />;
+      return <ManCompanyInfo {...adminManComProps} />;
     default:
-      return <AdminReviewCompaniesList {...adminReviewComProps} />;
+      return <ManCompanyList {...adminManComProps} />;
   }
 };
 
-export default AdminReviewCompaniesPage;
+export default AdminTestPage;

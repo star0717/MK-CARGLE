@@ -28,8 +28,13 @@ const SignUp: NextPage = () => {
     (state: RootStateInterface): UserState => state.userAll
   );
 
+<<<<<<< HEAD
   const [userAuth, setUserAuth] = useState<UserAuthority>(UserAuthority.OWNER); // 유저 권한 종류
-  const [stepNumber, setStepNumber] = useState<number>(6); // 스텝 숫자
+  const [stepNumber, setStepNumber] = useState<number>(5); // 스텝 숫자
+=======
+  const [userAuth, setUserAuth] = useState<UserAuthority>(UserAuthority.WORKER); // 유저 권한 종류
+  const [stepNumber, setStepNumber] = useState<number>(1); // 스텝 숫자
+>>>>>>> fdf8a7a38f0118f5e836055d18d5a631f678f156
 
   // component에 전달할 props들 정의
   const SignUpProps: _pSignUpProps = {

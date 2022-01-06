@@ -88,7 +88,7 @@ const Footer: NextPage = () => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <FooterWrapper minHeight={`100vh`}>
+    <FooterWrapper>
       <Wrapper
         isRelative={true}
         marginTop={`auto`}

@@ -26,6 +26,8 @@ import { User } from "../../../../models/user.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { formRegEx } from "../../../../validation/regEx";
 import { SignUpInfo } from "../../../../models/auth.entity";
+import { useAtomValue, useUpdateAtom } from "jotai/utils";
+import { nameState } from ".";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
@@ -46,6 +48,8 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false); // 모달 창 여부
   // const [busType, setBusType] = useState<string>(props.clickDoc.busType); // 업태
   // const [busItem, setBusItem] = useState<string>(props.clickDoc.busItem); // 업종
+  const name = useAtomValue(nameState);
+  const setName = useUpdateAtom(nameState);
 
   /*********************************************************************
    * 3. Handlers
@@ -93,6 +97,9 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
+        {/* Jotai 테스트 */}
+        atomValue: {name}
+        <SmallButton onClick={() => setName("info")}>이름변경</SmallButton>
         <Wrapper>
           <SmallButton
             type="button"
@@ -181,13 +188,10 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
                 <Wrapper dr={`row`}>
                   <Text>정비업종</Text>
                   <Combo
+                    name="mbTypeNum"
                     value={comData.mbTypeNum}
-                    {...register("mbTypeNum", {
-                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                        onComChangeHandler(e);
-                      },
-                      required: true,
-                    })}
+                    onChange={onComChangeHandler}
+                    required
                   >
                     {mbTypeOption.map((item) => {
                       return (
@@ -197,18 +201,6 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
                       );
                     })}
                   </Combo>
-                  {errors.mbTypeNum?.type === "required" && (
-                    <Text
-                      margin={`0px 0px 10px 0px`}
-                      width={`100%`}
-                      color={`#d6263b`}
-                      al={`flex-start`}
-                      fontSize={`14px`}
-                      textAlign={`left`}
-                    >
-                      필수 선택사항입니다.
-                    </Text>
-                  )}
                 </Wrapper>
                 <Wrapper dr={`row`}>
                   <Text>업태</Text>

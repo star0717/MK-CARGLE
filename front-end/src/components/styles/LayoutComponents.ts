@@ -4,18 +4,19 @@ import { appearAnimation } from "./AnimationCommon";
 // -----------PageWrapper----------- //
 
 export const PageWrapper = styled.div<any>`
-  display: flex;
-  flex-direction: column;
   width: 100%;
   min-height: 100vh;
-  justify-content: space-between;
+  position: relative;
+  display: flex;
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: center;
+  justify-content: flex-between;
 `;
 
 // -----------Head----------- //
 
 export const HeaderWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
-  height: ${(props) => props.height || `100%`};
   color: ${(props) => props.color};
   display: flex;
   background-color: ${(props) => props.bgColor};
@@ -185,13 +186,26 @@ export const HeaderIconAlarm = styled.div<any>`
 
 export const BodyWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
+  height: ${(props) => props.height || `100%`};
+  display: flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:${(props) => props.padding || ` 80px 0px 150px`};
+  
+  
+  
+
+  ${(props) => props.kindOf === `BodyWrapper2` && `height:100vh;`}
   }
 `;
 
 // -----------Footer----------- //
 
 export const FooterWrapper = styled.div<any>`
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  height: 150px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 `;

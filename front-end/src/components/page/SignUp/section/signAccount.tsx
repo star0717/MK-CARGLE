@@ -25,6 +25,7 @@ import {
   SmallButton,
   CommonButton,
   RsWrapper,
+  CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
 import { AxiosError } from "axios";
@@ -34,6 +35,7 @@ import {
   _pComFindModalProps,
   _pSignUpProps,
 } from "../../../../configure/_pProps.entity";
+import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 // modal setting
 Modal.setAppElement("body");
@@ -273,8 +275,8 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <>
-      <WholeWrapper ref={ref}>
+    <BodyWrapper ref={ref}>
+      <WholeWrapper>
         <RsWrapper>
           <form onSubmit={handleSubmit(onSignUpUserHandler)}>
             <Wrapper
@@ -647,7 +649,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
                 />
               </Wrapper>
             </Wrapper>
-            <Wrapper padding={`40px 0px 0px`}>
+            <CommonButtonWrapper kindOf={`column`}>
               <CommonButton
                 kindOf={`white`}
                 margin={`0px 0px 10px 0px`}
@@ -668,10 +670,11 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
               <CommonButton margin={`10px 0px 0px 0px`} type="submit">
                 {props.userAuth === UserAuthority.OWNER ? "다음" : "완료"}
               </CommonButton>
-            </Wrapper>
+            </CommonButtonWrapper>
           </form>
         </RsWrapper>
       </WholeWrapper>
+
       <Modal
         isOpen={modalOpen}
         style={{
@@ -716,7 +719,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
           <CompanyFindModal {...ComfindModalProps} />
         )}
       </Modal>
-    </>
+    </BodyWrapper>
   );
 };
 
