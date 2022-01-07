@@ -38,7 +38,7 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
   const findCompanyHandler = (page: number) => {
     const param: FindParameters = {
       page,
-      take: 5,
+      take: 10,
       filterKey: searchOption,
       filterValue: filterValue,
       useRegSearch: true,
