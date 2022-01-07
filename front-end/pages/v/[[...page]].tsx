@@ -289,7 +289,6 @@ export const getServerSideProps: GetServerSideProps = async (
         }
         case UseLink.ADMIN_USERS: {
           const routerQuery = getQuery(url);
-          console.log("루트", routerQuery);
           const params: FindParameters = {
             take: 10,
           };
@@ -307,8 +306,6 @@ export const getServerSideProps: GetServerSideProps = async (
                 }
               )
               .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
-
-            console.log("특정업체", (data as FindResult<User>).docs.length);
             return {
               props: {
                 tokenValue,
