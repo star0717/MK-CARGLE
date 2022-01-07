@@ -135,7 +135,12 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
  ***********************************************************************/
 
 // 승인관리용 props
-export interface _pAdminReviewCompanies extends _pFindDocs<Company> {}
+export interface _pAdminReviewCompanies extends _pFindDocs<Company> {
+  searchOption: string;
+  setSearchOption: React.Dispatch<React.SetStateAction<string>>;
+  filterValue: string;
+  setFilterValue: React.Dispatch<React.SetStateAction<string>>;
+}
 
 // 업체관리용 props
 export interface _pAdminManCompanies extends _pFindDocs<Company> {

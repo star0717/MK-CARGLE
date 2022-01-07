@@ -36,6 +36,12 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   //직원 명단 API Result 관련
   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
+  //직원 명단 API Result 관련
+  const [searchOption, setSearchOption] = useState<string>("name");
+  const [filterValue, setFilterValue] = useState<string>("");
+
+  console.log(searchOption);
+  console.log(filterValue);
 
   /*********************************************************************
    * 3. Handlers
@@ -45,9 +51,13 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
    * @param page 조회할 페이지
    */
   const findCompanyHandler = (page: number) => {
+    console.log("들어옴!");
     const param: FindParameters = {
       page,
       take: 10,
+      filterKey: searchOption,
+      filterValue: filterValue,
+      useRegSearch: true,
     };
     dispatch(ingCompany(param)).then((res: _ingCompany) => {
       setFindResult(res.payload);
@@ -61,6 +71,10 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
     ...props,
     findResult,
     setFindResult,
+    searchOption,
+    setSearchOption,
+    filterValue,
+    setFilterValue,
     findDocHandler: findCompanyHandler,
   };
   // switch (routerQuery.step) {
