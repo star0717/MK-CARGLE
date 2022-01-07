@@ -11,6 +11,7 @@ import { _MainProps } from "../../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
 import { getQuery } from "../../../../modules/commonModule";
+import { BodyWrapper } from "../../../styles/LayoutComponents";
 import ManCompanyInfo from "./manCompanyInfo";
 import ManCompanyList from "./manCompanyList";
 
@@ -58,11 +59,32 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
     findDocHandler: findCompanyHandler,
   };
 
-  switch (routerQuery.step) {
-    case Step.FIRST:
-      return <ManCompanyInfo {...adminManComProps} />;
-    default:
-      return <ManCompanyList {...adminManComProps} />;
+  // switch (routerQuery.id) {
+  //   case Step.FIRST:
+  //     return (
+  //       <BodyWrapper>
+  //         <ManCompanyInfo {...adminManComProps} />
+  //       </BodyWrapper>
+  //     );
+  //   default:
+  //     return (
+  //       <BodyWrapper>
+  //         <ManCompanyList {...adminManComProps} />
+  //       </BodyWrapper>
+  //     );
+  // }
+  if (routerQuery.id) {
+    return (
+      <BodyWrapper>
+        <ManCompanyInfo {...adminManComProps} />
+      </BodyWrapper>
+    );
+  } else {
+    return (
+      <BodyWrapper>
+        <ManCompanyList {...adminManComProps} />
+      </BodyWrapper>
+    );
   }
 };
 
