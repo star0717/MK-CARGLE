@@ -260,6 +260,7 @@ export enum ActionAPIs {
   APPROVE_COMPANY = "APPROVE_COMPANY", //업체 승인
   REJECT_COMPANY = "REJECT_COMPANY", //업체 승인요청 반려
   ING_COMPANY = "ING_COMPANY",
+  ADMIN_GET_USERS = "ADMIN_GET_USERS",
 
   // 고유 API
   ADMIN_PATCH_SINGUP_INFO = "ADMIN_PATCH_SINGUP_INFO", // 업체 가입 정보 수정
@@ -322,6 +323,12 @@ export class _iDeleteAdminCompanies implements baseActionInterface {
   payload: DeleteResult;
 }
 
+// 관리자: 모든 직원
+export class _iGetAdminUsers implements baseActionInterface {
+  type: ActionAPIs.ADMIN_GET_USERS;
+  payload: FindResult<User>;
+}
+
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
@@ -330,4 +337,5 @@ export class _iDeleteAdminCompanies implements baseActionInterface {
 export type ActionInterfaces =
   | _iFindCompanies
   | _iFindUsers
-  | _iPatchAdminSignUpInfo;
+  | _iPatchAdminSignUpInfo
+  | _iGetAdminUsers;

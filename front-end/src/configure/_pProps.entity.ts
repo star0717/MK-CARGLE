@@ -144,3 +144,11 @@ export interface _pAdminManCompanies extends _pFindDocs<Company> {
   filterValue: string;
   setFilterValue: React.Dispatch<React.SetStateAction<string>>;
 }
+
+// 직원관리용 props
+export interface _pAdminUsers extends _pFindDocs<User> {
+  searchOption: string;
+  setSearchOption: React.Dispatch<React.SetStateAction<string>>;
+  filterValue: string;
+  setFilterValue: React.Dispatch<React.SetStateAction<string>>;
+}

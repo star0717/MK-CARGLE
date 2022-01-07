@@ -30,6 +30,7 @@ import {
   _iPatchAdminSignUpInfo,
   _iDeleteAdminCompanies,
   _ingCompany,
+  _iGetAdminUsers,
 } from "../interfaces";
 
 // 로그인 action
@@ -535,6 +536,20 @@ export async function ingCompany(findParams: FindParameters) {
 
   const result: _ingCompany = {
     type: ActionAPIs.ING_COMPANY,
+    payload: req,
+  };
+  return result;
+}
+
+export async function _aGetAdminUsers(findParams: FindParameters) {
+  const req: FindResult<User> = await axios
+    .get(`/api/admin/users?${FindParameters.getQuery(findParams)}`)
+    .then((res: AxiosResponse<FindResult<User>, User>): FindResult<User> => {
+      return res.data;
+    });
+
+  const result: _iGetAdminUsers = {
+    type: ActionAPIs.ADMIN_GET_USERS,
     payload: req,
   };
   return result;
