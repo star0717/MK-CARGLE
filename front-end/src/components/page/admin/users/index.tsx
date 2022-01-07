@@ -2,30 +2,38 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
-import { _pAdminManCompanies } from "../../../../configure/_pProps.entity";
+import {
+  _aGetAdminManCompanies,
+  _aGetAdminUsers,
+} from "../../../../../store/action/user.action";
+import {
+  _iFindCompanies,
+  _iGetAdminUsers,
+} from "../../../../../store/interfaces";
+import {
+  _pAdminManCompanies,
+  _pAdminUsers,
+} from "../../../../configure/_pProps.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
+import { User } from "../../../../models/user.entity";
 import { getQuery } from "../../../../modules/commonModule";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
-import ManCompanyInfo from "./manCompanyInfo";
-import ManCompanyList from "./manCompanyList";
+import UserList from "./userList";
 
-const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
+const AdminUsersPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Page configuration
    *********************************************************************/
   const dispatch = useDispatch();
   const router = useRouter();
-  const routerQuery = getQuery(router.asPath);
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   //직원 명단 API Result 관련
-  const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
+  const [findResult, setFindResult] = useState<FindResult<User>>(props.data);
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   /*********************************************************************
@@ -35,14 +43,14 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
    * 작업자의 정보를 조회함
    * @param page 조회할 페이지
    */
-  const findCompanyHandler = (page: number) => {
+  const findUserHandler = (page: number) => {
     const param: FindParameters = {
-      take: 5,
+      take: 10,
       filterKey: searchOption,
       filterValue: filterValue,
       useRegSearch: true,
     };
-    dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
+    dispatch(_aGetAdminUsers(param)).then((res: _iGetAdminUsers) => {
       setFindResult(res.payload);
     });
   };
@@ -50,44 +58,22 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const adminManComProps: _pAdminManCompanies = {
+  const adminUsersListProps: _pAdminUsers = {
     ...props,
     findResult,
     setFindResult,
-    findDocHandler: findCompanyHandler,
+    findDocHandler: findUserHandler,
     searchOption,
     setSearchOption,
     filterValue,
     setFilterValue,
   };
 
-  // switch (routerQuery.id) {
-  //   case Step.FIRST:
-  //     return (
-  //       <BodyWrapper>
-  //         <ManCompanyInfo {...adminManComProps} />
-  //       </BodyWrapper>
-  //     );
-  //   default:
-  //     return (
-  //       <BodyWrapper>
-  //         <ManCompanyList {...adminManComProps} />
-  //       </BodyWrapper>
-  //     );
-  // }
-  if (routerQuery.id) {
-    return (
-      <BodyWrapper>
-        <ManCompanyInfo {...adminManComProps} />
-      </BodyWrapper>
-    );
-  } else {
-    return (
-      <BodyWrapper>
-        <ManCompanyList {...adminManComProps} />
-      </BodyWrapper>
-    );
-  }
+  return (
+    <BodyWrapper>
+      <UserList {...adminUsersListProps} />
+    </BodyWrapper>
+  );
 };
 
-export default AdminManCompaniesPage;
+export default AdminUsersPage;

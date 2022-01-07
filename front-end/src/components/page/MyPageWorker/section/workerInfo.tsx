@@ -62,7 +62,7 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
           이곳에서 직원 정보를 확인 및 수정할 수 있습니다.
         </CommonSubTitle>
       </CommonTitleWrapper>
-      <RsWrapper ju={`flex-start`} margin={`100px 0px 0px`}>
+      <RsWrapper ju={`flex-start`}>
         <Wrapper ju={`flex-start`} height={`auto`}>
           <TableWrapper>
             <TableHead>
@@ -114,8 +114,8 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
           },
           content: {
             background: "white",
-            width: "45rem",
-            height: "575px",
+            width: "500px",
+            height: "800px",
             maxWidth: "calc(100vw - 2rem)",
             maxHeight: "calc(100vh - 2rem)",
             overflowY: "auto",

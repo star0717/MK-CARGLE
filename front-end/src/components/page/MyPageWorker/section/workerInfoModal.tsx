@@ -25,11 +25,15 @@ import {
   Text,
   TextInput2,
   SmallButton,
+  CommonSmallTitle,
+  CommonButton,
+  CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
 // import { Switch } from "@material-ui/core";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
 import { Switch } from "@mui/material";
+import useStyles from "../../../styles/MuiTheme";
 
 const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
   const dispatch = useDispatch();
@@ -123,39 +127,69 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
+  const classes = useStyles();
+
   return (
-    <WholeWrapper ref={ref}>
-      <Text>직원 상세 정보</Text>
-      <Wrapper dr={`row`}>
-        <Text>승인상태</Text>
-        {/* <Switch
+    <WholeWrapper ref={ref} padding={`0px 50px 50px`}>
+      <CommonSmallTitle>직원 상세 정보</CommonSmallTitle>
+      <Wrapper dr={`row`} ju={`flex-end`} padding={`0px 0px 20px`}>
+        <Wrapper width={`80px`}>{/* <Text>승인상태&nbsp;|</Text> */}</Wrapper>
+        <Wrapper dr={`row`} width={`auto`}>
+          {/* <FormControlLabel
+          control={<IoIosSwitch sx={{ m: 1 }} defaultChecked />}
+          label="iOS style"
+        /> */}
+          <Wrapper width={`150px`} al={`flex-end`} margin={`0px 10px 0px 0px`}>
+            {approval ? (
+              <Text color={`#0066ff`} fontWeight={`600`}>
+                승인 완료되었습니다!
+              </Text>
+            ) : (
+              <Text color={`#9d9d9d`} fontWeight={`600`}>
+                승인 하시겠습니까?
+              </Text>
+            )}
+          </Wrapper>
+          <Switch
+            className={classes.IOSSwitch}
             color="primary"
             checked={approval}
             onChange={onChangeApproval}
-          /> */}
-        <Switch
-          color="primary"
-          checked={approval}
-          onChange={onChangeApproval}
-        />
-        {approval ? <Text>승인</Text> : <Text>미승인</Text>}
+          />
+        </Wrapper>
       </Wrapper>
       <form onSubmit={onChangeWorkerInfo}>
-        <Wrapper dr={`row`}>
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`}>
           <Text>직원명</Text>
-          <TextInput2 type="text" value={docInfo.name} readOnly />
+          <TextInput2
+            width={`400px`}
+            type="text"
+            value={docInfo.name}
+            readOnly
+          />
         </Wrapper>
-        <Wrapper dr={`row`}>
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`}>
           <Text>아이디</Text>
-          <TextInput2 type="text" value={docInfo.email} readOnly />
+          <TextInput2
+            width={`400px`}
+            type="text"
+            value={docInfo.email}
+            readOnly
+          />
         </Wrapper>
-        <Wrapper dr={`row`}>
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`}>
           <Text>휴대폰번호</Text>
-          <TextInput2 type="text" value={docInfo.hpNumber} readOnly />
+          <TextInput2
+            width={`400px`}
+            type="text"
+            value={docInfo.hpNumber}
+            readOnly
+          />
         </Wrapper>
-        <Wrapper dr={`row`}>
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`}>
           <Text>주소</Text>
           <TextInput2
+            width={`400px`}
             value={makeFullAddress(
               docInfo.address1,
               docInfo.address2,
@@ -165,9 +199,10 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
             readOnly
           />
         </Wrapper>
-        <Wrapper dr={`row`}>
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`}>
           <Text>입사일자</Text>
           <TextInput2
+            width={`400px`}
             type="date"
             name="joinDate"
             value={dayjs(docInfo.joinDate).format("YYYY-MM-DD")}
@@ -179,23 +214,30 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
             }}
           />
         </Wrapper>
-        <Wrapper>
-          <SmallButton
+
+        <CommonButtonWrapper kindOf={`column`}>
+          <CommonButton
             type="submit"
-            kindOf={`default`}
-            margin={`0px 0px 0px 20px`}
+            kindOf={`white`}
+            margin={`0px 0px 5px 0px`}
+            width={`400px`}
+            height={`50px`}
+            radius={`100px`}
           >
             저장
-          </SmallButton>
-          <SmallButton
+          </CommonButton>
+          <CommonButton
             type="button"
-            kindOf={`default`}
-            margin={`0px 0px 0px 20px`}
+            kindOf={`white`}
+            margin={`5px 0px 0px 0px`}
             onClick={workerDelete}
+            width={`400px`}
+            height={`50px`}
+            radius={`100px`}
           >
             직원삭제
-          </SmallButton>
-        </Wrapper>
+          </CommonButton>
+        </CommonButtonWrapper>
       </form>
     </WholeWrapper>
   );

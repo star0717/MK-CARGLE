@@ -35,7 +35,11 @@ import AdminTestPage from "../../src/components/page/admin/test";
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import { NextResponse } from "next/server";
 import { redirect } from "next/dist/server/api-utils";
+<<<<<<< HEAD
 import { AdminApiPath } from "../../src/models/api-path";
+=======
+import AdminUsersPage from "../../src/components/page/admin/users";
+>>>>>>> 735ca99aa9d9fd193d300d6741a12a79f0361caf
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -82,6 +86,9 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.ADMIN_MAN_COMPANIES:
       return <AdminManCompaniesPage {...props} />;
+
+    case UseLink.ADMIN_USERS:
+      return <AdminUsersPage {...props} />;
 
     case UseLink.ADMIN_TEST:
       return <AdminTestPage {...props} />;
@@ -197,7 +204,7 @@ export const getServerSideProps: GetServerSideProps = async (
         }
         case UseLink.ADMIN_REVIEW_COMPANIES: {
           const routerQuery = getQuery(url);
-          if (routerQuery.step === Step.FIRST) {
+          if (routerQuery.id) {
             data = await axios
               .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
                 headers: {
@@ -221,7 +228,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
             data = await axios
               .get(
-                `${apiUrl}/admin/review/companies?${FindParameters.getQuery(
+                `${apiUrl}/admin/ing/companies?${FindParameters.getQuery(
                   params
                 )}`,
                 {
@@ -244,36 +251,33 @@ export const getServerSideProps: GetServerSideProps = async (
         }
         case UseLink.ADMIN_MAN_COMPANIES: {
           const routerQuery = getQuery(url);
-          if (routerQuery.step) {
-            if (routerQuery.step === Step.FIRST) {
-              data = await axios
-                .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
-                  headers: {
-                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                  },
-                  withCredentials: true,
-                })
-                .then(
-                  (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-                );
-              console.log(data);
-              return {
-                props: {
-                  tokenValue,
-                  data,
+          if (routerQuery.id) {
+            data = await axios
+              .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
+                headers: {
+                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
                 },
-              };
-            }
+                withCredentials: true,
+              })
+              .then(
+                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+              );
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
           } else {
             const params: FindParameters = {
               take: 5,
-              filterKey: "approval",
-              filterValue: "done",
             };
 
             data = await axios
               .get(
-                `${apiUrl}/admin/companies?${FindParameters.getQuery(params)}`,
+                `${apiUrl}/admin/done/companies?${FindParameters.getQuery(
+                  params
+                )}`,
                 {
                   headers: {
                     Cookie: `mk_token=${context.req.cookies.mk_token}`,
@@ -284,6 +288,48 @@ export const getServerSideProps: GetServerSideProps = async (
               .then(
                 (res: AxiosResponse<FindResult<Company>, Company>) => res.data
               );
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          }
+        }
+        case UseLink.ADMIN_USERS: {
+          const routerQuery = getQuery(url);
+          const params: FindParameters = {
+            take: 10,
+          };
+          if (routerQuery.id) {
+            data = await axios
+              .get(
+                `${apiUrl}/admin/users/${
+                  routerQuery.id
+                }?${FindParameters.getQuery(params)}`,
+                {
+                  headers: {
+                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                  },
+                  withCredentials: true,
+                }
+              )
+              .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          } else {
+            data = await axios
+              .get(`${apiUrl}/admin/users?${FindParameters.getQuery(params)}`, {
+                headers: {
+                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                },
+                withCredentials: true,
+              })
+              .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
             return {
               props: {
                 tokenValue,

@@ -364,7 +364,7 @@ export const Text = styled.p<any>`
 
   & svg {
     color: ${(props) => props.color};
-    margin-top: ${(props) => props.marginTop};
+    margin-top: ${(props) => props.marginTop || `4px`};
     margin-bottom: ${(props) => props.marginBottom};
     margin-right: ${(props) => props.marginRight};
     font-size: ${(props) => props.fontSize || `18px`};
@@ -372,6 +372,7 @@ export const Text = styled.p<any>`
 
   & span {
     font-weight: 700;
+    margin-top: 4px;
   }
 
   &:hover {
@@ -955,17 +956,17 @@ export const TableWrapper = styled.div<any>`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 100px 0px 0px;
   align-items: center;
-  margin: ${(props) => props.margin || `0px`};
+  margin: ${(props) => props.margin || `100px 0px 0px`};
   padding: ${(props) => props.padding || `0px`};
-  border: 1px solid #c4c4c4;
+
+  min-height: 440px;
   border-radius: ${(props) => props.radius || `4px 4px 0px 0px`};
 `;
 
 export const TableHead = styled.ul<any>`
   width: 100%;
-  height: ${(props) => props.height || `40px`};
+  height: ${(props) => props.height || `45px`};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -973,7 +974,7 @@ export const TableHead = styled.ul<any>`
   justify-content: space-between;
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
-  border-radius: ${(props) => props.radius || `4px 4px 0px 0px`};
+  border-radius: ${(props) => props.radius || `8px 8px 0px  0px`};
   border-top: ${(props) => props.borderTop || ``};
   background-color: #0066ff;
   color: #fff;
@@ -1001,6 +1002,12 @@ export const TableBody = styled.div<any>`
   padding: ${(props) => props.padding || `0px`};
   overflow: ${(props) => props.overflow || ``};
   font-size: ${(props) => props.fontSize || `16px`};
+
+ &:last-child
+ {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+},
 `;
 export const TableRow = styled.ul<any>`
   width: 100%;

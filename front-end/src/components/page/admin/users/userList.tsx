@@ -4,15 +4,18 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
-import { UseLink } from "../../../../configure/router.entity";
 import {
-  _pAdminManCompanies,
-  _pAdminReviewCompanies,
-} from "../../../../configure/_pProps.entity";
+  _aGetAdminManCompanies,
+  _aGetAdminUsers,
+} from "../../../../../store/action/user.action";
+import {
+  _iFindCompanies,
+  _iGetAdminUsers,
+} from "../../../../../store/interfaces";
+import { UseLink } from "../../../../configure/router.entity";
+import { _pAdminUsers } from "../../../../configure/_pProps.entity";
 import { FindParameters } from "../../../../models/base.entity";
-import { Company, CompanyApproval } from "../../../../models/company.entity";
+import { User } from "../../../../models/user.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
   CloseButton,
@@ -32,7 +35,7 @@ import {
   Wrapper,
 } from "../../../styles/CommonComponents";
 
-const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
+const UsersList: NextPage<_pAdminUsers> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -50,14 +53,14 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    * 작업자의 정보를 조회함
    * @param page 조회할 페이지
    */
-  const findCompanyHandler = (page?: number) => {
+  const findUserHandler = (page?: number) => {
     const param: FindParameters = {
-      take: 5,
+      take: 10,
       filterKey: props.searchOption,
       filterValue: props.filterValue,
       useRegSearch: true,
     };
-    dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
+    dispatch(_aGetAdminUsers(param)).then((res: _iGetAdminUsers) => {
       props.setFindResult(res.payload);
     });
   };
@@ -84,7 +87,8 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    */
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      findCompanyHandler();
+      props.findDocHandler;
+      findUserHandler();
     }
   };
 
@@ -107,8 +111,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                 onSearchOptionHandler(e);
               }}
             >
-              <option value="name">상호명 검색</option>
-              <option value="comRegNum">사업자등록번호 검색</option>
+              <option value="name">이름 검색</option>
+              <option value="hpNumber">전화번호 검색</option>
+              <option value="approval">승인여부 검색</option>
             </Combo>
             <TextInput
               type="text"
@@ -122,63 +127,36 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             <IconButton
               type="submit"
               onClick={() => {
-                findCompanyHandler();
+                findUserHandler();
               }}
             >
               <BsSearch />
             </IconButton>
 
-            <Text>가입완료 업체 수 : {props.findResult.totalDocs}</Text>
+            <Text>직원 수 : {props.findResult.totalDocs}</Text>
           </Wrapper>
           <TableWrapper>
             <TableHead>
-              <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>상호명</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>사업자등록증</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>정비업등록증</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>대표자명</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>직원관리</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>전화번호</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>입사일자</TableHeadLIST>
+              <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
             </TableHead>
             <TableBody>
-              {props.findResult.docs.map((doc: Company) => (
+              {props.findResult.docs.map((doc: User) => (
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    router.push(`${UseLink.ADMIN_MAN_COMPANIES}?id=${doc._id}`);
+                    console.log("구혁씨 ㅎㅇ");
                   }}
                 >
-                  <TableRowLIST width={`200px`}>
-                    {dayjs(doc.createdAt).format("YYYY-MM-DD")}
+                  <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
+                  <TableRowLIST width={`300px`}>
+                    {dayjs(doc.joinDate).format("YYYY-MM-DD")}
                   </TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
-                  {doc.approval == CompanyApproval.BEFORE ? (
-                    <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
-                  ) : doc.approval == CompanyApproval.ING ? (
-                    <TableRowLIST width={`200px`}>요청 중</TableRowLIST>
-                  ) : doc.approval == CompanyApproval.DONE ? (
-                    <TableRowLIST width={`200px`}>승인완료</TableRowLIST>
-                  ) : (
-                    <TableRowLIST width={`200px`}>이상업체</TableRowLIST>
-                  )}
-                  <TableRowLIST
-                    width={`200px`}
-                    onClick={(e: React.MouseEvent<HTMLTableCellElement>) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <SmallButton
-                      type="button"
-                      kindOf={`default`}
-                      onClick={() => {
-                        router.push(UseLink.ADMIN_USERS);
-                      }}
-                    >
-                      직원관리
-                    </SmallButton>
+                  <TableRowLIST width={`300px`}>
+                    {doc.approval ? "승인" : "미승인"}
                   </TableRowLIST>
                 </TableRow>
               ))}
@@ -191,4 +169,4 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
   );
 };
 
-export default ManCompanyList;
+export default UsersList;
