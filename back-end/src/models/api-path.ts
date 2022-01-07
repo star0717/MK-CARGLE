@@ -1,5 +1,5 @@
 export class AuthApiPath {
-  static BASE = 'auth/';
+  static BASE = '/auth/';
   static signup = AuthApiPath.BASE + 'signup';
   static signin = AuthApiPath.BASE + 'signin';
   static signout = AuthApiPath.BASE + 'signout';
@@ -28,17 +28,17 @@ export class AuthApiPath {
 }
 
 export class UserApiPath {
-  static BASE = 'users/';
+  static BASE = '/users/';
   static users = UserApiPath.BASE;
 }
 
 export class CompanyApiPath {
-  static BASE = 'companies/';
+  static BASE = '/companies/';
   static companies = CompanyApiPath.BASE;
 }
 
 export class AdminApiPath {
-  static BASE = 'admin/';
+  static BASE = '/admin/';
   static review_approve_companies =
     AdminApiPath.BASE + 'review/approve/companies';
   static review_reject_companies =
@@ -56,7 +56,7 @@ export class AdminApiPath {
 }
 
 export class SettingsApiPath {
-  static BASE = 'settings/';
+  static BASE = '/settings/';
   static myinfo_confirm_password =
     SettingsApiPath.BASE + 'myinfo/confirm/password';
   static myinfo = SettingsApiPath.BASE + 'myinfo';
