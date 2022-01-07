@@ -35,6 +35,7 @@ import AdminTestPage from "../../src/components/page/admin/test";
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import { NextResponse } from "next/server";
 import { redirect } from "next/dist/server/api-utils";
+import AdminUsersPage from "../../src/components/page/admin/users";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -81,6 +82,9 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.ADMIN_MAN_COMPANIES:
       return <AdminManCompaniesPage {...props} />;
+
+    case UseLink.ADMIN_USERS:
+      return <AdminUsersPage {...props} />;
 
     case UseLink.ADMIN_TEST:
       return <AdminTestPage {...props} />;
@@ -280,6 +284,48 @@ export const getServerSideProps: GetServerSideProps = async (
               .then(
                 (res: AxiosResponse<FindResult<Company>, Company>) => res.data
               );
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          }
+        }
+        case UseLink.ADMIN_USERS: {
+          const routerQuery = getQuery(url);
+          const params: FindParameters = {
+            take: 10,
+          };
+          if (routerQuery.id) {
+            data = await axios
+              .get(
+                `${apiUrl}/admin/users/${
+                  routerQuery.id
+                }?${FindParameters.getQuery(params)}`,
+                {
+                  headers: {
+                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                  },
+                  withCredentials: true,
+                }
+              )
+              .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          } else {
+            data = await axios
+              .get(`${apiUrl}/admin/users?${FindParameters.getQuery(params)}`, {
+                headers: {
+                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                },
+                withCredentials: true,
+              })
+              .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
             return {
               props: {
                 tokenValue,

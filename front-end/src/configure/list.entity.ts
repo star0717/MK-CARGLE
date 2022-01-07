@@ -171,6 +171,12 @@ export const menuList = [
         subMenuLink: UseLink.ADMIN_MAN_COMPANIES,
         subMenuAuth: UserAuthority.ADMIN,
       },
+      {
+        key: "7.3",
+        subMenuName: "직원관리",
+        subMenuLink: UseLink.ADMIN_USERS,
+        subMenuAuth: UserAuthority.ADMIN,
+      },
     ],
   },
 ];
