@@ -1428,10 +1428,10 @@ export const NavUl = styled.ul<any>`
   text-decoration: none;
 `;
 
-export const NavLi = styled.li<any>`
-  height: ${(props) => props.height || `30px`};
+// export const NavLi = styled.li<any>`
+//   height: ${(props) => props.height || `30px`};
 
-  &:hover {
-    font-weight: bold;
-  }
-`;
+//   &:hover {
+//     font-weight: bold;
+//   }
+// `;
