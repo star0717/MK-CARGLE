@@ -559,6 +559,39 @@ export const SmallButton = styled.button<any>`
   }
 `;
 
+export const FocusButton = styled.button<any>`
+  width: ${(props) => props.width || `80px`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `40px`};
+  transition: ${(props) => props.transition || CustomTheme.transition};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor};
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+
+  ${(props) =>
+    props.kindOf === `default` && `background ${CustomTheme.subWhite_C};`}
+  ${(props) =>
+    props.kindOf === `default` && `color ${CustomTheme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `default` &&
+    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+    
+    ${(props) =>
+    props.kindOf === `true` && `background ${CustomTheme.basicTheme_C};`}
+    ${(props) => props.kindOf === `true` && `color ${CustomTheme.white_C};`}
+    ${(props) =>
+    props.kindOf === `true` && `border : 1px solid ${CustomTheme.white_C};`}
+`;
+
 export const LabelButton = styled.label<any>`
   width: ${(props) => props.width || `80px`};
   min-width: ${(props) => props.minWidth};

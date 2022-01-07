@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useResizeDetector } from "react-resize-detector";
 import { useRouter } from "next/router";
 import {
+  FocusButton,
   RsWrapper,
   SmallButton,
   Text,
@@ -60,9 +61,9 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
         <Wrapper>
           <Wrapper dr={`row`}>
             <Text>승인여부</Text>
-            <SmallButton
+            <FocusButton
               type="button"
-              kindOf={`default`}
+              kindOf={approval === true ? `true` : `default`}
               margin={`0px 0px 0px 20px`}
               onClick={() => {
                 setApproval(true);
@@ -70,10 +71,10 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
               }}
             >
               승인
-            </SmallButton>
-            <SmallButton
+            </FocusButton>
+            <FocusButton
               type="button"
-              kindOf={`default`}
+              kindOf={approval === false ? `true` : `default`}
               margin={`0px 0px 0px 20px`}
               onClick={() => {
                 setApproval(false);
@@ -81,7 +82,7 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
               }}
             >
               반려
-            </SmallButton>
+            </FocusButton>
           </Wrapper>
           <Wrapper dr={`row`}>
             <Text width={`130px`}>반려사유</Text>
