@@ -26,7 +26,7 @@ const Custom500: NextPage = () => {
           <Text
             fontSize={`24px`}
             fontWeight={`400`}
-            color={`#0066ff`}
+            color={`#314FA5`}
             padding={`0px 0px 10px`}
           >
             죄송합니다. 알 수 없는 오류가 발생하였습니다

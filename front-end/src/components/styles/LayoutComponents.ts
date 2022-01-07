@@ -113,7 +113,7 @@ export const HeaderText = styled.p<any>`
 
   &:hover {
     text-decoration: ${(props) => props.decoration};
-    color: #0066ff;
+    color: #314fa5;
   }
 `;
 
@@ -138,14 +138,14 @@ export const HeaderIconButton = styled.button<any>`
   box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
 
   &:hover {
-    color: #0066ff;
-    border: 1px solid #0066ff;
+    color: #314fa5;
+    border: 1px solid #314fa5;
   }
 `;
 
 export const HeaderIconAlarmWrapper = styled.div<any>`
   position: absolute;
-  z-index: 9999;
+  z-index: 9998;
   top: 50px;
   left: -230px;
 `;
@@ -166,7 +166,7 @@ export const HeaderIconAlarm = styled.div<any>`
   background-color: ${(props) => props.bgColor || `#fff`};
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
-  border: ${(props) => props.border || `1px solid #0066ff`};
+  border: ${(props) => props.border || `1px solid #314FA5`};
   border-radius: ${(props) => props.radius || CustomTheme.radius};
   box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
   padding: 0px 20px;
@@ -189,7 +189,7 @@ export const BodyWrapper = styled.div<any>`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 80px 0 150px;
+  padding: ${(props) => props.padding || `80px 0px 150px`};
 
   ${(props) =>
     props.kindOf === `NoneTitleBodyWrapper` && `justify-content:center`}

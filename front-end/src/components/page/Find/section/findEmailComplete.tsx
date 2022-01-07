@@ -30,7 +30,7 @@ const FindEmailComplete: NextPage<_pFindEmail> = (props) => {
         radius={`5px`}
         margin={`0px 0px 30px`}
       >
-        <Text fontSize={`22px`} fontWeight={`600`} color={`#0066ff`}>
+        <Text fontSize={`22px`} fontWeight={`600`} color={`#314FA5`}>
           {props.findEmail}
         </Text>
       </Wrapper>

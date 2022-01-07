@@ -141,7 +141,7 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
         /> */}
           <Wrapper width={`150px`} al={`flex-end`} margin={`0px 10px 0px 0px`}>
             {approval ? (
-              <Text color={`#0066ff`} fontWeight={`600`}>
+              <Text color={`#314FA5`} fontWeight={`600`}>
                 승인 완료되었습니다!
               </Text>
             ) : (
@@ -228,7 +228,6 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
           </CommonButton>
           <CommonButton
             type="button"
-            kindOf={`white`}
             margin={`5px 0px 0px 0px`}
             onClick={workerDelete}
             width={`400px`}
