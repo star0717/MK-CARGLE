@@ -259,6 +259,7 @@ export enum ActionAPIs {
   FIND_USERS = "FIND_USERS", // 사용자 정보 조회
   APPROVE_COMPANY = "APPROVE_COMPANY", //업체 승인
   REJECT_COMPANY = "REJECT_COMPANY", //업체 승인요청 반려
+  ING_COMPANY = "ING_COMPANY",
 
   // 고유 API
   ADMIN_PATCH_SINGUP_INFO = "ADMIN_PATCH_SINGUP_INFO", // 업체 가입 정보 수정
@@ -299,6 +300,12 @@ export class ApproveCompany implements baseActionInterface {
 //업체 승인요청 반려
 export class RejectCompany implements baseActionInterface {
   type: ActionAPIs.REJECT_COMPANY;
+  payload: any;
+}
+
+//approval 이 ing 상태인 업체 반환
+export class _ingCompany implements baseActionInterface {
+  type: ActionAPIs.ING_COMPANY;
   payload: any;
 }
 

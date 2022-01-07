@@ -3,10 +3,14 @@ import type { NextPage } from "next";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { _aGetAdminReivewCompanies } from "../../../../../store/action/user.action";
+import {
+  ingCompany,
+  _aGetAdminReivewCompanies,
+} from "../../../../../store/action/user.action";
 import {
   actionTypesUser,
   _iFindCompanies,
+  _ingCompany,
 } from "../../../../../store/interfaces";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
@@ -37,19 +41,12 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-  console.log("List로 들어왔습니다.");
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   //직원 명단 API Result 관련
-  //   const [findResult, setFindResult] = useState<FindResult<Company>>(props.data);
-  //   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  //   const [selectedDoc, setSelectedDoc] = useState<Company>();
   const [searchOption, setSearchOption] = useState<string>("name");
   const [filterValue, setFilterValue] = useState<string>("");
-  //   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  //   const [clickDoc, setClickDoc] = useState<Company>();
-  //   console.log("props =>", props);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -66,7 +63,8 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
       filterValue: filterValue,
       useRegSearch: true,
     };
-    dispatch(_aGetAdminReivewCompanies(param)).then((res: _iFindCompanies) => {
+    console.log("정상작동3");
+    dispatch(ingCompany(param)).then((res: _ingCompany) => {
       props.setFindResult(res.payload);
     });
   };
@@ -156,7 +154,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                   key={doc._id}
                   onClick={() => {
                     router.push(
-                      `${UseLink.ADMIN_REVIEW_COMPANIES}${StepQuery.FIRST}&id=${doc._id}`
+                      `${UseLink.ADMIN_REVIEW_COMPANIES}?id=${doc._id}`
                     );
                   }}
                 >
