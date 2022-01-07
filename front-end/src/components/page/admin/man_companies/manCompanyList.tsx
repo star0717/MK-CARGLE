@@ -19,6 +19,7 @@ import {
   Combo,
   IconButton,
   RsWrapper,
+  SmallButton,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -137,6 +138,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
               <TableHeadLIST width={`200px`}>정비업등록증</TableHeadLIST>
               <TableHeadLIST width={`200px`}>대표자명</TableHeadLIST>
               <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>직원관리</TableHeadLIST>
             </TableHead>
             <TableBody>
               {props.findResult.docs.map((doc: Company) => (
@@ -153,7 +155,6 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                   <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
                   <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
                   <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
-                  {/* <TableRowLIST width={`200px`}>{doc.approval}</TableRowLIST> */}
                   {doc.approval == CompanyApproval.BEFORE ? (
                     <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
                   ) : doc.approval == CompanyApproval.ING ? (
@@ -163,6 +164,22 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                   ) : (
                     <TableRowLIST width={`200px`}>이상업체</TableRowLIST>
                   )}
+                  <TableRowLIST
+                    width={`200px`}
+                    onClick={(e: React.MouseEvent<HTMLTableCellElement>) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <SmallButton
+                      type="button"
+                      kindOf={`default`}
+                      onClick={() => {
+                        console.log("hi");
+                      }}
+                    >
+                      직원관리
+                    </SmallButton>
+                  </TableRowLIST>
                 </TableRow>
               ))}
             </TableBody>
