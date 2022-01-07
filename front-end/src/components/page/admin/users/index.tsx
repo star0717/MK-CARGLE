@@ -3,14 +3,10 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  _aGetAdminManCompanies,
   _aGetAdminUsers,
   _aGetAdminUsersId,
 } from "../../../../../store/action/user.action";
-import {
-  _iFindCompanies,
-  _iGetAdminUsers,
-} from "../../../../../store/interfaces";
+import { _iGetAdminUsers } from "../../../../../store/interfaces";
 import {
   _pAdminManCompanies,
   _pAdminUsers,

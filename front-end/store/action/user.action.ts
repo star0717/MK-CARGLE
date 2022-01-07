@@ -18,7 +18,6 @@ import { User } from "../../src/models/user.entity";
 import {
   ActionAPIs,
   actionTypesUser,
-  AdminCompaniesList,
   ApproveCompany,
   RejectCompany,
   GetWorkersList,
@@ -26,17 +25,24 @@ import {
   PatchWorkersChange,
   PatchWorkersDelete,
   PatchWorkersReject,
-  _iFindCompanies,
   _iPatchAdminSignUpInfo,
   _iDeleteAdminCompanies,
   _ingCompany,
   _iGetAdminUsers,
 } from "../interfaces";
 
+import {
+  AuthApiPath,
+  UserApiPath,
+  CompanyApiPath,
+  AdminApiPath,
+  SettingsApiPath,
+} from "../../src/models/api-path";
+
 // 로그인 action
 export async function signInUserAction(dataToSubmit: UserInfo) {
   const req = await axios
-    .post(`/api/auth/signin`, dataToSubmit)
+    .post(`/api${AuthApiPath.signin}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_SIGNIN,
@@ -47,7 +53,7 @@ export async function signInUserAction(dataToSubmit: UserInfo) {
 // 로그아웃 action
 export async function signOutUserAction() {
   const req = await axios
-    .get(`/api/auth/signout`)
+    .get(`/api${AuthApiPath.signout}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_SIGNOUT,
@@ -58,7 +64,7 @@ export async function signOutUserAction() {
 // 회원가입 action
 export async function signUpUserAction(dataToSubmit: any) {
   const req = await axios
-    .post(`/api/auth/signup`, dataToSubmit)
+    .post(`/api${AuthApiPath.signup}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
@@ -70,7 +76,7 @@ export async function signUpUserAction(dataToSubmit: any) {
 // 이메일 인증번호 전송 action
 export async function emailSendAction(dataToSubmit: string) {
   const req = await axios
-    .get(`/api/auth/validate/email/${dataToSubmit}`)
+    .get(`/api${AuthApiPath.validate_email}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_EMAIL_SEND,
@@ -81,7 +87,7 @@ export async function emailSendAction(dataToSubmit: string) {
 // 인증번호 검사 action
 export async function authNumCheckAction(dataToSubmit: string) {
   const req = await axios
-    .get(`/api/auth/validate/email-token/${dataToSubmit}`)
+    .get(`/api${AuthApiPath.validate_email_token}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_AUTHNUM_CHECK,
@@ -92,7 +98,7 @@ export async function authNumCheckAction(dataToSubmit: string) {
 // 이메일 찾기 action
 export async function findEmailAction(dataToSubmit: HelpFindEmail) {
   const req = await axios
-    .post(`/api/auth/help/email`, dataToSubmit)
+    .post(`/api${AuthApiPath.help_email}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_FIND_EMAIL,
@@ -103,7 +109,7 @@ export async function findEmailAction(dataToSubmit: HelpFindEmail) {
 // 패스워드 찾기 action
 export async function findPWAction(dataToSubmit: HelpFindPWD) {
   const req = await axios
-    .post(`/api/auth/help/pwd`, dataToSubmit)
+    .post(`/api${AuthApiPath.help_pwd}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
@@ -115,7 +121,7 @@ export async function findPWAction(dataToSubmit: HelpFindPWD) {
 // 사업자번호 유효성 검사 action
 export async function companyCheckAction(dataToSubmit: string) {
   const req = await axios
-    .get(`/api/auth/validate/com-reg-number/${dataToSubmit}`)
+    .get(`/api${AuthApiPath.validate_com_reg_number}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_COMPANY_CHECK,
@@ -126,7 +132,7 @@ export async function companyCheckAction(dataToSubmit: string) {
 // 사업자번호 검색 action
 export async function companyFindAction(dataToSubmit: string) {
   const req = await axios
-    .get(`/api/auth/find/company/${dataToSubmit}`)
+    .get(`/api${AuthApiPath.company}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_COMPANY_FIND,
@@ -137,7 +143,7 @@ export async function companyFindAction(dataToSubmit: string) {
 // 사업자번호 검색 action
 export async function companyFindbyNameAction(dataToSubmit: string) {
   const req = await axios
-    .get(`/api/auth/find/companies/${dataToSubmit}`)
+    .get(`/api${AuthApiPath.companies}${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_COMPANY_FIND,
@@ -148,7 +154,7 @@ export async function companyFindbyNameAction(dataToSubmit: string) {
 // 사업자등록증 업로드 action
 export async function comFileUploadAction(dataToSubmit: FormData) {
   const req = await axios
-    .post(`/api/auth/upload/com-reg-doc`, dataToSubmit, {
+    .post(`/api${AuthApiPath.upload_com_reg_doc}`, dataToSubmit, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -163,7 +169,7 @@ export async function comFileUploadAction(dataToSubmit: FormData) {
 // 정비업등록증 업로드 action
 export async function manFileUploadAction(dataToSubmit: FormData) {
   const req = await axios
-    .post(`/api/auth/upload/man-reg-doc`, dataToSubmit, {
+    .post(`/api${AuthApiPath.upload_man_reg_doc}`, dataToSubmit, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -178,7 +184,7 @@ export async function manFileUploadAction(dataToSubmit: FormData) {
 // 가입 심사 요청 action (업체)
 export async function approvalReqAction(dataToSubmit: string) {
   const req = await axios
-    .patch(`/api/auth/request/company/${dataToSubmit}`)
+    .patch(`/api${AuthApiPath.request_company}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.APPROVAL_REQUEST,
@@ -193,7 +199,7 @@ export async function approvalReqAction(dataToSubmit: string) {
  */
 export async function pwCheckAction(dataToSubmit: ConfirmPWD) {
   const req = await axios
-    .post(`/api/settings/myinfo/confirm/password`, dataToSubmit)
+    .post(`/api${SettingsApiPath.myinfo_confirm_password}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.PASSWORD_CHECK,
@@ -207,7 +213,7 @@ export async function pwCheckAction(dataToSubmit: ConfirmPWD) {
  */
 export async function getMyInfoAction() {
   const req = await axios
-    .get(`/api/settings/myinfo`)
+    .get(`/api${SettingsApiPath.myinfo}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.GET_MY_INFO,
@@ -221,7 +227,7 @@ export async function getMyInfoAction() {
  */
 export async function setMyInfoAction(dataToSubmit: SignUpInfo) {
   const req = await axios
-    .patch(`/api/settings/myinfo`, dataToSubmit)
+    .patch(`/api${SettingsApiPath.myinfo}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
@@ -237,7 +243,7 @@ export async function setMyInfoAction(dataToSubmit: SignUpInfo) {
 export async function changePwAction(dataToSubmit: HelpChangePWD) {
   const req = await axios
     .patch(
-      `/api/settings/myinfo/change/password/${dataToSubmit._id}`,
+      `/api${SettingsApiPath.myinfo_change_password}/${dataToSubmit._id}`,
       dataToSubmit
     )
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -253,7 +259,7 @@ export async function changePwAction(dataToSubmit: HelpChangePWD) {
  */
 export async function uploadStampAction(dataToSubmit: FormData) {
   const req = await axios
-    .patch(`/api/settings/myinfo/stamp`, dataToSubmit)
+    .patch(`/api${SettingsApiPath.myinfo_stamp}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.UPROAD_STAMP,
@@ -267,7 +273,7 @@ export async function uploadStampAction(dataToSubmit: FormData) {
  */
 export async function downloadStampAction() {
   const req = await axios
-    .get(`/api/settings/myinfo/stamp`)
+    .get(`/api${SettingsApiPath.myinfo_stamp}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
@@ -282,7 +288,7 @@ export async function downloadStampAction() {
  */
 export async function withdrawalAction(dataToSubmit: ConfirmPWD) {
   const req = await axios
-    .post(`/api/auth/withdrawal`, dataToSubmit)
+    .post(`/api${AuthApiPath.withdrawal}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   return {
@@ -298,7 +304,7 @@ export async function withdrawalAction(dataToSubmit: ConfirmPWD) {
 export async function getWorkersListAction(dataToSubmit: FindParameters) {
   const req: FindResult<User> = await axios
     .get(
-      `/api/settings/management/workers?${FindParameters.getQuery(
+      `/api${SettingsApiPath.management_workers}?${FindParameters.getQuery(
         dataToSubmit
       )}`
     )
@@ -320,7 +326,7 @@ export async function getWorkersListAction(dataToSubmit: FindParameters) {
  */
 export async function patchWorkerApproveAction(dataToSubmit: string) {
   const req = await axios
-    .patch(`/api/settings/management/approve/workers/${dataToSubmit}`)
+    .patch(`/api${SettingsApiPath.management_approve_workers}/${dataToSubmit}`)
     .then((res: AxiosResponse<User, any>) => res.data);
 
   const result: PatchWorkersApprove = {
@@ -337,7 +343,7 @@ export async function patchWorkerApproveAction(dataToSubmit: string) {
  */
 export async function patchWorkerRejectAction(dataToSubmit: string) {
   const req = await axios
-    .patch(`/api/settings/management/reject/workers/${dataToSubmit}`)
+    .patch(`/api${SettingsApiPath.management_reject_workers}/${dataToSubmit}`)
     .then((res: AxiosResponse<User, any>) => res.data);
 
   const result: PatchWorkersReject = {
@@ -357,7 +363,7 @@ export async function patchWorkerChangeAction(
   dataToSubmit: Partial<User>
 ) {
   const req = await axios
-    .patch(`/api/settings/management/workers/${id}`, dataToSubmit)
+    .patch(`/api${SettingsApiPath.management_workers}/${id}`, dataToSubmit)
     .then((res: AxiosResponse<User, any>) => res.data);
 
   const result: PatchWorkersChange = {
@@ -374,7 +380,7 @@ export async function patchWorkerChangeAction(
  */
 export async function patchWorkerDeleteAction(dataToSubmit: string) {
   const req = await axios
-    .patch(`/api/settings/management/delete/workers/${dataToSubmit}`)
+    .patch(`/api${SettingsApiPath.management_delete_workers}/${dataToSubmit}`)
     .then((res: AxiosResponse<DeleteResult, any>) => res.data);
 
   const result: PatchWorkersDelete = {
@@ -391,51 +397,11 @@ export async function patchWorkerDeleteAction(dataToSubmit: string) {
  */
 export async function getComRegFile(id: string) {
   const req = await axios
-    .get(`/api/admin/review/com-reg-doc/${id}`)
+    .get(`/api${AdminApiPath.review_comRegDoc}/${id}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   const result = {
     type: actionTypesUser.ADMIN_COMPANIES_LIST,
-    payload: req,
-  };
-  return result;
-}
-
-// 승인요청 업체 조회
-export async function _aGetAdminReivewCompanies(findParams: FindParameters) {
-  const req: FindResult<Company> = await axios
-    .get(`/api/admin/review/companies?${FindParameters.getQuery(findParams)}`)
-    .then(
-      (
-        res: AxiosResponse<FindResult<Company>, Company>
-      ): FindResult<Company> => {
-        return res.data;
-      }
-    );
-
-  const result: _iFindCompanies = {
-    type: ActionAPIs.FIND_COMPANIES,
-    payload: req,
-  };
-  return result;
-}
-
-/**
- * 업체 리스트 반환 action
- */
-export async function _aGetAdminManCompanies(findParams: FindParameters) {
-  const req: FindResult<Company> = await axios
-    .get(`/api/admin/done/companies?${FindParameters.getQuery(findParams)}`)
-    .then(
-      (
-        res: AxiosResponse<FindResult<Company>, Company>
-      ): FindResult<Company> => {
-        return res.data;
-      }
-    );
-
-  const result: _iFindCompanies = {
-    type: ActionAPIs.FIND_COMPANIES,
     payload: req,
   };
   return result;
@@ -452,7 +418,7 @@ export async function _aPatchAdminSignUpInfo(
   dataToSubmit: SignUpInfo
 ) {
   const req: SignUpInfo = await axios
-    .patch(`/api/admin/signup-info/${id}`, dataToSubmit)
+    .patch(`/api${AdminApiPath.signup_info}/${id}`, dataToSubmit)
     .then((res: AxiosResponse<SignUpInfo, SignUpInfo>): SignUpInfo => {
       return res.data;
     });
@@ -471,7 +437,7 @@ export async function _aPatchAdminSignUpInfo(
  */
 export async function _aDeleteAdminCompanies(id: string) {
   const req: DeleteResult = await axios
-    .delete(`/api/admin/review/delete/companies/${id}`)
+    .delete(`/api${AdminApiPath.review_delete_companies}/${id}`)
     .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
       return res.data;
     });
@@ -490,7 +456,7 @@ export async function _aDeleteAdminCompanies(id: string) {
  */
 export async function approveCompany(id: string) {
   const req = await axios
-    .patch(`/api/admin/review/approve/companies/${id}`)
+    .patch(`/api${AdminApiPath.review_approve_companies}/${id}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   const result: ApproveCompany = {
@@ -509,7 +475,7 @@ export async function approveCompany(id: string) {
  */
 export async function rejectCompany(id: string, dataToSubmit: OptionalInfo) {
   const req = await axios
-    .patch(`/api/admin/review/reject/companies/${id}`, dataToSubmit)
+    .patch(`/api${AdminApiPath.review_reject_companies}/${id}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
 
   const result: RejectCompany = {
@@ -525,7 +491,9 @@ export async function rejectCompany(id: string, dataToSubmit: OptionalInfo) {
  */
 export async function ingCompany(findParams: FindParameters) {
   const req: FindResult<Company> = await axios
-    .get(`/api/admin/ing/companies?${FindParameters.getQuery(findParams)}`)
+    .get(
+      `/api${AdminApiPath.ing_companies}?${FindParameters.getQuery(findParams)}`
+    )
     .then(
       (
         res: AxiosResponse<FindResult<Company>, Company>
@@ -548,7 +516,7 @@ export async function ingCompany(findParams: FindParameters) {
  */
 export async function _aGetAdminUsers(findParams: FindParameters) {
   const req: FindResult<User> = await axios
-    .get(`/api/admin/users?${FindParameters.getQuery(findParams)}`)
+    .get(`/api${AdminApiPath.users}?${FindParameters.getQuery(findParams)}`)
     .then((res: AxiosResponse<FindResult<User>, User>): FindResult<User> => {
       return res.data;
     });
@@ -571,7 +539,9 @@ export async function _aGetAdminUsersId(
   findParams: FindParameters
 ) {
   const req: FindResult<User> = await axios
-    .get(`/api/admin/users/${id}?${FindParameters.getQuery(findParams)}`)
+    .get(
+      `/api${AdminApiPath.users}/${id}?${FindParameters.getQuery(findParams)}`
+    )
     .then((res: AxiosResponse<FindResult<User>, User>): FindResult<User> => {
       return res.data;
     });

@@ -2,11 +2,8 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  ingCompany,
-  _aGetAdminReivewCompanies,
-} from "../../../../../store/action/user.action";
-import { _iFindCompanies, _ingCompany } from "../../../../../store/interfaces";
+import { ingCompany } from "../../../../../store/action/user.action";
+import { _ingCompany } from "../../../../../store/interfaces";
 import { Step } from "../../../../configure/router.entity";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
