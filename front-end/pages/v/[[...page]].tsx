@@ -35,11 +35,8 @@ import AdminTestPage from "../../src/components/page/admin/test";
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import { NextResponse } from "next/server";
 import { redirect } from "next/dist/server/api-utils";
-<<<<<<< HEAD
 import { AdminApiPath } from "../../src/models/api-path";
-=======
 import AdminUsersPage from "../../src/components/page/admin/users";
->>>>>>> 735ca99aa9d9fd193d300d6741a12a79f0361caf
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
