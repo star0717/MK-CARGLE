@@ -955,6 +955,7 @@ export const TableWrapper = styled.div<any>`
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 100px 0px 0px;
   align-items: center;
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
@@ -988,8 +989,9 @@ export const TableHeadLIST = styled.li<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: row;
   align-items: center;
-  justify-content: ${(props) => props.ju || `center`};
-  text-align: left;
+  justify-content: ${(props) => props.ju || `flex-start`};
+  padding: 0px 24px;
+  font-weight: 600;
 `;
 
 export const TableBody = styled.div<any>`
@@ -999,7 +1001,6 @@ export const TableBody = styled.div<any>`
   padding: ${(props) => props.padding || `0px`};
   overflow: ${(props) => props.overflow || ``};
   font-size: ${(props) => props.fontSize || `16px`};
-  text-align: left;
 `;
 export const TableRow = styled.ul<any>`
   width: 100%;
@@ -1012,11 +1013,12 @@ export const TableRow = styled.ul<any>`
   border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
   margin: ${(props) => props.margin || `0px`};
   transition: 0.5s;
-  text-align: left;
+
   cursor: pointer;
 
   &:hover {
     background-color: #f5f5f5;
+    color: #0066ff;
   }
 `;
 
@@ -1026,11 +1028,12 @@ export const TableRowLIST = styled.li<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
+  padding: 0px 24px;
   padding: ${(props) => props.padding};
   line-height: ${(props) => props.lineHeight || `1.2`};
+  font-weight: 500;
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
-  text-align: left;
 `;
 
 /* start test */
