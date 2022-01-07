@@ -63,7 +63,7 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
         </CommonSubTitle>
       </CommonTitleWrapper>
       <RsWrapper ju={`flex-start`} margin={`100px 0px 0px`}>
-        <Wrapper height={`630px`} ju={`flex-start`}>
+        <Wrapper ju={`flex-start`} height={`auto`}>
           <TableWrapper>
             <TableHead>
               <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
