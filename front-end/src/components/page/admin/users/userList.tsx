@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import {
@@ -13,16 +14,18 @@ import {
   _iGetAdminUsers,
 } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
-import { _pAdminUsers } from "../../../../configure/_pProps.entity";
+import {
+  _pAdminUsers,
+  _pWorkerDataProps,
+} from "../../../../configure/_pProps.entity";
 import { FindParameters } from "../../../../models/base.entity";
-import { User } from "../../../../models/user.entity";
+import { User, UserAuthority } from "../../../../models/user.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
   CloseButton,
   Combo,
   IconButton,
   RsWrapper,
-  SmallButton,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -34,6 +37,8 @@ import {
   WholeWrapper,
   Wrapper,
 } from "../../../styles/CommonComponents";
+import { IoIosCloseCircle } from "react-icons/io";
+import UsersModal from "./user_Modal";
 
 const UsersList: NextPage<_pAdminUsers> = (props) => {
   /*********************************************************************
@@ -45,10 +50,25 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [clickDoc, setClickDoc] = useState<User>();
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 모달 창 닫기
+   */
+  const closeModal = () => {
+    setModalOpen(false);
+    props.findDocHandler(props.findResult.currentPage);
+  };
+
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
 
   /**
    * 검색 옵션 handler
@@ -72,13 +92,20 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
    */
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      props.findDocHandler;
+      props.findDocHandler(1);
     }
   };
 
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
+  const usersModalProps: _pWorkerDataProps = {
+    ...props,
+    clickDoc,
+    setClickDoc,
+    setModalOpen,
+    style: { height: "500px" },
+  };
 
   /*********************************************************************
    * 5. Page configuration
@@ -97,7 +124,6 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             >
               <option value="name">이름 검색</option>
               <option value="hpNumber">전화번호 검색</option>
-              <option value="approval">승인여부 검색</option>
             </Combo>
             <TextInput
               type="text"
@@ -111,7 +137,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             <IconButton
               type="submit"
               onClick={() => {
-                props.findDocHandler;
+                props.findDocHandler(1);
               }}
             >
               <BsSearch />
@@ -121,10 +147,11 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
           </Wrapper>
           <TableWrapper>
             <TableHead>
-              <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>전화번호</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>입사일자</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>직위</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>직원명</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>전화번호</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>입사일자</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
             </TableHead>
             <TableBody>
               {props.findResult.docs.map((doc: User) => (
@@ -132,14 +159,21 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
                   key={doc._id}
                   onClick={() => {
                     console.log("구혁씨 ㅎㅇ");
+                    setClickDoc(doc);
+                    setModalOpen(!modalOpen);
                   }}
                 >
-                  <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>
-                    {dayjs(doc.joinDate).format("YYYY-MM-DD")}
+                  <TableRowLIST width={`200px`}>
+                    {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
                   </TableRowLIST>
-                  <TableRowLIST width={`300px`}>
+                  <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.hpNumber}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>
+                    {doc.joinDate
+                      ? dayjs(doc.joinDate).format("YYYY-MM-DD")
+                      : "-"}
+                  </TableRowLIST>
+                  <TableRowLIST width={`200px`}>
                     {doc.approval ? "승인" : "미승인"}
                   </TableRowLIST>
                 </TableRow>
@@ -149,6 +183,45 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
         </Wrapper>
         <PagenationSection {...props} />
       </RsWrapper>
+      <Wrapper>
+        <Modal
+          isOpen={modalOpen}
+          style={{
+            overlay: {
+              position: "fixed",
+              zIndex: 9999,
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(255, 255, 255, 0.75)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            content: {
+              background: "white",
+              width: "500px",
+              height: "800px",
+              maxWidth: "calc(100vw - 2rem)",
+              maxHeight: "calc(100vh - 2rem)",
+              overflowY: "auto",
+              position: "relative",
+              border: "1px solid #ccc",
+              borderRadius: "0.3rem",
+              boxShadow: "0px 10px 15px rgba(220,220,220,1)",
+              inset: 0,
+            },
+          }}
+        >
+          <Wrapper fontSize={`28px`} al={`flex-end`}>
+            <CloseButton onClick={closeModal}>
+              <IoIosCloseCircle />
+            </CloseButton>
+            <UsersModal {...usersModalProps} />
+          </Wrapper>
+        </Modal>
+      </Wrapper>
     </WholeWrapper>
   );
 };

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import {
   _aGetAdminManCompanies,
   _aGetAdminUsers,
+  _aGetAdminUsersId,
 } from "../../../../../store/action/user.action";
 import {
   _iFindCompanies,
@@ -28,6 +29,7 @@ const AdminUsersPage: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   const dispatch = useDispatch();
   const router = useRouter();
+  const routerQuery = getQuery(router.asPath);
 
   /*********************************************************************
    * 2. State settings
@@ -47,13 +49,21 @@ const AdminUsersPage: NextPage<_MainProps> = (props) => {
     const param: FindParameters = {
       page,
       take: 10,
-      // filterKey: searchOption,
-      // filterValue: filterValue,
-      // useRegSearch: true,
+      filterKey: searchOption,
+      filterValue: filterValue,
+      useRegSearch: true,
     };
-    dispatch(_aGetAdminUsers(param)).then((res: _iGetAdminUsers) => {
-      setFindResult(res.payload);
-    });
+    if (routerQuery.id) {
+      dispatch(_aGetAdminUsersId(routerQuery.id, param)).then(
+        (res: _iGetAdminUsers) => {
+          setFindResult(res.payload);
+        }
+      );
+    } else {
+      dispatch(_aGetAdminUsers(param)).then((res: _iGetAdminUsers) => {
+        setFindResult(res.payload);
+      });
+    }
   };
 
   /*********************************************************************

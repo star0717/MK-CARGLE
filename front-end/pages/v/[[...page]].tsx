@@ -14,7 +14,6 @@ import {
   getQuery,
   parseJwt,
 } from "../../src/modules/commonModule";
-import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
 import { Company, CompanyApproval } from "../../src/models/company.entity";
 import FileUpload from "../../src/components/page/SignUp/section/fileUpload";
@@ -33,8 +32,6 @@ import AdminManCompaniesPage from "../../src/components/page/admin/man_companies
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
 
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
-import { NextResponse } from "next/server";
-import { redirect } from "next/dist/server/api-utils";
 import { AdminApiPath } from "../../src/models/api-path";
 import AdminUsersPage from "../../src/components/page/admin/users";
 
@@ -264,7 +261,7 @@ export const getServerSideProps: GetServerSideProps = async (
             };
           } else {
             const params: FindParameters = {
-              take: 5,
+              take: 10,
             };
 
             data = await axios
