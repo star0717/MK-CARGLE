@@ -955,9 +955,12 @@ export const TableWrapper = styled.div<any>`
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 100px 0px 0px;
   align-items: center;
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
+  border: 1px solid #c4c4c4;
+  border-radius: ${(props) => props.radius || `4px 4px 0px 0px`};
 `;
 
 export const TableHead = styled.ul<any>`
@@ -966,17 +969,19 @@ export const TableHead = styled.ul<any>`
   display: flex;
   flex-direction: row;
   align-items: center;
+  text-align: left;
   justify-content: space-between;
   box-shadow: ${(props) => props.shadow};
-  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
-  border-bottom: ${(props) => props.borderBottom || `1px solid #292929`};
-  border-top: ${(props) => props.borderTop || `1px solid #292929`};
-  border-radius: ${(props) => props.radius || ``};
-  background: #fff;
-  color: #292929;
+  margin: ${(props) => props.margin || `0px`};
+  border-radius: ${(props) => props.radius || `4px 4px 0px 0px`};
+  border-top: ${(props) => props.borderTop || ``};
+  background-color: #0066ff;
+  color: #fff;
   padding: ${(props) => props.padding || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
 `;
+
+// border-bottom: ${(props) => props.borderBottom || `2px solid #0066ff`};
 
 export const TableHeadLIST = styled.li<any>`
   width: ${(props) => props.width};
@@ -984,20 +989,15 @@ export const TableHeadLIST = styled.li<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: row;
   align-items: center;
-  justify-content: ${(props) => props.ju || `center`};
-
-  &:first-child,{
-    border-right: 1px solid #000;
-  },
-  &:last-child {
-    border-left: 1px solid #000;
-  },
+  justify-content: ${(props) => props.ju || `flex-start`};
+  padding: 0px 24px;
+  font-weight: 600;
 `;
 
 export const TableBody = styled.div<any>`
   width: 100%;
   height: ${(props) => props.height || `auto`};
-  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
+  margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
   overflow: ${(props) => props.overflow || ``};
   font-size: ${(props) => props.fontSize || `16px`};
@@ -1011,12 +1011,14 @@ export const TableRow = styled.ul<any>`
   align-items: center;
   justify-content: ${(props) => props.ju || `space-between`};
   border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
-  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
+  margin: ${(props) => props.margin || `0px`};
   transition: 0.5s;
+
   cursor: pointer;
 
   &:hover {
     background-color: #f5f5f5;
+    color: #0066ff;
   }
 `;
 
@@ -1026,9 +1028,11 @@ export const TableRowLIST = styled.li<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
+  padding: 0px 24px;
   padding: ${(props) => props.padding};
   line-height: ${(props) => props.lineHeight || `1.2`};
+  font-weight: 500;
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
 `;
 

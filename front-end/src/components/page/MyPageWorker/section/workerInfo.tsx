@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
 import { User } from "../../../../models/user.entity";
@@ -34,6 +34,13 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
     props.findDocHandler(props.findResult.currentPage);
   };
 
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
+
   /**
    * Worker Info modal props
    */
@@ -56,7 +63,7 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
         </CommonSubTitle>
       </CommonTitleWrapper>
       <RsWrapper ju={`flex-start`} margin={`100px 0px 0px`}>
-        <Wrapper height={`630px`} ju={`flex-start`}>
+        <Wrapper ju={`flex-start`} height={`auto`}>
           <TableWrapper>
             <TableHead>
               <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>

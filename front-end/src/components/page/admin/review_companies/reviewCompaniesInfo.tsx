@@ -53,10 +53,32 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
+        <SmallButton
+          type="button"
+          kindOf={`default`}
+          margin={`0px 0px 0px 20px`}
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          승인처리
+        </SmallButton>
         <Wrapper dr={`row`}>
           <Image alt="사업자, 정비업 등록증 이미지"></Image>
           <Wrapper>
             <Text>계정정보</Text>
+            <Wrapper dr={`row`}>
+              <Text>아이디</Text>
+              <TextInput2 tpye="text" readOnly value={userData.email} />
+            </Wrapper>
+            <Wrapper dr={`row`}>
+              <Text>이름</Text>
+              <TextInput2 tpye="text" readOnly value={userData.name} />
+            </Wrapper>
+            <Wrapper dr={`row`}>
+              <Text>전화번호</Text>
+              <TextInput2 tpye="text" readOnly value={userData.hpNumber} />
+            </Wrapper>
             <Text>사업자정보</Text>
             <Wrapper dr={`row`}>
               <Text>상호명</Text>
@@ -77,7 +99,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             <Wrapper dr={`row`}>
               <Text>정비업종</Text>
               <Combo
-                width={`800px`}
+                width={`300px`}
                 margin={`0px`}
                 value={comData.mbTypeNum}
                 {...register("mbTypeNum", {
@@ -106,8 +128,6 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             <Wrapper dr={`row`}>
               <Text>업체 전화번호</Text>
               <TextInput2 value={comData.phoneNum} type="text" readOnly />
-            </Wrapper>
-            <Wrapper dr={`row`}>
               <Text>업체 팩스번호</Text>
               <TextInput2 value={comData.faxNum} type="text" readOnly />
             </Wrapper>
@@ -125,16 +145,6 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             </Wrapper>
           </Wrapper>
         </Wrapper>
-        <SmallButton
-          type="button"
-          kindOf={`default`}
-          margin={`0px 0px 0px 20px`}
-          onClick={() => {
-            setModalOpen(true);
-          }}
-        >
-          승인처리
-        </SmallButton>
       </RsWrapper>
       <Wrapper>
         <Modal

@@ -125,80 +125,78 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper>
-        <Text>직원 상세 정보</Text>
-        <Wrapper dr={`row`}>
-          <Text>승인상태</Text>
-          {/* <Switch
+      <Text>직원 상세 정보</Text>
+      <Wrapper dr={`row`}>
+        <Text>승인상태</Text>
+        {/* <Switch
             color="primary"
             checked={approval}
             onChange={onChangeApproval}
           /> */}
-          <Switch
-            color="primary"
-            checked={approval}
-            onChange={onChangeApproval}
-          />
-          {approval ? <Text>승인</Text> : <Text>미승인</Text>}
+        <Switch
+          color="primary"
+          checked={approval}
+          onChange={onChangeApproval}
+        />
+        {approval ? <Text>승인</Text> : <Text>미승인</Text>}
+      </Wrapper>
+      <form onSubmit={onChangeWorkerInfo}>
+        <Wrapper dr={`row`}>
+          <Text>직원명</Text>
+          <TextInput2 type="text" value={docInfo.name} readOnly />
         </Wrapper>
-        <form onSubmit={onChangeWorkerInfo}>
-          <Wrapper dr={`row`}>
-            <Text>직원명</Text>
-            <TextInput2 type="text" value={docInfo.name} readOnly />
-          </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text>아이디</Text>
-            <TextInput2 type="text" value={docInfo.email} readOnly />
-          </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text>휴대폰번호</Text>
-            <TextInput2 type="text" value={docInfo.hpNumber} readOnly />
-          </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text>주소</Text>
-            <TextInput2
-              value={makeFullAddress(
-                docInfo.address1,
-                docInfo.address2,
-                docInfo.postcode
-              )}
-              type="text"
-              readOnly
-            />
-          </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text>입사일자</Text>
-            <TextInput2
-              type="date"
-              name="joinDate"
-              value={dayjs(docInfo.joinDate).format("YYYY-MM-DD")}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setDocInfo({
-                  ...docInfo,
-                  joinDate: new Date(e.target.value),
-                });
-              }}
-            />
-          </Wrapper>
-          <Wrapper>
-            <SmallButton
-              type="submit"
-              kindOf={`default`}
-              margin={`0px 0px 0px 20px`}
-            >
-              저장
-            </SmallButton>
-            <SmallButton
-              type="button"
-              kindOf={`default`}
-              margin={`0px 0px 0px 20px`}
-              onClick={workerDelete}
-            >
-              직원삭제
-            </SmallButton>
-          </Wrapper>
-        </form>
-      </RsWrapper>
+        <Wrapper dr={`row`}>
+          <Text>아이디</Text>
+          <TextInput2 type="text" value={docInfo.email} readOnly />
+        </Wrapper>
+        <Wrapper dr={`row`}>
+          <Text>휴대폰번호</Text>
+          <TextInput2 type="text" value={docInfo.hpNumber} readOnly />
+        </Wrapper>
+        <Wrapper dr={`row`}>
+          <Text>주소</Text>
+          <TextInput2
+            value={makeFullAddress(
+              docInfo.address1,
+              docInfo.address2,
+              docInfo.postcode
+            )}
+            type="text"
+            readOnly
+          />
+        </Wrapper>
+        <Wrapper dr={`row`}>
+          <Text>입사일자</Text>
+          <TextInput2
+            type="date"
+            name="joinDate"
+            value={dayjs(docInfo.joinDate).format("YYYY-MM-DD")}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setDocInfo({
+                ...docInfo,
+                joinDate: new Date(e.target.value),
+              });
+            }}
+          />
+        </Wrapper>
+        <Wrapper>
+          <SmallButton
+            type="submit"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+          >
+            저장
+          </SmallButton>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+            onClick={workerDelete}
+          >
+            직원삭제
+          </SmallButton>
+        </Wrapper>
+      </form>
     </WholeWrapper>
   );
 };
