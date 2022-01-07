@@ -1251,8 +1251,8 @@ export const PagenationWrapper = styled.div<any>`
 `;
 
 export const Pagenation = styled.button<any>`
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
@@ -1262,7 +1262,7 @@ export const Pagenation = styled.button<any>`
   background-color: ${(props) => props.bgColor || CustomTheme.white_C};
   color: ${(props) => props.color || CustomTheme.basicTheme_C};
   border: ${(props) => props.border || `1px solid #314FA5`};
-  border-radius: 30px;
+  border-radius: 0px;
   margin: 0px 3px;
 
   &.active {
