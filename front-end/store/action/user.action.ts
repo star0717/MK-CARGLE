@@ -29,6 +29,7 @@ import {
   _iFindCompanies,
   _iPatchAdminSignUpInfo,
   _iDeleteAdminCompanies,
+  _ingCompany,
 } from "../interfaces";
 
 // 로그인 action
@@ -512,6 +513,28 @@ export async function rejectCompany(id: string, dataToSubmit: OptionalInfo) {
 
   const result: RejectCompany = {
     type: ActionAPIs.REJECT_COMPANY,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * approval 이 ing 단계인 업체 정보를 페이징 정보와 함께 반환
+ * @param FindParameters
+ */
+export async function ingCompany(findParams: FindParameters) {
+  const req: FindResult<Company> = await axios
+    .get(`/api/admin/ing/companies?${FindParameters.getQuery(findParams)}`)
+    .then(
+      (
+        res: AxiosResponse<FindResult<Company>, Company>
+      ): FindResult<Company> => {
+        return res.data;
+      }
+    );
+
+  const result: _ingCompany = {
+    type: ActionAPIs.ING_COMPANY,
     payload: req,
   };
   return result;

@@ -1,6 +1,6 @@
 import Modal from "react-modal";
 import { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { Company } from "../../../../models/company.entity";
@@ -39,9 +39,16 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
     props.findDocHandler(props.findResult.currentPage);
   };
 
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
+
+  //업태 업종 정비업종 수정시 필요한 핸들러
   const onInputComHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log("asd");
-    // props.setClickDoc({ ...props.clickDoc, [e.target.name]: e.target.value });
+    setComData({ ...comData, [e.target.name]: e.target.value });
   };
 
   const ARCModalProps: any = {
@@ -53,16 +60,26 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
-        <SmallButton
-          type="button"
-          kindOf={`default`}
-          margin={`0px 0px 0px 20px`}
-          onClick={() => {
-            setModalOpen(true);
-          }}
-        >
-          승인처리
-        </SmallButton>
+        <Wrapper dr={`row`}>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+            onClick={() => {}}
+          >
+            수정
+          </SmallButton>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+            onClick={() => {
+              setModalOpen(true);
+            }}
+          >
+            승인처리
+          </SmallButton>
+        </Wrapper>
         <Wrapper dr={`row`}>
           <Image alt="사업자, 정비업 등록증 이미지"></Image>
           <Wrapper>
@@ -101,6 +118,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
               <Combo
                 width={`300px`}
                 margin={`0px`}
+                name="mbTypeNum"
                 value={comData.mbTypeNum}
                 {...register("mbTypeNum", {
                   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,12 +136,42 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
                 })}
               </Combo>
             </Wrapper>
-            <Wrapper dr={`row`}>
-              <Text>업태</Text>
-              <TextInput2 value={comData.busType} type="text" />
+            <Wrapper dr={`row`} margin={`0px 0px 10px`}>
+              <Text
+                width={`80px`}
+                textAlign={`end`}
+                padding={`0px 10px 0px 0px`}
+              >
+                업태
+              </Text>
+              <TextInput2
+                value={comData.busType}
+                type="text"
+                {...register("busType", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputComHandler(e);
+                  },
+                })}
+                width={`200px`}
+              />
 
-              <Text>업종</Text>
-              <TextInput2 value={comData.busItem} type="text" />
+              <Text
+                width={`80px`}
+                textAlign={`end`}
+                padding={`0px 10px 0px 0px`}
+              >
+                업종
+              </Text>
+              <TextInput2
+                value={comData.busItem}
+                type="text"
+                {...register("busItem", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputComHandler(e);
+                  },
+                })}
+                width={`200px`}
+              />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>업체 전화번호</Text>
