@@ -102,12 +102,12 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
         style={{
           overlay: {
             position: "fixed",
-            zIndex: 1020,
+            zIndex: 9999,
             top: 0,
             left: 0,
             width: "100vw",
             height: "100vh",
-            background: "rgba(255, 255, 255, 0.75)",
+            background: "rgba(71, 71, 71, 0.75)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -122,7 +122,7 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
             position: "relative",
             border: "1px solid #ccc",
             borderRadius: "0.3rem",
-            boxShadow: "0px 10px 15px rgba(220,220,220,1)",
+            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
             inset: 0,
           },
         }}

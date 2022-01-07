@@ -36,7 +36,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref}>
+    <WholeWrapper ref={ref} padding={`80px 0px 0px`}>
       <RsWrapper>
         <Wrapper dr={`row`}>
           {/* 사업자 회원가입 버튼 */}
@@ -93,7 +93,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
               <JoinFirstStepSelectText>
                 카센터에서 근무하고 계신가요?
               </JoinFirstStepSelectText>
-              <Text color={`0066FF`} fontSize={`24px`} fontWeight={`700`}>
+              <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
                 직원
               </Text>
             </JoinFirstStepSelect>

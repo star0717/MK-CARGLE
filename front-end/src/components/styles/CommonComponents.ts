@@ -277,7 +277,7 @@ export const CommonTitleWrapper = styled.div<any>`
   font-weight: 800;
   color: ${(props) => props.color};
   text-align: ${(props) => props.textAlign || `center`};
-  background-color: #292929;
+  background-color: #eee;
 `;
 
 export const CommonTitle = styled.h2<any>`
@@ -286,8 +286,8 @@ export const CommonTitle = styled.h2<any>`
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || ` 0px 0px`};
   font-size: 34px;
-  font-weight: 600;
-  color: ${(props) => props.color || `#fff`};
+  font-weight: 800;
+  color: ${(props) => props.color || `#343a40`};
   text-align: ${(props) => props.textAlign || `center`};
   @media (max-width: 1439px) {
     font-size: 32px;
@@ -303,7 +303,7 @@ export const CommonSubTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin || `0px`};
   font-size: 22px;
-  color: ${(props) => props.color || `${CustomTheme.lightGrey_C}`};
+  color: ${(props) => props.color || `#343a40`};
   font-weight: ${(props) => props.fontWeight || `400`};
   text-align: ${(props) => props.textAlign || `center`};
 `;
@@ -462,9 +462,9 @@ export const CommonButton = styled.button<any>`
     background: #fff;
     color: ${(props) => CustomTheme.white_C};
     box-shadow: ${(props) => CustomTheme.boxShadow};
-    ${(props) => !props.kindOf && `background ${CustomTheme.lightTheme_C};`}
+    ${(props) => !props.kindOf && `background ${CustomTheme.darkTheme_C};`}
     ${(props) =>
-      props.kindOf === `white` && `background ${CustomTheme.lightTheme_C};`}
+      props.kindOf === `white` && `background ${CustomTheme.darkTheme_C};`}
          ${(props) =>
       props.kindOf === `white` && `color ${CustomTheme.white_C};`}
 ${(props) => props.kindOf === `black` && `background : ${CustomTheme.white_C};`}
@@ -722,8 +722,8 @@ export const HeaderIconButton = styled.button<any>`
   box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
 
   &:hover {
-    color: #0066ff;
-    border: 1px solid #0066ff;
+    color: #314fa5;
+    border: 1px solid #314fa5;
   }
 `;
 
@@ -750,7 +750,7 @@ export const HeaderIconAlarm = styled.div<any>`
   background-color: ${(props) => props.bgColor || `#fff`};
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
-  border: ${(props) => props.border || `1px solid #0066ff`};
+  border: ${(props) => props.border || `1px solid #314FA5`};
   border-radius: ${(props) => props.radius || CustomTheme.radius};
   box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
   padding: 0px 20px;
@@ -906,14 +906,14 @@ export const Label = styled.label<any>`
   & .MuiFormControlLabel-root svg {
     font-size: 20px;
     margin-bottom: 1px;
-    color: #0066ff;
+    color: #314fa5;
   }
   & .main.MuiFormControlLabel-root svg {
     color: #fff;
   }
   & .MuiCheckbox-root svg {
     margin: 0px;
-    color: #0066ff;
+    color: #314fa5;
   }
   & .MuiCheckbox-root hover {
     margin: 0px;
@@ -957,10 +957,10 @@ export const TableWrapper = styled.div<any>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: ${(props) => props.margin || `100px 0px 0px`};
+  margin: ${(props) => props.margin || `50px 0px 30px`};
   padding: ${(props) => props.padding || `0px`};
 
-  min-height: 440px;
+  min-height: 445px;
   border-radius: ${(props) => props.radius || `4px 4px 0px 0px`};
 `;
 
@@ -974,15 +974,16 @@ export const TableHead = styled.ul<any>`
   justify-content: space-between;
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
-  border-radius: ${(props) => props.radius || `8px 8px 0px  0px`};
-  border-top: ${(props) => props.borderTop || ``};
-  background-color: #0066ff;
+
+  border-top: ${(props) => props.borderTop || `2px solid #292929`};
+  border-bottom: ${(props) => props.borderBottom || `1px solid #c4c4c4`};
+  background-color: #343a40;
   color: #fff;
   padding: ${(props) => props.padding || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
 `;
 
-// border-bottom: ${(props) => props.borderBottom || `2px solid #0066ff`};
+// border-bottom: ${(props) => props.borderBottom || `2px solid #314FA5`};
 
 export const TableHeadLIST = styled.li<any>`
   width: ${(props) => props.width};
@@ -1002,13 +1003,13 @@ export const TableBody = styled.div<any>`
   padding: ${(props) => props.padding || `0px`};
   overflow: ${(props) => props.overflow || ``};
   font-size: ${(props) => props.fontSize || `16px`};
-
- &:last-child
- {
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-},
 `;
+
+// &:last-child
+// {
+//  border-left: 1px solid #ddd;
+//  border-right: 1px solid #ddd;
+// },
 export const TableRow = styled.ul<any>`
   width: 100%;
   height: ${(props) => props.height || `40px`};
@@ -1024,8 +1025,12 @@ export const TableRow = styled.ul<any>`
   cursor: pointer;
 
   &:hover {
+    text-decoration: underline;
     background-color: #f5f5f5;
-    color: #0066ff;
+    color:#314FA5;
+  }
+
+
   }
 `;
 
@@ -1131,7 +1136,7 @@ export const HeaderText = styled.p<any>`
 
   &:hover {
     text-decoration: ${(props) => props.decoration};
-    color: #0066ff;
+    color: #314fa5;
   }
 `;
 
@@ -1241,7 +1246,7 @@ export const PagenationWrapper = styled.div<any>`
   box-shadow: ${(props) => props.shadow};
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
-  margin: ${(props) => props.margin || `20px 0px 0px`};
+  margin: ${(props) => props.margin || `20px 0px 20px`};
   padding: ${(props) => props.padding};
 `;
 
@@ -1254,9 +1259,9 @@ export const Pagenation = styled.button<any>`
   justify-content: ${(props) => props.ju || `center`};
   cursor: pointer;
   padding-top: 3px;
-  background-color: ${(props) => CustomTheme.white_C};
-  color: ${(props) => CustomTheme.basicTheme_C};
-  border: 1px solid #0066ff;
+  background-color: ${(props) => props.bgColor || CustomTheme.white_C};
+  color: ${(props) => props.color || CustomTheme.basicTheme_C};
+  border: ${(props) => props.border || `1px solid #314FA5`};
   border-radius: 30px;
   margin: 0px 3px;
 
@@ -1272,12 +1277,9 @@ export const Pagenation = styled.button<any>`
   &:last-child {
     background-color: ${(props) => CustomTheme.subWhite_C};
     border: 1px solid #ddd;
-    color: ${(props) => CustomTheme.black_C};
-  },
+    color: ${(props) => CustomTheme.basicTheme_C};
+  }
 `;
-// &:hover {
-//   box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
-// }
 
 // export const PagenationBtn = styled.div<any>`
 //   text-align: center;
@@ -1385,7 +1387,7 @@ export const JoinStepBar = styled.p<any>`
     props.kindOf === `before` &&
     `border : 1px solid ${CustomTheme.darkGrey_C};`}
   
-  ${(props) => props.kindOf === `progress` && `background : #d2e5ff;`}
+  ${(props) => props.kindOf === `progress` && `background : #fff;`}
   ${(props) =>
     props.kindOf === `progress` && `color ${CustomTheme.basicTheme_C};`}
   ${(props) =>
