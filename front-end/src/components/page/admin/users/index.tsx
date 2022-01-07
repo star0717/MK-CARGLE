@@ -47,9 +47,6 @@ const AdminUsersPage: NextPage<_MainProps> = (props) => {
     const param: FindParameters = {
       page,
       take: 10,
-      // filterKey: searchOption,
-      // filterValue: filterValue,
-      // useRegSearch: true,
     };
     dispatch(_aGetAdminUsers(param)).then((res: _iGetAdminUsers) => {
       setFindResult(res.payload);

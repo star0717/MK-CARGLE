@@ -39,6 +39,10 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   //직원 명단 API Result 관련
   const [searchOption, setSearchOption] = useState<string>("name");
   const [filterValue, setFilterValue] = useState<string>("");
+
+  console.log(searchOption);
+  console.log(filterValue);
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -47,6 +51,7 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
    * @param page 조회할 페이지
    */
   const findCompanyHandler = (page: number) => {
+    console.log("들어옴!");
     const param: FindParameters = {
       page,
       take: 10,

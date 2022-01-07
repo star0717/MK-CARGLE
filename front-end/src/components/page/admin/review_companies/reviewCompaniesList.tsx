@@ -58,7 +58,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
 
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      props.findDocHandler;
+      props.findDocHandler(1);
     }
   };
 
@@ -109,7 +109,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
             <IconButton
               type="submit"
               onClick={() => {
-                props.findDocHandler;
+                props.findDocHandler(1);
               }}
             >
               <BsSearch></BsSearch>
