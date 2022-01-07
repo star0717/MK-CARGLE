@@ -147,6 +147,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
+                    console.log("구혁씨 ㅎㅇ");
                     setModalOpen(!modalOpen);
                   }}
                 >
