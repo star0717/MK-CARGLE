@@ -32,7 +32,11 @@ import AdminManCompaniesPage from "../../src/components/page/admin/man_companies
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
 
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
-import { AdminApiPath } from "../../src/models/api-path";
+import {
+  AdminApiPath,
+  AuthApiPath,
+  SettingsApiPath,
+} from "../../src/models/api-path";
 import AdminUsersPage from "../../src/components/page/admin/users";
 
 /**
@@ -154,7 +158,7 @@ export const getServerSideProps: GetServerSideProps = async (
       switch (pathName) {
         case UseLink.TEST:
           data = await axios
-            .get(`${apiUrl}/auth/profile`, {
+            .get(`${apiUrl}${AuthApiPath.profile}`, {
               headers: {
                 Cookie: `mk_token=${context.req.cookies.mk_token}`,
               },
@@ -175,9 +179,9 @@ export const getServerSideProps: GetServerSideProps = async (
 
           data = await axios
             .get(
-              `${apiUrl}/settings/management/workers?${FindParameters.getQuery(
-                params
-              )}`,
+              `${apiUrl}${
+                SettingsApiPath.management_workers
+              }?${FindParameters.getQuery(params)}`,
               {
                 headers: {
                   Cookie: `mk_token=${context.req.cookies.mk_token}`,
@@ -197,7 +201,7 @@ export const getServerSideProps: GetServerSideProps = async (
           const routerQuery = getQuery(url);
           if (routerQuery.id) {
             data = await axios
-              .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
+              .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
                 headers: {
                   Cookie: `mk_token=${context.req.cookies.mk_token}`,
                 },
@@ -219,9 +223,9 @@ export const getServerSideProps: GetServerSideProps = async (
 
             data = await axios
               .get(
-                `${apiUrl}/admin/ing/companies?${FindParameters.getQuery(
-                  params
-                )}`,
+                `${apiUrl}${
+                  AdminApiPath.ing_companies
+                }?${FindParameters.getQuery(params)}`,
                 {
                   headers: {
                     Cookie: `mk_token=${context.req.cookies.mk_token}`,
@@ -244,7 +248,7 @@ export const getServerSideProps: GetServerSideProps = async (
           const routerQuery = getQuery(url);
           if (routerQuery.id) {
             data = await axios
-              .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
+              .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
                 headers: {
                   Cookie: `mk_token=${context.req.cookies.mk_token}`,
                 },
@@ -266,9 +270,9 @@ export const getServerSideProps: GetServerSideProps = async (
 
             data = await axios
               .get(
-                `${apiUrl}/admin/done/companies?${FindParameters.getQuery(
-                  params
-                )}`,
+                `${apiUrl}${
+                  AdminApiPath.done_companies
+                }?${FindParameters.getQuery(params)}`,
                 {
                   headers: {
                     Cookie: `mk_token=${context.req.cookies.mk_token}`,
@@ -295,7 +299,7 @@ export const getServerSideProps: GetServerSideProps = async (
           if (routerQuery.id) {
             data = await axios
               .get(
-                `${apiUrl}/admin/users/${
+                `${apiUrl}${AdminApiPath.users}/${
                   routerQuery.id
                 }?${FindParameters.getQuery(params)}`,
                 {
@@ -314,14 +318,18 @@ export const getServerSideProps: GetServerSideProps = async (
             };
           } else {
             data = await axios
-              .get(`${apiUrl}/admin/users?${FindParameters.getQuery(params)}`, {
-                headers: {
-                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                },
-                withCredentials: true,
-              })
+              .get(
+                `${apiUrl}${AdminApiPath.users}?${FindParameters.getQuery(
+                  params
+                )}`,
+                {
+                  headers: {
+                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                  },
+                  withCredentials: true,
+                }
+              )
               .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
-            console.log("전체업체", (data as FindResult<User>).docs.length);
             return {
               props: {
                 tokenValue,
@@ -336,7 +344,7 @@ export const getServerSideProps: GetServerSideProps = async (
           if (routerQuery.step === Step.FIRST) {
             data = await axios
               // .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
-              .get(`${apiUrl}/${AdminApiPath.signup_info}/${routerQuery.id}`, {
+              .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
                 headers: {
                   Cookie: `mk_token=${context.req.cookies.mk_token}`,
                 },
@@ -365,7 +373,9 @@ export const getServerSideProps: GetServerSideProps = async (
 
             data = await axios
               .get(
-                `${apiUrl}/admin/companies?${FindParameters.getQuery(params)}`,
+                `${apiUrl}${AdminApiPath.companies}?${FindParameters.getQuery(
+                  params
+                )}`,
                 {
                   headers: {
                     Cookie: `mk_token=${context.req.cookies.mk_token}`,
