@@ -21,8 +21,11 @@ import { makeFullAddress } from "../../../../modules/commonModule";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { useForm } from "react-hook-form";
 import { User } from "../../../../models/user.entity";
+import { useRouter } from "next/router";
 
 const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
+  const router = useRouter();
+
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [comData, setComData] = useState<Company>(props.data.company); // 클릭한 업체 정보
   const [userData, setUserData] = useState<User>(props.data.user); // 클릭한 유저 정보
@@ -78,6 +81,16 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             }}
           >
             승인처리
+          </SmallButton>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+            onClick={() => {
+              router.back();
+            }}
+          >
+            뒤로가기
           </SmallButton>
         </Wrapper>
         <Wrapper dr={`row`}>

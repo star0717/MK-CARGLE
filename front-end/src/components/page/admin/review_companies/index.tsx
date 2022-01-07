@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  _aGetAdminManCompanies,
+  ingCompany,
   _aGetAdminReivewCompanies,
 } from "../../../../../store/action/user.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
+import { _iFindCompanies, _ingCompany } from "../../../../../store/interfaces";
 import { Step } from "../../../../configure/router.entity";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
@@ -49,7 +49,8 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
       page,
       take: 5,
     };
-    dispatch(_aGetAdminReivewCompanies(param)).then((res: _iFindCompanies) => {
+    console.log("정상작동 2");
+    dispatch(ingCompany(param)).then((res: _ingCompany) => {
       setFindResult(res.payload);
     });
   };
@@ -63,19 +64,32 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
     setFindResult,
     findDocHandler: findCompanyHandler,
   };
-  switch (routerQuery.step) {
-    case Step.FIRST:
-      return (
-        <BodyWrapper>
-          <AdminReviewCompaniesinfo {...adminReviewComProps} />
-        </BodyWrapper>
-      );
-    default:
-      return (
-        <BodyWrapper>
-          <AdminReviewCompaniesList {...adminReviewComProps} />
-        </BodyWrapper>
-      );
+  // switch (routerQuery.step) {
+  //   case Step.FIRST:
+  //     return (
+  //       <BodyWrapper>
+  //         <AdminReviewCompaniesinfo {...adminReviewComProps} />
+  //       </BodyWrapper>
+  //     );
+  //   default:
+  //     return (
+  //       <BodyWrapper>
+  //         <AdminReviewCompaniesList {...adminReviewComProps} />
+  //       </BodyWrapper>
+  //     );
+  // }
+  if (routerQuery.id) {
+    return (
+      <BodyWrapper>
+        <AdminReviewCompaniesinfo {...adminReviewComProps} />
+      </BodyWrapper>
+    );
+  } else {
+    return (
+      <BodyWrapper>
+        <AdminReviewCompaniesList {...adminReviewComProps} />
+      </BodyWrapper>
+    );
   }
 };
 
