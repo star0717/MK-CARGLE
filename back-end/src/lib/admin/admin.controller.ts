@@ -71,21 +71,6 @@ export class AdminController {
     return await this.service.createAdmin();
   }
 
-  @Get('review/companies')
-  @ApiOperation({
-    summary: `[ADMIN] 승인 요청 업체 정보를 페이징 정보와 함께 반환`,
-  })
-  @ApiResponse({
-    description: `검색된 Company 배열 데이터와 페이징 정보`,
-    type: FindResult,
-  })
-  async findReqReviewCompanies(
-    @Query() fParams: FindParameters,
-    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
-  ): Promise<FindResult<Company>> {
-    return await this.service.findReqReviewCompanies(token, fParams);
-  }
-
   @Patch('review/approve/companies/:id')
   @ApiOperation({
     summary:
