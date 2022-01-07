@@ -55,6 +55,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
    */
   const findUserHandler = (page?: number) => {
     const param: FindParameters = {
+      page,
       take: 10,
       filterKey: props.searchOption,
       filterValue: props.filterValue,
