@@ -125,6 +125,7 @@ export interface _pWithdrawalModalProps {
 export interface _pWorkerDataProps extends _pFindDocs<User> {
   setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   clickDoc?: User;
+  setClickDoc?: React.Dispatch<React.SetStateAction<User>>;
   style?: {
     height: string;
   };

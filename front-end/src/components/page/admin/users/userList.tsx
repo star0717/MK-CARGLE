@@ -19,7 +19,7 @@ import {
   _pWorkerDataProps,
 } from "../../../../configure/_pProps.entity";
 import { FindParameters } from "../../../../models/base.entity";
-import { User } from "../../../../models/user.entity";
+import { User, UserAuthority } from "../../../../models/user.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
   CloseButton,
@@ -51,6 +51,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [clickDoc, setClickDoc] = useState<User>();
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -100,6 +101,8 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
    *********************************************************************/
   const usersModalProps: _pWorkerDataProps = {
     ...props,
+    clickDoc,
+    setClickDoc,
     setModalOpen,
     style: { height: "500px" },
   };
@@ -121,7 +124,6 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             >
               <option value="name">이름 검색</option>
               <option value="hpNumber">전화번호 검색</option>
-              <option value="approval">승인여부 검색</option>
             </Combo>
             <TextInput
               type="text"
@@ -145,10 +147,11 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
           </Wrapper>
           <TableWrapper>
             <TableHead>
-              <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>전화번호</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>입사일자</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>직위</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>직원명</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>전화번호</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>입사일자</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
             </TableHead>
             <TableBody>
               {props.findResult.docs.map((doc: User) => (
@@ -156,17 +159,21 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
                   key={doc._id}
                   onClick={() => {
                     console.log("구혁씨 ㅎㅇ");
+                    setClickDoc(doc);
                     setModalOpen(!modalOpen);
                   }}
                 >
-                  <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>
+                  <TableRowLIST width={`200px`}>
+                    {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
+                  </TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.hpNumber}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>
                     {doc.joinDate
                       ? dayjs(doc.joinDate).format("YYYY-MM-DD")
                       : "-"}
                   </TableRowLIST>
-                  <TableRowLIST width={`300px`}>
+                  <TableRowLIST width={`200px`}>
                     {doc.approval ? "승인" : "미승인"}
                   </TableRowLIST>
                 </TableRow>

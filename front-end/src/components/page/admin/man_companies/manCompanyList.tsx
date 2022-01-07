@@ -159,7 +159,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                       type="button"
                       kindOf={`default`}
                       onClick={() => {
-                        router.push(UseLink.ADMIN_USERS);
+                        router.push(`${UseLink.ADMIN_USERS}?id=${doc._id}`);
                       }}
                     >
                       직원관리
