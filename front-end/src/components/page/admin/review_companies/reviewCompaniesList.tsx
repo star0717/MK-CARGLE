@@ -55,7 +55,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
    * @param page 조회할 페이지
    */
   const findCompanyHandler = (page?: number) => {
-    console.log("새로 렌더링 했습니다.1");
     const param: FindParameters = {
       page,
       take: 10,
