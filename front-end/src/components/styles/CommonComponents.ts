@@ -1420,18 +1420,18 @@ export const NavAll = styled.div<any>`
   clear: both;
 `;
 
-export const NavUl = styled.ul<any>`
-  position: ${(props) => props.position || `relative`};
-  float: left;
-  font-size: ${(props) => props.fontSize || `16px`};
-  list-style: none;
-  text-decoration: none;
-`;
+// export const NavUl = styled.ul<any>`
+//   position: ${(props) => props.position || `relative`};
+//   float: left;
+//   font-size: ${(props) => props.fontSize || `16px`};
+//   list-style: none;
+//   text-decoration: none;
+// `;
 
-export const NavLi = styled.li<any>`
-  height: ${(props) => props.height || `30px`};
+// export const NavLi = styled.li<any>`
+//   height: ${(props) => props.height || `30px`};
 
-  &:hover {
-    font-weight: bold;
-  }
-`;
+//   &:hover {
+//     font-weight: bold;
+//   }
+// `;
