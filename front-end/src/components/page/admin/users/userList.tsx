@@ -5,14 +5,8 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import {
-  _aGetAdminManCompanies,
-  _aGetAdminUsers,
-} from "../../../../../store/action/user.action";
-import {
-  _iFindCompanies,
-  _iGetAdminUsers,
-} from "../../../../../store/interfaces";
+import { _aGetAdminUsers } from "../../../../../store/action/user.action";
+import { _iGetAdminUsers } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
 import {
   _pAdminUsers,
@@ -41,19 +35,18 @@ import { IoIosCloseCircle } from "react-icons/io";
 import UsersModal from "./user_Modal";
 
 const UsersList: NextPage<_pAdminUsers> = (props) => {
-  console.log("유저 list", props.findResult.docs.length);
-
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-  console.log(props);
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [clickDoc, setClickDoc] = useState<User>();
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -126,6 +119,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             >
               <option value="name">이름 검색</option>
               <option value="hpNumber">전화번호 검색</option>
+              <option value="approval">승인여부 검색</option>
             </Combo>
             <TextInput
               type="text"
@@ -160,7 +154,6 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    console.log("구혁씨 ㅎㅇ");
                     setClickDoc(doc);
                     setModalOpen(!modalOpen);
                   }}

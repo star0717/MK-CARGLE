@@ -5,14 +5,10 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  _aGetAdminManCompanies,
   _aGetAdminUsers,
   _aGetAdminUsersId,
 } from "../../../../../store/action/user.action";
-import {
-  _iFindCompanies,
-  _iGetAdminUsers,
-} from "../../../../../store/interfaces";
+import { _iGetAdminUsers } from "../../../../../store/interfaces";
 import {
   _pAdminManCompanies,
   _pAdminUsers,
@@ -26,8 +22,6 @@ import { BodyWrapper } from "../../../styles/LayoutComponents";
 import UserList from "./userList";
 
 const AdminUsersPage: NextPage<_MainProps> = (props) => {
-  console.log("유저 index", (props.data as FindResult<User>).docs.length);
-
   /*********************************************************************
    * 1. Page configuration
    *********************************************************************/
@@ -45,7 +39,9 @@ const AdminUsersPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  console.log("- ", findResult.docs.length);
+  useEffect(() => {
+    setFindResult(props.data);
+  }, [props]);
 
   /**
    * 작업자의 정보를 조회함

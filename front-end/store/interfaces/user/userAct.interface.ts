@@ -255,7 +255,6 @@ export interface PatchWorkersDelete {
  *****************************************************/
 export enum ActionAPIs {
   // 모델 별 공통 API
-  FIND_COMPANIES = "FIND_COMPANIES", // 업체 정보 조회
   FIND_USERS = "FIND_USERS", // 사용자 정보 조회
   APPROVE_COMPANY = "APPROVE_COMPANY", //업체 승인
   REJECT_COMPANY = "REJECT_COMPANY", //업체 승인요청 반려
@@ -281,11 +280,6 @@ export interface baseActionInterface {
 }
 
 /** 모델 별 공통 인터페이스 **/
-// 업체 정보 조회 결과
-export class _iFindCompanies implements baseActionInterface {
-  type: ActionAPIs.FIND_COMPANIES;
-  payload: FindResult<Company>;
-}
 
 // 사용자 정보 조회 결과
 export class _iFindUsers implements baseActionInterface {
@@ -342,7 +336,6 @@ export class _iGetAdminUsersId implements baseActionInterface {
  * => 정의한 인터페이스를 등록
  *****************************************************/
 export type ActionInterfaces =
-  | _iFindCompanies
   | _iFindUsers
   | _iPatchAdminSignUpInfo
   | _iGetAdminUsers
