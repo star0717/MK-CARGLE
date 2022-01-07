@@ -14,7 +14,6 @@ import {
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
-import ManComApprovalModal from "./approvalModal";
 import { _pAdminManCompanies } from "../../../../configure/_pProps.entity";
 import {
   makeFullAddress,

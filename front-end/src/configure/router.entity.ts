@@ -25,7 +25,7 @@ export const SubRoute = {
   WORKER: "worker",
   REVIEW_COMPANIES: "review_companies",
   MAN_COMPANIES: "man_companies",
-  USERS: "user",
+  USERS: "users",
   TEST: "test",
 };
 

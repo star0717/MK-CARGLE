@@ -44,42 +44,21 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  //직원 명단 API Result 관련
-  const [searchOption, setSearchOption] = useState<string>("name");
-  const [filterValue, setFilterValue] = useState<string>("");
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  /**
-   * 작업자의 정보를 조회함
-   * @param page 조회할 페이지
-   */
-  const findCompanyHandler = (page?: number) => {
-    console.log("새로 렌더링 했습니다.1");
-    const param: FindParameters = {
-      page,
-      take: 5,
-      filterKey: searchOption,
-      filterValue: filterValue,
-      useRegSearch: true,
-    };
-    console.log("정상작동3");
-    dispatch(ingCompany(param)).then((res: _ingCompany) => {
-      props.setFindResult(res.payload);
-    });
-  };
 
   const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchOption(e.target.value);
+    props.setSearchOption(e.target.value);
   };
 
   const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterValue(e.target.value);
+    props.setFilterValue(e.target.value);
   };
 
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      findCompanyHandler();
+      props.findDocHandler(1);
     }
   };
 
@@ -111,7 +90,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
         <Wrapper width={`1200px`}>
           <Wrapper dr={`row`}>
             <Combo
-              value={searchOption}
+              value={props.searchOption}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onSearchOptionHandler(e);
               }}
@@ -130,7 +109,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
             <IconButton
               type="submit"
               onClick={() => {
-                findCompanyHandler();
+                props.findDocHandler(1);
               }}
             >
               <BsSearch></BsSearch>

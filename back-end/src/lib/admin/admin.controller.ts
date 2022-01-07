@@ -71,21 +71,6 @@ export class AdminController {
     return await this.service.createAdmin();
   }
 
-  @Get('review/companies')
-  @ApiOperation({
-    summary: `[ADMIN] 승인 요청 업체 정보를 페이징 정보와 함께 반환`,
-  })
-  @ApiResponse({
-    description: `검색된 Company 배열 데이터와 페이징 정보`,
-    type: FindResult,
-  })
-  async findReqReviewCompanies(
-    @Query() fParams: FindParameters,
-    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
-  ): Promise<FindResult<Company>> {
-    return await this.service.findReqReviewCompanies(token, fParams);
-  }
-
   @Patch('review/approve/companies/:id')
   @ApiOperation({
     summary:
@@ -225,7 +210,7 @@ export class AdminController {
     return await this.service.findCompanies(token, fParams);
   }
 
-  @Get('/before/companies')
+  @Get('before/companies')
   @ApiOperation({
     summary: `[ADMIN] approval이 BEFORE 단계인 업체 정보를 페이징 정보와 함께 반환`,
   })
@@ -241,7 +226,7 @@ export class AdminController {
     return await this.service.findCompanies(token, fParams);
   }
 
-  @Get('/ing/companies')
+  @Get('ing/companies')
   @ApiOperation({
     summary: `[ADMIN] approval이 ING 단계인 업체 정보를 페이징 정보와 함께 반환`,
   })
@@ -257,7 +242,7 @@ export class AdminController {
     return await this.service.findCompanies(token, fParams);
   }
 
-  @Get('/done/companies')
+  @Get('done/companies')
   @ApiOperation({
     summary: `[ADMIN] approval이 DONE 단계인 업체 정보를 페이징 정보와 함께 반환`,
   })
@@ -273,7 +258,7 @@ export class AdminController {
     return await this.service.findCompanies(token, fParams);
   }
 
-  @Get('/users')
+  @Get('users')
   @ApiOperation({
     summary: `[ADMIN] 모든 사용자의 정보를 페이징 정보와 함께 반환`,
   })
@@ -287,7 +272,7 @@ export class AdminController {
     return await this.service.findUsers(token, fParams);
   }
 
-  @Get('/users/:id')
+  @Get('users/:id')
   @ApiOperation({
     summary: `[ADMIN] 특정 업체의 사용자의 정보를 페이징 정보와 함께 반환`,
   })

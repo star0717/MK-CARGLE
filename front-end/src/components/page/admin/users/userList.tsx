@@ -1,25 +1,31 @@
 import dayjs from "dayjs";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
+import {
+  _aGetAdminManCompanies,
+  _aGetAdminUsers,
+} from "../../../../../store/action/user.action";
+import {
+  _iFindCompanies,
+  _iGetAdminUsers,
+} from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
 import {
-  _pAdminManCompanies,
-  _pAdminReviewCompanies,
+  _pAdminUsers,
+  _pWorkerDataProps,
 } from "../../../../configure/_pProps.entity";
 import { FindParameters } from "../../../../models/base.entity";
-import { Company, CompanyApproval } from "../../../../models/company.entity";
+import { User, UserAuthority } from "../../../../models/user.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
   CloseButton,
   Combo,
   IconButton,
   RsWrapper,
-  SmallButton,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -31,21 +37,40 @@ import {
   WholeWrapper,
   Wrapper,
 } from "../../../styles/CommonComponents";
+import { IoIosCloseCircle } from "react-icons/io";
+import UsersModal from "./user_Modal";
 
-const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
+const UsersList: NextPage<_pAdminUsers> = (props) => {
+  console.log("유저 list", props.findResult.docs.length);
+
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-
+  console.log(props);
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [clickDoc, setClickDoc] = useState<User>();
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 모달 창 닫기
+   */
+  const closeModal = () => {
+    setModalOpen(false);
+    props.findDocHandler(props.findResult.currentPage);
+  };
+
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
 
   /**
    * 검색 옵션 handler
@@ -76,6 +101,13 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
+  const usersModalProps: _pWorkerDataProps = {
+    ...props,
+    clickDoc,
+    setClickDoc,
+    setModalOpen,
+    style: { height: "500px" },
+  };
 
   /*********************************************************************
    * 5. Page configuration
@@ -92,8 +124,8 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                 onSearchOptionHandler(e);
               }}
             >
-              <option value="name">상호명 검색</option>
-              <option value="comRegNum">사업자등록번호 검색</option>
+              <option value="name">이름 검색</option>
+              <option value="hpNumber">전화번호 검색</option>
             </Combo>
             <TextInput
               type="text"
@@ -113,57 +145,38 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
               <BsSearch />
             </IconButton>
 
-            <Text>가입완료 업체 수 : {props.findResult.totalDocs}</Text>
+            <Text>직원 수 : {props.findResult.totalDocs}</Text>
           </Wrapper>
           <TableWrapper>
             <TableHead>
-              <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>상호명</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>사업자등록증</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>정비업등록증</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>대표자명</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>직위</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>직원명</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>전화번호</TableHeadLIST>
+              <TableHeadLIST width={`200px`}>입사일자</TableHeadLIST>
               <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>직원관리</TableHeadLIST>
             </TableHead>
             <TableBody>
-              {props.findResult.docs.map((doc: Company) => (
+              {props.findResult.docs.map((doc: User) => (
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    router.push(`${UseLink.ADMIN_MAN_COMPANIES}?id=${doc._id}`);
+                    console.log("구혁씨 ㅎㅇ");
+                    setClickDoc(doc);
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   <TableRowLIST width={`200px`}>
-                    {dayjs(doc.createdAt).format("YYYY-MM-DD")}
+                    {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
                   </TableRowLIST>
                   <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
-                  {doc.approval == CompanyApproval.BEFORE ? (
-                    <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
-                  ) : doc.approval == CompanyApproval.ING ? (
-                    <TableRowLIST width={`200px`}>요청 중</TableRowLIST>
-                  ) : doc.approval == CompanyApproval.DONE ? (
-                    <TableRowLIST width={`200px`}>승인완료</TableRowLIST>
-                  ) : (
-                    <TableRowLIST width={`200px`}>이상업체</TableRowLIST>
-                  )}
-                  <TableRowLIST
-                    width={`200px`}
-                    onClick={(e: React.MouseEvent<HTMLTableCellElement>) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <SmallButton
-                      type="button"
-                      kindOf={`default`}
-                      onClick={() => {
-                        router.push(`${UseLink.ADMIN_USERS}?id=${doc._id}`);
-                      }}
-                    >
-                      직원관리
-                    </SmallButton>
+                  <TableRowLIST width={`200px`}>{doc.hpNumber}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>
+                    {doc.joinDate
+                      ? dayjs(doc.joinDate).format("YYYY-MM-DD")
+                      : "-"}
+                  </TableRowLIST>
+                  <TableRowLIST width={`200px`}>
+                    {doc.approval ? "승인" : "미승인"}
                   </TableRowLIST>
                 </TableRow>
               ))}
@@ -172,8 +185,47 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
         </Wrapper>
         <PagenationSection {...props} />
       </RsWrapper>
+      <Wrapper>
+        <Modal
+          isOpen={modalOpen}
+          style={{
+            overlay: {
+              position: "fixed",
+              zIndex: 9999,
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(255, 255, 255, 0.75)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            content: {
+              background: "white",
+              width: "500px",
+              height: "800px",
+              maxWidth: "calc(100vw - 2rem)",
+              maxHeight: "calc(100vh - 2rem)",
+              overflowY: "auto",
+              position: "relative",
+              border: "1px solid #ccc",
+              borderRadius: "0.3rem",
+              boxShadow: "0px 10px 15px rgba(220,220,220,1)",
+              inset: 0,
+            },
+          }}
+        >
+          <Wrapper fontSize={`28px`} al={`flex-end`}>
+            <CloseButton onClick={closeModal}>
+              <IoIosCloseCircle />
+            </CloseButton>
+            <UsersModal {...usersModalProps} />
+          </Wrapper>
+        </Modal>
+      </Wrapper>
     </WholeWrapper>
   );
 };
 
-export default ManCompanyList;
+export default UsersList;

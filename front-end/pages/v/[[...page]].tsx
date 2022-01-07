@@ -14,7 +14,6 @@ import {
   getQuery,
   parseJwt,
 } from "../../src/modules/commonModule";
-import { WholeWrapper } from "../../src/components/styles/CommonComponents";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
 import { Company, CompanyApproval } from "../../src/models/company.entity";
 import FileUpload from "../../src/components/page/SignUp/section/fileUpload";
@@ -31,10 +30,10 @@ import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
-import AdminTestPage from "../../src/components/page/admin/test";
+
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
-import { NextResponse } from "next/server";
-import { redirect } from "next/dist/server/api-utils";
+import { AdminApiPath } from "../../src/models/api-path";
+import AdminUsersPage from "../../src/components/page/admin/users";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -82,8 +81,8 @@ const SubComponent: NextPage<_MainProps> = (props) => {
     case UseLink.ADMIN_MAN_COMPANIES:
       return <AdminManCompaniesPage {...props} />;
 
-    case UseLink.ADMIN_TEST:
-      return <AdminTestPage {...props} />;
+    case UseLink.ADMIN_USERS:
+      return <AdminUsersPage {...props} />;
   }
 };
 
@@ -215,7 +214,7 @@ export const getServerSideProps: GetServerSideProps = async (
             };
           } else {
             const params: FindParameters = {
-              take: 5,
+              take: 10,
             };
 
             data = await axios
@@ -262,7 +261,7 @@ export const getServerSideProps: GetServerSideProps = async (
             };
           } else {
             const params: FindParameters = {
-              take: 5,
+              take: 10,
             };
 
             data = await axios
@@ -288,12 +287,59 @@ export const getServerSideProps: GetServerSideProps = async (
             };
           }
         }
+        case UseLink.ADMIN_USERS: {
+          const routerQuery = getQuery(url);
+          console.log("루트", routerQuery);
+          const params: FindParameters = {
+            take: 10,
+          };
+          if (routerQuery.id) {
+            data = await axios
+              .get(
+                `${apiUrl}/admin/users/${
+                  routerQuery.id
+                }?${FindParameters.getQuery(params)}`,
+                {
+                  headers: {
+                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                  },
+                  withCredentials: true,
+                }
+              )
+              .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
+
+            console.log("특정업체", (data as FindResult<User>).docs.length);
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          } else {
+            data = await axios
+              .get(`${apiUrl}/admin/users?${FindParameters.getQuery(params)}`, {
+                headers: {
+                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                },
+                withCredentials: true,
+              })
+              .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
+            console.log("전체업체", (data as FindResult<User>).docs.length);
+            return {
+              props: {
+                tokenValue,
+                data,
+              },
+            };
+          }
+        }
         case UseLink.ADMIN_TEST: {
           console.log("타는가");
           const routerQuery = getQuery(url);
           if (routerQuery.step === Step.FIRST) {
             data = await axios
-              .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
+              // .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
+              .get(`${apiUrl}/${AdminApiPath.signup_info}/${routerQuery.id}`, {
                 headers: {
                   Cookie: `mk_token=${context.req.cookies.mk_token}`,
                 },
