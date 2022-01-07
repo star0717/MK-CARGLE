@@ -26,8 +26,6 @@ import { BodyWrapper } from "../../../styles/LayoutComponents";
 import UserList from "./userList";
 
 const AdminUsersPage: NextPage<_MainProps> = (props) => {
-  console.log("유저 index", (props.data as FindResult<User>).docs.length);
-
   /*********************************************************************
    * 1. Page configuration
    *********************************************************************/
@@ -45,7 +43,9 @@ const AdminUsersPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  console.log("- ", findResult.docs.length);
+  useEffect(() => {
+    setFindResult(props.data);
+  }, [props]);
 
   /**
    * 작업자의 정보를 조회함

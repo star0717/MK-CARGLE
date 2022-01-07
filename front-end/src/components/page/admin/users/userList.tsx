@@ -41,14 +41,11 @@ import { IoIosCloseCircle } from "react-icons/io";
 import UsersModal from "./user_Modal";
 
 const UsersList: NextPage<_pAdminUsers> = (props) => {
-  console.log("유저 list", props.findResult.docs.length);
-
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-  console.log(props);
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
