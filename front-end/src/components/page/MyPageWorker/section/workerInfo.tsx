@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
 import { User } from "../../../../models/user.entity";
@@ -33,6 +33,13 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
     setModalOpen(false);
     props.findDocHandler(props.findResult.currentPage);
   };
+
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
 
   /**
    * Worker Info modal props

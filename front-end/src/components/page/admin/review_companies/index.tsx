@@ -13,6 +13,7 @@ import { _MainProps } from "../../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company } from "../../../../models/company.entity";
 import { getQuery } from "../../../../modules/commonModule";
+import { BodyWrapper } from "../../../styles/LayoutComponents";
 import AdminReviewCompaniesinfo from "./reviewCompaniesInfo";
 import AdminReviewCompaniesList from "./reviewCompaniesList";
 
@@ -64,9 +65,17 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   };
   switch (routerQuery.step) {
     case Step.FIRST:
-      return <AdminReviewCompaniesinfo {...adminReviewComProps} />;
+      return (
+        <BodyWrapper>
+          <AdminReviewCompaniesinfo {...adminReviewComProps} />
+        </BodyWrapper>
+      );
     default:
-      return <AdminReviewCompaniesList {...adminReviewComProps} />;
+      return (
+        <BodyWrapper>
+          <AdminReviewCompaniesList {...adminReviewComProps} />
+        </BodyWrapper>
+      );
   }
 };
 
