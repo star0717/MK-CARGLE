@@ -85,14 +85,6 @@ export class AdminService {
     };
   }
 
-  async findReqReviewCompanies(
-    token: AuthTokenInfo,
-    fParams: FindParameters,
-  ): Promise<FindResult<Company>> {
-    fParams.filter = { approval: CompanyApproval.ING } as Partial<Company>;
-    return this.companiesService.findByOptions(token, fParams);
-  }
-
   async approveCompany(id: string, doc: Partial<Company>): Promise<Company> {
     doc.approval = CompanyApproval.DONE;
     const company = await this.companiesService.findByIdAndUpdateForAuth(

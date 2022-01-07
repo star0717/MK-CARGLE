@@ -31,7 +31,7 @@ import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
-import AdminTestPage from "../../src/components/page/admin/test";
+
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import { NextResponse } from "next/server";
 import { redirect } from "next/dist/server/api-utils";
@@ -86,9 +86,6 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.ADMIN_USERS:
       return <AdminUsersPage {...props} />;
-
-    case UseLink.ADMIN_TEST:
-      return <AdminTestPage {...props} />;
   }
 };
 
