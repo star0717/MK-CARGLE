@@ -69,7 +69,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    */
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      props.findDocHandler;
+      props.findDocHandler(1);
     }
   };
 
@@ -107,7 +107,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             <IconButton
               type="submit"
               onClick={() => {
-                props.findDocHandler;
+                props.findDocHandler(1);
               }}
             >
               <BsSearch />

@@ -39,7 +39,6 @@ export class CompanyApiPath {
 
 export class AdminApiPath {
   static BASE = 'admin/';
-  static review_companies = AdminApiPath.BASE + 'review/companies';
   static review_approve_companies =
     AdminApiPath.BASE + 'review/approve/companies';
   static review_reject_companies =
