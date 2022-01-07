@@ -263,13 +263,13 @@ export const getServerSideProps: GetServerSideProps = async (
           } else {
             const params: FindParameters = {
               take: 5,
-              filterKey: "approval",
-              filterValue: "done",
             };
 
             data = await axios
               .get(
-                `${apiUrl}/admin/companies?${FindParameters.getQuery(params)}`,
+                `${apiUrl}/admin/done/companies?${FindParameters.getQuery(
+                  params
+                )}`,
                 {
                   headers: {
                     Cookie: `mk_token=${context.req.cookies.mk_token}`,

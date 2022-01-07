@@ -57,8 +57,6 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
    *********************************************************************/
   const [comData, setComData] = useState<Company>(props.data.company); // 클릭한 업체 정보
   const [userData, setUserData] = useState<User>(props.data.user); // 클릭한 유저 정보
-  // const [busType, setBusType] = useState<string>(props.clickDoc.busType); // 업태
-  // const [busItem, setBusItem] = useState<string>(props.clickDoc.busItem); // 업종
 
   /*********************************************************************
    * 3. Handlers

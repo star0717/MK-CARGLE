@@ -3,15 +3,10 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
-import {
-  actionTypesUser,
-  UserState,
-  _iFindCompanies,
-} from "../../../../../store/interfaces";
-import { RootStateInterface } from "../../../../../store/interfaces/RootState";
-import { StepQuery, UseLink } from "../../../../configure/router.entity";
+import { _iFindCompanies } from "../../../../../store/interfaces";
+import { UseLink } from "../../../../configure/router.entity";
 import {
   _pAdminManCompanies,
   _pAdminReviewCompanies,
@@ -46,8 +41,6 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
-  const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
 
   /*********************************************************************
    * 3. Handlers
@@ -59,8 +52,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
   const findCompanyHandler = (page?: number) => {
     const param: FindParameters = {
       take: 5,
-      filterKey: "approval",
-      filterValue: "done",
+      filterKey: props.searchOption,
+      filterValue: props.filterValue,
+      useRegSearch: true,
     };
     dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
       props.setFindResult(res.payload);
@@ -72,7 +66,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    * @param e
    */
   const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchOption(e.target.value);
+    props.setSearchOption(e.target.value);
   };
 
   /**
@@ -80,7 +74,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    * @param e 검색 내용 handler
    */
   const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterValue(e.target.value);
+    props.setFilterValue(e.target.value);
   };
 
   /**
@@ -89,7 +83,6 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    */
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      console.log("asd");
       findCompanyHandler();
     }
   };
@@ -108,7 +101,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
         <Wrapper width={`1200px`}>
           <Wrapper dr={`row`}>
             <Combo
-              value={searchOption}
+              value={props.searchOption}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onSearchOptionHandler(e);
               }}
@@ -118,6 +111,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             </Combo>
             <TextInput
               type="text"
+              value={props.filterValue}
               placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputSearchHandler(e);
@@ -149,7 +143,6 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                 <TableRow
                   key={doc._id}
                   onClick={() => {
-                    console.log("닥", doc);
                     router.push(`${UseLink.ADMIN_MAN_COMPANIES}?id=${doc._id}`);
                   }}
                 >

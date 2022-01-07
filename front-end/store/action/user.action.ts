@@ -423,7 +423,7 @@ export async function _aGetAdminReivewCompanies(findParams: FindParameters) {
  */
 export async function _aGetAdminManCompanies(findParams: FindParameters) {
   const req: FindResult<Company> = await axios
-    .get(`/api/admin/companies?${FindParameters.getQuery(findParams)}`)
+    .get(`/api/admin/done/companies?${FindParameters.getQuery(findParams)}`)
     .then(
       (
         res: AxiosResponse<FindResult<Company>, Company>
