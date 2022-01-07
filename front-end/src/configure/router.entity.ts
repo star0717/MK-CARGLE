@@ -25,6 +25,7 @@ export const SubRoute = {
   WORKER: "worker",
   REVIEW_COMPANIES: "review_companies",
   MAN_COMPANIES: "man_companies",
+  USERS: "user",
   TEST: "test",
 };
 
@@ -66,5 +67,6 @@ export const UseLink = {
   TEST: `${BaseLink.V}/${MainRoute.TEST}`,
   ADMIN_REVIEW_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.REVIEW_COMPANIES}`,
   ADMIN_MAN_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.MAN_COMPANIES}`,
+  ADMIN_USERS: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.USERS}`,
   ADMIN_TEST: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.TEST}`,
 };

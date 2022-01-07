@@ -54,96 +54,94 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper>
-        <Wrapper>
-          <Text>승인처리</Text>
+      <Wrapper>
+        <Text>승인처리</Text>
+      </Wrapper>
+      <Wrapper>
+        <Wrapper dr={`row`}>
+          <Text>승인여부</Text>
+          <FocusButton
+            type="button"
+            kindOf={approval === true ? `true` : `default`}
+            margin={`0px 0px 0px 20px`}
+            onClick={() => {
+              setApproval(true);
+              console.log("승인");
+            }}
+          >
+            승인
+          </FocusButton>
+          <FocusButton
+            type="button"
+            kindOf={approval === false ? `true` : `default`}
+            margin={`0px 0px 0px 20px`}
+            onClick={() => {
+              setApproval(false);
+              console.log("반려");
+            }}
+          >
+            반려
+          </FocusButton>
         </Wrapper>
-        <Wrapper>
-          <Wrapper dr={`row`}>
-            <Text>승인여부</Text>
-            <FocusButton
-              type="button"
-              kindOf={approval === true ? `true` : `default`}
-              margin={`0px 0px 0px 20px`}
-              onClick={() => {
-                setApproval(true);
-                console.log("승인");
-              }}
-            >
-              승인
-            </FocusButton>
-            <FocusButton
-              type="button"
-              kindOf={approval === false ? `true` : `default`}
-              margin={`0px 0px 0px 20px`}
-              onClick={() => {
-                setApproval(false);
-                console.log("반려");
-              }}
-            >
-              반려
-            </FocusButton>
-          </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text width={`130px`}>반려사유</Text>
-            <TextInput2
-              width={`250px`}
-              height={`150px`}
-              placeholder="반려 사유를 입력하세요."
-              type="text"
-              readOnly={approval}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onInputreasonHandler(e);
-              }}
-            />
-          </Wrapper>
-          <Wrapper dr={`row`}>
-            <Text width={`130px`}>E-Mail</Text>
-            <TextInput2 value={props.data.user.email} type="text" readOnly />
-          </Wrapper>
-          <Wrapper dr={`row`}>
-            <SmallButton
-              type="button"
-              kindOf={`default`}
-              margin={`0px 0px 0px 20px`}
-              onClick={() => {
-                if (approval === true) {
-                  dispatch(approveCompany(props.data.company._cID)).then(
-                    (res: any) => {
-                      alert("승인되었습니다.");
-                    }
-                  );
-                  props.setModalOpen(false);
-                  props.findDocHandler(props.findResult.currentPage); //리렌더링
-                  router.push(`${UseLink.ADMIN_REVIEW_COMPANIES}`); //list page 전환
-                } else if (approval == false) {
-                  console.log(reason);
-                  dispatch(rejectCompany(props.data.company._cID, reason)).then(
-                    (res: any) => {
-                      alert("반려처리 되었습니다.");
-                    }
-                  );
-                  props.setModalOpen(false);
-                  props.findDocHandler(props.findResult.currentPage); //리렌더링
-                  router.push(`${UseLink.ADMIN_REVIEW_COMPANIES}`); //list page 전환
-                }
-              }}
-            >
-              저장
-            </SmallButton>
-            <SmallButton
-              type="button"
-              kindOf={`default`}
-              margin={`0px 0px 0px 20px`}
-              onClick={() => {
+        <Wrapper dr={`row`}>
+          <Text width={`130px`}>반려사유</Text>
+          <TextInput2
+            width={`250px`}
+            height={`150px`}
+            placeholder="반려 사유를 입력하세요."
+            type="text"
+            readOnly={approval}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onInputreasonHandler(e);
+            }}
+          />
+        </Wrapper>
+        <Wrapper dr={`row`}>
+          <Text width={`130px`}>E-Mail</Text>
+          <TextInput2 value={props.data.user.email} type="text" readOnly />
+        </Wrapper>
+        <Wrapper dr={`row`}>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+            onClick={() => {
+              if (approval === true) {
+                dispatch(approveCompany(props.data.company._cID)).then(
+                  (res: any) => {
+                    alert("승인되었습니다.");
+                  }
+                );
                 props.setModalOpen(false);
-              }}
-            >
-              취소
-            </SmallButton>
-          </Wrapper>
+                props.findDocHandler(props.findResult.currentPage); //리렌더링
+                router.push(`${UseLink.ADMIN_REVIEW_COMPANIES}`); //list page 전환
+              } else if (approval == false) {
+                console.log(reason);
+                dispatch(rejectCompany(props.data.company._cID, reason)).then(
+                  (res: any) => {
+                    alert("반려처리 되었습니다.");
+                  }
+                );
+                props.setModalOpen(false);
+                props.findDocHandler(props.findResult.currentPage); //리렌더링
+                router.push(`${UseLink.ADMIN_REVIEW_COMPANIES}`); //list page 전환
+              }
+            }}
+          >
+            저장
+          </SmallButton>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            margin={`0px 0px 0px 20px`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
+            취소
+          </SmallButton>
         </Wrapper>
-      </RsWrapper>
+      </Wrapper>
     </WholeWrapper>
   );
 };
