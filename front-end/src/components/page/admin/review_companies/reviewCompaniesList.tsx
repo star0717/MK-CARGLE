@@ -58,12 +58,12 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
     console.log("새로 렌더링 했습니다.1");
     const param: FindParameters = {
       page,
-      take: 5,
+      take: 10,
       filterKey: searchOption,
       filterValue: filterValue,
       useRegSearch: true,
     };
-    console.log("정상작동3");
+
     dispatch(ingCompany(param)).then((res: _ingCompany) => {
       props.setFindResult(res.payload);
     });

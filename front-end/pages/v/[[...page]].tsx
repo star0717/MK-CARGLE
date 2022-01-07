@@ -215,7 +215,7 @@ export const getServerSideProps: GetServerSideProps = async (
             };
           } else {
             const params: FindParameters = {
-              take: 5,
+              take: 10,
             };
 
             data = await axios

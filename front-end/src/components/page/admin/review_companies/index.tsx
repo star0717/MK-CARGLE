@@ -47,9 +47,8 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const findCompanyHandler = (page: number) => {
     const param: FindParameters = {
       page,
-      take: 5,
+      take: 10,
     };
-    console.log("정상작동 2");
     dispatch(ingCompany(param)).then((res: _ingCompany) => {
       setFindResult(res.payload);
     });
