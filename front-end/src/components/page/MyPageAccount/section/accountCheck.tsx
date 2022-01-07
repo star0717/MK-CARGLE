@@ -68,43 +68,42 @@ const AccountCheck: NextPage<_pMyPageAccountProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <>
-      <WholeWrapper ref={ref}>
-        {/* <CommonTitleWrapper>
+    <WholeWrapper ref={ref}>
+      {/* <CommonTitleWrapper>
         <CommonTitle>회원탈퇴</CommonTitle>
         <CommonSubTitle>
           회원탈퇴를 위해 약관 동의 후 비밀번호를 입력해주세요.
         </CommonSubTitle>
       </CommonTitleWrapper> */}
-        <CommonTitleWrapper>
-          <CommonTitle>계정관리</CommonTitle>
-          <CommonSubTitle>
-            계정관리를 위해 비밀번호를 입력해주세요.
-          </CommonSubTitle>
-        </CommonTitleWrapper>
-        <RsWrapper>
-          <Wrapper
-            width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
-          >
-            <form onSubmit={pwCheckHandler}>
-              <TextInput2
-                type="password"
-                value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setPassword(e.target.value);
-                }}
-                placeholder="비밀번호를 입력하세요."
-                width={`500px`}
-                height={`60px`}
-                margin={`0px 0px 10px 0px`}
-              />
+      <CommonTitleWrapper>
+        <CommonTitle>계정관리</CommonTitle>
+        <CommonSubTitle>
+          계정관리를 위해 비밀번호를 입력해주세요.
+        </CommonSubTitle>
+      </CommonTitleWrapper>
+      <RsWrapper>
+        <Wrapper
+          width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
+          padding={`80px 0px 0px`}
+        >
+          <form onSubmit={pwCheckHandler}>
+            <TextInput2
+              type="password"
+              value={password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setPassword(e.target.value);
+              }}
+              placeholder="비밀번호를 입력하세요."
+              width={`500px`}
+              height={`60px`}
+              margin={`0px 0px 10px 0px`}
+            />
 
-              <CommonButton type="submit">확인</CommonButton>
-            </form>
-          </Wrapper>
-        </RsWrapper>
-      </WholeWrapper>
-    </>
+            <CommonButton type="submit">확인</CommonButton>
+          </form>
+        </Wrapper>
+      </RsWrapper>
+    </WholeWrapper>
   );
 };
 

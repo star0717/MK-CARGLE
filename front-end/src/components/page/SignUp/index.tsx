@@ -44,13 +44,19 @@ const SignUp: NextPage = () => {
   };
 
   return (
-    <BodyWrapper kindOf={`NoneTitleBodyWrapper`}>
+    <BodyWrapper
+      kindOf={
+        ((userAuth === UserAuthority.OWNER && stepNumber === 6) ||
+          (userAuth === UserAuthority.WORKER && stepNumber === 4)) &&
+        `NoneTitleBodyWrapper`
+      }
+    >
       <Header {...SignUpProps} />
       {stepNumber === 1 && <SelectUser {...SignUpProps} />}
       {stepNumber === 2 && <TermSignUp {...SignUpProps} />}
       {stepNumber === 3 && <SignAccount {...SignUpProps} />}
       {stepNumber === 4 &&
-        (userAuth === "owner" ? (
+        (userAuth === UserAuthority.OWNER ? (
           <SignCompany {...SignUpProps} />
         ) : (
           <SignupComplete {...SignUpProps} />

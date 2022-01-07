@@ -40,7 +40,6 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-  console.log(props);
   /*********************************************************************
    * 2. State settings
    *********************************************************************/

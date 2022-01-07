@@ -24,7 +24,7 @@ const FindPasswordComplete: NextPage = () => {
       <Wrapper
         width={`60px`}
         height={`60px`}
-        bgColor={`#0066ff`}
+        bgColor={`#314FA5`}
         radius={`60px`}
         margin={`0px 0px 36px 0px`}
       >

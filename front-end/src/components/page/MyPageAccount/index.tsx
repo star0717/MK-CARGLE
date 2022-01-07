@@ -6,6 +6,7 @@ import Withdrawal from "./section/withdrawal";
 import AccountInfo from "./section/accountInfo";
 import { _MainProps } from "../../../configure/_props.entity";
 import { _pMyPageAccountProps } from "../../../configure/_pProps.entity";
+import { BodyWrapper } from "../../styles/LayoutComponents";
 
 /**
  * 마이 페이지: 계정관리 index 컴포넌트(기능)
@@ -25,11 +26,11 @@ const MyPageAccount: NextPage<_MainProps> = (props) => {
   };
 
   return (
-    <>
+    <BodyWrapper>
       {step === 1 && <AccountCheck {...myPageAccountProps} />}
       {step === 2 && <AccountInfo {...myPageAccountProps} />}
       {step === 3 && <Withdrawal {...myPageAccountProps} />}
-    </>
+    </BodyWrapper>
   );
 };
 

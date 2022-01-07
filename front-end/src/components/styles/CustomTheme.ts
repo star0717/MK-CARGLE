@@ -8,10 +8,10 @@ const BOX_SHADOW_V2 = "0px 5px 10px rgba(220,220,220,1)";
 const BOX_SHADOW_DARK = "0px 10px  rgba(70,70,70,1)";
 
 export const CustomThemeColors = {
-  basicTheme_C: "#0066ff",
+  basicTheme_C: "#314FA5",
   lightTheme_C: "#448fff",
-  darkTheme_C: "#0052ce",
-  black_C: "#292929",
+  darkTheme_C: "#203462",
+  black_C: "#343a40",
   white_C: "#fff",
   subWhite_C: "#f5f5f5",
   red_C: "#d6263b",

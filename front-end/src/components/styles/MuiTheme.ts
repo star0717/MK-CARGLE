@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles({
   hi: {
     width: "200px",
-    backgroundColor: "#0066ff",
+    backgroundColor: "#314FA5",
     border: "1px",
     borderRadius: "3px",
   },
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
         transform: "translateX(16px)",
         color: "#fff",
         "& + .MuiSwitch-track": {
-          backgroundColor: "#0066ff",
+          backgroundColor: "#314FA5",
           opacity: 1,
           border: 0,
         },

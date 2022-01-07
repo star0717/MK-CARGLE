@@ -27,7 +27,7 @@ const Custom404: NextPage = () => {
           <Text
             fontSize={`24px`}
             fontWeight={`400`}
-            color={`#0066ff`}
+            color={`#314FA5`}
             padding={`50px 0px 10px`}
           >
             죄송합니다. 현재 찾을 수 없는 페이지를 요청 하셨습니다.
