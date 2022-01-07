@@ -174,6 +174,13 @@ export class AdminService {
     return this.companiesService.findByOptions(token, fParams);
   }
 
+  async findUsers(
+    token: AuthTokenInfo,
+    fParams: FindParameters,
+  ): Promise<FindResult<User>> {
+    return this.usersService.findByOptions(token, fParams);
+  }
+
   async findSignUpInfo(token: AuthTokenInfo, id: string): Promise<SignUpInfo> {
     let company: Company = await this.companiesService.findById(token, id);
     if (!company) throw new BadRequestException();

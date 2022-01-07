@@ -20,11 +20,11 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
-import { Company } from 'src/models/company.entity';
+import { Company, CompanyApproval } from 'src/models/company.entity';
 import { CommonService } from '../common/common.service';
 import { AuthToken, Public } from '../decorators/decorators';
 import { AdminService } from './admin.service';
-import { UserAuthority } from 'src/models/user.entity';
+import { User, UserAuthority } from 'src/models/user.entity';
 import { createReadStream } from 'fs';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
 import { join } from 'path';
@@ -223,6 +223,85 @@ export class AdminController {
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<FindResult<Company>> {
     return await this.service.findCompanies(token, fParams);
+  }
+
+  @Get('/before/companies')
+  @ApiOperation({
+    summary: `[ADMIN] approval이 BEFORE 단계인 업체 정보를 페이징 정보와 함께 반환`,
+  })
+  @ApiResponse({
+    description: `검색된 Company 배열 데이터와 페이징 정보`,
+    type: FindResult,
+  })
+  async findBeforeCompanies(
+    @Query() fParams: FindParameters,
+    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
+  ): Promise<FindResult<Company>> {
+    fParams.filter = { approval: CompanyApproval.BEFORE } as Partial<Company>;
+    return await this.service.findCompanies(token, fParams);
+  }
+
+  @Get('/ing/companies')
+  @ApiOperation({
+    summary: `[ADMIN] approval이 ING 단계인 업체 정보를 페이징 정보와 함께 반환`,
+  })
+  @ApiResponse({
+    description: `검색된 Company 배열 데이터와 페이징 정보`,
+    type: FindResult,
+  })
+  async findIngCompanies(
+    @Query() fParams: FindParameters,
+    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
+  ): Promise<FindResult<Company>> {
+    fParams.filter = { approval: CompanyApproval.ING } as Partial<Company>;
+    return await this.service.findCompanies(token, fParams);
+  }
+
+  @Get('/done/companies')
+  @ApiOperation({
+    summary: `[ADMIN] approval이 DONE 단계인 업체 정보를 페이징 정보와 함께 반환`,
+  })
+  @ApiResponse({
+    description: `검색된 Company 배열 데이터와 페이징 정보`,
+    type: FindResult,
+  })
+  async findDoneCompanies(
+    @Query() fParams: FindParameters,
+    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
+  ): Promise<FindResult<Company>> {
+    fParams.filter = { approval: CompanyApproval.DONE } as Partial<Company>;
+    return await this.service.findCompanies(token, fParams);
+  }
+
+  @Get('/users')
+  @ApiOperation({
+    summary: `[ADMIN] 모든 사용자의 정보를 페이징 정보와 함께 반환`,
+  })
+  @ApiResponse({
+    description: `검색된 User 배열 데이터와 페이징 정보`,
+  })
+  async findUsers(
+    @Query() fParams: FindParameters,
+    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
+  ): Promise<FindResult<User>> {
+    return await this.service.findUsers(token, fParams);
+  }
+
+  @Get('/users/:id')
+  @ApiOperation({
+    summary: `[ADMIN] 특정 업체의 사용자의 정보를 페이징 정보와 함께 반환`,
+  })
+  @ApiParam({ name: 'id', description: '업체의 오브젝트ID' })
+  @ApiResponse({
+    description: `검색된 User 배열 데이터와 페이징 정보`,
+  })
+  async findCompanyUsers(
+    @Param('id') id: string,
+    @Query() fParams: FindParameters,
+    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
+  ): Promise<FindResult<User>> {
+    fParams.filter = { _cID: id } as Partial<User>;
+    return await this.service.findUsers(token, fParams);
   }
 
   @Get('signup-info/:id')
