@@ -20,11 +20,9 @@ import { User } from "../../../../models/user.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
-  RsWrapper,
   Wrapper,
   Text,
   TextInput2,
-  SmallButton,
   CommonSmallTitle,
   CommonButton,
   CommonButtonWrapper,
@@ -51,32 +49,12 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
       dispatch(patchWorkerRejectAction(docInfo._id)).then(
         (res: PatchWorkersReject) => {
           setApproval(res.payload.approval);
-          // const newList: User[] = [];
-          // props.findResult.docs.forEach((item) => {
-          //   if (item._id === res.payload._id) {
-          //     item.approval = res.payload.approval;
-          //     newList.push(item);
-          //   } else {
-          //     newList.push(item);
-          //   }
-          // });
-          // props.setFindResult({ ...props.findResult, docs: newList });
         }
       );
     } else {
       dispatch(patchWorkerApproveAction(docInfo._id)).then(
         (res: PatchWorkersApprove) => {
           setApproval(res.payload.approval);
-          // const newList: User[] = [];
-          // props.findResult.docs.forEach((item) => {
-          //   if (item._id === res.payload._id) {
-          //     item.approval = res.payload.approval;
-          //     newList.push(item);
-          //   } else {
-          //     newList.push(item);
-          //   }
-          // });
-          // props.setFindResult({ ...props.findResult, docs: newList });
         }
       );
     }
@@ -133,12 +111,8 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
     <WholeWrapper ref={ref} padding={`0px 50px 50px`}>
       <CommonSmallTitle>직원 상세 정보</CommonSmallTitle>
       <Wrapper dr={`row`} ju={`flex-end`} padding={`0px 0px 20px`}>
-        <Wrapper width={`80px`}>{/* <Text>승인상태&nbsp;|</Text> */}</Wrapper>
+        <Wrapper width={`80px`} />
         <Wrapper dr={`row`} width={`auto`}>
-          {/* <FormControlLabel
-          control={<IoIosSwitch sx={{ m: 1 }} defaultChecked />}
-          label="iOS style"
-        /> */}
           <Wrapper width={`150px`} al={`flex-end`} margin={`0px 10px 0px 0px`}>
             {approval ? (
               <Text color={`#0066ff`} fontWeight={`600`}>
