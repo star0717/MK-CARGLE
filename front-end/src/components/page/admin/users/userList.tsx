@@ -14,7 +14,10 @@ import {
   _iGetAdminUsers,
 } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
-import { _pAdminUsers } from "../../../../configure/_pProps.entity";
+import {
+  _pAdminUsers,
+  _pWorkerDataProps,
+} from "../../../../configure/_pProps.entity";
 import { FindParameters } from "../../../../models/base.entity";
 import { User } from "../../../../models/user.entity";
 import { PagenationSection } from "../../../common/sections";
@@ -23,7 +26,6 @@ import {
   Combo,
   IconButton,
   RsWrapper,
-  SmallButton,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -36,6 +38,7 @@ import {
   Wrapper,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
+import UsersModal from "./user_Modal";
 
 const UsersList: NextPage<_pAdminUsers> = (props) => {
   /*********************************************************************
@@ -95,6 +98,11 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
+  const usersModalProps: _pWorkerDataProps = {
+    ...props,
+    setModalOpen,
+    style: { height: "500px" },
+  };
 
   /*********************************************************************
    * 5. Page configuration
@@ -203,6 +211,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             <CloseButton onClick={closeModal}>
               <IoIosCloseCircle />
             </CloseButton>
+            <UsersModal {...usersModalProps} />
           </Wrapper>
         </Modal>
       </Wrapper>

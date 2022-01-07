@@ -35,7 +35,7 @@ import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
 import { Switch } from "@mui/material";
 import useStyles from "../../../styles/MuiTheme";
 
-const usersModal: NextPage<_pWorkerDataProps> = (props) => {
+const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
   const dispatch = useDispatch();
 
   // state 관리
@@ -243,4 +243,4 @@ const usersModal: NextPage<_pWorkerDataProps> = (props) => {
   );
 };
 
-export default usersModal;
+export default UsersModal;
