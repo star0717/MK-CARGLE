@@ -27,13 +27,24 @@ import { mbTypeOption } from "../../../../configure/list.entity";
 import { formRegEx } from "../../../../validation/regEx";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import { useDispatch } from "react-redux";
-import { _aPatchAdminSignUpInfo } from "../../../../../store/action/user.action";
+import {
+  _aDeleteAdminCompanies,
+  _aPatchAdminSignUpInfo,
+} from "../../../../../store/action/user.action";
+import {
+  _iDeleteAdminCompanies,
+  _iPatchAdminSignUpInfo,
+} from "../../../../../store/interfaces";
+import { useRouter } from "next/router";
+import { UseLink } from "../../../../configure/router.entity";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+  const router = useRouter();
+
   // react-hook-form 사용을 위한 선언
   const {
     register,
@@ -73,17 +84,43 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
    * 업체와 대표자 정보 변경
    * @param data
    */
-  const onChangeComHandler: SubmitHandler<SignUpInfo> = (data) => {
+  const onChangeCompany: SubmitHandler<SignUpInfo> = (data) => {
     const changeData: SignUpInfo = {
       company: comData,
       user: userData,
     };
-    console.log("체인지", changeData);
+
     dispatch(_aPatchAdminSignUpInfo(comData._id, changeData)).then(
-      (res: any) => {
-        console.log(res);
+      (res: _iPatchAdminSignUpInfo) => {
+        alert("정보가 수정되었습니다.");
+        setComData(res.payload.company);
+        setUserData(res.payload.user);
+      },
+      (err) => {
+        alert("정보 변경에 실패했습니다.");
       }
     );
+  };
+
+  const onDeleteCompany = () => {
+    if (
+      window.confirm(
+        "삭제할 경우 업체, 소속 직원 정보가 모두 삭제됩니다.\n삭제하시겠습니까?"
+      )
+    ) {
+      dispatch(_aDeleteAdminCompanies(comData._id)).then(
+        (res: _iDeleteAdminCompanies) => {
+          alert("삭제되었습니다.");
+          props.findDocHandler(props.findResult.currentPage);
+          router.push(UseLink.ADMIN_MAN_COMPANIES);
+        },
+        (err) => {
+          alert("삭제에 실패했습니다.");
+        }
+      );
+    } else {
+      return false;
+    }
   };
 
   // 모달 창 닫기
@@ -105,19 +142,25 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   return (
     <WholeWrapper ref={ref} margin={`100px 0`}>
       <RsWrapper>
-        <Wrapper>
-          <SmallButton
+        <Wrapper dr={`row`}>
+          {/* <SmallButton
             type="button"
             kindOf={`default`}
-            margin={`0px 0px 0px 20px`}
             onClick={() => {
               setModalOpen(true);
             }}
           >
             승인처리
-          </SmallButton>
+          </SmallButton> */}
           <SmallButton form="comForm" type="submit" kindOf={`default`}>
             정보 수정
+          </SmallButton>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            onClick={onDeleteCompany}
+          >
+            회원삭제
           </SmallButton>
         </Wrapper>
         <Wrapper dr={`row`}>
@@ -125,7 +168,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
             <Image src="/images/404.png" width={300} height={500} />
           </Wrapper>
           <Wrapper>
-            <form id="comForm" onSubmit={handleSubmit(onChangeComHandler)}>
+            <form id="comForm" onSubmit={handleSubmit(onChangeCompany)}>
               <Wrapper>
                 <Text>계정정보</Text>
                 <Wrapper dr={`row`}>

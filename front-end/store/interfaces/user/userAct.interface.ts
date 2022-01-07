@@ -262,6 +262,7 @@ export enum ActionAPIs {
 
   // 고유 API
   ADMIN_PATCH_SINGUP_INFO = "ADMIN_PATCH_SINGUP_INFO", // 업체 가입 정보 수정
+  ADMIN_DELETE_COMPANIES = "ADMIN_DELETE_COMPANIES", // 업체, 대표, 직원 정보 삭제
 }
 
 /*****************************************************
@@ -302,9 +303,16 @@ export class RejectCompany implements baseActionInterface {
 }
 
 /** 고유 API 인터페이스 **/
+// 관리자: 업체, 대표자 정보 변경
 export class _iPatchAdminSignUpInfo implements baseActionInterface {
   type: ActionAPIs.ADMIN_PATCH_SINGUP_INFO;
   payload: SignUpInfo;
+}
+
+// 관리자: 업체, 대표자, 직원 삭제
+export class _iDeleteAdminCompanies implements baseActionInterface {
+  type: ActionAPIs.ADMIN_DELETE_COMPANIES;
+  payload: DeleteResult;
 }
 
 /*****************************************************

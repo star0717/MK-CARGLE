@@ -258,7 +258,6 @@ export class AdminController {
     @AuthToken({ auth: UserAuthority.ADMIN })
     token: AuthTokenInfo,
   ): Promise<SignUpInfo> {
-    console.log(info);
     return await this.service.updateSignUpInfo(token, id, info);
   }
 }

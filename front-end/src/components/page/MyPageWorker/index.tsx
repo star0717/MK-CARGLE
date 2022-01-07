@@ -8,6 +8,7 @@ import { _MainProps } from "../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../models/base.entity";
 import { GetWorkersList } from "../../../../store/interfaces";
 import WorkerInfo from "./section/workerInfo";
+import { BodyWrapper } from "../../styles/LayoutComponents";
 
 const MyPageWorker: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -51,7 +52,11 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return <WorkerInfo {...myPageWorkerProps} />;
+  return (
+    <BodyWrapper>
+      <WorkerInfo {...myPageWorkerProps} />;
+    </BodyWrapper>
+  );
 };
 
 export default MyPageWorker;

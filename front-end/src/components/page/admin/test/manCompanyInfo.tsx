@@ -28,8 +28,22 @@ import { formRegEx } from "../../../../validation/regEx";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import { useAtomValue, useUpdateAtom } from "jotai/utils";
 import { nameState } from ".";
+import { redirect } from "next/dist/server/api-utils";
+import { Router, useRouter } from "next/router";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
+  const router = useRouter();
+  console.log("조회");
+  if (props.data == null) {
+    // return {
+    //   redirect: {
+    //     permanent: false,
+    //     destination: "/",
+    //   },
+    // };
+    router.push("/new/url");
+  }
+
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/

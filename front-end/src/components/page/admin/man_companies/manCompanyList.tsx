@@ -58,11 +58,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
    */
   const findCompanyHandler = (page?: number) => {
     const param: FindParameters = {
-      page,
       take: 5,
-      filterKey: searchOption,
-      filterValue: filterValue,
-      useRegSearch: true,
+      filterKey: "approval",
+      filterValue: "done",
     };
     dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
       props.setFindResult(res.payload);
@@ -135,7 +133,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
               <BsSearch />
             </IconButton>
 
-            <Text>승인대기업체수 : {props.findResult.totalDocs}</Text>
+            <Text>가입완료 업체 수 : {props.findResult.totalDocs}</Text>
           </Wrapper>
           <TableWrapper>
             <TableHead>

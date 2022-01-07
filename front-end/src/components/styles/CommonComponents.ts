@@ -11,14 +11,14 @@ interface Propsinterface {
 
 export const WholeWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
-  height: ${(props) => props.height || `100%`};
+  height: ${(props) => props.height || `auto`};
   color: ${(props) => props.color};
   display: flex;
   background-color: ${(props) => props.bgColor};
   color: ${(props) => CustomTheme.black_C};
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
   background-image: ${(props) => props.bgImg};
   background-size: cover;
   background-position: 50% 50%;
@@ -31,10 +31,9 @@ export const WholeWrapper = styled.div<any>`
   left: ${(props) => props.left};
   right: ${(props) => props.right};
   bottom: ${(props) => props.bottom};
-  margin: ${(props) => props.margin};
+  margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
   animation: ${appearAnimation} 1s forwards;
-  overflow-x: hidden;
   min-height: ${(props) => props.minHeight || ``};
   min-width: ${(props) => props.minWidth || ``};
   box-shadow: ${(props) => props.shadow};
@@ -43,7 +42,7 @@ export const WholeWrapper = styled.div<any>`
 export const RsWrapper = styled.div<any>`
   width: 1200px;
   height: ${(props) => props.height || `100%`};
-  min-height: ${(props) => props.minHeight && `min-height: ${props.minHeight};`}
+  min-height: ${(props) => props.minHeight || `100%`};
   color: ${(props) => props.color};
   display: flex;
   background: ${(props) => props.bgColor};
@@ -55,7 +54,6 @@ export const RsWrapper = styled.div<any>`
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding || ``};
-  overflow: ${(props) => props.overflow};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
   font-size: ${(props) => props.fontSize};
@@ -274,9 +272,7 @@ export const CommonTitleWrapper = styled.div<any>`
   height: ${(props) => props.height || `150px`};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
-  margin: ${(props) => props.margin || `0px 0px 0px`};
-  margintop: ${(props) => props.marginTop};
-  padding-bottom: ${(props) => props.paddingBottom};
+  margin: ${(props) => props.margin || `0px`};
   font-size: 34px;
   font-weight: 800;
   color: ${(props) => props.color};
@@ -287,11 +283,8 @@ export const CommonTitleWrapper = styled.div<any>`
 export const CommonTitle = styled.h2<any>`
   width: ${(props) => props.width};
   display: ${(props) => props.display};
-  position: relative;
   margin: ${(props) => props.margin || `0px`};
-  margintop: ${(props) => props.marginTop};
   padding: ${(props) => props.padding || ` 0px 0px`};
-  padding-bottom: ${(props) => props.paddingBottom};
   font-size: 34px;
   font-weight: 600;
   color: ${(props) => props.color || `#fff`};
@@ -321,7 +314,7 @@ export const CommonSmallTitle = styled.h2<any>`
   margin: 30px 0px;
   padding-bottom: 10px;
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 500;
   color: ${(props) => props.color};
 
   &:before {

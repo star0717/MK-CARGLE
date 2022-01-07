@@ -28,6 +28,7 @@ import {
   PatchWorkersReject,
   _iFindCompanies,
   _iPatchAdminSignUpInfo,
+  _iDeleteAdminCompanies,
 } from "../interfaces";
 
 // 로그인 action
@@ -456,6 +457,25 @@ export async function _aPatchAdminSignUpInfo(
 
   const result: _iPatchAdminSignUpInfo = {
     type: ActionAPIs.ADMIN_PATCH_SINGUP_INFO,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 업체, 직원 정보 삭제
+ * @param id
+ * @returns
+ */
+export async function _aDeleteAdminCompanies(id: string) {
+  const req: DeleteResult = await axios
+    .delete(`/api/admin/review/delete/companies/${id}`)
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteAdminCompanies = {
+    type: ActionAPIs.ADMIN_DELETE_COMPANIES,
     payload: req,
   };
   return result;

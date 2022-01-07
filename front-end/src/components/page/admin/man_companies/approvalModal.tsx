@@ -22,11 +22,6 @@ const ManComApprovalModal: NextPage<any> = (props) => {
         <Wrapper>
           <SmallButton type="button">회원삭제</SmallButton>
         </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>승인여부</Text>
-          <SmallButton type="button">승인</SmallButton>
-          <SmallButton type="button">정지</SmallButton>
-        </Wrapper>
       </RsWrapper>
     </WholeWrapper>
   );
