@@ -31,15 +31,12 @@ import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
-import AdminTestPage from "../../src/components/page/admin/test";
+
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import { NextResponse } from "next/server";
 import { redirect } from "next/dist/server/api-utils";
-<<<<<<< HEAD
 import { AdminApiPath } from "../../src/models/api-path";
-=======
 import AdminUsersPage from "../../src/components/page/admin/users";
->>>>>>> 735ca99aa9d9fd193d300d6741a12a79f0361caf
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -89,9 +86,6 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.ADMIN_USERS:
       return <AdminUsersPage {...props} />;
-
-    case UseLink.ADMIN_TEST:
-      return <AdminTestPage {...props} />;
   }
 };
 
