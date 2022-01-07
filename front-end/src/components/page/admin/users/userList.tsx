@@ -72,7 +72,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
    */
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      props.findDocHandler(props.findResult.currentPage);
+      props.findDocHandler(1);
     }
   };
 
@@ -111,7 +111,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             <IconButton
               type="submit"
               onClick={() => {
-                props.findDocHandler(props.findResult.currentPage);
+                props.findDocHandler(1);
               }}
             >
               <BsSearch />
