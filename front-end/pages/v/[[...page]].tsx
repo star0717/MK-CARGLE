@@ -35,6 +35,7 @@ import AdminTestPage from "../../src/components/page/admin/test";
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import { NextResponse } from "next/server";
 import { redirect } from "next/dist/server/api-utils";
+import { AdminApiPath } from "../../src/models/api-path";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -296,7 +297,8 @@ export const getServerSideProps: GetServerSideProps = async (
           const routerQuery = getQuery(url);
           if (routerQuery.step === Step.FIRST) {
             data = await axios
-              .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
+              // .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
+              .get(`${apiUrl}/${AdminApiPath.signup_info}/${routerQuery.id}`, {
                 headers: {
                   Cookie: `mk_token=${context.req.cookies.mk_token}`,
                 },
