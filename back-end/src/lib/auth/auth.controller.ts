@@ -133,7 +133,7 @@ export class AuthController {
   @ApiOperation({ summary: '[PUBLIC] 사업자번호로 사업자 조회' })
   @ApiParam({ name: 'id', description: '조회할 사업자번호' })
   @ApiResponse({ description: '사업자정보', type: Company || null })
-  @Get('find/company/:id')
+  @Get('company/:id')
   async findCompanyByComRegNum(
     @Param('id') id: string,
   ): Promise<Partial<Company>> {
@@ -144,7 +144,7 @@ export class AuthController {
   @ApiOperation({ summary: '[PUBLIC] 사업자명으로 사업자 조회' })
   @ApiParam({ name: 'id', description: '조회할 사업자명' })
   @ApiResponse({ description: '사업자정보 배열', type: [Company] })
-  @Get('find/companies/:id')
+  @Get('companies/:id')
   async findCompaniesByName(
     @Param('id') name: string,
   ): Promise<Partial<Company>[]> {
@@ -255,7 +255,7 @@ export class AuthController {
 
   @ApiOperation({ summary: '[WORKER] 업로드된 사업자등록증 파일명 반환' })
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
-  @Get('file-name/com-reg-docc')
+  @Get('file-name/com-reg-doc')
   async getCrFileName(
     @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ): Promise<string> | null {

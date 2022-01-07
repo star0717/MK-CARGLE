@@ -244,7 +244,7 @@ export class SettingsController {
   @ApiParam({ name: 'id', description: '수정할 작업자의 오브젝트ID' })
   @ApiBody({ description: '수정할 작업자의 정보. joinDate만 허용', type: User })
   @ApiResponse({ description: '수정된 작업자의 정보', type: User })
-  @Patch('/management/workers/:id')
+  @Patch('management/workers/:id')
   async updateWorkerInfo(
     @Param('id') id: string,
     @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,

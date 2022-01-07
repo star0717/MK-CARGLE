@@ -49,22 +49,6 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  /**
-   * 작업자의 정보를 조회함
-   * @param page 조회할 페이지
-   */
-  const findUserHandler = (page?: number) => {
-    const param: FindParameters = {
-      page,
-      take: 10,
-      filterKey: props.searchOption,
-      filterValue: props.filterValue,
-      useRegSearch: true,
-    };
-    dispatch(_aGetAdminUsers(param)).then((res: _iGetAdminUsers) => {
-      props.setFindResult(res.payload);
-    });
-  };
 
   /**
    * 검색 옵션 handler
@@ -89,7 +73,6 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
       props.findDocHandler;
-      findUserHandler();
     }
   };
 
@@ -128,7 +111,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             <IconButton
               type="submit"
               onClick={() => {
-                findUserHandler();
+                props.findDocHandler;
               }}
             >
               <BsSearch />
