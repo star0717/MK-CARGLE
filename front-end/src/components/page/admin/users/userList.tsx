@@ -51,6 +51,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [clickDoc, setClickDoc] = useState<User>();
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -100,6 +101,8 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
    *********************************************************************/
   const usersModalProps: _pWorkerDataProps = {
     ...props,
+    clickDoc,
+    setClickDoc,
     setModalOpen,
     style: { height: "500px" },
   };
@@ -156,6 +159,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
                   key={doc._id}
                   onClick={() => {
                     console.log("구혁씨 ㅎㅇ");
+                    setClickDoc(doc);
                     setModalOpen(!modalOpen);
                   }}
                 >
