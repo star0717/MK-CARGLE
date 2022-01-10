@@ -190,7 +190,7 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
         </Wrapper>
 
         <CommonButtonWrapper kindOf={`column`}>
-          {/* <CommonButton
+          <CommonButton
             type="submit"
             kindOf={`white`}
             margin={`0px 0px 5px 0px`}
@@ -199,7 +199,7 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
             radius={`100px`}
           >
             저장
-          </CommonButton> */}
+          </CommonButton>
           <CommonButton
             type="button"
             kindOf={`white`}
