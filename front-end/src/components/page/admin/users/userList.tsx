@@ -18,6 +18,8 @@ import { PagenationSection } from "../../../common/sections";
 import {
   CloseButton,
   Combo,
+  CommonTitle,
+  CommonTitleWrapper,
   IconButton,
   RsWrapper,
   SearchButton,
@@ -111,13 +113,17 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
 
   return (
     <WholeWrapper>
+      <CommonTitleWrapper>
+        <CommonTitle>직원관리</CommonTitle>
+      </CommonTitleWrapper>
       <RsWrapper>
-        <Wrapper dr={`row`} al={`flex-end`}>
+        <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
           <Combo
             value={props.searchOption}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onSearchOptionHandler(e);
             }}
+            width={`150px`}
             height={`46px`}
           >
             <option value="name">이름 검색</option>
@@ -144,6 +150,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
           <SearchInputWrapper
             type="text"
             value={props.filterValue}
+            placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onInputSearchHandler(e);
             }}
