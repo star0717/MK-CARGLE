@@ -452,8 +452,8 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             },
             content: {
               background: "white",
-              width: "45rem",
-              height: "575px",
+              width: "500px",
+              height: "800px",
               maxWidth: "calc(100vw - 2rem)",
               maxHeight: "calc(100vh - 2rem)",
               overflowY: "auto",
