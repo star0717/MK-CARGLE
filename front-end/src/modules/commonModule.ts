@@ -1,3 +1,5 @@
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { ParsedUrlQuery } from "querystring";
 import parse from "url-parse";
 import { MbType } from "../configure/etc.entity";
 import { mbTypeOption } from "../configure/list.entity";
@@ -78,6 +80,6 @@ export const mbTypeToString = (list: Company) => {
   const textMbType: MbType = mbTypeOption.find((item) => {
     return item.value === list.mbTypeNum;
   });
-  if(textMbType == null) return;
+  if (textMbType == null) return;
   else textMbType.text;
 };

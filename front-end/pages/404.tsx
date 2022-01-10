@@ -21,7 +21,7 @@ const Custom404: NextPage = () => {
     <WholeWrapper>
       <Wrapper padding={`150px 0px 0px`}>
         <Wrapper width={`500px`}>
-          <Image src="/images/404.png" />
+          <Image src="/images/404.png" alt="404 에러" />
         </Wrapper>
         <Wrapper>
           <Text
