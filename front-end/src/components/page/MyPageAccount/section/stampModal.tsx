@@ -13,6 +13,7 @@ import {
   SmallButton,
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -160,6 +161,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
           src={upImg}
           onImageLoaded={onLoad}
           crop={crop}
+          ruleOfThirds
           onChange={(c) => setCrop(c)}
           onComplete={(c) => setCompletedCrop(c)}
         />

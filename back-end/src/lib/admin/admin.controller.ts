@@ -134,7 +134,9 @@ export class AdminController {
     token: AuthTokenInfo,
     @Res({ passthrough: true }) res: Response,
   ) {
+    console.log('hi');
     const fileName = await this.service.getComRegFileName(token, id);
+    console.log(fileName);
     if (!fileName) throw new NotFoundException();
     const extension = this.commonService.getFileExtension(fileName);
 
@@ -161,7 +163,7 @@ export class AdminController {
   }
 
   @Get('review/main-reg-doc/:id')
-  @ApiOperation({ summary: '[ADMIN] 업체의 사업자 등록증 반환' })
+  @ApiOperation({ summary: '[ADMIN] 업체의 정비업 등록증 반환' })
   @ApiParam({ name: 'id', description: '업체의 오브젝트ID' })
   async getMainRegDoc(
     @Param('id') id: string,
