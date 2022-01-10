@@ -135,6 +135,14 @@ export const getServerSideProps: GetServerSideProps = async (
    */
   const pathName: string = getPathName(url);
 
+  // Back-end API 호출에 사용되는 인증 토큰 설정
+  const authConfig = {
+    headers: {
+      Cookie: `mk_token=${context.req.cookies.mk_token}`,
+    },
+    withCredentials: true,
+  };
+
   if (context.req.cookies.mk_token) {
     /**
      * 로그인 토큰
@@ -197,16 +205,15 @@ export const getServerSideProps: GetServerSideProps = async (
             },
           };
         }
+        // 승인 관리
         case UseLink.ADMIN_REVIEW_COMPANIES: {
           const routerQuery = getQuery(url);
           if (routerQuery.id) {
             data = await axios
-              .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
-                headers: {
-                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                },
-                withCredentials: true,
-              })
+              .get(
+                `${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`,
+                authConfig
+              )
               .then(
                 (res: AxiosResponse<FindResult<Company>, Company>) => res.data
               );
@@ -226,12 +233,7 @@ export const getServerSideProps: GetServerSideProps = async (
                 `${apiUrl}${
                   AdminApiPath.ing_companies
                 }?${FindParameters.getQuery(params)}`,
-                {
-                  headers: {
-                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                  },
-                  withCredentials: true,
-                }
+                authConfig
               )
               .then(
                 (res: AxiosResponse<FindResult<Company>, Company>) => res.data
