@@ -128,14 +128,16 @@ export class AdminService {
   }
 
   async getComRegFileName(token: AuthTokenInfo, id: string) {
-    const company = await this.companiesService.findById(token, token.cID);
+    const company = await this.companiesService.findById(token, id);
     var fileName = company.comRegNum;
 
+    console.log(fileName);
     const fileList = await this.commonService.getFileNames(
       getCrnPath(),
       fileName,
     );
 
+    console.log(fileList);
     if (fileList.length == 0) {
       throw new NotFoundException();
     }
@@ -144,7 +146,7 @@ export class AdminService {
   }
 
   async getMainRegFileName(token: AuthTokenInfo, id: string) {
-    const company = await this.companiesService.findById(token, token.cID);
+    const company = await this.companiesService.findById(token, id);
     var fileName = company.mbRegNum;
 
     const fileList = await this.commonService.getFileNames(

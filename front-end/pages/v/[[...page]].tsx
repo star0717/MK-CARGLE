@@ -135,6 +135,41 @@ export const getServerSideProps: GetServerSideProps = async (
    */
   const pathName: string = getPathName(url);
 
+  /**
+   * Axios URL
+   */
+  const apiUrl: string =
+    process.env.DESTINATION_API + process.env.DESTINATION_PORT;
+
+  const genPath = (
+    apiPath: string,
+    id?: string,
+    findParams?: FindParameters
+  ) => {
+    console.log("아규먼트", apiPath, id, findParams);
+    apiPath = apiUrl + apiPath;
+    console.log("1");
+    if (id) {
+      console.log("1-1");
+      apiPath = `${apiPath}/${id}`;
+    }
+    console.log("2");
+    if (findParams != undefined) {
+      console.log("2-2");
+      apiPath = `${apiPath}${FindParameters.getQuery(findParams)}`;
+    }
+    console.log("params: ", FindParameters.getQuery(findParams));
+    console.log("최종 URL: ", apiPath);
+    return apiPath;
+  };
+
+  const authConfig = {
+    headers: {
+      Cookie: `mk_token=${context.req.cookies.mk_token}`,
+    },
+    withCredentials: true,
+  };
+
   if (context.req.cookies.mk_token) {
     /**
      * 로그인 토큰
@@ -146,12 +181,6 @@ export const getServerSideProps: GetServerSideProps = async (
         notFound: true,
       };
     } else {
-      /**
-       * Axios URL
-       */
-      const apiUrl: string =
-        process.env.DESTINATION_API + process.env.DESTINATION_PORT;
-
       let data: any;
 
       // 렌더링 시 데이터가 필요한 페이지만 URL 및 API 추가
@@ -207,14 +236,19 @@ export const getServerSideProps: GetServerSideProps = async (
         case UseLink.ADMIN_REVIEW_COMPANIES: {
           const routerQuery = getQuery(url);
           if (routerQuery.id) {
+            console.log("info");
             try {
               data = await axios
-                .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
-                  headers: {
-                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                  },
-                  withCredentials: true,
-                })
+                .get(
+                  `${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`,
+                  authConfig
+                )
+                // .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
+                //   headers: {
+                //     Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                //   },
+                //   withCredentials: true,
+                // })
                 .then(
                   (res: AxiosResponse<FindResult<Company>, Company>) => res.data
                 );
@@ -238,18 +272,23 @@ export const getServerSideProps: GetServerSideProps = async (
                 take: 10,
               };
 
+              console.log("list");
               data = await axios
                 .get(
-                  `${apiUrl}${
-                    AdminApiPath.ing_companies
-                  }?${FindParameters.getQuery(params)}`,
-                  {
-                    headers: {
-                      Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                    },
-                    withCredentials: true,
-                  }
+                  genPath(AdminApiPath.ing_companies, null, params),
+                  authConfig
                 )
+                // .get(
+                //   `${apiUrl}${
+                //     AdminApiPath.ing_companies
+                //   }?${FindParameters.getQuery(params)}`,
+                //   {
+                //     headers: {
+                //       Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                //     },
+                //     withCredentials: true,
+                //   }
+                // )
                 .then(
                   (res: AxiosResponse<FindResult<Company>, Company>) => res.data
                 );
