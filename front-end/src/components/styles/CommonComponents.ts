@@ -383,7 +383,7 @@ export const Text = styled.p<any>`
 /**button */
 
 export const CommonButtonWrapper = styled.div<any>`
-  width: ${(props) => props.width};
+  width: ${(props) => props.width || `100%`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
   transition: ${(props) => props.transition || CustomTheme.transition};
