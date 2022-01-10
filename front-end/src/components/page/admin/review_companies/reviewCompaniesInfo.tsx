@@ -29,12 +29,20 @@ import {
 import { useResizeDetector } from "react-resize-detector";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { mbTypeOption } from "../../../../configure/list.entity";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { User } from "../../../../models/user.entity";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import {
+  getComRegFile,
+  setMyInfoAction,
+} from "../../../../../store/action/user.action";
+import Link from "next/link";
+import { SignUpInfo } from "../../../../models/auth.entity";
 
 const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [comData, setComData] = useState<Company>(props.data.company); // 클릭한 업체 정보
@@ -64,6 +72,22 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
   };
 
+  /**
+   * 계정 정보 변경 handler
+   * @param data
+   */
+  const onChangeInfoHandler: SubmitHandler<SignUpInfo> = (e: any) => {
+    console.log("?>?");
+    const changeData: SignUpInfo = {
+      company: comData,
+      user: userData,
+    };
+
+    dispatch(setMyInfoAction(changeData)).then((res: any) => {
+      alert("저장되었습니다.");
+    });
+  };
+
   const ARCModalProps: any = {
     ...props,
     setModalOpen,
@@ -79,7 +103,14 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
         <Wrapper width={`1070px`}>
           <Wrapper dr={`row`} ju={`space-between`} padding={`0px 0px 30px`}>
             <Wrapper width={`auto`} dr={`row`}>
-              <SmallButton type="button" kindOf={`default`} onClick={() => {}}>
+              <SmallButton
+                type="button"
+                kindOf={`default`}
+                onClick={(e: any) => {
+                  console.log("!!!");
+                  onChangeInfoHandler(e);
+                }}
+              >
                 수정
               </SmallButton>
               <SmallButton
@@ -106,182 +137,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
               </SmallButton>
             </Wrapper>
           </Wrapper>
-          {/* <Wrapper>
-            <Wrapper
-              border={`1px solid #ccc`}
-              radius={`5px`}
-              shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
-              margin={`0px 0px 50px`}
-            >
-              <CommonSmallTitle
-                fontSize={`18px`}
-                fontWeight={`800`}
-                padding={`10px 0px`}
-              >
-                사용자 정보
-              </CommonSmallTitle>
-              <Wrapper al={`flex-start`}>
-                <Text margin={`0px 0px 10px`}>아이디</Text>
-                <TextInput2
-                  margin={`0px 0px 10px`}
-                  width={`400px`}
-                  type="text"
-                  readOnly
-                  value={userData.email}
-                />
-              </Wrapper>
-              <Wrapper al={`flex-start`}>
-                <Text margin={`0px 0px 10px`}>이름</Text>
-                <TextInput2
-                  margin={`0px 0px 10px`}
-                  width={`400px`}
-                  type="text"
-                  readOnly
-                  value={userData.name}
-                />
-              </Wrapper>
-              <Wrapper al={`flex-start`}>
-                <Text margin={`0px 0px 10px`}>전화번호</Text>
-                <TextInput2
-                  margin={`0px 0px 10px`}
-                  width={`400px`}
-                  type="text"
-                  readOnly
-                  value={userData.hpNumber}
-                />
-              </Wrapper>
-            </Wrapper>
-            <CommonSmallTitle
-              fontSize={`18px`}
-              fontWeight={`800`}
-              padding={`10px 0px`}
-            >
-              사업자 정보
-            </CommonSmallTitle>
-            <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>상호명</Text>
-              <TextInput2
-                margin={`0px 0px 10px`}
-                width={`400px`}
-                value={comData.name}
-                type="text"
-                readOnly
-              />
-            </Wrapper>
-            <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>사업자등록번호</Text>
-              <TextInput2
-                margin={`0px 0px 10px`}
-                width={`400px`}
-                value={comData.comRegNum}
-                type="text"
-                readOnly
-              />
-            </Wrapper>
-            <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>정비업등록번호</Text>
-              <TextInput2
-                margin={`0px 0px 10px`}
-                width={`400px`}
-                value={comData.mbRegNum}
-                type="text"
-                readOnly
-              />
-            </Wrapper>
-            <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>대표자명</Text>
-              <TextInput2
-                margin={`0px 0px 10px`}
-                width={`400px`}
-                value={comData.ownerName}
-                type="text"
-                readOnly
-              />
-            </Wrapper>
-            <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>정비업종</Text>
-              <Combo
-                width={`400px`}
-                margin={`0px`}
-                name="mbTypeNum"
-                value={comData.mbTypeNum}
-                {...register("mbTypeNum", {
-                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputComHandler(e);
-                  },
-                  required: true,
-                })}
-              >
-                {mbTypeOption.map((item) => {
-                  return (
-                    <option key={item.value} value={item.value}>
-                      {item.text}
-                    </option>
-                  );
-                })}
-              </Combo>
-            </Wrapper>
-            <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>업태</Text>
-              <TextInput2
-                margin={`0px 0px 10px`}
-                width={`400px`}
-                value={comData.busType}
-                type="text"
-                {...register("busType", {
-                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputComHandler(e);
-                  },
-                })}
-              />
-            </Wrapper>
-            <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>업종</Text>
-              <TextInput2
-                margin={`0px 0px 10px`}
-                width={`400px`}
-                value={comData.busItem}
-                type="text"
-                {...register("busItem", {
-                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputComHandler(e);
-                  },
-                })}
-              />
-            </Wrapper>
-            <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>업체 전화번호</Text>
-              <TextInput2
-                margin={`0px 0px 10px`}
-                width={`400px`}
-                value={comData.phoneNum}
-                type="text"
-                readOnly
-              />
-              <Text margin={`0px 0px 10px`}>업체 팩스번호</Text>
-              <TextInput2
-                margin={`0px 0px 10px`}
-                width={`400px`}
-                value={comData.faxNum}
-                type="text"
-                readOnly
-              />
-            </Wrapper>
-            <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>사업자 주소</Text>
-              <TextInput2
-                margin={`0px 0px 10px`}
-                width={`400px`}
-                value={makeFullAddress(
-                  comData.address1,
-                  comData.address2,
-                  comData.postcode
-                )}
-                type="text"
-                readOnly
-              />
-            </Wrapper>
-          </Wrapper> */}
+
           {/* ----------------------------------------사용자-------------------------------------- */}
           <Wrapper
             border={`1px solid #ccc`}
@@ -503,36 +359,6 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
                     />
                   </Wrapper>
                 </Wrapper>
-                {/* <Wrapper dr={`row`} margin={`0px 0px 10px`}>
-                <Text
-                  width={`130px`}
-                  textAlign={`end`}
-                  padding={`0px 10px 0px 0px`}
-                >
-                  업체 전화번호
-                </Text>
-                <TextInput2
-                  value={comData.phoneNum}
-                  type="text"
-                  readOnly
-                  width={`320px`}
-                  margin={`0px 10px 0px`}
-                />
-                <Text
-                  width={`130px`}
-                  textAlign={`end`}
-                  padding={`0px 10px 0px 0px`}
-                >
-                  업체 팩스번호
-                </Text>
-                <TextInput2
-                  value={comData.faxNum}
-                  type="text"
-                  readOnly
-                  width={`320px`}
-                  margin={`0px 0px 0px 0px`}
-                />
-              </Wrapper> */}
                 <Wrapper dr={`row`} margin={`0px 0px 10px`}>
                   <Wrapper dr={`row`}>
                     <Text
@@ -588,8 +414,23 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             </Wrapper>
           </Wrapper>
           <CommonButtonWrapper ju={`space-between`} padding={`0px 0px 30px`}>
-            <CommonButton kindOf={`white`}>사업자등록증 확인</CommonButton>
-            <CommonButton>정비업등록증 확인</CommonButton>
+            <CommonButton
+              kindOf={`white`}
+              onClick={() => {
+                let comRegDocLink = `/api/admin/review/com-reg-doc/${comData._id}`;
+                window.open(comRegDocLink);
+              }}
+            >
+              사업자등록증 확인
+            </CommonButton>
+            <CommonButton
+              onClick={() => {
+                let mainRegDocLink = `/api/admin/review/main-reg-doc/${comData._id}`;
+                window.open(mainRegDocLink);
+              }}
+            >
+              정비업등록증 확인
+            </CommonButton>
           </CommonButtonWrapper>
         </Wrapper>
       </RsWrapper>
