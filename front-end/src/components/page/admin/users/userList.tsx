@@ -144,6 +144,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
           <SearchInputWrapper
             type="text"
             value={props.filterValue}
+            placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onInputSearchHandler(e);
             }}
