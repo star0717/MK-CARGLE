@@ -153,7 +153,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
         });
       }
     }
-  }, [timer, props.formCheck]);
+  }, [timer, props.formCheck, dispatch]);
 
   /**
    * 인증번호 검사 handler
