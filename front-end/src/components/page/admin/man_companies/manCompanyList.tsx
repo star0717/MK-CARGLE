@@ -1,11 +1,9 @@
 import dayjs from "dayjs";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
 import {
   _pAdminManCompanies,

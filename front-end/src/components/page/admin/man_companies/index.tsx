@@ -2,8 +2,8 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { _aGetAdminManCompanies } from "../../../../../store/action/user.action";
-import { _iFindCompanies } from "../../../../../store/interfaces";
+import { _aGetAdminDoneCompanies } from "../../../../../store/action/user.action";
+import { _iGetAdminDoneCompanies } from "../../../../../store/interfaces";
 import { _pAdminManCompanies } from "../../../../configure/_pProps.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
@@ -43,9 +43,11 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
       filterValue: filterValue,
       useRegSearch: true,
     };
-    dispatch(_aGetAdminManCompanies(param)).then((res: _iFindCompanies) => {
-      setFindResult(res.payload);
-    });
+    dispatch(_aGetAdminDoneCompanies(param)).then(
+      (res: _iGetAdminDoneCompanies) => {
+        setFindResult(res.payload);
+      }
+    );
   };
 
   /*********************************************************************

@@ -29,6 +29,7 @@ import {
   _iDeleteAdminCompanies,
   _ingCompany,
   _iGetAdminUsers,
+  _iGetAdminDoneCompanies,
 } from "../interfaces";
 
 import {
@@ -504,6 +505,32 @@ export async function ingCompany(findParams: FindParameters) {
 
   const result: _ingCompany = {
     type: ActionAPIs.ING_COMPANY,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * approval이 done인 업체 정보를 페이징 정보와 함께 반환
+ * @param FindParameters
+ */
+export async function _aGetAdminDoneCompanies(findParams: FindParameters) {
+  const req: FindResult<Company> = await axios
+    .get(
+      `/api${AdminApiPath.done_companies}?${FindParameters.getQuery(
+        findParams
+      )}`
+    )
+    .then(
+      (
+        res: AxiosResponse<FindResult<Company>, Company>
+      ): FindResult<Company> => {
+        return res.data;
+      }
+    );
+
+  const result: _iGetAdminDoneCompanies = {
+    type: ActionAPIs.ADMIN_GET_DONE_COMPANIES,
     payload: req,
   };
   return result;

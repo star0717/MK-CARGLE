@@ -3,15 +3,8 @@ import type { NextPage } from "next";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import {
-  ingCompany,
-  _aGetAdminReivewCompanies,
-} from "../../../../../store/action/user.action";
-import {
-  actionTypesUser,
-  _iFindCompanies,
-  _ingCompany,
-} from "../../../../../store/interfaces";
+import { ingCompany } from "../../../../../store/action/user.action";
+import { actionTypesUser, _ingCompany } from "../../../../../store/interfaces";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company, CompanyApproval } from "../../../../models/company.entity";

@@ -259,6 +259,7 @@ export enum ActionAPIs {
   APPROVE_COMPANY = "APPROVE_COMPANY", //업체 승인
   REJECT_COMPANY = "REJECT_COMPANY", //업체 승인요청 반려
   ING_COMPANY = "ING_COMPANY",
+  ADMIN_GET_DONE_COMPANIES = "ADMIN_GET_DONE_COMPANIES", // done 업체 리스트
   ADMIN_GET_USERS = "ADMIN_GET_USERS", // 모든 직원 리스트 반환
   ADMIN_GET_USERS_ID = "ADMIN_GET_USERS_ID", // 해당 직원 리스트 반환
 
@@ -306,6 +307,10 @@ export class _ingCompany implements baseActionInterface {
 }
 
 /** 고유 API 인터페이스 **/
+export class _iGetAdminDoneCompanies implements baseActionInterface {
+  type: ActionAPIs.ADMIN_GET_DONE_COMPANIES;
+  payload: FindResult<Company>;
+}
 // 관리자: 업체, 대표자 정보 변경
 export class _iPatchAdminSignUpInfo implements baseActionInterface {
   type: ActionAPIs.ADMIN_PATCH_SINGUP_INFO;
