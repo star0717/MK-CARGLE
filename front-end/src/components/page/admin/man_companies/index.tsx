@@ -81,13 +81,13 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
   // }
   if (routerQuery.id) {
     return (
-      <BodyWrapper kindOf={`NoneTitleBodyWrapper`}>
+      <BodyWrapper>
         <ManCompanyInfo {...adminManComProps} />
       </BodyWrapper>
     );
   } else {
     return (
-      <BodyWrapper kindOf={`NoneTitleBodyWrapper`}>
+      <BodyWrapper>
         <ManCompanyList {...adminManComProps} />
       </BodyWrapper>
     );
