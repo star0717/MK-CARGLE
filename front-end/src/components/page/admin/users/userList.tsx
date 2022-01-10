@@ -20,6 +20,7 @@ import {
   Combo,
   IconButton,
   RsWrapper,
+  SearchInput,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -121,7 +122,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
               <option value="hpNumber">전화번호 검색</option>
               <option value="approval">승인여부 검색</option>
             </Combo>
-            <TextInput
+            {/* <TextInput
               type="text"
               value={props.filterValue}
               placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
@@ -137,7 +138,31 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
               }}
             >
               <BsSearch />
-            </IconButton>
+            </IconButton> */}
+
+            <Wrapper
+              width={`678px`}
+              padding={`0px 5px`}
+              dr={`row`}
+              borderBottom={`1px solid #000`}
+              margin={`10px 0px 0px`}
+            >
+              <Wrapper width={`auto`}>
+                <SearchInput
+                  width={`632px`}
+                  padding={`0px 5px 0px 5px`}
+                  placeholder="업체명 또는 사업자번호 입력"
+                  type="text"
+                />
+              </Wrapper>
+              <Wrapper width={`36px`} height={`46px`}>
+                <Text fontSize={`24px`}>
+                  <IconButton type="submit">
+                    <BsSearch />
+                  </IconButton>
+                </Text>
+              </Wrapper>
+            </Wrapper>
 
             <Text>직원 수 : {props.findResult.totalDocs}</Text>
           </Wrapper>

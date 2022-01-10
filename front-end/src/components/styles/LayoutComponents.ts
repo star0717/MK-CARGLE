@@ -63,7 +63,7 @@ export const HeaderFixed = styled.div<any>`
   align-items: center;
 
   &:hover ${HeaderHover} {
-    display: block;
+    display: ${(props) => props.display || `block`};
     top: 55px;
     left: 0;
     width: 100%;
