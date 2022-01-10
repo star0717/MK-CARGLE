@@ -183,33 +183,39 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
             <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
           </TableHead>
           <TableBody>
-            {props.findResult.docs.map((doc: Company) => (
-              <TableRow
-                key={doc._id}
-                onClick={() => {
-                  router.push(
-                    `${UseLink.ADMIN_REVIEW_COMPANIES}?id=${doc._id}`
-                  );
-                }}
-              >
-                <TableRowLIST width={`200px`}>
-                  {dayjs(doc.createdAt).format("YYYY-MM-DD")}
-                </TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
-                {doc.approval == CompanyApproval.BEFORE ? (
-                  <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
-                ) : doc.approval == CompanyApproval.ING ? (
-                  <TableRowLIST width={`200px`}>요청 중</TableRowLIST>
-                ) : doc.approval == CompanyApproval.DONE ? (
-                  <TableRowLIST width={`200px`}>승인완료</TableRowLIST>
-                ) : (
-                  <TableRowLIST width={`200px`}>이상업체</TableRowLIST>
-                )}
-              </TableRow>
-            ))}
+            {props.findResult.totalDocs > 0 ? (
+              props.findResult.docs.map((doc: Company) => (
+                <TableRow
+                  key={doc._id}
+                  onClick={() => {
+                    router.push(
+                      `${UseLink.ADMIN_REVIEW_COMPANIES}?id=${doc._id}`
+                    );
+                  }}
+                >
+                  <TableRowLIST width={`200px`}>
+                    {dayjs(doc.createdAt).format("YYYY-MM-DD")}
+                  </TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
+                  {doc.approval == CompanyApproval.BEFORE ? (
+                    <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.ING ? (
+                    <TableRowLIST width={`200px`}>요청 중</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.DONE ? (
+                    <TableRowLIST width={`200px`}>승인완료</TableRowLIST>
+                  ) : (
+                    <TableRowLIST width={`200px`}>이상업체</TableRowLIST>
+                  )}
+                </TableRow>
+              ))
+            ) : (
+              <Wrapper>
+                <Text>검색 결과가 없습니다.</Text>
+              </Wrapper>
+            )}
           </TableBody>
         </TableWrapper>
         <PagenationSection {...props} />
