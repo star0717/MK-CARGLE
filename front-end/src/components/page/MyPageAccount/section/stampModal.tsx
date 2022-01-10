@@ -160,6 +160,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
           src={upImg}
           onImageLoaded={onLoad}
           crop={crop}
+          ruleOfThirds
           onChange={(c) => setCrop(c)}
           onComplete={(c) => setCompletedCrop(c)}
         />

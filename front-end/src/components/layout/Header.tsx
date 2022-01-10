@@ -235,21 +235,17 @@ const Header: NextPage<_pLayoutProps> = (props) => {
               </HeaderHover>
             </HeaderFixed>
           )}
-        {props.tokenValue &&
-          props.tokenValue.cApproval === CompanyApproval.DONE && (
-            <Wrapper
-              width={`auto`}
-              padding={
-                width < 1510
-                  ? width < 1080
-                    ? `0px 10px`
-                    : `0px 10px`
-                  : `0px 20px`
-              }
-              dr={`row`}
-              al={`flex-start`}
-              wrap={`no-wrap`}
-            >
+        <Wrapper
+          width={`auto`}
+          padding={
+            width < 1510 ? (width < 1080 ? `0px 10px` : `0px 10px`) : `0px 20px`
+          }
+          dr={`row`}
+          al={`flex-start`}
+          wrap={`no-wrap`}
+        >
+          {props.tokenValue &&
+            props.tokenValue.cApproval === CompanyApproval.DONE && (
               <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
                 <HeaderIconButton
                   radius={`100px`}
@@ -286,7 +282,10 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                 </HeaderIconAlarm>
               </HeaderIconAlarmWrapper> */}
               </Wrapper>
-
+            )}
+          {props.tokenValue &&
+            (props.tokenValue.cApproval === CompanyApproval.DONE ||
+              props.tokenValue.cApproval === CompanyApproval.ING) && (
               <HeaderIconButton
                 radius={`100px`}
                 al={`center`}
@@ -299,8 +298,8 @@ const Header: NextPage<_pLayoutProps> = (props) => {
               >
                 <MdLogout />
               </HeaderIconButton>
-            </Wrapper>
-          )}
+            )}
+        </Wrapper>
       </Wrapper>
     </HeaderWrapper>
   );
