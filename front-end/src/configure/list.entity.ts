@@ -155,7 +155,7 @@ export const menuList = [
   },
   {
     key: "7",
-    menuName: "관리자",
+    menuName: "회원",
     link: UseLink.ADMIN_REVIEW_COMPANIES,
     auth: UserAuthority.ADMIN,
     subMenu: [

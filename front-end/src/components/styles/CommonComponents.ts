@@ -632,25 +632,6 @@ export const LabelButton = styled.label<any>`
   }
 `;
 
-export const SearchButton = styled.button<any>`
-  width: ${(props) => props.width || `80px`};
-  min-width: ${(props) => props.minWidth};
-  height: ${(props) => props.height || `40px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
-  margin: ${(props) => props.margin || `0px`};
-  padding: ${(props) => props.padding};
-  border-radius: ${(props) => props.radius};
-  font-size: ${(props) => props.fontSize};
-  display: flex;
-  flex-direction: ${(props) => props.dr || `row`};
-  align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
-  background-color: ${(props) => props.bgColor};
-  color: ${(props) => props.color};
-  cursor: pointer;
-  border: none;
-`;
-
 export const CloseButton = styled.button<any>`
   width: ${(props) => props.width || `auto`};
   min-width: ${(props) => props.minWidth};
@@ -830,14 +811,52 @@ export const TextInput2 = styled.input<any>`
 `;
 
 export const SearchInputWrapper = styled.div<any>`
-  width: ${(props) => props.width || `678px`};
-  height: ${(props) => props.height || `46px`};
-  border: none;
-  border-bottom: 1px solid #363636;
-  flex-direction: ${(props) => props.dr || `row`};
+  width: ${(props) => props.width || `100%`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  display: ${(props) => props.display || `flex`};
+  flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
+  flex-wrap: ${(props) => props.wrap || `no-wrap`};
+  background: ${(props) => props.white_C};
+  color: ${(props) => props.color};
+  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  position: ${(props) => (props.isFixed ? `fixed` : ``)};
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
+  bottom: ${(props) => props.bottom};
+  right: ${(props) => props.right};
+  z-index: ${(props) => props.zIndex};
+  border: ${(props) => props.border};
+  border-bottom: ${(props) => props.borderBottom || `1px solid #000`};
+  border-top: ${(props) => props.borderTop};
+  border-right: ${(props) => props.borderRight};
+  border-left: ${(props) => props.borderLeft};
+  border-radius: ${(props) => props.radius};
+  box-shadow: ${(props) => props.shadow};
+  font-size: ${(props) => props.fontSize};
+  font-weight: ${(props) => props.fontWeight};
+  margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
+  overflow: ${(props) => (props.isOverflow ? `auto` : props.overflow || ``)};
+  background-image: ${(props) => props.bgImg};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: ${(props) => props.attachment || `fixed`};
+  background-position: center;
+  background-color: ${(props) => props.bgColor};
+  transition: 0.5s;
+  cursor: ${(props) => props.cursor};
+  line-height: ${(props) => props.lineHeight};
+  text-align: ${(props) => props.textAlign};
+  animation: ${appearAnimation} 1s forwards;
+
+  &:focus {
+    border-bottom: 1px solid #0066ff;
+  }
 `;
 
 export const SearchInput = styled.input<any>`
@@ -876,9 +895,29 @@ export const SearchInput = styled.input<any>`
   }
 `;
 
+export const SearchButton = styled.button<any>`
+  width: ${(props) => props.width || `80px`};
+  min-width: ${(props) => props.minWidth};
+  height: ${(props) => props.height || `40px`};
+  transition: ${(props) => props.transition || CustomTheme.transition};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  border-radius: ${(props) => props.radius};
+  font-size: ${(props) => props.fontSize || `22px`};
+  display: flex;
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  background-color: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  cursor: pointer;
+  border: none;
+  background-color: #fff;
+`;
+
 export const Combo = styled.select<any>`
   width: ${(props) => props.width};
-  height: 40px;
+  height: ${(props) => props.height || `40px`};
   border: ${(props) => props.border || CustomTheme.border};
   padding: 0px 8px;
   color: ${(props) => props.color};
@@ -1420,18 +1459,18 @@ export const NavAll = styled.div<any>`
   clear: both;
 `;
 
-export const NavUl = styled.ul<any>`
-  position: ${(props) => props.position || `relative`};
-  float: left;
-  font-size: ${(props) => props.fontSize || `16px`};
-  list-style: none;
-  text-decoration: none;
-`;
+// export const NavUl = styled.ul<any>`
+//   position: ${(props) => props.position || `relative`};
+//   float: left;
+//   font-size: ${(props) => props.fontSize || `16px`};
+//   list-style: none;
+//   text-decoration: none;
+// `;
 
-export const NavLi = styled.li<any>`
-  height: ${(props) => props.height || `30px`};
+// export const NavLi = styled.li<any>`
+//   height: ${(props) => props.height || `30px`};
 
-  &:hover {
-    font-weight: bold;
-  }
-`;
+//   &:hover {
+//     font-weight: bold;
+//   }
+// `;

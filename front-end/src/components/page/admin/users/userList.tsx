@@ -20,6 +20,9 @@ import {
   Combo,
   IconButton,
   RsWrapper,
+  SearchButton,
+  SearchInput,
+  SearchInputWrapper,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -109,19 +112,19 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        <Wrapper width={`1200px`}>
-          <Wrapper dr={`row`}>
-            <Combo
-              value={props.searchOption}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onSearchOptionHandler(e);
-              }}
-            >
-              <option value="name">이름 검색</option>
-              <option value="hpNumber">전화번호 검색</option>
-              <option value="approval">승인여부 검색</option>
-            </Combo>
-            <TextInput
+        <Wrapper dr={`row`} al={`flex-end`}>
+          <Combo
+            value={props.searchOption}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onSearchOptionHandler(e);
+            }}
+            height={`46px`}
+          >
+            <option value="name">이름 검색</option>
+            <option value="hpNumber">전화번호 검색</option>
+            <option value="approval">승인여부 검색</option>
+          </Combo>
+          {/* <TextInput
               type="text"
               value={props.filterValue}
               placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
@@ -137,45 +140,86 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
               }}
             >
               <BsSearch />
-            </IconButton>
-
-            <Text>직원 수 : {props.findResult.totalDocs}</Text>
-          </Wrapper>
-          <TableWrapper>
-            <TableHead>
-              <TableHeadLIST width={`200px`}>직위</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>직원명</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>전화번호</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>입사일자</TableHeadLIST>
-              <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
-            </TableHead>
-            <TableBody>
-              {props.findResult.docs.map((doc: User) => (
-                <TableRow
-                  key={doc._id}
+            </IconButton> */}
+          <SearchInputWrapper
+            type="text"
+            value={props.filterValue}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onInputSearchHandler(e);
+            }}
+            onKeyUp={handleKeyUp}
+            width={`678px`}
+            padding={`0px 5px`}
+            dr={`row`}
+            margin={`10px 0px 0px`}
+            borderBottom={`1px solid #000`}
+          >
+            <Wrapper width={`auto`}>
+              <SearchInput
+                width={`632px`}
+                padding={`0px 5px 0px 5px`}
+                placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+                type="text"
+              />
+            </Wrapper>
+            <Wrapper width={`36px`} height={`46px`}>
+              <Text fontSize={`24px`}>
+                <IconButton
+                  type="submit"
                   onClick={() => {
-                    setClickDoc(doc);
-                    setModalOpen(!modalOpen);
+                    props.findDocHandler(1);
                   }}
+                  shadow={`none`}
                 >
-                  <TableRowLIST width={`200px`}>
-                    {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
-                  </TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.hpNumber}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>
-                    {doc.joinDate
-                      ? dayjs(doc.joinDate).format("YYYY-MM-DD")
-                      : "-"}
-                  </TableRowLIST>
-                  <TableRowLIST width={`200px`}>
-                    {doc.approval ? "승인" : "미승인"}
-                  </TableRowLIST>
-                </TableRow>
-              ))}
-            </TableBody>
-          </TableWrapper>
+                  <BsSearch />
+                </IconButton>
+              </Text>
+            </Wrapper>
+          </SearchInputWrapper>
         </Wrapper>
+        <Wrapper al={`flex-end`} margin={`50px 0px 0px`}>
+          <Text>
+            직원 수 :{" "}
+            <span style={{ color: "#314FA5" }}>
+              {props.findResult.totalDocs}
+            </span>
+          </Text>
+        </Wrapper>
+        <TableWrapper margin={`10px 0px 30px`}>
+          <TableHead>
+            <TableHeadLIST width={`200px`}>직위</TableHeadLIST>
+            <TableHeadLIST width={`200px`}>직원명</TableHeadLIST>
+            <TableHeadLIST width={`200px`}>전화번호</TableHeadLIST>
+            <TableHeadLIST width={`200px`}>입사일자</TableHeadLIST>
+            <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
+          </TableHead>
+          <TableBody>
+            {props.findResult.docs.map((doc: User) => (
+              <TableRow
+                key={doc._id}
+                onClick={() => {
+                  setClickDoc(doc);
+                  setModalOpen(!modalOpen);
+                }}
+              >
+                <TableRowLIST width={`200px`}>
+                  {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
+                </TableRowLIST>
+                <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
+                <TableRowLIST width={`200px`}>{doc.hpNumber}</TableRowLIST>
+                <TableRowLIST width={`200px`}>
+                  {doc.joinDate
+                    ? dayjs(doc.joinDate).format("YYYY-MM-DD")
+                    : "-"}
+                </TableRowLIST>
+                <TableRowLIST width={`200px`}>
+                  {doc.approval ? "승인" : "미승인"}
+                </TableRowLIST>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableWrapper>
+
         <PagenationSection {...props} />
       </RsWrapper>
       <Wrapper>
