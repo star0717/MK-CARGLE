@@ -26,6 +26,8 @@ export const SubRoute = {
   REVIEW_COMPANIES: "review_companies",
   MAN_COMPANIES: "man_companies",
   USERS: "users",
+  MAN_PARTS: "man_parts",
+  MOLIT_ITEM: "molit_item",
   TEST: "test",
 };
 
@@ -68,5 +70,7 @@ export const UseLink = {
   ADMIN_REVIEW_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.REVIEW_COMPANIES}`,
   ADMIN_MAN_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.MAN_COMPANIES}`,
   ADMIN_USERS: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.USERS}`,
+  ADMIN_MAN_PARTS: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.MAN_PARTS}`,
+  ADMIN_MOLIT_ITEM: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.MOLIT_ITEM}`,
   ADMIN_TEST: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.TEST}`,
 };
