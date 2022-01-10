@@ -141,25 +141,20 @@ export const getServerSideProps: GetServerSideProps = async (
   const apiUrl: string =
     process.env.DESTINATION_API + process.env.DESTINATION_PORT;
 
-  const genPath = (
-    apiPath: string,
-    id?: string,
-    findParams?: FindParameters
-  ) => {
-    console.log("아규먼트", apiPath, id, findParams);
+  const genPath = (apiPath: string, id: string, findParams: FindParameters) => {
     apiPath = apiUrl + apiPath;
-    console.log("1");
+
     if (id) {
-      console.log("1-1");
-      apiPath = `${apiPath}/${id}`;
+      console.log("1");
+      apiPath = apiPath + "/" + id;
+      console.log(apiPath);
     }
-    console.log("2");
-    if (findParams != undefined) {
-      console.log("2-2");
-      apiPath = `${apiPath}${FindParameters.getQuery(findParams)}`;
+
+    if (findParams) {
+      apiPath = apiPath + "/" + FindParameters.getQuery(findParams);
+      console.log(apiPath);
     }
-    console.log("params: ", FindParameters.getQuery(findParams));
-    console.log("최종 URL: ", apiPath);
+
     return apiPath;
   };
 
@@ -237,10 +232,11 @@ export const getServerSideProps: GetServerSideProps = async (
           const routerQuery = getQuery(url);
           if (routerQuery.id) {
             console.log("info");
+
             try {
               data = await axios
                 .get(
-                  `${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`,
+                  genPath(AdminApiPath.signup_info, routerQuery.id, null),
                   authConfig
                 )
                 // .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
@@ -259,6 +255,7 @@ export const getServerSideProps: GetServerSideProps = async (
                 },
               };
             } catch (err) {
+              console.log(err);
               return {
                 redirect: {
                   permanent: false,

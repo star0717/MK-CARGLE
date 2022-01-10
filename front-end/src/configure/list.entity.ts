@@ -179,4 +179,24 @@ export const menuList = [
       },
     ],
   },
+  {
+    key: "8",
+    menuName: "부품",
+    link: UseLink.ADMIN_MAN_PARTS,
+    auth: UserAuthority.ADMIN,
+    subMenu: [
+      {
+        key: "8.1",
+        subMenuName: "부품관리",
+        subMenuLink: UseLink.ADMIN_MAN_PARTS,
+        subMenuAuth: UserAuthority.ADMIN,
+      },
+      {
+        key: "8.2",
+        subMenuName: "국토부항목관리",
+        subMenuLink: UseLink.ADMIN_MOLIT_ITEM,
+        subMenuAuth: UserAuthority.ADMIN,
+      },
+    ],
+  },
 ];
