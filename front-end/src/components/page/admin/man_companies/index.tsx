@@ -45,6 +45,7 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
     };
     dispatch(_aGetAdminDoneCompanies(param)).then(
       (res: _iGetAdminDoneCompanies) => {
+        console.log(res);
         setFindResult(res.payload);
       }
     );
