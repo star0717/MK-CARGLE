@@ -185,48 +185,53 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             <TableHeadLIST width={`200px`}>직원관리</TableHeadLIST>
           </TableHead>
           <TableBody>
-            {props.findResult.totalDocs > 0}
-            {props.findResult.docs.map((doc: Company) => (
-              <TableRow
-                key={doc._id}
-                onClick={() => {
-                  router.push(`${UseLink.ADMIN_MAN_COMPANIES}?id=${doc._id}`);
-                }}
-              >
-                <TableRowLIST width={`200px`}>
-                  {dayjs(doc.createdAt).format("YYYY-MM-DD")}
-                </TableRowLIST>
-                <TableRowLIST width={`250px`}>{doc.name}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
-                {doc.approval == CompanyApproval.BEFORE ? (
-                  <TableRowLIST width={`150px`}>요청 전</TableRowLIST>
-                ) : doc.approval == CompanyApproval.ING ? (
-                  <TableRowLIST width={`150px`}>요청 중</TableRowLIST>
-                ) : doc.approval == CompanyApproval.DONE ? (
-                  <TableRowLIST width={`150px`}>승인완료</TableRowLIST>
-                ) : (
-                  <TableRowLIST width={`150px`}>이상업체</TableRowLIST>
-                )}
-                <TableRowLIST
-                  width={`200px`}
-                  onClick={(e: React.MouseEvent<HTMLTableCellElement>) => {
-                    e.stopPropagation();
+            {props.findResult.totalDocs > 0 ? (
+              props.findResult.docs.map((doc: Company) => (
+                <TableRow
+                  key={doc._id}
+                  onClick={() => {
+                    router.push(`${UseLink.ADMIN_MAN_COMPANIES}?id=${doc._id}`);
                   }}
                 >
-                  <SmallButton
-                    type="button"
-                    kindOf={`default`}
-                    onClick={() => {
-                      router.push(`${UseLink.ADMIN_USERS}?id=${doc._id}`);
+                  <TableRowLIST width={`200px`}>
+                    {dayjs(doc.createdAt).format("YYYY-MM-DD")}
+                  </TableRowLIST>
+                  <TableRowLIST width={`250px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
+                  {doc.approval == CompanyApproval.BEFORE ? (
+                    <TableRowLIST width={`150px`}>요청 전</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.ING ? (
+                    <TableRowLIST width={`150px`}>요청 중</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.DONE ? (
+                    <TableRowLIST width={`150px`}>승인완료</TableRowLIST>
+                  ) : (
+                    <TableRowLIST width={`150px`}>이상업체</TableRowLIST>
+                  )}
+                  <TableRowLIST
+                    width={`200px`}
+                    onClick={(e: React.MouseEvent<HTMLTableCellElement>) => {
+                      e.stopPropagation();
                     }}
                   >
-                    직원관리
-                  </SmallButton>
-                </TableRowLIST>
-              </TableRow>
-            ))}
+                    <SmallButton
+                      type="button"
+                      kindOf={`default`}
+                      onClick={() => {
+                        router.push(`${UseLink.ADMIN_USERS}?id=${doc._id}`);
+                      }}
+                    >
+                      직원관리
+                    </SmallButton>
+                  </TableRowLIST>
+                </TableRow>
+              ))
+            ) : (
+              <Wrapper>
+                <Text>검색 결과가 없습니다.</Text>
+              </Wrapper>
+            )}
           </TableBody>
         </TableWrapper>
         <PagenationSection {...props} />
