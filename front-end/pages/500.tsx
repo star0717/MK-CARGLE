@@ -20,7 +20,7 @@ const Custom500: NextPage = () => {
     <WholeWrapper>
       <Wrapper padding={`150px 0px 0px`}>
         <Wrapper width={`500px`} padding={`100px 0px 50px`}>
-          <Image src="/images/500.png" />
+          <Image src="/images/500.png" alt="500 에러" />
         </Wrapper>
         <Wrapper>
           <Text
