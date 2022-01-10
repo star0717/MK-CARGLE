@@ -96,7 +96,7 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
               </Wrapper>
               <Wrapper width={`36px`} height={`46px`}>
                 <Text fontSize={`24px`}>
-                  <IconButton type="submit">
+                  <IconButton type="submit" shadow={`none`}>
                     <BsSearch />
                   </IconButton>
                 </Text>
