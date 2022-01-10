@@ -135,14 +135,6 @@ export const getServerSideProps: GetServerSideProps = async (
    */
   const pathName: string = getPathName(url);
 
-  // Back-end API 호출에 사용되는 인증 토큰 설정
-  const authConfig = {
-    headers: {
-      Cookie: `mk_token=${context.req.cookies.mk_token}`,
-    },
-    withCredentials: true,
-  };
-
   if (context.req.cookies.mk_token) {
     /**
      * 로그인 토큰
@@ -181,49 +173,7 @@ export const getServerSideProps: GetServerSideProps = async (
           };
 
         case UseLink.MYPAGE_WORKER: {
-          const params: FindParameters = {
-            take: 10,
-          };
-
-          data = await axios
-            .get(
-              `${apiUrl}${
-                SettingsApiPath.management_workers
-              }?${FindParameters.getQuery(params)}`,
-              {
-                headers: {
-                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                },
-                withCredentials: true,
-              }
-            )
-            .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
-          return {
-            props: {
-              tokenValue,
-              data,
-            },
-          };
-        }
-        // 승인 관리
-        case UseLink.ADMIN_REVIEW_COMPANIES: {
-          const routerQuery = getQuery(url);
-          if (routerQuery.id) {
-            data = await axios
-              .get(
-                `${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`,
-                authConfig
-              )
-              .then(
-                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-              );
-            return {
-              props: {
-                tokenValue,
-                data,
-              },
-            };
-          } else {
+          try {
             const params: FindParameters = {
               take: 10,
             };
@@ -231,49 +181,7 @@ export const getServerSideProps: GetServerSideProps = async (
             data = await axios
               .get(
                 `${apiUrl}${
-                  AdminApiPath.ing_companies
-                }?${FindParameters.getQuery(params)}`,
-                authConfig
-              )
-              .then(
-                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-              );
-            return {
-              props: {
-                tokenValue,
-                data,
-              },
-            };
-          }
-        }
-        case UseLink.ADMIN_MAN_COMPANIES: {
-          const routerQuery = getQuery(url);
-          if (routerQuery.id) {
-            data = await axios
-              .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
-                headers: {
-                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                },
-                withCredentials: true,
-              })
-              .then(
-                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-              );
-            return {
-              props: {
-                tokenValue,
-                data,
-              },
-            };
-          } else {
-            const params: FindParameters = {
-              take: 10,
-            };
-
-            data = await axios
-              .get(
-                `${apiUrl}${
-                  AdminApiPath.done_companies
+                  SettingsApiPath.management_workers
                 }?${FindParameters.getQuery(params)}`,
                 {
                   headers: {
@@ -282,15 +190,142 @@ export const getServerSideProps: GetServerSideProps = async (
                   withCredentials: true,
                 }
               )
-              .then(
-                (res: AxiosResponse<FindResult<Company>, Company>) => res.data
-              );
+              .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
             return {
               props: {
                 tokenValue,
                 data,
               },
             };
+          } catch (err) {
+            return {
+              notFound: true,
+            };
+          }
+        }
+
+        case UseLink.ADMIN_REVIEW_COMPANIES: {
+          const routerQuery = getQuery(url);
+          if (routerQuery.id) {
+            try {
+              data = await axios
+                .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
+                  headers: {
+                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                  },
+                  withCredentials: true,
+                })
+                .then(
+                  (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+                );
+              return {
+                props: {
+                  tokenValue,
+                  data,
+                },
+              };
+            } catch (err) {
+              return {
+                redirect: {
+                  permanent: false,
+                  destination: UseLink.ADMIN_REVIEW_COMPANIES,
+                },
+              };
+            }
+          } else {
+            try {
+              const params: FindParameters = {
+                take: 10,
+              };
+
+              data = await axios
+                .get(
+                  `${apiUrl}${
+                    AdminApiPath.ing_companies
+                  }?${FindParameters.getQuery(params)}`,
+                  {
+                    headers: {
+                      Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                    },
+                    withCredentials: true,
+                  }
+                )
+                .then(
+                  (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+                );
+              return {
+                props: {
+                  tokenValue,
+                  data,
+                },
+              };
+            } catch (err) {
+              return {
+                notFound: true,
+              };
+            }
+          }
+        }
+        case UseLink.ADMIN_MAN_COMPANIES: {
+          const routerQuery = getQuery(url);
+          if (routerQuery.id) {
+            try {
+              data = await axios
+                .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
+                  headers: {
+                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                  },
+                  withCredentials: true,
+                })
+                .then(
+                  (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+                );
+              return {
+                props: {
+                  tokenValue,
+                  data,
+                },
+              };
+            } catch (err) {
+              return {
+                redirect: {
+                  permanent: false,
+                  destination: UseLink.ADMIN_MAN_COMPANIES,
+                },
+              };
+            }
+          } else {
+            try {
+              const params: FindParameters = {
+                take: 10,
+              };
+
+              data = await axios
+                .get(
+                  `${apiUrl}${
+                    AdminApiPath.done_companies
+                  }?${FindParameters.getQuery(params)}`,
+                  {
+                    headers: {
+                      Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                    },
+                    withCredentials: true,
+                  }
+                )
+                .then(
+                  (res: AxiosResponse<FindResult<Company>, Company>) => res.data
+                );
+              return {
+                props: {
+                  tokenValue,
+                  data,
+                },
+              };
+            } catch (err) {
+              return {
+                notFound: true,
+              };
+            }
           }
         }
         case UseLink.ADMIN_USERS: {
@@ -299,45 +334,60 @@ export const getServerSideProps: GetServerSideProps = async (
             take: 10,
           };
           if (routerQuery.id) {
-            data = await axios
-              .get(
-                `${apiUrl}${AdminApiPath.users}/${
-                  routerQuery.id
-                }?${FindParameters.getQuery(params)}`,
-                {
-                  headers: {
-                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                  },
-                  withCredentials: true,
-                }
-              )
-              .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
-            return {
-              props: {
-                tokenValue,
-                data,
-              },
-            };
+            try {
+              data = await axios
+                .get(
+                  `${apiUrl}${AdminApiPath.users}/${
+                    routerQuery.id
+                  }?${FindParameters.getQuery(params)}`,
+                  {
+                    headers: {
+                      Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                    },
+                    withCredentials: true,
+                  }
+                )
+                .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
+              return {
+                props: {
+                  tokenValue,
+                  data,
+                },
+              };
+            } catch (err) {
+              return {
+                redirect: {
+                  permanent: false,
+                  destination: UseLink.ADMIN_USERS,
+                },
+              };
+            }
           } else {
-            data = await axios
-              .get(
-                `${apiUrl}${AdminApiPath.users}?${FindParameters.getQuery(
-                  params
-                )}`,
-                {
-                  headers: {
-                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                  },
-                  withCredentials: true,
-                }
-              )
-              .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
-            return {
-              props: {
-                tokenValue,
-                data,
-              },
-            };
+            try {
+              data = await axios
+                .get(
+                  `${apiUrl}${AdminApiPath.users}?${FindParameters.getQuery(
+                    params
+                  )}`,
+                  {
+                    headers: {
+                      Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                    },
+                    withCredentials: true,
+                  }
+                )
+                .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
+              return {
+                props: {
+                  tokenValue,
+                  data,
+                },
+              };
+            } catch (err) {
+              return {
+                notFound: true,
+              };
+            }
           }
         }
         case UseLink.ADMIN_TEST: {
