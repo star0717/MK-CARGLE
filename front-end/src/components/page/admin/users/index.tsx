@@ -83,7 +83,7 @@ const AdminUsersPage: NextPage<_MainProps> = (props) => {
   };
 
   return (
-    <BodyWrapper kindOf={`NoneTitleBodyWrapper`}>
+    <BodyWrapper>
       <UserList {...adminUsersListProps} />
     </BodyWrapper>
   );

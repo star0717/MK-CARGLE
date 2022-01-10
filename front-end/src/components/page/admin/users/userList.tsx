@@ -18,6 +18,8 @@ import { PagenationSection } from "../../../common/sections";
 import {
   CloseButton,
   Combo,
+  CommonTitle,
+  CommonTitleWrapper,
   IconButton,
   RsWrapper,
   SearchButton,
@@ -111,13 +113,17 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
 
   return (
     <WholeWrapper>
+      <CommonTitleWrapper>
+        <CommonTitle>직원관리</CommonTitle>
+      </CommonTitleWrapper>
       <RsWrapper>
-        <Wrapper dr={`row`} al={`flex-end`}>
+        <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
           <Combo
             value={props.searchOption}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onSearchOptionHandler(e);
             }}
+            width={`150px`}
             height={`46px`}
           >
             <option value="name">이름 검색</option>
