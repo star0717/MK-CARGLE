@@ -25,7 +25,6 @@ import {
   TableRowLIST,
   TableWrapper,
   Text,
-  TextInput,
   WholeWrapper,
   Wrapper,
   SearchInputWrapper,
@@ -86,7 +85,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
   return (
     <WholeWrapper>
       <CommonTitleWrapper>
-        <CommonTitle>승인관리</CommonTitle>
+        <CommonTitle>업체관리</CommonTitle>
       </CommonTitleWrapper>
       <RsWrapper>
         {/* <Wrapper dr={`row`}>
@@ -119,14 +118,13 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
 
 
           </Wrapper> */}
-        <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
+        <Wrapper dr={`row`} al={`flex-end`}>
           <Combo
             value={props.searchOption}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onSearchOptionHandler(e);
             }}
             height={`46px`}
-            width={`150px`}
           >
             <option value="name">이름 검색</option>
             <option value="hpNumber">전화번호 검색</option>
@@ -187,6 +185,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             <TableHeadLIST width={`200px`}>직원관리</TableHeadLIST>
           </TableHead>
           <TableBody>
+            {props.findResult.totalDocs > 0}
             {props.findResult.docs.map((doc: Company) => (
               <TableRow
                 key={doc._id}
