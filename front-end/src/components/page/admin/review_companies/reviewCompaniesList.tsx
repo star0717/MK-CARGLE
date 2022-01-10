@@ -25,6 +25,8 @@ import {
   Combo,
   CommonTitleWrapper,
   CommonTitle,
+  SearchInputWrapper,
+  SearchInput,
 } from "../../../styles/CommonComponents";
 import { BsSearch } from "react-icons/bs";
 import { _MainProps } from "../../../../configure/_props.entity";
@@ -85,7 +87,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
         <CommonTitle>승인관리</CommonTitle>
       </CommonTitleWrapper>
       <RsWrapper>
-        <Wrapper dr={`row`}>
+        {/* <Wrapper dr={`row`}>
           <Combo
             value={props.searchOption}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,8 +115,65 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
           </IconButton>
 
           <Text>승인대기업체수 : {props.findResult.totalDocs}</Text>
+        </Wrapper> */}
+        <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
+          <Combo
+            value={props.searchOption}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onSearchOptionHandler(e);
+            }}
+            height={`46px`}
+            width={`150px`}
+          >
+            <option value="name">이름 검색</option>
+            <option value="hpNumber">전화번호 검색</option>
+            <option value="approval">승인여부 검색</option>
+          </Combo>
+          <SearchInputWrapper
+            type="text"
+            placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onInputSearchHandler(e);
+            }}
+            onKeyUp={handleKeyUp}
+            width={`678px`}
+            padding={`0px 5px`}
+            dr={`row`}
+            margin={`10px 0px 0px`}
+            borderBottom={`1px solid #000`}
+          >
+            <Wrapper width={`auto`}>
+              <SearchInput
+                width={`632px`}
+                padding={`0px 5px 0px 5px`}
+                placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+                type="text"
+              />
+            </Wrapper>
+            <Wrapper width={`36px`} height={`46px`}>
+              <Text fontSize={`24px`}>
+                <IconButton
+                  type="submit"
+                  onClick={() => {
+                    props.findDocHandler(1);
+                  }}
+                  shadow={`none`}
+                >
+                  <BsSearch />
+                </IconButton>
+              </Text>
+            </Wrapper>
+          </SearchInputWrapper>
         </Wrapper>
-        <TableWrapper>
+        <Wrapper al={`flex-end`} margin={`50px 0px 0px`}>
+          <Text>
+            승인대기 업체 수 :
+            <span style={{ color: "#314FA5" }}>
+              {props.findResult.totalDocs}
+            </span>
+          </Text>
+        </Wrapper>
+        <TableWrapper margin={`10px 0px 30px`}>
           <TableHead>
             <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
             <TableHeadLIST width={`200px`}>상호명</TableHeadLIST>
@@ -124,33 +183,39 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
             <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
           </TableHead>
           <TableBody>
-            {props.findResult.docs.map((doc: Company) => (
-              <TableRow
-                key={doc._id}
-                onClick={() => {
-                  router.push(
-                    `${UseLink.ADMIN_REVIEW_COMPANIES}?id=${doc._id}`
-                  );
-                }}
-              >
-                <TableRowLIST width={`200px`}>
-                  {dayjs(doc.createdAt).format("YYYY-MM-DD")}
-                </TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
-                {doc.approval == CompanyApproval.BEFORE ? (
-                  <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
-                ) : doc.approval == CompanyApproval.ING ? (
-                  <TableRowLIST width={`200px`}>요청 중</TableRowLIST>
-                ) : doc.approval == CompanyApproval.DONE ? (
-                  <TableRowLIST width={`200px`}>승인완료</TableRowLIST>
-                ) : (
-                  <TableRowLIST width={`200px`}>이상업체</TableRowLIST>
-                )}
-              </TableRow>
-            ))}
+            {props.findResult.totalDocs > 0 ? (
+              props.findResult.docs.map((doc: Company) => (
+                <TableRow
+                  key={doc._id}
+                  onClick={() => {
+                    router.push(
+                      `${UseLink.ADMIN_REVIEW_COMPANIES}?id=${doc._id}`
+                    );
+                  }}
+                >
+                  <TableRowLIST width={`200px`}>
+                    {dayjs(doc.createdAt).format("YYYY-MM-DD")}
+                  </TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
+                  {doc.approval == CompanyApproval.BEFORE ? (
+                    <TableRowLIST width={`200px`}>요청 전</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.ING ? (
+                    <TableRowLIST width={`200px`}>요청 중</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.DONE ? (
+                    <TableRowLIST width={`200px`}>승인완료</TableRowLIST>
+                  ) : (
+                    <TableRowLIST width={`200px`}>이상업체</TableRowLIST>
+                  )}
+                </TableRow>
+              ))
+            ) : (
+              <Wrapper>
+                <Text>검색 결과가 없습니다.</Text>
+              </Wrapper>
+            )}
           </TableBody>
         </TableWrapper>
         <PagenationSection {...props} />

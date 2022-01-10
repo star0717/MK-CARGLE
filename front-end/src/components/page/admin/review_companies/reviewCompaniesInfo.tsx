@@ -1,7 +1,11 @@
 import Modal from "react-modal";
 import { NextPage } from "next";
 import React, { useState, useEffect } from "react";
-import { IoIosCloseCircle } from "react-icons/io";
+import {
+  IoIosArrowDropleftCircle,
+  IoIosArrowDroprightCircle,
+  IoIosCloseCircle,
+} from "react-icons/io";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { Company } from "../../../../models/company.entity";
 import AdminReviewCompaniesModal from "./review_Company_Modal";
@@ -15,6 +19,9 @@ import {
   Wrapper,
   Image,
   Combo,
+  CommonTitleWrapper,
+  CommonTitle,
+  IconButton,
 } from "../../../styles/CommonComponents";
 import { useResizeDetector } from "react-resize-detector";
 import { makeFullAddress } from "../../../../modules/commonModule";
@@ -62,8 +69,11 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
+      <CommonTitleWrapper>
+        <CommonTitle>계정정보</CommonTitle>
+      </CommonTitleWrapper>
       <RsWrapper>
-        <Wrapper dr={`row`}>
+        <Wrapper dr={`row`} ju={`flex-end`}>
           <SmallButton
             type="button"
             kindOf={`default`}
@@ -93,8 +103,29 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             뒤로가기
           </SmallButton>
         </Wrapper>
-        <Wrapper dr={`row`}>
-          <Image alt="사업자, 정비업 등록증 이미지"></Image>
+        <Wrapper dr={`row`} ju={`space-between`}>
+          {/* <Wrapper
+            width={`600px`}
+            height={`600px`}
+            radius={`5px`}
+            border={`1px solid #c4c4c4`}
+            dr={`row`}
+          >
+            <IconButton shadow={`none`} width={`48px`} color={`#314FA5`}>
+              <IoIosArrowDropleftCircle />
+            </IconButton>
+            <Wrapper
+              width={`400px`}
+              height={`500px`}
+              border={`1px solid #c4c4c4`}
+              padding={`30px`}
+            >
+              <Image alt="사업자, 정비업 등록증 이미지" />
+            </Wrapper>
+            <IconButton shadow={`none`} width={`48px`} color={`#314FA5`}>
+              <IoIosArrowDroprightCircle />
+            </IconButton>
+          </Wrapper> */}
           <Wrapper>
             <Text>계정정보</Text>
             <Wrapper dr={`row`}>

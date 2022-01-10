@@ -201,29 +201,35 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
           </TableHead>
           <TableBody>
-            {props.findResult.docs.map((doc: User) => (
-              <TableRow
-                key={doc._id}
-                onClick={() => {
-                  setClickDoc(doc);
-                  setModalOpen(!modalOpen);
-                }}
-              >
-                <TableRowLIST width={`200px`}>
-                  {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
-                </TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
-                <TableRowLIST width={`200px`}>{doc.hpNumber}</TableRowLIST>
-                <TableRowLIST width={`200px`}>
-                  {doc.joinDate
-                    ? dayjs(doc.joinDate).format("YYYY-MM-DD")
-                    : "-"}
-                </TableRowLIST>
-                <TableRowLIST width={`200px`}>
-                  {doc.approval ? "승인" : "미승인"}
-                </TableRowLIST>
-              </TableRow>
-            ))}
+            {props.findResult.totalDocs > 0 ? (
+              props.findResult.docs.map((doc: User) => (
+                <TableRow
+                  key={doc._id}
+                  onClick={() => {
+                    setClickDoc(doc);
+                    setModalOpen(!modalOpen);
+                  }}
+                >
+                  <TableRowLIST width={`200px`}>
+                    {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
+                  </TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>{doc.hpNumber}</TableRowLIST>
+                  <TableRowLIST width={`200px`}>
+                    {doc.joinDate
+                      ? dayjs(doc.joinDate).format("YYYY-MM-DD")
+                      : "-"}
+                  </TableRowLIST>
+                  <TableRowLIST width={`200px`}>
+                    {doc.approval ? "승인" : "미승인"}
+                  </TableRowLIST>
+                </TableRow>
+              ))
+            ) : (
+              <Wrapper>
+                <Text>검색 결과가 없습니다.</Text>
+              </Wrapper>
+            )}
           </TableBody>
         </TableWrapper>
 
