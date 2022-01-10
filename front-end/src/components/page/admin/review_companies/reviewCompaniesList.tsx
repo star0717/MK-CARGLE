@@ -127,7 +127,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
           >
             <option value="name">이름 검색</option>
             <option value="hpNumber">전화번호 검색</option>
-            <option value="approval">승인여부 검색</option>
           </Combo>
           <SearchInputWrapper
             type="text"

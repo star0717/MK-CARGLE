@@ -108,10 +108,10 @@ export class FindParameters {
 
   static getQuery(data: FindParameters) {
     let query = '';
-    if (data.page) query = query + '?page=' + data.page;
+    if (data?.page) query = query + '?page=' + data.page;
     else query = query + '?page=1';
-    if (data.take) query = query + '&take=' + data.take;
-    if (data.filterKey && data.filterValue) {
+    if (data?.take) query = query + '&take=' + data.take;
+    if (data?.filterKey && data?.filterValue) {
       query =
         query +
         '&filterKey=' +
