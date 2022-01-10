@@ -226,11 +226,6 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                     사용자 정보
                   </CommonSmallTitle>
                 </Wrapper>
-                {/* <Text
-              fontSize={`28px`}
-              lineHeight={`28px`}
-              margin={`8px 0px 0px`}
-            ></Text> */}
               </Wrapper>
               <Wrapper
                 dr={`row`}

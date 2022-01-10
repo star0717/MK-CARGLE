@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React from "react";
-import { BsSearch } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { UseLink } from "../../../../configure/router.entity";
 import {
@@ -118,7 +118,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
 
 
           </Wrapper> */}
-        <Wrapper dr={`row`} al={`flex-end`}>
+        <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
           <Combo
             value={props.searchOption}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -188,6 +188,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             {props.findResult.totalDocs > 0 ? (
               props.findResult.docs.map((doc: Company) => (
                 <TableRow
+                  height={`50px`}
                   key={doc._id}
                   onClick={() => {
                     router.push(`${UseLink.ADMIN_MAN_COMPANIES}?id=${doc._id}`);
@@ -228,8 +229,11 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                 </TableRow>
               ))
             ) : (
-              <Wrapper>
-                <Text>검색 결과가 없습니다.</Text>
+              <Wrapper minHeight={`445px`}>
+                <Text fontSize={`48px`} color={`#c4c4c4`}>
+                  <BsEmojiFrownFill />
+                </Text>
+                <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
               </Wrapper>
             )}
           </TableBody>

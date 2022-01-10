@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { BsSearch } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { _aGetAdminUsers } from "../../../../../store/action/user.action";
 import { _iGetAdminUsers } from "../../../../../store/interfaces";
@@ -226,8 +226,11 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
                 </TableRow>
               ))
             ) : (
-              <Wrapper>
-                <Text>검색 결과가 없습니다.</Text>
+              <Wrapper minHeight={`445px`}>
+                <Text fontSize={`48px`} color={`#c4c4c4`}>
+                  <BsEmojiFrownFill />
+                </Text>
+                <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
               </Wrapper>
             )}
           </TableBody>
