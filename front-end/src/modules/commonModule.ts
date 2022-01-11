@@ -4,6 +4,7 @@ import parse from "url-parse";
 import { MbType } from "../configure/etc.entity";
 import { mbTypeOption } from "../configure/list.entity";
 import { AuthTokenInfo } from "../models/auth.entity";
+import { FindParameters } from "../models/base.entity";
 import { Company } from "../models/company.entity";
 
 /**
@@ -82,4 +83,33 @@ export const mbTypeToString = (list: Company) => {
   });
   if (textMbType == null) return;
   else textMbType.text;
+};
+
+// API 호출에 사용할 URL을 생성하기 위해 전달되는 아규먼트의 구조
+class GenPathArgs {
+  // 전달할 ID
+  id?: string;
+  // 리스트 조회에 사용할 파라미터
+  findParams?: FindParameters;
+}
+
+/** API 호출용 기본 URL */
+const baseApiUrl: string =
+  process.env.DESTINATION_API + process.env.DESTINATION_PORT;
+
+/**
+ * API 호출을 위해 경로 정보 생성
+ * @param path 호출할 API의 경로
+ * @param args 전달할 아큐먼트
+ * @returns API 호출용 최종 경로
+ */
+export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
+  let apiPath = baseApiUrl + path;
+  if (args?.id) {
+    apiPath += "/" + args.id;
+  }
+  if (args?.findParams) {
+    apiPath += "/" + FindParameters.getQuery(args.findParams);
+  }
+  return apiPath;
 };

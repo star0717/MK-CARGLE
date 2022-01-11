@@ -8,6 +8,7 @@ import {
   CommonSmallTitle,
   FocusButton,
   Text,
+  Combo,
   TextInput2,
   WholeWrapper,
   Wrapper,
@@ -43,7 +44,47 @@ const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return <WholeWrapper>나는야 모달모달!</WholeWrapper>;
+  return (
+    <WholeWrapper>
+      <Wrapper>
+        <Text>부품등록</Text>
+      </Wrapper>
+
+      <Wrapper dr={`row`}>
+        <Text>분류</Text>
+        <Combo width={`600px`}>
+          <option>{"분류명입니다(1)"}</option>
+          <option>{"분류명입니다(2)"}</option>
+          <option>{"분류명입니다(3)"}</option>
+        </Combo>
+      </Wrapper>
+      <Wrapper dr={`row`}>
+        <Text>부품명</Text>
+        <TextInput2 placeholder="부품명입니다~" width={`600px`}></TextInput2>
+      </Wrapper>
+      <Wrapper dr={`row`}>
+        <Text>부품코드</Text>
+        <TextInput2 placeholder="부품코드" width={`600px`}></TextInput2>
+      </Wrapper>
+      <Wrapper dr={`row`}>
+        <Text>국토부</Text>
+        <Combo width={`250px`}>
+          <option>{"국토부입니다(1)"}</option>
+          <option>{"국토부입니다(2)"}</option>
+          <option>{"국토부입니다(3)"}</option>
+        </Combo>
+        <Combo width={`350px`}>
+          <option>{"국토부 정비명 입니다(1)"}</option>
+          <option>{"국토부 정비명 입니다(2)"}</option>
+          <option>{"국토부 정비명 입니다(3)"}</option>
+        </Combo>
+      </Wrapper>
+      <Wrapper dr={`row`}>
+        <Text>동의어 설정</Text>
+        <TextInput2 placeholder="동의어입니다 4" width={`600px`}></TextInput2>
+      </Wrapper>
+    </WholeWrapper>
+  );
 };
 
 export default PartsModal;

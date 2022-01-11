@@ -184,7 +184,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
                     <Checkbox
-                      color="secondary"
+                      color="primary"
                       checked={saveCheck}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setSaveCheck(e.target.checked);

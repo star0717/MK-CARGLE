@@ -197,12 +197,6 @@ export const menuList = [
         subMenuLink: UseLink.ADMIN_MOLIT_ITEMS,
         subMenuAuth: UserAuthority.ADMIN,
       },
-      {
-        key: "8.3",
-        subMenuName: "ttttt",
-        subMenuLink: UseLink.ADMIN_MOLIT_ITEMS,
-        subMenuAuth: UserAuthority.ADMIN,
-      },
     ],
   },
 ];
