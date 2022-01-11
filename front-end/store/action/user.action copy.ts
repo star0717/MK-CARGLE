@@ -68,6 +68,7 @@ export async function _aPostAuthSignup(dataToSubmit: any) {
   const req = await axios
     .post(genApiPath(AuthApiPath.signup), dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
+
   return {
     type: actionTypesUser.USER_SIGNUP,
     payload: req,
@@ -77,7 +78,7 @@ export async function _aPostAuthSignup(dataToSubmit: any) {
 // 이메일 인증번호 전송 action
 export async function _aGetAuthValidateEmail(dataToSubmit: string) {
   const req = await axios
-    .get(genApiPath(AuthApiPath.validate_email, { id: dataToSubmit }))
+    .get(`/api${AuthApiPath.validate_email}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_EMAIL_SEND,
@@ -88,7 +89,7 @@ export async function _aGetAuthValidateEmail(dataToSubmit: string) {
 // 인증번호 검사 action
 export async function _aGetAuthValidateEmailToken(dataToSubmit: string) {
   const req = await axios
-    .get(genApiPath(AuthApiPath.validate_email_token, { id: dataToSubmit }))
+    .get(`/api${AuthApiPath.validate_email_token}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_AUTHNUM_CHECK,
@@ -99,7 +100,7 @@ export async function _aGetAuthValidateEmailToken(dataToSubmit: string) {
 // 이메일 찾기 action
 export async function _aPostAuthHelpEmail(dataToSubmit: HelpFindEmail) {
   const req = await axios
-    .post(genApiPath(AuthApiPath.help_email), dataToSubmit)
+    .post(`/api${AuthApiPath.help_email}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_FIND_EMAIL,
@@ -110,7 +111,7 @@ export async function _aPostAuthHelpEmail(dataToSubmit: HelpFindEmail) {
 // 패스워드 찾기 action
 export async function _aPostAuthHelpPwd(dataToSubmit: HelpFindPWD) {
   const req = await axios
-    .post(genApiPath(AuthApiPath.help_pwd), dataToSubmit)
+    .post(`/api${AuthApiPath.help_pwd}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_FIND_PW,
@@ -121,7 +122,7 @@ export async function _aPostAuthHelpPwd(dataToSubmit: HelpFindPWD) {
 // 사업자번호 유효성 검사 action
 export async function _aGetAuthValidateComRegNumber(dataToSubmit: string) {
   const req = await axios
-    .get(genApiPath(AuthApiPath.validate_com_reg_number, { id: dataToSubmit }))
+    .get(`/api${AuthApiPath.validate_com_reg_number}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_COMPANY_CHECK,
@@ -132,7 +133,7 @@ export async function _aGetAuthValidateComRegNumber(dataToSubmit: string) {
 // 사업자번호 검색 action
 export async function _aGetAuthCompany(dataToSubmit: string) {
   const req = await axios
-    .get(genApiPath(AuthApiPath.company, { id: dataToSubmit }))
+    .get(`/api${AuthApiPath.company}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_COMPANY_FIND,
@@ -143,7 +144,7 @@ export async function _aGetAuthCompany(dataToSubmit: string) {
 // 사업자번호 검색 action
 export async function _aGetAuthCompanies(dataToSubmit: string) {
   const req = await axios
-    .get(genApiPath(AuthApiPath.companies, { id: dataToSubmit }))
+    .get(`/api${AuthApiPath.companies}${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_COMPANY_FIND,
@@ -169,7 +170,7 @@ export async function _aPostAuthUploadComRegDoc(dataToSubmit: FormData) {
 // 정비업등록증 업로드 action
 export async function _aPostAuthUploadManRegDoc(dataToSubmit: FormData) {
   const req = await axios
-    .post(genApiPath(AuthApiPath.upload_man_reg_doc), dataToSubmit, {
+    .post(`/api${AuthApiPath.upload_man_reg_doc}`, dataToSubmit, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -184,7 +185,7 @@ export async function _aPostAuthUploadManRegDoc(dataToSubmit: FormData) {
 // 가입 심사 요청 action (업체)
 export async function _aPatchAuthRequestCompany(dataToSubmit: string) {
   const req = await axios
-    .patch(genApiPath(AuthApiPath.request_company, { id: dataToSubmit }))
+    .patch(`/api${AuthApiPath.request_company}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.APPROVAL_REQUEST,
@@ -197,7 +198,7 @@ export async function _aPatchAuthRequestCompany(dataToSubmit: string) {
  * @param dataToSubmit
  * @returns
  */
-export async function _aPostSettingsMyinfoConfirmPassword(
+export async function _aPostAuthMyinfoConfirmPassword(
   dataToSubmit: ConfirmPWD
 ) {
   const req = await axios

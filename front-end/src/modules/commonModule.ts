@@ -107,6 +107,6 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   if (args?.findParams) {
     apiPath += "/" + FindParameters.getQuery(args.findParams);
   }
-
+  console.log("API 호출 경로:", apiPath);
   return apiPath;
 };

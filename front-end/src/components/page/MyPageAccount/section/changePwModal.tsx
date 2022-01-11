@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   changePwAction,
-  _aPostAuthMyinfoConfirmPassword,
+  _aPostSettingsMyinfoConfirmPassword,
   _aGetAuthSignout,
 } from "../../../../../store/action/user.action";
 import { useResizeDetector } from "react-resize-detector";
@@ -63,28 +63,30 @@ const ChangePwModal: NextPage<_pMyPageAccountProps> = (props) => {
       _id: props.accountInfo.user._uID,
       PWD: password,
     };
-    dispatch(_aPostAuthMyinfoConfirmPassword(confirmPWD)).then((res: any) => {
-      if (res.payload === true) {
-        const HelpChangePWD = {
-          _id: props.accountInfo.user._uID,
-          oldPWD: password,
-          newPWD: newPassword,
-        };
-        dispatch(changePwAction(HelpChangePWD)).then((res: any) => {
-          if (res.payload === true) {
-            alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
-            onSignOutHandler();
-          } else {
-            alert("변경 실패");
-          }
-        });
-      } else {
-        alert("현재 비밀번호가 틀립니다.");
-        setPassword("");
-        setNewPassword("");
-        setNewPasswordCheck("");
+    dispatch(_aPostSettingsMyinfoConfirmPassword(confirmPWD)).then(
+      (res: any) => {
+        if (res.payload === true) {
+          const HelpChangePWD = {
+            _id: props.accountInfo.user._uID,
+            oldPWD: password,
+            newPWD: newPassword,
+          };
+          dispatch(changePwAction(HelpChangePWD)).then((res: any) => {
+            if (res.payload === true) {
+              alert("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
+              onSignOutHandler();
+            } else {
+              alert("변경 실패");
+            }
+          });
+        } else {
+          alert("현재 비밀번호가 틀립니다.");
+          setPassword("");
+          setNewPassword("");
+          setNewPasswordCheck("");
+        }
       }
-    });
+    );
   };
 
   // resize 변수 선언
