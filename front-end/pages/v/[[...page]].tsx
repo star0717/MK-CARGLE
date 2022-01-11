@@ -38,6 +38,8 @@ import {
   SettingsApiPath,
 } from "../../src/models/api-path";
 import AdminUsersPage from "../../src/components/page/admin/users";
+import AdminManPartsPage from "../../src/components/page/admin/man_parts";
+import AdminMolitItemsPage from "../../src/components/page/admin/molit_items";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -87,6 +89,12 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.ADMIN_USERS:
       return <AdminUsersPage {...props} />;
+
+    case UseLink.ADMIN_MAN_PARTS:
+      return <AdminManPartsPage {...props} />;
+
+    case UseLink.ADMIN_MOLIT_ITEMS:
+      return <AdminMolitItemsPage {...props} />;
   }
 };
 
