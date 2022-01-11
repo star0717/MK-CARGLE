@@ -21,6 +21,8 @@ import {
   WholeWrapper,
   Wrapper,
   CommonButton,
+  TableBody,
+  TableHeadRow,
 } from "../../../styles/CommonComponents";
 import { BsPlusSquareFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
@@ -102,6 +104,8 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               >
                 <Text>부품분류</Text>
               </Wrapper>
+
+              {/* default */}
               <Wrapper padding={`10px`}>
                 <Wrapper
                   height={`45px`}
@@ -116,7 +120,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                     <AiFillPlusSquare />
                   </Wrapper>
                   <Wrapper>
-                    <Text width={`200px`}>전체보기</Text>
+                    <Text>전체보기</Text>
                   </Wrapper>
                 </Wrapper>
 
@@ -134,18 +138,152 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                     <AiFillMinusSquare />
                   </Wrapper>
                   <Wrapper>
-                    <Text width={`200px`}>부품명(01)</Text>
+                    <Text>부품명(01)</Text>
                   </Wrapper>
                 </Wrapper>
-                {/* focus */}
               </Wrapper>
             </Wrapper>
 
             {/* 상세정보 */}
-            <Wrapper bgColor={`#ccc`} width={`880px`}>
-              deklkfgl;skf
+            <Wrapper>
+              <Wrapper
+                width={`880px`}
+                height={`150px`}
+                ju={`flex-start`}
+                bgColor={`#fff`}
+                overflow={`auto`}
+                radius={`5px 5px 0px 0px`}
+                border={`1px solid #c4c4c4`}
+              >
+                <Wrapper>
+                  <Wrapper
+                    bgColor={`#343a40`}
+                    color={`#fff`}
+                    minHeight={`45px`}
+                    radius={`5px 5px 0px 0px`}
+                  >
+                    <Text>상세정보</Text>
+                  </Wrapper>
+                  <Wrapper minHeight={`80px`}>
+                    <SearchInputWrapper
+                      type="text"
+                      width={`678px`}
+                      padding={`0px 5px`}
+                      dr={`row`}
+                      borderBottom={`1px solid #000`}
+                    >
+                      <Wrapper width={`auto`}>
+                        <SearchInput
+                          width={`632px`}
+                          padding={`0px 5px 0px 5px`}
+                          placeholder="찾고싶은 부품명을 입력하세요."
+                          type="text"
+                        />
+                      </Wrapper>
+                      <Wrapper width={`36px`} height={`46px`}>
+                        <Text fontSize={`24px`}>
+                          <IconButton type="submit" shadow={`none`}>
+                            <BsSearch />
+                          </IconButton>
+                        </Text>
+                      </Wrapper>
+                    </SearchInputWrapper>
+                  </Wrapper>
+                </Wrapper>
+              </Wrapper>
+              <TableWrapper
+                margin={`0px`}
+                radius={`0px`}
+                height={`450px`}
+                width={`880px`}
+              >
+                <table>
+                  <TableHead>
+                    <TableHeadRow>
+                      <TableHeadLIST width="33%">부품코드</TableHeadLIST>
+                      <TableHeadLIST width="33%">부품명</TableHeadLIST>
+                      <TableHeadLIST width="33%">국토부</TableHeadLIST>
+                    </TableHeadRow>
+                  </TableHead>
+                  <TableBody overflow={`auto`} height={`450px`}>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                  </TableBody>
+                </table>
+              </TableWrapper>
             </Wrapper>
-            {/* 상세정보 */}
           </Wrapper>
         </RsWrapper>
         <Wrapper>
