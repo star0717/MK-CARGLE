@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { signOutUserAction } from "../../../../../store/action/user.action";
+import { _aGetAuthSignout } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
 import { useResizeDetector } from "react-resize-detector";
@@ -27,7 +27,7 @@ const Approval: NextPage = () => {
    * @param e
    */
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(signOutUserAction()).then((res: any) => {
+    dispatch(_aGetAuthSignout()).then((res: any) => {
       dispatch({ type: actionTypesUser.USER_INIT });
       router.push(UseLink.INDEX);
     });

@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { signOutUserAction } from "../../../store/action/user.action";
+import { _aGetAuthSignout } from "../../../store/action/user.action";
 import { WholeWrapper, Wrapper, Text, Image } from "../styles/CommonComponents";
 import {
   HeaderWrapper,
@@ -29,7 +29,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
    * @param e
    */
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    dispatch(signOutUserAction()).then((res: any) => {
+    dispatch(_aGetAuthSignout()).then((res: any) => {
       router.push(UseLink.INDEX);
     });
   };

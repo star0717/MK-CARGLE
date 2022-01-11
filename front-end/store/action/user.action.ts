@@ -39,11 +39,12 @@ import {
   AdminApiPath,
   SettingsApiPath,
 } from "../../src/models/api-path";
+import { genApiPath } from "../../src/modules/commonModule";
 
 // 로그인 action
-export async function signInUserAction(dataToSubmit: UserInfo) {
+export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
   const req = await axios
-    .post(`/api${AuthApiPath.signin}`, dataToSubmit)
+    .post(genApiPath(AuthApiPath.signin), dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
   return {
     type: actionTypesUser.USER_SIGNIN,
@@ -52,7 +53,7 @@ export async function signInUserAction(dataToSubmit: UserInfo) {
 }
 
 // 로그아웃 action
-export async function signOutUserAction() {
+export async function _aGetAuthSignout() {
   const req = await axios
     .get(`/api${AuthApiPath.signout}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -63,7 +64,7 @@ export async function signOutUserAction() {
 }
 
 // 회원가입 action
-export async function signUpUserAction(dataToSubmit: any) {
+export async function _aPostAuthSignup(dataToSubmit: any) {
   const req = await axios
     .post(`/api${AuthApiPath.signup}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -75,7 +76,7 @@ export async function signUpUserAction(dataToSubmit: any) {
 }
 
 // 이메일 인증번호 전송 action
-export async function emailSendAction(dataToSubmit: string) {
+export async function _aGetAuthValidateEmail(dataToSubmit: string) {
   const req = await axios
     .get(`/api${AuthApiPath.validate_email}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -86,7 +87,7 @@ export async function emailSendAction(dataToSubmit: string) {
 }
 
 // 인증번호 검사 action
-export async function authNumCheckAction(dataToSubmit: string) {
+export async function _aGetAuthValidateEmailToken(dataToSubmit: string) {
   const req = await axios
     .get(`/api${AuthApiPath.validate_email_token}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -97,7 +98,7 @@ export async function authNumCheckAction(dataToSubmit: string) {
 }
 
 // 이메일 찾기 action
-export async function findEmailAction(dataToSubmit: HelpFindEmail) {
+export async function _aPostAuthHelpEmail(dataToSubmit: HelpFindEmail) {
   const req = await axios
     .post(`/api${AuthApiPath.help_email}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -108,11 +109,10 @@ export async function findEmailAction(dataToSubmit: HelpFindEmail) {
 }
 
 // 패스워드 찾기 action
-export async function findPWAction(dataToSubmit: HelpFindPWD) {
+export async function _aPostAuthHelpPwd(dataToSubmit: HelpFindPWD) {
   const req = await axios
     .post(`/api${AuthApiPath.help_pwd}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);
-
   return {
     type: actionTypesUser.USER_FIND_PW,
     payload: req,
@@ -120,7 +120,7 @@ export async function findPWAction(dataToSubmit: HelpFindPWD) {
 }
 
 // 사업자번호 유효성 검사 action
-export async function companyCheckAction(dataToSubmit: string) {
+export async function _aGetAuthValidateComRegNumber(dataToSubmit: string) {
   const req = await axios
     .get(`/api${AuthApiPath.validate_com_reg_number}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -131,7 +131,7 @@ export async function companyCheckAction(dataToSubmit: string) {
 }
 
 // 사업자번호 검색 action
-export async function companyFindAction(dataToSubmit: string) {
+export async function _aGetAuthCompany(dataToSubmit: string) {
   const req = await axios
     .get(`/api${AuthApiPath.company}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -142,7 +142,7 @@ export async function companyFindAction(dataToSubmit: string) {
 }
 
 // 사업자번호 검색 action
-export async function companyFindbyNameAction(dataToSubmit: string) {
+export async function _aGetAuthCompanies(dataToSubmit: string) {
   const req = await axios
     .get(`/api${AuthApiPath.companies}${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -153,7 +153,7 @@ export async function companyFindbyNameAction(dataToSubmit: string) {
 }
 
 // 사업자등록증 업로드 action
-export async function comFileUploadAction(dataToSubmit: FormData) {
+export async function _aPostAuthUploadComRegDoc(dataToSubmit: FormData) {
   const req = await axios
     .post(`/api${AuthApiPath.upload_com_reg_doc}`, dataToSubmit, {
       headers: {
@@ -168,7 +168,7 @@ export async function comFileUploadAction(dataToSubmit: FormData) {
 }
 
 // 정비업등록증 업로드 action
-export async function manFileUploadAction(dataToSubmit: FormData) {
+export async function _aPostAuthUploadManRegDoc(dataToSubmit: FormData) {
   const req = await axios
     .post(`/api${AuthApiPath.upload_man_reg_doc}`, dataToSubmit, {
       headers: {
@@ -183,7 +183,7 @@ export async function manFileUploadAction(dataToSubmit: FormData) {
 }
 
 // 가입 심사 요청 action (업체)
-export async function approvalReqAction(dataToSubmit: string) {
+export async function _aPatchAuthRequestCompany(dataToSubmit: string) {
   const req = await axios
     .patch(`/api${AuthApiPath.request_company}/${dataToSubmit}`)
     .then((res: AxiosResponse<unknown, any>) => res.data);
@@ -198,7 +198,9 @@ export async function approvalReqAction(dataToSubmit: string) {
  * @param dataToSubmit
  * @returns
  */
-export async function pwCheckAction(dataToSubmit: ConfirmPWD) {
+export async function _aPostAuthMyinfoConfirmPassword(
+  dataToSubmit: ConfirmPWD
+) {
   const req = await axios
     .post(`/api${SettingsApiPath.myinfo_confirm_password}`, dataToSubmit)
     .then((res: AxiosResponse<unknown, any>) => res.data);

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { signOutUserAction } from "../../../../store/action/user.action";
+import { _aGetAuthSignout } from "../../../../store/action/user.action";
 import Calendar from "../../common/calendar";
 import MyPageAccount from "../MyPageAccount";
 import Link from "next/link";
