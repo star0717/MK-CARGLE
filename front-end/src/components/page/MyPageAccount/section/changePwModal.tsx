@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   changePwAction,
-  pwCheckAction,
-  signOutUserAction,
+  _aPostAuthMyinfoConfirmPassword,
+  _aGetAuthSignout,
 } from "../../../../../store/action/user.action";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -49,7 +49,7 @@ const ChangePwModal: NextPage<_pMyPageAccountProps> = (props) => {
    * @param e
    */
   const onSignOutHandler = () => {
-    dispatch(signOutUserAction()).then((res: any) => {
+    dispatch(_aGetAuthSignout()).then((res: any) => {
       router.push(UseLink.INDEX);
     });
   };
@@ -63,7 +63,7 @@ const ChangePwModal: NextPage<_pMyPageAccountProps> = (props) => {
       _id: props.accountInfo.user._uID,
       PWD: password,
     };
-    dispatch(pwCheckAction(confirmPWD)).then((res: any) => {
+    dispatch(_aPostAuthMyinfoConfirmPassword(confirmPWD)).then((res: any) => {
       if (res.payload === true) {
         const HelpChangePWD = {
           _id: props.accountInfo.user._uID,

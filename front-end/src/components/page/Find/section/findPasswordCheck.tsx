@@ -17,7 +17,7 @@ import { useRouter } from "next/dist/client/router";
 import { UseLink } from "../../../../configure/router.entity";
 import { _pFindPassword } from "../../../../configure/_pProps.entity";
 import { useDispatch } from "react-redux";
-import { findPWAction } from "../../../../../store/action/user.action";
+import { _aPostAuthHelpPwd } from "../../../../../store/action/user.action";
 
 /**
  * 계정찾기: 비밀번호 찾기(화면)
@@ -47,7 +47,7 @@ const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
         hpNumber: props.hpNumber,
         email: props.email,
       };
-      dispatch(findPWAction(findPwInfo)).then(
+      dispatch(_aPostAuthHelpPwd(findPwInfo)).then(
         (req: any) => {
           if (req.payload) {
             props.setComplete(true);

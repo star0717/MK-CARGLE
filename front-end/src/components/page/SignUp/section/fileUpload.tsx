@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import {
-  approvalReqAction,
-  comFileUploadAction,
-  manFileUploadAction,
-  signOutUserAction,
+  _aPatchAuthRequestCompany,
+  _aPostAuthUploadComRegDoc,
+  _aPostAuthUploadManRegDoc,
+  _aGetAuthSignout,
 } from "../../../../../store/action/user.action";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
@@ -66,7 +66,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
    */
   const onSignOutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     alert("입력하신 계정정보로 로그인하시면 서류제출이 가능합니다.");
-    dispatch(signOutUserAction()).then((res: any) => {
+    dispatch(_aGetAuthSignout()).then((res: any) => {
       dispatch({ type: actionTypesUser.USER_INIT });
       router.push(UseLink.INDEX);
     });
@@ -82,28 +82,30 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     const manFormData = new FormData();
     comFormData.append("file", file.comFile); // NestJs의 fileinterceptor의 name과 일치해야 됨
     manFormData.append("file", file.manFile);
-    dispatch(comFileUploadAction(comFormData)).then(
+    dispatch(_aPostAuthUploadComRegDoc(comFormData)).then(
       (res: any) => {
-        dispatch(manFileUploadAction(manFormData)).then(
+        dispatch(_aPostAuthUploadManRegDoc(manFormData)).then(
           (res: any) => {
             const tokenInfo: AuthTokenInfo = parseJwt(Cookies.get("mk_token"));
-            dispatch(approvalReqAction(tokenInfo.cID)).then((res: any) => {
-              if (res.payload) {
-                if (props.stepNumber) {
-                  props.setStepNumber(props.stepNumber + 1);
+            dispatch(_aPatchAuthRequestCompany(tokenInfo.cID)).then(
+              (res: any) => {
+                if (res.payload) {
+                  if (props.stepNumber) {
+                    props.setStepNumber(props.stepNumber + 1);
+                  } else {
+                    alert(
+                      "제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다."
+                    );
+                    dispatch(_aGetAuthSignout()).then((res: any) => {
+                      dispatch({ type: actionTypesUser.USER_INIT });
+                      router.push(UseLink.INDEX);
+                    });
+                  }
                 } else {
-                  alert(
-                    "제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다."
-                  );
-                  dispatch(signOutUserAction()).then((res: any) => {
-                    dispatch({ type: actionTypesUser.USER_INIT });
-                    router.push(UseLink.INDEX);
-                  });
+                  alert("파일 업로드에 실패했습니다.");
                 }
-              } else {
-                alert("파일 업로드에 실패했습니다.");
               }
-            });
+            );
           },
           (err) => {
             if (err.response.status === 400 || 500) {

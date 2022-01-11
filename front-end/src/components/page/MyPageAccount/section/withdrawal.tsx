@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import WithdrawalModal from "./withdrawalModal";
 import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { pwCheckAction } from "../../../../../store/action/user.action";
+import { _aPostAuthMyinfoConfirmPassword } from "../../../../../store/action/user.action";
 import { _fWithdrawal } from "../../../../configure/_fProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -70,7 +70,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
       _id: accountInfo.user._uID,
       PWD: password,
     };
-    dispatch(pwCheckAction(confirmPWD)).then((res: any) => {
+    dispatch(_aPostAuthMyinfoConfirmPassword(confirmPWD)).then((res: any) => {
       if (res.payload === true) {
         setModalOpen(!modalOpen);
       } else {

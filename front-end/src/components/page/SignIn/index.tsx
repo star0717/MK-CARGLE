@@ -9,7 +9,7 @@ import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { actionTypesUser, UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
-import { signInUserAction } from "../../../../store/action/user.action";
+import { _aPostAuthSignin } from "../../../../store/action/user.action";
 import { formRegEx } from "../../../validation/regEx";
 import { UserInfo } from "../../../models/auth.entity";
 import { UseLink } from "../../../configure/router.entity";
@@ -71,7 +71,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
       alert("비밀번호를 입력해주세요.");
     } else {
       // 아이디, 비밀번호 정상 입력 시
-      dispatch(signInUserAction(inputSignIn)).then(
+      dispatch(_aPostAuthSignin(inputSignIn)).then(
         (res: any) => {
           // 아이디 저장할 경우 쿠키로 저장
           if (saveCheck) {

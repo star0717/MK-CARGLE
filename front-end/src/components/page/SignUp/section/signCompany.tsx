@@ -7,9 +7,9 @@ import { useDispatch } from "react-redux";
 import { actionTypesUser, FormInput } from "../../../../../store/interfaces";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import {
-  companyCheckAction,
-  companyFindAction,
-  signUpUserAction,
+  _aGetAuthValidateComRegNumber,
+  _aGetAuthCompany,
+  _aPostAuthSignup,
 } from "../../../../../store/action/user.action";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -100,28 +100,28 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
    */
   const onComRegNumCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (inputCompany.comRegNum) {
-      dispatch(companyFindAction(inputCompany.comRegNum)).then(
+      dispatch(_aGetAuthCompany(inputCompany.comRegNum)).then(
         (res: any) => {
           if (res.payload.length === 0) {
-            dispatch(companyCheckAction(inputCompany.comRegNum)).then(
-              (res: any) => {
-                if (res.payload) {
-                  setError("comRegNum", {
-                    type: "comCheckTrue",
-                    message: "사업자등록번호 인증이 완료되었습니다.",
-                  });
-                  dispatch({
-                    type: actionTypesUser.FORM_CHECK,
-                    payload: { ...props.formCheck, companyCheck: true },
-                  });
-                } else {
-                  setError("comRegNum", {
-                    type: "comCheckFalse",
-                    message: "유효하지 않은 사업자등록번호입니다.",
-                  });
-                }
+            dispatch(
+              _aGetAuthValidateComRegNumber(inputCompany.comRegNum)
+            ).then((res: any) => {
+              if (res.payload) {
+                setError("comRegNum", {
+                  type: "comCheckTrue",
+                  message: "사업자등록번호 인증이 완료되었습니다.",
+                });
+                dispatch({
+                  type: actionTypesUser.FORM_CHECK,
+                  payload: { ...props.formCheck, companyCheck: true },
+                });
+              } else {
+                setError("comRegNum", {
+                  type: "comCheckFalse",
+                  message: "유효하지 않은 사업자등록번호입니다.",
+                });
               }
-            );
+            });
           } else {
             setError("comRegNum", {
               type: "comExist",
@@ -180,7 +180,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
     } else {
       delete props.user._cID;
       dispatch(
-        signUpUserAction({
+        _aPostAuthSignup({
           user: props.user,
           company: inputCompany,
         })

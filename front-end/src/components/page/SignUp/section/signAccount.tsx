@@ -8,9 +8,9 @@ import { useDispatch } from "react-redux";
 import { actionTypesUser, FormInput } from "../../../../../store/interfaces";
 import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
 import {
-  authNumCheckAction,
-  emailSendAction,
-  signUpUserAction,
+  _aGetAuthValidateEmailToken,
+  _aGetAuthValidateEmail,
+  _aPostAuthSignup,
 } from "../../../../../store/action/user.action";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import DaumPostcode from "react-daum-postcode";
@@ -105,7 +105,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
    */
   const onEmailSendHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (formRegEx.EMAIL.test(inputUser.email)) {
-      dispatch(emailSendAction(inputUser.email)).then((res: any) => {
+      dispatch(_aGetAuthValidateEmail(inputUser.email)).then((res: any) => {
         if (res.payload) {
           alert("인증번호가 전송되었습니다.");
           dispatch({
@@ -161,7 +161,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
    */
   const onAuthNumCheckHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (authNum) {
-      dispatch(authNumCheckAction(authNum)).then((res: any) => {
+      dispatch(_aGetAuthValidateEmailToken(authNum)).then((res: any) => {
         if (res.payload) {
           alert("인증되었습니다.");
           setTimer(0);
@@ -224,7 +224,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
         props.setStepNumber(props.stepNumber + 1);
       } else {
         dispatch(
-          signUpUserAction({
+          _aPostAuthSignup({
             user: inputUser,
           })
         )
