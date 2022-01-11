@@ -26,8 +26,6 @@ const PartsModal: NextPage<any> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
-  // resize 변수 선언
-  const { width, height, ref } = useResizeDetector();
 
   /*********************************************************************
    * 2. State settings
@@ -49,7 +47,6 @@ const PartsModal: NextPage<any> = (props) => {
       <Wrapper>
         <Text>부품등록</Text>
       </Wrapper>
-
       <Wrapper dr={`row`}>
         <Text>분류</Text>
         <Combo width={`600px`}>
@@ -82,6 +79,46 @@ const PartsModal: NextPage<any> = (props) => {
       <Wrapper dr={`row`}>
         <Text>동의어 설정</Text>
         <TextInput2 placeholder="동의어입니다 4" width={`600px`}></TextInput2>
+      </Wrapper>
+      <Wrapper
+        width={`600px`}
+        height={`250px`}
+        border={`1px solid #c4c4c4`}
+        radius={`5px 5px 0px 0px`}
+        ju={`top`}
+      >
+        <Wrapper bgColor={`#eee`}>
+          <Text>등록된 단어</Text>
+        </Wrapper>
+        <Wrapper padding={`10px`} overflow={`auto`} ju={`top`}>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+            <Text>우와와오우와우와우와우와우와우와우왕</Text>
+          </Wrapper>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+            <Text>우와와오우와우와우와우와우와우와우왕</Text>
+          </Wrapper>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+            <Text>우와와오우와우와우와우와우와우와우왕</Text>
+          </Wrapper>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+            <Text>우와와오우와우와우와우와우와우와우왕</Text>
+          </Wrapper>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+            <Text>우와와오우와우와우와우와우와우와우왕</Text>
+          </Wrapper>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+            <Text>우와와오우와우와우와우와우와우와우왕</Text>
+          </Wrapper>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+            <Text>우와와오우와우와우와우와우와우와우왕</Text>
+          </Wrapper>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+            <Text>우와와오우와우와우와우와우와우와우왕</Text>
+          </Wrapper>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+            <Text>우와와오우와우와우와우와우와우와우왕</Text>
+          </Wrapper>
+        </Wrapper>
       </Wrapper>
     </WholeWrapper>
   );
