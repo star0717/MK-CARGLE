@@ -17,7 +17,7 @@ import { useRouter } from "next/dist/client/router";
 import { UseLink } from "../../../../configure/router.entity";
 import { _pFindEmail } from "../../../../configure/_pProps.entity";
 import { useDispatch } from "react-redux";
-import { findEmailAction } from "../../../../../store/action/user.action";
+import { _aPostAuthHelpEmail } from "../../../../../store/action/user.action";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 /**
@@ -45,7 +45,7 @@ const FindEmailCheck: NextPage<_pFindEmail> = (props) => {
         name: props.name,
         hpNumber: props.hpNumber,
       };
-      dispatch(findEmailAction(findEmailInfo)).then((res: any) => {
+      dispatch(_aPostAuthHelpEmail(findEmailInfo)).then((res: any) => {
         if (res.payload) {
           props.setFindEmail(res.payload);
           props.setComplete(true);

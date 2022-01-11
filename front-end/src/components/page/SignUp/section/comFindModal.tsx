@@ -2,8 +2,8 @@ import { NextPage } from "next";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  companyFindAction,
-  companyFindbyNameAction,
+  _aGetAuthCompany,
+  _aGetAuthCompanies,
 } from "../../../../../store/action/user.action";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -43,11 +43,11 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
   const findCompanyHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 먼저 사업자번호로 검색
-    dispatch(companyFindAction(searchText)).then(
+    dispatch(_aGetAuthCompany(searchText)).then(
       (res: any) => {
         if (res.payload === "") {
           // 결과가 없을 땐 사업자명으로 검색
-          dispatch(companyFindbyNameAction(searchText)).then((res: any) => {
+          dispatch(_aGetAuthCompanies(searchText)).then((res: any) => {
             if (res.payload.length === 0) {
               setCompanyList([]);
             } else {

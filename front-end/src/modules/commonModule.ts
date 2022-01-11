@@ -93,10 +93,6 @@ class GenPathArgs {
   findParams?: FindParameters;
 }
 
-/** API 호출용 기본 URL */
-const baseApiUrl: string =
-  process.env.DESTINATION_API + process.env.DESTINATION_PORT;
-
 /**
  * API 호출을 위해 경로 정보 생성
  * @param path 호출할 API의 경로
@@ -104,12 +100,13 @@ const baseApiUrl: string =
  * @returns API 호출용 최종 경로
  */
 export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
-  let apiPath = baseApiUrl + path;
+  let apiPath = "/api" + path;
   if (args?.id) {
     apiPath += "/" + args.id;
   }
   if (args?.findParams) {
     apiPath += "/" + FindParameters.getQuery(args.findParams);
   }
+
   return apiPath;
 };
