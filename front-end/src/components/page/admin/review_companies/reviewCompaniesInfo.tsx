@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
+  IoIosArrowForward,
   IoIosCloseCircle,
 } from "react-icons/io";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
@@ -423,6 +424,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
               }}
             >
               사업자등록증 확인
+              <IoIosArrowForward />
             </CommonButton>
             <CommonButton
               onClick={() => {
@@ -431,6 +433,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
               }}
             >
               정비업등록증 확인
+              <IoIosArrowForward />
             </CommonButton>
           </CommonButtonWrapper>
         </Wrapper>
