@@ -1,12 +1,7 @@
 import Modal from "react-modal";
 import { NextPage } from "next";
 import React, { useState, useEffect } from "react";
-import {
-  IoIosArrowDropleftCircle,
-  IoIosArrowDroprightCircle,
-  IoIosArrowForward,
-  IoIosCloseCircle,
-} from "react-icons/io";
+import { IoIosArrowForward, IoIosCloseCircle } from "react-icons/io";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { Company } from "../../../../models/company.entity";
 import AdminReviewCompaniesModal from "./review_Company_Modal";
@@ -18,11 +13,9 @@ import {
   TextInput2,
   WholeWrapper,
   Wrapper,
-  Image,
   Combo,
   CommonTitleWrapper,
   CommonTitle,
-  IconButton,
   CommonSmallTitle,
   CommonButtonWrapper,
   CommonButton,
@@ -34,12 +27,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { User } from "../../../../models/user.entity";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import {
-  getComRegFile,
-  setMyInfoAction,
-  _aPatchAdminSignUpInfo,
-} from "../../../../../store/action/user.action";
-import Link from "next/link";
+import { _aPatchAdminSignUpInfo } from "../../../../../store/action/user.action";
 import { SignUpInfo } from "../../../../models/auth.entity";
 
 const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
