@@ -78,7 +78,6 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
    * @param data
    */
   const onChangeInfoHandler: SubmitHandler<SignUpInfo> = (e: any) => {
-    console.log("?>?");
     const changeData: SignUpInfo = {
       company: comData,
       user: userData,
