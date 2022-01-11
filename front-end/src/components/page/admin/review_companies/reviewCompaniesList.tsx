@@ -38,6 +38,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -126,7 +127,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
             width={`150px`}
           >
             <option value="name">이름 검색</option>
-            <option value="hpNumber">전화번호 검색</option>
+            <option value="phoneNum">전화번호 검색</option>
           </Combo>
           <SearchInputWrapper
             type="text"

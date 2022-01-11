@@ -127,7 +127,7 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             height={`46px`}
           >
             <option value="name">이름 검색</option>
-            <option value="hpNumber">전화번호 검색</option>
+            <option value="phoneNum">전화번호 검색</option>
           </Combo>
           {/* <TextInput
               type="text"
