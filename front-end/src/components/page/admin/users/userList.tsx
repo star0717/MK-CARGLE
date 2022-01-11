@@ -7,12 +7,10 @@ import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { _aGetAdminUsers } from "../../../../../store/action/user.action";
 import { _iGetAdminUsers } from "../../../../../store/interfaces";
-import { UseLink } from "../../../../configure/router.entity";
 import {
   _pAdminUsers,
   _pWorkerDataProps,
 } from "../../../../configure/_pProps.entity";
-import { FindParameters } from "../../../../models/base.entity";
 import { User, UserAuthority } from "../../../../models/user.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
@@ -22,7 +20,6 @@ import {
   CommonTitleWrapper,
   IconButton,
   RsWrapper,
-  SearchButton,
   SearchInput,
   SearchInputWrapper,
   TableBody,
@@ -32,7 +29,6 @@ import {
   TableRowLIST,
   TableWrapper,
   Text,
-  TextInput,
   WholeWrapper,
   Wrapper,
 } from "../../../styles/CommonComponents";
@@ -129,23 +125,6 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             <option value="name">이름 검색</option>
             <option value="hpNumber">전화번호 검색</option>
           </Combo>
-          {/* <TextInput
-              type="text"
-              value={props.filterValue}
-              placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onInputSearchHandler(e);
-              }}
-              onKeyUp={handleKeyUp}
-            />
-            <IconButton
-              type="submit"
-              onClick={() => {
-                props.findDocHandler(1);
-              }}
-            >
-              <BsSearch />
-            </IconButton> */}
           <SearchInputWrapper
             type="text"
             value={props.filterValue}

@@ -1,16 +1,13 @@
 import dayjs from "dayjs";
 import type { NextPage } from "next";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { ingCompany } from "../../../../../store/action/user.action";
-import { actionTypesUser, _ingCompany } from "../../../../../store/interfaces";
+import { _ingCompany } from "../../../../../store/interfaces";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
-import { FindParameters, FindResult } from "../../../../models/base.entity";
 import { Company, CompanyApproval } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
-  TextInput,
   IconButton,
   RsWrapper,
   TableBody,
@@ -30,7 +27,7 @@ import {
 } from "../../../styles/CommonComponents";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { _MainProps } from "../../../../configure/_props.entity";
-import { StepQuery, UseLink } from "../../../../configure/router.entity";
+import { UseLink } from "../../../../configure/router.entity";
 
 const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   /*********************************************************************
@@ -38,6 +35,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -62,21 +60,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  //   const fprops: _pAdminReviewCompanies = {
-  //     ...props,
-  //     findResult,
-  //     setFindResult,
-  //     findDocHandler: findCompanyHandler,
-  //     clickDoc,
-  //     setClickDoc,
-  //   };
-
-  //   const ARCModalProps: any = {
-  //     ...props,
-  //     setModalOpen,
-  //     clickDoc,
-  //     style: { height: "500px" },
-  //   };
 
   /*********************************************************************
    * 5. Page configuration
@@ -87,35 +70,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
         <CommonTitle>승인관리</CommonTitle>
       </CommonTitleWrapper>
       <RsWrapper>
-        {/* <Wrapper dr={`row`}>
-          <Combo
-            value={props.searchOption}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              onSearchOptionHandler(e);
-            }}
-          >
-            <option value="name">상호명 검색</option>
-            <option value="comRegNum">사업자등록번호 검색</option>
-          </Combo>
-          <TextInput
-            type="text"
-            placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              onInputSearchHandler(e);
-            }}
-            onKeyUp={handleKeyUp}
-          />
-          <IconButton
-            type="submit"
-            onClick={() => {
-              props.findDocHandler(1);
-            }}
-          >
-            <BsSearch></BsSearch>
-          </IconButton>
-
-          <Text>승인대기업체수 : {props.findResult.totalDocs}</Text>
-        </Wrapper> */}
         <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
           <Combo
             value={props.searchOption}
@@ -126,7 +80,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
             width={`150px`}
           >
             <option value="name">이름 검색</option>
-            <option value="hpNumber">전화번호 검색</option>
+            <option value="phoneNum">전화번호 검색</option>
           </Combo>
           <SearchInputWrapper
             type="text"
