@@ -194,7 +194,13 @@ export const menuList = [
       {
         key: "8.2",
         subMenuName: "국토부항목관리",
-        subMenuLink: UseLink.ADMIN_MOLIT_ITEM,
+        subMenuLink: UseLink.ADMIN_MOLIT_ITEMS,
+        subMenuAuth: UserAuthority.ADMIN,
+      },
+      {
+        key: "8.3",
+        subMenuName: "ttttt",
+        subMenuLink: UseLink.ADMIN_MOLIT_ITEMS,
         subMenuAuth: UserAuthority.ADMIN,
       },
     ],

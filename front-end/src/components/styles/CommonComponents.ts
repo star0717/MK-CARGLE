@@ -455,7 +455,6 @@ export const CommonButton = styled.button<any>`
 
   & svg {
     font-size: 25px;
-    color: #fff;
   }
 
   &:hover {
