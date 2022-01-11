@@ -3,6 +3,9 @@ import { useDispatch } from "react-redux";
 import { useResizeDetector } from "react-resize-detector";
 import { useRouter } from "next/router";
 import {
+  CommonButton,
+  CommonButtonWrapper,
+  CommonSmallTitle,
   FocusButton,
   RsWrapper,
   SmallButton,
@@ -53,58 +56,76 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
    * 5. Page configuration
    *********************************************************************/
   return (
-    <WholeWrapper ref={ref}>
+    <WholeWrapper ref={ref} padding={`0px 50px 50px`}>
+      <CommonSmallTitle>승인처리</CommonSmallTitle>
       <Wrapper>
-        <Text>승인처리</Text>
-      </Wrapper>
-      <Wrapper>
-        <Wrapper dr={`row`}>
-          <Text>승인여부</Text>
-          <FocusButton
-            type="button"
-            kindOf={approval === true ? `true` : `default`}
-            margin={`0px 0px 0px 20px`}
-            onClick={() => {
-              setApproval(true);
-              console.log("승인");
-            }}
-          >
-            승인
-          </FocusButton>
-          <FocusButton
-            type="button"
-            kindOf={approval === false ? `true` : `default`}
-            margin={`0px 0px 0px 20px`}
-            onClick={() => {
-              setApproval(false);
-              console.log("반려");
-            }}
-          >
-            반려
-          </FocusButton>
+        <Wrapper
+          dr={`row`}
+          ju={`space-between`}
+          padding={`0px 0px 20px`}
+          width={`400px`}
+        >
+          <Text textAlign={`left`} margin={`0px 10px 0px 0px`}>
+            승인여부
+          </Text>
+          <Wrapper width={`180px`} dr={`row`}>
+            <FocusButton
+              type="button"
+              kindOf={approval === true ? `true` : `default`}
+              onClick={() => {
+                setApproval(true);
+                console.log("승인");
+              }}
+            >
+              승인
+            </FocusButton>
+            <FocusButton
+              type="button"
+              kindOf={approval === false ? `true` : `default`}
+              margin={`0px 0px 0px 20px`}
+              onClick={() => {
+                setApproval(false);
+                console.log("반려");
+              }}
+            >
+              반려
+            </FocusButton>
+          </Wrapper>
         </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text width={`130px`}>반려사유</Text>
-          <TextInput2
-            width={`250px`}
-            height={`150px`}
-            placeholder="반려 사유를 입력하세요."
-            type="text"
-            readOnly={approval}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              onInputreasonHandler(e);
-            }}
-          />
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+          <Text>반려사유</Text>
+          <Wrapper width={`400px`}>
+            <TextInput2
+              width={`400px`}
+              height={`150px`}
+              placeholder="반려 사유를 입력하세요."
+              type="text"
+              readOnly={approval}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputreasonHandler(e);
+              }}
+            />
+          </Wrapper>
         </Wrapper>
-        <Wrapper dr={`row`}>
-          <Text width={`130px`}>E-Mail</Text>
-          <TextInput2 value={props.data.user.email} type="text" readOnly />
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+          <Text>E-Mail</Text>
+          <Wrapper width={`400px`} ju={`flex-start`}>
+            <TextInput2
+              width={`400px`}
+              value={props.data.user.email}
+              type="text"
+              readOnly
+            />
+          </Wrapper>
         </Wrapper>
-        <Wrapper dr={`row`}>
-          <SmallButton
+        <CommonButtonWrapper kindOf={`column`}>
+          <CommonButton
+            kindOf={`white`}
+            margin={`5px 0px 0px 0px`}
+            width={`400px`}
+            height={`50px`}
+            radius={`100px`}
             type="button"
-            kindOf={`default`}
-            margin={`0px 0px 0px 20px`}
             onClick={() => {
               if (approval === true) {
                 dispatch(approveCompany(props.data.company._cID)).then(
@@ -129,18 +150,20 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
             }}
           >
             저장
-          </SmallButton>
-          <SmallButton
+          </CommonButton>
+          <CommonButton
+            margin={`5px 0px 0px 0px`}
+            width={`400px`}
+            height={`50px`}
+            radius={`100px`}
             type="button"
-            kindOf={`default`}
-            margin={`0px 0px 0px 20px`}
             onClick={() => {
               props.setModalOpen(false);
             }}
           >
             취소
-          </SmallButton>
-        </Wrapper>
+          </CommonButton>
+        </CommonButtonWrapper>
       </Wrapper>
     </WholeWrapper>
   );

@@ -31,6 +31,7 @@ export enum actionTypesUser {
   WITHDRAWAL = "WITHDRAWAL",
   GET_WORKERS_LIST = "GET_WORKERS_LIST",
   ADMIN_COMPANIES_LIST = "ADMIN_COMPANIES_LIST",
+  ADMIN_MAIN_LIST = "ADMIN_MAIN_LIST",
   PATCH_WORKERS_APPROVE = "PATCH_WORKERS_APPROVE",
   PATCH_WORKERS_REJECT = "PATCH_WORKERS_REJECT",
   PATCH_WORKERS_CHANGE = "PATCH_WORKERS_CHANGE",
@@ -65,6 +66,7 @@ export type ActionsUser =
   | Withdrawal
   | GetWorkersList
   | AdminCompaniesList
+  | AdminMainList
   | PatchWorkersApprove
   | PatchWorkersReject
   | PatchWorkersChange
@@ -225,6 +227,12 @@ export interface GetWorkersList {
 //업체 조회
 export interface AdminCompaniesList {
   type: actionTypesUser.ADMIN_COMPANIES_LIST;
+  payload: any;
+}
+
+//업체 조회????
+export interface AdminMainList {
+  type: actionTypesUser.ADMIN_MAIN_LIST;
   payload: any;
 }
 

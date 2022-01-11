@@ -409,6 +409,23 @@ export async function getComRegFile(id: string) {
 }
 
 /**
+ * 정비업 등록증 반환
+ * @param id
+ * @returns
+ */
+export async function getMainRegFile(id: string) {
+  const req = await axios
+    .get(`/api${AdminApiPath.review_mainRegDoc}/${id}`)
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+
+  const result = {
+    type: actionTypesUser.ADMIN_MAIN_LIST,
+    payload: req,
+  };
+  return result;
+}
+
+/**
  * 업체와 대표자 정보 변경
  * @param id
  * @param dataToSubmit

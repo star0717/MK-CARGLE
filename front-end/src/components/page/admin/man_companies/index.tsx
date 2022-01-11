@@ -65,20 +65,6 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
     setFilterValue,
   };
 
-  // switch (routerQuery.id) {
-  //   case Step.FIRST:
-  //     return (
-  //       <BodyWrapper>
-  //         <ManCompanyInfo {...adminManComProps} />
-  //       </BodyWrapper>
-  //     );
-  //   default:
-  //     return (
-  //       <BodyWrapper>
-  //         <ManCompanyList {...adminManComProps} />
-  //       </BodyWrapper>
-  //     );
-  // }
   if (routerQuery.id) {
     return (
       <BodyWrapper>

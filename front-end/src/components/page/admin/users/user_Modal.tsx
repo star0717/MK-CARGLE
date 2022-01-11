@@ -113,7 +113,7 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
       <Wrapper dr={`row`} ju={`flex-end`} padding={`0px 0px 20px`}>
         <Wrapper width={`80px`} />
         <Wrapper dr={`row`} width={`auto`}>
-          <Wrapper width={`150px`} al={`flex-end`} margin={`0px 10px 0px 0px`}>
+          <Wrapper al={`flex-end`} margin={`0px 10px 0px 0px`}>
             {approval ? (
               <Text color={`#0066ff`} fontWeight={`600`}>
                 승인 완료되었습니다!
@@ -190,7 +190,7 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
         </Wrapper>
 
         <CommonButtonWrapper kindOf={`column`}>
-          {/* <CommonButton
+          <CommonButton
             type="submit"
             kindOf={`white`}
             margin={`0px 0px 5px 0px`}
@@ -199,10 +199,9 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
             radius={`100px`}
           >
             저장
-          </CommonButton> */}
+          </CommonButton>
           <CommonButton
             type="button"
-            kindOf={`white`}
             margin={`5px 0px 0px 0px`}
             onClick={workerDelete}
             width={`400px`}
