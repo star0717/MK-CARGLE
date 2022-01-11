@@ -7,8 +7,6 @@ import {
   CommonButtonWrapper,
   CommonSmallTitle,
   FocusButton,
-  RsWrapper,
-  SmallButton,
   Text,
   TextInput2,
   WholeWrapper,
@@ -20,7 +18,7 @@ import {
   rejectCompany,
 } from "../../../../../store/action/user.action";
 import { OptionalInfo } from "../../../../models/base.entity";
-import { StepQuery, UseLink } from "../../../../configure/router.entity";
+import { UseLink } from "../../../../configure/router.entity";
 
 const AdminReviewCompaniesModal: NextPage<any> = (props) => {
   /*********************************************************************

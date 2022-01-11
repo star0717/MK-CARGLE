@@ -1,5 +1,3 @@
-import { atom, useAtom } from "jotai";
-import { useUpdateAtom } from "jotai/utils";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -15,7 +13,6 @@ import {
 } from "../../../../configure/_pProps.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
-import { Company } from "../../../../models/company.entity";
 import { User } from "../../../../models/user.entity";
 import { getQuery } from "../../../../modules/commonModule";
 import { BodyWrapper } from "../../../styles/LayoutComponents";

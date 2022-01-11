@@ -27,7 +27,6 @@ import {
   CommonButton,
   CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
-// import { Switch } from "@material-ui/core";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
 import { Switch } from "@mui/material";

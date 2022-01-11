@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ingCompany } from "../../../../../store/action/user.action";
 import { _ingCompany } from "../../../../../store/interfaces";
-import { Step } from "../../../../configure/router.entity";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
 import { FindParameters, FindResult } from "../../../../models/base.entity";
@@ -21,10 +20,6 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const routerQuery = getQuery(router.asPath);
-
-  // const { company } = useSelector(
-  //   (state: RootStateInterface): BaseState => state.baseAll
-  // );
 
   /*********************************************************************
    * 2. State settings
@@ -74,20 +69,7 @@ const AdminReviewCompaniesPage: NextPage<_MainProps> = (props) => {
     setFilterValue,
     findDocHandler: findCompanyHandler,
   };
-  // switch (routerQuery.step) {
-  //   case Step.FIRST:
-  //     return (
-  //       <BodyWrapper>
-  //         <AdminReviewCompaniesinfo {...adminReviewComProps} />
-  //       </BodyWrapper>
-  //     );
-  //   default:
-  //     return (
-  //       <BodyWrapper>
-  //         <AdminReviewCompaniesList {...adminReviewComProps} />
-  //       </BodyWrapper>
-  //     );
-  // }
+
   if (routerQuery.id) {
     return (
       <BodyWrapper>
