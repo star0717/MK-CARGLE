@@ -198,12 +198,7 @@ export const getServerSideProps: GetServerSideProps = async (
       switch (pathName) {
         case UseLink.TEST:
           data = await axios
-            .get(`${apiUrl}${AuthApiPath.profile}`, {
-              headers: {
-                Cookie: `mk_token=${context.req.cookies.mk_token}`,
-              },
-              withCredentials: true,
-            })
+            .get(genPath(AuthApiPath.profile), authConfig)
             .then((res: AxiosResponse<unknown, any>) => res.data);
           return {
             props: {
@@ -220,15 +215,10 @@ export const getServerSideProps: GetServerSideProps = async (
 
             data = await axios
               .get(
-                `${apiUrl}${
-                  SettingsApiPath.management_workers
-                }?${FindParameters.getQuery(params)}`,
-                {
-                  headers: {
-                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                  },
-                  withCredentials: true,
-                }
+                genPath(SettingsApiPath.management_workers, {
+                  findParams: params,
+                }),
+                authConfig
               )
               .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
             return {
@@ -304,12 +294,10 @@ export const getServerSideProps: GetServerSideProps = async (
           if (routerQuery.id) {
             try {
               data = await axios
-                .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
-                  headers: {
-                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                  },
-                  withCredentials: true,
-                })
+                .get(
+                  genPath(AdminApiPath.signup_info, { id: routerQuery.id }),
+                  authConfig
+                )
                 .then(
                   (res: AxiosResponse<FindResult<Company>, Company>) => res.data
                 );
@@ -335,15 +323,8 @@ export const getServerSideProps: GetServerSideProps = async (
 
               data = await axios
                 .get(
-                  `${apiUrl}${
-                    AdminApiPath.done_companies
-                  }?${FindParameters.getQuery(params)}`,
-                  {
-                    headers: {
-                      Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                    },
-                    withCredentials: true,
-                  }
+                  genPath(AdminApiPath.done_companies, { findParams: params }),
+                  authConfig
                 )
                 .then(
                   (res: AxiosResponse<FindResult<Company>, Company>) => res.data
@@ -369,17 +350,7 @@ export const getServerSideProps: GetServerSideProps = async (
           if (routerQuery.id) {
             try {
               data = await axios
-                .get(
-                  `${apiUrl}${AdminApiPath.users}/${
-                    routerQuery.id
-                  }?${FindParameters.getQuery(params)}`,
-                  {
-                    headers: {
-                      Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                    },
-                    withCredentials: true,
-                  }
-                )
+                .get(genPath(AdminApiPath.users, { id: routerQuery.id }))
                 .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
               return {
                 props: {
@@ -399,15 +370,8 @@ export const getServerSideProps: GetServerSideProps = async (
             try {
               data = await axios
                 .get(
-                  `${apiUrl}${AdminApiPath.users}?${FindParameters.getQuery(
-                    params
-                  )}`,
-                  {
-                    headers: {
-                      Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                    },
-                    withCredentials: true,
-                  }
+                  genPath(AdminApiPath.users, { findParams: params }),
+                  authConfig
                 )
                 .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
               return {
@@ -428,13 +392,10 @@ export const getServerSideProps: GetServerSideProps = async (
           const routerQuery = getQuery(url);
           if (routerQuery.step === Step.FIRST) {
             data = await axios
-              // .get(`${apiUrl}/admin/signup-info/${routerQuery.id}`, {
-              .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
-                headers: {
-                  Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                },
-                withCredentials: true,
-              })
+              .get(
+                genPath(AdminApiPath.signup_info, { id: routerQuery.id }),
+                authConfig
+              )
               .then(
                 (res: AxiosResponse<FindResult<Company>, Company>) => res.data
               )
@@ -458,16 +419,10 @@ export const getServerSideProps: GetServerSideProps = async (
 
             data = await axios
               .get(
-                `${apiUrl}${AdminApiPath.companies}?${FindParameters.getQuery(
-                  params
-                )}`,
-                {
-                  headers: {
-                    Cookie: `mk_token=${context.req.cookies.mk_token}`,
-                  },
-                  withCredentials: true,
-                }
+                genPath(AdminApiPath.companies, { findParams: params }),
+                authConfig
               )
+
               .then(
                 (res: AxiosResponse<FindResult<Company>, Company>) => res.data
               );
