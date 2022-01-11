@@ -189,14 +189,43 @@ export const getServerSideProps: GetServerSideProps = async (
       // 렌더링 시 데이터가 필요한 페이지만 URL 및 API 추가
       switch (pathName) {
         case UseLink.TEST:
-          data = await axios
-            .get(`${apiUrl}${AuthApiPath.profile}`, {
-              headers: {
-                Cookie: `mk_token=${context.req.cookies.mk_token}`,
+          // data = await axios
+          //   .get(`${apiUrl}${AuthApiPath.profile}`, {
+          //     headers: {
+          //       Cookie: `mk_token=${context.req.cookies.mk_token}`,
+          //     },
+          //     withCredentials: true,
+          //   })
+          //   .then((res: AxiosResponse<unknown, any>) => res.data);
+          data = {
+            class: [{ name: "분류명1" }, { name: "분류명2" }],
+            part: [
+              {
+                class: "분류명1",
+                code: "code1",
+                name: "name1",
+                molit: "molit1",
               },
-              withCredentials: true,
-            })
-            .then((res: AxiosResponse<unknown, any>) => res.data);
+              {
+                class: "분류명2",
+                code: "code2",
+                name: "name2",
+                molit: "molit2",
+              },
+              {
+                class: "분류명1",
+                code: "code3",
+                name: "name3",
+                molit: "molit3",
+              },
+              {
+                class: "분류명2",
+                code: "code4",
+                name: "name4",
+                molit: "molit4",
+              },
+            ],
+          };
           return {
             props: {
               tokenValue,
