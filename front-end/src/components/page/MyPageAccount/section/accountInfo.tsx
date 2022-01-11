@@ -836,7 +836,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
             left: 0,
             width: "100vw",
             height: "100vh",
-            background: "rgba(255, 255, 255, 0.75)",
+            background: "rgba(71, 71, 71, 0.75)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -851,7 +851,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
             position: "relative",
             border: "1px solid #ccc",
             borderRadius: "0.3rem",
-            boxShadow: "0px 10px 15px rgba(220,220,220,1)",
+            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
             inset: 0,
           },
         }}

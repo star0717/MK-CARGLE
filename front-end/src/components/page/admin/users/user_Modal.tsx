@@ -202,7 +202,6 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
           </CommonButton>
           <CommonButton
             type="button"
-            kindOf={`white`}
             margin={`5px 0px 0px 0px`}
             onClick={workerDelete}
             width={`400px`}
