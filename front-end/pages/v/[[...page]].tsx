@@ -158,7 +158,7 @@ export const getServerSideProps: GetServerSideProps = async (
    * @param args 전달할 아큐먼트
    * @returns API 호출용 최종 경로
    */
-  const genPath = (path: string, args?: Partial<GenPathArgs>) => {
+  const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
     let apiPath = baseApiUrl + path;
     if (args?.id) {
       apiPath += "/" + args.id;
@@ -261,7 +261,7 @@ export const getServerSideProps: GetServerSideProps = async (
       case UseLink.MYPAGE_WORKER: {
         successResult.props.data = await axios
           .get(
-            genPath(SettingsApiPath.management_workers, {
+            genApiPath(SettingsApiPath.management_workers, {
               findParams: params,
             }),
             authConfig
@@ -274,12 +274,12 @@ export const getServerSideProps: GetServerSideProps = async (
         if (id) {
           failResult.redirect.destination = pagePath;
           successResult.props.data = await axios
-            .get(genPath(AdminApiPath.signup_info, { id }), authConfig)
+            .get(genApiPath(AdminApiPath.signup_info, { id }), authConfig)
             .then((res: AxiosResponse<Company, Company>) => res.data);
         } else {
           successResult.props.data = await axios
             .get(
-              genPath(AdminApiPath.ing_companies, { findParams: params }),
+              genApiPath(AdminApiPath.ing_companies, { findParams: params }),
               authConfig
             )
             .then(
@@ -292,13 +292,13 @@ export const getServerSideProps: GetServerSideProps = async (
         if (id) {
           failResult.redirect.destination = pagePath;
           successResult.props.data = await axios
-            .get(genPath(AdminApiPath.signup_info, { id }), authConfig)
+            .get(genApiPath(AdminApiPath.signup_info, { id }), authConfig)
             .then((res: AxiosResponse<Company, Company>) => res.data);
           return successResult;
         } else {
           successResult.props.data = await axios
             .get(
-              genPath(AdminApiPath.done_companies, { findParams: params }),
+              genApiPath(AdminApiPath.done_companies, { findParams: params }),
               authConfig
             )
             .then(
@@ -311,13 +311,13 @@ export const getServerSideProps: GetServerSideProps = async (
         if (id) {
           failResult.redirect.destination = pagePath;
           successResult.props.data = await axios
-            .get(genPath(AdminApiPath.users, { id }))
+            .get(genApiPath(AdminApiPath.users, { id }))
             .then((res: AxiosResponse<User, User>) => res.data);
           return successResult;
         } else {
           successResult.props.data = await axios
             .get(
-              genPath(AdminApiPath.users, { findParams: params }),
+              genApiPath(AdminApiPath.users, { findParams: params }),
               authConfig
             )
             .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
