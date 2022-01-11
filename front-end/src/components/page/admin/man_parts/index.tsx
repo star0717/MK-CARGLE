@@ -25,6 +25,7 @@ import {
 import { BsPlusSquareFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
+import PartsModal from "./parts_Modal";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -46,7 +47,6 @@ const AdminManPartsPage: NextPage<any> = (props) => {
    *********************************************************************/
   const closeModal = () => {
     setModalOpen(false);
-    props.findDocHandler(props.findResult.currentPage);
   };
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
@@ -55,6 +55,13 @@ const AdminManPartsPage: NextPage<any> = (props) => {
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
+
+  const ARCModalProps: any = {
+    ...props,
+    setModalOpen,
+    style: { height: "500px" },
+  };
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -68,7 +75,13 @@ const AdminManPartsPage: NextPage<any> = (props) => {
         <CommonTitleWrapper>
           <CommonTitle>부품관리</CommonTitle>
         </CommonTitleWrapper>
-        <CommonButton>hyeok modal</CommonButton>
+        <CommonButton
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          hyeok modal
+        </CommonButton>
         <RsWrapper>
           <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
             {/* 부품분류 */}
@@ -153,8 +166,8 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               },
               content: {
                 background: "white",
-                width: "500px",
-                height: "800px",
+                width: "800px",
+                height: "600px",
                 maxWidth: "calc(100vw - 2rem)",
                 maxHeight: "calc(100vh - 2rem)",
                 overflowY: "auto",
@@ -170,7 +183,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               <CloseButton onClick={closeModal}>
                 <IoIosCloseCircle />
               </CloseButton>
-              <parts_Modal />
+              <PartsModal {...ARCModalProps} />
             </Wrapper>
           </Modal>
         </Wrapper>
