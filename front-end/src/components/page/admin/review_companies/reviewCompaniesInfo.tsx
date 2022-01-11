@@ -36,6 +36,7 @@ import { useDispatch } from "react-redux";
 import {
   getComRegFile,
   setMyInfoAction,
+  _aPatchAdminSignUpInfo,
 } from "../../../../../store/action/user.action";
 import Link from "next/link";
 import { SignUpInfo } from "../../../../models/auth.entity";
@@ -83,9 +84,11 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
       user: userData,
     };
 
-    dispatch(setMyInfoAction(changeData)).then((res: any) => {
-      alert("저장되었습니다.");
-    });
+    dispatch(_aPatchAdminSignUpInfo(comData._id, changeData)).then(
+      (res: any) => {
+        alert("저장되었습니다.");
+      }
+    );
   };
 
   const ARCModalProps: any = {
@@ -107,7 +110,6 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
                 type="button"
                 kindOf={`default`}
                 onClick={(e: any) => {
-                  console.log("!!!");
                   onChangeInfoHandler(e);
                 }}
               >
