@@ -211,8 +211,11 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                 </TableRow>
               ))
             ) : (
-              <Wrapper>
-                <Text>검색 결과가 없습니다.</Text>
+              <Wrapper minHeight={`445px`}>
+                <Text fontSize={`48px`} color={`#c4c4c4`}>
+                  <BsEmojiFrownFill />
+                </Text>
+                <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
               </Wrapper>
             )}
           </TableBody>
