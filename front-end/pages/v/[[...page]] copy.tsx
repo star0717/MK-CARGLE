@@ -25,7 +25,7 @@ import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
@@ -114,17 +114,6 @@ const MainPage: NextPage<_MainProps> = (props) => {
 
 export default MainPage;
 
-class GenPathArgs {
-  // 전달할 ID
-  id?: string;
-  // 리스트 조회에 사용할 파라미터
-  findParams?: FindParameters;
-}
-
-class GenPathResult {
-  url: string;
-  config?: AxiosRequestConfig<any>;
-}
 /**
  * pre-rendering: 서버사이드 렌더링
  * @param context
@@ -152,16 +141,19 @@ export const getServerSideProps: GetServerSideProps = async (
   const apiUrl: string =
     process.env.DESTINATION_API + process.env.DESTINATION_PORT;
 
-  const genPath = (path: string, args?: Partial<GenPathArgs>) => {
-    let apiPath = apiUrl + path;
-    if (args?.id) {
-      apiPath += "/" + args.id;
-    }
-    if (args?.findParams) {
-      apiPath += "/" + FindParameters.getQuery(args.findParams);
+  const genPath = (apiPath: string, id: string, findParams: FindParameters) => {
+    apiPath = apiUrl + apiPath;
+
+    if (id) {
+      console.log("1");
+      apiPath = apiPath + "/" + id;
+      console.log(apiPath);
     }
 
-    console.log("API 경로", apiPath);
+    if (findParams) {
+      apiPath = apiPath + "/" + FindParameters.getQuery(findParams);
+      console.log(apiPath);
+    }
 
     return apiPath;
   };
@@ -239,14 +231,20 @@ export const getServerSideProps: GetServerSideProps = async (
         case UseLink.ADMIN_REVIEW_COMPANIES: {
           const routerQuery = getQuery(url);
           if (routerQuery.id) {
-            console.log("info", routerQuery);
+            console.log("info");
 
             try {
               data = await axios
                 .get(
-                  genPath(AdminApiPath.signup_info, { id: routerQuery.id }),
+                  genPath(AdminApiPath.signup_info, routerQuery.id, null),
                   authConfig
                 )
+                // .get(`${apiUrl}${AdminApiPath.signup_info}/${routerQuery.id}`, {
+                //   headers: {
+                //     Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                //   },
+                //   withCredentials: true,
+                // })
                 .then(
                   (res: AxiosResponse<FindResult<Company>, Company>) => res.data
                 );
@@ -257,6 +255,7 @@ export const getServerSideProps: GetServerSideProps = async (
                 },
               };
             } catch (err) {
+              console.log(err);
               return {
                 redirect: {
                   permanent: false,
@@ -269,12 +268,24 @@ export const getServerSideProps: GetServerSideProps = async (
               const params: FindParameters = {
                 take: 10,
               };
+
               console.log("list");
               data = await axios
                 .get(
-                  genPath(AdminApiPath.ing_companies, { findParams: params }),
+                  genPath(AdminApiPath.ing_companies, null, params),
                   authConfig
                 )
+                // .get(
+                //   `${apiUrl}${
+                //     AdminApiPath.ing_companies
+                //   }?${FindParameters.getQuery(params)}`,
+                //   {
+                //     headers: {
+                //       Cookie: `mk_token=${context.req.cookies.mk_token}`,
+                //     },
+                //     withCredentials: true,
+                //   }
+                // )
                 .then(
                   (res: AxiosResponse<FindResult<Company>, Company>) => res.data
                 );
