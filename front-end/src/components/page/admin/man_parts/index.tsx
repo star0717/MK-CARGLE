@@ -199,161 +199,161 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 width={`880px`}
               >
                 <Table>
-                  <TableHead>
+                  <TableHead width={`880px`}>
                     <TableHeadRow>
-                      <TableHeadLIST width={`300px`}>부품코드</TableHeadLIST>
-                      <TableHeadLIST width={`300px`}>부품명</TableHeadLIST>
-                      <TableHeadLIST width={`300px`}>국토부</TableHeadLIST>
+                      <TableHeadLIST width={`293px`}>부품코드</TableHeadLIST>
+                      <TableHeadLIST width={`294px`}>부품명</TableHeadLIST>
+                      <TableHeadLIST width={`293px`}>국토부</TableHeadLIST>
                     </TableHeadRow>
                   </TableHead>
                   <TableBody overflowY={`auto`} height={`405px`}>
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST>부품코드</TableRowLIST>
-                      <TableRowLIST>부품명</TableRowLIST>
-                      <TableRowLIST>국토부</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
                     </TableRow>
                   </TableBody>
                 </Table>

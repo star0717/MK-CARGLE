@@ -1006,7 +1006,7 @@ export const Table = styled.table<any>`
 export const TableHead = styled.thead<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height || `45px`};
-  display: ${(props) => props.display || `block`};
+  display: ${(props) => props.display || `inline-block`};
   text-align: left;
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
@@ -1032,7 +1032,7 @@ export const TableHeadLIST = styled.th<any>`
 export const TableBody = styled.tbody<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height || `445px`};
-  display: block;
+  display: inline-block;
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
   overflow-y: ${(props) => props.overflowY || ``};
