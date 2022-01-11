@@ -46,60 +46,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
   return (
     <BodyWrapper ref={ref}>
       <WholeWrapper>
-        <RsWrapper>
-          <Wrapper dr={`row`}>
-            <Wrapper>ddd</Wrapper>
-            <Wrapper>
-              <SearchInputWrapper
-                width={`678px`}
-                padding={`0px 5px`}
-                dr={`row`}
-                margin={`10px 0px 0px`}
-                borderBottom={`1px solid #000`}
-              >
-                <form>
-                <Wrapper width={`auto`}>
-                  <SearchInput
-                    type="text"
-                    width={`632px`}
-                    padding={`0px 5px 0px 5px`}
-                    placeholder="찾고 싶은 부품을 입력하세요."
-                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    //   onInputSearchHandler(e);
-                    // }}
-                    // onKeyUp={handleKeyUp}
-                  />
-                </Wrapper>
-                <Wrapper width={`36px`} height={`46px`}>
-                  <Text fontSize={`24px`}>
-                    <IconButton
-                      type="submit"
-                      onClick={() => {
-                        props.findDocHandler(1);
-                      }}
-                      shadow={`none`}
-                    >
-                      <BsSearch />
-                    </IconButton>
-                  </Text>
-                </Wrapper>
-                </form>
-              </SearchInputWrapper>
-              <TableWrapper margin={`10px 0px 30px`}>
-                <TableHead>
-                  <TableHeadLIST width={`200px`}>부품코드</TableHeadLIST>
-                  <TableHeadLIST width={`200px`}>부품명</TableHeadLIST>
-                  <TableHeadLIST width={`200px`}>국토부</TableHeadLIST>
-                </TableHead>
-                <TableRow>
-                  <TableRowLIST width={`200px`}>부품코드</TableRowLIST>
-                  <TableRowLIST width={`200px`}>부품명</TableRowLIST>
-                  <TableRowLIST width={`200px`}>국토부</TableRowLIST>
-                </TableRow>
-              </TableWrapper>
-            </Wrapper>
-          </Wrapper>
-        </RsWrapper>
+        <RsWrapper></RsWrapper>
       </WholeWrapper>
     </BodyWrapper>
   );
