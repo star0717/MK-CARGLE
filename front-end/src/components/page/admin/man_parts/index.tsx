@@ -23,6 +23,7 @@ import {
   CommonButton,
   TableBody,
   TableHeadRow,
+  Table,
 } from "../../../styles/CommonComponents";
 import { BsPlusSquareFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
@@ -197,15 +198,89 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 height={`450px`}
                 width={`880px`}
               >
-                <table>
+                <Table>
                   <TableHead>
                     <TableHeadRow>
-                      <TableHeadLIST width="33%">부품코드</TableHeadLIST>
-                      <TableHeadLIST width="33%">부품명</TableHeadLIST>
-                      <TableHeadLIST width="33%">국토부</TableHeadLIST>
+                      <TableHeadLIST width={`300px`}>부품코드</TableHeadLIST>
+                      <TableHeadLIST width={`300px`}>부품명</TableHeadLIST>
+                      <TableHeadLIST width={`300px`}>국토부</TableHeadLIST>
                     </TableHeadRow>
                   </TableHead>
-                  <TableBody overflow={`auto`} height={`450px`}>
+                  <TableBody overflowY={`auto`} height={`405px`}>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST>부품코드</TableRowLIST>
+                      <TableRowLIST>부품명</TableRowLIST>
+                      <TableRowLIST>국토부</TableRowLIST>
+                    </TableRow>
                     <TableRow>
                       <TableRowLIST>부품코드</TableRowLIST>
                       <TableRowLIST>부품명</TableRowLIST>
@@ -281,7 +356,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                       <TableRowLIST>국토부</TableRowLIST>
                     </TableRow>
                   </TableBody>
-                </table>
+                </Table>
               </TableWrapper>
             </Wrapper>
           </Wrapper>

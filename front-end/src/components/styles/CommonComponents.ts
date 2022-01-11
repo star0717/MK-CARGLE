@@ -992,22 +992,25 @@ export const Image = styled.img<any>`
 
 export const TableWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
-  display: block;
   margin: ${(props) => props.margin || `50px 0px 30px`};
   padding: ${(props) => props.padding || `0px`};
+`;
+
+export const Table = styled.table<any>`
+  width: 100%;
   border-radius: ${(props) => props.radius || `4px 4px 0px 0px`};
+  border-collapse: collapse;
+  min-height: ${(props) => props.minHeight || `445px`};
 `;
 
 export const TableHead = styled.thead<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height || `45px`};
-  display: ${(props) => props.display || `inline-block`};
+  display: ${(props) => props.display || `block`};
   text-align: left;
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
-  border-top: ${(props) => props.borderTop || `2px solid #292929`};
-  border-bottom: ${(props) => props.borderBottom || `1px solid #c4c4c4`};
-  background-color: #343a40;
+  background-color: #000;
   color: #fff;
   padding: ${(props) => props.padding || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
@@ -1017,7 +1020,6 @@ export const TableHeadRow = styled.tr<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height || `40px`};
   padding: ${(props) => props.padding || `0px`};
-  border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
   margin: ${(props) => props.margin || `0px`};
   transition: 0.5s;
 `;
@@ -1029,21 +1031,17 @@ export const TableHeadLIST = styled.th<any>`
 
 export const TableBody = styled.tbody<any>`
   width: ${(props) => props.width || `100%`};
-  height: ${(props) => props.height || `auto`};
-  display: ${(props) => props.display || `inline-block`};
+  height: ${(props) => props.height || `445px`};
+  display: block;
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
-  overflow: ${(props) => props.overflow || ``};
-  font-size: ${(props) => props.fontSize || `16px`};
-  min-height: ${(props) => props.minHeight || ``};
+  overflow-y: ${(props) => props.overflowY || ``};
 `;
 
-// &:last-child
-// {
-//  border-left: 1px solid #ddd;
-//  border-right: 1px solid #ddd;
-// },
 export const TableRow = styled.tr<any>`
+  width: ${(props) => props.width || `100%`};
+
+  border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
   height: ${(props) => props.height || `40px`};
   padding: ${(props) => props.padding || `0px`};
   border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
@@ -1054,21 +1052,13 @@ export const TableRow = styled.tr<any>`
   &:hover {
     text-decoration: underline;
     background-color: #f5f5f5;
-    color:#314FA5;
-  }
-
-
+    color: #314fa5;
   }
 `;
 
 export const TableRowLIST = styled.td<any>`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height || `100%`};
   padding: 0px 24px;
-  padding: ${(props) => props.padding};
-  line-height: ${(props) => props.lineHeight || `1.2`};
-  font-weight: 500;
-  border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
+  font-weight: 600;
 `;
 
 /* start test */

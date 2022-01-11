@@ -22,9 +22,11 @@ import {
   RsWrapper,
   SearchInput,
   SearchInputWrapper,
+  Table,
   TableBody,
   TableHead,
   TableHeadLIST,
+  TableHeadRow,
   TableRow,
   TableRowLIST,
   TableWrapper,
@@ -171,47 +173,51 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
           </Text>
         </Wrapper>
         <TableWrapper margin={`10px 0px 30px`}>
-          <TableHead>
-            <TableHeadLIST width={`200px`}>직위</TableHeadLIST>
-            <TableHeadLIST width={`200px`}>직원명</TableHeadLIST>
-            <TableHeadLIST width={`200px`}>전화번호</TableHeadLIST>
-            <TableHeadLIST width={`200px`}>입사일자</TableHeadLIST>
-            <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
-          </TableHead>
-          <TableBody>
-            {props.findResult.totalDocs > 0 ? (
-              props.findResult.docs.map((doc: User) => (
-                <TableRow
-                  key={doc._id}
-                  onClick={() => {
-                    setClickDoc(doc);
-                    setModalOpen(!modalOpen);
-                  }}
-                >
-                  <TableRowLIST width={`200px`}>
-                    {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
-                  </TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.hpNumber}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>
-                    {doc.joinDate
-                      ? dayjs(doc.joinDate).format("YYYY-MM-DD")
-                      : "-"}
-                  </TableRowLIST>
-                  <TableRowLIST width={`200px`}>
-                    {doc.approval ? "승인" : "미승인"}
-                  </TableRowLIST>
-                </TableRow>
-              ))
-            ) : (
-              <Wrapper minHeight={`445px`}>
-                <Text fontSize={`48px`} color={`#c4c4c4`}>
-                  <BsEmojiFrownFill />
-                </Text>
-                <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
-              </Wrapper>
-            )}
-          </TableBody>
+          <Table>
+            <TableHead>
+              <TableHeadRow>
+                <TableHeadLIST width={`200px`}>직위</TableHeadLIST>
+                <TableHeadLIST width={`200px`}>직원명</TableHeadLIST>
+                <TableHeadLIST width={`200px`}>전화번호</TableHeadLIST>
+                <TableHeadLIST width={`200px`}>입사일자</TableHeadLIST>
+                <TableHeadLIST width={`200px`}>승인여부</TableHeadLIST>
+              </TableHeadRow>
+            </TableHead>
+            <TableBody>
+              {props.findResult.totalDocs > 0 ? (
+                props.findResult.docs.map((doc: User) => (
+                  <TableRow
+                    key={doc._id}
+                    onClick={() => {
+                      setClickDoc(doc);
+                      setModalOpen(!modalOpen);
+                    }}
+                  >
+                    <TableRowLIST width={`200px`}>
+                      {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
+                    </TableRowLIST>
+                    <TableRowLIST width={`200px`}>{doc.name}</TableRowLIST>
+                    <TableRowLIST width={`200px`}>{doc.hpNumber}</TableRowLIST>
+                    <TableRowLIST width={`200px`}>
+                      {doc.joinDate
+                        ? dayjs(doc.joinDate).format("YYYY-MM-DD")
+                        : "-"}
+                    </TableRowLIST>
+                    <TableRowLIST width={`200px`}>
+                      {doc.approval ? "승인" : "미승인"}
+                    </TableRowLIST>
+                  </TableRow>
+                ))
+              ) : (
+                <Wrapper minHeight={`445px`}>
+                  <Text fontSize={`48px`} color={`#c4c4c4`}>
+                    <BsEmojiFrownFill />
+                  </Text>
+                  <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
+                </Wrapper>
+              )}
+            </TableBody>
+          </Table>
         </TableWrapper>
 
         <PagenationSection {...props} />

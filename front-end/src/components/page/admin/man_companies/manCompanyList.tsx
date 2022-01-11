@@ -29,6 +29,8 @@ import {
   SearchInput,
   CommonTitleWrapper,
   CommonTitle,
+  Table,
+  TableHeadRow,
 } from "../../../styles/CommonComponents";
 
 const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
@@ -142,68 +144,74 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
           </Text>
         </Wrapper>
         <TableWrapper margin={`10px 0px 30px`}>
-          <TableHead>
-            <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
-            <TableHeadLIST width={`250px`}>상호명</TableHeadLIST>
-            <TableHeadLIST width={`200px`}>사업자등록증</TableHeadLIST>
-            <TableHeadLIST width={`200px`}>정비업등록증</TableHeadLIST>
-            <TableHeadLIST width={`200px`}>대표자명</TableHeadLIST>
-            <TableHeadLIST width={`150px`}>승인여부</TableHeadLIST>
-            <TableHeadLIST width={`200px`}>직원관리</TableHeadLIST>
-          </TableHead>
-          <TableBody>
-            {props.findResult.totalDocs > 0 ? (
-              props.findResult.docs.map((doc: Company) => (
-                <TableRow
-                  height={`50px`}
-                  key={doc._id}
-                  onClick={() => {
-                    router.push(`${UseLink.ADMIN_MAN_COMPANIES}?id=${doc._id}`);
-                  }}
-                >
-                  <TableRowLIST width={`200px`}>
-                    {dayjs(doc.createdAt).format("YYYY-MM-DD")}
-                  </TableRowLIST>
-                  <TableRowLIST width={`250px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
-                  <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
-                  {doc.approval == CompanyApproval.BEFORE ? (
-                    <TableRowLIST width={`150px`}>요청 전</TableRowLIST>
-                  ) : doc.approval == CompanyApproval.ING ? (
-                    <TableRowLIST width={`150px`}>요청 중</TableRowLIST>
-                  ) : doc.approval == CompanyApproval.DONE ? (
-                    <TableRowLIST width={`150px`}>승인완료</TableRowLIST>
-                  ) : (
-                    <TableRowLIST width={`150px`}>이상업체</TableRowLIST>
-                  )}
-                  <TableRowLIST
-                    width={`200px`}
-                    onClick={(e: React.MouseEvent<HTMLTableCellElement>) => {
-                      e.stopPropagation();
+          <Table>
+            <TableHead>
+              <TableHeadRow>
+                <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
+                <TableHeadLIST width={`250px`}>상호명</TableHeadLIST>
+                <TableHeadLIST width={`200px`}>사업자등록증</TableHeadLIST>
+                <TableHeadLIST width={`200px`}>정비업등록증</TableHeadLIST>
+                <TableHeadLIST width={`200px`}>대표자명</TableHeadLIST>
+                <TableHeadLIST width={`150px`}>승인여부</TableHeadLIST>
+                <TableHeadLIST width={`200px`}>직원관리</TableHeadLIST>
+              </TableHeadRow>
+            </TableHead>
+            <TableBody>
+              {props.findResult.totalDocs > 0 ? (
+                props.findResult.docs.map((doc: Company) => (
+                  <TableRow
+                    height={`50px`}
+                    key={doc._id}
+                    onClick={() => {
+                      router.push(
+                        `${UseLink.ADMIN_MAN_COMPANIES}?id=${doc._id}`
+                      );
                     }}
                   >
-                    <SmallButton
-                      type="button"
-                      kindOf={`default`}
-                      onClick={() => {
-                        router.push(`${UseLink.ADMIN_USERS}?id=${doc._id}`);
+                    <TableRowLIST width={`200px`}>
+                      {dayjs(doc.createdAt).format("YYYY-MM-DD")}
+                    </TableRowLIST>
+                    <TableRowLIST width={`250px`}>{doc.name}</TableRowLIST>
+                    <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
+                    <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
+                    <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
+                    {doc.approval == CompanyApproval.BEFORE ? (
+                      <TableRowLIST width={`150px`}>요청 전</TableRowLIST>
+                    ) : doc.approval == CompanyApproval.ING ? (
+                      <TableRowLIST width={`150px`}>요청 중</TableRowLIST>
+                    ) : doc.approval == CompanyApproval.DONE ? (
+                      <TableRowLIST width={`150px`}>승인완료</TableRowLIST>
+                    ) : (
+                      <TableRowLIST width={`150px`}>이상업체</TableRowLIST>
+                    )}
+                    <TableRowLIST
+                      width={`200px`}
+                      onClick={(e: React.MouseEvent<HTMLTableCellElement>) => {
+                        e.stopPropagation();
                       }}
                     >
-                      직원관리
-                    </SmallButton>
-                  </TableRowLIST>
-                </TableRow>
-              ))
-            ) : (
-              <Wrapper minHeight={`445px`}>
-                <Text fontSize={`48px`} color={`#c4c4c4`}>
-                  <BsEmojiFrownFill />
-                </Text>
-                <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
-              </Wrapper>
-            )}
-          </TableBody>
+                      <SmallButton
+                        type="button"
+                        kindOf={`default`}
+                        onClick={() => {
+                          router.push(`${UseLink.ADMIN_USERS}?id=${doc._id}`);
+                        }}
+                      >
+                        직원관리
+                      </SmallButton>
+                    </TableRowLIST>
+                  </TableRow>
+                ))
+              ) : (
+                <Wrapper minHeight={`445px`}>
+                  <Text fontSize={`48px`} color={`#c4c4c4`}>
+                    <BsEmojiFrownFill />
+                  </Text>
+                  <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
+                </Wrapper>
+              )}
+            </TableBody>
+          </Table>
         </TableWrapper>
         <PagenationSection {...props} />
       </RsWrapper>
