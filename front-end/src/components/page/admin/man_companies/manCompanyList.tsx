@@ -9,11 +9,9 @@ import {
   _pAdminManCompanies,
   _pAdminReviewCompanies,
 } from "../../../../configure/_pProps.entity";
-import { FindParameters } from "../../../../models/base.entity";
 import { Company, CompanyApproval } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
-  CloseButton,
   Combo,
   IconButton,
   RsWrapper,
@@ -88,36 +86,6 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
         <CommonTitle>업체관리</CommonTitle>
       </CommonTitleWrapper>
       <RsWrapper>
-        {/* <Wrapper dr={`row`}>
-            <Combo
-              value={props.searchOption}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onSearchOptionHandler(e);
-              }}
-            >
-              <option value="name">상호명 검색</option>
-              <option value="comRegNum">사업자등록번호 검색</option>
-            </Combo>
-            <TextInput
-              type="text"
-              value={props.filterValue}
-              placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onInputSearchHandler(e);
-              }}
-              onKeyUp={handleKeyUp}
-            />
-            <IconButton
-              type="submit"
-              onClick={() => {
-                props.findDocHandler(1);
-              }}
-            >
-              <BsSearch />
-            </IconButton>
-
-
-          </Wrapper> */}
         <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
           <Combo
             value={props.searchOption}
@@ -127,7 +95,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             height={`46px`}
           >
             <option value="name">이름 검색</option>
-            <option value="hpNumber">전화번호 검색</option>
+            <option value="phoneNum">전화번호 검색</option>
           </Combo>
           <SearchInputWrapper
             type="text"

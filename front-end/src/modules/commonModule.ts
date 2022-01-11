@@ -35,8 +35,8 @@ export const getPathName = (url: string): string => {
  * @param url
  * @returns
  */
-export const getQuery = (url: string): any => {
-  const query: any = parse(url, true).query;
+export const getQuery = (url: string): Record<string, string> => {
+  const query: Record<string, string> = parse(url, true).query;
 
   return query;
 };
