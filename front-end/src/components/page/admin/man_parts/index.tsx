@@ -82,6 +82,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
           onClick={() => {
             setModalOpen(true);
           }}
+          kindOf={`circleWhite`}
         >
           hyeok modal
         </CommonButton>

@@ -138,7 +138,6 @@ export const Wrapper = styled.div<any>`
   padding: ${(props) => props.padding};
   overflow: ${(props) => (props.isOverflow ? `auto` : props.overflow || ``)};
   background-image: ${(props) => props.bgImg};
-  overflow-y: ${(props) => props.overflowY};
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: ${(props) => props.attachment || `fixed`};
@@ -410,7 +409,7 @@ export const CommonButton = styled.button<any>`
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `60px`};
   transition: ${(props) => props.transition || CustomTheme.transition};
-  margin: ${(props) => props.margin};
+  margin: ${(props) => props.margin || `4px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius || `4px`};
   font-size: ${(props) => props.fontSize || `18px`};
@@ -430,6 +429,28 @@ export const CommonButton = styled.button<any>`
       ${(props) =>
     props.kindOf === `white` &&
     `border : 1px solid ${CustomTheme.basicTheme_C};`}
+
+    ${(props) =>
+    props.kindOf === `circleWhite` && `background : ${CustomTheme.white_C};`}
+    ${(props) =>
+    props.kindOf === `circleWhite` && `color : ${CustomTheme.basicTheme_C};`}
+        ${(props) =>
+    props.kindOf === `circleWhite` &&
+    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+      ${(props) => props.kindOf === `circleWhite` && `border-radius : 100px;`}
+
+      ${(props) =>
+    props.kindOf === `circleTheme` &&
+    `background : ${CustomTheme.basicTheme_C};`}
+        ${(props) =>
+    props.kindOf === `circleTheme` && `color : ${CustomTheme.white_C};`}
+            ${(props) =>
+    props.kindOf === `circleTheme` &&
+    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+          ${(props) =>
+    props.kindOf === `circleTheme` && `border-radius : 100px;`}
+
+
      ${(props) =>
     props.kindOf === `black` && `background : ${CustomTheme.darkGrey_C};`}
   ${(props) => props.kindOf === `black` && `color : ${CustomTheme.white_C};`}
@@ -467,11 +488,13 @@ export const CommonButton = styled.button<any>`
       props.kindOf === `white` && `background ${CustomTheme.darkTheme_C};`}
          ${(props) =>
       props.kindOf === `white` && `color ${CustomTheme.white_C};`}
+
 ${(props) => props.kindOf === `black` && `background : ${CustomTheme.white_C};`}
   ${(props) => props.kindOf === `black` && `color : ${CustomTheme.black_C};`}
   ${(props) =>
       props.kindOf === `black` &&
       `border : 1px solid ${CustomTheme.darkGrey_C};`}
+
         ${(props) =>
       props.kindOf === `subTheme` && `color ${CustomTheme.white_C};`}
       
@@ -484,6 +507,22 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) =>
       props.kindOf === `naver` && `color : ${CustomTheme.white_C};`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
+
+        ${(props) =>
+      props.kindOf === `circleWhite` &&
+      `background : ${CustomTheme.darkTheme_C};`}
+          ${(props) =>
+      props.kindOf === `circleWhite` && `color : ${CustomTheme.white_C};`}
+            ${(props) =>
+      props.kindOf === `circleWhite` && `border-radius : 100px;`}
+
+      ${(props) =>
+      props.kindOf === `circleTheme` &&
+      `background : ${CustomTheme.darkTheme_C};`}
+            ${(props) =>
+      props.kindOf === `circleTheme` && `color : ${CustomTheme.white_C};`}
+              ${(props) =>
+      props.kindOf === `circleTheme` && `border-radius : 100px;`}
   }
 
   // @media (max-width: 1439px) {
@@ -703,7 +742,7 @@ export const HeaderIconButton = styled.button<any>`
   box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
 
   &:hover {
-    color: #314fa5;¸
+    color: #314fa5;
     border: 1px solid #314fa5;
   }
 `;
