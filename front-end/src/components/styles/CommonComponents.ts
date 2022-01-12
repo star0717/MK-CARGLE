@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
-import { translateX } from "./AnimationCommon";
-import CustomTheme from "./CustomTheme";
 
 interface Propsinterface {
   width: Number;
@@ -15,7 +13,7 @@ export const WholeWrapper = styled.div<any>`
   color: ${(props) => props.color};
   display: flex;
   background-color: ${(props) => props.bgColor};
-  color: ${(props) => CustomTheme.black_C};
+  color: ${(props) => props.theme.custom.black_C};
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
@@ -150,7 +148,7 @@ export const Wrapper = styled.div<any>`
   animation: ${appearAnimation} 1s forwards;
 
   &.active div {
-    color: ${(props) => CustomTheme.black_C};
+    color: ${(props) => props.theme.custom.black_C};
     font-weight: 700;
     text-decoration: underline;
   }
@@ -229,7 +227,7 @@ export const CommonForm = styled.form<any>`
   animation: ${appearAnimation} 1s forwards;
 
   &.active div {
-    color: ${(props) => CustomTheme.black_C};
+    color: ${(props) => props.theme.custom.black_C};
     font-weight: 700;
     text-decoration: underline;
   }
@@ -325,7 +323,7 @@ export const CommonSmallTitle = styled.h2<any>`
     margin-left: -20px;
     width: 30px;
     height: 100%;
-    border-bottom: 6px solid ${(props) => CustomTheme.basicTheme_C};
+    border-bottom: 6px solid ${(props) => props.theme.custom.basicTheme_C};
   }
 `;
 
@@ -386,7 +384,7 @@ export const CommonButtonWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin || ``};
   padding: ${(props) => props.padding || `40px 0px 0px`};
   border-radius: ${(props) => props.radius};
@@ -408,7 +406,7 @@ export const CommonButton = styled.button<any>`
   width: ${(props) => props.width || `500px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `60px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin || `4px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius || `4px`};
@@ -421,58 +419,67 @@ export const CommonButton = styled.button<any>`
   color: #fff;
   border: 0px;
 
-  ${(props) => !props.kindOf && `background : ${CustomTheme.basicTheme_C};`}
   ${(props) =>
-    props.kindOf === `white` && `background : ${CustomTheme.white_C};`}
+    !props.kindOf && `background : ${props.theme.custom.basicTheme_C};`}
   ${(props) =>
-    props.kindOf === `white` && `color : ${CustomTheme.basicTheme_C};`}
+    props.kindOf === `white` && `background : ${props.theme.custom.white_C};`}
+  ${(props) =>
+    props.kindOf === `white` && `color : ${props.theme.custom.basicTheme_C};`}
       ${(props) =>
     props.kindOf === `white` &&
-    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+    `border : 1px solid ${props.theme.custom.basicTheme_C};`}
 
     ${(props) =>
-    props.kindOf === `circleWhite` && `background : ${CustomTheme.white_C};`}
+    props.kindOf === `circleWhite` &&
+    `background : ${props.theme.custom.white_C};`}
     ${(props) =>
-    props.kindOf === `circleWhite` && `color : ${CustomTheme.basicTheme_C};`}
+    props.kindOf === `circleWhite` &&
+    `color : ${props.theme.custom.basicTheme_C};`}
         ${(props) =>
     props.kindOf === `circleWhite` &&
-    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+    `border : 1px solid ${props.theme.custom.basicTheme_C};`}
       ${(props) => props.kindOf === `circleWhite` && `border-radius : 100px;`}
 
       ${(props) =>
     props.kindOf === `circleTheme` &&
-    `background : ${CustomTheme.basicTheme_C};`}
+    `background : ${props.theme.custom.basicTheme_C};`}
         ${(props) =>
-    props.kindOf === `circleTheme` && `color : ${CustomTheme.white_C};`}
+    props.kindOf === `circleTheme` && `color : ${props.theme.custom.white_C};`}
             ${(props) =>
     props.kindOf === `circleTheme` &&
-    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+    `border : 1px solid ${props.theme.custom.basicTheme_C};`}
           ${(props) =>
     props.kindOf === `circleTheme` && `border-radius : 100px;`}
 
 
      ${(props) =>
-    props.kindOf === `black` && `background : ${CustomTheme.darkGrey_C};`}
-  ${(props) => props.kindOf === `black` && `color : ${CustomTheme.white_C};`}
+    props.kindOf === `black` &&
+    `background : ${props.theme.custom.darkGrey_C};`}
+  ${(props) =>
+    props.kindOf === `black` && `color : ${props.theme.custom.white_C};`}
   
     ${(props) =>
-    props.kindOf === `subTheme` && `background : ${CustomTheme.white_C};`}
-  ${(props) => props.kindOf === `subTheme` && `color : ${CustomTheme.black_C};`}
+    props.kindOf === `subTheme` &&
+    `background : ${props.theme.custom.white_C};`}
+  ${(props) =>
+    props.kindOf === `subTheme` && `color : ${props.theme.custom.black_C};`}
 
   
     ${(props) =>
-    props.kindOf === `grey` && `background : ${CustomTheme.white_C};`}
-  ${(props) => props.kindOf === `grey` && `color : ${CustomTheme.grey_C};`}
+    props.kindOf === `grey` && `background : ${props.theme.custom.white_C};`}
+  ${(props) =>
+    props.kindOf === `grey` && `color : ${props.theme.custom.grey_C};`}
       ${(props) =>
-    props.kindOf === `grey` && `border : 1px solid ${CustomTheme.grey_C};`}
+    props.kindOf === `grey` &&
+    `border : 1px solid ${props.theme.custom.grey_C};`}
   
       ${(props) =>
-    props.kindOf === `default` && `background : ${CustomTheme.grey_C};`}
+    props.kindOf === `default` && `background : ${props.theme.custom.grey_C};`}
     ${(props) => props.kindOf === `naver` && `border : 1px solid #1CC020;`}
       ${(props) =>
-    props.kindOf === `naver` && `color : ${CustomTheme.black_C};`}
+    props.kindOf === `naver` && `color : ${props.theme.custom.black_C};`}
          ${(props) =>
-    props.kindOf === `naver` && `background : ${CustomTheme.white_C};`}
+    props.kindOf === `naver` && `background : ${props.theme.custom.white_C};`}
       
 
   & svg {
@@ -481,46 +488,53 @@ export const CommonButton = styled.button<any>`
 
   &:hover {
     background: #fff;
-    color: ${(props) => CustomTheme.white_C};
-    box-shadow: ${(props) => CustomTheme.boxShadow};
-    ${(props) => !props.kindOf && `background ${CustomTheme.darkTheme_C};`}
+    color: ${(props) => props.theme.custom.white_C};
+    box-shadow: ${(props) => props.theme.custom.boxShadow};
     ${(props) =>
-      props.kindOf === `white` && `background ${CustomTheme.darkTheme_C};`}
+      !props.kindOf && `background ${props.theme.custom.darkTheme_C};`}
+    ${(props) =>
+      props.kindOf === `white` &&
+      `background ${props.theme.custom.darkTheme_C};`}
          ${(props) =>
-      props.kindOf === `white` && `color ${CustomTheme.white_C};`}
+      props.kindOf === `white` && `color ${props.theme.custom.white_C};`}
 
-${(props) => props.kindOf === `black` && `background : ${CustomTheme.white_C};`}
-  ${(props) => props.kindOf === `black` && `color : ${CustomTheme.black_C};`}
+${(props) =>
+      props.kindOf === `black` && `background : ${props.theme.custom.white_C};`}
+  ${(props) =>
+      props.kindOf === `black` && `color : ${props.theme.custom.black_C};`}
   ${(props) =>
       props.kindOf === `black` &&
-      `border : 1px solid ${CustomTheme.darkGrey_C};`}
+      `border : 1px solid ${props.theme.custom.darkGrey_C};`}
 
         ${(props) =>
-      props.kindOf === `subTheme` && `color ${CustomTheme.white_C};`}
+      props.kindOf === `subTheme` && `color ${props.theme.custom.white_C};`}
       
-      ${(props) => props.kindOf === `grey` && `color ${CustomTheme.white_C};`}
+      ${(props) =>
+      props.kindOf === `grey` && `color ${props.theme.custom.white_C};`}
           ${(props) =>
-      props.kindOf === `grey` && `background ${CustomTheme.grey_C};`}
+      props.kindOf === `grey` && `background ${props.theme.custom.grey_C};`}
 
 
 ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
         ${(props) =>
-      props.kindOf === `naver` && `color : ${CustomTheme.white_C};`}
+      props.kindOf === `naver` && `color : ${props.theme.custom.white_C};`}
         ${(props) => props.kindOf === `naver` && `border : none;`}
 
         ${(props) =>
       props.kindOf === `circleWhite` &&
-      `background : ${CustomTheme.darkTheme_C};`}
+      `background : ${props.theme.custom.darkTheme_C};`}
           ${(props) =>
-      props.kindOf === `circleWhite` && `color : ${CustomTheme.white_C};`}
+      props.kindOf === `circleWhite` &&
+      `color : ${props.theme.custom.white_C};`}
             ${(props) =>
       props.kindOf === `circleWhite` && `border-radius : 100px;`}
 
       ${(props) =>
       props.kindOf === `circleTheme` &&
-      `background : ${CustomTheme.darkTheme_C};`}
+      `background : ${props.theme.custom.darkTheme_C};`}
             ${(props) =>
-      props.kindOf === `circleTheme` && `color : ${CustomTheme.white_C};`}
+      props.kindOf === `circleTheme` &&
+      `color : ${props.theme.custom.white_C};`}
               ${(props) =>
       props.kindOf === `circleTheme` && `border-radius : 100px;`}
   }
@@ -540,7 +554,7 @@ export const SmallButton = styled.button<any>`
   width: ${(props) => props.width || `80px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -555,22 +569,27 @@ export const SmallButton = styled.button<any>`
   cursor: pointer;
 
   ${(props) =>
-    props.kindOf === `default` && `background ${CustomTheme.subWhite_C};`}
+    props.kindOf === `default` &&
+    `background ${props.theme.custom.subWhite_C};`}
   ${(props) =>
-    props.kindOf === `default` && `color ${CustomTheme.basicTheme_C};`}
+    props.kindOf === `default` && `color ${props.theme.custom.basicTheme_C};`}
   ${(props) =>
     props.kindOf === `default` &&
-    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+    `border : 1px solid ${props.theme.custom.basicTheme_C};`}
 
     ${(props) =>
-    props.kindOf === `cancle` && `background ${CustomTheme.subWhite_C};`}
-    ${(props) => props.kindOf === `cancle` && `color ${CustomTheme.red_C};`}
+    props.kindOf === `cancle` && `background ${props.theme.custom.subWhite_C};`}
     ${(props) =>
-    props.kindOf === `cancle` && `border : 1px solid ${CustomTheme.red_C};`}
+    props.kindOf === `cancle` && `color ${props.theme.custom.red_C};`}
+    ${(props) =>
+    props.kindOf === `cancle` &&
+    `border : 1px solid ${props.theme.custom.red_C};`}
   
 
-  ${(props) => props.kindOf === `ghost` && `background ${CustomTheme.grey_C};`}
-  ${(props) => props.kindOf === `ghost` && `color ${CustomTheme.white_C};`}
+  ${(props) =>
+    props.kindOf === `ghost` && `background ${props.theme.custom.grey_C};`}
+  ${(props) =>
+    props.kindOf === `ghost` && `color ${props.theme.custom.white_C};`}
   ${(props) => props.kindOf === `ghost` && `cursor : default;`}
   ${(props) => props.kindOf === `ghost` && `border : none;`}
   
@@ -581,14 +600,17 @@ export const SmallButton = styled.button<any>`
   }
 
   &:hover {
-    box-shadow: ${(props) => CustomTheme.boxShadow};
+    box-shadow: ${(props) => props.theme.custom.boxShadow};
     ${(props) =>
-      props.kindOf === `default` && `background ${CustomTheme.basicTheme_C};`}
-    ${(props) => props.kindOf === `default` && `color ${CustomTheme.white_C};`}
+      props.kindOf === `default` &&
+      `background ${props.theme.custom.basicTheme_C};`}
+    ${(props) =>
+      props.kindOf === `default` && `color ${props.theme.custom.white_C};`}
 
     ${(props) =>
-      props.kindOf === `cancle` && `background ${CustomTheme.red_C};`}
-    ${(props) => props.kindOf === `cancle` && `color ${CustomTheme.white_C};`}
+      props.kindOf === `cancle` && `background ${props.theme.custom.red_C};`}
+    ${(props) =>
+      props.kindOf === `cancle` && `color ${props.theme.custom.white_C};`}
   }
 `;
 
@@ -596,7 +618,7 @@ export const FocusButton = styled.button<any>`
   width: ${(props) => props.width || `80px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -611,25 +633,28 @@ export const FocusButton = styled.button<any>`
   cursor: pointer;
 
   ${(props) =>
-    props.kindOf === `default` && `background ${CustomTheme.subWhite_C};`}
+    props.kindOf === `default` &&
+    `background ${props.theme.custom.subWhite_C};`}
   ${(props) =>
-    props.kindOf === `default` && `color ${CustomTheme.basicTheme_C};`}
+    props.kindOf === `default` && `color ${props.theme.custom.basicTheme_C};`}
   ${(props) =>
     props.kindOf === `default` &&
-    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+    `border : 1px solid ${props.theme.custom.basicTheme_C};`}
     
     ${(props) =>
-    props.kindOf === `true` && `background ${CustomTheme.basicTheme_C};`}
-    ${(props) => props.kindOf === `true` && `color ${CustomTheme.white_C};`}
+    props.kindOf === `true` && `background ${props.theme.custom.basicTheme_C};`}
     ${(props) =>
-    props.kindOf === `true` && `border : 1px solid ${CustomTheme.white_C};`}
+    props.kindOf === `true` && `color ${props.theme.custom.white_C};`}
+    ${(props) =>
+    props.kindOf === `true` &&
+    `border : 1px solid ${props.theme.custom.white_C};`}
 `;
 
 export const LabelButton = styled.label<any>`
   width: ${(props) => props.width || `80px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -644,16 +669,19 @@ export const LabelButton = styled.label<any>`
   cursor: pointer;
 
   ${(props) =>
-    props.kindOf === `default` && `background ${CustomTheme.subWhite_C};`}
+    props.kindOf === `default` &&
+    `background ${props.theme.custom.subWhite_C};`}
   ${(props) =>
-    props.kindOf === `default` && `color ${CustomTheme.basicTheme_C};`}
+    props.kindOf === `default` && `color ${props.theme.custom.basicTheme_C};`}
   ${(props) =>
     props.kindOf === `default` &&
-    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+    `border : 1px solid ${props.theme.custom.basicTheme_C};`}
   
 
-  ${(props) => props.kindOf === `ghost` && `background ${CustomTheme.grey_C};`}
-  ${(props) => props.kindOf === `ghost` && `color ${CustomTheme.white_C};`}
+  ${(props) =>
+    props.kindOf === `ghost` && `background ${props.theme.custom.grey_C};`}
+  ${(props) =>
+    props.kindOf === `ghost` && `color ${props.theme.custom.white_C};`}
   ${(props) => props.kindOf === `ghost` && `cursor : default;`}
   ${(props) => props.kindOf === `ghost` && `border : none;`}
   
@@ -664,10 +692,12 @@ export const LabelButton = styled.label<any>`
   }
 
   &:hover {
-    box-shadow: ${(props) => CustomTheme.boxShadow};
+    box-shadow: ${(props) => props.theme.custom.boxShadow};
     ${(props) =>
-      props.kindOf === `default` && `background ${CustomTheme.basicTheme_C};`}
-    ${(props) => props.kindOf === `default` && `color ${CustomTheme.white_C};`}
+      props.kindOf === `default` &&
+      `background ${props.theme.custom.basicTheme_C};`}
+    ${(props) =>
+      props.kindOf === `default` && `color ${props.theme.custom.white_C};`}
   }
 `;
 
@@ -675,7 +705,7 @@ export const CloseButton = styled.button<any>`
   width: ${(props) => props.width || `auto`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `auto`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -699,7 +729,7 @@ export const IconButton = styled.button<any>`
   width: ${(props) => props.width || `34px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `34px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -712,8 +742,8 @@ export const IconButton = styled.button<any>`
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
   border: ${(props) => props.border || `none`};
-  border-radius: ${(props) => props.radius || CustomTheme.radius};
-  box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
+  border-radius: ${(props) => props.radius || props.theme.custom.radius};
+  box-shadow: ${(props) => props.shadow || props.theme.custom.boxShadow};
 
   & svg {
     color: ${(props) => props.color || props.basicTheme_C};
@@ -725,7 +755,7 @@ export const HeaderIconButton = styled.button<any>`
   width: ${(props) => props.width || `34px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `34px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -738,8 +768,8 @@ export const HeaderIconButton = styled.button<any>`
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
   border: ${(props) => props.border || `none`};
-  border-radius: ${(props) => props.radius || CustomTheme.radius};
-  box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
+  border-radius: ${(props) => props.radius || props.theme.custom.radius};
+  box-shadow: ${(props) => props.shadow || props.theme.custom.boxShadow};
 
   &:hover {
     color: #314fa5;
@@ -758,7 +788,7 @@ export const HeaderIconAlarm = styled.div<any>`
   width: ${(props) => props.width || `300px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `100px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -771,8 +801,8 @@ export const HeaderIconAlarm = styled.div<any>`
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
   border: ${(props) => props.border || `1px solid #314FA5`};
-  border-radius: ${(props) => props.radius || CustomTheme.radius};
-  box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
+  border-radius: ${(props) => props.radius || props.theme.custom.radius};
+  box-shadow: ${(props) => props.shadow || props.theme.custom.boxShadow};
   padding: 0px 20px;
   margin: 5px 0px;
   opacity: 0.8;
@@ -790,11 +820,11 @@ export const HeaderIconAlarm = styled.div<any>`
 export const TextInput = styled.input<any>`
   width: ${(props) => props.width || `378px`};
   height: ${(props) => props.height || `60px`};
-  border: 1px solid ${(props) => CustomTheme.grey_C};
-  border-radius: ${(props) => CustomTheme.radius};
+  border: 1px solid ${(props) => props.theme.custom.grey_C};
+  border-radius: ${(props) => props.theme.custom.radius};
   background-color: ${(props) => props.bgColor};
-  padding: ${(props) => props.padding || CustomTheme.inputPadding};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  padding: ${(props) => props.padding || props.theme.custom.inputPadding};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin};
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
@@ -803,7 +833,7 @@ export const TextInput = styled.input<any>`
   letter-spacing: 0px;
   &:focus {
     outline: none;
-    box-shadow: ${(props) => CustomTheme.boxShadow};
+    box-shadow: ${(props) => props.theme.custom.boxShadow};
   }
 
   @media (max-width: 500px) {
@@ -814,36 +844,36 @@ export const TextInput = styled.input<any>`
 export const TextInput2 = styled.input<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
-  border: ${(props) => CustomTheme.border};
-  padding: ${(props) => props.padding || CustomTheme.inputPadding};
-  border-radius: ${(props) => CustomTheme.radius};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  border: ${(props) => props.theme.custom.border};
+  padding: ${(props) => props.padding || props.theme.custom.inputPadding};
+  border-radius: ${(props) => props.theme.custom.radius};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
   font-size: 16px;
 
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
-  border: ${(props) => CustomTheme.border};
-  padding: ${(props) => props.padding || CustomTheme.inputPadding};
-  border-radius: ${(props) => CustomTheme.radius};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  border: ${(props) => props.theme.custom.border};
+  padding: ${(props) => props.padding || props.theme.custom.inputPadding};
+  border-radius: ${(props) => props.theme.custom.radius};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
 
   &:focus {
     outline: none;
-    border: 1px solid ${(props) => CustomTheme.basicTheme_C};
+    border: 1px solid ${(props) => props.theme.custom.basicTheme_C};
   }
 
   &:read-only:focus {
     box-shadow: none;
-    border: ${(props) => CustomTheme.border};
+    border: ${(props) => props.theme.custom.border};
   }
 
   &:read-only {
     box-shadow: none;
-    border: ${(props) => CustomTheme.border};
+    border: ${(props) => props.theme.custom.border};
     background-color: #f5f5f5;
     cursor: default;
   }
@@ -903,8 +933,8 @@ export const SearchInput = styled.input<any>`
   height: ${(props) => props.height || `46px`};
   border: none;
   background-color: ${(props) => props.bgColor};
-  padding: ${(props) => props.padding || CustomTheme.inputPadding};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  padding: ${(props) => props.padding || props.theme.custom.inputPadding};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin};
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
@@ -938,7 +968,7 @@ export const SearchButton = styled.button<any>`
   width: ${(props) => props.width || `80px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -957,16 +987,16 @@ export const SearchButton = styled.button<any>`
 export const Combo = styled.select<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
-  border: ${(props) => props.border || CustomTheme.border};
+  border: ${(props) => props.border || props.theme.custom.border};
   padding: 0px 8px;
   color: ${(props) => props.color};
-  border-radius: ${(props) => CustomTheme.radius};
+  border-radius: ${(props) => props.theme.custom.radius};
   margin: ${(props) => props.margin || `0px 5px`};
   font-size: 16px;
 
   &:focus {
     outline: none;
-    border: 1px solid ${(props) => CustomTheme.basicTheme_C};
+    border: 1px solid ${(props) => props.theme.custom.basicTheme_C};
   }
 `;
 
@@ -1041,6 +1071,7 @@ export const Table = styled.table<any>`
   border-radius: ${(props) => props.radius || `4px 4px 0px 0px`};
   border-collapse: collapse;
   min-height: ${(props) => props.minHeight || `445px`};
+  display: ${(props) => props.display || `inline-block`};
 `;
 
 export const TableHead = styled.thead<any>`
@@ -1275,8 +1306,9 @@ export const LiWrapper = styled.li<any>`
 
   &:hover {
     background: ${(props) =>
-      props.isTabHover ? `${CustomTheme.basicTheme_C}` : ``};
-    color: ${(props) => (props.isTabHover ? `${CustomTheme.white_C}` : ``)};
+      props.isTabHover ? `${props.theme.custom.basicTheme_C}` : ``};
+    color: ${(props) =>
+      props.isTabHover ? `${props.theme.custom.white_C}` : ``};
   }
 `;
 
@@ -1312,8 +1344,8 @@ export const Pagenation = styled.button<any>`
   justify-content: ${(props) => props.ju || `center`};
   cursor: pointer;
   padding-top: 3px;
-  background-color: ${(props) => props.bgColor || CustomTheme.white_C};
-  color: ${(props) => props.color || CustomTheme.basicTheme_C};
+  background-color: ${(props) => props.bgColor || props.theme.custom.white_C};
+  color: ${(props) => props.color || props.theme.custom.basicTheme_C};
   border: ${(props) => props.border || `1px solid #314FA5`};
   border-radius: 0px;
   margin: 0px 3px;
@@ -1328,9 +1360,9 @@ export const Pagenation = styled.button<any>`
   &:nth-child(2),
   &:nth-last-child(2),
   &:last-child {
-    background-color: ${(props) => CustomTheme.subWhite_C};
+    background-color: ${(props) => props.theme.custom.subWhite_C};
     border: 1px solid #ddd;
-    color: ${(props) => CustomTheme.basicTheme_C};
+    color: ${(props) => props.theme.custom.basicTheme_C};
   }
 `;
 
@@ -1346,14 +1378,14 @@ export const Pagenation = styled.button<any>`
 //   cursor: pointer;
 //   border-radius: 25px;
 //   margin: 0px 3px;
-//   background-color: ${(props) => CustomTheme.basicTheme_C};
+//   background-color: ${(props) => props.theme.custom.basicTheme_C};
 //   border: 1px solid #ddd;
 
 //   &:first-child,
 //   &:last-child {
-//     background-color: ${(props) => CustomTheme.subWhite_C};
+//     background-color: ${(props) => props.theme.custom.subWhite_C};
 //     border: 1px solid #ddd;
-//     color: ${(props) => CustomTheme.black_C};
+//     color: ${(props) => props.theme.custom.black_C};
 //   }
 
 //   &:hover {
@@ -1366,12 +1398,12 @@ export const Pagenation = styled.button<any>`
 export const JoinFirstStepSelect = styled.div<any>`
   width: ${(props) => props.width || `480px`};
   height: ${(props) => props.height || `380px`};
-  color: ${(props) => props.color || CustomTheme.basicTheme_C};
+  color: ${(props) => props.color || props.theme.custom.basicTheme_C};
   background-color: ${(props) => props.bgColor || `#f5f5f5`};
   border: ${(props) => props.border || `1px solid #c4c4c4`};
   align-items: ${(props) => props.al || `center`};
   border-radius: ${(props) => props.radius || `5px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   filter: grayscale(100%);
   justify-content: ${(props) => props.ju || `center`};
   display: flex;
@@ -1381,7 +1413,7 @@ export const JoinFirstStepSelect = styled.div<any>`
 
   &:hover {
     box-shadow: 0px 10px 15px rgba(220, 220, 220, 1);
-    border: 1px solid ${(props) => CustomTheme.basicTheme_C};
+    border: 1px solid ${(props) => props.theme.custom.basicTheme_C};
     background-color: #fff;
     filter: grayscale(0%);
   }
@@ -1426,30 +1458,34 @@ export const JoinStepBar = styled.p<any>`
   ${(props) => props.kindOf === `line` && `border-radius : 0px;`}
   ${(props) =>
     props.kindOf === `line` &&
-    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+    `border : 1px solid ${props.theme.custom.basicTheme_C};`}
   
   ${(props) => props.kindOf === `line2` && `height : 1px;`}
   ${(props) => props.kindOf === `line2` && `border-radius : 0px;`}
   ${(props) =>
-    props.kindOf === `line2` && `border : 1px solid ${CustomTheme.darkGrey_C};`}
+    props.kindOf === `line2` &&
+    `border : 1px solid ${props.theme.custom.darkGrey_C};`}
   
   ${(props) =>
-    props.kindOf === `before` && `background ${CustomTheme.subWhite_C};`}
-  ${(props) => props.kindOf === `before` && `color ${CustomTheme.darkGrey_C};`}
+    props.kindOf === `before` && `background ${props.theme.custom.subWhite_C};`}
+  ${(props) =>
+    props.kindOf === `before` && `color ${props.theme.custom.darkGrey_C};`}
   ${(props) =>
     props.kindOf === `before` &&
-    `border : 1px solid ${CustomTheme.darkGrey_C};`}
+    `border : 1px solid ${props.theme.custom.darkGrey_C};`}
   
   ${(props) => props.kindOf === `progress` && `background : #fff;`}
   ${(props) =>
-    props.kindOf === `progress` && `color ${CustomTheme.basicTheme_C};`}
+    props.kindOf === `progress` && `color ${props.theme.custom.basicTheme_C};`}
   ${(props) =>
     props.kindOf === `progress` &&
-    `border : 1px solid ${CustomTheme.basicTheme_C};`}
+    `border : 1px solid ${props.theme.custom.basicTheme_C};`}
 
     ${(props) =>
-    props.kindOf === `complete` && `background ${CustomTheme.basicTheme_C};`}
-  ${(props) => props.kindOf === `complete` && `color ${CustomTheme.white_C};`}
+    props.kindOf === `complete` &&
+    `background ${props.theme.custom.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `complete` && `color ${props.theme.custom.white_C};`}
 `;
 
 /*Header */
