@@ -91,6 +91,8 @@ class GenPathArgs {
   id?: string;
   // 리스트 조회에 사용할 파라미터
   findParams?: FindParameters;
+  // 디스패치에서 호출된 것인지 유무
+  isServerSide?: boolean;
 }
 
 /**
@@ -101,11 +103,14 @@ class GenPathArgs {
  */
 export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   let apiPath = "/api" + path;
+  if (args?.isServerSide)
+    apiPath = `${process.env.DESTINATION_API}:${process.env.DESTINATION_PORT}${path}`;
+
   if (args?.id) {
     apiPath += "/" + args.id;
   }
   if (args?.findParams) {
-    apiPath += "/" + FindParameters.getQuery(args.findParams);
+    apiPath += FindParameters.getQuery(args.findParams);
   }
   console.log("API 호출 경로:", apiPath);
   return apiPath;

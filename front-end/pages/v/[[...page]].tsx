@@ -200,27 +200,34 @@ export const getServerSideProps: GetServerSideProps = async (
     switch (pagePath) {
       case UseLink.TEST:
         successResult.props.data = {
-          class: [{ name: "분류명1" }, { name: "분류명2" }],
+          class: [
+            { _id: "1", name: "분류명1" },
+            { _id: "2", name: "분류명2" },
+          ],
           part: [
             {
+              _id: "1",
               class: "분류명1",
               code: "code1",
               name: "name1",
               molit: "molit1",
             },
             {
+              _id: "2",
               class: "분류명2",
               code: "code2",
               name: "name2",
               molit: "molit2",
             },
             {
+              _id: "3",
               class: "분류명1",
               code: "code3",
               name: "name3",
               molit: "molit3",
             },
             {
+              _id: "4",
               class: "분류명2",
               code: "code4",
               name: "name4",
@@ -235,6 +242,7 @@ export const getServerSideProps: GetServerSideProps = async (
           .get(
             genApiPath(SettingsApiPath.management_workers, {
               findParams: params,
+              isServerSide: true,
             }),
             authConfig
           )
@@ -246,31 +254,44 @@ export const getServerSideProps: GetServerSideProps = async (
         if (id) {
           failResult.redirect.destination = pagePath;
           successResult.props.data = await axios
-            .get(genApiPath(AdminApiPath.signup_info, { id }), authConfig)
+            .get(
+              genApiPath(AdminApiPath.signup_info, { id, isServerSide: true }),
+              authConfig
+            )
             .then((res: AxiosResponse<Company, Company>) => res.data);
         } else {
           successResult.props.data = await axios
             .get(
-              genApiPath(AdminApiPath.ing_companies, { findParams: params }),
+              genApiPath(AdminApiPath.ing_companies, {
+                findParams: params,
+                isServerSide: true,
+              }),
               authConfig
             )
             .then(
               (res: AxiosResponse<FindResult<Company>, Company>) => res.data
             );
         }
+        console.log(successResult);
         return successResult;
       }
       case UseLink.ADMIN_MAN_COMPANIES: {
         if (id) {
           failResult.redirect.destination = pagePath;
           successResult.props.data = await axios
-            .get(genApiPath(AdminApiPath.signup_info, { id }), authConfig)
+            .get(
+              genApiPath(AdminApiPath.signup_info, { id, isServerSide: true }),
+              authConfig
+            )
             .then((res: AxiosResponse<Company, Company>) => res.data);
           return successResult;
         } else {
           successResult.props.data = await axios
             .get(
-              genApiPath(AdminApiPath.done_companies, { findParams: params }),
+              genApiPath(AdminApiPath.done_companies, {
+                findParams: params,
+                isServerSide: true,
+              }),
               authConfig
             )
             .then(
@@ -283,13 +304,16 @@ export const getServerSideProps: GetServerSideProps = async (
         if (id) {
           failResult.redirect.destination = pagePath;
           successResult.props.data = await axios
-            .get(genApiPath(AdminApiPath.users, { id }))
+            .get(genApiPath(AdminApiPath.users, { id, isServerSide: true }))
             .then((res: AxiosResponse<User, User>) => res.data);
           return successResult;
         } else {
           successResult.props.data = await axios
             .get(
-              genApiPath(AdminApiPath.users, { findParams: params }),
+              genApiPath(AdminApiPath.users, {
+                findParams: params,
+                isServerSide: true,
+              }),
               authConfig
             )
             .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
@@ -304,6 +328,7 @@ export const getServerSideProps: GetServerSideProps = async (
         };
     }
   } catch (err) {
+    console.log("에러발생", failResult);
     return failResult;
   }
 };
