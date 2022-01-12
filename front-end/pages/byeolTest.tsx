@@ -16,6 +16,7 @@ import {
   CommonSmallTitle,
   CommonButtonWrapper,
   CommonButton,
+  Table,
 } from "../src/components/styles/CommonComponents";
 import { Alert, Checkbox } from "@mui/material";
 import { pink } from "@mui/material/colors";
@@ -31,8 +32,79 @@ const ByeolTest: NextPage = () => {
   const classes = useStyles();
 
   return (
-    <Wrapper>
-      <Text fontSize={`100px`}>What The Fucking Tuesday</Text>
+    <Wrapper width={`100%`} bgColor={`skyblue`}>
+      <Table>
+        <thead>
+          <tr>
+            <th>ddd</th>
+            <th>sss</th>
+            <th>fff</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>티디</td>
+            <td>티디</td>
+            <td>티디</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>2</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+          </tr>
+        </tbody>
+      </Table>
     </Wrapper>
   );
 };

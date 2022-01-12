@@ -1067,19 +1067,44 @@ export const TableWrapper = styled.div<any>`
   overflow: ${(props) => props.overflow || ``};
 `;
 
+export const td = styled.td<any>`
+  width: ${(props) => props.width || `10%`};
+  background-color: orange;
+`;
+
 export const Table = styled.table<any>`
   width: 100%;
   border-radius: ${(props) => props.radius || `4px 4px 0px 0px`};
   border-collapse: collapse;
   min-height: ${(props) => props.minHeight || `445px`};
-  display: ${(props) => props.display || `inline-block`};
+  display: ${(props) => props.display || `block`};
+  background-color: green;
+  text-align: left;
+
+  thead {
+    width: 100%;
+  }
+  tbody {
+    width: 100%;
+  }
+  thead tr {
+    background-color: blue;
+  }
+  tbody tr {
+    background-color: red;
+  }
+  th,
+  td {
+    width: 10%;
+    background-color: orange;
+  }
 `;
 
 export const TableHead = styled.thead<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height || `45px`};
   display: ${(props) => props.display || `inline-block`};
-  text-align: left;
+  text-align: ${(props) => props.textAlign || `left`};
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
   background-color: #343a40;
@@ -1101,6 +1126,7 @@ export const TableHeadRow = styled.tr<any>`
 export const TableHeadLIST = styled.th<any>`
   padding: 0px 24px;
   font-weight: 600;
+  line-height: ${(props) => props.lineHeight || `45px`};
 `;
 
 export const TableBody = styled.tbody<any>`
@@ -1135,6 +1161,8 @@ export const TableRow = styled.tr<any>`
 export const TableRowLIST = styled.td<any>`
   padding: 0px 24px;
   font-weight: 600;
+  line-height: ${(props) => props.lineHeight || `40px`};
+  text-align: ${(props) => props.textAlign || `left`};
 `;
 
 export const ColGroup = styled.colgroup<any>``;
