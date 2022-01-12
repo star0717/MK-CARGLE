@@ -149,8 +149,19 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 </TableHead>
                 <TableBody height={`405px`}>
                   <TableRow>
-                    <TableRowLIST width={` 40px`}></TableRowLIST>
-                    <TableRowLIST width={` 260px`}>부품코드</TableRowLIST>
+                    <TableRowLIST width={` 300px`} textAlign={`center`}>
+                      전체보기
+                    </TableRowLIST>
+                  </TableRow>
+                  <TableRow>
+                    <TableRowLIST width={` 40px`}>
+                      <Wrapper>
+                        <Text fontSize={`24px`} margin={`4px 0px 0px`}>
+                          <AiFillPlusSquare />
+                        </Text>
+                      </Wrapper>
+                    </TableRowLIST>
+                    <TableRowLIST width={` 260px`}>전체보기</TableRowLIST>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -182,7 +193,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                   <TableBody height={`405px`}>
                     <TableRow>
                       <TableRowLIST width={` 40px`}>
-                        <Wrapper color={`#000`}>
+                        <Wrapper color={`#314fa5`}>
                           <Text fontSize={`24px`} margin={`4px 0px 0px`}>
                             <RiCheckboxBlankLine />
                           </Text>
@@ -194,7 +205,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                     </TableRow>
                     <TableRow>
                       <TableRowLIST width={` 40px`}>
-                        <Wrapper color={`#000`}>
+                        <Wrapper color={`#314fa5`}>
                           <Text fontSize={`24px`} margin={`4px 0px 0px`}>
                             <RiCheckboxFill />
                           </Text>
