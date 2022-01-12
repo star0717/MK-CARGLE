@@ -189,23 +189,13 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
         </Wrapper>
 
         <CommonButtonWrapper kindOf={`column`}>
-          <CommonButton
-            type="submit"
-            kindOf={`white`}
-            margin={`0px 0px 5px 0px`}
-            width={`400px`}
-            height={`50px`}
-            radius={`100px`}
-          >
+          <CommonButton type="submit" kindOf={`circleWhite`}>
             저장
           </CommonButton>
           <CommonButton
             type="button"
-            margin={`5px 0px 0px 0px`}
             onClick={workerDelete}
-            width={`400px`}
-            height={`50px`}
-            radius={`100px`}
+            kindOf={`circleTheme`}
           >
             직원삭제
           </CommonButton>

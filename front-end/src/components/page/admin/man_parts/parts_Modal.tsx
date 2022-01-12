@@ -1,25 +1,24 @@
 import { NextPage } from "next";
 import { useDispatch } from "react-redux";
-import { useResizeDetector } from "react-resize-detector";
-import { useRouter } from "next/router";
 import {
   CommonButton,
   CommonButtonWrapper,
-  CommonSmallTitle,
-  FocusButton,
   Text,
   Combo,
   TextInput2,
   WholeWrapper,
   Wrapper,
+  TableHeadRow,
+  TableHeadLIST,
+  TableRowLIST,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableWrapper,
 } from "../../../styles/CommonComponents";
-import React, { useState } from "react";
-import {
-  approveCompany,
-  rejectCompany,
-} from "../../../../../store/action/user.action";
-import { OptionalInfo } from "../../../../models/base.entity";
-import { UseLink } from "../../../../configure/router.entity";
+import React from "react";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
@@ -80,9 +79,29 @@ const PartsModal: NextPage<any> = (props) => {
         <Text>동의어 설정</Text>
         <TextInput2 placeholder="동의어입니다 4" width={`600px`}></TextInput2>
       </Wrapper>
-      <Wrapper
+      <TableWrapper
         width={`600px`}
-        height={`250px`}
+        height={`200px`}
+        border={`1px solid #c4c4c4`}
+        radius={`5px 5px 0px 0px`}
+        ju={`top`}
+      >
+        <Table>
+          <TableHead>
+            <TableHeadRow>
+              <TableHeadLIST>등록된 단어</TableHeadLIST>
+            </TableHeadRow>
+          </TableHead>
+          <TableBody overflowY={`auto`}>
+            <TableRow>
+              <TableRowLIST>우와우와우와우와우ㅡ와우와우와우왕</TableRowLIST>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableWrapper>
+      {/* <Wrapper
+        width={`600px`}
+        height={`200px`}
         border={`1px solid #c4c4c4`}
         radius={`5px 5px 0px 0px`}
         ju={`top`}
@@ -90,36 +109,43 @@ const PartsModal: NextPage<any> = (props) => {
         <Wrapper bgColor={`#eee`}>
           <Text>등록된 단어</Text>
         </Wrapper>
-        <Wrapper padding={`10px`} overflow={`auto`} ju={`top`}>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+        <Wrapper padding={`10px`} overflow={`auto`}>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
         </Wrapper>
-      </Wrapper>
+      </Wrapper> */}
+      <CommonButtonWrapper
+        ju={`space-around
+      `}
+      >
+        <CommonButton kindOf={`circleWhite`}>닫 기</CommonButton>
+        <CommonButton kindOf={`circleTheme`}>저 장</CommonButton>
+      </CommonButtonWrapper>
     </WholeWrapper>
   );
 };

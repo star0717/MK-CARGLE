@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
-import CustomTheme from "./CustomTheme";
 
 // -----------PageWrapper----------- //
 
@@ -19,7 +18,7 @@ export const HeaderWrapper = styled.div<any>`
   color: ${(props) => props.color};
   display: flex;
   background-color: ${(props) => props.bgColor};
-  color: ${(props) => CustomTheme.black_C};
+  color: ${(props) => props.theme.custom.black_C};
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
@@ -43,7 +42,7 @@ export const HeaderWrapper = styled.div<any>`
 
   & .MuiCheckbox-root,
   & .MuiCheckbox-colorSecondary.Mui-checked {
-    color: ${(props) => CustomTheme.black_C} !important;
+    color: ${(props) => props.theme.custom.black_C} !important;
   }
 `;
 
@@ -121,7 +120,7 @@ export const HeaderIconButton = styled.button<any>`
   width: ${(props) => props.width || `34px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `34px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -134,8 +133,8 @@ export const HeaderIconButton = styled.button<any>`
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
   border: ${(props) => props.border || `none`};
-  border-radius: ${(props) => props.radius || CustomTheme.radius};
-  box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
+  border-radius: ${(props) => props.radius || props.theme.custom.radius};
+  box-shadow: ${(props) => props.shadow || props.theme.custom.boxShadow};
 
   &:hover {
     color: #314fa5;
@@ -154,7 +153,7 @@ export const HeaderIconAlarm = styled.div<any>`
   width: ${(props) => props.width || `300px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `100px`};
-  transition: ${(props) => props.transition || CustomTheme.transition};
+  transition: ${(props) => props.transition || props.theme.custom.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
@@ -167,8 +166,8 @@ export const HeaderIconAlarm = styled.div<any>`
   color: ${(props) => props.color || props.basicTheme_C};
   cursor: pointer;
   border: ${(props) => props.border || `1px solid #314FA5`};
-  border-radius: ${(props) => props.radius || CustomTheme.radius};
-  box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
+  border-radius: ${(props) => props.radius || props.theme.custom.radius};
+  box-shadow: ${(props) => props.shadow || props.theme.custom.boxShadow};
   padding: 0px 20px;
   margin: 5px 0px;
   opacity: 0.8;
