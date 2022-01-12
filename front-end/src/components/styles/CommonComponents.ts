@@ -1064,6 +1064,7 @@ export const TableWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
   margin: ${(props) => props.margin || `50px 0px 30px`};
   padding: ${(props) => props.padding || `0px`};
+  overflow: ${(props) => props.overflow || ``};
 `;
 
 export const Table = styled.table<any>`
@@ -1081,10 +1082,12 @@ export const TableHead = styled.thead<any>`
   text-align: left;
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
-  background-color: #000;
+  background-color: #343a40;
   color: #fff;
   padding: ${(props) => props.padding || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
+  position: sticky;
+  top: 0;
 `;
 
 export const TableHeadRow = styled.tr<any>`
@@ -1107,6 +1110,7 @@ export const TableBody = styled.tbody<any>`
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
   overflow-y: ${(props) => props.overflowY || ``};
+  text-overflow: ellipsis;
 `;
 
 export const TableRow = styled.tr<any>`
@@ -1119,6 +1123,7 @@ export const TableRow = styled.tr<any>`
   margin: ${(props) => props.margin || `0px`};
   transition: 0.5s;
   cursor: pointer;
+  text-overflow: ellipsis;
 
   &:hover {
     text-decoration: underline;
@@ -1132,6 +1137,11 @@ export const TableRowLIST = styled.td<any>`
   font-weight: 600;
 `;
 
+export const ColGroup = styled.colgroup<any>``;
+
+export const Col = styled.col<any>`
+  width: ${(props) => props.width || ``};
+`;
 /* start test */
 
 // export const TestWrapper = styled.div<any>`
