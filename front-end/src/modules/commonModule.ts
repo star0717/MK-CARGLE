@@ -104,7 +104,7 @@ class GenPathArgs {
 export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   let apiPath = "/api" + path;
   if (args.isServerSide)
-    apiPath = `${process.env.DESTINATION_API}${process.env.DESTINATION_PORT}${path}`;
+    apiPath = `${process.env.DESTINATION_API}:${process.env.DESTINATION_PORT}${path}`;
 
   if (args?.id) {
     apiPath += "/" + args.id;
