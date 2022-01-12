@@ -120,6 +120,10 @@ const PartsModal: NextPage<any> = (props) => {
           </Wrapper>
         </Wrapper>
       </Wrapper>
+      <Wrapper dr={`row`} width={`200px`} ju={`space-between`}>
+        <CommonButton>닫 기</CommonButton>
+        <CommonButton>저 장</CommonButton>
+      </Wrapper>
     </WholeWrapper>
   );
 };
