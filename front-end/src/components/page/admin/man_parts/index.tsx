@@ -30,6 +30,7 @@ import {
 import { BsPlusSquareFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
+import { RiCheckboxBlankLine, RiCheckboxFill } from "react-icons/ri";
 import PartsModal from "./parts_Modal";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
@@ -89,112 +90,73 @@ const AdminManPartsPage: NextPage<any> = (props) => {
           hyeok modal
         </CommonButton>
         <RsWrapper>
+          <SearchInputWrapper
+            type="text"
+            width={`678px`}
+            padding={`0px 5px`}
+            dr={`row`}
+            borderBottom={`1px solid #000`}
+          >
+            <Wrapper width={`auto`}>
+              <SearchInput
+                width={`632px`}
+                padding={`0px 5px 0px 5px`}
+                placeholder="찾고싶은 부품명을 입력하세요."
+                type="text"
+              />
+            </Wrapper>
+            <Wrapper width={`36px`} height={`46px`}>
+              <Text fontSize={`24px`}>
+                <IconButton type="submit" shadow={`none`}>
+                  <BsSearch />
+                </IconButton>
+              </Text>
+            </Wrapper>
+          </SearchInputWrapper>
+          <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
+            <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
+              <SmallButton kindOf={`default`} width={`150px`}>
+                부품 추가하기
+              </SmallButton>
+              <SmallButton kindOf={`default`} width={`150px`}>
+                부품 추가하기
+              </SmallButton>
+            </Wrapper>
+          </Wrapper>
           <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
             {/* 부품분류 */}
-            <Wrapper
+            <TableWrapper
+              margin={`0px`}
+              radius={`0px`}
+              height={`450px`}
               width={`300px`}
-              height={`600px`}
-              ju={`flex-start`}
-              bgColor={`#fff`}
               overflow={`auto`}
-              radius={`5px 5px 0px 0px`}
-              border={`1px solid #c4c4c4`}
             >
-              <Wrapper
-                bgColor={`#343a40`}
-                color={`#fff`}
-                height={`45px`}
-                radius={`5px 5px 0px 0px`}
-              >
-                <Text>부품분류</Text>
-              </Wrapper>
-
-              {/* default */}
-              <Wrapper padding={`10px`}>
-                <Wrapper
-                  height={`45px`}
-                  bgColor={`#fff`}
-                  border={`1px solid #c4c4c4`}
-                  dr={`row`}
-                  radius={`5px`}
-                  padding={`0px 20px`}
-                  margin={`0px 0px 10px`}
-                >
-                  <Wrapper width={`22px`} color={`#51b351`} fontSize={`22px`}>
-                    <AiFillPlusSquare />
-                  </Wrapper>
-                  <Wrapper>
-                    <Text>전체보기</Text>
-                  </Wrapper>
-                </Wrapper>
-
-                {/* focus */}
-                <Wrapper
-                  height={`45px`}
-                  bgColor={`#eee`}
-                  border={`1px solid #c4c4c4`}
-                  dr={`row`}
-                  radius={`5px`}
-                  padding={`0px 20px`}
-                  margin={`0px 0px 10px`}
-                >
-                  <Wrapper width={`22px`} fontSize={`22px`} color={`#d6263b`}>
-                    <AiFillMinusSquare />
-                  </Wrapper>
-                  <Wrapper>
-                    <Text>부품명(01)</Text>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
-
-            {/* 상세정보 */}
-            <Wrapper>
-              <Wrapper
-                width={`880px`}
-                height={`150px`}
-                ju={`flex-start`}
-                bgColor={`#fff`}
-                overflow={`auto`}
-                radius={`5px 5px 0px 0px`}
-                border={`1px solid #c4c4c4`}
-              >
-                <Wrapper>
-                  <Wrapper
-                    bgColor={`#343a40`}
-                    color={`#fff`}
-                    minHeight={`45px`}
-                    radius={`5px 5px 0px 0px`}
-                  >
-                    <Text>상세정보</Text>
-                  </Wrapper>
-                  <Wrapper minHeight={`80px`}>
-                    <SearchInputWrapper
-                      type="text"
-                      width={`678px`}
-                      padding={`0px 5px`}
-                      dr={`row`}
-                      borderBottom={`1px solid #000`}
-                    >
-                      <Wrapper width={`auto`}>
-                        <SearchInput
-                          width={`632px`}
-                          padding={`0px 5px 0px 5px`}
-                          placeholder="찾고싶은 부품명을 입력하세요."
-                          type="text"
-                        />
-                      </Wrapper>
-                      <Wrapper width={`36px`} height={`46px`}>
-                        <Text fontSize={`24px`}>
-                          <IconButton type="submit" shadow={`none`}>
-                            <BsSearch />
-                          </IconButton>
+              <Table>
+                <TableHead>
+                  <TableHeadRow>
+                    <TableHeadLIST width={`40px`}>
+                      {/* 제 이름은 플러스 버튼이에요!! */}
+                      <Wrapper>
+                        <Text fontSize={`24px`} margin={`4px 0px 0px`}>
+                          <AiFillPlusSquare />
                         </Text>
                       </Wrapper>
-                    </SearchInputWrapper>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
+                      {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
+                    </TableHeadLIST>
+                    <TableHeadLIST width={`260px`}>부품분류</TableHeadLIST>
+                  </TableHeadRow>
+                </TableHead>
+                <TableBody height={`405px`}>
+                  <TableRow>
+                    <TableRowLIST width={` 40px`}></TableRowLIST>
+                    <TableRowLIST width={` 260px`}>부품코드</TableRowLIST>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableWrapper>
+            {/* 상세정보 */}
+            <Wrapper>
               <TableWrapper
                 margin={`0px`}
                 radius={`0px`}
@@ -203,96 +165,44 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 overflow={`auto`}
               >
                 <Table>
-                  {/* <ColGroup>
-                    <Col width={`293px`} />
-                    <Col width={`293px`} />
-                    <Col width={`293px`} />
-                  </ColGroup> */}
                   <TableHead>
                     <TableHeadRow>
-                      <TableHeadLIST width={`293px`}>
-                        내가 만약 길어진다면
+                      <TableHeadLIST width={`40px`}>
+                        <Wrapper>
+                          <Text fontSize={`24px`} margin={`4px 0px 0px`}>
+                            <RiCheckboxBlankLine />
+                          </Text>
+                        </Wrapper>
                       </TableHeadLIST>
-                      <TableHeadLIST width={`293px`}>나는 적당</TableHeadLIST>
-                      <TableHeadLIST width={`293px`}>짧</TableHeadLIST>
+                      <TableHeadLIST width={`200px`}>부품코드</TableHeadLIST>
+                      <TableHeadLIST width={`320px`}>부품명</TableHeadLIST>
+                      <TableHeadLIST width={`320px`}>국토부</TableHeadLIST>
                     </TableHeadRow>
                   </TableHead>
                   <TableBody height={`405px`}>
                     <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>
-                        내가 만약 길어진다면
+                      <TableRowLIST width={` 40px`}>
+                        <Wrapper color={`#000`}>
+                          <Text fontSize={`24px`} margin={`4px 0px 0px`}>
+                            <RiCheckboxBlankLine />
+                          </Text>
+                        </Wrapper>
                       </TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 200px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 320px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 320px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>
-                        내가 만약 길어진다면
+                      <TableRowLIST width={` 40px`}>
+                        <Wrapper color={`#000`}>
+                          <Text fontSize={`24px`} margin={`4px 0px 0px`}>
+                            <RiCheckboxFill />
+                          </Text>
+                        </Wrapper>
                       </TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>
-                        내가 만약 길어진다면
-                      </TableRowLIST>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>
-                        내가 만약 길어진다면
-                      </TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>
-                        내가 만약 길어진다면
-                      </TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>
-                        내가 만약 길어진다면
-                      </TableRowLIST>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 200px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 320px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 320px`}>국토부</TableRowLIST>
                     </TableRow>
                   </TableBody>
                 </Table>

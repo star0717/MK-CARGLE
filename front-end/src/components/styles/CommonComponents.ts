@@ -1079,7 +1079,7 @@ export const TableHead = styled.thead<any>`
   width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height || `45px`};
   display: ${(props) => props.display || `inline-block`};
-  text-align: left;
+  text-align: ${(props) => props.textAlign || `left`};
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
   background-color: #343a40;
@@ -1101,6 +1101,7 @@ export const TableHeadRow = styled.tr<any>`
 export const TableHeadLIST = styled.th<any>`
   padding: 0px 24px;
   font-weight: 600;
+  line-height: ${(props) => props.lineHeight || `45px`};
 `;
 
 export const TableBody = styled.tbody<any>`
@@ -1135,6 +1136,8 @@ export const TableRow = styled.tr<any>`
 export const TableRowLIST = styled.td<any>`
   padding: 0px 24px;
   font-weight: 600;
+  line-height: ${(props) => props.lineHeight || `40px`};
+  text-align: ${(props) => props.textAlign || `left`};
 `;
 
 export const ColGroup = styled.colgroup<any>``;
