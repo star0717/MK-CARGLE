@@ -67,7 +67,7 @@ const FindEmailCheck: NextPage<_pFindEmail> = (props) => {
         border={`1px solid #ccc`}
         radius={`5px`}
       >
-        <form onSubmit={onfindEmailHandler}>
+        <form id="findEmailForm" onSubmit={onfindEmailHandler}>
           <Wrapper al={`flex-start`}>
             <Text margin={`0px 0px 10px`}>이름</Text>
             <TextInput2
@@ -92,7 +92,12 @@ const FindEmailCheck: NextPage<_pFindEmail> = (props) => {
         </form>
       </Wrapper>
       <CommonButtonWrapper kindOf={`column`}>
-        <CommonButton type="submit" kindOf={`white`} margin={`0px 0px 20px`}>
+        <CommonButton
+          type="submit"
+          kindOf={`white`}
+          margin={`0px 0px 20px`}
+          form="findEmailForm"
+        >
           다음
         </CommonButton>
         <CommonButton
