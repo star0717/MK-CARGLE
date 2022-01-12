@@ -2,30 +2,20 @@ import { NextPage } from "next";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useResizeDetector } from "react-resize-detector";
 import {
-  CloseButton,
   RsWrapper,
   Text,
   SmallButton,
   TextInput2,
   WholeWrapper,
   Wrapper,
-  Image,
   Combo,
   CommonTitleWrapper,
   CommonTitle,
-  IconButton,
   CommonSmallTitle,
-  CommonButtonWrapper,
-  CommonButton,
 } from "../../../styles/CommonComponents";
 import React, { useState } from "react";
-import Modal from "react-modal";
-import { IoIosCloseCircle } from "react-icons/io";
 import { _pAdminManCompanies } from "../../../../configure/_pProps.entity";
-import {
-  makeFullAddress,
-  mbTypeToString,
-} from "../../../../modules/commonModule";
+import { makeFullAddress } from "../../../../modules/commonModule";
 import { Company } from "../../../../models/company.entity";
 import { User } from "../../../../models/user.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
