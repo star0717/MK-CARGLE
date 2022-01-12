@@ -200,27 +200,34 @@ export const getServerSideProps: GetServerSideProps = async (
     switch (pagePath) {
       case UseLink.TEST:
         successResult.props.data = {
-          class: [{ name: "분류명1" }, { name: "분류명2" }],
+          class: [
+            { _id: "1", name: "분류명1" },
+            { _id: "2", name: "분류명2" },
+          ],
           part: [
             {
+              _id: "1",
               class: "분류명1",
               code: "code1",
               name: "name1",
               molit: "molit1",
             },
             {
+              _id: "2",
               class: "분류명2",
               code: "code2",
               name: "name2",
               molit: "molit2",
             },
             {
+              _id: "3",
               class: "분류명1",
               code: "code3",
               name: "name3",
               molit: "molit3",
             },
             {
+              _id: "4",
               class: "분류명2",
               code: "code4",
               name: "name4",

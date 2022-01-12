@@ -112,9 +112,8 @@ const PartsModal: NextPage<any> = (props) => {
             radius={`5px`}
             padding={`0px 20px`}
             margin={`0px 0px 5px`}
-            text-align={`left`}
           >
-            <Wrapper>
+            <Wrapper text-align={`left`}>
               <Text>동의어 입니다. (01)</Text>
             </Wrapper>
             <Wrapper width={`22px`} fontSize={`22px`}>
@@ -169,6 +168,7 @@ const PartsModal: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
+            
           </Wrapper>
           <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
