@@ -24,6 +24,8 @@ import {
   TableBody,
   TableHeadRow,
   Table,
+  ColGroup,
+  Col,
 } from "../../../styles/CommonComponents";
 import { BsPlusSquareFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
@@ -198,79 +200,99 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 radius={`0px`}
                 height={`450px`}
                 width={`880px`}
+                overflow={`auto`}
               >
                 <Table>
-                  <TableHead width={`880px`}>
+                  {/* <ColGroup>
+                    <Col width={`293px`} />
+                    <Col width={`293px`} />
+                    <Col width={`293px`} />
+                  </ColGroup> */}
+                  <TableHead>
                     <TableHeadRow>
-                      <TableHeadLIST width={`293px`}>부품코드</TableHeadLIST>
-                      <TableHeadLIST width={`294px`}>부품명</TableHeadLIST>
-                      <TableHeadLIST width={`293px`}>국토부</TableHeadLIST>
+                      <TableHeadLIST width={`293px`}>
+                        내가 만약 길어진다면
+                      </TableHeadLIST>
+                      <TableHeadLIST width={`293px`}>나는 적당</TableHeadLIST>
+                      <TableHeadLIST width={`293px`}>짧</TableHeadLIST>
                     </TableHeadRow>
                   </TableHead>
-                  <TableBody overflowY={`auto`} height={`405px`}>
+                  <TableBody height={`405px`}>
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>
+                        내가 만약 길어진다면
+                      </TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
-                    </TableRow>
-
-                    <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>
+                        내가 만약 길어진다면
+                      </TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>
+                        내가 만약 길어진다면
+                      </TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>
+                        내가 만약 길어진다면
+                      </TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowLIST width={` 293px`}>
+                        내가 만약 길어진다면
+                      </TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
                     </TableRow>
 
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>
+                        내가 만약 길어진다면
+                      </TableRowLIST>
+                    </TableRow>
+
+                    <TableRow>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
                     </TableRow>
                     <TableRow>
-                      <TableRowLIST width={`293px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`294px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`293px`}>국토부</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>부품명</TableRowLIST>
+                      <TableRowLIST width={` 293px`}>국토부</TableRowLIST>
                     </TableRow>
                   </TableBody>
                 </Table>
