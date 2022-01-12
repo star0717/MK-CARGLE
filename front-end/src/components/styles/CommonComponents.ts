@@ -138,6 +138,7 @@ export const Wrapper = styled.div<any>`
   padding: ${(props) => props.padding};
   overflow: ${(props) => (props.isOverflow ? `auto` : props.overflow || ``)};
   background-image: ${(props) => props.bgImg};
+  overflow-y: ${(props) => props.overflowY};
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: ${(props) => props.attachment || `fixed`};
@@ -702,7 +703,7 @@ export const HeaderIconButton = styled.button<any>`
   box-shadow: ${(props) => props.shadow || CustomTheme.boxShadow};
 
   &:hover {
-    color: #314fa5;
+    color: #314fa5;¸
     border: 1px solid #314fa5;
   }
 `;

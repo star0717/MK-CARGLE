@@ -90,40 +90,44 @@ const PartsModal: NextPage<any> = (props) => {
         <Wrapper bgColor={`#eee`}>
           <Text>등록된 단어</Text>
         </Wrapper>
-        <Wrapper padding={`10px`} overflow={`auto`} ju={`top`}>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+        <Wrapper padding={`10px`} overflow={`auto`}>
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px">
+          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
           </Wrapper>
         </Wrapper>
       </Wrapper>
-      <Wrapper dr={`row`} width={`200px`} ju={`space-between`}>
-        <CommonButton>닫 기</CommonButton>
-        <CommonButton>저 장</CommonButton>
-      </Wrapper>
+      <CommonButtonWrapper
+        dr={`row`}
+        ju={`space-around
+      `}
+      >
+        <CommonButton width={`200px`}>닫 기</CommonButton>
+        <CommonButton width={`200px`}>저 장</CommonButton>
+      </CommonButtonWrapper>
     </WholeWrapper>
   );
 };
