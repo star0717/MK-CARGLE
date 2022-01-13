@@ -1,44 +1,28 @@
-/* html,
-body {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  font-family: "Noto Sans KR", sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-} */
-
-import { createGlobalStyle, css } from "styled-components";
+import { createGlobalStyle } from "styled-components";
+import { reset } from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
-html,
-body {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  font-family: "Noto Sans KR", sans-serif;
-}
+${reset}
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: "Noto Sans KR", sans-serif;
+  }
 
-#__next {
-  height: 100%;
-}
+  #__next {
+    height: 100%;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-* {
-  box-sizing: border-box;
-} 
-
+  * {
+    box-sizing: border-box;
+  } 
 `;
 
 export default GlobalStyle;

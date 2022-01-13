@@ -10,12 +10,6 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  TableWrapper,
-  TableHead,
-  TableHeadLIST,
-  TableBody,
-  TableRow,
-  TableRowLIST,
   CommonForm,
   SearchInput,
   IconButton,
@@ -103,48 +97,49 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
               </Wrapper>
             </Wrapper>
             <Wrapper fontSize={`18px`}>
-              <TableWrapper margin={`0px`} padding={`0px`}>
-                <TableHead margin={`0px`} borderTop={`0px`}>
-                  <TableHeadLIST width={`226px`}>업체명</TableHeadLIST>
-                  <TableHeadLIST width={`226px`}>대표자명</TableHeadLIST>
-                  <TableHeadLIST width={`226px`}>사업자등록번호</TableHeadLIST>
-                </TableHead>
-                {companyList.length === 0 ? (
-                  <Wrapper>소속 업체를 검색하세요.</Wrapper>
-                ) : (
-                  <TableBody margin={`0px`} overflow={`auto`}>
-                    {companyList.map((item: any, index: number) => (
-                      <TableRow
-                        margin={`0px`}
-                        id={item.comRegNum}
-                        key={index}
-                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                          props.setInputForm({
-                            ...props.inputForm,
-                            companyNum: item.comRegNum,
-                          });
-                          props.setInputUser({
-                            ...props.inputUser,
-                            _cID: item._id,
-                          });
-                          props.setValue("companyNum", item.comRegNum, {
-                            shouldValidate: true,
-                          });
-                          props.setModalOpen(false);
-                        }}
-                      >
-                        <TableRowLIST width={`226px`}>{item.name}</TableRowLIST>
-                        <TableRowLIST width={`226px`}>
-                          {item.ownerName}
-                        </TableRowLIST>
-                        <TableRowLIST width={`226px`}>
-                          {item.comRegNum}
-                        </TableRowLIST>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                )}
-              </TableWrapper>
+              <Wrapper margin={`0px`} padding={`0px`}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>업체명</th>
+                      <th>대표자명</th>
+                      <th>사업자등록번호</th>
+                    </tr>
+                  </thead>
+                  {companyList.length === 0 ? (
+                    <Wrapper>소속 업체를 검색하세요.</Wrapper>
+                  ) : (
+                    <tbody>
+                      {companyList.map((item: any, index: number) => (
+                        <tr
+                          id={item.comRegNum}
+                          key={index}
+                          onClick={(
+                            e: React.MouseEvent<HTMLTableRowElement>
+                          ) => {
+                            props.setInputForm({
+                              ...props.inputForm,
+                              companyNum: item.comRegNum,
+                            });
+                            props.setInputUser({
+                              ...props.inputUser,
+                              _cID: item._id,
+                            });
+                            props.setValue("companyNum", item.comRegNum, {
+                              shouldValidate: true,
+                            });
+                            props.setModalOpen(false);
+                          }}
+                        >
+                          <td width={`226px`}>{item.name}</td>
+                          <td width={`226px`}>{item.ownerName}</td>
+                          <td width={`226px`}>{item.comRegNum}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  )}
+                </table>
+              </Wrapper>
             </Wrapper>
           </CommonForm>
         </Wrapper>

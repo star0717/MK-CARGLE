@@ -16,12 +16,6 @@ import {
   IconButton,
   RsWrapper,
   SmallButton,
-  TableBody,
-  TableHead,
-  TableHeadLIST,
-  TableRow,
-  TableRowLIST,
-  TableWrapper,
   Text,
   WholeWrapper,
   Wrapper,
@@ -29,8 +23,6 @@ import {
   SearchInput,
   CommonTitleWrapper,
   CommonTitle,
-  Table,
-  TableHeadRow,
 } from "../../../styles/CommonComponents";
 
 const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
@@ -143,24 +135,23 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             </span>
           </Text>
         </Wrapper>
-        <TableWrapper margin={`10px 0px 30px`}>
-          <Table>
-            <TableHead>
-              <TableHeadRow>
-                <TableHeadLIST width={`200px`}>가입일</TableHeadLIST>
-                <TableHeadLIST width={`250px`}>상호명</TableHeadLIST>
-                <TableHeadLIST width={`200px`}>사업자등록증</TableHeadLIST>
-                <TableHeadLIST width={`200px`}>정비업등록증</TableHeadLIST>
-                <TableHeadLIST width={`200px`}>대표자명</TableHeadLIST>
-                <TableHeadLIST width={`150px`}>승인여부</TableHeadLIST>
-                <TableHeadLIST width={`200px`}>직원관리</TableHeadLIST>
-              </TableHeadRow>
-            </TableHead>
-            <TableBody>
+        <Wrapper margin={`10px 0px 30px`}>
+          <table>
+            <thead>
+              <tr>
+                <th>가입일</th>
+                <th>상호명</th>
+                <th>사업자등록증</th>
+                <th>정비업등록증</th>
+                <th>대표자명</th>
+                <th>승인여부</th>
+                <th>직원관리</th>
+              </tr>
+            </thead>
+            <tbody>
               {props.findResult.totalDocs > 0 ? (
                 props.findResult.docs.map((doc: Company) => (
-                  <TableRow
-                    height={`50px`}
+                  <tr
                     key={doc._id}
                     onClick={() => {
                       router.push(
@@ -168,23 +159,23 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                       );
                     }}
                   >
-                    <TableRowLIST width={`200px`}>
+                    <td width={`200px`}>
                       {dayjs(doc.createdAt).format("YYYY-MM-DD")}
-                    </TableRowLIST>
-                    <TableRowLIST width={`250px`}>{doc.name}</TableRowLIST>
-                    <TableRowLIST width={`200px`}>{doc.comRegNum}</TableRowLIST>
-                    <TableRowLIST width={`200px`}>{doc.mbRegNum}</TableRowLIST>
-                    <TableRowLIST width={`200px`}>{doc.ownerName}</TableRowLIST>
+                    </td>
+                    <td width={`250px`}>{doc.name}</td>
+                    <td width={`200px`}>{doc.comRegNum}</td>
+                    <td width={`200px`}>{doc.mbRegNum}</td>
+                    <td width={`200px`}>{doc.ownerName}</td>
                     {doc.approval == CompanyApproval.BEFORE ? (
-                      <TableRowLIST width={`150px`}>요청 전</TableRowLIST>
+                      <td width={`150px`}>요청 전</td>
                     ) : doc.approval == CompanyApproval.ING ? (
-                      <TableRowLIST width={`150px`}>요청 중</TableRowLIST>
+                      <td width={`150px`}>요청 중</td>
                     ) : doc.approval == CompanyApproval.DONE ? (
-                      <TableRowLIST width={`150px`}>승인완료</TableRowLIST>
+                      <td width={`150px`}>승인완료</td>
                     ) : (
-                      <TableRowLIST width={`150px`}>이상업체</TableRowLIST>
+                      <td width={`150px`}>이상업체</td>
                     )}
-                    <TableRowLIST
+                    <td
                       width={`200px`}
                       onClick={(e: React.MouseEvent<HTMLTableCellElement>) => {
                         e.stopPropagation();
@@ -199,8 +190,8 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                       >
                         직원관리
                       </SmallButton>
-                    </TableRowLIST>
-                  </TableRow>
+                    </td>
+                  </tr>
                 ))
               ) : (
                 <Wrapper minHeight={`445px`}>
@@ -210,9 +201,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
                   <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
                 </Wrapper>
               )}
-            </TableBody>
-          </Table>
-        </TableWrapper>
+            </tbody>
+          </table>
+        </Wrapper>
         <PagenationSection {...props} />
       </RsWrapper>
     </WholeWrapper>

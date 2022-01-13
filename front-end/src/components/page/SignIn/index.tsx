@@ -26,7 +26,6 @@ import {
   Label,
 } from "../../styles/CommonComponents";
 import { BodyWrapper } from "../../styles/LayoutComponents";
-import { Checkbox } from "@mui/material";
 
 /**
  * 로그인 컴포넌트(기능)
@@ -183,8 +182,8 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   {/* 체크박스 div */}
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
-                    <Checkbox
-                      color="primary"
+                    <input
+                      type="checkbox"
                       checked={saveCheck}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setSaveCheck(e.target.checked);

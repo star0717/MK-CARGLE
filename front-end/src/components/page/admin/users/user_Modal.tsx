@@ -29,8 +29,6 @@ import {
 } from "../../../styles/CommonComponents";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
-import { Switch } from "@mui/material";
-import { useStyles } from "../../../styles/MuiTheme";
 
 const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
   const dispatch = useDispatch();
@@ -104,8 +102,6 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
-  const classes = useStyles();
-
   return (
     <WholeWrapper ref={ref} padding={`0px 50px 50px`}>
       <CommonSmallTitle>직원 상세 정보</CommonSmallTitle>
@@ -123,9 +119,8 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
               </Text>
             )}
           </Wrapper>
-          <Switch
-            className={classes.IOSSwitch}
-            color="primary"
+          <input
+            type="checkbox"
             checked={approval}
             onChange={onChangeApproval}
           />

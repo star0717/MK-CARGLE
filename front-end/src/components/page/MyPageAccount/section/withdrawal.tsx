@@ -202,7 +202,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
         style={{
           overlay: {
             position: "fixed",
-            zIndex: 1020,
+            zIndex: 9999,
             top: 0,
             left: 0,
             width: "100vw",

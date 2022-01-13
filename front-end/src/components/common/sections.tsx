@@ -24,16 +24,12 @@ export const PagenationSection: NextPage<_pFindDocs<any>> = (props) => {
           <Pagenation
             key={i}
             type="button"
-            color={
-              cPage === i ? theme.custom.white_C : theme.custom.basicTheme_C
-            }
-            bgColor={
-              cPage === i ? theme.custom.basicTheme_C : theme.custom.white_C
-            }
+            color={cPage === i ? theme.white_C : theme.basicTheme_C}
+            bgColor={cPage === i ? theme.basicTheme_C : theme.white_C}
             border={
               cPage === i
-                ? `1px solid ${theme.custom.basicTheme_C}`
-                : `1px solid ${theme.custom.basicTheme_C}`
+                ? `1px solid ${theme.basicTheme_C}`
+                : `1px solid ${theme.basicTheme_C}`
             }
             onClick={() => {
               if (props.findResult.currentPage != i) {

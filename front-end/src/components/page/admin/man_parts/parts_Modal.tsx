@@ -8,14 +8,6 @@ import {
   TextInput2,
   WholeWrapper,
   Wrapper,
-  TableHeadRow,
-  TableHeadLIST,
-  TableRowLIST,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableWrapper,
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { IoIosCloseCircle } from "react-icons/io";

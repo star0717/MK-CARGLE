@@ -14,17 +14,8 @@ import {
   Wrapper,
 } from "../../styles/CommonComponents";
 import { BsSearch } from "react-icons/bs";
-import {
-  Checkbox,
-  Paper,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-} from "@mui/material";
 import ReactModal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
-import { StyledTableCell, StyledTableRow } from "../../styles/MuiTheme";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -250,30 +241,13 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                   </SmallButton>
                 </Wrapper>
               </Wrapper>
-              <TableContainer
-                component={Paper}
-                sx={{
-                  width: `90%`,
-                  maxHeight: 440,
-                }}
-              >
-                <Table
-                  stickyHeader
-                  sx={{
-                    borderRadius: `4px 4px 0px 0px`,
-                    textAlign: `left`,
-                  }}
-                >
-                  <TableHead>
-                    <StyledTableRow>
-                      <StyledTableCell width={`10%`}>
-                        <Checkbox
-                          sx={{
-                            color: `#fff`,
-                            "&.Mui-checked": {
-                              color: `#fff`,
-                            },
-                          }}
+              <Wrapper>
+                <table>
+                  <thead>
+                    <tr>
+                      <td width={`10%`}>
+                        <input
+                          type="checkbox"
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                             onCheckedAll(e.target.checked)
                           }
@@ -285,34 +259,29 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                               : false
                           }
                         />
-                      </StyledTableCell>
-                      <StyledTableCell width={`30%`}>부품코드</StyledTableCell>
-                      <StyledTableCell width={`30%`}>부품명</StyledTableCell>
-                      <StyledTableCell width={`30%`}>국토부</StyledTableCell>
-                    </StyledTableRow>
-                  </TableHead>
-                  <TableBody>
+                      </td>
+                      <td width={`30%`}>부품코드</td>
+                      <td width={`30%`}>부품명</td>
+                      <td width={`30%`}>국토부</td>
+                    </tr>
+                  </thead>
+                  <tbody>
                     {partList.map((list: any) => (
-                      <StyledTableRow
+                      <tr
                         key={list._id}
                         onClick={() => {
                           setModalOption("patchPart");
                           setModalOpen(true);
                         }}
                       >
-                        <StyledTableCell
+                        <td
                           width={`10%`}
                           onClick={(
                             e: React.MouseEvent<HTMLTableCellElement>
                           ) => e.stopPropagation()}
                         >
-                          <Checkbox
-                            sx={{
-                              color: `#000`,
-                              "&.Mui-checked": {
-                                color: `#000`,
-                              },
-                            }}
+                          <input
+                            type="checkbox"
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => onCheckedElement(e.target.checked, list)}
@@ -320,21 +289,15 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                               checkedList.includes(list._id) ? true : false
                             }
                           />
-                        </StyledTableCell>
-                        <StyledTableCell width={`30%`}>
-                          {list.code}
-                        </StyledTableCell>
-                        <StyledTableCell width={`30%`}>
-                          {list.name}
-                        </StyledTableCell>
-                        <StyledTableCell width={`30%`}>
-                          {list.molit}
-                        </StyledTableCell>
-                      </StyledTableRow>
+                        </td>
+                        <td width={`30%`}>{list.code}</td>
+                        <td width={`30%`}>{list.name}</td>
+                        <td width={`30%`}>{list.molit}</td>
+                      </tr>
                     ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                  </tbody>
+                </table>
+              </Wrapper>
             </Wrapper>
           </Wrapper>
         </RsWrapper>

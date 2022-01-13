@@ -10,22 +10,12 @@ import {
   RsWrapper,
   SearchInput,
   SearchInputWrapper,
-  TableHead,
-  TableHeadLIST,
-  TableRow,
-  SmallButton,
-  TableRowLIST,
   CloseButton,
-  TableWrapper,
   Text,
   WholeWrapper,
   Wrapper,
   CommonButton,
-  TableBody,
-  TableHeadRow,
-  Table,
-  ColGroup,
-  Col,
+  SmallButton,
 } from "../../../styles/CommonComponents";
 import { BsPlusSquareFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
@@ -125,17 +115,17 @@ const AdminManPartsPage: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
             {/* 부품분류 */}
-            <TableWrapper
+            <Wrapper
               margin={`0px`}
               radius={`0px`}
               height={`450px`}
               width={`300px`}
               overflow={`auto`}
             >
-              <Table>
-                <TableHead>
-                  <TableHeadRow>
-                    <TableHeadLIST width={`40px`}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>
                       {/* 제 이름은 플러스 버튼이에요!! */}
                       <Wrapper>
                         <Text fontSize={`24px`} margin={`4px 0px 0px`}>
@@ -143,81 +133,79 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                         </Text>
                       </Wrapper>
                       {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
-                    </TableHeadLIST>
-                    <TableHeadLIST width={`260px`}>부품분류</TableHeadLIST>
-                  </TableHeadRow>
-                </TableHead>
-                <TableBody height={`405px`}>
-                  <TableRow>
-                    <TableRowLIST width={` 300px`} textAlign={`center`}>
-                      전체보기
-                    </TableRowLIST>
-                  </TableRow>
-                  <TableRow>
-                    <TableRowLIST width={` 40px`}>
+                    </th>
+                    <th>부품분류</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>전체보기</td>
+                  </tr>
+                  <tr>
+                    <td width={` 40px`}>
                       <Wrapper>
                         <Text fontSize={`24px`} margin={`4px 0px 0px`}>
                           <AiFillPlusSquare />
                         </Text>
                       </Wrapper>
-                    </TableRowLIST>
-                    <TableRowLIST width={` 260px`}>전체보기</TableRowLIST>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableWrapper>
+                    </td>
+                    <td width={` 260px`}>전체보기</td>
+                  </tr>
+                </tbody>
+              </table>
+            </Wrapper>
             {/* 상세정보 */}
             <Wrapper>
-              <TableWrapper
+              <Wrapper
                 margin={`0px`}
                 radius={`0px`}
                 height={`450px`}
                 width={`880px`}
                 overflow={`auto`}
               >
-                <Table>
-                  <TableHead>
-                    <TableHeadRow>
-                      <TableHeadLIST width={`40px`}>
+                <table>
+                  <thead>
+                    <tr>
+                      <td width={`40px`}>
                         <Wrapper>
                           <Text fontSize={`24px`} margin={`4px 0px 0px`}>
                             <RiCheckboxBlankLine />
                           </Text>
                         </Wrapper>
-                      </TableHeadLIST>
-                      <TableHeadLIST width={`200px`}>부품코드</TableHeadLIST>
-                      <TableHeadLIST width={`320px`}>부품명</TableHeadLIST>
-                      <TableHeadLIST width={`320px`}>국토부</TableHeadLIST>
-                    </TableHeadRow>
-                  </TableHead>
-                  <TableBody height={`405px`}>
-                    <TableRow>
-                      <TableRowLIST width={` 40px`}>
+                      </td>
+                      <td width={`200px`}>부품코드</td>
+                      <td width={`320px`}>부품명</td>
+                      <td width={`320px`}>국토부</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td width={` 40px`}>
                         <Wrapper color={`#314fa5`}>
                           <Text fontSize={`24px`} margin={`4px 0px 0px`}>
                             <RiCheckboxBlankLine />
                           </Text>
                         </Wrapper>
-                      </TableRowLIST>
-                      <TableRowLIST width={` 200px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 320px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 320px`}>국토부</TableRowLIST>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowLIST width={` 40px`}>
+                      </td>
+                      <td width={` 200px`}>부품코드</td>
+                      <td width={` 320px`}>부품명</td>
+                      <td width={` 320px`}>국토부</td>
+                    </tr>
+                    <tr>
+                      <td width={` 40px`}>
                         <Wrapper color={`#314fa5`}>
                           <Text fontSize={`24px`} margin={`4px 0px 0px`}>
                             <RiCheckboxFill />
                           </Text>
                         </Wrapper>
-                      </TableRowLIST>
-                      <TableRowLIST width={` 200px`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={` 320px`}>부품명</TableRowLIST>
-                      <TableRowLIST width={` 320px`}>국토부</TableRowLIST>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableWrapper>
+                      </td>
+                      <td width={` 200px`}>부품코드</td>
+                      <td width={` 320px`}>부품명</td>
+                      <td width={` 320px`}>국토부</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Wrapper>
             </Wrapper>
           </Wrapper>
         </RsWrapper>
@@ -227,7 +215,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
             style={{
               overlay: {
                 position: "fixed",
-                zIndex: 1020,
+                zIndex: 9999,
                 top: 0,
                 left: 0,
                 width: "100vw",

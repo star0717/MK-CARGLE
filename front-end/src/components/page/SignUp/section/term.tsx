@@ -19,9 +19,7 @@ import {
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
-import { UserAuthority } from "../../../../models/user.entity";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
-import { Checkbox } from "@mui/material";
 
 /**
  * 회원가입: 이용약관 컴포넌트(기능)
@@ -101,7 +99,8 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
                     <Text>이용약관에 동의합니다.</Text>
-                    <Checkbox
+                    <input
+                      type="checkbox"
                       checked={props.formCheck.mkTerm}
                       {...register("mkTerm", {
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,7 +167,8 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
                     <Text>이용약관에 동의합니다.</Text>
-                    <Checkbox
+                    <input
+                      type="checkbox"
                       checked={props.formCheck.privacyTerm}
                       {...register("privacyTerm", {
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -224,7 +224,8 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                 </Wrapper>
                 <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
                   <Text>마케팅 정보 수신에 동의합니다.</Text>
-                  <Checkbox
+                  <input
+                    type="checkbox"
                     checked={props.formCheck.marketTerm}
                     {...register("marketTerm", {
                       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {

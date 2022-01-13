@@ -10,12 +10,6 @@ import { useResizeDetector } from "react-resize-detector";
 import {
   CloseButton,
   RsWrapper,
-  TableBody,
-  TableHead,
-  TableHeadLIST,
-  TableRow,
-  TableRowLIST,
-  TableWrapper,
   Text,
   WholeWrapper,
   Wrapper,
@@ -64,36 +58,40 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
       </CommonTitleWrapper>
       <RsWrapper ju={`flex-start`}>
         <Wrapper ju={`flex-start`} height={`auto`}>
-          <TableWrapper>
-            <TableHead>
-              <TableHeadLIST width={`300px`}>직원명</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>전화번호</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>입사일자</TableHeadLIST>
-              <TableHeadLIST width={`300px`}>승인여부</TableHeadLIST>
-            </TableHead>
-            <TableBody>
-              {props.findResult.docs.map((doc: User) => (
-                <TableRow
-                  key={doc._id}
-                  onClick={() => {
-                    setModalOpen(!modalOpen);
-                    setClickDoc(doc);
-                  }}
-                >
-                  <TableRowLIST width={`300px`}>{doc.name}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>{doc.hpNumber}</TableRowLIST>
-                  <TableRowLIST width={`300px`}>
-                    {dayjs(doc.joinDate).format("YYYY-MM-DD")}
-                  </TableRowLIST>
-                  {doc.approval ? (
-                    <TableRowLIST width={`300px`}>승인</TableRowLIST>
-                  ) : (
-                    <TableRowLIST width={`300px`}>미승인</TableRowLIST>
-                  )}
-                </TableRow>
-              ))}
-            </TableBody>
-          </TableWrapper>
+          <Wrapper>
+            <table>
+              <thead>
+                <tr>
+                  <th>직원명</th>
+                  <th>전화번호</th>
+                  <th>입사일자</th>
+                  <th>승인여부</th>
+                </tr>
+              </thead>
+              <tbody>
+                {props.findResult.docs.map((doc: User) => (
+                  <tr
+                    key={doc._id}
+                    onClick={() => {
+                      setModalOpen(!modalOpen);
+                      setClickDoc(doc);
+                    }}
+                  >
+                    <td width={`300px`}>{doc.name}</td>
+                    <td width={`300px`}>{doc.hpNumber}</td>
+                    <td width={`300px`}>
+                      {dayjs(doc.joinDate).format("YYYY-MM-DD")}
+                    </td>
+                    {doc.approval ? (
+                      <td width={`300px`}>승인</td>
+                    ) : (
+                      <td width={`300px`}>미승인</td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Wrapper>
         </Wrapper>
         <PagenationSection {...props} />
       </RsWrapper>

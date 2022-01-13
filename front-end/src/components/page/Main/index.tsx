@@ -173,20 +173,24 @@ const Main: NextPage = () => {
         <div style={{ width: "50%", height: "350px" }}>
           <div style={{ width: "100%", height: "30%" }}>
             <table style={{ width: "100%", height: "100%", border: "1px" }}>
-              <tr>
-                <td>차량 번호</td>
-                <td>전화번호</td>
-                <td>정비내용</td>
-                <td>접수 일자</td>
-                <td>진행 상태</td>
-              </tr>
-              <tr>
-                <td>12가1234</td>
-                <td>010-1234-1234</td>
-                <td>엔진오일 교체</td>
-                <td>2021.10.08</td>
-                <td>대기</td>
-              </tr>
+              <thead>
+                <tr>
+                  <th>차량 번호</th>
+                  <th>전화번호</th>
+                  <th>정비내용</th>
+                  <th>접수 일자</th>
+                  <th>진행 상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>12가1234</td>
+                  <td>010-1234-1234</td>
+                  <td>엔진오일 교체</td>
+                  <td>2021.10.08</td>
+                  <td>대기</td>
+                </tr>
+              </tbody>
             </table>
           </div>
           <div style={{ width: "100%", height: "30%" }}>
