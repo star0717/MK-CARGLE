@@ -58,27 +58,28 @@ export const StyledTableCell = styled(TableCell)((props) => ({
   [`&.${tableCellClasses.head}`]: {
     width: (props) => props.width,
     height: (props) => props.height || `45px`,
-    backgroundColor: "#000",
+    backgroundColor: "#343a40",
     color: "#fff",
     fontWeight: 600,
     cursor: "default",
   },
   [`&.${tableCellClasses.body}`]: {
     width: (props) => props.width,
-    fontSize: 14,
+    height: (props) => props.height || `40px`,
+    fontSize: 16,
   },
 }));
 
 export const StyledTableRow = styled(TableRow)((props) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: "gray",
-  },
   // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
   "&:hover": {
-    backgroundColor: "pink",
+    textDecoration: "underline",
+    backgroundColor: "#f5f5f5",
+    color: "#314FA5",
     cursor: "pointer",
+    transition: "0.4s",
   },
 }));
