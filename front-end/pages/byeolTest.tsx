@@ -45,18 +45,18 @@ const ByeolTest: NextPage = () => {
   const classes = useStyles();
 
   return (
-    <Wrapper width={`100%`} bgColor={`skyblue`}>
+    <Wrapper width={`100%`} padding={`100px 0px 0px`}>
       <TableContainer
         component={Paper}
         sx={{
-          width: `90%`,
-          maxHeight: 440,
+          width: `50%`,
+          maxHeight: 445,
         }}
       >
         <Table
           stickyHeader
           sx={{
-            borderRadius: `4px 4px 0px 0px`,
+            borderRadius: `0px`,
             textAlign: `left`,
           }}
         >
