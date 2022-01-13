@@ -60,31 +60,33 @@ export const useStyles = makeStyles({
   },
 });
 
-// export const StyledTableCell = styled(TableCell)((props) => ({
-//   [`&.${tableCellClasses.head}`]: {
-//     width: (props) => props.width,
-//     height: (props) => props.height || `45px`,
-//     backgroundColor: "#000",
-//     color: "#fff",
-//     fontWeight: 600,
-//     cursor: "default",
-//   },
-//   [`&.${tableCellClasses.body}`]: {
-//     width: (props) => props.width,
-//     fontSize: 14,
-//   },
-// }));
+export const StyledTableCell = styled(TableCell)((props) => ({
+  [`&.${tableCellClasses.head}`]: {
+    width: (props) => props.width,
+    height: (props) => props.height || `45px`,
+    backgroundColor: "#343a40",
+    color: "#fff",
+    fontWeight: 600,
+    cursor: "default",
+    fontSize: "16px",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    width: (props) => props.width,
+    fontSize: "16px",
+    cursor: "pointer",
+  },
+}));
 
-// export const StyledTableRow = styled(TableRow)((props) => ({
-//   "&:nth-of-type(odd)": {
-//     backgroundColor: "gray",
-//   },
-//   // hide last border
-//   "&:last-child td, &:last-child th": {
-//     border: 0,
-//   },
-//   "&:hover": {
-//     backgroundColor: "pink",
-//     cursor: "pointer",
-//   },
-// }));
+export const StyledTableRow = styled(TableRow)((props) => ({
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+  "&:hover": {
+    textDecoration: "underline",
+    backgroundColor: "#f5f5f5",
+    color: "#314FA5",
+    cursor: "pointer",
+    transition: "0.5s",
+  },
+}));
