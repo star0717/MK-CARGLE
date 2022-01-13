@@ -49,7 +49,7 @@ const ByeolTest: NextPage = () => {
       <TableContainer
         component={Paper}
         sx={{
-          width: `50%`,
+          width: `100%`,
           maxHeight: 445,
         }}
       >
