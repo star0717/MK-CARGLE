@@ -52,34 +52,39 @@ export const useStyles = makeStyles({
       transition: "0.2s",
     },
   },
+  customTable: {
+    backgroundColor: "red",
+    // ".MuiTableHead-root	": {
+    //   backgroundColor: "blue",
+    // },
+  },
 });
 
-export const StyledTableCell = styled(TableCell)((props) => ({
-  [`&.${tableCellClasses.head}`]: {
-    width: (props) => props.width,
-    height: (props) => props.height || `45px`,
-    backgroundColor: "#343a40",
-    color: "#fff",
-    fontWeight: 600,
-    cursor: "default",
-  },
-  [`&.${tableCellClasses.body}`]: {
-    width: (props) => props.width,
-    height: (props) => props.height || `40px`,
-    fontSize: 16,
-  },
-}));
+// export const StyledTableCell = styled(TableCell)((props) => ({
+//   [`&.${tableCellClasses.head}`]: {
+//     width: (props) => props.width,
+//     height: (props) => props.height || `45px`,
+//     backgroundColor: "#000",
+//     color: "#fff",
+//     fontWeight: 600,
+//     cursor: "default",
+//   },
+//   [`&.${tableCellClasses.body}`]: {
+//     width: (props) => props.width,
+//     fontSize: 14,
+//   },
+// }));
 
-export const StyledTableRow = styled(TableRow)((props) => ({
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-  "&:hover": {
-    textDecoration: "underline",
-    backgroundColor: "#f5f5f5",
-    color: "#314FA5",
-    cursor: "pointer",
-    transition: "0.4s",
-  },
-}));
+// export const StyledTableRow = styled(TableRow)((props) => ({
+//   "&:nth-of-type(odd)": {
+//     backgroundColor: "gray",
+//   },
+//   // hide last border
+//   "&:last-child td, &:last-child th": {
+//     border: 0,
+//   },
+//   "&:hover": {
+//     backgroundColor: "pink",
+//     cursor: "pointer",
+//   },
+// }));

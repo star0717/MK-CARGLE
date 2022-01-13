@@ -67,7 +67,7 @@ const ByeolTest: NextPage = () => {
               <StyledTableCell width={`10%`}>ccc</StyledTableCell>
             </StyledTableRow>
           </TableHead>
-          <TableBody sx={{ overflow: `auto` }}>
+          <TableBody>
             <StyledTableRow>
               <StyledTableCell>111</StyledTableCell>
               <StyledTableCell>222</StyledTableCell>

@@ -9,22 +9,24 @@ import {
   SearchInput,
   SearchInputWrapper,
   SmallButton,
-  Table,
-  TableBody,
-  TableHead,
-  TableHeadLIST,
-  TableHeadRow,
-  TableRow,
-  TableRowLIST,
-  TableWrapper,
   Text,
   WholeWrapper,
   Wrapper,
 } from "../../styles/CommonComponents";
 import { BsSearch } from "react-icons/bs";
-import { Checkbox } from "@mui/material";
+import {
+  Checkbox,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import ReactModal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
+import { useStyles } from "../../styles/MuiTheme";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -156,6 +158,8 @@ const AdminManPartsPage: NextPage<any> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
+  const classes = useStyles();
+
   return (
     <BodyWrapper ref={ref}>
       <WholeWrapper>
@@ -250,11 +254,24 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                   </SmallButton>
                 </Wrapper>
               </Wrapper>
-              <TableWrapper margin={`10px 0px 30px`}>
-                <Table>
+              <TableContainer
+                component={Paper}
+                sx={{
+                  width: `90%`,
+                  maxHeight: 440,
+                }}
+              >
+                <Table
+                  stickyHeader
+                  // sx={{
+                  //   borderRadius: `4px 4px 0px 0px`,
+                  //   textAlign: `left`,
+                  // }}
+                  className={classes.customTable}
+                >
                   <TableHead>
-                    <TableHeadRow>
-                      <TableHeadLIST width={`20px`}>
+                    <TableRow>
+                      <TableCell width={`10%`}>
                         <Checkbox
                           sx={{
                             color: `#fff`,
@@ -273,11 +290,11 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                               : false
                           }
                         />
-                      </TableHeadLIST>
-                      <TableHeadLIST width={`200px`}>부품코드</TableHeadLIST>
-                      <TableHeadLIST width={`200px`}>부품명</TableHeadLIST>
-                      <TableHeadLIST width={`200px`}>국토부</TableHeadLIST>
-                    </TableHeadRow>
+                      </TableCell>
+                      <TableCell width={`30%`}>부품코드</TableCell>
+                      <TableCell width={`30%`}>부품명</TableCell>
+                      <TableCell width={`30%`}>국토부</TableCell>
+                    </TableRow>
                   </TableHead>
                   <TableBody>
                     {partList.map((list: any) => (
@@ -288,8 +305,8 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                           setModalOpen(true);
                         }}
                       >
-                        <TableRowLIST
-                          width={`20px`}
+                        <TableCell
+                          width={`10%`}
                           onClick={(
                             e: React.MouseEvent<HTMLTableCellElement>
                           ) => e.stopPropagation()}
@@ -308,17 +325,15 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                               checkedList.includes(list._id) ? true : false
                             }
                           />
-                        </TableRowLIST>
-                        <TableRowLIST width={`200px`}>{list.code}</TableRowLIST>
-                        <TableRowLIST width={`200px`}>{list.name}</TableRowLIST>
-                        <TableRowLIST width={`200px`}>
-                          {list.molit}
-                        </TableRowLIST>
+                        </TableCell>
+                        <TableCell width={`30%`}>{list.code}</TableCell>
+                        <TableCell width={`30%`}>{list.name}</TableCell>
+                        <TableCell width={`30%`}>{list.molit}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-              </TableWrapper>
+              </TableContainer>
             </Wrapper>
           </Wrapper>
         </RsWrapper>
