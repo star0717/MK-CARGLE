@@ -19,6 +19,7 @@ import {
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { IoIosCloseCircle } from "react-icons/io";
+import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 
 const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
@@ -79,26 +80,66 @@ const PartsModal: NextPage<any> = (props) => {
         <Text>동의어 설정</Text>
         <TextInput2 placeholder="동의어입니다 4" width={`600px`}></TextInput2>
       </Wrapper>
-      <TableWrapper
+      <Wrapper
         width={`600px`}
-        height={`200px`}
-        border={`1px solid #c4c4c4`}
+        ju={`flex-start`}
+        bgColor={`#fff`}
+        overflow={`auto`}
         radius={`5px 5px 0px 0px`}
-        ju={`top`}
+        border={`1px solid #c4c4c4`}
       >
-        <Table>
-          <TableHead>
-            <TableHeadRow>
-              <TableHeadLIST>등록된 단어</TableHeadLIST>
-            </TableHeadRow>
-          </TableHead>
-          <TableBody overflowY={`auto`}>
-            <TableRow>
-              <TableRowLIST>우와우와우와우와우ㅡ와우와우와우왕</TableRowLIST>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableWrapper>
+        <Wrapper
+          bgColor={`#343a40`}
+          color={`#fff`}
+          height={`30px`}
+          radius={`5px 5px 0px 0px`}
+        >
+          <Text>부품분류</Text>
+        </Wrapper>
+
+        {/* default */}
+        <Wrapper
+          padding={`10px`}
+          height={`150px`}
+          overflow={`auto`}
+          ju={`flex-start`}
+        >
+          <Wrapper
+            height={`30px`}
+            bgColor={`#fff`}
+            border={`1px solid #c4c4c4`}
+            dr={`row`}
+            radius={`5px`}
+            padding={`0px 20px`}
+            margin={`0px 0px 5px`}
+          >
+            <Wrapper text-align={`left`}>
+              <Text>동의어 입니다. (01)</Text>
+            </Wrapper>
+            <Wrapper width={`22px`} fontSize={`22px`}>
+              <IoIosCloseCircle />
+            </Wrapper>
+          </Wrapper>
+
+          {/* focus */}
+          <Wrapper
+            height={`30px`}
+            bgColor={`#eee`}
+            border={`1px solid #c4c4c4`}
+            dr={`row`}
+            radius={`5px`}
+            padding={`0px 20px`}
+            margin={`0px 0px 5px`}
+          >
+            <Wrapper>
+              <Text>동의어 입니다. (02)</Text>
+            </Wrapper>
+            <Wrapper width={`22px`} fontSize={`22px`}>
+              <IoIosCloseCircle />
+            </Wrapper>
+          </Wrapper>
+        </Wrapper>
+      </Wrapper>
       {/* <Wrapper
         width={`600px`}
         height={`200px`}
@@ -127,6 +168,7 @@ const PartsModal: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>
+            
           </Wrapper>
           <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
             <Text>우와와오우와우와우와우와우와우와우왕</Text>

@@ -1,6 +1,7 @@
-import { makeStyles } from "@mui/styles";
+import { TableCell, tableCellClasses, TableRow } from "@mui/material";
+import { makeStyles, styled } from "@mui/styles";
 
-const useStyles = makeStyles({
+export const useStyles = makeStyles({
   hi: {
     width: "200px",
     backgroundColor: "#314FA5",
@@ -51,6 +52,41 @@ const useStyles = makeStyles({
       transition: "0.2s",
     },
   },
+  customTable: {
+    backgroundColor: "red",
+    // ".MuiTableHead-root	": {
+    //   backgroundColor: "blue",
+    // },
+  },
 });
 
-export default useStyles;
+export const StyledTableCell = styled(TableCell)((props) => ({
+  [`&.${tableCellClasses.head}`]: {
+    width: (props) => props.width,
+    height: (props) => props.height || `45px`,
+    backgroundColor: "#343a40",
+    color: "#fff",
+    fontWeight: 600,
+    cursor: "default",
+    fontSize: "16px",
+  },
+  [`&.${tableCellClasses.body}`]: {
+    width: (props) => props.width,
+    fontSize: "16px",
+    cursor: "pointer",
+  },
+}));
+
+export const StyledTableRow = styled(TableRow)((props) => ({
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+  "&:hover": {
+    textDecoration: "underline",
+    backgroundColor: "#f5f5f5",
+    color: "#314FA5",
+    cursor: "pointer",
+    transition: "0.5s",
+  },
+}));

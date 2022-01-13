@@ -30,7 +30,7 @@ import {
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
 import { Switch } from "@mui/material";
-import useStyles from "../../../styles/MuiTheme";
+import { useStyles } from "../../../styles/MuiTheme";
 
 const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
   const dispatch = useDispatch();

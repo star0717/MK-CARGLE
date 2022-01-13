@@ -82,7 +82,7 @@ const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
           border={`1px solid #ccc`}
           radius={`5px`}
         >
-          <form onSubmit={onFindPwHandler}>
+          <form id="findPwForm" onSubmit={onFindPwHandler}>
             <Wrapper al={`flex-start`}>
               <Text margin={`0px 0px 10px`}>이름</Text>
               <TextInput2
@@ -121,7 +121,12 @@ const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
           </form>
         </Wrapper>
         <CommonButtonWrapper kindOf={`column`}>
-          <CommonButton type="submit" kindOf={`white`} margin={`0px 0px 20px`}>
+          <CommonButton
+            type="submit"
+            kindOf={`white`}
+            margin={`0px 0px 20px`}
+            form="findPwForm"
+          >
             다음
           </CommonButton>
           <CommonButton

@@ -13,6 +13,7 @@ import {
   SmallButton,
   RsWrapper,
 } from "../../../styles/CommonComponents";
+import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 /**
  * 회원가입: 업체 승인 대기 컴포넌트(기능)
@@ -37,20 +38,22 @@ const Approval: NextPage = () => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref}>
-      <RsWrapper>
-        <Wrapper>
-          <Text>가입 심사가 진행 중입니다.</Text>
-          <SmallButton
-            type="button"
-            kindOf={`default`}
-            onClick={onSignOutHandler}
-          >
-            돌아가기
-          </SmallButton>
-        </Wrapper>
-      </RsWrapper>
-    </WholeWrapper>
+    <BodyWrapper>
+      <WholeWrapper ref={ref}>
+        <RsWrapper>
+          <Wrapper>
+            <Text>가입 심사가 진행 중입니다.</Text>
+            <SmallButton
+              type="button"
+              kindOf={`default`}
+              onClick={onSignOutHandler}
+            >
+              돌아가기
+            </SmallButton>
+          </Wrapper>
+        </RsWrapper>
+      </WholeWrapper>
+    </BodyWrapper>
   );
 };
 
