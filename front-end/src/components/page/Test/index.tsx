@@ -19,14 +19,12 @@ import {
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
-  TableRow,
 } from "@mui/material";
 import ReactModal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
-import { useStyles } from "../../styles/MuiTheme";
+import { StyledTableCell, StyledTableRow } from "../../styles/MuiTheme";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -158,8 +156,6 @@ const AdminManPartsPage: NextPage<any> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
-  const classes = useStyles();
-
   return (
     <BodyWrapper ref={ref}>
       <WholeWrapper>
@@ -263,15 +259,14 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               >
                 <Table
                   stickyHeader
-                  // sx={{
-                  //   borderRadius: `4px 4px 0px 0px`,
-                  //   textAlign: `left`,
-                  // }}
-                  className={classes.customTable}
+                  sx={{
+                    borderRadius: `4px 4px 0px 0px`,
+                    textAlign: `left`,
+                  }}
                 >
                   <TableHead>
-                    <TableRow>
-                      <TableCell width={`10%`}>
+                    <StyledTableRow>
+                      <StyledTableCell width={`10%`}>
                         <Checkbox
                           sx={{
                             color: `#fff`,
@@ -290,22 +285,22 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                               : false
                           }
                         />
-                      </TableCell>
-                      <TableCell width={`30%`}>부품코드</TableCell>
-                      <TableCell width={`30%`}>부품명</TableCell>
-                      <TableCell width={`30%`}>국토부</TableCell>
-                    </TableRow>
+                      </StyledTableCell>
+                      <StyledTableCell width={`30%`}>부품코드</StyledTableCell>
+                      <StyledTableCell width={`30%`}>부품명</StyledTableCell>
+                      <StyledTableCell width={`30%`}>국토부</StyledTableCell>
+                    </StyledTableRow>
                   </TableHead>
                   <TableBody>
                     {partList.map((list: any) => (
-                      <TableRow
+                      <StyledTableRow
                         key={list._id}
                         onClick={() => {
                           setModalOption("patchPart");
                           setModalOpen(true);
                         }}
                       >
-                        <TableCell
+                        <StyledTableCell
                           width={`10%`}
                           onClick={(
                             e: React.MouseEvent<HTMLTableCellElement>
@@ -325,11 +320,17 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                               checkedList.includes(list._id) ? true : false
                             }
                           />
-                        </TableCell>
-                        <TableCell width={`30%`}>{list.code}</TableCell>
-                        <TableCell width={`30%`}>{list.name}</TableCell>
-                        <TableCell width={`30%`}>{list.molit}</TableCell>
-                      </TableRow>
+                        </StyledTableCell>
+                        <StyledTableCell width={`30%`}>
+                          {list.code}
+                        </StyledTableCell>
+                        <StyledTableCell width={`30%`}>
+                          {list.name}
+                        </StyledTableCell>
+                        <StyledTableCell width={`30%`}>
+                          {list.molit}
+                        </StyledTableCell>
+                      </StyledTableRow>
                     ))}
                   </TableBody>
                 </Table>
