@@ -1438,7 +1438,7 @@ export const CheckBox = styled.button<any>`
   height: 24px;
   color: #314fa5;
   padding: 6px 4px 4px;
-  margin: 0px;
+  margin: 5px;
   border: 1px solid #314fa5;
   background-color: #fff;
   cursor: pointer;

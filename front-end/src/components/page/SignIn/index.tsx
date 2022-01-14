@@ -25,9 +25,9 @@ import {
   CommonSubTitle,
   Label,
   CheckBox,
-  CheckMark,
 } from "../../styles/CommonComponents";
 import { BodyWrapper } from "../../styles/LayoutComponents";
+import { BsCheckLg } from "react-icons/bs";
 
 /**
  * 로그인 컴포넌트(기능)
@@ -51,6 +51,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
   });
 
   const [saveCheck, setSaveCheck] = useState<boolean>(props.saveCheck); // 아이디 저장 체크 여부를 위한 state
+  const [check, setCheck] = useState<boolean>(false);
 
   /**
    * 인풋 값 변환 handler
@@ -184,6 +185,28 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   {/* 체크박스 div */}
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
+                    {saveCheck === true ? (
+                      <CheckBox
+                        type="button"
+                        kindOf={`Checked`}
+                        onClick={() => {
+                          setSaveCheck(!saveCheck);
+                        }}
+                      >
+                        <BsCheckLg />
+                      </CheckBox>
+                    ) : (
+                      <CheckBox
+                        type="button"
+                        kindOf={`unChecked`}
+                        onClick={() => {
+                          setSaveCheck(!saveCheck);
+                        }}
+                      >
+                        <BsCheckLg />
+                      </CheckBox>
+                    )}
+                    <Text>아이디 저장</Text>
                     {/* <input
                         type="checkbox"
                         checked={saveCheck}
@@ -191,10 +214,6 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                           setSaveCheck(e.target.checked);
                         }}
                       /> */}
-                    <CheckBox>
-                      <input type="checkbox" checked />
-                      <CheckMark></CheckMark>
-                    </CheckBox>
                   </Wrapper>
                   {/* 로그인 버튼 */}
                   <CommonButton

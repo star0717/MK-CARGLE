@@ -38,7 +38,6 @@ const ByeolTest: NextPage = () => {
         <CheckBox
           kindOf={`Checked`}
           onClick={() => {
-            console.log("click1");
             setCheck(!check);
           }}
         >
@@ -48,7 +47,6 @@ const ByeolTest: NextPage = () => {
         <CheckBox
           kindOf={`unChecked`}
           onClick={() => {
-            console.log("click2");
             setCheck(!check);
           }}
         >
