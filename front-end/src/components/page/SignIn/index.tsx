@@ -51,7 +51,6 @@ const SignIn: NextPage<_SignInProps> = (props) => {
   });
 
   const [saveCheck, setSaveCheck] = useState<boolean>(props.saveCheck); // 아이디 저장 체크 여부를 위한 state
-  const [check, setCheck] = useState<boolean>(false);
 
   /**
    * 인풋 값 변환 handler
@@ -185,35 +184,16 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   {/* 체크박스 div */}
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
-                    {saveCheck === true ? (
-                      <CheckBox
-                        type="button"
-                        kindOf={`Checked`}
-                        onClick={() => {
-                          setSaveCheck(!saveCheck);
-                        }}
-                      >
-                        <BsCheckLg />
-                      </CheckBox>
-                    ) : (
-                      <CheckBox
-                        type="button"
-                        kindOf={`unChecked`}
-                        onClick={() => {
-                          setSaveCheck(!saveCheck);
-                        }}
-                      >
-                        <BsCheckLg />
-                      </CheckBox>
-                    )}
+                    <CheckBox
+                      type="button"
+                      kindOf={`${saveCheck}`}
+                      onClick={() => {
+                        setSaveCheck(!saveCheck);
+                      }}
+                    >
+                      <BsCheckLg />
+                    </CheckBox>
                     <Text>아이디 저장</Text>
-                    {/* <input
-                        type="checkbox"
-                        checked={saveCheck}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setSaveCheck(e.target.checked);
-                        }}
-                      /> */}
                   </Wrapper>
                   {/* 로그인 버튼 */}
                   <CommonButton

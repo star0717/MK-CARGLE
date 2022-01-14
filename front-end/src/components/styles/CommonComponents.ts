@@ -1445,9 +1445,9 @@ export const CheckBox = styled.button<any>`
   transition: 0.4s;
   border-radius: 2px;
 
-  ${(props) => props.kindOf === `unChecked` && `color:#fff;`}
-  ${(props) => props.kindOf === `Checked` && `color:#fff;`}
-  ${(props) => props.kindOf === `Checked` && `background-color:#314fa5;`}
+  ${(props) => props.kindOf === `false` && `color:#fff;`}
+  ${(props) => props.kindOf === `true` && `color:#fff;`}
+  ${(props) => props.kindOf === `true` && `background-color:#314fa5;`}
 `;
 
 export const Switch = styled.div<any>`
