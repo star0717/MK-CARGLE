@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { _ingCompany } from "../../../../../store/interfaces";
 import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
-import { Company, CompanyApproval } from "../../../../models/company.entity";
+import { Company } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
   IconButton,
@@ -22,6 +22,7 @@ import {
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { _MainProps } from "../../../../configure/_props.entity";
 import { UseLink } from "../../../../configure/router.entity";
+import { CompanyApproval } from "../../../../constants/model.const";
 
 const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   /*********************************************************************

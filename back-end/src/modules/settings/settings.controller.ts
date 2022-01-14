@@ -30,7 +30,7 @@ import {
   SignUpInfo,
 } from 'src/models/auth.entity';
 import { SettingsService } from './settings.service';
-import { User, UserAuthority } from 'src/models/user.entity';
+import { User } from 'src/models/user.entity';
 import {
   DeleteResult,
   FindParameters,
@@ -41,6 +41,7 @@ import { stampFileInterceptor } from 'src/config/multer.option';
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import { getStampPath } from 'src/config/configuration';
+import { UserAuthority } from 'src/constants/model.const';
 
 @ApiTags('설정(마이페이지) API')
 @Controller('settings')

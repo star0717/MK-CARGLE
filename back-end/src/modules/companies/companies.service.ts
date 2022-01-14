@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
+import { CompanyApproval } from 'src/constants/model.const';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
-import { Company, CompanyApproval } from 'src/models/company.entity';
+import { Company } from 'src/models/company.entity';
 
 @Injectable()
 export class CompaniesService extends SafeService<Company> {

@@ -29,7 +29,7 @@ export declare class BaseEntity {
   /**  버전값 (조회되진 않음) */
   __v: number;
 }
-export class FindParameters {
+export declare class FindParameters {
   page?: number;
   take?: number;
   filterKey?: string;
@@ -37,26 +37,7 @@ export class FindParameters {
   useRegSearch?: boolean;
   filter?: Object;
   projection?: string;
-  static getQuery(data: FindParameters) {
-    let query = "";
-    if (data?.page) query = query + "?page=" + data.page;
-    else query = query + "?page=1";
-    if (data?.take) query = query + "&take=" + data.take;
-    if (data?.filterKey && data?.filterValue) {
-      query =
-        query +
-        "&filterKey=" +
-        data.filterKey +
-        "&filterValue=" +
-        data.filterValue;
-      if (data.useRegSearch == true) {
-        query = query + "&useRegSearch=" + data.useRegSearch;
-      }
-    }
-    return query;
-  }
 }
-
 export declare class FindResult<T> {
   docs: T[];
   totalDocs: number;

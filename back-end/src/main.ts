@@ -14,7 +14,7 @@ import {
   tsClassB,
   TsClassList,
   TsItem,
-} from './models/part.entity';
+} from './constants/model.const';
 
 async function bootstrap() {
   const env = config();

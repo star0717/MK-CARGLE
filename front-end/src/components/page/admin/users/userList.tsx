@@ -11,7 +11,7 @@ import {
   _pAdminUsers,
   _pWorkerDataProps,
 } from "../../../../configure/_pProps.entity";
-import { User, UserAuthority } from "../../../../models/user.entity";
+import { User } from "../../../../models/user.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
   CloseButton,
@@ -28,6 +28,7 @@ import {
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
 import UsersModal from "./user_Modal";
+import { UserAuthority } from "../../../../constants/model.const";
 
 const UsersList: NextPage<_pAdminUsers> = (props) => {
   /*********************************************************************

@@ -12,13 +12,12 @@ import {
   HeaderText,
   HeaderIconButton,
 } from "../styles/LayoutComponents";
-import { CompanyApproval } from "../../models/company.entity";
 import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { menuList } from "../../configure/list.entity";
-import { UserAuthority } from "../../models/user.entity";
 import { _pLayoutProps } from "../../configure/_pProps.entity";
+import { CompanyApproval, UserAuthority } from "../../constants/model.const";
 
 const Header: NextPage<_pLayoutProps> = (props) => {
   const dispatch = useDispatch();

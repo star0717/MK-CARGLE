@@ -30,12 +30,13 @@ import {
   UserInfo,
   ConfirmPWD,
 } from 'src/models/auth.entity';
-import { User, UserAuthority } from 'src/models/user.entity';
+import { User } from 'src/models/user.entity';
 import { Company } from 'src/models/company.entity';
 import { Observable } from 'rxjs';
 import { docFileInterceptor } from 'src/config/multer.option';
 import { CommonService } from '../common/common.service';
 import { AuthToken, Public } from '../decorators/decorators';
+import { UserAuthority } from 'src/constants/model.const';
 
 @Controller('auth')
 @ApiTags('인증 API')

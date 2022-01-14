@@ -2,7 +2,7 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es2017",
-        "outDir": "../front-end/src/models",
+        "outDir": "../front-end/src/models/",
         "baseUrl": "./",
         "allowJs": true,
         "declaration": true,

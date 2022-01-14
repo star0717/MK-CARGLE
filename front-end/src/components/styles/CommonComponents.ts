@@ -419,7 +419,8 @@ export const CommonButton = styled.button<any>`
   color: #fff;
   border: 0px;
 
-  ${(props) => !props.kindOf && `background : ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    !props.kindOf && `background : ${props.theme.basicTheme_C};`}
   ${(props) =>
     props.kindOf === `white` && `background : ${props.theme.white_C};`}
   ${(props) =>
@@ -429,9 +430,11 @@ export const CommonButton = styled.button<any>`
     `border : 1px solid ${props.theme.basicTheme_C};`}
 
     ${(props) =>
-    props.kindOf === `circleWhite` && `background : ${props.theme.white_C};`}
+    props.kindOf === `circleWhite` &&
+    `background : ${props.theme.white_C};`}
     ${(props) =>
-    props.kindOf === `circleWhite` && `color : ${props.theme.basicTheme_C};`}
+    props.kindOf === `circleWhite` &&
+    `color : ${props.theme.basicTheme_C};`}
         ${(props) =>
     props.kindOf === `circleWhite` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
@@ -450,19 +453,25 @@ export const CommonButton = styled.button<any>`
 
 
      ${(props) =>
-    props.kindOf === `black` && `background : ${props.theme.darkGrey_C};`}
-  ${(props) => props.kindOf === `black` && `color : ${props.theme.white_C};`}
+    props.kindOf === `black` &&
+    `background : ${props.theme.darkGrey_C};`}
+  ${(props) =>
+    props.kindOf === `black` && `color : ${props.theme.white_C};`}
   
     ${(props) =>
-    props.kindOf === `subTheme` && `background : ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `subTheme` && `color : ${props.theme.black_C};`}
+    props.kindOf === `subTheme` &&
+    `background : ${props.theme.white_C};`}
+  ${(props) =>
+    props.kindOf === `subTheme` && `color : ${props.theme.black_C};`}
 
   
     ${(props) =>
     props.kindOf === `grey` && `background : ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `grey` && `color : ${props.theme.grey_C};`}
+  ${(props) =>
+    props.kindOf === `grey` && `color : ${props.theme.grey_C};`}
       ${(props) =>
-    props.kindOf === `grey` && `border : 1px solid ${props.theme.grey_C};`}
+    props.kindOf === `grey` &&
+    `border : 1px solid ${props.theme.grey_C};`}
   
       ${(props) =>
     props.kindOf === `default` && `background : ${props.theme.grey_C};`}
@@ -481,14 +490,18 @@ export const CommonButton = styled.button<any>`
     background: #fff;
     color: ${(props) => props.theme.white_C};
     box-shadow: ${(props) => props.theme.boxShadow};
-    ${(props) => !props.kindOf && `background ${props.theme.darkTheme_C};`}
     ${(props) =>
-      props.kindOf === `white` && `background ${props.theme.darkTheme_C};`}
+      !props.kindOf && `background ${props.theme.darkTheme_C};`}
+    ${(props) =>
+      props.kindOf === `white` &&
+      `background ${props.theme.darkTheme_C};`}
          ${(props) =>
       props.kindOf === `white` && `color ${props.theme.white_C};`}
 
-${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `black` && `color : ${props.theme.black_C};`}
+${(props) =>
+      props.kindOf === `black` && `background : ${props.theme.white_C};`}
+  ${(props) =>
+      props.kindOf === `black` && `color : ${props.theme.black_C};`}
   ${(props) =>
       props.kindOf === `black` &&
       `border : 1px solid ${props.theme.darkGrey_C};`}
@@ -496,7 +509,8 @@ ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
         ${(props) =>
       props.kindOf === `subTheme` && `color ${props.theme.white_C};`}
       
-      ${(props) => props.kindOf === `grey` && `color ${props.theme.white_C};`}
+      ${(props) =>
+      props.kindOf === `grey` && `color ${props.theme.white_C};`}
           ${(props) =>
       props.kindOf === `grey` && `background ${props.theme.grey_C};`}
 
@@ -510,7 +524,8 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
       props.kindOf === `circleWhite` &&
       `background : ${props.theme.darkTheme_C};`}
           ${(props) =>
-      props.kindOf === `circleWhite` && `color : ${props.theme.white_C};`}
+      props.kindOf === `circleWhite` &&
+      `color : ${props.theme.white_C};`}
             ${(props) =>
       props.kindOf === `circleWhite` && `border-radius : 100px;`}
 
@@ -518,7 +533,8 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
       props.kindOf === `circleTheme` &&
       `background : ${props.theme.darkTheme_C};`}
             ${(props) =>
-      props.kindOf === `circleTheme` && `color : ${props.theme.white_C};`}
+      props.kindOf === `circleTheme` &&
+      `color : ${props.theme.white_C};`}
               ${(props) =>
       props.kindOf === `circleTheme` && `border-radius : 100px;`}
   }
@@ -553,7 +569,8 @@ export const SmallButton = styled.button<any>`
   cursor: pointer;
 
   ${(props) =>
-    props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
+    props.kindOf === `default` &&
+    `background ${props.theme.subWhite_C};`}
   ${(props) =>
     props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
   ${(props) =>
@@ -562,13 +579,17 @@ export const SmallButton = styled.button<any>`
 
     ${(props) =>
     props.kindOf === `cancle` && `background ${props.theme.subWhite_C};`}
-    ${(props) => props.kindOf === `cancle` && `color ${props.theme.red_C};`}
     ${(props) =>
-    props.kindOf === `cancle` && `border : 1px solid ${props.theme.red_C};`}
+    props.kindOf === `cancle` && `color ${props.theme.red_C};`}
+    ${(props) =>
+    props.kindOf === `cancle` &&
+    `border : 1px solid ${props.theme.red_C};`}
   
 
-  ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
-  ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
+  ${(props) =>
+    props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
+  ${(props) =>
+    props.kindOf === `ghost` && `color ${props.theme.white_C};`}
   ${(props) => props.kindOf === `ghost` && `cursor : default;`}
   ${(props) => props.kindOf === `ghost` && `border : none;`}
   
@@ -581,12 +602,15 @@ export const SmallButton = styled.button<any>`
   &:hover {
     box-shadow: ${(props) => props.theme.boxShadow};
     ${(props) =>
-      props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
-    ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
+      props.kindOf === `default` &&
+      `background ${props.theme.basicTheme_C};`}
+    ${(props) =>
+      props.kindOf === `default` && `color ${props.theme.white_C};`}
 
     ${(props) =>
       props.kindOf === `cancle` && `background ${props.theme.red_C};`}
-    ${(props) => props.kindOf === `cancle` && `color ${props.theme.white_C};`}
+    ${(props) =>
+      props.kindOf === `cancle` && `color ${props.theme.white_C};`}
   }
 `;
 
@@ -609,7 +633,8 @@ export const FocusButton = styled.button<any>`
   cursor: pointer;
 
   ${(props) =>
-    props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
+    props.kindOf === `default` &&
+    `background ${props.theme.subWhite_C};`}
   ${(props) =>
     props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
   ${(props) =>
@@ -618,9 +643,11 @@ export const FocusButton = styled.button<any>`
     
     ${(props) =>
     props.kindOf === `true` && `background ${props.theme.basicTheme_C};`}
-    ${(props) => props.kindOf === `true` && `color ${props.theme.white_C};`}
     ${(props) =>
-    props.kindOf === `true` && `border : 1px solid ${props.theme.white_C};`}
+    props.kindOf === `true` && `color ${props.theme.white_C};`}
+    ${(props) =>
+    props.kindOf === `true` &&
+    `border : 1px solid ${props.theme.white_C};`}
 `;
 
 export const LabelButton = styled.label<any>`
@@ -642,7 +669,8 @@ export const LabelButton = styled.label<any>`
   cursor: pointer;
 
   ${(props) =>
-    props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
+    props.kindOf === `default` &&
+    `background ${props.theme.subWhite_C};`}
   ${(props) =>
     props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
   ${(props) =>
@@ -650,8 +678,10 @@ export const LabelButton = styled.label<any>`
     `border : 1px solid ${props.theme.basicTheme_C};`}
   
 
-  ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
-  ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
+  ${(props) =>
+    props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
+  ${(props) =>
+    props.kindOf === `ghost` && `color ${props.theme.white_C};`}
   ${(props) => props.kindOf === `ghost` && `cursor : default;`}
   ${(props) => props.kindOf === `ghost` && `border : none;`}
   
@@ -664,8 +694,10 @@ export const LabelButton = styled.label<any>`
   &:hover {
     box-shadow: ${(props) => props.theme.boxShadow};
     ${(props) =>
-      props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
-    ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
+      props.kindOf === `default` &&
+      `background ${props.theme.basicTheme_C};`}
+    ${(props) =>
+      props.kindOf === `default` && `color ${props.theme.white_C};`}
   }
 `;
 
@@ -1185,7 +1217,8 @@ export const LiWrapper = styled.li<any>`
   &:hover {
     background: ${(props) =>
       props.isTabHover ? `${props.theme.basicTheme_C}` : ``};
-    color: ${(props) => (props.isTabHover ? `${props.theme.white_C}` : ``)};
+    color: ${(props) =>
+      props.isTabHover ? `${props.theme.white_C}` : ``};
   }
 `;
 
@@ -1340,11 +1373,13 @@ export const JoinStepBar = styled.p<any>`
   ${(props) => props.kindOf === `line2` && `height : 1px;`}
   ${(props) => props.kindOf === `line2` && `border-radius : 0px;`}
   ${(props) =>
-    props.kindOf === `line2` && `border : 1px solid ${props.theme.darkGrey_C};`}
+    props.kindOf === `line2` &&
+    `border : 1px solid ${props.theme.darkGrey_C};`}
   
   ${(props) =>
     props.kindOf === `before` && `background ${props.theme.subWhite_C};`}
-  ${(props) => props.kindOf === `before` && `color ${props.theme.darkGrey_C};`}
+  ${(props) =>
+    props.kindOf === `before` && `color ${props.theme.darkGrey_C};`}
   ${(props) =>
     props.kindOf === `before` &&
     `border : 1px solid ${props.theme.darkGrey_C};`}
@@ -1357,8 +1392,10 @@ export const JoinStepBar = styled.p<any>`
     `border : 1px solid ${props.theme.basicTheme_C};`}
 
     ${(props) =>
-    props.kindOf === `complete` && `background ${props.theme.basicTheme_C};`}
-  ${(props) => props.kindOf === `complete` && `color ${props.theme.white_C};`}
+    props.kindOf === `complete` &&
+    `background ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `complete` && `color ${props.theme.white_C};`}
 `;
 
 /*Header */
@@ -1382,40 +1419,6 @@ export const NavAll = styled.div<any>`
   clear: both;
 `;
 
-// export const CheckBox = styled.label<any>`
-//   display: block;
-//   position: relative;
-//   padding-left: 35px;
-//   margin-bottom: 12px;
-//   cursor: pointer;
-//   font-size: 18px;
-
-//   &:input {
-//     position: absolute;
-//     opacity: 0;
-//     cursor: pointer;
-//     height: 0;
-//     width: 0;
-//   }
-
-//   &:hover input ~ .checkmark {
-//     background-color: #ccc;
-//   }
-
-//   input:checked ~ .checkmark {
-//     background-color: #e91b00;
-//   }
-// `;
-
-// export const CheckMark = styled.span<any>`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   height: 25px;
-//   width: 25px;
-//   background-color: #eee;
-// `;
-
 // export const NavUl = styled.ul<any>`
 //   position: ${(props) => props.position || `relative`};
 //   float: left;
@@ -1431,37 +1434,3 @@ export const NavAll = styled.div<any>`
 //     font-weight: bold;
 //   }
 // `;
-
-export const CheckBox = styled.button<any>`
-  font-size: 12px;
-  width: 24px;
-  height: 24px;
-  color: #314fa5;
-  padding: 6px 4px 4px;
-  margin: 0px;
-  border: 1px solid #314fa5;
-  background-color: #fff;
-  cursor: pointer;
-  transition: 0.4s;
-  border-radius: 4px;
-
-  ${(props) => props.kindOf === `unChecked` && `color:#fff;`}
-  ${(props) => props.kindOf === `Checked` && `color:#fff;`}
-  ${(props) => props.kindOf === `Checked` && `background-color:#314fa5;`}
-`;
-
-export const Switch = styled.div<any>`
-  width: auto;
-  height: auto;
-  font-size: 56px;
-  color: #ccc;
-  background-color: #fff;
-  padding: 0px;
-  margin: 0px;
-  borer: none;
-  outline: none;
-  transition: 0.4s;
-
-  ${(props) => props.kindOf === `on` && `color:#314fa5;`}
-  ${(props) => props.kindOf === `on` && `transition: 0.4s;`}
-`;

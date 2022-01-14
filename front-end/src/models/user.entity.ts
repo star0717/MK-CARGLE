@@ -1,12 +1,5 @@
 import { BaseEntity } from "./base.entity";
-/**
- * 사용자의 권한
- */
-export enum UserAuthority {
-  ADMIN = "admin",
-  OWNER = "owner",
-  WORKER = "worker",
-}
+import { UserAuthority } from "../constants/model.const";
 /**
  * 사용자 모델 스키마
  */

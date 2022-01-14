@@ -24,8 +24,6 @@ import {
   Text,
   CommonSubTitle,
   Label,
-  CheckBox,
-  CheckMark,
 } from "../../styles/CommonComponents";
 import { BodyWrapper } from "../../styles/LayoutComponents";
 
@@ -184,17 +182,14 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   {/* 체크박스 div */}
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
-                    {/* <input
-                        type="checkbox"
-                        checked={saveCheck}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setSaveCheck(e.target.checked);
-                        }}
-                      /> */}
-                    <CheckBox>
-                      <input type="checkbox" checked />
-                      <CheckMark></CheckMark>
-                    </CheckBox>
+                    <input
+                      type="checkbox"
+                      checked={saveCheck}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setSaveCheck(e.target.checked);
+                      }}
+                    />
+                    <Text>아이디 저장</Text>
                   </Wrapper>
                   {/* 로그인 버튼 */}
                   <CommonButton

@@ -21,10 +21,11 @@ import {
   FindResult,
 } from 'src/models/base.entity';
 import { Company } from 'src/models/company.entity';
-import { User, UserAuthority } from 'src/models/user.entity';
+import { User } from 'src/models/user.entity';
 import { CompaniesService } from '../companies/companies.service';
 import { UsersService } from '../users/users.service';
 import { MongoError, MongoServerError } from 'mongodb';
+import { UserAuthority } from 'src/constants/model.const';
 
 @Injectable()
 export class SettingsService {

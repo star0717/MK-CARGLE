@@ -18,8 +18,8 @@ import {
   UserInfo,
   ConfirmPWD,
 } from 'src/models/auth.entity';
-import { Company, CompanyApproval } from 'src/models/company.entity';
-import { User, UserAuthority } from 'src/models/user.entity';
+import { Company } from 'src/models/company.entity';
+import { User } from 'src/models/user.entity';
 
 import { HttpService } from '@nestjs/axios';
 import { randomInt } from 'crypto';
@@ -27,6 +27,7 @@ import { compare, hashSync } from 'bcrypt';
 import { CommonService } from '../common/common.service';
 import { CompaniesService } from 'src/modules/companies/companies.service';
 import { UsersService } from 'src/modules/users/users.service';
+import { CompanyApproval, UserAuthority } from 'src/constants/model.const';
 
 @Injectable()
 export class AuthService {

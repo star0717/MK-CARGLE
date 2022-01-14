@@ -1,5 +1,6 @@
-import { Company, CompanyApproval } from "./company.entity";
-import { User, UserAuthority } from "./user.entity";
+import { CompanyApproval, UserAuthority } from "../constants/model.const";
+import { Company } from "./company.entity";
+import { User } from "./user.entity";
 /**
  * 회원 가입 정보용 DTO
  */

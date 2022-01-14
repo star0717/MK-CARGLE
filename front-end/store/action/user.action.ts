@@ -38,8 +38,9 @@ import {
   CompanyApiPath,
   AdminApiPath,
   SettingsApiPath,
-} from "../../src/models/api-path";
+} from "../../src/constants/api-path.const";
 import { genApiPath } from "../../src/modules/commonModule";
+import { genFindParamQuery } from "../../src/constants/model.const";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -306,7 +307,7 @@ export async function withdrawalAction(dataToSubmit: ConfirmPWD) {
 export async function getWorkersListAction(dataToSubmit: FindParameters) {
   const req: FindResult<User> = await axios
     .get(
-      `/api${SettingsApiPath.management_workers}?${FindParameters.getQuery(
+      `/api${SettingsApiPath.management_workers}?${genFindParamQuery(
         dataToSubmit
       )}`
     )
@@ -510,9 +511,7 @@ export async function rejectCompany(id: string, dataToSubmit: OptionalInfo) {
  */
 export async function ingCompany(findParams: FindParameters) {
   const req: FindResult<Company> = await axios
-    .get(
-      `/api${AdminApiPath.ing_companies}?${FindParameters.getQuery(findParams)}`
-    )
+    .get(`/api${AdminApiPath.ing_companies}?${genFindParamQuery(findParams)}`)
     .then(
       (
         res: AxiosResponse<FindResult<Company>, Company>
@@ -534,11 +533,7 @@ export async function ingCompany(findParams: FindParameters) {
  */
 export async function _aGetAdminDoneCompanies(findParams: FindParameters) {
   const req: FindResult<Company> = await axios
-    .get(
-      `/api${AdminApiPath.done_companies}?${FindParameters.getQuery(
-        findParams
-      )}`
-    )
+    .get(`/api${AdminApiPath.done_companies}?${genFindParamQuery(findParams)}`)
     .then(
       (
         res: AxiosResponse<FindResult<Company>, Company>
@@ -561,7 +556,8 @@ export async function _aGetAdminDoneCompanies(findParams: FindParameters) {
  */
 export async function _aGetAdminUsers(findParams: FindParameters) {
   const req: FindResult<User> = await axios
-    .get(`/api${AdminApiPath.users}?${FindParameters.getQuery(findParams)}`)
+    .get(genApiPath(AdminApiPath.users, { findParams }))
+    // .get(`/api${AdminApiPath.users}?${genFindParamQuery(findParams)}`)
     .then((res: AxiosResponse<FindResult<User>, User>): FindResult<User> => {
       return res.data;
     });
@@ -584,9 +580,7 @@ export async function _aGetAdminUsersId(
   findParams: FindParameters
 ) {
   const req: FindResult<User> = await axios
-    .get(
-      `/api${AdminApiPath.users}/${id}?${FindParameters.getQuery(findParams)}`
-    )
+    .get(`/api${AdminApiPath.users}/${id}?${genFindParamQuery(findParams)}`)
     .then((res: AxiosResponse<FindResult<User>, User>): FindResult<User> => {
       return res.data;
     });

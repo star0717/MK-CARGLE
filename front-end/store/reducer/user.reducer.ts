@@ -7,8 +7,12 @@ import {
   FormCheck,
 } from "../interfaces";
 import { UserInfo } from "../../src/models/auth.entity";
-import { User, UserAuthority } from "../../src/models/user.entity";
-import { Company, CompanyApproval } from "../../src/models/company.entity";
+import { User } from "../../src/models/user.entity";
+import { Company } from "../../src/models/company.entity";
+import {
+  CompanyApproval,
+  UserAuthority,
+} from "../../src/constants/model.const";
 
 export const initialState: UserState = {
   signInInfo: <UserInfo>{

@@ -3,6 +3,7 @@ import { ParsedUrlQuery } from "querystring";
 import parse from "url-parse";
 import { MbType } from "../configure/etc.entity";
 import { mbTypeOption } from "../configure/list.entity";
+import { genFindParamQuery } from "../constants/model.const";
 import { AuthTokenInfo } from "../models/auth.entity";
 import { FindParameters } from "../models/base.entity";
 import { Company } from "../models/company.entity";
@@ -110,7 +111,7 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
     apiPath += "/" + args.id;
   }
   if (args?.findParams) {
-    apiPath += FindParameters.getQuery(args.findParams);
+    apiPath += genFindParamQuery(args.findParams);
   }
   console.log("API 호출 경로:", apiPath);
   return apiPath;

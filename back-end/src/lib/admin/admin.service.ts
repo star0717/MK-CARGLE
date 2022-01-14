@@ -6,14 +6,15 @@ import {
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
+import { CompanyApproval, UserAuthority } from 'src/constants/model.const';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
 import {
   OptionalInfo,
   FindParameters,
   FindResult,
 } from 'src/models/base.entity';
-import { Company, CompanyApproval } from 'src/models/company.entity';
-import { User, UserAuthority } from 'src/models/user.entity';
+import { Company } from 'src/models/company.entity';
+import { User } from 'src/models/user.entity';
 import { CompaniesService } from 'src/modules/companies/companies.service';
 import { UsersService } from 'src/modules/users/users.service';
 import { CommonService } from '../common/common.service';

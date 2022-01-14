@@ -1,9 +1,5 @@
 import { BaseEntity } from "./base.entity";
-export enum CompanyApproval {
-  BEFORE = "before",
-  ING = "ing",
-  DONE = "done",
-}
+import { CompanyApproval } from "../constants/model.const";
 export declare class Company extends BaseEntity {
   name: string;
   comRegNum: string;

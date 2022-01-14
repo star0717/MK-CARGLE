@@ -35,7 +35,6 @@ import { SafeService } from './safe-crud.service';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { AuthToken } from '../decorators/decorators';
-import { UserAuthority } from 'src/models/user.entity';
 
 @Injectable()
 export class AbstractValidationPipe extends ValidationPipe {
