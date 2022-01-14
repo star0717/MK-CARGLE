@@ -8,7 +8,7 @@ import { IsArray, IsOptional, IsString } from 'class-validator';
 import { BaseEntity } from './base.entity';
 
 // 부품 아이템 클래스
-export class PartItem extends BaseEntity {
+export class Part extends BaseEntity {
   @ApiProperty({
     description: '분류 레이블 (A부터 O까지의 대문자 알파벳)',
   })
@@ -37,11 +37,8 @@ export class PartItem extends BaseEntity {
   })
   @IsOptional()
   @IsArray()
-  @prop({
-    required: true,
-    trim: true,
-  })
-  nickName?: string[];
+  @prop({ type: String })
+  nickName: string[];
 
   @ApiProperty({
     description: '부품 코드',
@@ -65,4 +62,10 @@ export class PartItem extends BaseEntity {
     trim: true,
   })
   tsCode?: string;
+
+  @ApiProperty({
+    description: '버전',
+  })
+  @prop()
+  __v: number;
 }

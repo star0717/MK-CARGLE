@@ -7,14 +7,7 @@ import * as cookieParser from 'cookie-parser';
 import { existsSync, mkdirSync } from 'fs';
 import config from './config/configuration';
 import { JwtAuthGuard } from './lib/auth/guard/jwt-auth.guard';
-import {
-  getTsCode as getTsCode,
-  getTsItem,
-  getTsItemList,
-  tsClassB,
-  TsClassList,
-  TsItem,
-} from './constants/model.const';
+import { getTsCode, getTsItem } from './constants/part.const';
 
 async function bootstrap() {
   const env = config();
@@ -50,7 +43,6 @@ async function bootstrap() {
     .setTitle('API server')
     .setDescription("The API server's API description")
     .setVersion('1.0')
-    .addTag('인증 API')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
