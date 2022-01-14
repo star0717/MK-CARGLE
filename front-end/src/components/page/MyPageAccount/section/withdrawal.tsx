@@ -135,6 +135,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
                 <Text>
                   회원탈퇴 약관을 상세히 읽고 숙지하였으며, 동의합니다.
                 </Text>
+
                 <input
                   type="checkbox"
                   checked={termCheck}
@@ -145,6 +146,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
                     required: { value: true, message: "약관에 동의해주세요." },
                   })}
                 />
+
                 {errors.withdrawalTerm?.type === "required" && (
                   <Text
                     margin={`0px 0px 10px`}
