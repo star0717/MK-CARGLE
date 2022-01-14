@@ -25,7 +25,12 @@ import {
   TableHeadLIST,
   TableBody,
   TableRowLIST,
+  CheckboxContainer,
+  CheckBox1,
+  HiddenCheckbox,
+  Label1,
 } from "../src/components/styles/CommonComponents";
+import { AiFillCheckSquare } from "react-icons/ai";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -36,6 +41,13 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const ByeolTest: NextPage = () => {
   const [check, setCheck] = useState<boolean>(false);
   const [toggle, setToggle] = useState<boolean>(false);
+
+  interface CheckboxProps {
+    id: string;
+    checked: boolean;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    label?: string | null;
+  }
 
   return (
     <Wrapper width={`100%`} padding={`100px 0px 0px`}>
@@ -58,15 +70,42 @@ const ByeolTest: NextPage = () => {
           <BsCheckLg />
         </CheckBox>
       )} */}
+      {/* <CheckboxContainer>
+        <CheckBox1 checked={toggle}>
+          <HiddenCheckbox type="checkbox" onChange={!toggle} checked={toggle} />
+          <AiFillCheckSquare width="14px" height="14px" />
+        </CheckBox1>
+        {label ? <Label1>{label}</Label1> : null}
+      </CheckboxContainer> */}
+      <CheckboxContainer>
+        <CheckBox1
+          checked={toggle}
+          onClick={() => {
+            console.log(toggle);
+          }}
+          bgColor={toggle === true ? `red` : `blue`}
+        >
+          <HiddenCheckbox
+            checked={toggle}
+            onChange={() => {
+              setToggle(!toggle);
+            }}
+            type="checkbox"
+          />
+          <Text fontSize={`24px`}>
+            <BsCheckLg />
+          </Text>
+        </CheckBox1>
+      </CheckboxContainer>
 
-      <CheckBox
+      {/* <CheckBox
         kindOf={`${toggle}`}
         onClick={() => {
           setToggle(!toggle);
         }}
       >
         <BsCheckLg />
-      </CheckBox>
+      </CheckBox> */}
 
       {/* {toggle === true ? (
         <Switch
