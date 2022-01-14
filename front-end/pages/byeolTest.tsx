@@ -20,6 +20,11 @@ import {
   CommonButton,
   CheckBox,
   Switch,
+  TableWrapper,
+  TableHead,
+  TableHeadLIST,
+  TableBody,
+  TableBodyLIST,
 } from "../src/components/styles/CommonComponents";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -80,6 +85,20 @@ const ByeolTest: NextPage = () => {
       <Switch kindOf={`on`}>
         <MdToggleOff />
       </Switch> */}
+      <TableWrapper width={`1200px`}>
+        <TableHead>
+          <TableHeadLIST width={`25%`}>가나다라</TableHeadLIST>
+          <TableHeadLIST width={`25%`}>마바</TableHeadLIST>
+          <TableHeadLIST width={`25%`}>사아자</TableHeadLIST>
+          <TableHeadLIST width={`25%`}>차카타파하</TableHeadLIST>
+        </TableHead>
+        <TableBody>
+          <TableBodyLIST width={`25%`}>차카타파하</TableBodyLIST>
+          <TableBodyLIST width={`25%`}>사아자</TableBodyLIST>
+          <TableBodyLIST width={`25%`}>마바</TableBodyLIST>
+          <TableBodyLIST width={`25%`}>가나다라</TableBodyLIST>
+        </TableBody>
+      </TableWrapper>
     </Wrapper>
   );
 };

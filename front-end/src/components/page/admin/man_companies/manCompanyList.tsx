@@ -23,6 +23,11 @@ import {
   SearchInput,
   CommonTitleWrapper,
   CommonTitle,
+  TableWrapper,
+  TableHead,
+  TableHeadLIST,
+  TableBody,
+  TableBodyLIST,
 } from "../../../styles/CommonComponents";
 
 const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
@@ -135,7 +140,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             </span>
           </Text>
         </Wrapper>
-        <Wrapper margin={`10px 0px 30px`}>
+        {/* <Wrapper margin={`10px 0px 30px`}>
           <table>
             <thead>
               <tr>
@@ -203,7 +208,21 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
               )}
             </tbody>
           </table>
-        </Wrapper>
+        </Wrapper> */}
+        <TableWrapper>
+          <TableHead>
+            <TableHeadLIST>가입일</TableHeadLIST>
+            <TableHeadLIST>상호명</TableHeadLIST>
+            <TableHeadLIST>사업자등록증</TableHeadLIST>
+            <TableHeadLIST>정비업등록증</TableHeadLIST>
+            <TableHeadLIST>대표자명</TableHeadLIST>
+            <TableHeadLIST>승인여부</TableHeadLIST>
+            <TableHeadLIST>직원관리</TableHeadLIST>
+          </TableHead>
+          <TableBody>
+            <TableBodyLIST> </TableBodyLIST>
+          </TableBody>
+        </TableWrapper>
         <PagenationSection {...props} />
       </RsWrapper>
     </WholeWrapper>
