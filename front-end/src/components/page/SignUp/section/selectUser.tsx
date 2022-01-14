@@ -21,7 +21,7 @@ import { actionTypesUser } from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
 import { IoIosArrowForward } from "react-icons/io";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
-import { UserAuthority } from "../../../../models/user.entity";
+import { UserAuthority } from "../../../../constants/model.const";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 /**

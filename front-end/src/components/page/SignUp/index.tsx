@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { UserAuthority } from "../../../models/user.entity";
+import { UserAuthority } from "../../../constants/model.const";
 import Header from "./header";
 import { useSelector } from "react-redux";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
