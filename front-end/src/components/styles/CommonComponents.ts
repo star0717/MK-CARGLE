@@ -1382,39 +1382,39 @@ export const NavAll = styled.div<any>`
   clear: both;
 `;
 
-export const CheckBox = styled.label<any>`
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 18px;
+// export const CheckBox = styled.label<any>`
+//   display: block;
+//   position: relative;
+//   padding-left: 35px;
+//   margin-bottom: 12px;
+//   cursor: pointer;
+//   font-size: 18px;
 
-  &:input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
+//   &:input {
+//     position: absolute;
+//     opacity: 0;
+//     cursor: pointer;
+//     height: 0;
+//     width: 0;
+//   }
 
-  &:hover input ~ .checkmark {
-    background-color: #ccc;
-  }
+//   &:hover input ~ .checkmark {
+//     background-color: #ccc;
+//   }
 
-  input:checked ~ .checkmark {
-    background-color: #e91b00;
-  }
-`;
+//   input:checked ~ .checkmark {
+//     background-color: #e91b00;
+//   }
+// `;
 
-export const CheckMark = styled.span<any>`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
-`;
+// export const CheckMark = styled.span<any>`
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   height: 25px;
+//   width: 25px;
+//   background-color: #eee;
+// `;
 
 // export const NavUl = styled.ul<any>`
 //   position: ${(props) => props.position || `relative`};
@@ -1431,3 +1431,37 @@ export const CheckMark = styled.span<any>`
 //     font-weight: bold;
 //   }
 // `;
+
+export const CheckBox = styled.button<any>`
+  font-size: 12px;
+  width: 24px;
+  height: 24px;
+  color: #314fa5;
+  padding: 6px 4px 4px;
+  margin: 0px;
+  border: 1px solid #314fa5;
+  background-color: #fff;
+  cursor: pointer;
+  transition: 0.4s;
+  border-radius: 4px;
+
+  ${(props) => props.kindOf === `unChecked` && `color:#fff;`}
+  ${(props) => props.kindOf === `Checked` && `color:#fff;`}
+  ${(props) => props.kindOf === `Checked` && `background-color:#314fa5;`}
+`;
+
+export const Switch = styled.div<any>`
+  width: auto;
+  height: auto;
+  font-size: 56px;
+  color: #ccc;
+  background-color: #fff;
+  padding: 0px;
+  margin: 0px;
+  borer: none;
+  outline: none;
+  transition: 0.4s;
+
+  ${(props) => props.kindOf === `on` && `color:#314fa5;`}
+  ${(props) => props.kindOf === `on` && `transition: 0.4s;`}
+`;
