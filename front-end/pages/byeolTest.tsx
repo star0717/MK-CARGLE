@@ -39,11 +39,10 @@ const ByeolTest: NextPage = () => {
 
   return (
     <Wrapper width={`100%`} padding={`100px 0px 0px`}>
-      {check === true ? (
+      {/* {check === true ? (
         <CheckBox
           kindOf={`Checked`}
           onClick={() => {
-            console.log("click1");
             setCheck(!check);
           }}
         >
@@ -53,14 +52,23 @@ const ByeolTest: NextPage = () => {
         <CheckBox
           kindOf={`unChecked`}
           onClick={() => {
-            console.log("click2");
             setCheck(!check);
           }}
         >
           <BsCheckLg />
         </CheckBox>
-      )}
-      {toggle === true ? (
+      )} */}
+
+      <CheckBox
+        kindOf={`${toggle}`}
+        onClick={() => {
+          setToggle(!toggle);
+        }}
+      >
+        <BsCheckLg />
+      </CheckBox>
+
+      {/* {toggle === true ? (
         <Switch
           kindOf={`on`}
           onClick={() => {
@@ -77,7 +85,7 @@ const ByeolTest: NextPage = () => {
         >
           <MdToggleOn />
         </Switch>
-      )}
+      )} */}
 
       {/* <Switch>
         <MdToggleOff />

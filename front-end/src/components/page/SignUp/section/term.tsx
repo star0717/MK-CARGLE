@@ -15,11 +15,13 @@ import {
   CommonTitle,
   CommonTitleWrapper,
   Label,
+  CheckBox,
 } from "../../../styles/CommonComponents";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
+import { BsCheckLg } from "react-icons/bs";
 
 /**
  * 회원가입: 이용약관 컴포넌트(기능)
@@ -99,7 +101,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
                     <Text>이용약관에 동의합니다.</Text>
-                    <input
+                    {/* <input
                       type="checkbox"
                       checked={props.formCheck.mkTerm}
                       {...register("mkTerm", {
@@ -114,7 +116,69 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                         },
                         required: true,
                       })}
-                    />
+                    /> */}
+                    <CheckBox
+                      type="button"
+                      kindOf={props.formCheck.mkTerm}
+                      {...register("mkTerm", {
+                        onChange: (e: React.ChangeEvent<HTMLButtonElement>) => {
+                          console.log(props.formCheck.mkTerm);
+                          dispatch({
+                            type: actionTypesUser.FORM_CHECK,
+                            payload: {
+                              ...props.formCheck,
+                              mkTerm: !props.formCheck.mkTerm,
+                            },
+                          });
+                        },
+                        required: true,
+                      })}
+                    >
+                      <BsCheckLg />
+                    </CheckBox>
+
+                    {/* {props.formCheck.mkTerm === true ? (
+                      <CheckBox
+                        type="button"
+                        kindOf={`Checked`}
+                        {...register("mkTerm", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLButtonElement>
+                          ) => {
+                            console.log(props.formCheck);
+                            dispatch({
+                              type: actionTypesUser.FORM_CHECK,
+                              payload: {
+                                ...props.formCheck,
+                                mkTerm: false,
+                              },
+                            });
+                          },
+                        })}
+                      >
+                        <BsCheckLg />
+                      </CheckBox>
+                    ) : (
+                      <CheckBox
+                        type="button"
+                        kindOf={`unChecked`}
+                        {...register("mkTerm", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLButtonElement>
+                          ) => {
+                            dispatch({
+                              type: actionTypesUser.FORM_CHECK,
+                              payload: {
+                                ...props.formCheck,
+                                mkTerm: true,
+                              },
+                            });
+                          },
+                        })}
+                      >
+                        <BsCheckLg />
+                      </CheckBox>
+                    )} */}
                   </Wrapper>
                 </Wrapper>
               </Wrapper>

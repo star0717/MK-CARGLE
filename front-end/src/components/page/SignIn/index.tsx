@@ -25,9 +25,9 @@ import {
   CommonSubTitle,
   Label,
   CheckBox,
-  CheckMark,
 } from "../../styles/CommonComponents";
 import { BodyWrapper } from "../../styles/LayoutComponents";
+import { BsCheckLg } from "react-icons/bs";
 
 /**
  * 로그인 컴포넌트(기능)
@@ -184,17 +184,16 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   {/* 체크박스 div */}
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
-                    {/* <input
-                        type="checkbox"
-                        checked={saveCheck}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setSaveCheck(e.target.checked);
-                        }}
-                      /> */}
-                    <CheckBox>
-                      <input type="checkbox" checked />
-                      <CheckMark></CheckMark>
+                    <CheckBox
+                      type="button"
+                      kindOf={`${saveCheck}`}
+                      onClick={() => {
+                        setSaveCheck(!saveCheck);
+                      }}
+                    >
+                      <BsCheckLg />
                     </CheckBox>
+                    <Text>아이디 저장</Text>
                   </Wrapper>
                   {/* 로그인 버튼 */}
                   <CommonButton
