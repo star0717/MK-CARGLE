@@ -1198,6 +1198,7 @@ export const TableWrapper = styled.div<any>`
   align-items: center;
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
+  min-height: 500px;
 `;
 
 export const TableHead = styled.ul<any>`
@@ -1222,14 +1223,14 @@ export const TableHeadLIST = styled.li<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: row;
   align-items: center;
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
+  text-align: start;
 `;
 
 export const TableBody = styled.div<any>`
   width: 100%;
   height: ${(props) => props.height || `auto`};
-  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
-  padding: ${(props) => props.padding || `0px 20px`};
+  margin: ${(props) => props.margin || `0px`};
   overflow: ${(props) => props.overflow || ``};
   font-size: ${(props) => props.fontSize || `16px`};
 `;
@@ -1242,13 +1243,13 @@ export const TableRow = styled.ul<any>`
   align-items: center;
   justify-content: ${(props) => props.ju || `space-between`};
   border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
-  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   transition: 0.5s;
   cursor: pointer;
+  padding: ${(props) => props.padding || `0px 20px`};
 
   &:hover {
     background-color: #f5f5f5;
-    color: #343a40;
+    color: #314fa5;
     text-decoration: underline;
   }
 `;
@@ -1259,10 +1260,11 @@ export const TableRowLIST = styled.li<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
   padding: ${(props) => props.padding};
   line-height: ${(props) => props.lineHeight || `1.2`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
+  text-align: start;
 `;
 
 /** pagenation */

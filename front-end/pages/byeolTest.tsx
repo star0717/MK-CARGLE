@@ -24,7 +24,7 @@ import {
   TableHead,
   TableHeadLIST,
   TableBody,
-  TableBodyLIST,
+  TableRowLIST,
 } from "../src/components/styles/CommonComponents";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -101,10 +101,10 @@ const ByeolTest: NextPage = () => {
           <TableHeadLIST width={`25%`}>차카타파하</TableHeadLIST>
         </TableHead>
         <TableBody>
-          <TableBodyLIST width={`25%`}>차카타파하</TableBodyLIST>
-          <TableBodyLIST width={`25%`}>사아자</TableBodyLIST>
-          <TableBodyLIST width={`25%`}>마바</TableBodyLIST>
-          <TableBodyLIST width={`25%`}>가나다라</TableBodyLIST>
+          <TableRowLIST width={`25%`}>차카타파하</TableRowLIST>
+          <TableRowLIST width={`25%`}>사아자</TableRowLIST>
+          <TableRowLIST width={`25%`}>마바</TableRowLIST>
+          <TableRowLIST width={`25%`}>가나다라</TableRowLIST>
         </TableBody>
       </TableWrapper>
     </Wrapper>
