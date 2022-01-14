@@ -193,10 +193,6 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                     >
                       <BsCheckLg />
                     </CheckBox>
-<<<<<<< HEAD
-=======
-
->>>>>>> f6f6d222cadb4eb396ec7b73f7baf85b537aed9c
                     <Text>아이디 저장</Text>
                   </Wrapper>
                   {/* 로그인 버튼 */}
