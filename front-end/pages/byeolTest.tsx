@@ -25,7 +25,12 @@ import {
   TableHeadLIST,
   TableBody,
   TableRowLIST,
+  CheckboxContainer,
+  CheckBox1,
+  HiddenCheckbox,
+  Label1,
 } from "../src/components/styles/CommonComponents";
+import { AiFillCheckSquare } from "react-icons/ai";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -36,6 +41,13 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const ByeolTest: NextPage = () => {
   const [check, setCheck] = useState<boolean>(false);
   const [toggle, setToggle] = useState<boolean>(false);
+
+  interface CheckboxProps {
+    id: string;
+    checked: boolean;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    label?: string | null;
+  }
 
   return (
     <Wrapper width={`100%`} padding={`100px 0px 0px`}>
@@ -107,6 +119,14 @@ const ByeolTest: NextPage = () => {
           <TableRowLIST width={`25%`}>가나다라</TableRowLIST>
         </TableBody>
       </TableWrapper>
+
+      <CheckboxContainer>
+        <CheckBox1 checked={toggle}>
+          <HiddenCheckbox type="checkbox" onChange={!toggle} checked={toggle} />
+          <AiFillCheckSquare width="14px" height="14px" />
+        </CheckBox1>
+        {label ? <Label1>{label}</Label1> : null}
+      </CheckboxContainer>
     </Wrapper>
   );
 };

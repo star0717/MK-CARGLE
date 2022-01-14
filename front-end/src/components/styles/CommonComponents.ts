@@ -1509,3 +1509,41 @@ export const Switch = styled.div<any>`
   ${(props) => props.kindOf === `on` && `color:#314fa5;`}
   ${(props) => props.kindOf === `on` && `transition: 0.4s;`}
 `;
+
+export const CheckboxContainer = styled.div<any>`
+  display: flex;
+  align-items: center;
+`;
+
+export const CheckBox1 = styled.label<any>`
+  display: inline-block;
+  width: 14px;ß
+  height: 14px;ß
+  border: 1px solid ${`green`};
+  background-color: ${(props) => props.bgColor || `red`}; 
+  border-radius: ${`4px`};
+  cursor: pointer;
+
+  & > svg {
+    position: absolute;
+  }
+`;
+
+export const HiddenCheckbox = styled.input<any>`
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+`;
+
+export const Label1 = styled.label<any>`
+  display: inline-block;
+  line-height: 16px;
+  padding-left: 4px;
+  cursor: pointer;
+`;
