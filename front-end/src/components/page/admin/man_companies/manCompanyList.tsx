@@ -27,7 +27,8 @@ import {
   TableHead,
   TableHeadLIST,
   TableBody,
-  TableBodyLIST,
+  TableRowLIST,
+  TableRow,
 } from "../../../styles/CommonComponents";
 
 const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
@@ -220,7 +221,9 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             <TableHeadLIST>직원관리</TableHeadLIST>
           </TableHead>
           <TableBody>
-            <TableBodyLIST> </TableBodyLIST>
+            <TableRow>
+              <TableRowLIST> </TableRowLIST>
+            </TableRow>
           </TableBody>
         </TableWrapper>
         <PagenationSection {...props} />

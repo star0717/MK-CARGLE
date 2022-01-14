@@ -1192,37 +1192,28 @@ export const LiWrapper = styled.li<any>`
 // Table
 
 export const TableWrapper = styled.div<any>`
-  width: ${(props) => props.width || `100%`};
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: ${(props) => props.margin || `20px 0px 50px`};
+  margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
-  border: 1px solid #ccc;
-  box-shadow: ${(props) => props.shadow || `3px 3px 3px #eee`};
-  min-height: 445px;
-
-  @media (max-width: 700px) {
-    display: none;
-  }
 `;
 
 export const TableHead = styled.ul<any>`
   width: 100%;
-  height: 50px;
+  height: ${(props) => props.height || `50px`};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  font-weight: 600;
+  box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
-  border-bottom: ${(props) => props.borderBottom};
-  border-top: ${(props) => props.borderTop};
   border-radius: ${(props) => props.radius || ``};
   background: #343a40;
   color: #fff;
-  font-size: 16px;
-  text-align: left;
+  padding: ${(props) => props.padding || `0px 20px`};
+  font-size: ${(props) => props.fontSize || `16px`};
 `;
 
 export const TableHeadLIST = styled.li<any>`
@@ -1231,45 +1222,47 @@ export const TableHeadLIST = styled.li<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: row;
   align-items: center;
-  text-align: left;
-  justify-content: ${(props) => props.ju || `flex-start`};
-  padding: 0px 20px;
-  font-size: 16px;
+  justify-content: ${(props) => props.ju || `center`};
 `;
 
-export const TableBody = styled.ul<any>`
+export const TableBody = styled.div<any>`
+  width: 100%;
+  height: ${(props) => props.height || `auto`};
+  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
+  padding: ${(props) => props.padding || `0px 20px`};
+  overflow: ${(props) => props.overflow || ``};
+  font-size: ${(props) => props.fontSize || `16px`};
+`;
+export const TableRow = styled.ul<any>`
   width: 100%;
   height: ${(props) => props.height || `45px`};
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.padding || `0px`};
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: ${(props) => props.ju || `space-between`};
-  text-align: left;
-  font-size: 16px;
-
   border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
+  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
   transition: 0.5s;
   cursor: pointer;
 
   &:hover {
-    background: #f5f5f5;
-    color: #314fa5;
+    background-color: #f5f5f5;
+    color: #343a40;
     text-decoration: underline;
   }
 `;
 
-export const TableBodyLIST = styled.li<any>`
+export const TableRowLIST = styled.li<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `100%`};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `flex-start`};
+  justify-content: ${(props) => props.ju || `center`};
   padding: ${(props) => props.padding};
   line-height: ${(props) => props.lineHeight || `1.2`};
-  text-align: left;
-  padding: 0px 20px;
+  border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
 `;
 
 /** pagenation */
