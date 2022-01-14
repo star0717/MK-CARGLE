@@ -477,6 +477,6 @@ export const getTsItem = (tsCode: string) => {
   return null;
 };
 
-export const getTsCode = (item: TsItem) => {
+export const getCode = (item: TsItem) => {
   return item.class.label + item.index;
 };

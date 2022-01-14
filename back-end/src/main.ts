@@ -7,7 +7,14 @@ import * as cookieParser from 'cookie-parser';
 import { existsSync, mkdirSync } from 'fs';
 import config from './config/configuration';
 import { JwtAuthGuard } from './lib/auth/guard/jwt-auth.guard';
-import { TsClassList } from './models/part.entity';
+import {
+  getTsCode as getTsCode,
+  getTsItem,
+  getTsItemList,
+  tsClassB,
+  TsClassList,
+  TsItem,
+} from './models/part.entity';
 
 async function bootstrap() {
   const env = config();
@@ -51,8 +58,15 @@ async function bootstrap() {
   // 서버 실행
   await app.listen(process.env.SV_PORT);
 
-  TsClassList.forEach((e) => {
-    console.log(e.class, e.name);
-  });
+  // TsClassList.forEach((e) => {
+  //   console.log(e.label, e.description);
+  // });
+  // const tsItemList = getTsItemList(tsClassB);
+  // tsItemList.forEach((item) => {
+  //   console.log(item.index, item.name, item.class.label);
+  // });
+  let item = getTsItem('B20');
+  console.log(item);
+  console.log(getTsCode(item));
 }
 bootstrap();
