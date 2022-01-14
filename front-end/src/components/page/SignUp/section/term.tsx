@@ -40,15 +40,15 @@ const Term: NextPage<_pSignUpProps> = (props) => {
 
   /**
    * 이용약관 form submit handler
-   * @param data
+   * @param _data
    */
-  const agreeTermHandler: SubmitHandler<_fTermData> = (data) => {
+  const agreeTermHandler: SubmitHandler<_fTermData> = (_data) => {
     props.setStepNumber(props.stepNumber + 1);
   };
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
-
+  console.log(props.formCheck.mkTerm);
   return (
     <BodyWrapper ref={ref}>
       <WholeWrapper>
@@ -101,7 +101,43 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
                     <Text>이용약관에 동의합니다.</Text>
-                    {/* <input
+
+                    <CheckBox
+                      type="button"
+                      kindOf={`${props.formCheck.mkTerm}`}
+                      onClick={() => {
+                        // dispatch({
+                        //   type: actionTypesUser.FORM_CHECK,
+                        //   payload: {
+                        //     ...props.formCheck,
+                        //     mkTerm: !props.formCheck.mkTerm,
+                        //   },
+                        // });
+                        dispatch({
+                          type: actionTypesUser.FORM_CHECK,
+                          payload: {
+                            ...props.formCheck,
+                            mkTerm: !props.formCheck.mkTerm,
+                          },
+                        });
+                      }}
+
+                      // {...register("mkTerm", {
+                      //   onChange: (e: React.ChangeEvent<HTMLButtonElement>) => {
+                      //     dispatch({
+                      //       type: actionTypesUser.FORM_CHECK,
+                      //       payload: {
+                      //         ...props.formCheck,
+                      //         mkTerm: !props.formCheck.mkTerm,
+                      //       },
+                      //     });
+                      //   },
+                      // })}
+                    >
+                      <BsCheckLg />
+                    </CheckBox>
+                    <input
+                      // style={{ opacity: `0` }}
                       type="checkbox"
                       checked={props.formCheck.mkTerm}
                       {...register("mkTerm", {
@@ -116,69 +152,18 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                         },
                         required: true,
                       })}
-                    /> */}
-                    <CheckBox
-                      type="button"
-                      kindOf={props.formCheck.mkTerm}
-                      {...register("mkTerm", {
-                        onChange: (e: React.ChangeEvent<HTMLButtonElement>) => {
-                          console.log(props.formCheck.mkTerm);
-                          dispatch({
-                            type: actionTypesUser.FORM_CHECK,
-                            payload: {
-                              ...props.formCheck,
-                              mkTerm: !props.formCheck.mkTerm,
-                            },
-                          });
-                        },
+                    />
+                    {/* <input
+                      type="checkbox"
+                      checked={props.formCheck.mkTerm}
+                      {...(register("mkTerm"),
+                      {
+                        onChange: (
+                          e: React.ChangeEvent<HTMLInputElement>
+                        ) => {},
                         required: true,
                       })}
-                    >
-                      <BsCheckLg />
-                    </CheckBox>
-
-                    {/* {props.formCheck.mkTerm === true ? (
-                      <CheckBox
-                        type="button"
-                        kindOf={`Checked`}
-                        {...register("mkTerm", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLButtonElement>
-                          ) => {
-                            console.log(props.formCheck);
-                            dispatch({
-                              type: actionTypesUser.FORM_CHECK,
-                              payload: {
-                                ...props.formCheck,
-                                mkTerm: false,
-                              },
-                            });
-                          },
-                        })}
-                      >
-                        <BsCheckLg />
-                      </CheckBox>
-                    ) : (
-                      <CheckBox
-                        type="button"
-                        kindOf={`unChecked`}
-                        {...register("mkTerm", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLButtonElement>
-                          ) => {
-                            dispatch({
-                              type: actionTypesUser.FORM_CHECK,
-                              payload: {
-                                ...props.formCheck,
-                                mkTerm: true,
-                              },
-                            });
-                          },
-                        })}
-                      >
-                        <BsCheckLg />
-                      </CheckBox>
-                    )} */}
+                    /> */}
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -307,7 +292,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
               </Wrapper>
               <CommonButtonWrapper kindOf={`column`}>
                 <CommonButton
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  onClick={(_e: React.MouseEvent<HTMLButtonElement>) => {
                     props.setStepNumber(props.stepNumber - 1);
                   }}
                   kindOf={`white`}

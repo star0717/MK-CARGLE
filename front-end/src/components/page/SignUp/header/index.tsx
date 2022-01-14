@@ -12,7 +12,7 @@ import {
 } from "../../../styles/CommonComponents";
 import { GoCheck } from "react-icons/go";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
-import { UserAuthority } from "../../../../models/user.entity";
+import { UserAuthority } from "../../../../constants/model.const";
 
 /**
  * 회원가입: 공통 헤더 컴포넌트(기능)

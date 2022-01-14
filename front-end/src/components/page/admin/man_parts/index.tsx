@@ -16,6 +16,9 @@ import {
   Wrapper,
   CommonButton,
   SmallButton,
+  TableWrapper,
+  TableHead,
+  TableHeadLIST,
 } from "../../../styles/CommonComponents";
 import { BsPlusSquareFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
@@ -159,11 +162,11 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               <Wrapper
                 margin={`0px`}
                 radius={`0px`}
-                height={`450px`}
+                height={`500px`}
                 width={`880px`}
                 overflow={`auto`}
               >
-                <table>
+                {/* <table>
                   <thead>
                     <tr>
                       <td width={`40px`}>
@@ -204,7 +207,27 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                       <td width={` 320px`}>국토부</td>
                     </tr>
                   </tbody>
-                </table>
+                </table> */}
+                <TableWrapper>
+                  <TableHead>
+                    <TableHeadLIST width={`calc(100% / 4)`}>
+                      <Wrapper>
+                        <Text fontSize={`24px`} margin={`4px 0px 0px`}>
+                          <RiCheckboxBlankLine />
+                        </Text>
+                      </Wrapper>
+                    </TableHeadLIST>
+                    <TableHeadLIST width={`calc(100% / 4)`}>
+                      부품코드
+                    </TableHeadLIST>
+                    <TableHeadLIST width={`calc(100% / 4)`}>
+                      부품명
+                    </TableHeadLIST>
+                    <TableHeadLIST width={`calc(100% / 4)`}>
+                      국토부
+                    </TableHeadLIST>
+                  </TableHead>
+                </TableWrapper>
               </Wrapper>
             </Wrapper>
           </Wrapper>
