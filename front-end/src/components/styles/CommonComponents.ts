@@ -1189,6 +1189,74 @@ export const LiWrapper = styled.li<any>`
   }
 `;
 
+// Table
+
+export const TableWrapper = styled.div<any>`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: ${(props) => props.margin || `20px 0px 50px`};
+  padding: ${(props) => props.margin || `20px 0px 50px`};
+
+  @media (max-width: 700px) {
+    display: none;
+  }
+`;
+
+export const TableHead = styled.ul<any>`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: ${(props) => props.shadow || `3px 3px 3px #eee`};
+  margin: ${(props) => props.margin || `0px 0px 10px 0px`};
+  border-bottom: ${(props) => props.borderBottom};
+  border-top: ${(props) => props.borderTop};
+  border-radius: ${(props) => props.radius || ``};
+  background: #fff;
+  color: #000;
+`;
+
+export const TableHeadLIST = styled.li<any>`
+  width: ${(props) => props.width};
+  height: 100%;
+  display: ${(props) => props.display || `flex`};
+  flex-direction: row;
+  align-items: center;
+  justify-content: ${(props) => props.ju || `center`};
+`;
+
+export const TableBody = styled.ul<any>`
+  width: 100%;
+  height: ${(props) => props.height || `35px`};
+  padding: ${(props) => props.padding};
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: ${(props) => props.ju || `space-between`};
+
+  border-bottom: ${(props) => props.borderBottom || `1px solid #eee`};
+  transition: 0.5s;
+  cursor: pointer;
+  /* &:hover {
+    background: #f5f5f5;
+  } */
+`;
+
+export const TableBodyLIST = styled.li<any>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `100%`};
+  display: ${(props) => props.display || `flex`};
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  padding: ${(props) => props.padding};
+  line-height: ${(props) => props.lineHeight || `1.2`};
+`;
+
 /** pagenation */
 
 export const PagenationWrapper = styled.div<any>`
