@@ -1434,16 +1434,16 @@ export const NavAll = styled.div<any>`
 
 export const CheckBox = styled.button<any>`
   font-size: 12px;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   color: #314fa5;
-  padding: 6px 4px 4px;
-  margin: 0px;
+  padding: 4px 2px 2px;
+  margin: 5px;
   border: 1px solid #314fa5;
   background-color: #fff;
   cursor: pointer;
   transition: 0.4s;
-  border-radius: 4px;
+  border-radius: 2px;
 
   ${(props) => props.kindOf === `unChecked` && `color:#fff;`}
   ${(props) => props.kindOf === `Checked` && `color:#fff;`}
