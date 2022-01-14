@@ -70,15 +70,42 @@ const ByeolTest: NextPage = () => {
           <BsCheckLg />
         </CheckBox>
       )} */}
+      {/* <CheckboxContainer>
+        <CheckBox1 checked={toggle}>
+          <HiddenCheckbox type="checkbox" onChange={!toggle} checked={toggle} />
+          <AiFillCheckSquare width="14px" height="14px" />
+        </CheckBox1>
+        {label ? <Label1>{label}</Label1> : null}
+      </CheckboxContainer> */}
+      <CheckboxContainer>
+        <CheckBox1
+          checked={toggle}
+          onClick={() => {
+            console.log(toggle);
+          }}
+          bgColor={toggle === true ? `red` : `blue`}
+        >
+          <HiddenCheckbox
+            checked={toggle}
+            onChange={() => {
+              setToggle(!toggle);
+            }}
+            type="checkbox"
+          />
+          <Text fontSize={`24px`}>
+            <BsCheckLg />
+          </Text>
+        </CheckBox1>
+      </CheckboxContainer>
 
-      <CheckBox
+      {/* <CheckBox
         kindOf={`${toggle}`}
         onClick={() => {
           setToggle(!toggle);
         }}
       >
         <BsCheckLg />
-      </CheckBox>
+      </CheckBox> */}
 
       {/* {toggle === true ? (
         <Switch
@@ -119,14 +146,6 @@ const ByeolTest: NextPage = () => {
           <TableRowLIST width={`25%`}>가나다라</TableRowLIST>
         </TableBody>
       </TableWrapper>
-
-      <CheckboxContainer>
-        <CheckBox1 checked={toggle}>
-          <HiddenCheckbox type="checkbox" onChange={!toggle} checked={toggle} />
-          <AiFillCheckSquare width="14px" height="14px" />
-        </CheckBox1>
-        {label ? <Label1>{label}</Label1> : null}
-      </CheckboxContainer>
     </Wrapper>
   );
 };
