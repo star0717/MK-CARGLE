@@ -1458,40 +1458,6 @@ export const NavAll = styled.div<any>`
   clear: both;
 `;
 
-// export const CheckBox = styled.label<any>`
-//   display: block;
-//   position: relative;
-//   padding-left: 35px;
-//   margin-bottom: 12px;
-//   cursor: pointer;
-//   font-size: 18px;
-
-//   &:input {
-//     position: absolute;
-//     opacity: 0;
-//     cursor: pointer;
-//     height: 0;
-//     width: 0;
-//   }
-
-//   &:hover input ~ .checkmark {
-//     background-color: #ccc;
-//   }
-
-//   input:checked ~ .checkmark {
-//     background-color: #e91b00;
-//   }
-// `;
-
-// export const CheckMark = styled.span<any>`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   height: 25px;
-//   width: 25px;
-//   background-color: #eee;
-// `;
-
 // export const NavUl = styled.ul<any>`
 //   position: ${(props) => props.position || `relative`};
 //   float: left;

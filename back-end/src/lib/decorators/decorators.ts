@@ -5,8 +5,10 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthTokenInfo } from 'src/models/auth.entity';
-import { CompanyApproval } from 'src/models/company.entity';
-import { UserAuthority as UAuth } from 'src/models/user.entity';
+import {
+  CompanyApproval,
+  UserAuthority as UAuth,
+} from 'src/constants/model.const';
 
 export const Public = () => SetMetadata('isPublic', true);
 

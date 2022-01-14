@@ -9,7 +9,8 @@ import {
   _pAdminManCompanies,
   _pAdminReviewCompanies,
 } from "../../../../configure/_pProps.entity";
-import { Company, CompanyApproval } from "../../../../models/company.entity";
+import { CompanyApproval } from "../../../../constants/model.const";
+import { Company } from "../../../../models/company.entity";
 import { PagenationSection } from "../../../common/sections";
 import {
   Combo,

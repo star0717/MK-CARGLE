@@ -2,12 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 import { BaseEntity } from './base.entity';
 import { prop } from '@typegoose/typegoose';
-
-export enum CompanyApproval {
-  BEFORE = 'before', // 심사 전. 회원가입 후 서류 제출 완료 전
-  ING = 'ing', // 심사 중. 회원가입 및 서류 제출 완료
-  DONE = 'done', // 승인완료
-}
+import { CompanyApproval } from 'src/constants/model.const';
 
 export class Company extends BaseEntity {
   @ApiProperty({ description: '상호명' })

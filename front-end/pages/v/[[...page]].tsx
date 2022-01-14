@@ -16,17 +16,17 @@ import {
   parseJwt,
 } from "../../src/modules/commonModule";
 import { AuthTokenInfo } from "../../src/models/auth.entity";
-import { Company, CompanyApproval } from "../../src/models/company.entity";
+import { Company } from "../../src/models/company.entity";
 import FileUpload from "../../src/components/page/SignUp/section/fileUpload";
 import Approval from "../../src/components/page/SignUp/section/approval";
 import Main from "../../src/components/page/Main";
-import { Step, UseLink } from "../../src/configure/router.entity";
+import { UseLink } from "../../src/configure/router.entity";
 import { useRouter } from "next/dist/client/router";
 import MyPageAccount from "../../src/components/page/MyPageAccount";
 import MyPageWorker from "../../src/components/page/MyPageWorker";
 import Test from "../../src/components/page/Test";
 import { _MainProps } from "../../src/configure/_props.entity";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
@@ -35,13 +35,12 @@ import AdminReviewCompaniesPage from "../../src/components/page/admin/review_com
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import {
   AdminApiPath,
-  AuthApiPath,
   SettingsApiPath,
-} from "../../src/models/api-path";
+} from "../../src/constants/api-path.const";
 import AdminUsersPage from "../../src/components/page/admin/users";
 import AdminManPartsPage from "../../src/components/page/admin/man_parts";
 import AdminMolitItemsPage from "../../src/components/page/admin/molit_items";
-import { tryGetPreviewData } from "next/dist/server/api-utils";
+import { CompanyApproval } from "../../src/constants/model.const";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -260,6 +259,7 @@ export const getServerSideProps: GetServerSideProps = async (
             )
             .then((res: AxiosResponse<Company, Company>) => res.data);
         } else {
+          console.log("11");
           successResult.props.data = await axios
             .get(
               genApiPath(AdminApiPath.ing_companies, {

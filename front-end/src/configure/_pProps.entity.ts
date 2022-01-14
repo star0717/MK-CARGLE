@@ -2,9 +2,10 @@ import React from "react";
 import { FieldValues, UseFormSetValue } from "react-hook-form";
 import { AuthTokenInfo, SignUpInfo } from "../../src/models/auth.entity";
 import { FormCheck, FormInput } from "../../store/interfaces";
+import { UserAuthority } from "../constants/model.const";
 import { FindResult } from "../models/base.entity";
 import { Company } from "../models/company.entity";
-import { User, UserAuthority } from "../models/user.entity";
+import { User } from "../models/user.entity";
 import { _fTermData, _fWithdrawal } from "./_fProps.entity";
 import { _MainProps } from "./_props.entity";
 

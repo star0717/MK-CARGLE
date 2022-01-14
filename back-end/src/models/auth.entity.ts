@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsOptional, IsString, ValidateNested } from 'class-validator';
-import { Company, CompanyApproval } from './company.entity';
-import { User, UserAuthority } from './user.entity';
+import { CompanyApproval, UserAuthority } from 'src/constants/model.const';
+import { Company } from './company.entity';
+import { User } from './user.entity';
 
 /**
  * 회원 가입 정보용 DTO

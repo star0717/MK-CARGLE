@@ -1,4 +1,4 @@
-import { UserAuthority } from "../models/user.entity";
+import { UserAuthority } from "../constants/model.const";
 import { MbType } from "./etc.entity";
 import { UseLink } from "./router.entity";
 

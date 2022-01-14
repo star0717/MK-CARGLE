@@ -4,7 +4,6 @@ import {
   IsBoolean,
   IsEmail,
   IsEnum,
-  IsNumber,
   IsOptional,
   IsString,
   IsMongoId,
@@ -14,16 +13,8 @@ import {
 } from 'class-validator';
 import { BaseEntity } from './base.entity';
 import { hashSync } from 'bcrypt';
+import { UserAuthority } from 'src/constants/model.const';
 const saltRounds = 10;
-
-/**
- * 사용자의 권한
- */
-export enum UserAuthority {
-  ADMIN = 'admin', // MK의 시스템 관리자
-  OWNER = 'owner', // 카센터
-  WORKER = 'worker', // 카센터 직원
-}
 
 /**
  * 사용자 모델 스키마

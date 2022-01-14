@@ -18,13 +18,6 @@ export class AuthApiPath {
   static request_company = AuthApiPath.BASE + 'request/company';
   static help_email = AuthApiPath.BASE + 'help/email';
   static help_pwd = AuthApiPath.BASE + 'help/pwd';
-
-  /**
-   * 변경 사항
-   * find/company/ -> company/
-   * find/companies -> companies
-   * file-name/com-reg-docc -> file-name/com-reg-doc
-   */
 }
 
 export class UserApiPath {

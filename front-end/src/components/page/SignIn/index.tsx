@@ -24,7 +24,10 @@ import {
   Text,
   CommonSubTitle,
   Label,
+<<<<<<< HEAD
+=======
   CheckBox,
+>>>>>>> 5b39e944077caf7531e48aca988f09233b592bf4
 } from "../../styles/CommonComponents";
 import { BodyWrapper } from "../../styles/LayoutComponents";
 import { BsCheckLg } from "react-icons/bs";
@@ -184,6 +187,15 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   {/* 체크박스 div */}
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
+<<<<<<< HEAD
+                    <input
+                      type="checkbox"
+                      checked={saveCheck}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setSaveCheck(e.target.checked);
+                      }}
+                    />
+=======
                     <CheckBox
                       type="button"
                       kindOf={`${saveCheck}`}
@@ -193,6 +205,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                     >
                       <BsCheckLg />
                     </CheckBox>
+>>>>>>> 5b39e944077caf7531e48aca988f09233b592bf4
                     <Text>아이디 저장</Text>
                   </Wrapper>
                   {/* 로그인 버튼 */}

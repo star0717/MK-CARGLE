@@ -20,11 +20,11 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
-import { Company, CompanyApproval } from 'src/models/company.entity';
+import { Company } from 'src/models/company.entity';
 import { CommonService } from '../common/common.service';
 import { AuthToken, Public } from '../decorators/decorators';
 import { AdminService } from './admin.service';
-import { User, UserAuthority } from 'src/models/user.entity';
+import { User } from 'src/models/user.entity';
 import { createReadStream } from 'fs';
 import { getCrnPath, getMrnPath } from 'src/config/configuration';
 import { join } from 'path';
@@ -33,6 +33,7 @@ import {
   FindParameters,
   FindResult,
 } from 'src/models/base.entity';
+import { CompanyApproval, UserAuthority } from 'src/constants/model.const';
 
 @Controller('admin')
 @ApiTags('시스템 관리자 API')
@@ -240,6 +241,7 @@ export class AdminController {
     @Query() fParams: FindParameters,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<FindResult<Company>> {
+    console.log(fParams);
     fParams.filter = { approval: CompanyApproval.ING } as Partial<Company>;
     return await this.service.findCompanies(token, fParams);
   }
