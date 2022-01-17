@@ -302,9 +302,10 @@ export const CommonSubTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin || `0px`};
   font-size: 22px;
-  color: ${(props) => props.color || `#343a40`};
+  color: ${(props) => props.color || `#314FA5`};
   font-weight: ${(props) => props.fontWeight || `400`};
   text-align: ${(props) => props.textAlign || `center`};
+  padding: 10px 0px 0px;
 `;
 
 export const CommonSmallTitle = styled.h2<any>`
@@ -344,7 +345,7 @@ export const Text = styled.p<any>`
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
-  background: ${(props) => props.bgColor};
+  background: ${(props) => props.background};
   text-align: ${(props) => props.textAlign || `center`};
   transition: 0.5s;
   position: ${(props) => (props.isRelative ? `relative` : ``)};
@@ -377,6 +378,14 @@ export const Text = styled.p<any>`
   &:hover {
     text-decoration: ${(props) => props.decoration};
   }
+
+  ${(props) =>
+    props.kindOf === `gradient` &&
+    `background : linear-gradient(180deg, hsla(224, 54%, 42%, 1) 0%, hsla(216, 100%, 63%, 1) 100%);`}
+
+  ${(props) => props.kindOf === `gradient` && ` -webkit-background-clip: text;`}
+  ${(props) =>
+    props.kindOf === `gradient` && ` -webkit-text-fill-color: transparent;`}
 `;
 
 /**button */
@@ -1407,6 +1416,7 @@ export const JoinStepBar = styled.p<any>`
   width: ${(props) => props.width || `64px`};
   height: ${(props) => props.height || `64px`};
   border-radius: ${(props) => props.radius || `64px`};
+  color: ${(props) => props.color || ``};
   background-color: ${(props) => props.bgColor || `#314FA5`};
 
   ${(props) => props.kindOf === `line` && `height : 1px;`}
@@ -1428,14 +1438,17 @@ export const JoinStepBar = styled.p<any>`
     props.kindOf === `before` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
   
-  ${(props) => props.kindOf === `progress` && `background : #314fa5;`}
+  ${(props) =>
+    props.kindOf === `progress` &&
+    `background: linear-gradient(125deg, hsla(224, 54%, 42%, 1) 0%, hsla(216, 100%, 63%, 1) 100%);`}
   ${(props) => props.kindOf === `progress` && `color ${props.theme.white_C};`}
   ${(props) =>
     props.kindOf === `progress` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
 
     ${(props) =>
-    props.kindOf === `complete` && `background ${props.theme.basicTheme_C};`}
+    props.kindOf === `complete` &&
+    `background: linear-gradient(125deg, hsla(224, 54%, 42%, 1) 0%, hsla(216, 100%, 63%, 1) 100%);`}
   ${(props) => props.kindOf === `complete` && `color ${props.theme.white_C};`}
 `;
 
@@ -1517,7 +1530,7 @@ export const CheckboxContainer = styled.div<any>`
 
 export const CheckBoxLine = styled.label<any>`
   display: inline-block;
-  margin: 4px 8px 4px 0px;
+  margin: 12px 8px 12px 0px;
   width: 24px;
   height: 24px;
   background-color: ${(props) => props.bgColor || `#314fa5`};

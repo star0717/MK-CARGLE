@@ -121,8 +121,9 @@ const SignIn: NextPage<_SignInProps> = (props) => {
               margin={`0px`}
               padding={`0px`}
               color={`#292929`}
-              fontSize={`34px`}
+              fontSize={`40px`}
               fontWeight={`800`}
+              kindOf={`gradient`}
             >
               CARGLE
             </Text>

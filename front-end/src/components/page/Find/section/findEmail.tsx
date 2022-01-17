@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
 import { _pFindEmail } from "../../../../configure/_pProps.entity";
+import { BodyWrapper } from "../../../styles/LayoutComponents";
 import FindEmailCheck from "./findEmailCheck";
 import FindEmailComplete from "./findEmailComplete";
 
@@ -26,13 +27,13 @@ const FindEmail: NextPage = () => {
   };
 
   return (
-    <>
+    <BodyWrapper>
       {complete ? (
         <FindEmailComplete {...findEmailProps} />
       ) : (
         <FindEmailCheck {...findEmailProps} />
       )}
-    </>
+    </BodyWrapper>
   );
 };
 
