@@ -143,6 +143,7 @@ export const Wrapper = styled.div<any>`
   background-color: ${(props) => props.bgColor};
   transition: 0.5s;
   cursor: ${(props) => props.cursor};
+  transform: ${(props) => props.transform};
   line-height: ${(props) => props.lineHeight};
   text-align: ${(props) => props.textAlign};
   animation: ${appearAnimation} 1s forwards;
@@ -1515,18 +1516,23 @@ export const CheckboxContainer = styled.div<any>`
   align-items: center;
 `;
 
-export const CheckBox1 = styled.label<any>`
+export const CheckBoxLine = styled.label<any>`
   display: inline-block;
-  width: 34px;
-  height: 34px;
-  border: 1px solid ${`green`};
-  background-color: ${(props) => props.bgColor || `red`};
+  width: 24px;
+  height: 24px;
+  background-color: ${(props) => props.bgColor || `redgreen`};
   border-radius: ${`4px`};
   cursor: pointer;
+  border: 1px solid #314fa5;
+  transition: 0.4s;
 
   & > svg {
     position: absolute;
   }
+
+  ${(props) => props.kindOf === `true` && `bgColor:#314fa5;`}
+
+  ${(props) => props.kindOf === `false` && `bgColor:#fff;`}
 `;
 
 export const HiddenCheckbox = styled.input<any>`
@@ -1540,10 +1546,16 @@ export const HiddenCheckbox = styled.input<any>`
   white-space: nowrap;
   width: 1px;
 `;
-
-export const Label1 = styled.label<any>`
-  display: inline-block;
-  line-height: 16px;
-  padding-left: 4px;
-  cursor: pointer;
+export const CheckBoxIcon = styled.p<any>`
+  font-size: 16px;
+  color: #fff;
+  text-align: ${(props) => props.textAlign || `center`};
+  line-height: 2;
 `;
+
+// export const Label1 = styled.label<any>`
+//   display: inline-block;
+//   line-height: 16px;
+//   padding-left: 4px;
+//   cursor: pointer;
+// `;

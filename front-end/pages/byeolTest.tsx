@@ -26,9 +26,9 @@ import {
   TableBody,
   TableRowLIST,
   CheckboxContainer,
-  CheckBox1,
+  CheckBoxLine,
   HiddenCheckbox,
-  Label1,
+  CheckBoxIcon,
 } from "../src/components/styles/CommonComponents";
 import { AiFillCheckSquare } from "react-icons/ai";
 
@@ -71,19 +71,19 @@ const ByeolTest: NextPage = () => {
         </CheckBox>
       )} */}
       {/* <CheckboxContainer>
-        <CheckBox1 checked={toggle}>
+        <CheckBoxLine checked={toggle}>
           <HiddenCheckbox type="checkbox" onChange={!toggle} checked={toggle} />
           <AiFillCheckSquare width="14px" height="14px" />
-        </CheckBox1>
+        </CheckBoxLine>
         {label ? <Label1>{label}</Label1> : null}
       </CheckboxContainer> */}
       <CheckboxContainer>
-        <CheckBox1
+        <CheckBoxLine
           checked={toggle}
           onClick={() => {
             console.log(toggle);
           }}
-          bgColor={toggle === true ? `red` : `blue`}
+          bgColor={toggle === true ? `#314fa5` : `#fff`}
         >
           <HiddenCheckbox
             checked={toggle}
@@ -92,10 +92,10 @@ const ByeolTest: NextPage = () => {
             }}
             type="checkbox"
           />
-          <Text fontSize={`24px`}>
+          <CheckBoxIcon fontSize={`16px`} color={`#fff`}>
             <BsCheckLg />
-          </Text>
-        </CheckBox1>
+          </CheckBoxIcon>
+        </CheckBoxLine>
       </CheckboxContainer>
 
       {/* <CheckBox
@@ -146,6 +146,21 @@ const ByeolTest: NextPage = () => {
           <TableRowLIST width={`25%`}>가나다라</TableRowLIST>
         </TableBody>
       </TableWrapper>
+      <Wrapper
+        width={`60px`}
+        height={`30px`}
+        radius={`30px`}
+        bgColor={`#ccc`}
+        al={`flex-start`}
+      >
+        <Wrapper
+          width={`24px`}
+          height={`24px`}
+          bgColor={`#000`}
+          radius={`24px`}
+          padding={`2px`}
+        ></Wrapper>
+      </Wrapper>
     </Wrapper>
   );
 };
