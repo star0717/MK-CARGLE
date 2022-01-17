@@ -90,6 +90,7 @@ const ByeolTest: NextPage = () => {
           </CheckBoxIcon>
         </CheckBoxLine>
       </CheckboxContainer>
+      <Wrapper>dsfjkdlskf</Wrapper>
 
       {/* <CheckBox
         kindOf={`${toggle}`}
