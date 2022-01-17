@@ -38,7 +38,7 @@ import {
   CompanyApiPath,
   AdminApiPath,
   SettingsApiPath,
-} from "../../src/models/api-path";
+} from "../../src/constants/api-path.const";
 import { genApiPath } from "../../src/modules/commonModule";
 
 // 로그인 action
