@@ -79,14 +79,13 @@ const ByeolTest: NextPage = () => {
       </CheckboxContainer> */}
       <CheckboxContainer>
         <CheckBoxLine
-          checked={toggle}
+          kindOf={`${toggle}`}
           onClick={() => {
             console.log(toggle);
           }}
-          bgColor={toggle === true ? `#314fa5` : `#fff`}
         >
           <HiddenCheckbox
-            checked={toggle}
+            kindOf={`${toggle}`}
             onChange={() => {
               setToggle(!toggle);
             }}

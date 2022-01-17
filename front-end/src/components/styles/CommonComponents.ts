@@ -1520,8 +1520,8 @@ export const CheckBoxLine = styled.label<any>`
   display: inline-block;
   width: 24px;
   height: 24px;
-  background-color: ${(props) => props.bgColor || `redgreen`};
-  border-radius: ${`4px`};
+  background-color: ${(props) => props.bgColor || `#314fa5`};
+  border-radius: 4px;
   cursor: pointer;
   border: 1px solid #314fa5;
   transition: 0.4s;
