@@ -38,6 +38,7 @@ export class AdminApiPath {
     AdminApiPath.BASE + 'review/reject/companies';
   static review_delete_companies =
     AdminApiPath.BASE + 'review/delete/companies';
+  /** 회사 및 사용자 관리 관련 */
   static review_comRegDoc = AdminApiPath.BASE + 'review/com-reg-doc';
   static review_mainRegDoc = AdminApiPath.BASE + 'review/main-reg-doc';
   static companies = AdminApiPath.BASE + 'companies';
@@ -46,6 +47,10 @@ export class AdminApiPath {
   static done_companies = AdminApiPath.BASE + 'done/companies';
   static users = AdminApiPath.BASE + 'users';
   static signup_info = AdminApiPath.BASE + 'signup-info';
+  /** 부품 관리 */
+  static parts = AdminApiPath.BASE + 'parts';
+  static parts_Class = AdminApiPath.BASE + 'parts/class';
+  static part_genCode = AdminApiPath.BASE + 'parts/gen-code';
 }
 
 export class SettingsApiPath {

@@ -103,11 +103,13 @@ export class SafeService<T extends BaseEntity> {
       };
     }
 
-    console.log('*** findByOptions');
-    console.log(fQuery);
     const currentPage = fParams.page;
     const skipOption = (currentPage - 1) * fParams.take;
     const limitOption = fParams.take;
+
+    console.log('*** findByOptions');
+    console.log('fQuery: ', fQuery);
+    console.log('fParams :', fParams);
 
     let result: FindResult<T> = new FindResult<T>();
     result.totalDocs = await this.model.countDocuments(
