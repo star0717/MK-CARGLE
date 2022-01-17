@@ -440,6 +440,10 @@ export const CommonButton = styled.button<any>`
 
     ${(props) =>
     props.kindOf === `circleWhite` && `background : ${props.theme.white_C};`}
+    ${(props) => props.kindOf === `circleWhite` && `width : 400px;`}
+      ${(props) => props.kindOf === `circleWhite` && `height : 50px;`}
+      ${(props) =>
+    props.kindOf === `circleWhite` && `background : ${props.theme.white_C};`}
     ${(props) =>
     props.kindOf === `circleWhite` && `color : ${props.theme.basicTheme_C};`}
         ${(props) =>
@@ -457,6 +461,8 @@ export const CommonButton = styled.button<any>`
     `border : 1px solid ${props.theme.basicTheme_C};`}
           ${(props) =>
     props.kindOf === `circleTheme` && `border-radius : 100px;`}
+    ${(props) => props.kindOf === `circleTheme` && `width : 400px;`}
+      ${(props) => props.kindOf === `circleTheme` && `height : 50px;`}
 
 
      ${(props) =>

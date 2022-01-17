@@ -97,6 +97,7 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
               width={`400px`}
               height={`150px`}
               placeholder="반려 사유를 입력하세요."
+              al={`flex-start`}
               type="text"
               readOnly={approval}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,11 +119,7 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
         </Wrapper>
         <CommonButtonWrapper kindOf={`column`}>
           <CommonButton
-            kindOf={`white`}
-            margin={`5px 0px 0px 0px`}
-            width={`400px`}
-            height={`50px`}
-            radius={`100px`}
+            kindOf={`circleWhite`}
             type="button"
             onClick={() => {
               if (approval === true) {
@@ -150,10 +147,7 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
             저장
           </CommonButton>
           <CommonButton
-            margin={`5px 0px 0px 0px`}
-            width={`400px`}
-            height={`50px`}
-            radius={`100px`}
+            kindOf={`circleTheme`}
             type="button"
             onClick={() => {
               props.setModalOpen(false);

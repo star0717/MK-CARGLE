@@ -234,8 +234,8 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             },
             content: {
               background: "white",
-              width: "800px",
-              height: "600px",
+              width: "500px",
+              height: "800px",
               maxWidth: "calc(100vw - 2rem)",
               maxHeight: "calc(100vh - 2rem)",
               overflowY: "auto",
