@@ -1518,10 +1518,11 @@ export const CheckboxContainer = styled.div<any>`
 
 export const CheckBoxLine = styled.label<any>`
   display: inline-block;
+  margin: 4px 8px 4px 0px;
   width: 24px;
   height: 24px;
   background-color: ${(props) => props.bgColor || `#314fa5`};
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   border: 1px solid #314fa5;
   transition: 0.4s;

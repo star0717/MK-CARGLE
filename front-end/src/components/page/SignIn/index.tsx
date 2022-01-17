@@ -25,6 +25,10 @@ import {
   CommonSubTitle,
   Label,
   CheckBox,
+  CheckboxContainer,
+  CheckBoxIcon,
+  CheckBoxLine,
+  HiddenCheckbox,
 } from "../../styles/CommonComponents";
 import { BodyWrapper } from "../../styles/LayoutComponents";
 import { BsCheckLg } from "react-icons/bs";
@@ -184,16 +188,20 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   {/* 체크박스 div */}
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
-                    <CheckBox
-                      type="button"
-                      kindOf={`${saveCheck}`}
-                      onClick={() => {
-                        setSaveCheck(!saveCheck);
-                      }}
-                    >
-                      <BsCheckLg />
-                    </CheckBox>
-                    <Text>아이디 저장</Text>
+                    <CheckboxContainer>
+                      <CheckBoxLine kindOf={`${saveCheck}`}>
+                        <HiddenCheckbox
+                          type="checkbox"
+                          onChange={() => {
+                            setSaveCheck(!saveCheck);
+                          }}
+                        />
+                        <CheckBoxIcon>
+                          <BsCheckLg />
+                        </CheckBoxIcon>
+                      </CheckBoxLine>
+                      아이디 저장
+                    </CheckboxContainer>
                   </Wrapper>
                   {/* 로그인 버튼 */}
                   <CommonButton

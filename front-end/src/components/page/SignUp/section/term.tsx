@@ -18,6 +18,8 @@ import {
   CheckBox,
   CheckboxContainer,
   HiddenCheckbox,
+  CheckBoxIcon,
+  CheckBoxLine,
 } from "../../../styles/CommonComponents";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
@@ -102,16 +104,10 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     )}
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
-                    <Text>이용약관에 동의합니다.</Text>
-
-                    {/* <CheckboxContainer>
-                      <CheckBox1
-                        bgColor={
-                          props.formCheck.mkTerm === true ? `#fff` : `#fff`
-                        }
-                      >
+                    <CheckboxContainer>
+                      <CheckBoxLine kindOf={`${props.formCheck.mkTerm}`}>
                         <HiddenCheckbox
-                          checked={props.formCheck.mkTerm}
+                          type="checkbox"
                           {...register("mkTerm", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -126,58 +122,13 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                             },
                             required: true,
                           })}
-                          type="checkbox"
                         />
-                        <Text fontSize={`24px`}>
+                        <CheckBoxIcon>
                           <BsCheckLg />
-                        </Text>
-                      </CheckBox1>
-                    </CheckboxContainer> */}
-
-                    {/* <CheckBox
-                      type="button"
-                      kindOf={`${props.formCheck.mkTerm}`}
-                      onClick={() => {
-                        dispatch({
-                          type: actionTypesUser.FORM_CHECK,
-                          payload: {
-                            ...props.formCheck,
-                            mkTerm: !props.formCheck.mkTerm,
-                          },
-                        });
-                      }}
-                    >
-                      <BsCheckLg />
-                    </CheckBox> */}
-
-                    {/* <input
-                      // style={{ opacity: `0` }}
-                      type="checkbox"
-                      checked={props.formCheck.mkTerm}
-                      {...register("mkTerm", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          dispatch({
-                            type: actionTypesUser.FORM_CHECK,
-                            payload: {
-                              ...props.formCheck,
-                              mkTerm: e.target.checked,
-                            },
-                          });
-                        },
-                        required: true,
-                      })}
-                    /> */}
-                    {/* <input
-                      type="checkbox"
-                      checked={props.formCheck.mkTerm}
-                      {...(register("mkTerm"),
-                      {
-                        onChange: (
-                          e: React.ChangeEvent<HTMLInputElement>
-                        ) => {},
-                        required: true,
-                      })}
-                    /> */}
+                        </CheckBoxIcon>
+                      </CheckBoxLine>
+                      동의합니다.
+                    </CheckboxContainer>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -229,23 +180,31 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     )}
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
-                    <Text>이용약관에 동의합니다.</Text>
-                    <input
-                      type="checkbox"
-                      checked={props.formCheck.privacyTerm}
-                      {...register("privacyTerm", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          dispatch({
-                            type: actionTypesUser.FORM_CHECK,
-                            payload: {
-                              ...props.formCheck,
-                              privacyTerm: e.target.checked,
+                    <CheckboxContainer>
+                      <CheckBoxLine kindOf={`${props.formCheck.privacyTerm}`}>
+                        <HiddenCheckbox
+                          type="checkbox"
+                          {...register("privacyTerm", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              dispatch({
+                                type: actionTypesUser.FORM_CHECK,
+                                payload: {
+                                  ...props.formCheck,
+                                  privacyTerm: e.target.checked,
+                                },
+                              });
                             },
-                          });
-                        },
-                        required: true,
-                      })}
-                    />
+                            required: true,
+                          })}
+                        />
+                        <CheckBoxIcon>
+                          <BsCheckLg />
+                        </CheckBoxIcon>
+                      </CheckBoxLine>
+                      동의합니다.
+                    </CheckboxContainer>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -286,22 +245,30 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   </Text>
                 </Wrapper>
                 <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
-                  <Text>마케팅 정보 수신에 동의합니다.</Text>
-                  <input
-                    type="checkbox"
-                    checked={props.formCheck.marketTerm}
-                    {...register("marketTerm", {
-                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                        dispatch({
-                          type: actionTypesUser.FORM_CHECK,
-                          payload: {
-                            ...props.formCheck,
-                            marketTerm: e.target.checked,
+                  <CheckboxContainer>
+                    <CheckBoxLine kindOf={`${props.formCheck.marketTerm}`}>
+                      <HiddenCheckbox
+                        type="checkbox"
+                        {...register("marketTerm", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            dispatch({
+                              type: actionTypesUser.FORM_CHECK,
+                              payload: {
+                                ...props.formCheck,
+                                marketTerm: e.target.checked,
+                              },
+                            });
                           },
-                        });
-                      },
-                    })}
-                  />
+                        })}
+                      />
+                      <CheckBoxIcon>
+                        <BsCheckLg />
+                      </CheckBoxIcon>
+                    </CheckBoxLine>
+                    동의합니다.
+                  </CheckboxContainer>
                 </Wrapper>
               </Wrapper>
               <CommonButtonWrapper kindOf={`column`}>
