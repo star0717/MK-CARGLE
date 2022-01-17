@@ -55,8 +55,10 @@ export class SafeService<T extends BaseEntity> {
     doc.createdAt = new Date(Date.now());
 
     try {
+      console.log(doc);
       return await this.model.create(doc);
     } catch (err: unknown) {
+      console.log(err);
       this.handelError(err);
     }
   }
@@ -66,6 +68,7 @@ export class SafeService<T extends BaseEntity> {
     doc._cID = token.cID;
     doc._uID = token.uID;
 
+    console.log(doc);
     return await this._create(doc);
   }
 

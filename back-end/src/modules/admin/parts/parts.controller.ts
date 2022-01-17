@@ -46,6 +46,7 @@ export class PartsController extends SafeControllerFactory<Part>(Part) {
     @Body() part: Part,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<Part> {
+    console.log(part);
     return this.service.create(token, part);
   }
 
@@ -82,7 +83,27 @@ export class PartsController extends SafeControllerFactory<Part>(Part) {
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<FindResult<Part>> {
     fParams.filter = { label: id } as Partial<Part>;
+    console.log(fParams);
     return this.service.findByOptions(token, fParams);
+  }
+
+  @Get('gen-code/:id')
+  @ApiOperation({
+    summary: '[ADMIN] 특정 클래스에 추가할 새로운 부품코드를 반환',
+  })
+  @ApiParam({
+    name: 'id',
+    description: `추가할 부품의 클래스. A부터 O사이의 대문자 알파벳`,
+  })
+  @ApiResponse({
+    description: `부품코드`,
+    type: String,
+  })
+  async genPartCode(
+    @Param('id') id: string,
+    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
+  ): Promise<string> {
+    return await this.service.genPartCode(token, id);
   }
 
   @Get(':id')

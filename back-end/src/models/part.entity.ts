@@ -58,7 +58,7 @@ export class Part extends BaseEntity {
   @IsOptional()
   @IsString()
   @prop({
-    required: true,
+    required: false,
     trim: true,
   })
   tsCode?: string;
