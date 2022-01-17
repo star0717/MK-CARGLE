@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { FilterQuery, QueryWithHelpers } from 'mongoose';
+import { FilterQuery } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
@@ -18,7 +18,7 @@ export class PartsService extends SafeService<Part> {
 
   async genPartCode(token: AuthTokenInfo, id: string) {
     const fQuery: FilterQuery<Part> = { label: id };
-    const part: Part = await this.model.findOne(fQuery).sort({ lable: 1 });
+    const part: Part = await this.model.findOne(fQuery).sort({ code: -1 });
 
     let newPostfix = '1';
     if (part) {

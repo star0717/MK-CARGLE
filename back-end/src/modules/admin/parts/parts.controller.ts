@@ -62,6 +62,7 @@ export class PartsController extends SafeControllerFactory<Part>(Part) {
     @Query() fParams: FindParameters,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<FindResult<Part>> {
+    fParams.take = 100;
     return this.service.findByOptions(token, fParams);
   }
 
