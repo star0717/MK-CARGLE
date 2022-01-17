@@ -13,6 +13,8 @@ import {
 import { GoCheck } from "react-icons/go";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { UserAuthority } from "../../../../constants/model.const";
+import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
+import { MdOutlineBusinessCenter } from "react-icons/md";
 
 /**
  * 회원가입: 공통 헤더 컴포넌트(기능)
@@ -76,7 +78,7 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
                 <JoinStepBar
                   kindOf={props.stepNumber === 2 ? `progress` : `complete`}
                 >
-                  {props.stepNumber === 2 ? `1` : <GoCheck />}
+                  {props.stepNumber === 2 ? <AiOutlineFileText /> : <GoCheck />}
                 </JoinStepBar>
                 <JoinStepBar
                   kindOf={props.stepNumber > 2 ? `line` : `line2`}
@@ -90,7 +92,7 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
                       : `complete`
                   }
                 >
-                  {props.stepNumber > 3 ? <GoCheck /> : `2`}
+                  {props.stepNumber > 3 ? <GoCheck /> : <AiOutlineUser />}
                 </JoinStepBar>
                 <JoinStepBar
                   kindOf={props.stepNumber > 3 ? `line` : `line2`}
@@ -104,7 +106,11 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
                       : `complete`
                   }
                 >
-                  {props.stepNumber > 4 ? <GoCheck /> : `3`}
+                  {props.stepNumber > 4 ? (
+                    <GoCheck />
+                  ) : (
+                    <MdOutlineBusinessCenter />
+                  )}
                 </JoinStepBar>
                 <JoinStepBar
                   kindOf={props.stepNumber > 4 ? `line` : `line2`}

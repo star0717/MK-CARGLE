@@ -1401,14 +1401,13 @@ export const JoinStepBar = styled.p<any>`
   justify-content: ${(props) => props.ju || `center`};
   align-items: ${(props) => props.al || `center`};
   text-align: center;
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 32px;
   margin: 0px;
   padding: 0px;
-  width: ${(props) => props.width || `32px`};
-  height: ${(props) => props.height || `32px`};
-  border-radius: ${(props) => props.radius || `32px`};
-  background-color: ${(props) => props.bgColor || `32px`};
+  width: ${(props) => props.width || `64px`};
+  height: ${(props) => props.height || `64px`};
+  border-radius: ${(props) => props.radius || `64px`};
+  background-color: ${(props) => props.bgColor || `#314FA5`};
 
   ${(props) => props.kindOf === `line` && `height : 1px;`}
   ${(props) => props.kindOf === `line` && `border-radius : 0px;`}
@@ -1422,15 +1421,15 @@ export const JoinStepBar = styled.p<any>`
     props.kindOf === `line2` && `border : 1px solid ${props.theme.darkGrey_C};`}
   
   ${(props) =>
-    props.kindOf === `before` && `background ${props.theme.subWhite_C};`}
-  ${(props) => props.kindOf === `before` && `color ${props.theme.darkGrey_C};`}
+    props.kindOf === `before` && `background ${props.theme.white_C};`}
+  ${(props) =>
+    props.kindOf === `before` && `color ${props.theme.basicTheme_C};`}
   ${(props) =>
     props.kindOf === `before` &&
-    `border : 1px solid ${props.theme.darkGrey_C};`}
+    `border : 1px solid ${props.theme.basicTheme_C};`}
   
-  ${(props) => props.kindOf === `progress` && `background : #fff;`}
-  ${(props) =>
-    props.kindOf === `progress` && `color ${props.theme.basicTheme_C};`}
+  ${(props) => props.kindOf === `progress` && `background : #314fa5;`}
+  ${(props) => props.kindOf === `progress` && `color ${props.theme.white_C};`}
   ${(props) =>
     props.kindOf === `progress` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
