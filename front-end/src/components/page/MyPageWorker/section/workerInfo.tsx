@@ -15,6 +15,12 @@ import {
   CommonTitle,
   CommonTitleWrapper,
   CommonSubTitle,
+  TableWrapper,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableRowLIST,
+  TableHeadLIST,
 } from "../../../styles/CommonComponents";
 import dayjs from "dayjs";
 
@@ -55,43 +61,37 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
           이곳에서 직원 정보를 확인 및 수정할 수 있습니다.
         </CommonSubTitle>
       </CommonTitleWrapper>
-      <RsWrapper ju={`flex-start`}>
-        <Wrapper ju={`flex-start`} height={`auto`}>
-          <Wrapper>
-            <table>
-              <thead>
-                <tr>
-                  <th>직원명</th>
-                  <th>전화번호</th>
-                  <th>입사일자</th>
-                  <th>승인여부</th>
-                </tr>
-              </thead>
-              <tbody>
-                {props.findResult.docs.map((doc: User) => (
-                  <tr
-                    key={doc._id}
-                    onClick={() => {
-                      setModalOpen(!modalOpen);
-                      setClickDoc(doc);
-                    }}
-                  >
-                    <td width={`300px`}>{doc.name}</td>
-                    <td width={`300px`}>{doc.hpNumber}</td>
-                    <td width={`300px`}>
-                      {dayjs(doc.joinDate).format("YYYY-MM-DD")}
-                    </td>
-                    {doc.approval ? (
-                      <td width={`300px`}>승인</td>
-                    ) : (
-                      <td width={`300px`}>미승인</td>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Wrapper>
-        </Wrapper>
+      <RsWrapper>
+        <TableWrapper margin={`50px 0px 0px`}>
+          <TableHead>
+            <TableHeadLIST width={`25%`}>직원명</TableHeadLIST>
+            <TableHeadLIST width={`25%`}>전화번호</TableHeadLIST>
+            <TableHeadLIST width={`25%`}>입사일자</TableHeadLIST>
+            <TableHeadLIST width={`25%`}>승인여부</TableHeadLIST>
+          </TableHead>
+          <TableBody>
+            {props.findResult.docs.map((doc: User) => (
+              <TableRow
+                key={doc._id}
+                onClick={() => {
+                  setModalOpen(!modalOpen);
+                  setClickDoc(doc);
+                }}
+              >
+                <TableRowLIST width={`25%`}>{doc.name}</TableRowLIST>
+                <TableRowLIST width={`25%`}>{doc.hpNumber}</TableRowLIST>
+                <TableRowLIST width={`25%`}>
+                  {dayjs(doc.joinDate).format("YYYY-MM-DD")}
+                </TableRowLIST>
+                {doc.approval ? (
+                  <TableRowLIST width={`25%`}>승인</TableRowLIST>
+                ) : (
+                  <TableRowLIST width={`25%`}>미승인</TableRowLIST>
+                )}
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableWrapper>
         <PagenationSection {...props} />
       </RsWrapper>
       <Modal
