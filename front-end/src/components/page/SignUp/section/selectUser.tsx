@@ -99,7 +99,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
             </JoinFirstStepSelect>
           </Wrapper>
         </Wrapper>
-        <CommonButtonWrapper>
+        <CommonButtonWrapper kindOf={`column`}>
           <CommonButton>
             <Link href={UseLink.INDEX}>
               <a>다음에 가입하기</a>
