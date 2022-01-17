@@ -1571,9 +1571,9 @@ export const CheckBoxIcon = styled.p<any>`
   line-height: 2;
 `;
 
-// export const Label1 = styled.label<any>`
-//   display: inline-block;
-//   line-height: 16px;
-//   padding-left: 4px;
-//   cursor: pointer;
-// `;
+export const Label1 = styled.label<any>`
+  display: inline-block;
+  line-height: 16px;
+  padding-left: 4px;
+  cursor: pointer;
+`;
