@@ -17,7 +17,6 @@ import {
   Label,
   CheckBox,
   CheckboxContainer,
-  CheckBox1,
   HiddenCheckbox,
 } from "../../../styles/CommonComponents";
 import { useDispatch } from "react-redux";
@@ -105,7 +104,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   <Wrapper dr={`row`} width={`auto`}>
                     <Text>이용약관에 동의합니다.</Text>
 
-                    <CheckboxContainer>
+                    {/* <CheckboxContainer>
                       <CheckBox1
                         bgColor={
                           props.formCheck.mkTerm === true ? `#fff` : `#fff`
@@ -133,7 +132,8 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                           <BsCheckLg />
                         </Text>
                       </CheckBox1>
-                    </CheckboxContainer>
+                    </CheckboxContainer> */}
+
                     {/* <CheckBox
                       type="button"
                       kindOf={`${props.formCheck.mkTerm}`}

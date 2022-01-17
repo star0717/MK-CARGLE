@@ -26,8 +26,8 @@ import {
   TableBody,
   TableRowLIST,
   CheckboxContainer,
-  CheckBoxLine,
   HiddenCheckbox,
+  CheckBoxLine,
   CheckBoxIcon,
 } from "../src/components/styles/CommonComponents";
 import { AiFillCheckSquare } from "react-icons/ai";
@@ -48,7 +48,7 @@ const ByeolTest: NextPage = () => {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     label?: string | null;
   }
-
+  console.log("333", toggle);
   return (
     <Wrapper width={`100%`} padding={`100px 0px 0px`}>
       {/* {check === true ? (
@@ -71,27 +71,21 @@ const ByeolTest: NextPage = () => {
         </CheckBox>
       )} */}
       {/* <CheckboxContainer>
-        <CheckBoxLine checked={toggle}>
+        <CheckBox1 checked={toggle}>
           <HiddenCheckbox type="checkbox" onChange={!toggle} checked={toggle} />
           <AiFillCheckSquare width="14px" height="14px" />
-        </CheckBoxLine>
+        </CheckBox1>
         {label ? <Label1>{label}</Label1> : null}
       </CheckboxContainer> */}
       <CheckboxContainer>
-        <CheckBoxLine
-          kindOf={`${toggle}`}
-          onClick={() => {
-            console.log(toggle);
-          }}
-        >
+        <CheckBoxLine kindOf={`${toggle}`}>
           <HiddenCheckbox
-            kindOf={`${toggle}`}
+            type="checkbox"
             onChange={() => {
               setToggle(!toggle);
             }}
-            type="checkbox"
           />
-          <CheckBoxIcon fontSize={`16px`} color={`#fff`}>
+          <CheckBoxIcon>
             <BsCheckLg />
           </CheckBoxIcon>
         </CheckBoxLine>
@@ -145,21 +139,6 @@ const ByeolTest: NextPage = () => {
           <TableRowLIST width={`25%`}>가나다라</TableRowLIST>
         </TableBody>
       </TableWrapper>
-      <Wrapper
-        width={`60px`}
-        height={`30px`}
-        radius={`30px`}
-        bgColor={`#ccc`}
-        al={`flex-start`}
-      >
-        <Wrapper
-          width={`24px`}
-          height={`24px`}
-          bgColor={`#000`}
-          radius={`24px`}
-          padding={`2px`}
-        ></Wrapper>
-      </Wrapper>
     </Wrapper>
   );
 };
