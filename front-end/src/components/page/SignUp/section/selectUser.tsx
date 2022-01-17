@@ -9,9 +9,6 @@ import {
   JoinFirstStepSelectText,
   Image,
   RsWrapper,
-  CommonTitleWrapper,
-  CommonSubTitle,
-  CommonTitle,
   CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
 import Link from "next/link";
@@ -22,7 +19,6 @@ import { UseLink } from "../../../../configure/router.entity";
 import { IoIosArrowForward } from "react-icons/io";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { UserAuthority } from "../../../../constants/model.const";
-import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 /**
  * 회원가입: 가입유형 선택 컴포넌트(기능)
