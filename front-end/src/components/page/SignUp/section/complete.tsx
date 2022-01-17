@@ -12,9 +12,6 @@ import {
   CommonButton,
   CommonButtonWrapper,
   RsWrapper,
-  CommonTitleWrapper,
-  CommonTitle,
-  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
