@@ -20,10 +20,10 @@ import {
   TableHead,
   TableHeadLIST,
 } from "../../../styles/CommonComponents";
-import { BsPlusSquareFill, BsSearch } from "react-icons/bs";
-import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
+import { BsSearch } from "react-icons/bs";
+import { AiFillPlusSquare } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
-import { RiCheckboxBlankLine, RiCheckboxFill } from "react-icons/ri";
+import { RiCheckboxBlankLine } from "react-icons/ri";
 import PartsModal from "./parts_Modal";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
