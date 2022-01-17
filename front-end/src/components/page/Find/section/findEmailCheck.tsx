@@ -5,11 +5,7 @@ import {
   Wrapper,
   CommonButton,
   TextInput2,
-  CommonTitle,
-  CommonSubTitle,
   CommonButtonWrapper,
-  CommonTitleWrapper,
-  RsWrapper,
   Text,
 } from "../../../styles/CommonComponents";
 import React from "react";
@@ -18,7 +14,6 @@ import { UseLink } from "../../../../configure/router.entity";
 import { _pFindEmail } from "../../../../configure/_pProps.entity";
 import { useDispatch } from "react-redux";
 import { _aPostAuthHelpEmail } from "../../../../../store/action/user.action";
-import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 /**
  * 계정찾기: 이메일 찾기(화면)

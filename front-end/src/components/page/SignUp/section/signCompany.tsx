@@ -31,7 +31,6 @@ import { AxiosError } from "axios";
 import { DbErrorInfo } from "../../../../models/base.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
-import { UserAuthority } from "../../../../models/user.entity";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 // modal setting

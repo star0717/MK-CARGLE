@@ -17,11 +17,16 @@ import {
   CommonSubTitle,
   CommonTitleWrapper,
   RsWrapper,
+  CheckboxContainer,
+  CheckBoxIcon,
+  CheckBoxLine,
+  HiddenCheckbox,
 } from "../../../styles/CommonComponents";
 import {
   _pMyPageAccountProps,
   _pWithdrawalModalProps,
 } from "../../../../configure/_pProps.entity";
+import { BsCheckLg } from "react-icons/bs";
 
 Modal.setAppElement("body");
 
@@ -132,7 +137,28 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
                 </Text>
               </Wrapper>
               <Wrapper dr={`row`}>
-                <Text>
+                <CheckboxContainer>
+                  <CheckBoxLine kindOf={`${termCheck}`}>
+                    <HiddenCheckbox
+                      type="checkbox"
+                      {...register("withdrawalTerm", {
+                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                          setTermCheck(e.target.checked);
+                        },
+                        required: {
+                          value: true,
+                          message: "약관에 동의해주세요.",
+                        },
+                      })}
+                    />
+                    <CheckBoxIcon>
+                      <BsCheckLg />
+                    </CheckBoxIcon>
+                  </CheckBoxLine>
+                  회원탈퇴 약관을 상세히 읽고 숙지하였으며, 동의합니다.
+                </CheckboxContainer>
+
+                {/* <Text>
                   회원탈퇴 약관을 상세히 읽고 숙지하였으며, 동의합니다.
                 </Text>
 
@@ -145,7 +171,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
                     },
                     required: { value: true, message: "약관에 동의해주세요." },
                   })}
-                />
+                /> */}
 
                 {errors.withdrawalTerm?.type === "required" && (
                   <Text

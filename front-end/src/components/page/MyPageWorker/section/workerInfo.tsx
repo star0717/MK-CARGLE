@@ -10,7 +10,6 @@ import { useResizeDetector } from "react-resize-detector";
 import {
   CloseButton,
   RsWrapper,
-  Text,
   WholeWrapper,
   Wrapper,
   CommonTitle,

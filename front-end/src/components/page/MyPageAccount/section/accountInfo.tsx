@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import StampModal from "./stampModal";
 import { IoIosCloseCircle } from "react-icons/io";
-import { User, UserAuthority } from "../../../../models/user.entity";
+import { UserAuthority } from "../../../../constants/model.const";
 import { Company } from "../../../../models/company.entity";
 import { AxiosError } from "axios";
 import { DbErrorInfo } from "../../../../models/base.entity";
@@ -41,6 +41,7 @@ import {
   _pMyPageAccountProps,
   _pStampModalProps,
 } from "../../../../configure/_pProps.entity";
+import { User } from "../../../../models/user.entity";
 
 Modal.setAppElement("body");
 

@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { _aGetAuthSignout } from "../../../../store/action/user.action";
 import Calendar from "../../common/calendar";
-import MyPageAccount from "../MyPageAccount";
 import Link from "next/link";
 import { Text, Wrapper } from "../../styles/CommonComponents";
 import { UseLink } from "../../../configure/router.entity";

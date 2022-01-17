@@ -15,7 +15,7 @@ import {
 import { SignUpInfo } from "../../../../models/auth.entity";
 import DaumPostcode from "react-daum-postcode";
 import CompanyFindModal from "./comFindModal";
-import { User, UserAuthority } from "../../../../models/user.entity";
+import { User } from "../../../../models/user.entity";
 import {
   CloseButton,
   WholeWrapper,
@@ -36,6 +36,7 @@ import {
   _pSignUpProps,
 } from "../../../../configure/_pProps.entity";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
+import { UserAuthority } from "../../../../constants/model.const";
 
 // modal setting
 Modal.setAppElement("body");
