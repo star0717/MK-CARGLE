@@ -22,6 +22,12 @@ import {
   RsWrapper,
   SearchInput,
   SearchInputWrapper,
+  TableBody,
+  TableHead,
+  TableHeadLIST,
+  TableRow,
+  TableRowLIST,
+  TableWrapper,
   Text,
   WholeWrapper,
   Wrapper,
@@ -166,38 +172,36 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
           </Text>
         </Wrapper>
         <Wrapper margin={`10px 0px 30px`}>
-          <table>
-            <thead>
-              <tr>
-                <th>직위</th>
-                <th>직원명</th>
-                <th>전화번호</th>
-                <th>입사일자</th>
-                <th>승인여부</th>
-              </tr>
-            </thead>
-            <tbody>
+          <TableWrapper>
+            <TableHead>
+              <TableHeadLIST width={`20%`}>직위</TableHeadLIST>
+              <TableHeadLIST width={`20%`}>직원명</TableHeadLIST>
+              <TableHeadLIST width={`20%`}>전화번호</TableHeadLIST>
+              <TableHeadLIST width={`20%`}>입사일자</TableHeadLIST>
+              <TableHeadLIST width={`20%`}>승인여부</TableHeadLIST>
+            </TableHead>
+            <TableBody>
               {props.findResult.totalDocs > 0 ? (
                 props.findResult.docs.map((doc: User) => (
-                  <tr
+                  <TableRow
                     key={doc._id}
                     onClick={() => {
                       setClickDoc(doc);
                       setModalOpen(!modalOpen);
                     }}
                   >
-                    <td width={`200px`}>
+                    <TableRowLIST width={`20%`}>
                       {doc.auth === UserAuthority.OWNER ? "사업주" : "직원"}
-                    </td>
-                    <td width={`200px`}>{doc.name}</td>
-                    <td width={`200px`}>{doc.hpNumber}</td>
-                    <td width={`200px`}>
+                    </TableRowLIST>
+                    <TableRowLIST width={`20%`}>{doc.name}</TableRowLIST>
+                    <TableRowLIST width={`20%`}>{doc.hpNumber}</TableRowLIST>
+                    <TableRowLIST width={`20%`}>
                       {doc.joinDate
                         ? dayjs(doc.joinDate).format("YYYY-MM-DD")
                         : "-"}
-                    </td>
-                    <td width={`200px`}>{doc.approval ? "승인" : "미승인"}</td>
-                  </tr>
+                    </TableRowLIST>
+                    <td width={`20%`}>{doc.approval ? "승인" : "미승인"}</td>
+                  </TableRow>
                 ))
               ) : (
                 <Wrapper minHeight={`445px`}>
@@ -207,8 +211,8 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
                   <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
                 </Wrapper>
               )}
-            </tbody>
-          </table>
+            </TableBody>
+          </TableWrapper>
         </Wrapper>
         <PagenationSection {...props} />
       </RsWrapper>

@@ -19,6 +19,11 @@ import {
   SearchInputWrapper,
   SearchInput,
   TableWrapper,
+  TableHead,
+  TableHeadLIST,
+  TableBody,
+  TableRow,
+  TableRowLIST,
 } from "../../../styles/CommonComponents";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { _MainProps } from "../../../../configure/_props.entity";
@@ -124,56 +129,52 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
         </Wrapper>
 
         <TableWrapper>
-          <table>
-            <thead>
-              <tr>
-                <th>가입일</th>
-                <th>상호명</th>
-                <th>사업자등록증</th>
-                <th>정비업등록증</th>
-                <th>대표자명</th>
-                <th>승인여부</th>
-              </tr>
-            </thead>
-            <tbody>
-              {props.findResult.totalDocs > 0 ? (
-                props.findResult.docs.map((doc: Company) => (
-                  <tr
-                    key={doc._id}
-                    onClick={() => {
-                      router.push(
-                        `${UseLink.ADMIN_REVIEW_COMPANIES}?id=${doc._id}`
-                      );
-                    }}
-                  >
-                    <td width={`200px`}>
-                      {dayjs(doc.createdAt).format("YYYY-MM-DD")}
-                    </td>
-                    <td width={`200px`}>{doc.name}</td>
-                    <td width={`200px`}>{doc.comRegNum}</td>
-                    <td width={`200px`}>{doc.mbRegNum}</td>
-                    <td width={`200px`}>{doc.ownerName}</td>
-                    {doc.approval == CompanyApproval.BEFORE ? (
-                      <td width={`200px`}>요청 전</td>
-                    ) : doc.approval == CompanyApproval.ING ? (
-                      <td width={`200px`}>요청 중</td>
-                    ) : doc.approval == CompanyApproval.DONE ? (
-                      <td width={`200px`}>승인완료</td>
-                    ) : (
-                      <td width={`200px`}>이상업체</td>
-                    )}
-                  </tr>
-                ))
-              ) : (
-                <Wrapper minHeight={`445px`}>
-                  <Text fontSize={`48px`} color={`#c4c4c4`}>
-                    <BsEmojiFrownFill />
-                  </Text>
-                  <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
-                </Wrapper>
-              )}
-            </tbody>
-          </table>
+          <TableHead>
+            <TableHeadLIST width={`17%`}>가입일</TableHeadLIST>
+            <TableHeadLIST width={`17%`}>상호명</TableHeadLIST>
+            <TableHeadLIST width={`17%`}>사업자등록증</TableHeadLIST>
+            <TableHeadLIST width={`17%`}>정비업등록증</TableHeadLIST>
+            <TableHeadLIST width={`16%`}>대표자명</TableHeadLIST>
+            <TableHeadLIST width={`16%`}>승인여부</TableHeadLIST>
+          </TableHead>
+          <TableBody>
+            {props.findResult.totalDocs > 0 ? (
+              props.findResult.docs.map((doc: Company) => (
+                <TableRow
+                  key={doc._id}
+                  onClick={() => {
+                    router.push(
+                      `${UseLink.ADMIN_REVIEW_COMPANIES}?id=${doc._id}`
+                    );
+                  }}
+                >
+                  <TableRowLIST width={`17%`}>
+                    {dayjs(doc.createdAt).format("YYYY-MM-DD")}
+                  </TableRowLIST>
+                  <TableRowLIST width={`17%`}>{doc.name}</TableRowLIST>
+                  <TableRowLIST width={`17%`}>{doc.comRegNum}</TableRowLIST>
+                  <TableRowLIST width={`17%`}>{doc.mbRegNum}</TableRowLIST>
+                  <TableRowLIST width={`16%`}>{doc.ownerName}</TableRowLIST>
+                  {doc.approval == CompanyApproval.BEFORE ? (
+                    <TableRowLIST width={`16%`}>요청 전</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.ING ? (
+                    <TableRowLIST width={`16%`}>요청 중</TableRowLIST>
+                  ) : doc.approval == CompanyApproval.DONE ? (
+                    <TableRowLIST width={`16%`}>승인완료</TableRowLIST>
+                  ) : (
+                    <TableRowLIST width={`16%`}>이상업체</TableRowLIST>
+                  )}
+                </TableRow>
+              ))
+            ) : (
+              <Wrapper minHeight={`445px`}>
+                <Text fontSize={`48px`} color={`#c4c4c4`}>
+                  <BsEmojiFrownFill />
+                </Text>
+                <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
+              </Wrapper>
+            )}
+          </TableBody>
         </TableWrapper>
         <PagenationSection {...props} />
       </RsWrapper>
