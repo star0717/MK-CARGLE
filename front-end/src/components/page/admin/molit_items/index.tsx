@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useResizeDetector } from "react-resize-detector";
-import { WholeWrapper } from "../../../styles/CommonComponents";
+
 import React from "react";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
 

@@ -11,7 +11,6 @@ import {
 } from "../../../styles/CommonComponents";
 import React from "react";
 import { IoIosCloseCircle } from "react-icons/io";
-import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 
 const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
