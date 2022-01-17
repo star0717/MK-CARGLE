@@ -16,6 +16,9 @@ import {
   CommonTitleWrapper,
   Label,
   CheckBox,
+  CheckboxContainer,
+  CheckBox1,
+  HiddenCheckbox,
 } from "../../../styles/CommonComponents";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
@@ -102,17 +105,40 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   <Wrapper dr={`row`} width={`auto`}>
                     <Text>이용약관에 동의합니다.</Text>
 
-                    <CheckBox
+                    <CheckboxContainer>
+                      <CheckBox1
+                        checked={props.formCheck.mkTerm}
+                        bgColor={
+                          props.formCheck.mkTerm === true ? `#fff` : `#fff`
+                        }
+                      >
+                        <HiddenCheckbox
+                          checked={props.formCheck.mkTerm}
+                          {...register("mkTerm", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              dispatch({
+                                type: actionTypesUser.FORM_CHECK,
+                                payload: {
+                                  ...props.formCheck,
+                                  mkTerm: e.target.checked,
+                                },
+                              });
+                            },
+                            required: true,
+                          })}
+                          type="checkbox"
+                        />
+                        <Text fontSize={`24px`}>
+                          <BsCheckLg />
+                        </Text>
+                      </CheckBox1>
+                    </CheckboxContainer>
+                    {/* <CheckBox
                       type="button"
                       kindOf={`${props.formCheck.mkTerm}`}
                       onClick={() => {
-                        // dispatch({
-                        //   type: actionTypesUser.FORM_CHECK,
-                        //   payload: {
-                        //     ...props.formCheck,
-                        //     mkTerm: !props.formCheck.mkTerm,
-                        //   },
-                        // });
                         dispatch({
                           type: actionTypesUser.FORM_CHECK,
                           payload: {
@@ -121,22 +147,11 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                           },
                         });
                       }}
-
-                      // {...register("mkTerm", {
-                      //   onChange: (e: React.ChangeEvent<HTMLButtonElement>) => {
-                      //     dispatch({
-                      //       type: actionTypesUser.FORM_CHECK,
-                      //       payload: {
-                      //         ...props.formCheck,
-                      //         mkTerm: !props.formCheck.mkTerm,
-                      //       },
-                      //     });
-                      //   },
-                      // })}
                     >
                       <BsCheckLg />
-                    </CheckBox>
-                    <input
+                    </CheckBox> */}
+
+                    {/* <input
                       // style={{ opacity: `0` }}
                       type="checkbox"
                       checked={props.formCheck.mkTerm}
@@ -152,7 +167,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                         },
                         required: true,
                       })}
-                    />
+                    /> */}
                     {/* <input
                       type="checkbox"
                       checked={props.formCheck.mkTerm}
