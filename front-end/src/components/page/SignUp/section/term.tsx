@@ -107,7 +107,6 @@ const Term: NextPage<_pSignUpProps> = (props) => {
 
                     <CheckboxContainer>
                       <CheckBox1
-                        checked={props.formCheck.mkTerm}
                         bgColor={
                           props.formCheck.mkTerm === true ? `#fff` : `#fff`
                         }
