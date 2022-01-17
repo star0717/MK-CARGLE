@@ -36,7 +36,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm({ criteriaMode: "all" });
-
+  console.log(props.stepNumber);
   /**
    * 이용약관 form submit handler
    * @param _data
