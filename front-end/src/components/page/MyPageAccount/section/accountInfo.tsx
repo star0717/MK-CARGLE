@@ -568,7 +568,6 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                         value={mbTypeToString(comData)}
                         type="text"
                         readOnly={readOnly}
-                        {...register("mbTypeNum")}
                         width={`800px`}
                       />
                     ) : (
