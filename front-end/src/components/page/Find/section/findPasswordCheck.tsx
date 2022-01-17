@@ -75,7 +75,7 @@ const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
           패스워드 찾기를 위하여 계정 정보를 입력해주세요.
         </CommonSubTitle>
       </CommonTitleWrapper>
-      <RsWrapper>
+      <RsWrapper padding={`80px 0px 0px`}>
         <Wrapper
           width={`auto`}
           padding={`50px`}
@@ -96,7 +96,7 @@ const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
               />
             </Wrapper>
             <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>이름</Text>
+              <Text margin={`0px 0px 10px`}>이메일</Text>
               <TextInput2
                 type="email"
                 value={props.email}
@@ -108,7 +108,7 @@ const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
               />
             </Wrapper>
             <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>이름</Text>
+              <Text margin={`0px 0px 10px`}>휴대전화번호</Text>
               <TextInput2
                 type="text"
                 value={props.hpNumber}

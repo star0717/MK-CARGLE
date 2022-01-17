@@ -32,12 +32,7 @@ const FindBody: NextPage = () => {
  * @returns
  */
 const Find: NextPage = () => {
-  return (
-    <BodyWrapper>
-      <FindHeader />
-      <FindBody />
-    </BodyWrapper>
-  );
+  return <FindBody />;
 };
 
 export default Find;

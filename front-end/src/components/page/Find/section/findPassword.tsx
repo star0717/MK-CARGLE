@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
 import { _pFindPassword } from "../../../../configure/_pProps.entity";
+import { BodyWrapper } from "../../../styles/LayoutComponents";
 import FindPasswordCheck from "./findPasswordCheck";
 import FindPasswordComplete from "./findPasswordComplete";
 
@@ -29,13 +30,13 @@ const FindPassword: NextPage = () => {
   };
 
   return (
-    <>
+    <BodyWrapper kindOf={complete === true ? `NoneTitleBodyWrapper` : ``}>
       {complete ? (
         <FindPasswordComplete />
       ) : (
         <FindPasswordCheck {...findPasswordProps} />
       )}
-    </>
+    </BodyWrapper>
   );
 };
 

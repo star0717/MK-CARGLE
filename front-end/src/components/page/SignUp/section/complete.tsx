@@ -12,10 +12,12 @@ import {
   CommonButton,
   CommonButtonWrapper,
   RsWrapper,
+  JoinStepBar,
 } from "../../../styles/CommonComponents";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
+import { GoCheck } from "react-icons/go";
 
 /**
  * 회원가입: 완료 컴포넌트(기능)
@@ -44,15 +46,17 @@ const Complete: NextPage<_pSignUpProps> = (props) => {
     <WholeWrapper ref={ref} padding={`0px`}>
       <RsWrapper padding={`0px`}>
         <Wrapper>
-          <Text color={`#314FA5`} fontSize={`60px`}>
-            <BsFillCheckCircleFill />
-          </Text>
+          <Wrapper padding={`0px 0px 20px`}>
+            <JoinStepBar kindOf={`progress`}>
+              <GoCheck />
+            </JoinStepBar>
+          </Wrapper>
           <Text padding={`0px 0px 50px`} fontSize={`22px`}>
             회원가입이 완료되었습니다.
             <br />
             가입승인 후 정상 이용이 가능합니다.
           </Text>
-          <CommonButtonWrapper>
+          <CommonButtonWrapper kindOf={`column`}>
             <CommonButton type="button" onClick={onSignOutHandler}>
               확인
             </CommonButton>

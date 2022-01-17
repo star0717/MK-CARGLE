@@ -9,6 +9,7 @@ import {
   CommonTitleWrapper,
   JoinStepBarWrapper,
   JoinStepBar,
+  Text,
 } from "../../../styles/CommonComponents";
 import { GoCheck } from "react-icons/go";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
@@ -75,51 +76,75 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
               props.stepNumber === 4 ||
               props.stepNumber === 5) && (
               <JoinStepBarWrapper>
-                <JoinStepBar
-                  kindOf={props.stepNumber === 2 ? `progress` : `complete`}
-                >
-                  {props.stepNumber === 2 ? <AiOutlineFileText /> : <GoCheck />}
-                </JoinStepBar>
+                <Wrapper width={`auto`}>
+                  <JoinStepBar
+                    kindOf={props.stepNumber === 2 ? `progress` : `complete`}
+                  >
+                    {props.stepNumber === 2 ? (
+                      <AiOutlineFileText />
+                    ) : (
+                      <GoCheck />
+                    )}
+                  </JoinStepBar>
+                  <Text height={`0px`} padding={`10px 0px 0px`}>
+                    약관동의
+                  </Text>
+                </Wrapper>
                 <JoinStepBar
                   kindOf={props.stepNumber > 2 ? `line` : `line2`}
                 ></JoinStepBar>
-                <JoinStepBar
-                  kindOf={
-                    props.stepNumber < 3
-                      ? `before`
-                      : props.stepNumber === 3
-                      ? `progress`
-                      : `complete`
-                  }
-                >
-                  {props.stepNumber > 3 ? <GoCheck /> : <AiOutlineUser />}
-                </JoinStepBar>
+                <Wrapper width={`auto`}>
+                  <JoinStepBar
+                    kindOf={
+                      props.stepNumber < 3
+                        ? `before`
+                        : props.stepNumber === 3
+                        ? `progress`
+                        : `complete`
+                    }
+                  >
+                    {props.stepNumber > 3 ? <GoCheck /> : <AiOutlineUser />}
+                  </JoinStepBar>
+                  <Text height={`0px`} padding={`10px 0px 0px`}>
+                    계정정보
+                  </Text>
+                </Wrapper>
                 <JoinStepBar
                   kindOf={props.stepNumber > 3 ? `line` : `line2`}
                 ></JoinStepBar>
-                <JoinStepBar
-                  kindOf={
-                    props.stepNumber < 4
-                      ? `before`
-                      : props.stepNumber === 4
-                      ? `progress`
-                      : `complete`
-                  }
-                >
-                  {props.stepNumber > 4 ? (
-                    <GoCheck />
-                  ) : (
-                    <MdOutlineBusinessCenter />
-                  )}
-                </JoinStepBar>
+                <Wrapper width={`auto`}>
+                  <JoinStepBar
+                    kindOf={
+                      props.stepNumber < 4
+                        ? `before`
+                        : props.stepNumber === 4
+                        ? `progress`
+                        : `complete`
+                    }
+                  >
+                    {props.stepNumber > 4 ? (
+                      <GoCheck />
+                    ) : (
+                      <MdOutlineBusinessCenter />
+                    )}
+                  </JoinStepBar>
+                  <Text height={`0px`} padding={`10px 0px 0px`}>
+                    사업자정보
+                  </Text>
+                </Wrapper>
                 <JoinStepBar
                   kindOf={props.stepNumber > 4 ? `line` : `line2`}
                 ></JoinStepBar>
-                <JoinStepBar
-                  kindOf={props.stepNumber === 5 ? `progress` : `before`}
-                >
-                  <MdOutlineUploadFile />
-                </JoinStepBar>
+                <Wrapper width={`auto`}>
+                  <JoinStepBar
+                    kindOf={props.stepNumber === 5 ? `progress` : `before`}
+                  >
+                    <MdOutlineUploadFile />
+                  </JoinStepBar>
+                  <Text height={`0px`} padding={`10px 0px 0px`}>
+                    서류제출
+                  </Text>
+                </Wrapper>
               </JoinStepBarWrapper>
             )}
         </WholeWrapper>

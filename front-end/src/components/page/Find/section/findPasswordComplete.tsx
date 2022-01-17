@@ -3,6 +3,8 @@ import { useRouter } from "next/dist/client/router";
 import {
   CommonButton,
   CommonButtonWrapper,
+  JoinStepBar,
+  RsWrapper,
   Text,
   WholeWrapper,
   Wrapper,
@@ -21,32 +23,28 @@ const FindPasswordComplete: NextPage = () => {
 
   return (
     <WholeWrapper>
-      <Wrapper
-        width={`60px`}
-        height={`60px`}
-        bgColor={`#314FA5`}
-        radius={`60px`}
-        margin={`0px 0px 36px 0px`}
-      >
-        <Text color={`#fff`} fontSize={`26px`} margin={`10px 3px 0px 0px`}>
-          <FaPaperPlane />
+      <RsWrapper>
+        <Wrapper padding={`0px 0px 20px`}>
+          <JoinStepBar kindOf={`progress`}>
+            <FaPaperPlane />
+          </JoinStepBar>
+        </Wrapper>
+        <Text padding={`0px 0px 50px`} fontSize={`22px`}>
+          입력된 이메일 주소로 <br />
+          임시 비밀번호가 발송되었습니다.
         </Text>
-      </Wrapper>
-      <Text padding={`0px 0px 50px`} fontSize={`22px`}>
-        입력된 이메일 주소로 <br />
-        임시 비밀번호가 발송되었습니다.
-      </Text>
-      <Wrapper>
-        <CommonButtonWrapper>
-          <CommonButton
-            onClick={() => {
-              router.push(UseLink.INDEX);
-            }}
-          >
-            로그인
-          </CommonButton>
-        </CommonButtonWrapper>
-      </Wrapper>
+        <Wrapper>
+          <CommonButtonWrapper kindOf={`column`}>
+            <CommonButton
+              onClick={() => {
+                router.push(UseLink.INDEX);
+              }}
+            >
+              로그인
+            </CommonButton>
+          </CommonButtonWrapper>
+        </Wrapper>
+      </RsWrapper>
     </WholeWrapper>
   );
 };

@@ -18,6 +18,7 @@ import {
   CommonTitle,
   SearchInputWrapper,
   SearchInput,
+  TableWrapper,
 } from "../../../styles/CommonComponents";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { _MainProps } from "../../../../configure/_props.entity";
@@ -121,7 +122,8 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
             </span>
           </Text>
         </Wrapper>
-        <Wrapper margin={`10px 0px 30px`}>
+
+        <TableWrapper>
           <table>
             <thead>
               <tr>
@@ -172,7 +174,7 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
               )}
             </tbody>
           </table>
-        </Wrapper>
+        </TableWrapper>
         <PagenationSection {...props} />
       </RsWrapper>
     </WholeWrapper>
