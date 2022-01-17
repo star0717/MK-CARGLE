@@ -13,15 +13,4 @@ export class PartsService extends SafeService<Part> {
   ) {
     super(model, commonService);
   }
-  findAll() {
-    return `This action returns all parts`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} part`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} part`;
-  }
 }
