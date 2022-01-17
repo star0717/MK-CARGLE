@@ -14,7 +14,7 @@ import { GoCheck } from "react-icons/go";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { UserAuthority } from "../../../../constants/model.const";
 import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
-import { MdOutlineBusinessCenter } from "react-icons/md";
+import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 
 /**
  * 회원가입: 공통 헤더 컴포넌트(기능)
@@ -118,7 +118,7 @@ const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
                 <JoinStepBar
                   kindOf={props.stepNumber === 5 ? `progress` : `before`}
                 >
-                  4
+                  <MdOutlineUploadFile />
                 </JoinStepBar>
               </JoinStepBarWrapper>
             )}
