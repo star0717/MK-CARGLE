@@ -21,6 +21,9 @@ import {
   CheckBoxIcon,
   CheckBoxLine,
   HiddenCheckbox,
+  TextInput2,
+  CommonButtonWrapper,
+  CommonButton,
 } from "../../../styles/CommonComponents";
 import {
   _pMyPageAccountProps,
@@ -104,20 +107,19 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
             회원탈퇴를 위해 약관 동의 후 비밀번호를 입력해주세요.
           </CommonSubTitle>
         </CommonTitleWrapper>
-        <RsWrapper>
-          <Wrapper>
+        <RsWrapper padding={`80px 0px 0px`}>
+          <Wrapper al={`flex-start`} width={`500px`}>
             <form onSubmit={handleSubmit(pwCheckHandler)}>
               <Wrapper
-                width={
-                  width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                }
-                height={`150px`}
+                height={`200px`}
+                width={`500px`}
                 border={`1px solid #ccc`}
                 al={`flex-start`}
                 ju={`flex-start`}
                 padding={`10px`}
                 radius={`5px`}
                 overflow={`auto`}
+                shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               >
                 <Text textAlign={`flex-start`}>
                   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
@@ -134,27 +136,32 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
                   repellat
                 </Text>
               </Wrapper>
-              <Wrapper dr={`row`}>
-                <CheckboxContainer>
-                  <CheckBoxLine kindOf={`${termCheck}`}>
-                    <HiddenCheckbox
-                      type="checkbox"
-                      {...register("withdrawalTerm", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          setTermCheck(e.target.checked);
-                        },
-                        required: {
-                          value: true,
-                          message: "약관에 동의해주세요.",
-                        },
-                      })}
-                    />
-                    <CheckBoxIcon>
-                      <BsCheckLg />
-                    </CheckBoxIcon>
-                  </CheckBoxLine>
-                  회원탈퇴 약관을 상세히 읽고 숙지하였으며, 동의합니다.
-                </CheckboxContainer>
+              <Wrapper dr={`row-reverse`} padding={`10px 0px`}>
+                <Wrapper al={`flex-end`}>
+                  <CheckboxContainer>
+                    <CheckBoxLine kindOf={`${termCheck}`}>
+                      <HiddenCheckbox
+                        margin={`0px`}
+                        type="checkbox"
+                        {...register("withdrawalTerm", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setTermCheck(e.target.checked);
+                          },
+                          required: {
+                            value: true,
+                            message: "약관에 동의해주세요.",
+                          },
+                        })}
+                      />
+                      <CheckBoxIcon>
+                        <BsCheckLg />
+                      </CheckBoxIcon>
+                    </CheckBoxLine>
+                    동의합니다.
+                  </CheckboxContainer>
+                </Wrapper>
 
                 {/* <Text>
                   회원탈퇴 약관을 상세히 읽고 숙지하였으며, 동의합니다.
@@ -185,6 +192,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
                 )}
               </Wrapper>
               <TextInput
+                width={`500px`}
                 type="password"
                 placeholder="비밀번호를 입력하세요"
                 {...register("password", {
@@ -206,18 +214,16 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
                   {errors.password.message}
                 </Text>
               )}
-              <Wrapper dr={`row`}>
-                <SmallButton
+              <CommonButtonWrapper kindOf={`column`}>
+                <CommonButton
                   type="button"
-                  kindOf={`default`}
+                  kindOf={`white`}
                   onClick={() => props.setStep(2)}
                 >
                   돌아가기
-                </SmallButton>
-                <SmallButton type="submit" kindOf={`default`}>
-                  회원탈퇴
-                </SmallButton>
-              </Wrapper>
+                </CommonButton>
+                <CommonButton type="submit">회원탈퇴</CommonButton>
+              </CommonButtonWrapper>
             </form>
           </Wrapper>
         </RsWrapper>
