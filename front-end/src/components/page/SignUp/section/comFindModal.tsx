@@ -13,6 +13,14 @@ import {
   SearchInput,
   IconButton,
   RsWrapper,
+  CommonSmallTitle,
+  SearchInputWrapper,
+  TableWrapper,
+  TableHead,
+  TableHeadLIST,
+  TableBody,
+  TableRow,
+  TableRowLIST,
 } from "../../../styles/CommonComponents";
 import { CHAR_DEL } from "../../../../validation/regEx";
 import { BsSearch } from "react-icons/bs";
@@ -65,84 +73,81 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper>
-        <Wrapper height={`500px`} ju={`flex-start`}>
-          <form onSubmit={findCompanyHandler}>
-            <Wrapper
-              width={`678px`}
-              padding={`0px 5px`}
-              dr={`row`}
-              borderBottom={`1px solid #000`}
-              margin={`10px 0px 0px`}
-            >
-              <Wrapper width={`auto`}>
-                <SearchInput
-                  width={`632px`}
-                  padding={`0px 5px 0px 5px`}
-                  placeholder="업체명 또는 사업자번호 입력"
-                  type="text"
-                  value={searchText}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setSearchText(CHAR_DEL(e.target.value));
-                  }}
-                />
-              </Wrapper>
-              <Wrapper width={`36px`} height={`46px`}>
-                <Text fontSize={`24px`}>
-                  <IconButton type="submit" shadow={`none`}>
-                    <BsSearch />
-                  </IconButton>
-                </Text>
-              </Wrapper>
+      <CommonSmallTitle>소속 업체 검색</CommonSmallTitle>
+      <Wrapper ju={`flex-start`}>
+        <form onSubmit={findCompanyHandler}>
+          <SearchInputWrapper
+            type="text"
+            width={`400px`}
+            padding={`0px 5px`}
+            dr={`row`}
+            borderBottom={`1px solid #000`}
+          >
+            <Wrapper width={`auto`}>
+              <SearchInput
+                width={`346px`}
+                padding={`0px 5px 0px 5px`}
+                placeholder="사업자등록번호 또는 업체명을 입력하세요."
+                type="text"
+                value={searchText}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchText(CHAR_DEL(e.target.value));
+                }}
+              />
             </Wrapper>
-            <Wrapper fontSize={`18px`}>
-              <Wrapper margin={`0px`} padding={`0px`}>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>업체명</th>
-                      <th>대표자명</th>
-                      <th>사업자등록번호</th>
-                    </tr>
-                  </thead>
-                  {companyList.length === 0 ? (
-                    <Wrapper>소속 업체를 검색하세요.</Wrapper>
-                  ) : (
-                    <tbody>
-                      {companyList.map((item: any, index: number) => (
-                        <tr
-                          id={item.comRegNum}
-                          key={index}
-                          onClick={(
-                            e: React.MouseEvent<HTMLTableRowElement>
-                          ) => {
-                            props.setInputForm({
-                              ...props.inputForm,
-                              companyNum: item.comRegNum,
-                            });
-                            props.setInputUser({
-                              ...props.inputUser,
-                              _cID: item._id,
-                            });
-                            props.setValue("companyNum", item.comRegNum, {
-                              shouldValidate: true,
-                            });
-                            props.setModalOpen(false);
-                          }}
-                        >
-                          <td width={`226px`}>{item.name}</td>
-                          <td width={`226px`}>{item.ownerName}</td>
-                          <td width={`226px`}>{item.comRegNum}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  )}
-                </table>
-              </Wrapper>
+            <Wrapper width={`36px`} height={`46px`}>
+              <Text fontSize={`24px`}>
+                <IconButton type="submit" shadow={`none`}>
+                  <BsSearch />
+                </IconButton>
+              </Text>
             </Wrapper>
-          </form>
-        </Wrapper>
-      </RsWrapper>
+          </SearchInputWrapper>
+          <Wrapper fontSize={`18px`}>
+            <Wrapper margin={`0px`} padding={`0px`}>
+              <TableWrapper>
+                <TableHead>
+                  <TableHeadLIST>업체명</TableHeadLIST>
+                  <TableHeadLIST>대표자명</TableHeadLIST>
+                  <TableHeadLIST>사업자등록번호</TableHeadLIST>
+                </TableHead>
+                {companyList.length === 0 ? (
+                  <Wrapper height={`100%`} al={`center`}>
+                    소속 업체를 검색하세요.
+                  </Wrapper>
+                ) : (
+                  <TableBody>
+                    {companyList.map((item: any, index: number) => (
+                      <TableRow
+                        id={item.comRegNum}
+                        key={index}
+                        onClick={(e: React.MouseEvent<HTMLTableRowElement>) => {
+                          props.setInputForm({
+                            ...props.inputForm,
+                            companyNum: item.comRegNum,
+                          });
+                          props.setInputUser({
+                            ...props.inputUser,
+                            _cID: item._id,
+                          });
+                          props.setValue("companyNum", item.comRegNum, {
+                            shouldValidate: true,
+                          });
+                          props.setModalOpen(false);
+                        }}
+                      >
+                        <TableRowLIST>{item.name}</TableRowLIST>
+                        <TableRowLIST>{item.ownerName}</TableRowLIST>
+                        <TableRowLIST>{item.comRegNum}</TableRowLIST>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                )}
+              </TableWrapper>
+            </Wrapper>
+          </Wrapper>
+        </form>
+      </Wrapper>
     </WholeWrapper>
   );
 };
