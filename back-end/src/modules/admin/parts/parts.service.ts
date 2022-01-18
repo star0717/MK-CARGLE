@@ -17,13 +17,15 @@ export class PartsService extends SafeService<Part> {
     super(model, commonService);
   }
 
-  async genPartCode(token: AuthTokenInfo, id: string): Promise<string> {
+  async genPartCode(id: string): Promise<string> {
     const fQuery: FilterQuery<Part> = { label: id };
     const part: Part = await this.model.findOne(fQuery).sort({ code: -1 });
 
     let newPostfix = '1';
     if (part) {
-      const currentPostfix = parseInt(part.code.substring(1));
+      console.log(part.code);
+      const currentPostfix = parseInt(part.code.substring(2));
+      console.log(currentPostfix);
       newPostfix = (currentPostfix + 1).toString();
     }
     console.log('id: ', id, 'newPostfix: ', newPostfix);

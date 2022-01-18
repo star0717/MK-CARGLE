@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { prop } from '@typegoose/typegoose';
 import { Transform } from 'class-transformer';
-import { IsOptional, IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 import { TypegooseModule } from 'nestjs-typegoose';
 import {
   getValidPageNumber,
@@ -62,13 +62,6 @@ export class BaseEntity extends TypegooseModule {
   __v: number;
 }
 
-// // 페이지당 출력될 문서의 수의 기봅값
-// const defTakeNum: number = 30;
-// // 페이지장 출력될 문서의 최소 수
-// const minTakeNum: number = 1;
-// // 페이지장 출력될 문서의 최대 수
-// const maxTakeNum: number = 100;
-
 export class FindParameters {
   @ApiProperty({
     description: '요청 페이지',
@@ -112,69 +105,7 @@ export class FindParameters {
 
   // Back-end 전용. 프로젝션으로 활용
   projection?: string = null;
-
-  // static getQuery(data: FindParameters) {
-  //   let query = '';
-  //   if (data?.page) query = query + '?page=' + data.page;
-  //   else query = query + '?page=1';
-  //   if (data?.take) query = query + '&take=' + data.take;
-  //   if (data?.filterKey && data?.filterValue) {
-  //     query =
-  //       query +
-  //       '&filterKey=' +
-  //       data.filterKey +
-  //       '&filterValue=' +
-  //       data.filterValue;
-  //     if (data.useRegSearch == true) {
-  //       query = query + '&useRegSearch=' + data.useRegSearch;
-  //     }
-  //   }
-  //   return query;
-  // }
 }
-
-// // 페이지번호 검증
-// export function getValidPageNumber(params: TransformFnParams) {
-//   // console.log("getValidPageNumber");
-//   // console.log("input: " + params.value);
-
-//   params.value = parseInt(params.value);
-
-//   if (!isNumber(params.value)) {
-//     params.value = 1;
-//   }
-//   if (params.value <= 0) {
-//     params.value = 1;
-//   }
-//   return params.value;
-// }
-
-// // 페이지당 출력 문서 수 검증
-// export function getValidTakeNumber(params: TransformFnParams) {
-//   // console.log("getValidTakeNumber");
-//   // console.log("input: " + params.value);
-//   params.value = parseInt(params.value);
-
-//   if (!isNumber(params.value)) {
-//     params.value = defTakeNum;
-//   }
-
-//   if (params.value <= 0) {
-//     params.value = defTakeNum;
-//   } else if (params.value > maxTakeNum) {
-//     params.value = maxTakeNum;
-//   }
-//   return params.value;
-// }
-
-// export function strToBoolean(params: TransformFnParams) {
-//   if (params.value == 'true' || params.value == true) {
-//     params.value = true;
-//   } else {
-//     params.value = false;
-//   }
-//   return params.value;
-// }
 
 export class FindResult<T> {
   @ApiProperty({ description: '검색 결과' })
@@ -192,6 +123,7 @@ export class FindResult<T> {
 
 export class DeleteObjectIds {
   @ApiProperty({ description: '삭제할 데이터들의 오브젝트 ID들' })
+  @IsArray()
   ids: string[];
 }
 
