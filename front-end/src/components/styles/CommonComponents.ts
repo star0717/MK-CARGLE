@@ -118,6 +118,7 @@ export const Wrapper = styled.div<any>`
   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   position: ${(props) => (props.isFixed ? `fixed` : ``)};
+  position: ${(props) => (props.isSticky ? `sticky` : ``)};
   top: ${(props) => props.top};
   left: ${(props) => props.left};
   bottom: ${(props) => props.bottom};
@@ -1214,7 +1215,9 @@ export const TableWrapper = styled.div<any>`
   align-items: center;
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
-  min-height: 500px;
+  min-height: ${(props) => props.minHeight || `445px`};
+  overflow: ${(props) => props.overflow || ``};
+  overflow-y: ${(props) => props.overflowY || ``};
 `;
 
 export const TableHead = styled.ul<any>`
@@ -1231,6 +1234,9 @@ export const TableHead = styled.ul<any>`
   color: #fff;
   padding: ${(props) => props.padding || `0px 20px`};
   font-size: ${(props) => props.fontSize || `16px`};
+  min-height: 50px;
+  position: ${(props) => (props.isFixed ? `fixed` : ``)};
+  position: ${(props) => (props.isSticky ? `sticky` : ``)};
 `;
 
 export const TableHeadLIST = styled.li<any>`
@@ -1241,6 +1247,8 @@ export const TableHeadLIST = styled.li<any>`
   align-items: center;
   justify-content: ${(props) => props.ju || `flex-start`};
   text-align: start;
+  font-size: ${(props) => props.fontSize || `16px`};
+  color: ${(props) => props.color || ``};
 `;
 
 export const TableBody = styled.div<any>`
@@ -1262,6 +1270,7 @@ export const TableRow = styled.ul<any>`
   transition: 0.5s;
   cursor: pointer;
   padding: ${(props) => props.padding || `0px 20px`};
+  min-height: 45px;
 
   &:hover {
     background-color: #f5f5f5;
@@ -1274,6 +1283,8 @@ export const TableRowLIST = styled.li<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `100%`};
   display: ${(props) => props.display || `flex`};
+  color: ${(props) => props.color || ``};
+  font-size: ${(props) => props.fontSize || `16px`};
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};

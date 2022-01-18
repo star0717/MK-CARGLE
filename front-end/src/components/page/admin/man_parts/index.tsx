@@ -19,12 +19,20 @@ import {
   TableWrapper,
   TableHead,
   TableHeadLIST,
+  TableBody,
+  TableRow,
+  TableRowLIST,
+  CheckboxContainer,
+  CheckBoxIcon,
+  CheckBoxLine,
+  HiddenCheckbox,
 } from "../../../styles/CommonComponents";
-import { BsSearch } from "react-icons/bs";
-import { AiFillPlusSquare } from "react-icons/ai";
+import { BsCheckLg, BsSearch } from "react-icons/bs";
+import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
 import { RiCheckboxBlankLine } from "react-icons/ri";
 import PartsModal from "./parts_Modal";
+import { actionTypesUser } from "../../../../../store/interfaces";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -74,99 +82,80 @@ const AdminManPartsPage: NextPage<any> = (props) => {
         <CommonTitleWrapper>
           <CommonTitle>부품관리</CommonTitle>
         </CommonTitleWrapper>
-        <CommonButton
-          onClick={() => {
-            setModalOpen(true);
-          }}
-          kindOf={`circleWhite`}
-        >
-          hyeok modal
-        </CommonButton>
+
         <RsWrapper>
-          <SearchInputWrapper
-            type="text"
-            width={`678px`}
-            padding={`0px 5px`}
-            dr={`row`}
-            borderBottom={`1px solid #000`}
-          >
-            <Wrapper width={`auto`}>
-              <SearchInput
-                width={`632px`}
-                padding={`0px 5px 0px 5px`}
-                placeholder="찾고싶은 부품명을 입력하세요."
-                type="text"
-              />
-            </Wrapper>
-            <Wrapper width={`36px`} height={`46px`}>
-              <Text fontSize={`24px`}>
-                <IconButton type="submit" shadow={`none`}>
-                  <BsSearch />
-                </IconButton>
-              </Text>
-            </Wrapper>
-          </SearchInputWrapper>
+          <Wrapper padding={`50px 0px 0px`}>
+            <SearchInputWrapper
+              type="text"
+              width={`678px`}
+              padding={`0px 5px`}
+              dr={`row`}
+              borderBottom={`1px solid #000`}
+            >
+              <Wrapper width={`auto`}>
+                <SearchInput
+                  width={`632px`}
+                  padding={`0px 5px 0px 5px`}
+                  placeholder="찾고싶은 부품명을 입력하세요."
+                  type="text"
+                />
+              </Wrapper>
+              <Wrapper width={`36px`} height={`46px`}>
+                <Text fontSize={`24px`}>
+                  <IconButton type="submit" shadow={`none`}>
+                    <BsSearch />
+                  </IconButton>
+                </Text>
+              </Wrapper>
+            </SearchInputWrapper>
+          </Wrapper>
           <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
             <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
-              <SmallButton kindOf={`default`} width={`150px`}>
+              <SmallButton kindOf={`default`} width={`150px`} fontSize={`16px`}>
                 부품 추가하기
               </SmallButton>
-              <SmallButton kindOf={`default`} width={`150px`}>
-                부품 추가하기
+              <SmallButton kindOf={`cancle`} width={`150px`} fontSize={`16px`}>
+                선택삭제
               </SmallButton>
             </Wrapper>
           </Wrapper>
           <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
             {/* 부품분류 */}
-            <Wrapper
-              margin={`0px`}
-              radius={`0px`}
-              height={`450px`}
-              width={`300px`}
-              overflow={`auto`}
-            >
-              <table>
-                <thead>
-                  <tr>
-                    <th>
+            <Wrapper width={`24%`}>
+              <TableWrapper>
+                <Wrapper isSticky={true}>
+                  <TableHead radius={`8px 8px 0px 0px`}>
+                    <TableHeadLIST
+                      width={`30%`}
+                      color={`#51b351`}
+                      fontSize={`24px`}
+                    >
                       {/* 제 이름은 플러스 버튼이에요!! */}
-                      <Wrapper>
-                        <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                          <AiFillPlusSquare />
-                        </Text>
-                      </Wrapper>
+                      <AiFillPlusSquare />
                       {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
-                    </th>
-                    <th>부품분류</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>전체보기</td>
-                  </tr>
-                  <tr>
-                    <td width={` 40px`}>
-                      <Wrapper>
-                        <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                          <AiFillPlusSquare />
-                        </Text>
-                      </Wrapper>
-                    </td>
-                    <td width={` 260px`}>전체보기</td>
-                  </tr>
-                </tbody>
-              </table>
+                    </TableHeadLIST>
+                    <TableHeadLIST width={`70%`}>부품분류</TableHeadLIST>
+                  </TableHead>
+                </Wrapper>
+                <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+                  <TableBody>
+                    <TableRow>
+                      <TableRowLIST
+                        width={` 30%`}
+                        color={`#d6263b`}
+                        fontSize={`24px`}
+                      >
+                        <AiFillMinusSquare />
+                      </TableRowLIST>
+                      <TableRowLIST width={`70%`}>전체보기</TableRowLIST>
+                    </TableRow>
+                  </TableBody>
+                </Wrapper>
+              </TableWrapper>
             </Wrapper>
             {/* 상세정보 */}
-            <Wrapper>
-              <Wrapper
-                margin={`0px`}
-                radius={`0px`}
-                height={`500px`}
-                width={`880px`}
-                overflow={`auto`}
-              >
-                {/* <table>
+            <Wrapper width={`74%`}>
+              {/* <table>
                   <thead>
                     <tr>
                       <td width={`40px`}>
@@ -208,29 +197,56 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                     </tr>
                   </tbody>
                 </table> */}
-                <TableWrapper>
-                  <TableHead>
-                    <TableHeadLIST width={`calc(100% / 4)`}>
-                      <Wrapper>
-                        <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                          <RiCheckboxBlankLine />
-                        </Text>
-                      </Wrapper>
+              <TableWrapper overflow={`auto`}>
+                <Wrapper isSticky={true}>
+                  <TableHead radius={`8px 8px 0px 0px`}>
+                    <TableHeadLIST width={`10%`}>
+                      {/* 체크박스 */}
+                      <CheckboxContainer>
+                        <CheckBoxLine>
+                          <HiddenCheckbox type="checkbox" />
+                          <CheckBoxIcon>
+                            <BsCheckLg />
+                          </CheckBoxIcon>
+                        </CheckBoxLine>
+                      </CheckboxContainer>
+                      {/*  */}
                     </TableHeadLIST>
-                    <TableHeadLIST width={`calc(100% / 4)`}>
-                      부품코드
-                    </TableHeadLIST>
-                    <TableHeadLIST width={`calc(100% / 4)`}>
-                      부품명
-                    </TableHeadLIST>
-                    <TableHeadLIST width={`calc(100% / 4)`}>
-                      국토부
-                    </TableHeadLIST>
+                    <TableHeadLIST width={`20%`}>부품코드</TableHeadLIST>
+                    <TableHeadLIST width={`35%`}>부품명</TableHeadLIST>
+                    <TableHeadLIST width={`35%`}>국토부</TableHeadLIST>
                   </TableHead>
-                </TableWrapper>
-              </Wrapper>
+                </Wrapper>
+                <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+                  <TableBody>
+                    <TableRow>
+                      <TableRowLIST width={`10%`}>
+                        <CheckboxContainer>
+                          <CheckBoxLine>
+                            <HiddenCheckbox type="checkbox" />
+                            <CheckBoxIcon>
+                              <BsCheckLg />
+                            </CheckBoxIcon>
+                          </CheckBoxLine>
+                        </CheckboxContainer>
+                      </TableRowLIST>
+                      <TableRowLIST width={`20%`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`35%`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`35%`}>국토부</TableRowLIST>
+                    </TableRow>
+                  </TableBody>
+                </Wrapper>
+              </TableWrapper>
             </Wrapper>
           </Wrapper>
+          <CommonButton
+            onClick={() => {
+              setModalOpen(true);
+            }}
+            kindOf={`circleWhite`}
+          >
+            hyeok modal
+          </CommonButton>
         </RsWrapper>
         <Wrapper>
           <Modal

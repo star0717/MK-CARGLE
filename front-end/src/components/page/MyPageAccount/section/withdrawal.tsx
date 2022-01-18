@@ -70,7 +70,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
    * 비밀번호 체크 및 회원탈퇴 모달 open handler
    * @param data
    */
-  const pwCheckHandler: SubmitHandler<_fWithdrawal> = (data) => {
+  const pwCheckHandler: SubmitHandler<Partial<_fWithdrawal>> = (data) => {
     const confirmPWD = {
       _id: accountInfo.user._uID,
       PWD: password,

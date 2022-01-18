@@ -41,7 +41,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
    * 이용약관 form submit handler
    * @param _data
    */
-  const agreeTermHandler: SubmitHandler<_fTermData> = (_data) => {
+  const agreeTermHandler: SubmitHandler<Partial<_fTermData>> = (_data) => {
     props.setStepNumber(props.stepNumber + 1);
   };
 
