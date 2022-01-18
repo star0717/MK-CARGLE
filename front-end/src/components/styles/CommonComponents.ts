@@ -1274,10 +1274,28 @@ export const TableRow = styled.ul<any>`
   background: ${(props) => props.bgColor};
   color: ${(props) => props.color};
 
+  & span {
+    font-size: 26px;
+    display: none;
+    margin-top: 5px;
+    ${(props) => props.kindOf === `focus` && `display : block;`}
+  }
+
+  ${(props) => !props.kindOf && `background : ${props.theme.White_C};`}
+
+  ${(props) => props.kindOf === `focus` && `background : #f5f5f5;`}
+  ${(props) => props.kindOf === `focus` && `font-weight : 600;`}
+  ${(props) => props.kindOf === `focus` && `color : #314FA5;`}
+  
+
+
   &:hover {
     background-color: #f5f5f5;
+    ${(props) => props.kindOf === `focus` && `background : #f5f5f5;`}
     color: #314fa5;
+    ${(props) => props.kindOf === `focus` && `color : #314FA5;`}
     text-decoration: underline;
+    ${(props) => props.kindOf === `focus` && `text-decoration : none;`}
   }
 `;
 
