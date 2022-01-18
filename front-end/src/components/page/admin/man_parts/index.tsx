@@ -29,10 +29,9 @@ import {
 import { BsCheckLg, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
-import { RiCheckboxBlankLine } from "react-icons/ri";
 import PartsModal from "./parts_Modal";
-import { actionTypesUser } from "../../../../../store/interfaces";
 import ReactModal from "react-modal";
+import { PartClass, partClassList } from "../../../../constants/model.const";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -42,10 +41,14 @@ const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [modalOption, setModalOption] = useState<string>("");
-  const [partClass, setPartClass] = useState<any>();
-  const [allPart, setAllPart] = useState<any>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
+  const [modalOption, setModalOption] = useState<string>(""); // modal 옵션
+  const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
+  const [selectClass, setSelectClass] = useState<string>("all"); // 선택한 분류
+  const [partClass, setPartClass] = useState<PartClass[]>(partClassList); // 분류 리스트
+  const [partList, setPartList] = useState<any>(props.data); // 부품 리스트
+
+  const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -141,6 +144,9 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                     >
                       {/* 제 이름은 플러스 버튼이에요!! */}
                       <IconButton
+                        bgColor={`inherit`}
+                        shadow={`inherit`}
+                        color={`inherit`}
                         onClick={() => {
                           setModalOption("addClass");
                           setModalOpen(true);
@@ -161,62 +167,64 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                         color={`#d6263b`}
                         fontSize={`24px`}
                       >
-                        <AiFillMinusSquare />
+                        {/* <IconButton
+                          bgColor={`inherit`}
+                          shadow={`inherit`}
+                          color={`inherit`}
+                          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                            e.stopPropagation()
+                          }
+                        >
+                          <AiFillMinusSquare />
+                        </IconButton> */}
                       </TableRowLIST>
                       <TableRowLIST width={`70%`}>전체보기</TableRowLIST>
                     </TableRow>
+                    {partClass.map((item: PartClass) => (
+                      <TableRow
+                        key={item.label}
+                        color={selectClass === item.label ? `white` : `black`}
+                        bgColor={selectClass === item.label ? `black` : `white`}
+                        onClick={() => {
+                          setSelectClass(item.label);
+                        }}
+                      >
+                        <TableRowLIST
+                          width={` 30%`}
+                          color={`#d6263b`}
+                          fontSize={`24px`}
+                        >
+                          <IconButton
+                            bgColor={`inherit`}
+                            shadow={`inherit`}
+                            color={`inherit`}
+                            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                              e.stopPropagation()
+                            }
+                          >
+                            <AiFillMinusSquare />
+                          </IconButton>
+                        </TableRowLIST>
+                        <TableRowLIST width={`70%`}>
+                          {item.description}
+                        </TableRowLIST>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
             </Wrapper>
             {/* 상세정보 */}
             <Wrapper width={`74%`}>
-              {/* <table>
-                  <thead>
-                    <tr>
-                      <td width={`40px`}>
-                        <Wrapper>
-                          <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                            <RiCheckboxBlankLine />
-                          </Text>
-                        </Wrapper>
-                      </td>
-                      <td width={`200px`}>부품코드</td>
-                      <td width={`320px`}>부품명</td>
-                      <td width={`320px`}>국토부</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td width={` 40px`}>
-                        <Wrapper color={`#314fa5`}>
-                          <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                            <RiCheckboxBlankLine />
-                          </Text>
-                        </Wrapper>
-                      </td>
-                      <td width={` 200px`}>부품코드</td>
-                      <td width={` 320px`}>부품명</td>
-                      <td width={` 320px`}>국토부</td>
-                    </tr>
-                    <tr>
-                      <td width={` 40px`}>
-                        <Wrapper color={`#314fa5`}>
-                          <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                            <RiCheckboxFill />
-                          </Text>
-                        </Wrapper>
-                      </td>
-                      <td width={` 200px`}>부품코드</td>
-                      <td width={` 320px`}>부품명</td>
-                      <td width={` 320px`}>국토부</td>
-                    </tr>
-                  </tbody>
-                </table> */}
               <TableWrapper overflow={`auto`}>
                 <Wrapper isSticky={true}>
                   <TableHead radius={`8px 8px 0px 0px`}>
-                    <TableHeadLIST width={`10%`}>
+                    <TableHeadLIST
+                      width={`10%`}
+                      onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                        e.stopPropagation()
+                      }
+                    >
                       {/* 체크박스 */}
                       <CheckboxContainer>
                         <CheckBoxLine>
@@ -235,13 +243,18 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
-                    <TableRow
+                    {/* <TableRow
                       onClick={() => {
                         setModalOption("editPart");
                         setModalOpen(true);
                       }}
                     >
-                      <TableRowLIST width={`10%`}>
+                      <TableRowLIST
+                        width={`10%`}
+                        onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                          e.stopPropagation()
+                        }
+                      >
                         <CheckboxContainer>
                           <CheckBoxLine>
                             <HiddenCheckbox type="checkbox" />
@@ -254,7 +267,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                       <TableRowLIST width={`20%`}>부품코드</TableRowLIST>
                       <TableRowLIST width={`35%`}>부품명</TableRowLIST>
                       <TableRowLIST width={`35%`}>국토부</TableRowLIST>
-                    </TableRow>
+                    </TableRow> */}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
