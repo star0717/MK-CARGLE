@@ -140,12 +140,14 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                       fontSize={`24px`}
                     >
                       {/* 제 이름은 플러스 버튼이에요!! */}
-                      <AiFillPlusSquare
+                      <IconButton
                         onClick={() => {
                           setModalOption("addClass");
                           setModalOpen(true);
                         }}
-                      />
+                      >
+                        <AiFillPlusSquare />
+                      </IconButton>
                       {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
                     </TableHeadLIST>
                     <TableHeadLIST width={`70%`}>부품분류</TableHeadLIST>
