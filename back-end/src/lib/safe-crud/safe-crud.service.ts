@@ -1,13 +1,17 @@
+/**
+ * Safe CRUD Service
+ * 공통으로 사용가능한 안전한 CRUD 서비스
+ *
+ * Safe Controller에서 제공하는 메소드들은 public
+ * Safe Controller에서 제공되지 않는 메소드들은 protect
+ */
 import {
   BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
-  Req,
-  Res,
 } from '@nestjs/common';
 import { Model, FilterQuery } from 'mongoose';
-import { Request, Response } from 'express';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   BaseEntity,
@@ -15,12 +19,12 @@ import {
   FindParameters,
   FindResult,
   DbErrorInfo,
+  DeleteObjectIds,
 } from 'src/models/base.entity';
 
 import { CommonService } from '../common/common.service';
 import { MongoServerError } from 'mongodb';
 import { UserAuthority } from 'src/constants/model.const';
-// import { MongoError, MongoServerError } from 'mongoose/node_modules/mongodb';
 
 /* 확장 서비스 클래스용 패키지 - 아래의 내용을 확장 클래스에 주입
 import { InjectModel } from 'nestjs-typegoose';
@@ -76,7 +80,7 @@ export class SafeService<T extends BaseEntity> {
     token: AuthTokenInfo,
     fParams: FindParameters,
   ): Promise<FindResult<T>> {
-    var fQuery: FilterQuery<BaseEntity> = {};
+    let fQuery: FilterQuery<BaseEntity> = {};
     if (fParams.filterKey && fParams.filterValue) {
       if (!this.isContainedKey(fParams.filterKey)) {
         throw new BadRequestException();
@@ -184,7 +188,24 @@ export class SafeService<T extends BaseEntity> {
     return await this.model.findOne(fQuery as FilterQuery<T>).deleteOne();
   }
 
-  protected async _deleteMany(
+  async deleteManyByIds(
+    token: AuthTokenInfo,
+    objectIds: DeleteObjectIds,
+  ): Promise<DeleteResult> {
+    let fQuery: FilterQuery<BaseEntity> = {
+      _id: {
+        $ind: objectIds.ids,
+      },
+    };
+    if (token.uAuth != UserAuthority.ADMIN) {
+      fQuery._cID = token.cID;
+    }
+
+    console.log(fQuery);
+    return await this.model.deleteMany(fQuery);
+  }
+
+  protected async _deleteAllByComID(
     token: AuthTokenInfo,
     doc: Partial<T>,
   ): Promise<DeleteResult> {

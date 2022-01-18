@@ -53,7 +53,7 @@ export class UsersService extends SafeService<User> {
     token: AuthTokenInfo,
     _cID: string,
   ): Promise<DeleteResult> {
-    return await this._deleteMany(token, { _cID });
+    return await this._deleteAllByComID(token, { _cID });
   }
 
   async findByFieldForAuth(doc: Partial<User>): Promise<User> {
