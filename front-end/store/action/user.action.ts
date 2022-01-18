@@ -33,6 +33,7 @@ import {
   _iGetAdminPartGenCode,
   _iDeleteAdminPartOne,
   _iGetAdminParts,
+  _iGetAdminPartsClass,
 } from "../interfaces";
 
 import {
@@ -657,6 +658,28 @@ export async function _aGetAdminParts() {
 }
 
 /**
+ * 부품 선택 리스트 반환
+ * @returns
+ */
+export async function _aGetAdminPartsClass(label: string) {
+  const req: FindResult<PartItem> = await axios
+    .get(genApiPath(AdminApiPath.parts_Class, { id: label }))
+    .then(
+      (
+        res: AxiosResponse<FindResult<PartItem>, PartItem>
+      ): FindResult<PartItem> => {
+        return res.data;
+      }
+    );
+
+  const result: _iGetAdminPartsClass = {
+    type: ActionAPIs.ADMIN_GET_PARTS_CLASS,
+    payload: req,
+  };
+  return result;
+}
+
+/**
  * 부품 하나 삭제
  * @param id
  * @returns
@@ -674,3 +697,22 @@ export async function _aDeleteAdminPartOne(id: string) {
   };
   return result;
 }
+
+// /**
+//  * 부품 전체 삭제
+//  * @param id
+//  * @returns
+//  */
+//  export async function _aDeleteAdminPartOne(id: string) {
+//   const req: DeleteResult = await axios
+//     .delete(genApiPath(AdminApiPath.parts, { id: id }))
+//     .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+//       return res.data;
+//     });
+
+//   const result: _iDeleteAdminPartOne = {
+//     type: ActionAPIs.ADMIN_DELETE_PART_ONE,
+//     payload: req,
+//   };
+//   return result;
+// }

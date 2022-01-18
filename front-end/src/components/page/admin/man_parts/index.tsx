@@ -38,10 +38,12 @@ import { useDispatch } from "react-redux";
 import {
   _aDeleteAdminPartOne,
   _aGetAdminParts,
+  _aGetAdminPartsClass,
 } from "../../../../../store/action/user.action";
 import {
   _iDeleteAdminPartOne,
   _iGetAdminParts,
+  _iGetAdminPartsClass,
 } from "../../../../../store/interfaces";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
@@ -57,9 +59,8 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   const [modalOption, setModalOption] = useState<string>(""); // modal 옵션
   const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
   const [selectClass, setSelectClass] = useState<string>("all"); // 선택한 분류
-  const [partClass, setPartClass] = useState<PartClass[]>(partClassList); // 분류 리스트
-  const [partList, setPartList] = useState<PartItem[]>(props.data.docs); // 부품 리스트
-
+  const [partList, setPartList] = useState<PartItem[]>(props.data.docs); // 부품 선택 리스트
+  const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
   const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
 
   /*********************************************************************
@@ -81,15 +82,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
     e.preventDefault();
     const newList: PartItem[] = [];
     if (!searchText) {
-      if (selectClass === "all") {
-        return setPartList(props.data.docs);
-      } else {
-        props.data.docs.forEach((part: PartItem) => {
-          if (part.label === selectClass) {
-            newList.push(part);
-          }
-        });
-      }
+      setReset(reset + 1);
     }
     partList.forEach((part: PartItem) => {
       if (
@@ -99,8 +92,8 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
       ) {
         newList.push(part);
       }
+      return setPartList(newList);
     });
-    setPartList(newList);
   };
 
   /**
@@ -109,17 +102,17 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   useEffect(() => {
     setCheckedList([]);
     if (selectClass === "all") {
-      setPartList(props.data.docs);
-    } else {
-      const newList: PartItem[] = [];
-      props.data.docs.forEach((part: PartItem) => {
-        if (part.label === selectClass) {
-          newList.push(part);
-        }
+      dispatch(_aGetAdminParts()).then((res: _iGetAdminParts) => {
+        setPartList(res.payload.docs);
       });
-      setPartList(newList);
+    } else {
+      dispatch(_aGetAdminPartsClass(selectClass)).then(
+        (res: _iGetAdminPartsClass) => {
+          setPartList(res.payload.docs);
+        }
+      );
     }
-  }, [selectClass]);
+  }, [selectClass, reset]);
 
   /**
    * 전체 선택 기능
@@ -171,6 +164,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   };
 
   console.log("체크항목", checkedList);
+  console.log("리스트", partList);
 
   /*********************************************************************
    * 5. Page configuration
@@ -242,12 +236,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                       dispatch(_aDeleteAdminPartOne(checkedList[0])).then(
                         (res: _iDeleteAdminPartOne) => {
                           alert("삭제되었습니다.");
-                          dispatch(_aGetAdminParts()).then(
-                            (res: _iGetAdminParts) => {
-                              console.log(res);
-                              setPartList(res.payload.docs);
-                            }
-                          );
+                          setReset(reset + 1);
                         },
                         (err) => {
                           alert("삭제에 실패했습니다.");
@@ -288,7 +277,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                         전체보기
                       </TableRowLIST>
                     </TableRow>
-                    {partClass.map((item: PartClass) => (
+                    {partClassList.map((item: PartClass) => (
                       <TableRow
                         key={item.label}
                         color={selectClass === item.label ? `#fff` : `#343a40`}
@@ -359,7 +348,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                   <TableBody>
                     {partList.map((list: PartItem) => (
                       <TableRow
-                        key={list.code}
+                        key={list._id}
                         onClick={() => {
                           setModalOption("editPart");
                           setModalOpen(true);

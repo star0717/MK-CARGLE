@@ -277,6 +277,7 @@ export enum ActionAPIs {
   ADMIN_DELETE_COMPANIES = "ADMIN_DELETE_COMPANIES", // 업체, 대표, 직원 정보 삭제
   ADMIN_GET_PART_GENCODE = "ADMIN_GET_PART_GENCODE",
   ADMIN_GET_PARTS = "ADMIN_GET_PARTS", // 부품 전체 리스트 반환
+  ADMIN_GET_PARTS_CLASS = "ADMIN_GET_PARTS_CLASS", // 부품 선택 리스트 반환
   ADMIN_DELETE_PART_ONE = "ADMIN_DELETE_PART_ONE", // 부품 하나 삭제
   ADMIN_DELETE_PART_MANY = "ADMIN_DELETE_PART_MANY", // 부품 하나 삭제
 }
@@ -360,6 +361,12 @@ export class _iGetAdminParts implements baseActionInterface {
   payload: FindResult<PartItem>;
 }
 
+// 관리자: 부품 선택 리스트 반환
+export class _iGetAdminPartsClass implements baseActionInterface {
+  type: ActionAPIs.ADMIN_GET_PARTS_CLASS;
+  payload: FindResult<PartItem>;
+}
+
 // 관리자: 부품 하나 삭제
 export class _iDeleteAdminPartOne implements baseActionInterface {
   type: ActionAPIs.ADMIN_DELETE_PART_ONE;
@@ -383,5 +390,7 @@ export type ActionInterfaces =
   | _iGetAdminUsers
   | _iGetAdminUsersId
   | _iGetAdminPartGenCode
+  | _iGetAdminParts
+  | _iGetAdminPartsClass
   | _iDeleteAdminPartOne
   | _iDeleteAdminPartMany;
