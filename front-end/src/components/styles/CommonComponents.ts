@@ -1271,6 +1271,8 @@ export const TableRow = styled.ul<any>`
   cursor: pointer;
   padding: ${(props) => props.padding || `0px 20px`};
   min-height: 45px;
+  background: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
 
   &:hover {
     background-color: #f5f5f5;
