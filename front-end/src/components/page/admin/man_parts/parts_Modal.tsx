@@ -24,7 +24,7 @@ import {
   tsItemListH,
   tsItemListS,
 } from "../../../../constants/model.const";
-import { set } from "react-hook-form";
+import { _aGetAdminPartGenCode } from "../../../../../store/action/user.action";
 
 const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
@@ -32,8 +32,8 @@ const PartsModal: NextPage<any> = (props) => {
    *********************************************************************/
   const dispatch = useDispatch();
   const [partClass, setPartClass] = useState<PartClass[]>(partClassList);
+  const [partCode, setPartCode] = useState<String>("");
   const [tsClass, setTsClass] = useState<TsClass[]>(TsClassList);
-  const [tsList, setTsList] = useState<String>("");
   const [tsItem, setTsItem] = useState<TsItem[]>(tsItemListB);
 
   /*********************************************************************
@@ -60,9 +60,19 @@ const PartsModal: NextPage<any> = (props) => {
       <form onSubmit={onSaveFormHandler}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>분류</Text>
-          <Combo width={`400px`} margin={`0px`}>
+          <Combo
+            width={`400px`}
+            margin={`0px`}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              dispatch(_aGetAdminPartGenCode(`${e.target.value}`)).then(
+                (res: any) => {
+                  setPartCode(res.payload);
+                }
+              );
+            }}
+          >
             {partClass.map((item: PartClass) => (
-              <option>{item.description}</option>
+              <option value={item.label}>{item.description}</option>
             ))}
           </Combo>
         </Wrapper>
@@ -72,7 +82,7 @@ const PartsModal: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품코드</Text>
-          <TextInput2 placeholder="부품코드" width={`400px`}></TextInput2>
+          <TextInput2 placeholder="부품코드" width={`400px`} value={partCode} />
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>국토부</Text>

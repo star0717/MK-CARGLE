@@ -30,6 +30,7 @@ import {
   _ingCompany,
   _iGetAdminUsers,
   _iGetAdminDoneCompanies,
+  _iGetAdminPartGenCode,
 } from "../interfaces";
 
 import {
@@ -605,6 +606,25 @@ export async function _aGetAdminUsersId(
 
   const result: _iGetAdminUsers = {
     type: ActionAPIs.ADMIN_GET_USERS,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 해당 직원 리스트 반환
+ * @param id
+ * @returns
+ */
+export async function _aGetAdminPartGenCode(id: string) {
+  const req: string = await axios
+    .get(genApiPath(AdminApiPath.part_genCode, { id: id }))
+    .then((res: AxiosResponse<string, string>): string => {
+      return res.data;
+    });
+
+  const result: _iGetAdminPartGenCode = {
+    type: ActionAPIs.ADMIN_DELETE_COMPANIES,
     payload: req,
   };
   return result;
