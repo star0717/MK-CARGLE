@@ -43,7 +43,10 @@ const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  const onSaveFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("저장~");
+    alert("정상적으로 등록 되었습니다.");
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -54,7 +57,7 @@ const PartsModal: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <CommonSmallTitle>부품등록</CommonSmallTitle>
-      <form>
+      <form onSubmit={onSaveFormHandler}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>분류</Text>
           <Combo width={`400px`} margin={`0px`}>
@@ -170,8 +173,18 @@ const PartsModal: NextPage<any> = (props) => {
           </Wrapper>
         </Wrapper>
         <CommonButtonWrapper kindOf={`column`}>
-          <CommonButton kindOf={`circleWhite`}>닫 기</CommonButton>
-          <CommonButton kindOf={`circleTheme`}>저 장</CommonButton>
+          <CommonButton
+            type={"button"}
+            kindOf={`circleWhite`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
+            닫 기
+          </CommonButton>
+          <CommonButton type={"submit"} kindOf={`circleTheme`}>
+            저 장
+          </CommonButton>
         </CommonButtonWrapper>
       </form>
     </WholeWrapper>
