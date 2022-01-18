@@ -617,9 +617,11 @@ export async function _aGetAdminUsersId(
  * @returns
  */
 export async function _aGetAdminPartGenCode(id: string) {
+  console.log("ID", id);
   const req: string = await axios
     .get(genApiPath(AdminApiPath.part_genCode, { id: id }))
     .then((res: AxiosResponse<string, string>): string => {
+      console.log("???", res.data);
       return res.data;
     });
 
