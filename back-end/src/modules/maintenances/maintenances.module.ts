@@ -4,13 +4,13 @@ import { MaintenancesController } from './maintenances.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { Maintenance } from 'src/models/maintenance.entity';
 import { CommonModule } from 'src/lib/common/common.module';
-import { PartsService } from 'src/modules/admin/parts/parts.service';
+import { PartsModule } from '../admin/parts/parts.module';
 
 @Module({
   imports: [
     TypegooseModule.forFeature([Maintenance]),
     CommonModule,
-    // PartsService,
+    PartsModule,
   ],
   controllers: [MaintenancesController],
   providers: [MaintenancesService],
