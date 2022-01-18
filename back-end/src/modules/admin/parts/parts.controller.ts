@@ -62,8 +62,7 @@ export class PartsController extends SafeControllerFactory<Part>(Part) {
     @Query() fParams: FindParameters,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<FindResult<Part>> {
-    fParams.take = 100;
-    return this.service.findByOptions(token, fParams);
+    return this.service.findAllPart();
   }
 
   @Get('class/:id')
@@ -83,9 +82,7 @@ export class PartsController extends SafeControllerFactory<Part>(Part) {
     @Query() fParams: FindParameters,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<FindResult<Part>> {
-    fParams.filter = { label: id } as Partial<Part>;
-    console.log(fParams);
-    return this.service.findByOptions(token, fParams);
+    return this.service.findAllPart(id);
   }
 
   @Get('gen-code/:id')

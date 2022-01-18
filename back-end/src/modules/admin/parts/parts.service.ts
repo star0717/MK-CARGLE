@@ -5,6 +5,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { AuthTokenInfo } from 'src/models/auth.entity';
+import { FindParameters, FindResult } from 'src/models/base.entity';
 import { Part } from 'src/models/part.entity';
 
 @Injectable()
@@ -26,5 +27,18 @@ export class PartsService extends SafeService<Part> {
       newPostfix = (currentPostfix + 1).toString();
     }
     return `${id}${newPostfix.padStart(4, '0')}`;
+  }
+
+  async findAllPart(label?: string): Promise<FindResult<Part>> {
+    let fQuery: FilterQuery<Part> = {};
+    if (label) fQuery = { label };
+    const docs = await this.model.find(fQuery).sort({ code: -1 });
+    const result: FindResult<Part> = {
+      currentPage: 1,
+      lastPage: 1,
+      docs,
+      totalDocs: docs.length,
+    };
+    return result;
   }
 }
