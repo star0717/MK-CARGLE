@@ -69,20 +69,30 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
    */
   const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!searchText) {
-      setSelectClass(selectClass);
-    }
     const newList: PartItem[] = [];
-    partList.forEach((part: PartItem) => {
-      if (
-        part.code.includes(searchText) ||
-        part.name.includes(searchText) ||
-        part.tsCode?.includes(searchText)
-      ) {
-        newList.push(part);
+    if (!searchText) {
+      if (selectClass === "all") {
+        setPartList(props.data.docs);
+      } else {
+        props.data.docs.forEach((part: PartItem) => {
+          if (part.label === selectClass) {
+            newList.push(part);
+          }
+        });
+        setPartList(newList);
       }
-    });
-    setPartList(newList);
+    } else {
+      partList.forEach((part: PartItem) => {
+        if (
+          part.code.includes(searchText) ||
+          part.name.includes(searchText) ||
+          part.tsCode?.includes(searchText)
+        ) {
+          newList.push(part);
+        }
+      });
+      setPartList(newList);
+    }
   };
 
   /**
@@ -110,9 +120,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
     (checked) => {
       if (checked) {
         const checkedListArray: string[] = [];
-
         partList.forEach((list: PartItem) => checkedListArray.push(list.code));
-
         setCheckedList(checkedListArray);
       } else {
         setCheckedList([]);
@@ -213,7 +221,14 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
               >
                 부품 추가하기
               </SmallButton>
-              <SmallButton kindOf={`cancle`} width={`150px`} fontSize={`16px`}>
+              <SmallButton
+                kindOf={`cancle`}
+                width={`150px`}
+                fontSize={`16px`}
+                onClick={() => {
+                  console.log("삭제!");
+                }}
+              >
                 선택삭제
               </SmallButton>
             </Wrapper>
@@ -229,7 +244,10 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
-                    <TableRow>
+                    <TableRow
+                      color={selectClass === "all" ? `#fff` : `#343a40`}
+                      bgColor={selectClass === "all" ? `#343a40` : `#fff`}
+                    >
                       <TableRowLIST
                         width={`100%`}
                         onClick={() => {
@@ -242,8 +260,10 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                     {partClass.map((item: PartClass) => (
                       <TableRow
                         key={item.label}
-                        color={selectClass === item.label ? `white` : `black`}
-                        bgColor={selectClass === item.label ? `black` : `white`}
+                        color={selectClass === item.label ? `#fff` : `#343a40`}
+                        bgColor={
+                          selectClass === item.label ? `#343a40` : `#fff`
+                        }
                         onClick={() => {
                           setSelectClass(item.label);
                         }}
