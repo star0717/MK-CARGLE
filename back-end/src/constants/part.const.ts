@@ -519,37 +519,52 @@ export class PartClass {
 }
 
 // 부품 분류
-export const partClassA: PartClass = { label: 'A', description: '오일/기타' };
-export const partClassB: PartClass = { label: 'B', description: '필터' };
-export const partClassC: PartClass = { label: 'C', description: '브레이크' };
-export const partClassD: PartClass = { label: 'D', description: '램프' };
-export const partClassE: PartClass = { label: 'E', description: '타이밍밸트' };
-export const partClassF: PartClass = { label: 'F', description: '배터리' };
-export const partClassG: PartClass = { label: 'G', description: '타이어' };
-export const partClassH: PartClass = { label: 'H', description: '연료/점화' };
-export const partClassI: PartClass = { label: 'I', description: '전기/전자' };
-export const partClassJ: PartClass = { label: 'J', description: '센서' };
-export const partClassK: PartClass = { label: 'K', description: '바디' };
-export const partClassL: PartClass = { label: 'L', description: '조향/하부' };
-export const partClassM: PartClass = { label: 'M', description: '엔진' };
-export const partClassN: PartClass = { label: 'N', description: '냉각/히터' };
-export const partClassO: PartClass = { label: 'O', description: '의장/실내' };
+export const partClass01: PartClass = { label: '01', description: '오일/기타' };
+export const partClass02: PartClass = { label: '02', description: '필터' };
+export const partClass03: PartClass = { label: '03', description: '브레이크' };
+export const partClass04: PartClass = { label: '04', description: '램프' };
+export const partClass05: PartClass = {
+  label: '05',
+  description: '타이밍밸트',
+};
+export const partClass06: PartClass = { label: '06', description: '배터리' };
+export const partClass07: PartClass = { label: '07', description: '타이어' };
+export const partClass08: PartClass = { label: '08', description: '연료/점화' };
+export const partClass09: PartClass = { label: '09', description: '전기/전자' };
+export const partClass10: PartClass = { label: '10', description: '센서' };
+export const partClass11: PartClass = { label: '11', description: '바디' };
+export const partClass12: PartClass = { label: '12', description: '조향/하부' };
+export const partClass13: PartClass = { label: '13', description: '엔진' };
+export const partClass14: PartClass = { label: '14', description: '냉각/히터' };
+export const partClass15: PartClass = { label: '15', description: '의장/실내' };
 
 // 부품 분류 리스트
 export const partClassList: PartClass[] = [
-  partClassA,
-  partClassB,
-  partClassC,
-  partClassD,
-  partClassE,
-  partClassF,
-  partClassG,
-  partClassH,
-  partClassI,
-  partClassJ,
-  partClassK,
-  partClassL,
-  partClassM,
-  partClassN,
-  partClassO,
+  partClass01,
+  partClass02,
+  partClass03,
+  partClass04,
+  partClass05,
+  partClass06,
+  partClass07,
+  partClass08,
+  partClass09,
+  partClass10,
+  partClass11,
+  partClass12,
+  partClass13,
+  partClass14,
+  partClass15,
 ];
+
+/**
+ * 레이블에 해당하는 부품클래스 정보를 반환
+ * @param label 부품 레이블
+ * @returns 부품 클래스 정보
+ */
+export const getPartClass = (label: string): PartClass => {
+  for (let i = 0; i < partClassList.length; i++) {
+    if (partClassList[i].label == label) return partClassList[i];
+  }
+  return null;
+};

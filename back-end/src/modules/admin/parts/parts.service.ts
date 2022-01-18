@@ -26,12 +26,13 @@ export class PartsService extends SafeService<Part> {
       const currentPostfix = parseInt(part.code.substring(1));
       newPostfix = (currentPostfix + 1).toString();
     }
-    return `${id}${newPostfix.padStart(4, '0')}`;
+    return `${id.padStart(2, '0')}${newPostfix.padStart(4, '0')}`;
   }
 
   async findAllPart(label?: string): Promise<FindResult<Part>> {
     let fQuery: FilterQuery<Part> = {};
     if (label) fQuery = { label };
+    console.log(fQuery);
     const docs = await this.model.find(fQuery).sort({ code: -1 });
     const result: FindResult<Part> = {
       currentPage: 1,
