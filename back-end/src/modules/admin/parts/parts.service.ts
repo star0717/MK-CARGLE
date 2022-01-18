@@ -17,7 +17,7 @@ export class PartsService extends SafeService<Part> {
     super(model, commonService);
   }
 
-  async genPartCode(token: AuthTokenInfo, id: string) {
+  async genPartCode(token: AuthTokenInfo, id: string): Promise<string> {
     const fQuery: FilterQuery<Part> = { label: id };
     const part: Part = await this.model.findOne(fQuery).sort({ code: -1 });
 
@@ -26,7 +26,8 @@ export class PartsService extends SafeService<Part> {
       const currentPostfix = parseInt(part.code.substring(1));
       newPostfix = (currentPostfix + 1).toString();
     }
-    return `${id.padStart(2, '0')}${newPostfix.padStart(4, '0')}`;
+    console.log('id: ', id, 'newPostfix: ', newPostfix);
+    return `${id.padStart(2, 'A')}${newPostfix.padStart(4, '0')}`;
   }
 
   async findAllPart(label?: string): Promise<FindResult<Part>> {

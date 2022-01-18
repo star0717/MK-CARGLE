@@ -1465,7 +1465,7 @@ export const JoinStepBar = styled.p<any>`
   ${(props) => props.kindOf === `line2` && `height : 1px;`}
   ${(props) => props.kindOf === `line2` && `border-radius : 0px;`}
   ${(props) =>
-    props.kindOf === `line2` && `border : 1px solid ${props.theme.darkGrey_C};`}
+    props.kindOf === `line2` && `border : 1px solid ${props.theme.grey_C};`}
   
   ${(props) =>
     props.kindOf === `before` && `background ${props.theme.white_C};`}

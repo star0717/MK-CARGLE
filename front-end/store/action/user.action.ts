@@ -624,7 +624,6 @@ export async function _aGetAdminPartGenCode(id: string) {
   const req: string = await axios
     .get(genApiPath(AdminApiPath.part_genCode, { id: id }))
     .then((res: AxiosResponse<string, string>): string => {
-      console.log("???", res.data);
       return res.data;
     });
 

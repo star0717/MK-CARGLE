@@ -101,7 +101,9 @@ export class PartsController extends SafeControllerFactory<Part>(Part) {
     @Param('id') id: string,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<string> {
-    return await this.service.genPartCode(token, id);
+    const result = await this.service.genPartCode(token, id);
+    console.log(result);
+    return result;
   }
 
   @Get(':id')
