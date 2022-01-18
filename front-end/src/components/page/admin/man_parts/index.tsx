@@ -137,48 +137,13 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               <TableWrapper>
                 <Wrapper isSticky={true}>
                   <TableHead radius={`8px 8px 0px 0px`}>
-                    <TableHeadLIST
-                      width={`30%`}
-                      color={`#51b351`}
-                      fontSize={`24px`}
-                    >
-                      {/* 제 이름은 플러스 버튼이에요!! */}
-                      <IconButton
-                        bgColor={`inherit`}
-                        shadow={`inherit`}
-                        color={`inherit`}
-                        onClick={() => {
-                          setModalOption("addClass");
-                          setModalOpen(true);
-                        }}
-                      >
-                        <AiFillPlusSquare />
-                      </IconButton>
-                      {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
-                    </TableHeadLIST>
-                    <TableHeadLIST width={`70%`}>부품분류</TableHeadLIST>
+                    <TableHeadLIST width={`100%`}>부품분류</TableHeadLIST>
                   </TableHead>
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     <TableRow>
-                      <TableRowLIST
-                        width={` 30%`}
-                        color={`#d6263b`}
-                        fontSize={`24px`}
-                      >
-                        {/* <IconButton
-                          bgColor={`inherit`}
-                          shadow={`inherit`}
-                          color={`inherit`}
-                          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                            e.stopPropagation()
-                          }
-                        >
-                          <AiFillMinusSquare />
-                        </IconButton> */}
-                      </TableRowLIST>
-                      <TableRowLIST width={`70%`}>전체보기</TableRowLIST>
+                      <TableRowLIST width={`100%`}>전체보기</TableRowLIST>
                     </TableRow>
                     {partClass.map((item: PartClass) => (
                       <TableRow
@@ -189,23 +154,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                           setSelectClass(item.label);
                         }}
                       >
-                        <TableRowLIST
-                          width={` 30%`}
-                          color={`#d6263b`}
-                          fontSize={`24px`}
-                        >
-                          <IconButton
-                            bgColor={`inherit`}
-                            shadow={`inherit`}
-                            color={`inherit`}
-                            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                              e.stopPropagation()
-                            }
-                          >
-                            <AiFillMinusSquare />
-                          </IconButton>
-                        </TableRowLIST>
-                        <TableRowLIST width={`70%`}>
+                        <TableRowLIST width={`100%`}>
                           {item.description}
                         </TableRowLIST>
                       </TableRow>
@@ -309,9 +258,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               <CloseButton onClick={closeModal}>
                 <IoIosCloseCircle />
               </CloseButton>
-              {modalOption === "addClass" ? (
-                "클래스"
-              ) : modalOption === "addPart" ? (
+              {modalOption === "addPart" ? (
                 <PartsModal {...ARCModalProps} />
               ) : (
                 "수정"
