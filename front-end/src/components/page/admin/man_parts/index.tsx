@@ -22,12 +22,17 @@ import {
   TableBody,
   TableRow,
   TableRowLIST,
+  CheckboxContainer,
+  CheckBoxIcon,
+  CheckBoxLine,
+  HiddenCheckbox,
 } from "../../../styles/CommonComponents";
-import { BsSearch } from "react-icons/bs";
+import { BsCheckLg, BsSearch } from "react-icons/bs";
 import { AiFillPlusSquare } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
 import { RiCheckboxBlankLine } from "react-icons/ri";
 import PartsModal from "./parts_Modal";
+import { actionTypesUser } from "../../../../../store/interfaces";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -122,23 +127,27 @@ const AdminManPartsPage: NextPage<any> = (props) => {
           <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
             {/* 부품분류 */}
             <Wrapper width={`24%`}>
-              <TableWrapper height={`445px`} overflow={`scroll`}>
-                <TableHead radius={`8px 8px 0px 0px`}>
-                  <TableHeadLIST width={`30%`}>
-                    {/* 제 이름은 플러스 버튼이에요!! */}
-                    <AiFillPlusSquare />
-                    {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
-                  </TableHeadLIST>
-                  <TableHeadLIST width={`70%`}>부품분류</TableHeadLIST>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableRowLIST width={` 30%`}>
+              <TableWrapper>
+                <Wrapper isSticky={true}>
+                  <TableHead radius={`8px 8px 0px 0px`}>
+                    <TableHeadLIST width={`30%`}>
+                      {/* 제 이름은 플러스 버튼이에요!! */}
                       <AiFillPlusSquare />
-                    </TableRowLIST>
-                    <TableRowLIST width={`70%`}>전체보기</TableRowLIST>
-                  </TableRow>
-                </TableBody>
+                      {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
+                    </TableHeadLIST>
+                    <TableHeadLIST width={`70%`}>부품분류</TableHeadLIST>
+                  </TableHead>
+                </Wrapper>
+                <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+                  <TableBody>
+                    <TableRow>
+                      <TableRowLIST width={` 30%`}>
+                        <AiFillPlusSquare />
+                      </TableRowLIST>
+                      <TableRowLIST width={`70%`}>전체보기</TableRowLIST>
+                    </TableRow>
+                  </TableBody>
+                </Wrapper>
               </TableWrapper>
             </Wrapper>
             {/* 상세정보 */}
@@ -186,26 +195,37 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                   </tbody>
                 </table> */}
               <TableWrapper overflow={`auto`}>
-                <TableHead radius={`8px 8px 0px 0px`}>
-                  <TableHeadLIST width={`10%`}>
-                    <Wrapper>
-                      <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                        <RiCheckboxBlankLine />
-                      </Text>
-                    </Wrapper>
-                  </TableHeadLIST>
-                  <TableHeadLIST width={`20%`}>부품코드</TableHeadLIST>
-                  <TableHeadLIST width={`35%`}>부품명</TableHeadLIST>
-                  <TableHeadLIST width={`35%`}>국토부</TableHeadLIST>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableRowLIST width={`10%`}></TableRowLIST>
-                    <TableRowLIST width={`20%`}>부품코드</TableRowLIST>
-                    <TableRowLIST width={`35%`}>부품명</TableRowLIST>
-                    <TableRowLIST width={`35%`}>국토부</TableRowLIST>
-                  </TableRow>
-                </TableBody>
+                <Wrapper isSticky={true}>
+                  <TableHead radius={`8px 8px 0px 0px`}>
+                    <TableHeadLIST width={`10%`}>
+                      <Wrapper>
+                        {/* 체크박스 */}
+                        <CheckboxContainer>
+                          <CheckBoxLine>
+                            <HiddenCheckbox type="checkbox" />
+                            <CheckBoxIcon>
+                              <BsCheckLg />
+                            </CheckBoxIcon>
+                          </CheckBoxLine>
+                        </CheckboxContainer>
+                        {/*  */}
+                      </Wrapper>
+                    </TableHeadLIST>
+                    <TableHeadLIST width={`20%`}>부품코드</TableHeadLIST>
+                    <TableHeadLIST width={`35%`}>부품명</TableHeadLIST>
+                    <TableHeadLIST width={`35%`}>국토부</TableHeadLIST>
+                  </TableHead>
+                </Wrapper>
+                <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+                  <TableBody>
+                    <TableRow>
+                      <TableRowLIST width={`10%`}></TableRowLIST>
+                      <TableRowLIST width={`20%`}>부품코드</TableRowLIST>
+                      <TableRowLIST width={`35%`}>부품명</TableRowLIST>
+                      <TableRowLIST width={`35%`}>국토부</TableRowLIST>
+                    </TableRow>
+                  </TableBody>
+                </Wrapper>
               </TableWrapper>
             </Wrapper>
           </Wrapper>
