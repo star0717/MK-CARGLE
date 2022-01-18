@@ -31,7 +31,7 @@ import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
 import PartsModal from "./parts_Modal";
 import ReactModal from "react-modal";
-import { PartClass, partClassList } from "../../../../constants/model.const";
+import { PartClass, partClassList } from "../../../../constants/part.const";
 import { PartItem } from "../../../../models/part.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
 import { useDispatch } from "react-redux";
