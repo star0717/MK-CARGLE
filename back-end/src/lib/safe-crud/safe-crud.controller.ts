@@ -27,6 +27,7 @@ import {
 import { Request, Response } from 'express';
 import {
   BaseEntity,
+  DeleteObjectIds,
   DeleteResult,
   FindParameters,
   FindResult,
@@ -163,6 +164,28 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       @AuthToken() token: AuthTokenInfo,
     ): Promise<DeleteResult> {
       return this.safeService.findByIdAndRemove(token, id);
+    }
+
+    @Post('/deletemany')
+    @ApiOperation({
+      summary: `[WORKER] 복수 오브젝트 ID에 해당하는 ${bodyDto.name} 데이터들을 삭제`,
+    })
+    @ApiBody({
+      description: `삭제할 데이터들의 오브젝트ID들`,
+      type: DeleteObjectIds,
+    })
+    @ApiResponse({
+      description: `삭제된 ${bodyDto.name} 데이터의 수`,
+      type: DeleteResult,
+    })
+    async deleteMany(
+      @Body() objectIds: DeleteObjectIds,
+      @AuthToken() token: AuthTokenInfo,
+    ): Promise<DeleteResult> {
+      console.log('hi');
+      console.log(objectIds.ids);
+      return null;
+      return this.safeService.deleteManyByIds(token, objectIds);
     }
   }
   return SafeController;

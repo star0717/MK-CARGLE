@@ -66,6 +66,7 @@ const PartsModal: NextPage<any> = (props) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               dispatch(_aGetAdminPartGenCode(`${e.target.value}`)).then(
                 (res: any) => {
+                  console.log("!!!", res);
                   setPartCode(res.payload);
                 }
               );
