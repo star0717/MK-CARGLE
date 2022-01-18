@@ -43,8 +43,8 @@ import {
   SettingsApiPath,
 } from "../../src/constants/api-path.const";
 import { genApiPath } from "../../src/modules/commonModule";
-import { PartItem } from "../../src/models/part.entity";
 import { DeleteObjectIds } from "../../src/models/base.entity";
+import { Part } from "../../src/models/part.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -642,15 +642,11 @@ export async function _aGetAdminPartGenCode(id: string) {
  * @returns
  */
 export async function _aGetAdminParts() {
-  const req: FindResult<PartItem> = await axios
+  const req: FindResult<Part> = await axios
     .get(genApiPath(AdminApiPath.parts))
-    .then(
-      (
-        res: AxiosResponse<FindResult<PartItem>, PartItem>
-      ): FindResult<PartItem> => {
-        return res.data;
-      }
-    );
+    .then((res: AxiosResponse<FindResult<Part>, Part>): FindResult<Part> => {
+      return res.data;
+    });
 
   const result: _iGetAdminParts = {
     type: ActionAPIs.ADMIN_GET_PARTS,
@@ -664,15 +660,11 @@ export async function _aGetAdminParts() {
  * @returns
  */
 export async function _aGetAdminPartsClass(label: string) {
-  const req: FindResult<PartItem> = await axios
+  const req: FindResult<Part> = await axios
     .get(genApiPath(AdminApiPath.parts_Class, { id: label }))
-    .then(
-      (
-        res: AxiosResponse<FindResult<PartItem>, PartItem>
-      ): FindResult<PartItem> => {
-        return res.data;
-      }
-    );
+    .then((res: AxiosResponse<FindResult<Part>, Part>): FindResult<Part> => {
+      return res.data;
+    });
 
   const result: _iGetAdminPartsClass = {
     type: ActionAPIs.ADMIN_GET_PARTS_CLASS,
