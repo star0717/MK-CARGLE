@@ -44,7 +44,7 @@ models 모듈은 front-end에 구현된 데이터 모델 클래스를 참조하�
 - 예를 들어 8000번대 Port를 사용할 경우 8000(font-end), 8001(back-end), 8022(ssh)의 포트를 사용함
 - ufw(ubuntu firewall)을 통해 Port를 allow함
 - 해당 개발자용 디렉토리를 생성하고 n2server 소스를 git clone
-- font-end, back-end의 .env 파일 설정 및 라이브러리 설치
+- front-end, back-end의 .env 파일 설정 및 라이브러리 설치
 - ssh 포트 추가: sshd_config 파일에 포트 추가
 - front-end 포트 추가: .env 파일에 DESTINATION_PORT에 back-end용 포트 설정. package.json 파일에 script 항목에 새로운 포트 추가
 - back-end 포트 추가: .env 파일의 SV_PORT에 back-end용 포트 설정
