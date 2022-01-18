@@ -454,6 +454,11 @@ export const tsItemListS: TsItem[] = [
   },
 ];
 
+/**
+ * 클래스에 해당하는 국토부 정비이력 리스트 반환
+ * @param tsClass 국토부 정비이력 클래스
+ * @returns 정비이력 리스트
+ */
 export const getTsItemList = (tsClass: TsClass): TsItem[] => {
   switch (tsClass) {
     case tsClassB:
@@ -471,6 +476,11 @@ export const getTsItemList = (tsClass: TsClass): TsItem[] => {
   }
 };
 
+/**
+ * 국토부 정비이력 코드에 해당하는 정비이력 정보(아이템) 반환
+ * @param tsCode 정비이력 (예, B01)
+ * @returns 정비이력 정보(아이템)
+ */
 export const getTsItem = (tsCode: string) => {
   const prefix = tsCode.charAt(0);
   const postfix = tsCode.substring(1);
@@ -489,6 +499,11 @@ export const getTsItem = (tsCode: string) => {
   return null;
 };
 
+/**
+ * 국토부 정비이력에 해당하는 국토부 정비이력 코드 반환
+ * @param item 코드를 조회할 정비이력 아이템
+ * @returns 코드
+ */
 export const getTsCode = (item: TsItem) => {
   return item.class.label + item.index;
 };
