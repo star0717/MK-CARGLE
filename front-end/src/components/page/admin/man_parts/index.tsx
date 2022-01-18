@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useResizeDetector } from "react-resize-detector";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
 import {
   CommonTitle,
@@ -29,10 +29,10 @@ import {
 import { BsCheckLg, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
-import { RiCheckboxBlankLine } from "react-icons/ri";
 import PartsModal from "./parts_Modal";
-import { actionTypesUser } from "../../../../../store/interfaces";
 import ReactModal from "react-modal";
+import { PartClass, partClassList } from "../../../../constants/model.const";
+import { PartItem } from "../../../../models/part.entity";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -42,14 +42,97 @@ const AdminManPartsPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [modalOption, setModalOption] = useState<string>("");
-  const [partClass, setPartClass] = useState<any>();
-  const [allPart, setAllPart] = useState<any>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
+  const [modalOption, setModalOption] = useState<string>(""); // modal 옵션
+  const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
+  const [selectClass, setSelectClass] = useState<string>("all"); // 선택한 분류
+  const [partClass, setPartClass] = useState<PartClass[]>(partClassList); // 분류 리스트
+  const [partList, setPartList] = useState<any>(props.data.docs); // 부품 리스트
+
+  const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 검색 input handler
+   * @param e
+   */
+  const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
 
+  /**
+   * 검색 handler
+   * @param e
+   */
+  const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!searchText) {
+      console.log("없음");
+    }
+    const newList: any[] = [];
+    props.data.part.forEach((part: any) => {
+      if (
+        part.code.includes(searchText) ||
+        part.name.includes(searchText) ||
+        part.molit.includes(searchText)
+      ) {
+        newList.push(part);
+      }
+    });
+    setPartList(newList);
+  };
+
+  /**
+   * 부품 분류 선택 handler -> 리스트 출력
+   */
+  useEffect(() => {
+    setCheckedList([]);
+    if (selectClass === "all") {
+      setPartList(props.data.docs);
+    } else {
+      const newList: any[] = [];
+      props.data.docs.forEach((part: any) => {
+        if (part.class === selectClass) {
+          newList.push(part);
+        }
+      });
+      setPartList(newList);
+    }
+  }, [selectClass]);
+
+  /**
+   * 전체 선택 기능
+   */
+  const onCheckedAll = useCallback(
+    (checked) => {
+      if (checked) {
+        const checkedListArray: string[] = [];
+
+        partList.forEach((list: PartItem) => checkedListArray.push(list.code));
+
+        setCheckedList(checkedListArray);
+      } else {
+        setCheckedList([]);
+      }
+    },
+    [partList]
+  );
+
+  /**
+   * 개별 선택 기능
+   */
+  const onCheckedElement = useCallback(
+    (checked: boolean, list: PartItem) => {
+      if (checked) {
+        setCheckedList([...checkedList, list.code]);
+      } else {
+        setCheckedList(checkedList.filter((el) => el !== list.code));
+      }
+    },
+    [checkedList]
+  );
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -70,6 +153,8 @@ const AdminManPartsPage: NextPage<any> = (props) => {
     style: { height: "500px" },
   };
 
+  console.log("체크항목", checkedList);
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -86,29 +171,33 @@ const AdminManPartsPage: NextPage<any> = (props) => {
 
         <RsWrapper>
           <Wrapper padding={`50px 0px 0px`}>
-            <SearchInputWrapper
-              type="text"
-              width={`678px`}
-              padding={`0px 5px`}
-              dr={`row`}
-              borderBottom={`1px solid #000`}
-            >
-              <Wrapper width={`auto`}>
-                <SearchInput
-                  width={`632px`}
-                  padding={`0px 5px 0px 5px`}
-                  placeholder="찾고싶은 부품명을 입력하세요."
-                  type="text"
-                />
-              </Wrapper>
-              <Wrapper width={`36px`} height={`46px`}>
-                <Text fontSize={`24px`}>
-                  <IconButton type="submit" shadow={`none`}>
-                    <BsSearch />
-                  </IconButton>
-                </Text>
-              </Wrapper>
-            </SearchInputWrapper>
+            <form onSubmit={onSearchFormHandler}>
+              <SearchInputWrapper
+                type="text"
+                width={`678px`}
+                padding={`0px 5px`}
+                dr={`row`}
+                borderBottom={`1px solid #000`}
+              >
+                <Wrapper width={`auto`}>
+                  <SearchInput
+                    width={`632px`}
+                    padding={`0px 5px 0px 5px`}
+                    placeholder="찾고싶은 부품명을 입력하세요."
+                    type="text"
+                    value={searchText}
+                    onChange={onInputSearchHandler}
+                  />
+                </Wrapper>
+                <Wrapper width={`36px`} height={`46px`}>
+                  <Text fontSize={`24px`}>
+                    <IconButton type="submit" shadow={`none`}>
+                      <BsSearch />
+                    </IconButton>
+                  </Text>
+                </Wrapper>
+              </SearchInputWrapper>
+            </form>
           </Wrapper>
           <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
             <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
@@ -134,91 +223,67 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               <TableWrapper>
                 <Wrapper isSticky={true}>
                   <TableHead radius={`8px 8px 0px 0px`}>
-                    <TableHeadLIST
-                      width={`30%`}
-                      color={`#51b351`}
-                      fontSize={`24px`}
-                    >
-                      {/* 제 이름은 플러스 버튼이에요!! */}
-                      <AiFillPlusSquare
-                        onClick={() => {
-                          setModalOption("addClass");
-                          setModalOpen(true);
-                        }}
-                      />
-                      {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
-                    </TableHeadLIST>
-                    <TableHeadLIST width={`70%`}>부품분류</TableHeadLIST>
+                    <TableHeadLIST width={`100%`}>부품분류</TableHeadLIST>
                   </TableHead>
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     <TableRow>
-                      <TableRowLIST
-                        width={` 30%`}
-                        color={`#d6263b`}
-                        fontSize={`24px`}
-                      >
-                        <AiFillMinusSquare />
-                      </TableRowLIST>
-                      <TableRowLIST width={`70%`}>전체보기</TableRowLIST>
+                      <TableRowLIST width={`100%`}>전체보기</TableRowLIST>
                     </TableRow>
+                    {partClass.map((item: PartClass) => (
+                      <TableRow
+                        key={item.label}
+                        color={selectClass === item.label ? `white` : `black`}
+                        bgColor={selectClass === item.label ? `black` : `white`}
+                        onClick={() => {
+                          setSelectClass(item.label);
+                        }}
+                      >
+                        <TableRowLIST width={`100%`}>
+                          {item.description}
+                        </TableRowLIST>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
             </Wrapper>
             {/* 상세정보 */}
             <Wrapper width={`74%`}>
-              {/* <table>
-                  <thead>
-                    <tr>
-                      <td width={`40px`}>
-                        <Wrapper>
-                          <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                            <RiCheckboxBlankLine />
-                          </Text>
-                        </Wrapper>
-                      </td>
-                      <td width={`200px`}>부품코드</td>
-                      <td width={`320px`}>부품명</td>
-                      <td width={`320px`}>국토부</td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td width={` 40px`}>
-                        <Wrapper color={`#314fa5`}>
-                          <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                            <RiCheckboxBlankLine />
-                          </Text>
-                        </Wrapper>
-                      </td>
-                      <td width={` 200px`}>부품코드</td>
-                      <td width={` 320px`}>부품명</td>
-                      <td width={` 320px`}>국토부</td>
-                    </tr>
-                    <tr>
-                      <td width={` 40px`}>
-                        <Wrapper color={`#314fa5`}>
-                          <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                            <RiCheckboxFill />
-                          </Text>
-                        </Wrapper>
-                      </td>
-                      <td width={` 200px`}>부품코드</td>
-                      <td width={` 320px`}>부품명</td>
-                      <td width={` 320px`}>국토부</td>
-                    </tr>
-                  </tbody>
-                </table> */}
               <TableWrapper overflow={`auto`}>
                 <Wrapper isSticky={true}>
                   <TableHead radius={`8px 8px 0px 0px`}>
-                    <TableHeadLIST width={`10%`}>
+                    <TableHeadLIST
+                      width={`10%`}
+                      onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                        e.stopPropagation()
+                      }
+                    >
                       {/* 체크박스 */}
                       <CheckboxContainer>
-                        <CheckBoxLine>
-                          <HiddenCheckbox type="checkbox" />
+                        <CheckBoxLine
+                          kindOf={
+                            checkedList.length === 0
+                              ? false
+                              : checkedList.length === partList.length
+                              ? true
+                              : false
+                          }
+                        >
+                          <HiddenCheckbox
+                            type="checkbox"
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => onCheckedAll(e.target.checked)}
+                            checked={
+                              checkedList.length === 0
+                                ? false
+                                : checkedList.length === partList.length
+                                ? true
+                                : false
+                            }
+                          />
                           <CheckBoxIcon>
                             <BsCheckLg />
                           </CheckBoxIcon>
@@ -233,26 +298,46 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
-                    <TableRow
-                      onClick={() => {
-                        setModalOption("editPart");
-                        setModalOpen(true);
-                      }}
-                    >
-                      <TableRowLIST width={`10%`}>
-                        <CheckboxContainer>
-                          <CheckBoxLine>
-                            <HiddenCheckbox type="checkbox" />
-                            <CheckBoxIcon>
-                              <BsCheckLg />
-                            </CheckBoxIcon>
-                          </CheckBoxLine>
-                        </CheckboxContainer>
-                      </TableRowLIST>
-                      <TableRowLIST width={`20%`}>부품코드</TableRowLIST>
-                      <TableRowLIST width={`35%`}>부품명</TableRowLIST>
-                      <TableRowLIST width={`35%`}>국토부</TableRowLIST>
-                    </TableRow>
+                    {partList.map((list: PartItem) => (
+                      <TableRow
+                        onClick={() => {
+                          setModalOption("editPart");
+                          setModalOpen(true);
+                        }}
+                      >
+                        <TableRowLIST
+                          key={list.code}
+                          width={`10%`}
+                          onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                            e.stopPropagation()
+                          }
+                        >
+                          <CheckboxContainer>
+                            <CheckBoxLine
+                              kindOf={
+                                checkedList.includes(list.code) ? true : false
+                              }
+                            >
+                              <HiddenCheckbox
+                                type="checkbox"
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => onCheckedElement(e.target.checked, list)}
+                                checked={
+                                  checkedList.includes(list.code) ? true : false
+                                }
+                              />
+                              <CheckBoxIcon>
+                                <BsCheckLg />
+                              </CheckBoxIcon>
+                            </CheckBoxLine>
+                          </CheckboxContainer>
+                        </TableRowLIST>
+                        <TableRowLIST width={`20%`}>{list.code}</TableRowLIST>
+                        <TableRowLIST width={`35%`}>{list.name}</TableRowLIST>
+                        <TableRowLIST width={`35%`}>{list.tsCode}</TableRowLIST>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
@@ -294,9 +379,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               <CloseButton onClick={closeModal}>
                 <IoIosCloseCircle />
               </CloseButton>
-              {modalOption === "addClass" ? (
-                "클래스"
-              ) : modalOption === "addPart" ? (
+              {modalOption === "addPart" ? (
                 <PartsModal {...ARCModalProps} />
               ) : (
                 "수정"

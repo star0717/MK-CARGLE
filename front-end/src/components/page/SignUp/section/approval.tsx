@@ -12,8 +12,13 @@ import {
   Text,
   SmallButton,
   RsWrapper,
+  CommonButton,
+  CommonButtonWrapper,
+  JoinStepBar,
 } from "../../../styles/CommonComponents";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
+import { GoCheck } from "react-icons/go";
+import { AiOutlineHourglass } from "react-icons/ai";
 
 /**
  * 회원가입: 업체 승인 대기 컴포넌트(기능)
@@ -40,16 +45,21 @@ const Approval: NextPage = () => {
   return (
     <BodyWrapper>
       <WholeWrapper ref={ref}>
-        <RsWrapper>
+        <RsWrapper padding={`12% 0px 12%`}>
           <Wrapper>
-            <Text>가입 심사가 진행 중입니다.</Text>
-            <SmallButton
-              type="button"
-              kindOf={`default`}
-              onClick={onSignOutHandler}
-            >
-              돌아가기
-            </SmallButton>
+            <Wrapper padding={`0px 0px 20px`} transform={`rotate(15deg)`}>
+              <JoinStepBar kindOf={`progress`}>
+                <AiOutlineHourglass />
+              </JoinStepBar>
+            </Wrapper>
+            <Text padding={`0px 0px 50px`} fontSize={`22px`}>
+              가입 심사가 진행중입니다.
+            </Text>
+            <CommonButtonWrapper kindOf={`column`}>
+              <CommonButton type="button" onClick={onSignOutHandler}>
+                돌아가기
+              </CommonButton>
+            </CommonButtonWrapper>
           </Wrapper>
         </RsWrapper>
       </WholeWrapper>

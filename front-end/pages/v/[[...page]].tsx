@@ -327,6 +327,18 @@ export const getServerSideProps: GetServerSideProps = async (
           return successResult;
         }
       }
+      case UseLink.ADMIN_MAN_PARTS: {
+        failResult.redirect.destination = pagePath;
+        successResult.props.data = await axios
+          .get(
+            genApiPath(AdminApiPath.parts, {
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<User, User>) => res.data);
+        return successResult;
+      }
       default:
         return {
           props: {

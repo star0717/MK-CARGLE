@@ -100,7 +100,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
                     <CheckboxContainer>
-                      <CheckBoxLine kindOf={`${props.formCheck.mkTerm}`}>
+                      <CheckBoxLine kindOf={props.formCheck.mkTerm}>
                         <HiddenCheckbox
                           type="checkbox"
                           {...register("mkTerm", {
@@ -176,7 +176,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
                     <CheckboxContainer>
-                      <CheckBoxLine kindOf={`${props.formCheck.privacyTerm}`}>
+                      <CheckBoxLine kindOf={props.formCheck.privacyTerm}>
                         <HiddenCheckbox
                           type="checkbox"
                           {...register("privacyTerm", {
@@ -241,7 +241,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                 </Wrapper>
                 <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
                   <CheckboxContainer>
-                    <CheckBoxLine kindOf={`${props.formCheck.marketTerm}`}>
+                    <CheckBoxLine kindOf={props.formCheck.marketTerm}>
                       <HiddenCheckbox
                         type="checkbox"
                         {...register("marketTerm", {

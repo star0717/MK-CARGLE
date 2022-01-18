@@ -81,11 +81,8 @@ const AccountCheck: NextPage<_pMyPageAccountProps> = (props) => {
           계정관리를 위해 비밀번호를 입력해주세요.
         </CommonSubTitle>
       </CommonTitleWrapper>
-      <RsWrapper>
-        <Wrapper
-          width={width < 1439 ? (width < 500 ? `300px` : `400px`) : `500px`}
-          padding={`80px 0px 0px`}
-        >
+      <RsWrapper padding={`12% 0px 12%`}>
+        <Wrapper>
           <form onSubmit={pwCheckHandler}>
             <TextInput2
               type="password"
