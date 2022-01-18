@@ -33,8 +33,9 @@ import PartsModal from "./parts_Modal";
 import ReactModal from "react-modal";
 import { PartClass, partClassList } from "../../../../constants/model.const";
 import { PartItem } from "../../../../models/part.entity";
+import { _MainProps } from "../../../../configure/_props.entity";
 
-const AdminManPartsPage: NextPage<any> = (props) => {
+const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -47,7 +48,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
   const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
   const [selectClass, setSelectClass] = useState<string>("all"); // 선택한 분류
   const [partClass, setPartClass] = useState<PartClass[]>(partClassList); // 분류 리스트
-  const [partList, setPartList] = useState<any>(props.data.docs); // 부품 리스트
+  const [partList, setPartList] = useState<PartItem[]>(props.data.docs); // 부품 리스트
 
   const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
 
@@ -69,14 +70,14 @@ const AdminManPartsPage: NextPage<any> = (props) => {
   const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchText) {
-      console.log("없음");
+      setSelectClass(selectClass);
     }
-    const newList: any[] = [];
-    props.data.part.forEach((part: any) => {
+    const newList: PartItem[] = [];
+    partList.forEach((part: PartItem) => {
       if (
         part.code.includes(searchText) ||
         part.name.includes(searchText) ||
-        part.molit.includes(searchText)
+        part.tsCode?.includes(searchText)
       ) {
         newList.push(part);
       }
@@ -92,9 +93,9 @@ const AdminManPartsPage: NextPage<any> = (props) => {
     if (selectClass === "all") {
       setPartList(props.data.docs);
     } else {
-      const newList: any[] = [];
-      props.data.docs.forEach((part: any) => {
-        if (part.class === selectClass) {
+      const newList: PartItem[] = [];
+      props.data.docs.forEach((part: PartItem) => {
+        if (part.label === selectClass) {
           newList.push(part);
         }
       });
@@ -229,7 +230,14 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     <TableRow>
-                      <TableRowLIST width={`100%`}>전체보기</TableRowLIST>
+                      <TableRowLIST
+                        width={`100%`}
+                        onClick={() => {
+                          setSelectClass("all");
+                        }}
+                      >
+                        전체보기
+                      </TableRowLIST>
                     </TableRow>
                     {partClass.map((item: PartClass) => (
                       <TableRow
@@ -300,13 +308,13 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                   <TableBody>
                     {partList.map((list: PartItem) => (
                       <TableRow
+                        key={list.code}
                         onClick={() => {
                           setModalOption("editPart");
                           setModalOpen(true);
                         }}
                       >
                         <TableRowLIST
-                          key={list.code}
                           width={`10%`}
                           onClick={(e: React.MouseEvent<HTMLLIElement>) =>
                             e.stopPropagation()
