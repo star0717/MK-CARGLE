@@ -194,7 +194,7 @@ export class SafeService<T extends BaseEntity> {
   ): Promise<DeleteResult> {
     let fQuery: FilterQuery<BaseEntity> = {
       _id: {
-        $ind: objectIds.ids,
+        $in: objectIds.ids,
       },
     };
     if (token.uAuth != UserAuthority.ADMIN) {

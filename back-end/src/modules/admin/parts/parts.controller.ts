@@ -21,6 +21,7 @@ import { AuthToken } from 'src/lib/decorators/decorators';
 import { SafeControllerFactory } from 'src/lib/safe-crud/safe-crud.controller';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
+  DeleteObjectIds,
   DeleteResult,
   FindParameters,
   FindResult,
@@ -30,10 +31,8 @@ import { PartsService } from './parts.service';
 
 @Controller('admin/parts')
 @ApiTags('시스템 관리자용 부품관리 API')
-export class PartsController extends SafeControllerFactory<Part>(Part) {
-  constructor(private readonly service: PartsService) {
-    super(service);
-  }
+export class PartsController {
+  constructor(private readonly service: PartsService) {}
 
   @Post()
   @ApiOperation({ summary: `[ADMIN] 새로운 Part를 추가` })
@@ -101,7 +100,7 @@ export class PartsController extends SafeControllerFactory<Part>(Part) {
     @Param('id') id: string,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<string> {
-    const result = await this.service.genPartCode(token, id);
+    const result = await this.service.genPartCode(id);
     console.log(result);
     return result;
   }
@@ -152,5 +151,24 @@ export class PartsController extends SafeControllerFactory<Part>(Part) {
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<DeleteResult> {
     return this.service.findByIdAndRemove(token, id);
+  }
+
+  @Post('/deletemany')
+  @ApiOperation({
+    summary: `[ADMIN] 복수 오브젝트 ID에 해당하는 Part 데이터들을 삭제`,
+  })
+  @ApiBody({
+    description: `삭제할 데이터들의 오브젝트ID들`,
+    type: DeleteObjectIds,
+  })
+  @ApiResponse({
+    description: `삭제된 Part 데이터의 수`,
+    type: DeleteResult,
+  })
+  async deleteManyByIds(
+    @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
+    @Body() objectIds: DeleteObjectIds,
+  ): Promise<DeleteResult> {
+    return this.service.deleteManyByIds(token, objectIds);
   }
 }
