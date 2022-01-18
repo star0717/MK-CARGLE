@@ -121,7 +121,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
             회원탈퇴를 위해 약관 동의 후 비밀번호를 입력해주세요.
           </CommonSubTitle>
         </CommonTitleWrapper>
-        <RsWrapper padding={`80px 0px 0px`}>
+        <RsWrapper padding={`5% 0px 5%`}>
           <Wrapper al={`flex-start`} width={`500px`}>
             <form onSubmit={handleSubmit(pwCheckHandler)}>
               <Wrapper
