@@ -144,7 +144,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
    * 계정 정보 변경 handler
    * @param data
    */
-  const onChangeInfoHandler: SubmitHandler<SignUpInfo> = (data) => {
+  const onChangeInfoHandler: SubmitHandler<Partial<SignUpInfo>> = (data) => {
     const changeData: SignUpInfo = {
       company: comData,
       user: userData,

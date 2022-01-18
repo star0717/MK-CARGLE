@@ -10,7 +10,6 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  CommonForm,
   SearchInput,
   IconButton,
   RsWrapper,
@@ -68,7 +67,7 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
     <WholeWrapper ref={ref}>
       <RsWrapper>
         <Wrapper height={`500px`} ju={`flex-start`}>
-          <CommonForm ju={`flex-start`} onSubmit={findCompanyHandler}>
+          <form onSubmit={findCompanyHandler}>
             <Wrapper
               width={`678px`}
               padding={`0px 5px`}
@@ -141,7 +140,7 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
                 </table>
               </Wrapper>
             </Wrapper>
-          </CommonForm>
+          </form>
         </Wrapper>
       </RsWrapper>
     </WholeWrapper>
