@@ -133,47 +133,6 @@ const PartsModal: NextPage<any> = (props) => {
             </Wrapper>
           </Wrapper>
         </Wrapper>
-        {/* <Wrapper
-        width={`400px`}
-        height={`200px`}
-        border={`1px solid #c4c4c4`}
-        radius={`5px 5px 0px 0px`}
-        ju={`top`}
-      >
-        <Wrapper bgColor={`#eee`}>
-          <Text>등록된 단어</Text>
-        </Wrapper>
-        <Wrapper padding={`10px`} overflow={`auto`}>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
-            <Text>우와와오우와우와우와우와우와우와우왕</Text>
-          </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
-            <Text>우와와오우와우와우와우와우와우와우왕</Text>
-          </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
-            <Text>우와와오우와우와우와우와우와우와우왕</Text>
-          </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
-            <Text>우와와오우와우와우와우와우와우와우왕</Text>
-          </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
-            <Text>우와와오우와우와우와우와우와우와우왕</Text>
-          </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
-            <Text>우와와오우와우와우와우와우와우와우왕</Text>
-            
-          </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
-            <Text>우와와오우와우와우와우와우와우와우왕</Text>
-          </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
-            <Text>우와와오우와우와우와우와우와우와우왕</Text>
-          </Wrapper>
-          <Wrapper border={`1px solid #c4c4c4`} margin="5px 0px 0px">
-            <Text>우와와오우와우와우와우와우와우와우왕</Text>
-          </Wrapper>
-        </Wrapper>
-      </Wrapper> */}
         <CommonButtonWrapper kindOf={`column`}>
           <CommonButton kindOf={`circleWhite`}>닫 기</CommonButton>
           <CommonButton kindOf={`circleTheme`}>저 장</CommonButton>

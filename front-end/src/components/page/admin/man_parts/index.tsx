@@ -28,7 +28,7 @@ import {
   HiddenCheckbox,
 } from "../../../styles/CommonComponents";
 import { BsCheckLg, BsSearch } from "react-icons/bs";
-import { AiFillPlusSquare } from "react-icons/ai";
+import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
 import { RiCheckboxBlankLine } from "react-icons/ri";
 import PartsModal from "./parts_Modal";
@@ -82,45 +82,40 @@ const AdminManPartsPage: NextPage<any> = (props) => {
         <CommonTitleWrapper>
           <CommonTitle>부품관리</CommonTitle>
         </CommonTitleWrapper>
-        <CommonButton
-          onClick={() => {
-            setModalOpen(true);
-          }}
-          kindOf={`circleWhite`}
-        >
-          hyeok modal
-        </CommonButton>
+
         <RsWrapper>
-          <SearchInputWrapper
-            type="text"
-            width={`678px`}
-            padding={`0px 5px`}
-            dr={`row`}
-            borderBottom={`1px solid #000`}
-          >
-            <Wrapper width={`auto`}>
-              <SearchInput
-                width={`632px`}
-                padding={`0px 5px 0px 5px`}
-                placeholder="찾고싶은 부품명을 입력하세요."
-                type="text"
-              />
-            </Wrapper>
-            <Wrapper width={`36px`} height={`46px`}>
-              <Text fontSize={`24px`}>
-                <IconButton type="submit" shadow={`none`}>
-                  <BsSearch />
-                </IconButton>
-              </Text>
-            </Wrapper>
-          </SearchInputWrapper>
+          <Wrapper padding={`50px 0px 0px`}>
+            <SearchInputWrapper
+              type="text"
+              width={`678px`}
+              padding={`0px 5px`}
+              dr={`row`}
+              borderBottom={`1px solid #000`}
+            >
+              <Wrapper width={`auto`}>
+                <SearchInput
+                  width={`632px`}
+                  padding={`0px 5px 0px 5px`}
+                  placeholder="찾고싶은 부품명을 입력하세요."
+                  type="text"
+                />
+              </Wrapper>
+              <Wrapper width={`36px`} height={`46px`}>
+                <Text fontSize={`24px`}>
+                  <IconButton type="submit" shadow={`none`}>
+                    <BsSearch />
+                  </IconButton>
+                </Text>
+              </Wrapper>
+            </SearchInputWrapper>
+          </Wrapper>
           <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
             <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
-              <SmallButton kindOf={`default`} width={`150px`}>
+              <SmallButton kindOf={`default`} width={`150px`} fontSize={`16px`}>
                 부품 추가하기
               </SmallButton>
-              <SmallButton kindOf={`default`} width={`150px`}>
-                부품 추가하기
+              <SmallButton kindOf={`cancle`} width={`150px`} fontSize={`16px`}>
+                선택삭제
               </SmallButton>
             </Wrapper>
           </Wrapper>
@@ -130,7 +125,11 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               <TableWrapper>
                 <Wrapper isSticky={true}>
                   <TableHead radius={`8px 8px 0px 0px`}>
-                    <TableHeadLIST width={`30%`}>
+                    <TableHeadLIST
+                      width={`30%`}
+                      color={`#51b351`}
+                      fontSize={`24px`}
+                    >
                       {/* 제 이름은 플러스 버튼이에요!! */}
                       <AiFillPlusSquare />
                       {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
@@ -141,8 +140,12 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     <TableRow>
-                      <TableRowLIST width={` 30%`}>
-                        <AiFillPlusSquare />
+                      <TableRowLIST
+                        width={` 30%`}
+                        color={`#d6263b`}
+                        fontSize={`24px`}
+                      >
+                        <AiFillMinusSquare />
                       </TableRowLIST>
                       <TableRowLIST width={`70%`}>전체보기</TableRowLIST>
                     </TableRow>
@@ -198,18 +201,16 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 <Wrapper isSticky={true}>
                   <TableHead radius={`8px 8px 0px 0px`}>
                     <TableHeadLIST width={`10%`}>
-                      <Wrapper>
-                        {/* 체크박스 */}
-                        <CheckboxContainer>
-                          <CheckBoxLine>
-                            <HiddenCheckbox type="checkbox" />
-                            <CheckBoxIcon>
-                              <BsCheckLg />
-                            </CheckBoxIcon>
-                          </CheckBoxLine>
-                        </CheckboxContainer>
-                        {/*  */}
-                      </Wrapper>
+                      {/* 체크박스 */}
+                      <CheckboxContainer>
+                        <CheckBoxLine>
+                          <HiddenCheckbox type="checkbox" />
+                          <CheckBoxIcon>
+                            <BsCheckLg />
+                          </CheckBoxIcon>
+                        </CheckBoxLine>
+                      </CheckboxContainer>
+                      {/*  */}
                     </TableHeadLIST>
                     <TableHeadLIST width={`20%`}>부품코드</TableHeadLIST>
                     <TableHeadLIST width={`35%`}>부품명</TableHeadLIST>
@@ -219,7 +220,16 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     <TableRow>
-                      <TableRowLIST width={`10%`}></TableRowLIST>
+                      <TableRowLIST width={`10%`}>
+                        <CheckboxContainer>
+                          <CheckBoxLine>
+                            <HiddenCheckbox type="checkbox" />
+                            <CheckBoxIcon>
+                              <BsCheckLg />
+                            </CheckBoxIcon>
+                          </CheckBoxLine>
+                        </CheckboxContainer>
+                      </TableRowLIST>
                       <TableRowLIST width={`20%`}>부품코드</TableRowLIST>
                       <TableRowLIST width={`35%`}>부품명</TableRowLIST>
                       <TableRowLIST width={`35%`}>국토부</TableRowLIST>
@@ -229,6 +239,14 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               </TableWrapper>
             </Wrapper>
           </Wrapper>
+          <CommonButton
+            onClick={() => {
+              setModalOpen(true);
+            }}
+            kindOf={`circleWhite`}
+          >
+            hyeok modal
+          </CommonButton>
         </RsWrapper>
         <Wrapper>
           <Modal

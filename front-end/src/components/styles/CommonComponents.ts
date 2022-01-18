@@ -1247,6 +1247,8 @@ export const TableHeadLIST = styled.li<any>`
   align-items: center;
   justify-content: ${(props) => props.ju || `flex-start`};
   text-align: start;
+  font-size: ${(props) => props.fontSize || `16px`};
+  color: ${(props) => props.color || ``};
 `;
 
 export const TableBody = styled.div<any>`
@@ -1281,6 +1283,8 @@ export const TableRowLIST = styled.li<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `100%`};
   display: ${(props) => props.display || `flex`};
+  color: ${(props) => props.color || ``};
+  font-size: ${(props) => props.fontSize || `16px`};
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
