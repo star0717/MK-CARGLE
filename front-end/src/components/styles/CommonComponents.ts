@@ -1560,8 +1560,8 @@ export const CheckBoxLine = styled.label<any>`
     position: absolute;
   }
 
-  ${(props) => props.kindOf === `true` && `background-color:#314fa5;`}
-  ${(props) => props.kindOf === `false` && `background-color:#fff;`}
+  ${(props) => props.kindOf === true && `background-color:#314fa5;`}
+  ${(props) => props.kindOf === false && `background-color:#fff;`}
 `;
 
 export const HiddenCheckbox = styled.input<any>`

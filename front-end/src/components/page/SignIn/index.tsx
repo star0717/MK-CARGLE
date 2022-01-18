@@ -186,7 +186,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
 
                   <Wrapper dr={`row`} ju={`flex-end`}>
                     <CheckboxContainer>
-                      <CheckBoxLine kindOf={`${saveCheck}`}>
+                      <CheckBoxLine kindOf={saveCheck}>
                         <HiddenCheckbox
                           type="checkbox"
                           onChange={() => {
