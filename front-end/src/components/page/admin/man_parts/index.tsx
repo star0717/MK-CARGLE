@@ -72,27 +72,25 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
     const newList: PartItem[] = [];
     if (!searchText) {
       if (selectClass === "all") {
-        setPartList(props.data.docs);
+        return setPartList(props.data.docs);
       } else {
         props.data.docs.forEach((part: PartItem) => {
           if (part.label === selectClass) {
             newList.push(part);
           }
         });
-        setPartList(newList);
       }
-    } else {
-      partList.forEach((part: PartItem) => {
-        if (
-          part.code.includes(searchText) ||
-          part.name.includes(searchText) ||
-          part.tsCode?.includes(searchText)
-        ) {
-          newList.push(part);
-        }
-      });
-      setPartList(newList);
     }
+    partList.forEach((part: PartItem) => {
+      if (
+        part.code.includes(searchText) ||
+        part.name.includes(searchText) ||
+        part.tsCode?.includes(searchText)
+      ) {
+        newList.push(part);
+      }
+    });
+    setPartList(newList);
   };
 
   /**
@@ -226,7 +224,11 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 width={`150px`}
                 fontSize={`16px`}
                 onClick={() => {
-                  console.log("삭제!");
+                  if (checkedList.length === 0) {
+                    alert("항목을 선택해주세요.");
+                  } else if (checkedList.length === 1) {
+                  } else {
+                  }
                 }}
               >
                 선택삭제
