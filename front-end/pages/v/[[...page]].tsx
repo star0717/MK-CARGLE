@@ -304,7 +304,14 @@ export const getServerSideProps: GetServerSideProps = async (
         if (id) {
           failResult.redirect.destination = pagePath;
           successResult.props.data = await axios
-            .get(genApiPath(AdminApiPath.users, { id, isServerSide: true }))
+            .get(
+              genApiPath(AdminApiPath.users, {
+                id: id,
+                findParams: params,
+                isServerSide: true,
+              }),
+              authConfig
+            )
             .then((res: AxiosResponse<User, User>) => res.data);
           return successResult;
         } else {
