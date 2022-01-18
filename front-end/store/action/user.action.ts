@@ -44,6 +44,7 @@ import {
 } from "../../src/constants/api-path.const";
 import { genApiPath } from "../../src/modules/commonModule";
 import { PartItem } from "../../src/models/part.entity";
+import { DeleteObjectIds } from "../../src/models/base.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -705,8 +706,11 @@ export async function _aDeleteAdminPartsOne(id: string) {
  * @returns
  */
 export async function _aDeleteAdminPartsMany(ids: string[]) {
+  const oids: DeleteObjectIds = {
+    ids,
+  };
   const req: DeleteResult = await axios
-    .post(genApiPath(AdminApiPath.part_deletemany), ids)
+    .post(genApiPath(AdminApiPath.part_deletemany), oids)
     .then((res: AxiosResponse<DeleteResult, string[]>): DeleteResult => {
       return res.data;
     });

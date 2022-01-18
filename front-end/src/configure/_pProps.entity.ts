@@ -1,6 +1,6 @@
 import React from "react";
 import { FieldValues, UseFormSetValue } from "react-hook-form";
-import { AuthTokenInfo, SignUpInfo } from "../../src/models/auth.entity";
+import { AuthTokenInfo, SignUpInfo } from "../models/auth.entity";
 import { FormCheck, FormInput } from "../../store/interfaces";
 import { UserAuthority } from "../constants/model.const";
 import { FindResult } from "../models/base.entity";

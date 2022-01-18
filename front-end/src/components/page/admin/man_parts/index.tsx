@@ -32,7 +32,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import PartsModal from "./parts_Modal";
 import ReactModal from "react-modal";
 import { PartClass, partClassList } from "../../../../constants/part.const";
-import { PartItem } from "../../../../models/part.entity";
+
 import { _MainProps } from "../../../../configure/_props.entity";
 import { useDispatch } from "react-redux";
 import {
@@ -47,6 +47,8 @@ import {
   _iGetAdminParts,
   _iGetAdminPartsClass,
 } from "../../../../../store/interfaces";
+import { Part } from "../../../../models/part.entity";
+import { DeleteObjectIds } from "../../../../models/base.entity";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -61,7 +63,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   const [modalOption, setModalOption] = useState<string>(""); // modal 옵션
   const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
   const [selectClass, setSelectClass] = useState<string>("all"); // 선택한 분류
-  const [partList, setPartList] = useState<PartItem[]>(props.data.docs); // 부품 선택 리스트
+  const [partList, setPartList] = useState<Part[]>(props.data.docs); // 부품 선택 리스트
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
   const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
 
@@ -82,11 +84,11 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
    */
   const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newList: PartItem[] = [];
+    const newList: Part[] = [];
     if (!searchText) {
       setReset(reset + 1);
     }
-    partList.forEach((part: PartItem) => {
+    partList.forEach((part: Part) => {
       if (
         part.code.includes(searchText) ||
         part.name.includes(searchText) ||
@@ -123,7 +125,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
     (checked) => {
       if (checked) {
         const checkedListArray: string[] = [];
-        partList.forEach((list: PartItem) => checkedListArray.push(list._id));
+        partList.forEach((list: Part) => checkedListArray.push(list._id));
         setCheckedList(checkedListArray);
       } else {
         setCheckedList([]);
@@ -136,7 +138,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
    * 개별 선택 기능
    */
   const onCheckedElement = useCallback(
-    (checked: boolean, list: PartItem) => {
+    (checked: boolean, list: Part) => {
       if (checked) {
         setCheckedList([...checkedList, list._id]);
       } else {
@@ -356,7 +358,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
-                    {partList.map((list: PartItem) => (
+                    {partList.map((list: Part) => (
                       <TableRow
                         key={list._id}
                         onClick={() => {

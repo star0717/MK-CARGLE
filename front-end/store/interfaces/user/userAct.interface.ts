@@ -1,7 +1,8 @@
 import { SignUpInfo } from "../../../src/models/auth.entity";
 import { DeleteResult, FindResult } from "../../../src/models/base.entity";
 import { Company } from "../../../src/models/company.entity";
-import { PartItem } from "../../../src/models/part.entity";
+import { Part } from "../../../src/models/part.entity";
+
 import { User } from "../../../src/models/user.entity";
 
 export enum actionTypesUser {
@@ -358,13 +359,13 @@ export class _iGetAdminPartGenCode implements baseActionInterface {
 // 관리자: 부품 전체 리스트 반환
 export class _iGetAdminParts implements baseActionInterface {
   type: ActionAPIs.ADMIN_GET_PARTS;
-  payload: FindResult<PartItem>;
+  payload: FindResult<Part>;
 }
 
 // 관리자: 부품 선택 리스트 반환
 export class _iGetAdminPartsClass implements baseActionInterface {
   type: ActionAPIs.ADMIN_GET_PARTS_CLASS;
-  payload: FindResult<PartItem>;
+  payload: FindResult<Part>;
 }
 
 // 관리자: 부품 하나 삭제

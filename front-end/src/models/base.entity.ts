@@ -44,6 +44,9 @@ export declare class FindResult<T> {
   currentPage: number;
   lastPage: number;
 }
+export declare class DeleteObjectIds {
+  ids: string[];
+}
 export declare class DeleteResult {
   deletedCount: number;
 }
