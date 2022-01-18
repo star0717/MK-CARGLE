@@ -36,12 +36,14 @@ import { PartItem } from "../../../../models/part.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
 import { useDispatch } from "react-redux";
 import {
-  _aDeleteAdminPartOne,
+  _aDeleteAdminPartsMany,
+  _aDeleteAdminPartsOne,
   _aGetAdminParts,
   _aGetAdminPartsClass,
 } from "../../../../../store/action/user.action";
 import {
-  _iDeleteAdminPartOne,
+  _iDeleteAdminPartsMany,
+  _iDeleteAdminPartsOne,
   _iGetAdminParts,
   _iGetAdminPartsClass,
 } from "../../../../../store/interfaces";
@@ -164,7 +166,6 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   };
 
   console.log("체크항목", checkedList);
-  console.log("리스트", partList);
 
   /*********************************************************************
    * 5. Page configuration
@@ -233,8 +234,8 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                   }
                   if (window.confirm("삭제하시겠습니까?")) {
                     if (checkedList.length === 1) {
-                      dispatch(_aDeleteAdminPartOne(checkedList[0])).then(
-                        (res: _iDeleteAdminPartOne) => {
+                      dispatch(_aDeleteAdminPartsOne(checkedList[0])).then(
+                        (res: _iDeleteAdminPartsOne) => {
                           alert("삭제되었습니다.");
                           setReset(reset + 1);
                         },
@@ -243,6 +244,15 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                         }
                       );
                     } else {
+                      dispatch(_aDeleteAdminPartsMany(checkedList)).then(
+                        (res: _iDeleteAdminPartsMany) => {
+                          alert("삭제되었습니다.");
+                          setReset(reset + 1);
+                        },
+                        (err) => {
+                          alert("삭제에 실패했습니다.");
+                        }
+                      );
                     }
                   } else {
                     return false;

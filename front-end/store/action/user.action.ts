@@ -31,9 +31,10 @@ import {
   _iGetAdminUsers,
   _iGetAdminDoneCompanies,
   _iGetAdminPartGenCode,
-  _iDeleteAdminPartOne,
+  _iDeleteAdminPartsOne,
   _iGetAdminParts,
   _iGetAdminPartsClass,
+  _iDeleteAdminPartsMany,
 } from "../interfaces";
 
 import {
@@ -684,35 +685,36 @@ export async function _aGetAdminPartsClass(label: string) {
  * @param id
  * @returns
  */
-export async function _aDeleteAdminPartOne(id: string) {
+export async function _aDeleteAdminPartsOne(id: string) {
   const req: DeleteResult = await axios
     .delete(genApiPath(AdminApiPath.parts, { id: id }))
     .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
       return res.data;
     });
 
-  const result: _iDeleteAdminPartOne = {
-    type: ActionAPIs.ADMIN_DELETE_PART_ONE,
+  const result: _iDeleteAdminPartsOne = {
+    type: ActionAPIs.ADMIN_DELETE_PARTS_ONE,
     payload: req,
   };
   return result;
 }
 
-// /**
-//  * 부품 전체 삭제
-//  * @param id
-//  * @returns
-//  */
-//  export async function _aDeleteAdminPartOne(id: string) {
-//   const req: DeleteResult = await axios
-//     .delete(genApiPath(AdminApiPath.parts, { id: id }))
-//     .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
-//       return res.data;
-//     });
+/**
+ * 부품 여러개 삭제
+ * @param id
+ * @returns
+ */
+export async function _aDeleteAdminPartsMany(ids: string[]) {
+  console.log("아이디즈", ids);
+  const req: DeleteResult = await axios
+    .post(genApiPath(AdminApiPath.parts), ids)
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
 
-//   const result: _iDeleteAdminPartOne = {
-//     type: ActionAPIs.ADMIN_DELETE_PART_ONE,
-//     payload: req,
-//   };
-//   return result;
-// }
+  const result: _iDeleteAdminPartsMany = {
+    type: ActionAPIs.ADMIN_DELETE_PARTS_MANY,
+    payload: req,
+  };
+  return result;
+}

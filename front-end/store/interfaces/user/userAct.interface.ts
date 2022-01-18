@@ -278,8 +278,8 @@ export enum ActionAPIs {
   ADMIN_GET_PART_GENCODE = "ADMIN_GET_PART_GENCODE",
   ADMIN_GET_PARTS = "ADMIN_GET_PARTS", // 부품 전체 리스트 반환
   ADMIN_GET_PARTS_CLASS = "ADMIN_GET_PARTS_CLASS", // 부품 선택 리스트 반환
-  ADMIN_DELETE_PART_ONE = "ADMIN_DELETE_PART_ONE", // 부품 하나 삭제
-  ADMIN_DELETE_PART_MANY = "ADMIN_DELETE_PART_MANY", // 부품 하나 삭제
+  ADMIN_DELETE_PARTS_ONE = "ADMIN_DELETE_PARTS_ONE", // 부품 하나 삭제
+  ADMIN_DELETE_PARTS_MANY = "ADMIN_DELETE_PARTS_MANY", // 부품 하나 삭제
 }
 
 /*****************************************************
@@ -368,14 +368,14 @@ export class _iGetAdminPartsClass implements baseActionInterface {
 }
 
 // 관리자: 부품 하나 삭제
-export class _iDeleteAdminPartOne implements baseActionInterface {
-  type: ActionAPIs.ADMIN_DELETE_PART_ONE;
+export class _iDeleteAdminPartsOne implements baseActionInterface {
+  type: ActionAPIs.ADMIN_DELETE_PARTS_ONE;
   payload: DeleteResult;
 }
 
 // 관리자: 부품 하나 삭제
-export class _iDeleteAdminPartMany implements baseActionInterface {
-  type: ActionAPIs.ADMIN_DELETE_PART_MANY;
+export class _iDeleteAdminPartsMany implements baseActionInterface {
+  type: ActionAPIs.ADMIN_DELETE_PARTS_MANY;
   payload: DeleteResult;
 }
 
@@ -392,5 +392,5 @@ export type ActionInterfaces =
   | _iGetAdminPartGenCode
   | _iGetAdminParts
   | _iGetAdminPartsClass
-  | _iDeleteAdminPartOne
-  | _iDeleteAdminPartMany;
+  | _iDeleteAdminPartsOne
+  | _iDeleteAdminPartsMany;
