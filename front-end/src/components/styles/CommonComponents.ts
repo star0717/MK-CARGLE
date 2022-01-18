@@ -1214,7 +1214,9 @@ export const TableWrapper = styled.div<any>`
   align-items: center;
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
-  min-height: 500px;
+  min-height: ${(props) => props.minHeight || `445px`};
+  overflow: ${(props) => props.overflow || ``};
+  overflow-y: ${(props) => props.overflowY || ``};
 `;
 
 export const TableHead = styled.ul<any>`

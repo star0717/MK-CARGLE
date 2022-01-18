@@ -19,6 +19,9 @@ import {
   TableWrapper,
   TableHead,
   TableHeadLIST,
+  TableBody,
+  TableRow,
+  TableRowLIST,
 } from "../../../styles/CommonComponents";
 import { BsSearch } from "react-icons/bs";
 import { AiFillPlusSquare } from "react-icons/ai";
@@ -118,55 +121,29 @@ const AdminManPartsPage: NextPage<any> = (props) => {
           </Wrapper>
           <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
             {/* 부품분류 */}
-            <Wrapper
-              margin={`0px`}
-              radius={`0px`}
-              height={`450px`}
-              width={`300px`}
-              overflow={`auto`}
-            >
-              <table>
-                <thead>
-                  <tr>
-                    <th>
-                      {/* 제 이름은 플러스 버튼이에요!! */}
-                      <Wrapper>
-                        <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                          <AiFillPlusSquare />
-                        </Text>
-                      </Wrapper>
-                      {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
-                    </th>
-                    <th>부품분류</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>전체보기</td>
-                  </tr>
-                  <tr>
-                    <td width={` 40px`}>
-                      <Wrapper>
-                        <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                          <AiFillPlusSquare />
-                        </Text>
-                      </Wrapper>
-                    </td>
-                    <td width={` 260px`}>전체보기</td>
-                  </tr>
-                </tbody>
-              </table>
+            <Wrapper width={`24%`}>
+              <TableWrapper height={`445px`} overflow={`scroll`}>
+                <TableHead radius={`8px 8px 0px 0px`}>
+                  <TableHeadLIST width={`30%`}>
+                    {/* 제 이름은 플러스 버튼이에요!! */}
+                    <AiFillPlusSquare />
+                    {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
+                  </TableHeadLIST>
+                  <TableHeadLIST width={`70%`}>부품분류</TableHeadLIST>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableRowLIST width={` 30%`}>
+                      <AiFillPlusSquare />
+                    </TableRowLIST>
+                    <TableRowLIST width={`70%`}>전체보기</TableRowLIST>
+                  </TableRow>
+                </TableBody>
+              </TableWrapper>
             </Wrapper>
             {/* 상세정보 */}
-            <Wrapper>
-              <Wrapper
-                margin={`0px`}
-                radius={`0px`}
-                height={`500px`}
-                width={`880px`}
-                overflow={`auto`}
-              >
-                {/* <table>
+            <Wrapper width={`74%`}>
+              {/* <table>
                   <thead>
                     <tr>
                       <td width={`40px`}>
@@ -208,27 +185,28 @@ const AdminManPartsPage: NextPage<any> = (props) => {
                     </tr>
                   </tbody>
                 </table> */}
-                <TableWrapper>
-                  <TableHead>
-                    <TableHeadLIST width={`calc(100% / 4)`}>
-                      <Wrapper>
-                        <Text fontSize={`24px`} margin={`4px 0px 0px`}>
-                          <RiCheckboxBlankLine />
-                        </Text>
-                      </Wrapper>
-                    </TableHeadLIST>
-                    <TableHeadLIST width={`calc(100% / 4)`}>
-                      부품코드
-                    </TableHeadLIST>
-                    <TableHeadLIST width={`calc(100% / 4)`}>
-                      부품명
-                    </TableHeadLIST>
-                    <TableHeadLIST width={`calc(100% / 4)`}>
-                      국토부
-                    </TableHeadLIST>
-                  </TableHead>
-                </TableWrapper>
-              </Wrapper>
+              <TableWrapper overflow={`auto`}>
+                <TableHead radius={`8px 8px 0px 0px`}>
+                  <TableHeadLIST width={`10%`}>
+                    <Wrapper>
+                      <Text fontSize={`24px`} margin={`4px 0px 0px`}>
+                        <RiCheckboxBlankLine />
+                      </Text>
+                    </Wrapper>
+                  </TableHeadLIST>
+                  <TableHeadLIST width={`20%`}>부품코드</TableHeadLIST>
+                  <TableHeadLIST width={`35%`}>부품명</TableHeadLIST>
+                  <TableHeadLIST width={`35%`}>국토부</TableHeadLIST>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableRowLIST width={`10%`}></TableRowLIST>
+                    <TableRowLIST width={`20%`}>부품코드</TableRowLIST>
+                    <TableRowLIST width={`35%`}>부품명</TableRowLIST>
+                    <TableRowLIST width={`35%`}>국토부</TableRowLIST>
+                  </TableRow>
+                </TableBody>
+              </TableWrapper>
             </Wrapper>
           </Wrapper>
         </RsWrapper>
