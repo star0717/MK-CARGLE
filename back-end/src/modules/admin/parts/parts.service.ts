@@ -27,7 +27,7 @@ export class PartsService extends SafeService<Part> {
       newPostfix = (currentPostfix + 1).toString();
     }
     console.log('id: ', id, 'newPostfix: ', newPostfix);
-    return `${id.padStart(2, 'A')}${newPostfix.padStart(4, '0')}`;
+    return `${id}${newPostfix.padStart(4, '0')}`;
   }
 
   async findAllPart(label?: string): Promise<FindResult<Part>> {

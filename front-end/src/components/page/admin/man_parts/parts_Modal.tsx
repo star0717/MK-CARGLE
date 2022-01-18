@@ -23,7 +23,7 @@ import {
   tsItemListE,
   tsItemListH,
   tsItemListS,
-} from "../../../../constants/model.const";
+} from "../../../../constants/part.const";
 import { _aGetAdminPartGenCode } from "../../../../../store/action/user.action";
 
 const PartsModal: NextPage<any> = (props) => {
