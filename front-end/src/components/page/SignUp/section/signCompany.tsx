@@ -168,7 +168,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
    * 사업자(owner) 회원가입 form submit handler
    * @param data
    */
-  const onSignUpCompanyHandler: SubmitHandler<SignUpInfo> = (data) => {
+  const onSignUpCompanyHandler: SubmitHandler<Partial<SignUpInfo>> = (data) => {
     dispatch({ type: actionTypesUser.INPUT_COMPANY, payload: inputCompany });
     dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
     if (!props.formCheck.companyCheck) {

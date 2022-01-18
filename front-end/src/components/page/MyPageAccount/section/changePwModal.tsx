@@ -58,7 +58,7 @@ const ChangePwModal: NextPage<_pMyPageAccountProps> = (props) => {
    * 비밀번호 변경 handler
    * @param data
    */
-  const onChangePwHandler: SubmitHandler<_fChangePw> = (data) => {
+  const onChangePwHandler: SubmitHandler<Partial<_fChangePw>> = (data) => {
     const confirmPWD: ConfirmPWD = {
       _id: props.accountInfo.user._uID,
       PWD: password,

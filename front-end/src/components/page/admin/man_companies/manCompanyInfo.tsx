@@ -76,7 +76,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
    * 업체와 대표자 정보 변경
    * @param data
    */
-  const onChangeCompany: SubmitHandler<SignUpInfo> = (data) => {
+  const onChangeCompany: SubmitHandler<Partial<SignUpInfo>> = (data) => {
     const changeData: SignUpInfo = {
       company: comData,
       user: userData,
