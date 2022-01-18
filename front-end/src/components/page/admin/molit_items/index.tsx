@@ -30,6 +30,7 @@ import {
   Text,
   CloseButton,
 } from "../../../styles/CommonComponents";
+import { MdOutlineNavigateNext } from "react-icons/md";
 
 const AdminMolitItemsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -135,6 +136,21 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
+                    <TableRow kindOf={`focus`}>
+                      <TableRowLIST
+                        width={` 30%`}
+                        color={`#d6263b`}
+                        fontSize={`24px`}
+                      >
+                        <AiFillMinusSquare />
+                      </TableRowLIST>
+                      <TableRowLIST width={`70%`}>
+                        분류명
+                        <span>
+                          <MdOutlineNavigateNext />
+                        </span>
+                      </TableRowLIST>
+                    </TableRow>
                     <TableRow>
                       <TableRowLIST
                         width={` 30%`}
@@ -143,7 +159,12 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
                       >
                         <AiFillMinusSquare />
                       </TableRowLIST>
-                      <TableRowLIST width={`70%`}>분류명입니다.</TableRowLIST>
+                      <TableRowLIST width={`70%`}>
+                        분류명
+                        <span>
+                          <MdOutlineNavigateNext />
+                        </span>
+                      </TableRowLIST>
                     </TableRow>
                   </TableBody>
                 </Wrapper>
