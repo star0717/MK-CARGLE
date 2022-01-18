@@ -1129,7 +1129,7 @@ export const UlWrapper = styled.ul<any>`
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `flex-start`};
+  justify-content: ${(props) => props.ju || `center`};
   flex-wrap: ${(props) => (props.isWrap ? `wrap` : ``)};
   position: ${(props) => props.isRelative};
   background: ${(props) => props.bgColor};
