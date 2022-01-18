@@ -78,14 +78,15 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
         <form onSubmit={findCompanyHandler}>
           <SearchInputWrapper
             type="text"
-            width={`400px`}
+            width={`500px`}
             padding={`0px 5px`}
+            margin={`0px 0px 30px 0px`}
             dr={`row`}
             borderBottom={`1px solid #000`}
           >
             <Wrapper width={`auto`}>
               <SearchInput
-                width={`346px`}
+                width={`446px`}
                 padding={`0px 5px 0px 5px`}
                 placeholder="사업자등록번호 또는 업체명을 입력하세요."
                 type="text"
@@ -107,12 +108,12 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
             <Wrapper margin={`0px`} padding={`0px`}>
               <TableWrapper>
                 <TableHead>
-                  <TableHeadLIST>업체명</TableHeadLIST>
-                  <TableHeadLIST>대표자명</TableHeadLIST>
-                  <TableHeadLIST>사업자등록번호</TableHeadLIST>
+                  <TableHeadLIST width={`35%`}>업체명</TableHeadLIST>
+                  <TableHeadLIST width={`30%`}>대표자명</TableHeadLIST>
+                  <TableHeadLIST width={`35%`}>사업자등록번호</TableHeadLIST>
                 </TableHead>
                 {companyList.length === 0 ? (
-                  <Wrapper height={`100%`} al={`center`}>
+                  <Wrapper height={`400px`} al={`center`}>
                     소속 업체를 검색하세요.
                   </Wrapper>
                 ) : (
@@ -136,9 +137,13 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
                           props.setModalOpen(false);
                         }}
                       >
-                        <TableRowLIST>{item.name}</TableRowLIST>
-                        <TableRowLIST>{item.ownerName}</TableRowLIST>
-                        <TableRowLIST>{item.comRegNum}</TableRowLIST>
+                        <TableRowLIST width={`35%`}>{item.name}</TableRowLIST>
+                        <TableRowLIST width={`30%`}>
+                          {item.ownerName}
+                        </TableRowLIST>
+                        <TableRowLIST width={`35%`}>
+                          {item.comRegNum}
+                        </TableRowLIST>
                       </TableRow>
                     ))}
                   </TableBody>
