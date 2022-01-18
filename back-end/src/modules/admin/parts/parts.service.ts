@@ -4,12 +4,7 @@ import { FilterQuery } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
-import { AuthTokenInfo } from 'src/models/auth.entity';
-import {
-  DeleteObjectIds,
-  FindParameters,
-  FindResult,
-} from 'src/models/base.entity';
+import { FindResult } from 'src/models/base.entity';
 import { Part } from 'src/models/part.entity';
 
 @Injectable()
