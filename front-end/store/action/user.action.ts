@@ -705,7 +705,6 @@ export async function _aDeleteAdminPartsOne(id: string) {
  * @returns
  */
 export async function _aDeleteAdminPartsMany(ids: string[]) {
-  console.log("아이디즈", ids);
   const req: DeleteResult = await axios
     .post(genApiPath(AdminApiPath.parts), ids)
     .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
