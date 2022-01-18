@@ -640,7 +640,7 @@ export async function _aGetAdminPartGenCode(id: string) {
  */
 export async function _aGetAdminParts() {
   const req: FindResult<PartItem> = await axios
-    .delete(genApiPath(AdminApiPath.parts))
+    .get(genApiPath(AdminApiPath.parts))
     .then(
       (
         res: AxiosResponse<FindResult<PartItem>, PartItem>

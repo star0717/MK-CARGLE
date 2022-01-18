@@ -35,8 +35,14 @@ import { PartClass, partClassList } from "../../../../constants/model.const";
 import { PartItem } from "../../../../models/part.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
 import { useDispatch } from "react-redux";
-import { _aDeleteAdminPartOne } from "../../../../../store/action/user.action";
-import { _iDeleteAdminPartOne } from "../../../../../store/interfaces";
+import {
+  _aDeleteAdminPartOne,
+  _aGetAdminParts,
+} from "../../../../../store/action/user.action";
+import {
+  _iDeleteAdminPartOne,
+  _iGetAdminParts,
+} from "../../../../../store/interfaces";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -236,6 +242,12 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                       dispatch(_aDeleteAdminPartOne(checkedList[0])).then(
                         (res: _iDeleteAdminPartOne) => {
                           alert("삭제되었습니다.");
+                          dispatch(_aGetAdminParts()).then(
+                            (res: _iGetAdminParts) => {
+                              console.log(res);
+                              setPartList(res.payload.docs);
+                            }
+                          );
                         },
                         (err) => {
                           alert("삭제에 실패했습니다.");
