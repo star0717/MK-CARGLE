@@ -51,6 +51,7 @@ export class AdminApiPath {
   static parts = AdminApiPath.BASE + "parts";
   static parts_Class = AdminApiPath.BASE + "parts/class";
   static part_genCode = AdminApiPath.BASE + "parts/gen-code";
+  static part_deletemany = AdminApiPath.BASE + "parts/deletemany";
 }
 
 export class SettingsApiPath {
