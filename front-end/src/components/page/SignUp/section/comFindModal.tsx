@@ -23,7 +23,7 @@ import {
   TableRowLIST,
 } from "../../../styles/CommonComponents";
 import { CHAR_DEL } from "../../../../validation/regEx";
-import { BsSearch } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { _pComFindModalProps } from "../../../../configure/_pProps.entity";
 
 /**
@@ -34,6 +34,7 @@ import { _pComFindModalProps } from "../../../../configure/_pProps.entity";
 const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
   const dispatch = useDispatch();
 
+  const [search, setSearch] = useState<boolean>(false);
   const [companyList, setCompanyList] = useState<any>([]); // 검색해서 받아온 업체 리스트 state
   const [searchText, setSearchText] = useState<string>(""); // 검색 input state(업체명 or 사업자번호)
 
@@ -51,13 +52,16 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
           dispatch(_aGetAuthCompanies(searchText)).then((res: any) => {
             if (res.payload.length === 0) {
               setCompanyList([]);
+              setSearch(true);
             } else {
               setCompanyList(res.payload);
+              setSearch(true);
             }
           });
         } else {
           // 사업자 번호 결과값 있을 때 (json으로 받아옴)
           setCompanyList([res.payload]);
+          setSearch(true);
         }
       },
       (err) => {
@@ -112,9 +116,21 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
                   <TableHeadLIST width={`30%`}>대표자명</TableHeadLIST>
                   <TableHeadLIST width={`35%`}>사업자등록번호</TableHeadLIST>
                 </TableHead>
-                {companyList.length === 0 ? (
+                {!search ? (
                   <Wrapper height={`400px`} al={`center`}>
-                    소속 업체를 검색하세요.
+                    <Text fontSize={`48px`} color={`#c4c4c4`}>
+                      <BsSearch />
+                    </Text>
+                    <Text color={`#c4c4c4`}>
+                      소속 업체를 검색창에 입력해주세요.
+                    </Text>
+                  </Wrapper>
+                ) : companyList.length === 0 ? (
+                  <Wrapper height={`400px`} al={`center`}>
+                    <Text fontSize={`48px`} color={`#c4c4c4`}>
+                      <BsEmojiFrownFill />
+                    </Text>
+                    <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
                   </Wrapper>
                 ) : (
                   <TableBody>
