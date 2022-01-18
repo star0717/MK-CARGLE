@@ -4,7 +4,10 @@ import Modal from "react-modal";
 import WithdrawalModal from "./withdrawalModal";
 import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { _aPostAuthMyinfoConfirmPassword } from "../../../../../store/action/user.action";
+import {
+  _aPostAuthMyinfoConfirmPassword,
+  withdrawalAction,
+} from "../../../../../store/action/user.action";
 import { _fWithdrawal } from "../../../../configure/_fProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -30,6 +33,8 @@ import {
   _pWithdrawalModalProps,
 } from "../../../../configure/_pProps.entity";
 import { BsCheckLg } from "react-icons/bs";
+import router from "next/router";
+import { UseLink } from "../../../../configure/router.entity";
 
 Modal.setAppElement("body");
 
@@ -80,7 +85,16 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
     };
     dispatch(_aPostAuthMyinfoConfirmPassword(confirmPWD)).then((res: any) => {
       if (res.payload === true) {
-        setModalOpen(!modalOpen);
+        if (
+          window.confirm("모든 데이터가 삭제됩니다.\n정말로 탈퇴하시겠습니까?")
+        ) {
+          dispatch(withdrawalAction(confirmPWD)).then((res: any) => {
+            alert("정상적으로 탈퇴 되었습니다.");
+            router.push(UseLink.INDEX);
+          });
+        } else {
+          return false;
+        }
       } else {
         alert("비밀번호가 틀립니다.");
       }
@@ -204,7 +218,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
               />
               {errors.password?.type === "required" && (
                 <Text
-                  margin={`0px 0px 10px`}
+                  margin={`10px 0px 10px`}
                   width={`100%`}
                   color={`#d6263b`}
                   al={`flex-start`}
@@ -228,7 +242,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
           </Wrapper>
         </RsWrapper>
       </WholeWrapper>
-      <Modal
+      {/* <Modal
         isOpen={modalOpen}
         onRequestClose={() => setModalOpen(false)}
         style={{
@@ -260,7 +274,7 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
         }}
       >
         <WithdrawalModal {...WithdrawalModalProps} />
-      </Modal>
+      </Modal> */}
     </>
   );
 };
