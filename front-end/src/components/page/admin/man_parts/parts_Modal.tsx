@@ -10,14 +10,31 @@ import {
   Wrapper,
   CommonSmallTitle,
 } from "../../../styles/CommonComponents";
-import React from "react";
+import React, { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
+import {
+  PartClass,
+  partClassList,
+  TsClass,
+  TsClassList,
+  TsItem,
+  tsItemListB,
+  tsItemListD,
+  tsItemListE,
+  tsItemListH,
+  tsItemListS,
+} from "../../../../constants/model.const";
+import { set } from "react-hook-form";
 
 const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+  const [partClass, setPartClass] = useState<PartClass[]>(partClassList);
+  const [tsClass, setTsClass] = useState<TsClass[]>(TsClassList);
+  const [tsList, setTsList] = useState<String>("");
+  const [tsItem, setTsItem] = useState<TsItem[]>(tsItemListB);
 
   /*********************************************************************
    * 2. State settings
@@ -26,7 +43,10 @@ const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  const onSaveFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("저장~");
+    alert("정상적으로 등록 되었습니다.");
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -37,13 +57,13 @@ const PartsModal: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <CommonSmallTitle>부품등록</CommonSmallTitle>
-      <form>
+      <form onSubmit={onSaveFormHandler}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>분류</Text>
           <Combo width={`400px`} margin={`0px`}>
-            <option>{"분류명입니다(1)"}</option>
-            <option>{"분류명입니다(2)"}</option>
-            <option>{"분류명입니다(3)"}</option>
+            {partClass.map((item: PartClass) => (
+              <option>{item.description}</option>
+            ))}
           </Combo>
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
@@ -57,15 +77,34 @@ const PartsModal: NextPage<any> = (props) => {
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>국토부</Text>
           <Wrapper dr={`row`} ju={`space-between`} width={`400px`}>
-            <Combo width={`145px`} margin={`0px`}>
-              <option>{"국토부입니다(1)"}</option>
-              <option>{"국토부입니다(2)"}</option>
-              <option>{"국토부입니다(3)"}</option>
+            <Combo
+              width={`145px`}
+              margin={`0px`}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                switch (e.target.value) {
+                  case "tsItemListB":
+                    return setTsItem(tsItemListB);
+                  case "tsItemListD":
+                    return setTsItem(tsItemListD);
+                  case "tsItemListE":
+                    return setTsItem(tsItemListE);
+                  case "tsItemListH":
+                    return setTsItem(tsItemListH);
+                  case "tsItemListS":
+                    return setTsItem(tsItemListS);
+                }
+              }}
+            >
+              {tsClass.map((item: TsClass) => (
+                <option value={`tsItemList${item.label}`}>
+                  {item.description}
+                </option>
+              ))}
             </Combo>
             <Combo width={`245px`} margin={`0px`}>
-              <option>{"국토부 정비명 입니다(1)"}</option>
-              <option>{"국토부 정비명 입니다(2)"}</option>
-              <option>{"국토부 정비명 입니다(3)"}</option>
+              {tsItem.map((item: TsItem) => (
+                <option>{item.name}</option>
+              ))}
             </Combo>
           </Wrapper>
         </Wrapper>
@@ -134,8 +173,18 @@ const PartsModal: NextPage<any> = (props) => {
           </Wrapper>
         </Wrapper>
         <CommonButtonWrapper kindOf={`column`}>
-          <CommonButton kindOf={`circleWhite`}>닫 기</CommonButton>
-          <CommonButton kindOf={`circleTheme`}>저 장</CommonButton>
+          <CommonButton
+            type={"button"}
+            kindOf={`circleWhite`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
+            닫 기
+          </CommonButton>
+          <CommonButton type={"submit"} kindOf={`circleTheme`}>
+            저 장
+          </CommonButton>
         </CommonButtonWrapper>
       </form>
     </WholeWrapper>

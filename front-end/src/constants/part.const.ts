@@ -19,7 +19,13 @@ export const tsClassH: TsClass = { label: "H", description: "고전원전기장�
 export const tsClassS: TsClass = { label: "S", description: "섀시" };
 
 // 국토부 정비이력 분류 리스트
-export const TsClassList: TsClass[] = [tsClassB, tsClassD, tsClassE, tsClassS];
+export const TsClassList: TsClass[] = [
+  tsClassB,
+  tsClassD,
+  tsClassE,
+  tsClassH,
+  tsClassS,
+];
 
 // 국토부 정비이력 아이템 클래스
 export class TsItem {
