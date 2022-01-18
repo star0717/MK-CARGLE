@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   getMyInfoAction,
-  _aPostSettingsMyinfoConfirmPassword,
+  _aPostAuthMyinfoConfirmPassword,
 } from "../../../../../store/action/user.action";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -42,7 +42,7 @@ const AccountCheck: NextPage<_pMyPageAccountProps> = (props) => {
         _id: props.tokenValue.uID,
         PWD: password,
       };
-      dispatch(_aPostSettingsMyinfoConfirmPassword(confirmPWD)).then(
+      dispatch(_aPostAuthMyinfoConfirmPassword(confirmPWD)).then(
         (res: any) => {
           if (res.payload === true) {
             dispatch(getMyInfoAction()).then((res: any) => {

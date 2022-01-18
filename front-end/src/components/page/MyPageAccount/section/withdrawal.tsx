@@ -4,7 +4,7 @@ import Modal from "react-modal";
 import WithdrawalModal from "./withdrawalModal";
 import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { _aPostSettingsMyinfoConfirmPassword } from "../../../../../store/action/user.action";
+import { _aPostAuthMyinfoConfirmPassword } from "../../../../../store/action/user.action";
 import { _fWithdrawal } from "../../../../configure/_fProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -75,15 +75,13 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
       _id: accountInfo.user._uID,
       PWD: password,
     };
-    dispatch(_aPostSettingsMyinfoConfirmPassword(confirmPWD)).then(
-      (res: any) => {
-        if (res.payload === true) {
-          setModalOpen(!modalOpen);
-        } else {
-          alert("비밀번호가 틀립니다.");
-        }
+    dispatch(_aPostAuthMyinfoConfirmPassword(confirmPWD)).then((res: any) => {
+      if (res.payload === true) {
+        setModalOpen(!modalOpen);
+      } else {
+        alert("비밀번호가 틀립니다.");
       }
-    );
+    });
   };
 
   // 회원탈퇴 모달 props
