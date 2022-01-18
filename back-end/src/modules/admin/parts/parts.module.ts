@@ -9,5 +9,6 @@ import { CommonModule } from 'src/lib/common/common.module';
   imports: [TypegooseModule.forFeature([Part]), CommonModule],
   controllers: [PartsController],
   providers: [PartsService],
+  exports: [PartsService],
 })
 export class PartsModule {}
