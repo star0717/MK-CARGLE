@@ -31,6 +31,8 @@ import {
   _iGetAdminUsers,
   _iGetAdminDoneCompanies,
   _iGetAdminPartGenCode,
+  _iDeleteAdminPartOne,
+  _iGetAdminParts,
 } from "../interfaces";
 
 import {
@@ -39,6 +41,7 @@ import {
   SettingsApiPath,
 } from "../../src/constants/api-path.const";
 import { genApiPath } from "../../src/modules/commonModule";
+import { PartItem } from "../../src/models/part.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -627,6 +630,47 @@ export async function _aGetAdminPartGenCode(id: string) {
 
   const result: _iGetAdminPartGenCode = {
     type: ActionAPIs.ADMIN_DELETE_COMPANIES,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 부품 전체 리스트 반환
+ * @returns
+ */
+export async function _aGetAdminParts() {
+  const req: FindResult<PartItem> = await axios
+    .delete(genApiPath(AdminApiPath.parts))
+    .then(
+      (
+        res: AxiosResponse<FindResult<PartItem>, PartItem>
+      ): FindResult<PartItem> => {
+        return res.data;
+      }
+    );
+
+  const result: _iGetAdminParts = {
+    type: ActionAPIs.ADMIN_GET_PARTS,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 부품 하나 삭제
+ * @param id
+ * @returns
+ */
+export async function _aDeleteAdminPartOne(id: string) {
+  const req: DeleteResult = await axios
+    .delete(genApiPath(AdminApiPath.parts, { id: id }))
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteAdminPartOne = {
+    type: ActionAPIs.ADMIN_DELETE_PART_ONE,
     payload: req,
   };
   return result;

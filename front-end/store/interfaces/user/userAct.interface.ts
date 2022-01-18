@@ -1,6 +1,7 @@
 import { SignUpInfo } from "../../../src/models/auth.entity";
 import { DeleteResult, FindResult } from "../../../src/models/base.entity";
 import { Company } from "../../../src/models/company.entity";
+import { PartItem } from "../../../src/models/part.entity";
 import { User } from "../../../src/models/user.entity";
 
 export enum actionTypesUser {
@@ -275,6 +276,9 @@ export enum ActionAPIs {
   ADMIN_PATCH_SINGUP_INFO = "ADMIN_PATCH_SINGUP_INFO", // 업체 가입 정보 수정
   ADMIN_DELETE_COMPANIES = "ADMIN_DELETE_COMPANIES", // 업체, 대표, 직원 정보 삭제
   ADMIN_GET_PART_GENCODE = "ADMIN_GET_PART_GENCODE",
+  ADMIN_GET_PARTS = "ADMIN_GET_PARTS", // 부품 전체 리스트 반환
+  ADMIN_DELETE_PART_ONE = "ADMIN_DELETE_PART_ONE", // 부품 하나 삭제
+  ADMIN_DELETE_PART_MANY = "ADMIN_DELETE_PART_MANY", // 부품 하나 삭제
 }
 
 /*****************************************************
@@ -350,6 +354,24 @@ export class _iGetAdminPartGenCode implements baseActionInterface {
   payload: string;
 }
 
+// 관리자: 부품 전체 리스트 반환
+export class _iGetAdminParts implements baseActionInterface {
+  type: ActionAPIs.ADMIN_GET_PARTS;
+  payload: FindResult<PartItem>;
+}
+
+// 관리자: 부품 하나 삭제
+export class _iDeleteAdminPartOne implements baseActionInterface {
+  type: ActionAPIs.ADMIN_DELETE_PART_ONE;
+  payload: DeleteResult;
+}
+
+// 관리자: 부품 하나 삭제
+export class _iDeleteAdminPartMany implements baseActionInterface {
+  type: ActionAPIs.ADMIN_DELETE_PART_MANY;
+  payload: DeleteResult;
+}
+
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
@@ -360,4 +382,6 @@ export type ActionInterfaces =
   | _iPatchAdminSignUpInfo
   | _iGetAdminUsers
   | _iGetAdminUsersId
-  | _iGetAdminPartGenCode;
+  | _iGetAdminPartGenCode
+  | _iDeleteAdminPartOne
+  | _iDeleteAdminPartMany;

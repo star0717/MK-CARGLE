@@ -34,11 +34,15 @@ import ReactModal from "react-modal";
 import { PartClass, partClassList } from "../../../../constants/model.const";
 import { PartItem } from "../../../../models/part.entity";
 import { _MainProps } from "../../../../configure/_props.entity";
+import { useDispatch } from "react-redux";
+import { _aDeleteAdminPartOne } from "../../../../../store/action/user.action";
+import { _iDeleteAdminPartOne } from "../../../../../store/interfaces";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const dispatch = useDispatch();
 
   /*********************************************************************
    * 2. State settings
@@ -118,7 +122,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
     (checked) => {
       if (checked) {
         const checkedListArray: string[] = [];
-        partList.forEach((list: PartItem) => checkedListArray.push(list.code));
+        partList.forEach((list: PartItem) => checkedListArray.push(list._id));
         setCheckedList(checkedListArray);
       } else {
         setCheckedList([]);
@@ -133,9 +137,9 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   const onCheckedElement = useCallback(
     (checked: boolean, list: PartItem) => {
       if (checked) {
-        setCheckedList([...checkedList, list.code]);
+        setCheckedList([...checkedList, list._id]);
       } else {
-        setCheckedList(checkedList.filter((el) => el !== list.code));
+        setCheckedList(checkedList.filter((el) => el !== list._id));
       }
     },
     [checkedList]
@@ -225,9 +229,22 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 fontSize={`16px`}
                 onClick={() => {
                   if (checkedList.length === 0) {
-                    alert("항목을 선택해주세요.");
-                  } else if (checkedList.length === 1) {
+                    return alert("항목을 선택해주세요.");
+                  }
+                  if (window.confirm("삭제하시겠습니까?")) {
+                    if (checkedList.length === 1) {
+                      dispatch(_aDeleteAdminPartOne(checkedList[0])).then(
+                        (res: _iDeleteAdminPartOne) => {
+                          alert("삭제되었습니다.");
+                        },
+                        (err) => {
+                          alert("삭제에 실패했습니다.");
+                        }
+                      );
+                    } else {
+                    }
                   } else {
+                    return false;
                   }
                 }}
               >
@@ -345,7 +362,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                           <CheckboxContainer>
                             <CheckBoxLine
                               kindOf={
-                                checkedList.includes(list.code) ? true : false
+                                checkedList.includes(list._id) ? true : false
                               }
                             >
                               <HiddenCheckbox
@@ -354,7 +371,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                                   e: React.ChangeEvent<HTMLInputElement>
                                 ) => onCheckedElement(e.target.checked, list)}
                                 checked={
-                                  checkedList.includes(list.code) ? true : false
+                                  checkedList.includes(list._id) ? true : false
                                 }
                               />
                               <CheckBoxIcon>
