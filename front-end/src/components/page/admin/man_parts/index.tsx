@@ -52,6 +52,7 @@ import {
 } from "../../../../../store/interfaces";
 import { Part } from "../../../../models/part.entity";
 import { DeleteObjectIds } from "../../../../models/base.entity";
+import PartsInfo_Modal from "./partsInfo_Modal";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -453,7 +454,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
               {modalOption === "addPart" ? (
                 <PartsModal {...ARCModalProps} />
               ) : (
-                "수정"
+                <PartsInfo_Modal {...ARCModalProps} />
               )}
             </Wrapper>
           </ReactModal>

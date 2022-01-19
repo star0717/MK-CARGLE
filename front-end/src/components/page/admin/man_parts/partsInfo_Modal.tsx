@@ -34,7 +34,7 @@ import { BsPlus } from "react-icons/bs";
 // import Part from "../../../../models/part.entity"
 import { Part } from "../../../../models/part.entity";
 
-const PartsModal: NextPage<any> = (props) => {
+const PartsInfo_Modal: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -279,4 +279,4 @@ const PartsModal: NextPage<any> = (props) => {
   );
 };
 
-export default PartsModal;
+export default PartsInfo_Modal;
