@@ -232,7 +232,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                   setModalOpen(true);
                 }}
               >
-                부품 추가하기
+                부품추가
               </SmallButton>
               <SmallButton
                 kindOf={`cancle`}
