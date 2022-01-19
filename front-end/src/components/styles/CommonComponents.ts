@@ -362,6 +362,7 @@ export const Text = styled.p<any>`
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
+  text-decoration: ${(props) => props.decoration};
 
   & svg {
     color: ${(props) => props.color};
