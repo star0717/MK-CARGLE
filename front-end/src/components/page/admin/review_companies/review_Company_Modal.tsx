@@ -8,6 +8,7 @@ import {
   CommonSmallTitle,
   FocusButton,
   Text,
+  TextArea,
   TextInput2,
   WholeWrapper,
   Wrapper,
@@ -93,7 +94,8 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
         <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
           <Text>반려사유</Text>
           <Wrapper width={`400px`}>
-            <TextInput2
+            <TextArea
+              padding={`10px`}
               width={`400px`}
               height={`150px`}
               placeholder="반려 사유를 입력하세요."

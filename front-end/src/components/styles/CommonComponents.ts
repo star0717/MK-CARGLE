@@ -850,7 +850,8 @@ export const TextInput2 = styled.input<any>`
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
   font-size: 16px;
-
+  align-items: ${(props) => props.al || ``};
+  justify-content: ${(props) => props.ju || ``};
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
   border: ${(props) => props.theme.border};
@@ -859,6 +860,52 @@ export const TextInput2 = styled.input<any>`
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
+  line-height: ${(props) => props.lineHeight};
+  text-align: ${(props) => props.textAlign};
+  vertical-align: ${(props) => props.vertical};
+
+  &:focus {
+    outline: none;
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
+  }
+
+  &:read-only:focus {
+    box-shadow: none;
+    border: ${(props) => props.theme.border};
+  }
+
+  &:read-only {
+    box-shadow: none;
+    border: ${(props) => props.theme.border};
+    background-color: #f5f5f5;
+    cursor: default;
+  }
+`;
+
+export const TextArea = styled.textarea<any>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.theme.border};
+  padding: ${(props) => props.padding || props.theme.inputPadding};
+  border-radius: ${(props) => props.theme.radius};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
+  font-size: 16px;
+  align-items: ${(props) => props.al || ``};
+  justify-content: ${(props) => props.ju || ``};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.theme.border};
+  padding: ${(props) => props.padding || props.theme.inputPadding};
+  border-radius: ${(props) => props.theme.radius};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
+  line-height: ${(props) => props.lineHeight};
+  text-align: ${(props) => props.textAlign};
+  vertical-align: ${(props) => props.vertical};
+  resize: none;
 
   &:focus {
     outline: none;
