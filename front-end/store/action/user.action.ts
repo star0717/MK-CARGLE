@@ -35,6 +35,7 @@ import {
   _iGetAdminParts,
   _iGetAdminPartsClass,
   _iDeleteAdminPartsMany,
+  _iPostAdminParts,
 } from "../interfaces";
 
 import {
@@ -709,6 +710,26 @@ export async function _aDeleteAdminPartsMany(ids: string[]) {
 
   const result: _iDeleteAdminPartsMany = {
     type: ActionAPIs.ADMIN_DELETE_PARTS_MANY,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 새로운 Part를 추가
+ * @param id
+ * @returns
+ */
+export async function _aPostAdminPart(setPart: Partial<Part>) {
+  console.log("API : ", setPart);
+  const req = await axios
+    .post(genApiPath(AdminApiPath.parts), setPart)
+    .then((res: AxiosResponse<string, string[]>): string => {
+      return res.data;
+    });
+
+  const result: _iPostAdminParts = {
+    type: ActionAPIs.ADMIN_PARTS,
     payload: req,
   };
   return result;

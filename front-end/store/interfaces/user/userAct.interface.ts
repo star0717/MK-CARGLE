@@ -276,11 +276,12 @@ export enum ActionAPIs {
   // 고유 API
   ADMIN_PATCH_SINGUP_INFO = "ADMIN_PATCH_SINGUP_INFO", // 업체 가입 정보 수정
   ADMIN_DELETE_COMPANIES = "ADMIN_DELETE_COMPANIES", // 업체, 대표, 직원 정보 삭제
-  ADMIN_GET_PART_GENCODE = "ADMIN_GET_PART_GENCODE",
+  ADMIN_GET_PART_GENCODE = "ADMIN_GET_PART_GENCODE", // 부품 코드번호 반환
   ADMIN_GET_PARTS = "ADMIN_GET_PARTS", // 부품 전체 리스트 반환
   ADMIN_GET_PARTS_CLASS = "ADMIN_GET_PARTS_CLASS", // 부품 선택 리스트 반환
   ADMIN_DELETE_PARTS_ONE = "ADMIN_DELETE_PARTS_ONE", // 부품 하나 삭제
   ADMIN_DELETE_PARTS_MANY = "ADMIN_DELETE_PARTS_MANY", // 부품 하나 삭제
+  ADMIN_PARTS = "ADMIN_PARTS", //부품 추가
 }
 
 /*****************************************************
@@ -380,6 +381,11 @@ export class _iDeleteAdminPartsMany implements baseActionInterface {
   payload: DeleteResult;
 }
 
+export class _iPostAdminParts implements baseActionInterface {
+  type: ActionAPIs.ADMIN_PARTS;
+  payload: string;
+}
+
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
@@ -394,4 +400,5 @@ export type ActionInterfaces =
   | _iGetAdminParts
   | _iGetAdminPartsClass
   | _iDeleteAdminPartsOne
-  | _iDeleteAdminPartsMany;
+  | _iDeleteAdminPartsMany
+  | _iPostAdminParts;
