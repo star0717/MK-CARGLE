@@ -11,6 +11,8 @@ ${reset}
     font-family: "Noto Sans KR", sans-serif;
   }
 
+
+
   #__next {
     height: 100%;
   }
