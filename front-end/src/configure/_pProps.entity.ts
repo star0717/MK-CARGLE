@@ -8,6 +8,7 @@ import { Company } from "../models/company.entity";
 import { User } from "../models/user.entity";
 import { _fTermData, _fWithdrawal } from "./_fProps.entity";
 import { _MainProps } from "./_props.entity";
+import { Part } from "../models/part.entity";
 
 /***********************************************************************
  * 기본
@@ -163,8 +164,8 @@ export interface _pAdminUsers extends _pFindDocs<User> {
 // 부품관리용 modal props
 export interface _pAdminManParts extends _MainProps {
   setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-  clickDocId?: string;
-  setClickDocId?: React.Dispatch<React.SetStateAction<string>>;
+  clickDoc?: Part;
+  setClickDoc?: React.Dispatch<React.SetStateAction<Part>>;
   style?: {
     height: string;
   };

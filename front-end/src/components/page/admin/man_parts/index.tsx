@@ -71,7 +71,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   const [partList, setPartList] = useState<Part[]>(props.data.docs); // 부품 선택 리스트
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
   const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
-  const [clickDocId, setClickDocId] = useState<string>(""); // 선택한 부품 항목 ID
+  const [clickDoc, setClickDoc] = useState<Part>(); // 선택한 부품 항목 데이터
 
   /*********************************************************************
    * 3. Handlers
@@ -170,8 +170,8 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   const ARCModalProps: _pAdminManParts = {
     ...props,
     setModalOpen,
-    clickDocId,
-    setClickDocId,
+    clickDoc,
+    setClickDoc,
     style: { height: "500px" },
   };
 
@@ -356,9 +356,9 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                       <TableRow
                         key={list._id}
                         onClick={() => {
-                          // setModalOption("editPart");
-                          // setModalOpen(true);
-                          setClickDocId(list._id);
+                          setClickDoc(list);
+                          setModalOption("editPart");
+                          setModalOpen(true);
                         }}
                       >
                         <TableRowLIST
