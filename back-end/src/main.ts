@@ -50,15 +50,8 @@ async function bootstrap() {
   // 서버 실행
   await app.listen(process.env.SV_PORT);
 
-  // TsClassList.forEach((e) => {
-  //   console.log(e.label, e.description);
-  // });
-  // const tsItemList = getTsItemList(tsClassB);
-  // tsItemList.forEach((item) => {
-  //   console.log(item.index, item.name, item.class.label);
-  // });
-  let item = getTsItem('B20');
-  console.log(item);
-  console.log(getTsCode(item));
+  for (var i = 0; i < 5; i++) {
+    console.log(new Date().getTime());
+  }
 }
 bootstrap();
