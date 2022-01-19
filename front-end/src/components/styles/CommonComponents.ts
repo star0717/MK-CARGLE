@@ -1711,7 +1711,7 @@ export const SwitchInput = styled.input<any>`
   height: 0;
 
   &:checked + ${SwitchSlider} {
-    background-color: #2196f3;
+    background-color: #314fa5;
   }
 
   &:focus + ${SwitchSlider} {

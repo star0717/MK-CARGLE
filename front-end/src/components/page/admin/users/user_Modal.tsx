@@ -26,6 +26,9 @@ import {
   CommonSmallTitle,
   CommonButton,
   CommonButtonWrapper,
+  Switch,
+  SwitchInput,
+  SwitchSlider,
 } from "../../../styles/CommonComponents";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
@@ -105,27 +108,34 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
   return (
     <WholeWrapper ref={ref} padding={`0px 50px 50px`}>
       <CommonSmallTitle>직원 상세 정보</CommonSmallTitle>
-      <Wrapper dr={`row`} ju={`flex-end`} padding={`0px 0px 20px`}>
-        <Wrapper width={`80px`} />
-        <Wrapper dr={`row`} width={`auto`}>
-          <Wrapper al={`flex-end`} margin={`0px 10px 0px 0px`}>
-            {approval ? (
-              <Text color={`#0066ff`} fontWeight={`600`}>
-                승인 완료되었습니다!
-              </Text>
-            ) : (
-              <Text color={`#9d9d9d`} fontWeight={`600`}>
-                승인 하시겠습니까?
-              </Text>
-            )}
-          </Wrapper>
-          <input
-            type="checkbox"
-            checked={approval}
-            onChange={onChangeApproval}
-          />
+      <Wrapper
+        dr={`row`}
+        ju={`flex-end`}
+        padding={`0px 0px 20px`}
+        width={`400px`}
+      >
+        <Wrapper al={`flex-end`} margin={`0px 10px 0px 0px`}>
+          {approval ? (
+            <Text color={`#314FA5`} fontWeight={`400`}>
+              승인 완료되었습니다!
+            </Text>
+          ) : (
+            <Text color={`#9d9d9d`} fontWeight={`400`}>
+              승인 하시겠습니까?
+            </Text>
+          )}
         </Wrapper>
-      </Wrapper>
+        <Wrapper width={`60px`} al={`flex-end`}>
+          <Switch>
+            <SwitchInput
+              type="checkbox"
+              checked={approval}
+              onChange={onChangeApproval}
+            />
+            <SwitchSlider />
+          </Switch>
+        </Wrapper>
+      </Wrapper>{" "}
       <form onSubmit={onChangeWorkerInfo}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px`}>
           <Text>직원명</Text>
