@@ -164,11 +164,13 @@ const PartsModal: NextPage<any> = (props) => {
                 }
               }}
             >
+              <option value="">선택</option>
               {tsClass.map((item: TsClass) => (
                 <option value={`${item.label}`}>{item.description}</option>
               ))}
             </Combo>
             <Combo width={`245px`} margin={`0px`}>
+              <option value="">선택</option>
               {tsItem.map((item: TsItem) => (
                 <option>{item.name}</option>
               ))}
