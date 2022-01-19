@@ -159,3 +159,13 @@ export interface _pAdminUsers extends _pFindDocs<User> {
   filterValue: string;
   setFilterValue: React.Dispatch<React.SetStateAction<string>>;
 }
+
+// 부품관리용 modal props
+export interface _pAdminManParts extends _MainProps {
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  clickDocId?: string;
+  setClickDocId?: React.Dispatch<React.SetStateAction<string>>;
+  style?: {
+    height: string;
+  };
+}

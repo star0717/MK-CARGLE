@@ -53,6 +53,7 @@ import {
 import { Part } from "../../../../models/part.entity";
 import { DeleteObjectIds } from "../../../../models/base.entity";
 import PartsInfo_Modal from "./partsInfo_Modal";
+import { _pAdminManParts } from "../../../../configure/_pProps.entity";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -70,6 +71,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   const [partList, setPartList] = useState<Part[]>(props.data.docs); // 부품 선택 리스트
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
   const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
+  const [clickDocId, setClickDocId] = useState<string>(""); // 선택한 부품 항목 ID
 
   /*********************************************************************
    * 3. Handlers
@@ -165,9 +167,11 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
 
-  const ARCModalProps: any = {
+  const ARCModalProps: _pAdminManParts = {
     ...props,
     setModalOpen,
+    clickDocId,
+    setClickDocId,
     style: { height: "500px" },
   };
 
@@ -324,36 +328,6 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                         e.stopPropagation()
                       }
                     >
-                      {/* 체크박스 */}
-                      {/* <CheckboxContainer>
-                        <CheckBoxLine
-                          kindOf={
-                            checkedList.length === 0
-                              ? false
-                              : checkedList.length === partList.length
-                              ? true
-                              : false
-                          }
-                        >
-                          <HiddenCheckbox
-                            type="checkbox"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => onCheckedAll(e.target.checked)}
-                            checked={
-                              checkedList.length === 0
-                                ? false
-                                : checkedList.length === partList.length
-                                ? true
-                                : false
-                            }
-                          />
-                          <CheckBoxIcon>
-                            <BsCheckLg />
-                          </CheckBoxIcon>
-                        </CheckBoxLine>
-                      </CheckboxContainer> */}
-                      {/*  */}
                       <Checkbox>
                         <CheckInput
                           type="checkbox"
@@ -382,8 +356,9 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                       <TableRow
                         key={list._id}
                         onClick={() => {
-                          setModalOption("editPart");
-                          setModalOpen(true);
+                          // setModalOption("editPart");
+                          // setModalOpen(true);
+                          setClickDocId(list._id);
                         }}
                       >
                         <TableRowLIST
