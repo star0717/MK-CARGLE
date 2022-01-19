@@ -122,7 +122,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                   >
                     <Text
                       fontSize={width < 1510 ? `16px` : `18px`}
-                      fontWeight={`800`}
+                      fontWeight={`600`}
                       padding={width < 1510 ? `5px 15px` : `5px 30px`}
                     >
                       <Link href={menu.link}>
