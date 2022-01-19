@@ -1726,7 +1726,9 @@ export const CheckMark = styled.span<any>`
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: #eee;
+  background-color: #fff;
+  border: 1px solid #314fa5;
+  border-radius: 4px;
   transition: 0.2s;
 
   &:after {
@@ -1757,9 +1759,10 @@ export const Checkbox = styled.label<any>`
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 26px;
+  margin: ${(props) => props.margin || `10px 0px`};
   cursor: pointer;
-  font-size: 22px;
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1770,7 +1773,7 @@ export const Checkbox = styled.label<any>`
   }
 
   ${CheckInput}:checked ~ ${CheckMark} {
-    background-color: #2196f3;
+    background-color: #314fa5;
   }
 
   ${CheckInput}:checked ~ ${CheckMark}:after {
