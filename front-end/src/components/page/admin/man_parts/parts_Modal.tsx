@@ -40,9 +40,9 @@ const PartsModal: NextPage<any> = (props) => {
    *********************************************************************/
   const dispatch = useDispatch();
   const [partClass, setPartClass] = useState<PartClass[]>(partClassList);
-  const [partCode, setPartCode] = useState<String>("");
   const [tsClass, setTsClass] = useState<TsClass[]>(TsClassList);
   const [tsItem, setTsItem] = useState<TsItem[]>(tsItemListB);
+  const [partCode, setPartCode] = useState<string>("");
   const [partNickName, setPartNickName] = useState<string>("");
   const [partInfo, setPartInfo] = useState<Partial<Part>>({
     label: "",
@@ -50,7 +50,6 @@ const PartsModal: NextPage<any> = (props) => {
     nickName: [],
     code: "",
     tsCode: "",
-    __v: 0,
   });
 
   /*********************************************************************
@@ -63,14 +62,18 @@ const PartsModal: NextPage<any> = (props) => {
   const onSaveFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const plusPartInfo = {
-      label: partCode,
-      name: "",
+      label: partInfo.label,
+      name: partInfo.name,
       nickName: partInfo.nickName,
       code: partCode,
+      tsCode: partInfo.tsCode,
     };
 
-    dispatch(_aPostAdminPart(partInfo));
-    alert("정상적으로 등록 되었습니다.");
+    dispatch(_aPostAdminPart(plusPartInfo)).then((res: any) => {
+      console.log("?>?", plusPartInfo);
+      alert("정상적으로 등록 되었습니다.");
+      props.setModalOpen(false);
+    });
   };
   const onInputNickNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPartNickName(e.target.value);
@@ -87,8 +90,9 @@ const PartsModal: NextPage<any> = (props) => {
     });
     setPartInfo({ ...partInfo, nickName: newArr });
   };
-
-  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPartInfo({ ...partInfo, name: e.target.value });
+  };
 
   /*********************************************************************
    * 4. Props settings
@@ -126,7 +130,13 @@ const PartsModal: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품명</Text>
-          <TextInput2 placeholder="부품명입니다~" width={`400px`}></TextInput2>
+          <TextInput2
+            placeholder="부품명입니다~"
+            width={`400px`}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onInputHandler(e);
+            }}
+          />
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품코드</Text>
@@ -139,24 +149,23 @@ const PartsModal: NextPage<any> = (props) => {
               width={`145px`}
               margin={`0px`}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setPartInfo({ ...partInfo, tsCode: e.target.value });
                 switch (e.target.value) {
-                  case "tsItemListB":
+                  case "B":
                     return setTsItem(tsItemListB);
-                  case "tsItemListD":
+                  case "D":
                     return setTsItem(tsItemListD);
-                  case "tsItemListE":
+                  case "E":
                     return setTsItem(tsItemListE);
-                  case "tsItemListH":
+                  case "H":
                     return setTsItem(tsItemListH);
-                  case "tsItemListS":
+                  case "S":
                     return setTsItem(tsItemListS);
                 }
               }}
             >
               {tsClass.map((item: TsClass) => (
-                <option value={`tsItemList${item.label}`}>
-                  {item.description}
-                </option>
+                <option value={`${item.label}`}>{item.description}</option>
               ))}
             </Combo>
             <Combo width={`245px`} margin={`0px`}>

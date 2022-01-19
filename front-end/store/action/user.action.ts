@@ -720,9 +720,10 @@ export async function _aDeleteAdminPartsMany(ids: string[]) {
  * @param id
  * @returns
  */
-export async function _aPostAdminPart(ids: string[]) {
+export async function _aPostAdminPart(setPart: Partial<Part>) {
+  console.log("API : ", setPart);
   const req = await axios
-    .post(genApiPath(AdminApiPath.parts), { id: ids })
+    .post(genApiPath(AdminApiPath.parts), setPart)
     .then((res: AxiosResponse<string, string[]>): string => {
       return res.data;
     });
