@@ -169,8 +169,6 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
     style: { height: "500px" },
   };
 
-  console.log("체크항목", checkedList);
-
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
