@@ -274,7 +274,7 @@ export const CommonTitleWrapper = styled.div<any>`
   flex-direction: ${(props) => props.dr || `column`};
   margin: ${(props) => props.margin || `0px`};
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 700;
   color: ${(props) => props.color};
   text-align: ${(props) => props.textAlign || `center`};
   background-color: #eee;
@@ -286,7 +286,7 @@ export const CommonTitle = styled.h2<any>`
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || ` 0px 0px`};
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 700;
   color: ${(props) => props.color || `#343a40`};
   text-align: ${(props) => props.textAlign || `center`};
   @media (max-width: 1439px) {
@@ -1612,7 +1612,7 @@ export const CheckBoxIcon = styled.p<any>`
   font-size: 16px;
   color: #fff;
   text-align: ${(props) => props.textAlign || `center`};
-  line-height: 2;
+  line-height: 1.6;
 `;
 
 // export const Label1 = styled.label<any>`
