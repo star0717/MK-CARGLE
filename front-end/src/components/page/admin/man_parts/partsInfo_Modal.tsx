@@ -33,8 +33,9 @@ import {
 import { BsPlus } from "react-icons/bs";
 // import Part from "../../../../models/part.entity"
 import { Part } from "../../../../models/part.entity";
+import { _pAdminManParts } from "../../../../configure/_pProps.entity";
 
-const PartsInfo_Modal: NextPage<any> = (props) => {
+const PartsInfo_Modal: NextPage<_pAdminManParts> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -44,13 +45,7 @@ const PartsInfo_Modal: NextPage<any> = (props) => {
   const [tsItem, setTsItem] = useState<TsItem[]>(tsItemListB);
 
   const [partNickName, setPartNickName] = useState<string>("");
-  const [partInfo, setPartInfo] = useState<Partial<Part>>({
-    label: props.clickDoc.label,
-    name: props.clickDoc.name,
-    nickName: props.clickDoc.nickName,
-    code: props.clickDoc.code,
-    tsCode: props.clickDoc.tsCode,
-  });
+  const [partInfo, setPartInfo] = useState<Partial<Part>>(props.clickDoc);
 
   /*********************************************************************
    * 2. State settings
@@ -103,20 +98,23 @@ const PartsInfo_Modal: NextPage<any> = (props) => {
             width={`400px`}
             margin={`0px`}
             value={partInfo.label}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              console.log("target", e.target.value);
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              console.log("선택", e.target.value);
               setPartInfo({ ...partInfo, label: e.target.value });
               dispatch(_aGetAdminPartGenCode(e.target.value)).then(
                 (res: any) => {
                   setPartInfo({ ...partInfo, code: res.payload });
                 }
               );
-              console.log("~", partInfo.label);
             }}
           >
-            {partClass.map((item: PartClass) => (
-              <option value={item.label}>{item.description}</option>
-            ))}
+            {partClass.map((item: PartClass) => {
+              return (
+                <option key={item.label} value={item.label}>
+                  {item.description}
+                </option>
+              );
+            })}
           </Combo>
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>

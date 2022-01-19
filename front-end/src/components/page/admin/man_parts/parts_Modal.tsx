@@ -34,8 +34,9 @@ import { BsPlus } from "react-icons/bs";
 // import Part from "../../../../models/part.entity"
 import { Part } from "../../../../models/part.entity";
 import wrapper from "../../../../../store";
+import { _pAdminManParts } from "../../../../configure/_pProps.entity";
 
-const PartsModal: NextPage<any> = (props) => {
+const PartsModal: NextPage<_pAdminManParts> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
