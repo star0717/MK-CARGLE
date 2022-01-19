@@ -34,7 +34,7 @@ export class PartsService extends SafeService<Part> {
   async findAllPart(label?: string): Promise<FindResult<Part>> {
     let fQuery: FilterQuery<Part> = {};
     if (label) fQuery = { label };
-    // console.log(fQuery);
+
     const docs = await this.model.find(fQuery).sort({ code: -1 });
     const result: FindResult<Part> = {
       currentPage: 1,

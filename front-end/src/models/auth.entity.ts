@@ -1,12 +1,12 @@
-import { CompanyApproval, UserAuthority } from 'src/constants/model.const';
-import { Company } from './company.entity';
-import { User } from './user.entity';
+import { CompanyApproval, UserAuthority } from "../constants/model.const";
+import { Company } from "./company.entity";
+import { User } from "./user.entity";
 /**
  * 회원 가입 정보용 DTO
  */
 export declare class SignUpInfo {
-    user: User;
-    company: Company;
+  user: User;
+  company: Company;
 }
 /**
  * 로그인을 시도할 때 사용할 사용자 정보
@@ -15,37 +15,37 @@ export declare class SignUpInfo {
  * - 실제 데이터 맵핑은 UsersService에서 조정함
  */
 export declare class UserInfo {
-    id: string;
-    pwd: string;
+  id: string;
+  pwd: string;
 }
 /**
  * 로그인 시 발급되는 토큰을 구성하는 정보
  */
 export declare class AuthTokenInfo {
-    uID: string;
-    uName: string;
-    uAuth: UserAuthority;
-    uApproval: boolean;
-    cID: string;
-    cName: string;
-    cApproval: CompanyApproval;
+  uID: string;
+  uName: string;
+  uAuth: UserAuthority;
+  uApproval: boolean;
+  cID: string;
+  cName: string;
+  cApproval: CompanyApproval;
 }
 /**
  * 이메일 주소 찾기에 사용될 데이터 모델
  */
 export declare class HelpFindEmail {
-    name: string;
-    hpNumber: string;
+  name: string;
+  hpNumber: string;
 }
 export declare class HelpFindPWD extends HelpFindEmail {
-    email: string;
+  email: string;
 }
 export declare class HelpChangePWD {
-    _id: string;
-    oldPWD: string;
-    newPWD: string;
+  _id: string;
+  oldPWD: string;
+  newPWD: string;
 }
 export declare class ConfirmPWD {
-    _id: string;
-    PWD: string;
+  _id: string;
+  PWD: string;
 }
