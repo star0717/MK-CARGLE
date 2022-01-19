@@ -100,7 +100,10 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
     setPartInfo({ ...partInfo, nickName: newArr });
   };
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPartInfo({ ...partInfo, name: e.target.value });
+    setPartInfo({
+      ...partInfo,
+      name: e.target.value.replace(" ", ""),
+    });
   };
 
   /*********************************************************************
@@ -166,7 +169,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
           <TextInput2
             placeholder="부품명입니다~"
             width={`400px`}
-            value={partInfo.name.trim()}
+            value={partInfo.name}
             {...register("name", {
               onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputHandler(e);
