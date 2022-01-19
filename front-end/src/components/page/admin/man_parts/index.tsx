@@ -392,7 +392,15 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                           }
                         >
                           <Checkbox>
-                            <CheckInput type="checkbox" />
+                            <CheckInput
+                              type="checkbox"
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => onCheckedElement(e.target.checked, list)}
+                              checked={
+                                checkedList.includes(list._id) ? true : false
+                              }
+                            />
                             <CheckMark></CheckMark>
                           </Checkbox>
                         </TableRowLIST>
