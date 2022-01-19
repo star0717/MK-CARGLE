@@ -703,6 +703,7 @@ export const CloseButton = styled.button<any>`
   color: ${(props) => props.color || props.black_C};
   cursor: pointer;
   border: none;
+  position: ${(props) => (props.isFixed ? `fixed` : ``)};
 
   & svg {
     color: ${(props) => props.color || props.black_C};
