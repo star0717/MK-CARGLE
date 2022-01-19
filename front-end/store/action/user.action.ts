@@ -734,3 +734,41 @@ export async function _aPostAdminPart(setPart: Partial<Part>) {
   };
   return result;
 }
+
+/**
+ * Part 데이터 갱신
+ * @param id
+ * @returns
+ */
+export async function _aPatchAdminPart(id: string) {
+  const req = await axios
+    .patch(genApiPath(AdminApiPath.parts), id)
+    .then((res: AxiosResponse<string, string[]>): string => {
+      return res.data;
+    });
+
+  const result: _iPostAdminParts = {
+    type: ActionAPIs.ADMIN_PARTS,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Part 데이터 반환
+ * @param id
+ * @returns
+ */
+export async function _aGetAdminPart(_id: string) {
+  const req = await axios
+    .get(genApiPath(AdminApiPath.parts, { id: _id }))
+    .then((res: AxiosResponse<string, string[]>): string => {
+      return res.data;
+    });
+
+  const result: _iPostAdminParts = {
+    type: ActionAPIs.ADMIN_PARTS,
+    payload: req,
+  };
+  return result;
+}
