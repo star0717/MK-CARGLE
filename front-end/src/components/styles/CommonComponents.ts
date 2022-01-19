@@ -1587,81 +1587,81 @@ export const NavAll = styled.div<any>`
 //   }
 // `;
 
-export const CheckBox = styled.button<any>`
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
-  color: #314fa5;
-  padding: 4px 2px 2px;
-  margin: 5px;
-  border: 1px solid #314fa5;
-  background-color: #fff;
-  cursor: pointer;
-  transition: 0.4s;
-  border-radius: 2px;
+// export const CheckBox = styled.button<any>`
+//   font-size: 12px;
+//   width: 20px;
+//   height: 20px;
+//   color: #314fa5;
+//   padding: 4px 2px 2px;
+//   margin: 5px;
+//   border: 1px solid #314fa5;
+//   background-color: #fff;
+//   cursor: pointer;
+//   transition: 0.4s;
+//   border-radius: 2px;
 
-  ${(props) => props.kindOf === `false` && `color:#fff;`}
-  ${(props) => props.kindOf === `true` && `color:#fff;`}
-  ${(props) => props.kindOf === `true` && `background-color:#314fa5;`}
-`;
+//   ${(props) => props.kindOf === `false` && `color:#fff;`}
+//   ${(props) => props.kindOf === `true` && `color:#fff;`}
+//   ${(props) => props.kindOf === `true` && `background-color:#314fa5;`}
+// `;
 
-export const Switch = styled.div<any>`
-  width: auto;
-  height: auto;
-  font-size: 56px;
-  color: #ccc;
-  background-color: #fff;
-  padding: 0px;
-  margin: 0px;
-  borer: none;
-  outline: none;
-  transition: 0.4s;
+// export const Switch = styled.div<any>`
+//   width: auto;
+//   height: auto;
+//   font-size: 56px;
+//   color: #ccc;
+//   background-color: #fff;
+//   padding: 0px;
+//   margin: 0px;
+//   borer: none;
+//   outline: none;
+//   transition: 0.4s;
 
-  ${(props) => props.kindOf === `on` && `color:#314fa5;`}
-  ${(props) => props.kindOf === `on` && `transition: 0.4s;`}
-`;
+//   ${(props) => props.kindOf === `on` && `color:#314fa5;`}
+//   ${(props) => props.kindOf === `on` && `transition: 0.4s;`}
+// `;
 
-export const CheckboxContainer = styled.div<any>`
-  display: flex;
-  align-items: center;
-`;
+// export const CheckboxContainer = styled.div<any>`
+//   display: flex;
+//   align-items: center;
+// `;
 
-export const CheckBoxLine = styled.label<any>`
-  display: inline-block;
-  margin: 12px 8px 12px 0px;
-  width: 24px;
-  height: 24px;
-  background-color: ${(props) => props.bgColor || `#314fa5`};
-  border-radius: 2px;
-  cursor: pointer;
-  border: 1px solid #314fa5;
-  transition: 0.4s;
+// export const CheckBoxLine = styled.label<any>`
+//   display: inline-block;
+//   margin: 12px 8px 12px 0px;
+//   width: 24px;
+//   height: 24px;
+//   background-color: ${(props) => props.bgColor || `#314fa5`};
+//   border-radius: 2px;
+//   cursor: pointer;
+//   border: 1px solid #314fa5;
+//   transition: 0.4s;
 
-  & > svg {
-    position: absolute;
-  }
+//   & > svg {
+//     position: absolute;
+//   }
 
-  ${(props) => props.kindOf === true && `background-color:#314fa5;`}
-  ${(props) => props.kindOf === false && `background-color:#fff;`}
-`;
+//   ${(props) => props.kindOf === true && `background-color:#314fa5;`}
+//   ${(props) => props.kindOf === false && `background-color:#fff;`}
+// `;
 
-export const HiddenCheckbox = styled.input<any>`
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-`;
-export const CheckBoxIcon = styled.p<any>`
-  font-size: 16px;
-  color: #fff;
-  text-align: ${(props) => props.textAlign || `center`};
-  line-height: 1.6;
-`;
+// export const HiddenCheckbox = styled.input<any>`
+//   border: 0;
+//   clip: rect(0 0 0 0);
+//   height: 1px;
+//   margin: 0;
+//   padding: 0;
+//   overflow: hidden;
+//   position: absolute;
+//   white-space: nowrap;
+//   width: 1px;
+// `;
+// export const CheckBoxIcon = styled.p<any>`
+//   font-size: 16px;
+//   color: #fff;
+//   text-align: ${(props) => props.textAlign || `center`};
+//   line-height: 1.6;
+// `;
 
 // export const Label1 = styled.label<any>`
 //   display: inline-block;
@@ -1669,3 +1669,117 @@ export const CheckBoxIcon = styled.p<any>`
 //   padding-left: 4px;
 //   cursor: pointer;
 // `;
+
+// check-box and switch
+
+export const Switch = styled.label<any>`
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+`;
+
+export const SwitchSlider = styled.span<any>`
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+`;
+
+export const SwitchInput = styled.input<any>`
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  &:checked + ${SwitchSlider} {
+    background-color: #2196f3;
+  }
+
+  &:focus + ${SwitchSlider} {
+    box-shadow: 0 0 1px #2196f3;
+  }
+
+  &:checked + ${SwitchSlider}:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+`;
+
+//---------------------------------------//
+export const CheckMark = styled.span<any>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  transition: 0.2s;
+
+  &:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+`;
+
+export const CheckInput = styled.input<any>`
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+`;
+
+export const Checkbox = styled.label<any>`
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 26px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  &:hover ${CheckInput} ~ ${CheckMark} {
+    background-color: #ccc;
+  }
+
+  ${CheckInput}:checked ~ ${CheckMark} {
+    background-color: #2196f3;
+  }
+
+  ${CheckInput}:checked ~ ${CheckMark}:after {
+    display: block;
+  }
+`;

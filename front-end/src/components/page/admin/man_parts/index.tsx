@@ -21,10 +21,13 @@ import {
   TableBody,
   TableRow,
   TableRowLIST,
-  CheckboxContainer,
-  CheckBoxIcon,
-  CheckBoxLine,
-  HiddenCheckbox,
+  // CheckboxContainer,
+  // CheckBoxIcon,
+  // CheckBoxLine,
+  // HiddenCheckbox,
+  Checkbox,
+  CheckInput,
+  CheckMark,
 } from "../../../styles/CommonComponents";
 import { BsCheckLg, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
@@ -321,7 +324,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                       }
                     >
                       {/* 체크박스 */}
-                      <CheckboxContainer>
+                      {/* <CheckboxContainer>
                         <CheckBoxLine
                           kindOf={
                             checkedList.length === 0
@@ -348,8 +351,24 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                             <BsCheckLg />
                           </CheckBoxIcon>
                         </CheckBoxLine>
-                      </CheckboxContainer>
+                      </CheckboxContainer> */}
                       {/*  */}
+                      <Checkbox>
+                        <CheckInput
+                          type="checkbox"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            onCheckedAll(e.target.checked)
+                          }
+                          checked={
+                            checkedList.length === 0
+                              ? false
+                              : checkedList.length === partList.length
+                              ? true
+                              : false
+                          }
+                        />
+                        <CheckMark></CheckMark>
+                      </Checkbox>
                     </TableHeadLIST>
                     <TableHeadLIST width={`20%`}>부품코드</TableHeadLIST>
                     <TableHeadLIST width={`35%`}>부품명</TableHeadLIST>
@@ -372,26 +391,10 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                             e.stopPropagation()
                           }
                         >
-                          <CheckboxContainer>
-                            <CheckBoxLine
-                              kindOf={
-                                checkedList.includes(list._id) ? true : false
-                              }
-                            >
-                              <HiddenCheckbox
-                                type="checkbox"
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => onCheckedElement(e.target.checked, list)}
-                                checked={
-                                  checkedList.includes(list._id) ? true : false
-                                }
-                              />
-                              <CheckBoxIcon>
-                                <BsCheckLg />
-                              </CheckBoxIcon>
-                            </CheckBoxLine>
-                          </CheckboxContainer>
+                          <Checkbox>
+                            <CheckInput type="checkbox" />
+                            <CheckMark></CheckMark>
+                          </Checkbox>
                         </TableRowLIST>
                         <TableRowLIST width={`20%`}>{list.code}</TableRowLIST>
                         <TableRowLIST width={`35%`}>{list.name}</TableRowLIST>
