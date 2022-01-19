@@ -21,13 +21,11 @@ import {
   CommonButton,
   TextInput2,
   Text,
-  CheckboxContainer,
-  CheckBoxIcon,
-  CheckBoxLine,
-  HiddenCheckbox,
+  Checkbox,
+  CheckInput,
+  CheckMark,
 } from "../../styles/CommonComponents";
 import { BodyWrapper } from "../../styles/LayoutComponents";
-import { BsCheckLg } from "react-icons/bs";
 
 /**
  * 로그인 컴포넌트(기능)
@@ -185,21 +183,22 @@ const SignIn: NextPage<_SignInProps> = (props) => {
 
                   {/* 체크박스 div */}
 
-                  <Wrapper dr={`row`} ju={`flex-end`}>
-                    <CheckboxContainer>
-                      <CheckBoxLine kindOf={saveCheck}>
-                        <HiddenCheckbox
-                          type="checkbox"
-                          onChange={() => {
-                            setSaveCheck(!saveCheck);
-                          }}
-                        />
-                        <CheckBoxIcon>
-                          <BsCheckLg />
-                        </CheckBoxIcon>
-                      </CheckBoxLine>
+                  <Wrapper
+                    dr={`row`}
+                    ju={`flex-end`}
+                    height={`40px`}
+                    al={`center`}
+                  >
+                    <Checkbox>
                       아이디 저장
-                    </CheckboxContainer>
+                      <CheckInput
+                        type="checkbox"
+                        onChange={() => {
+                          setSaveCheck(!saveCheck);
+                        }}
+                      />
+                      <CheckMark></CheckMark>
+                    </Checkbox>
                   </Wrapper>
                   {/* 로그인 버튼 */}
                   <CommonButton

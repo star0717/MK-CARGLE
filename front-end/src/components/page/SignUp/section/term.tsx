@@ -11,10 +11,9 @@ import {
   RsWrapper,
   CommonSmallTitle,
   CommonButtonWrapper,
-  CheckboxContainer,
-  HiddenCheckbox,
-  CheckBoxIcon,
-  CheckBoxLine,
+  CheckInput,
+  Checkbox,
+  CheckMark,
 } from "../../../styles/CommonComponents";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
@@ -99,31 +98,27 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     )}
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
-                    <CheckboxContainer>
-                      <CheckBoxLine kindOf={props.formCheck.mkTerm}>
-                        <HiddenCheckbox
-                          type="checkbox"
-                          {...register("mkTerm", {
-                            onChange: (
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              dispatch({
-                                type: actionTypesUser.FORM_CHECK,
-                                payload: {
-                                  ...props.formCheck,
-                                  mkTerm: e.target.checked,
-                                },
-                              });
-                            },
-                            required: true,
-                          })}
-                        />
-                        <CheckBoxIcon>
-                          <BsCheckLg />
-                        </CheckBoxIcon>
-                      </CheckBoxLine>
+                    <Checkbox>
                       동의합니다.
-                    </CheckboxContainer>
+                      <CheckInput
+                        type="checkbox"
+                        {...register("mkTerm", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            dispatch({
+                              type: actionTypesUser.FORM_CHECK,
+                              payload: {
+                                ...props.formCheck,
+                                mkTerm: e.target.checked,
+                              },
+                            });
+                          },
+                          required: true,
+                        })}
+                      />
+                      <CheckMark></CheckMark>
+                    </Checkbox>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -138,9 +133,6 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   </CommonSmallTitle>
                 </Wrapper>
                 <Wrapper
-                  // width={
-                  //   width < 1439 ? (width < 500 ? `300px` : `1000px`) : `1200px`
-                  // }
                   height={`200px`}
                   width={`500px`}
                   border={`1px solid #ccc`}
@@ -175,31 +167,27 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     )}
                   </Wrapper>
                   <Wrapper dr={`row`} width={`auto`}>
-                    <CheckboxContainer>
-                      <CheckBoxLine kindOf={props.formCheck.privacyTerm}>
-                        <HiddenCheckbox
-                          type="checkbox"
-                          {...register("privacyTerm", {
-                            onChange: (
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              dispatch({
-                                type: actionTypesUser.FORM_CHECK,
-                                payload: {
-                                  ...props.formCheck,
-                                  privacyTerm: e.target.checked,
-                                },
-                              });
-                            },
-                            required: true,
-                          })}
-                        />
-                        <CheckBoxIcon>
-                          <BsCheckLg />
-                        </CheckBoxIcon>
-                      </CheckBoxLine>
+                    <Checkbox>
                       동의합니다.
-                    </CheckboxContainer>
+                      <CheckInput
+                        type="checkbox"
+                        {...register("privacyTerm", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            dispatch({
+                              type: actionTypesUser.FORM_CHECK,
+                              payload: {
+                                ...props.formCheck,
+                                privacyTerm: e.target.checked,
+                              },
+                            });
+                          },
+                          required: true,
+                        })}
+                      />
+                      <CheckMark></CheckMark>
+                    </Checkbox>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -240,30 +228,24 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   </Text>
                 </Wrapper>
                 <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
-                  <CheckboxContainer>
-                    <CheckBoxLine kindOf={props.formCheck.marketTerm}>
-                      <HiddenCheckbox
-                        type="checkbox"
-                        {...register("marketTerm", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            dispatch({
-                              type: actionTypesUser.FORM_CHECK,
-                              payload: {
-                                ...props.formCheck,
-                                marketTerm: e.target.checked,
-                              },
-                            });
-                          },
-                        })}
-                      />
-                      <CheckBoxIcon>
-                        <BsCheckLg />
-                      </CheckBoxIcon>
-                    </CheckBoxLine>
+                  <Checkbox>
                     동의합니다.
-                  </CheckboxContainer>
+                    <CheckInput
+                      type="checkbox"
+                      {...register("marketTerm", {
+                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                          dispatch({
+                            type: actionTypesUser.FORM_CHECK,
+                            payload: {
+                              ...props.formCheck,
+                              marketTerm: e.target.checked,
+                            },
+                          });
+                        },
+                      })}
+                    />
+                    <CheckMark></CheckMark>
+                  </Checkbox>
                 </Wrapper>
               </Wrapper>
               <CommonButtonWrapper kindOf={`column`}>

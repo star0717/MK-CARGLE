@@ -21,15 +21,13 @@ import {
   TableBody,
   TableRow,
   TableRowLIST,
-  CheckboxContainer,
-  CheckBoxIcon,
-  CheckBoxLine,
-  HiddenCheckbox,
+  Checkbox,
+  CheckInput,
+  CheckMark,
 } from "../../../styles/CommonComponents";
-import { BsCheckLg, BsSearch } from "react-icons/bs";
-import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
+import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
-import PartsModal from "./parts_Modal";
+import PartsModal from "./partsModal";
 import ReactModal from "react-modal";
 import { PartClass, partClassList } from "../../../../constants/part.const";
 
@@ -48,7 +46,8 @@ import {
   _iGetAdminPartsClass,
 } from "../../../../../store/interfaces";
 import { Part } from "../../../../models/part.entity";
-import { DeleteObjectIds } from "../../../../models/base.entity";
+import { _pAdminManParts } from "../../../../configure/_pProps.entity";
+import PartsInfoModal from "./partsInfoModal";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -66,6 +65,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   const [partList, setPartList] = useState<Part[]>(props.data.docs); // 부품 선택 리스트
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
   const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
+  const [clickDoc, setClickDoc] = useState<Part>(); // 선택한 부품 항목 데이터
 
   /*********************************************************************
    * 3. Handlers
@@ -161,9 +161,11 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
 
-  const ARCModalProps: any = {
+  const ARCModalProps: _pAdminManParts = {
     ...props,
     setModalOpen,
+    clickDoc,
+    setClickDoc,
     style: { height: "500px" },
   };
 
@@ -224,7 +226,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                   setModalOpen(true);
                 }}
               >
-                부품 추가하기
+                부품추가
               </SmallButton>
               <SmallButton
                 kindOf={`cancle`}
@@ -265,7 +267,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
               </SmallButton>
             </Wrapper>
           </Wrapper>
-          <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
+          <Wrapper dr={`row`} padding={`40px 0px 50px`} ju={`space-between`}>
             {/* 부품분류 */}
             <Wrapper width={`24%`}>
               <TableWrapper>
@@ -277,8 +279,9 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     <TableRow
-                      color={selectClass === "all" ? `#fff` : `#343a40`}
-                      bgColor={selectClass === "all" ? `#343a40` : `#fff`}
+                      kindOf={
+                        selectClass === "all" ? `selectClass` : `noSelectClass`
+                      }
                     >
                       <TableRowLIST
                         width={`100%`}
@@ -292,9 +295,10 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                     {partClassList.map((item: PartClass) => (
                       <TableRow
                         key={item.label}
-                        color={selectClass === item.label ? `#fff` : `#343a40`}
-                        bgColor={
-                          selectClass === item.label ? `#343a40` : `#fff`
+                        kindOf={
+                          selectClass === item.label
+                            ? `selectClass`
+                            : `noSelectClass`
                         }
                         onClick={() => {
                           setSelectClass(item.label);
@@ -320,36 +324,22 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                         e.stopPropagation()
                       }
                     >
-                      {/* 체크박스 */}
-                      <CheckboxContainer>
-                        <CheckBoxLine
-                          kindOf={
+                      <Checkbox kindOf={`TableCheckBox`}>
+                        <CheckInput
+                          type="checkbox"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            onCheckedAll(e.target.checked)
+                          }
+                          checked={
                             checkedList.length === 0
                               ? false
                               : checkedList.length === partList.length
                               ? true
                               : false
                           }
-                        >
-                          <HiddenCheckbox
-                            type="checkbox"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => onCheckedAll(e.target.checked)}
-                            checked={
-                              checkedList.length === 0
-                                ? false
-                                : checkedList.length === partList.length
-                                ? true
-                                : false
-                            }
-                          />
-                          <CheckBoxIcon>
-                            <BsCheckLg />
-                          </CheckBoxIcon>
-                        </CheckBoxLine>
-                      </CheckboxContainer>
-                      {/*  */}
+                        />
+                        <CheckMark></CheckMark>
+                      </Checkbox>
                     </TableHeadLIST>
                     <TableHeadLIST width={`20%`}>부품코드</TableHeadLIST>
                     <TableHeadLIST width={`35%`}>부품명</TableHeadLIST>
@@ -362,6 +352,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                       <TableRow
                         key={list._id}
                         onClick={() => {
+                          setClickDoc(list);
                           setModalOption("editPart");
                           setModalOpen(true);
                         }}
@@ -372,26 +363,18 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                             e.stopPropagation()
                           }
                         >
-                          <CheckboxContainer>
-                            <CheckBoxLine
-                              kindOf={
+                          <Checkbox kindOf={`TableCheckBox`}>
+                            <CheckInput
+                              type="checkbox"
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => onCheckedElement(e.target.checked, list)}
+                              checked={
                                 checkedList.includes(list._id) ? true : false
                               }
-                            >
-                              <HiddenCheckbox
-                                type="checkbox"
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => onCheckedElement(e.target.checked, list)}
-                                checked={
-                                  checkedList.includes(list._id) ? true : false
-                                }
-                              />
-                              <CheckBoxIcon>
-                                <BsCheckLg />
-                              </CheckBoxIcon>
-                            </CheckBoxLine>
-                          </CheckboxContainer>
+                            />
+                            <CheckMark></CheckMark>
+                          </Checkbox>
                         </TableRowLIST>
                         <TableRowLIST width={`20%`}>{list.code}</TableRowLIST>
                         <TableRowLIST width={`35%`}>{list.name}</TableRowLIST>
@@ -442,7 +425,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
               {modalOption === "addPart" ? (
                 <PartsModal {...ARCModalProps} />
               ) : (
-                "수정"
+                <PartsInfoModal {...ARCModalProps} />
               )}
             </Wrapper>
           </ReactModal>

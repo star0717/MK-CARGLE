@@ -228,34 +228,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                   </CommonSmallTitle>
                 </Wrapper>
               </Wrapper>
-              <Wrapper
-                dr={`row`}
-                // borderTop={`2px solid #000`}
-                // borderBottom={`2px solid #000`}
-                // ju={`space-between`}
-                al={`center`}
-                margin={`0px 0px 50px`}
-              >
-                {/* <Wrapper width={`270px`} bgColor={`#f5f5f5`} padding={`163px 0px`}>
-              <Wrapper
-                width={`80px`}
-                height={`80px`}
-                bgColor={`#ccc`}
-                radius={`100px`}
-              >
-                <Text fontSize={`60px`} lineHeight={`36px`} color={`#fff`}>
-                  <Person />
-                </Text>
-              </Wrapper>
-              <Text
-                padding={`20px 0px 0px`}
-                fontSize={`18px`}
-                fontWeight={`800`}
-                letterSpacing={`4px`}
-              >
-                {props.userData.name}님
-              </Text>
-            </Wrapper> */}
+              <Wrapper dr={`row`} al={`center`} margin={`0px 0px 50px`}>
                 <Wrapper dr={`column`} width={`auto`} padding={`10px 0px`}>
                   <Wrapper dr={`row`} margin={`0px 0px 10px`}>
                     <Text

@@ -35,6 +35,7 @@ export const WholeWrapper = styled.div<any>`
   min-height: ${(props) => props.minHeight || ``};
   min-width: ${(props) => props.minWidth || ``};
   box-shadow: ${(props) => props.shadow};
+  overflow: ${(props) => props.overflow || ``};
 `;
 
 export const RsWrapper = styled.div<any>`
@@ -321,9 +322,9 @@ export const CommonSmallTitle = styled.h2<any>`
   &:before {
     content: "";
     position: absolute;
-    bottom: 0px;
+    bottom: -5px;
     left: 50%;
-    margin-left: -20px;
+    margin-left: -14px;
     width: 30px;
     height: 100%;
     border-bottom: 6px solid ${(props) => props.theme.basicTheme_C};
@@ -850,7 +851,8 @@ export const TextInput2 = styled.input<any>`
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
   font-size: 16px;
-
+  align-items: ${(props) => props.al || ``};
+  justify-content: ${(props) => props.ju || ``};
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
   border: ${(props) => props.theme.border};
@@ -859,6 +861,52 @@ export const TextInput2 = styled.input<any>`
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
+  line-height: ${(props) => props.lineHeight};
+  text-align: ${(props) => props.textAlign};
+  vertical-align: ${(props) => props.vertical};
+
+  &:focus {
+    outline: none;
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
+  }
+
+  &:read-only:focus {
+    box-shadow: none;
+    border: ${(props) => props.theme.border};
+  }
+
+  &:read-only {
+    box-shadow: none;
+    border: ${(props) => props.theme.border};
+    background-color: #f5f5f5;
+    cursor: default;
+  }
+`;
+
+export const TextArea = styled.textarea<any>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.theme.border};
+  padding: ${(props) => props.padding || props.theme.inputPadding};
+  border-radius: ${(props) => props.theme.radius};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
+  font-size: 16px;
+  align-items: ${(props) => props.al || ``};
+  justify-content: ${(props) => props.ju || ``};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.theme.border};
+  padding: ${(props) => props.padding || props.theme.inputPadding};
+  border-radius: ${(props) => props.theme.radius};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
+  line-height: ${(props) => props.lineHeight};
+  text-align: ${(props) => props.textAlign};
+  vertical-align: ${(props) => props.vertical};
+  resize: none;
 
   &:focus {
     outline: none;
@@ -1288,13 +1336,6 @@ export const TableRow = styled.ul<any>`
   background: ${(props) => props.bgColor};
   color: ${(props) => props.color};
 
-  & span {
-    font-size: 26px;
-    display: none;
-    margin-top: 5px;
-    ${(props) => props.kindOf === `focus` && `display : block;`}
-  }
-
   ${(props) => !props.kindOf && `background : ${props.theme.White_C};`}
 
   ${(props) => props.kindOf === `focus` && `background : #f5f5f5;`}
@@ -1311,6 +1352,12 @@ export const TableRow = styled.ul<any>`
     text-decoration: underline;
     ${(props) => props.kindOf === `focus` && `text-decoration : none;`}
   }
+
+  ${(props) =>
+    props.kindOf === `selectClass` &&
+    `background: #8DAFCE; color: #fff; &:hover {background: #8DAFCE; color: #fff; text-decoration: none;}`}
+  ${(props) =>
+    props.kindOf === `noSelectClass` && `background: #fff; color: #343a40;`}
 `;
 
 export const TableRowLIST = styled.li<any>`
@@ -1540,81 +1587,81 @@ export const NavAll = styled.div<any>`
 //   }
 // `;
 
-export const CheckBox = styled.button<any>`
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
-  color: #314fa5;
-  padding: 4px 2px 2px;
-  margin: 5px;
-  border: 1px solid #314fa5;
-  background-color: #fff;
-  cursor: pointer;
-  transition: 0.4s;
-  border-radius: 2px;
+// export const CheckBox = styled.button<any>`
+//   font-size: 12px;
+//   width: 20px;
+//   height: 20px;
+//   color: #314fa5;
+//   padding: 4px 2px 2px;
+//   margin: 5px;
+//   border: 1px solid #314fa5;
+//   background-color: #fff;
+//   cursor: pointer;
+//   transition: 0.4s;
+//   border-radius: 2px;
 
-  ${(props) => props.kindOf === `false` && `color:#fff;`}
-  ${(props) => props.kindOf === `true` && `color:#fff;`}
-  ${(props) => props.kindOf === `true` && `background-color:#314fa5;`}
-`;
+//   ${(props) => props.kindOf === `false` && `color:#fff;`}
+//   ${(props) => props.kindOf === `true` && `color:#fff;`}
+//   ${(props) => props.kindOf === `true` && `background-color:#314fa5;`}
+// `;
 
-export const Switch = styled.div<any>`
-  width: auto;
-  height: auto;
-  font-size: 56px;
-  color: #ccc;
-  background-color: #fff;
-  padding: 0px;
-  margin: 0px;
-  borer: none;
-  outline: none;
-  transition: 0.4s;
+// export const Switch = styled.div<any>`
+//   width: auto;
+//   height: auto;
+//   font-size: 56px;
+//   color: #ccc;
+//   background-color: #fff;
+//   padding: 0px;
+//   margin: 0px;
+//   borer: none;
+//   outline: none;
+//   transition: 0.4s;
 
-  ${(props) => props.kindOf === `on` && `color:#314fa5;`}
-  ${(props) => props.kindOf === `on` && `transition: 0.4s;`}
-`;
+//   ${(props) => props.kindOf === `on` && `color:#314fa5;`}
+//   ${(props) => props.kindOf === `on` && `transition: 0.4s;`}
+// `;
 
-export const CheckboxContainer = styled.div<any>`
-  display: flex;
-  align-items: center;
-`;
+// export const CheckboxContainer = styled.div<any>`
+//   display: flex;
+//   align-items: center;
+// `;
 
-export const CheckBoxLine = styled.label<any>`
-  display: inline-block;
-  margin: 12px 8px 12px 0px;
-  width: 24px;
-  height: 24px;
-  background-color: ${(props) => props.bgColor || `#314fa5`};
-  border-radius: 2px;
-  cursor: pointer;
-  border: 1px solid #314fa5;
-  transition: 0.4s;
+// export const CheckBoxLine = styled.label<any>`
+//   display: inline-block;
+//   margin: 12px 8px 12px 0px;
+//   width: 24px;
+//   height: 24px;
+//   background-color: ${(props) => props.bgColor || `#314fa5`};
+//   border-radius: 2px;
+//   cursor: pointer;
+//   border: 1px solid #314fa5;
+//   transition: 0.4s;
 
-  & > svg {
-    position: absolute;
-  }
+//   & > svg {
+//     position: absolute;
+//   }
 
-  ${(props) => props.kindOf === true && `background-color:#314fa5;`}
-  ${(props) => props.kindOf === false && `background-color:#fff;`}
-`;
+//   ${(props) => props.kindOf === true && `background-color:#314fa5;`}
+//   ${(props) => props.kindOf === false && `background-color:#fff;`}
+// `;
 
-export const HiddenCheckbox = styled.input<any>`
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-`;
-export const CheckBoxIcon = styled.p<any>`
-  font-size: 16px;
-  color: #fff;
-  text-align: ${(props) => props.textAlign || `center`};
-  line-height: 1.6;
-`;
+// export const HiddenCheckbox = styled.input<any>`
+//   border: 0;
+//   clip: rect(0 0 0 0);
+//   height: 1px;
+//   margin: 0;
+//   padding: 0;
+//   overflow: hidden;
+//   position: absolute;
+//   white-space: nowrap;
+//   width: 1px;
+// `;
+// export const CheckBoxIcon = styled.p<any>`
+//   font-size: 16px;
+//   color: #fff;
+//   text-align: ${(props) => props.textAlign || `center`};
+//   line-height: 1.6;
+// `;
 
 // export const Label1 = styled.label<any>`
 //   display: inline-block;
@@ -1622,3 +1669,123 @@ export const CheckBoxIcon = styled.p<any>`
 //   padding-left: 4px;
 //   cursor: pointer;
 // `;
+
+// check-box and switch
+
+export const Switch = styled.label<any>`
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+`;
+
+export const SwitchSlider = styled.span<any>`
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 5px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+`;
+
+export const SwitchInput = styled.input<any>`
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  &:checked + ${SwitchSlider} {
+    background-color: #314fa5;
+  }
+
+  &:focus + ${SwitchSlider} {
+    box-shadow: 0 0 1px #2196f3;
+  }
+
+  &:checked + ${SwitchSlider}:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+`;
+
+//---------------------------------------//
+export const CheckMark = styled.span<any>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #ddd;
+  border-radius: 4px;
+  transition: 0.2s;
+
+  &:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+`;
+
+export const CheckInput = styled.input<any>`
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+`;
+
+export const Checkbox = styled.label<any>`
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin: ${(props) => props.margin || `10px 0px`};
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  ${(props) => props.kindOf === `TableCheckBox` && `margin : 0px 0px 26px 0px;`}
+
+  ${CheckInput}:checked ~ ${CheckMark} {
+    background-color: #314fa5;
+    ${(props) =>
+      props.kindOf === `TableCheckBox` && `background-color: #8DAFCE;`}
+  }
+
+  ${CheckInput}:checked ~ ${CheckMark}:after {
+    display: block;
+  }
+`;
+
+// &:hover ${CheckInput} ~ ${CheckMark} {
+//   background-color: #edeeff;
+// }

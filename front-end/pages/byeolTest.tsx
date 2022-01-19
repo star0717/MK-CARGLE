@@ -1,145 +1,146 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
-import { BsCheckLg } from "react-icons/bs";
-import { MdToggleOff, MdToggleOn } from "react-icons/md";
 import {
-  CloseButton,
-  RsWrapper,
-  Text,
-  SmallButton,
-  TextInput2,
-  WholeWrapper,
-  Wrapper,
-  Image,
-  Combo,
-  CommonTitleWrapper,
-  CommonTitle,
-  IconButton,
-  CommonSmallTitle,
-  CommonButtonWrapper,
-  CommonButton,
-  CheckBox,
+  Checkbox,
+  CheckInput,
+  CheckMark,
   Switch,
-  TableWrapper,
-  TableHead,
-  TableHeadLIST,
-  TableBody,
-  TableRowLIST,
-  CheckboxContainer,
-  HiddenCheckbox,
-  CheckBoxLine,
-  CheckBoxIcon,
+  SwitchInput,
+  SwitchSlider,
+  Wrapper,
 } from "../src/components/styles/CommonComponents";
-import { AiFillCheckSquare } from "react-icons/ai";
-
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
+import styled from "styled-components";
 
 /**
- * 404 에러 페이지
+ * 테스트 페이지
  * @returns
  */
 const ByeolTest: NextPage = () => {
-  const [check, setCheck] = useState<boolean>(false);
-  const [toggle, setToggle] = useState<boolean>(false);
+  // const Switch = styled.label<any>`
+  //   position: relative;
+  //   display: inline-block;
+  //   width: 60px;
+  //   height: 34px;
+  // `;
 
-  interface CheckboxProps {
-    id: string;
-    checked: boolean;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    label?: string | null;
-  }
-  console.log("333", toggle);
+  // const SwitchSlider = styled.span<any>`
+  //   position: absolute;
+  //   cursor: pointer;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   background-color: #ccc;
+  //   -webkit-transition: 0.4s;
+  //   transition: 0.4s;
+  //   border-radius: 34px;
+
+  //   &:before {
+  //     position: absolute;
+  //     content: "";
+  //     height: 26px;
+  //     width: 26px;
+  //     left: 4px;
+  //     bottom: 4px;
+  //     background-color: white;
+  //     -webkit-transition: 0.4s;
+  //     transition: 0.4s;
+  //     border-radius: 50%;
+  //   }
+  // `;
+
+  // const SwitchInput = styled.input<any>`
+  //   opacity: 0;
+  //   width: 0;
+  //   height: 0;
+
+  //   &:checked + ${SwitchSlider} {
+  //     background-color: #2196f3;
+  //   }
+
+  //   &:focus + ${SwitchSlider} {
+  //     box-shadow: 0 0 1px #2196f3;
+  //   }
+
+  //   &:checked + ${SwitchSlider}:before {
+  //     -webkit-transform: translateX(26px);
+  //     -ms-transform: translateX(26px);
+  //     transform: translateX(26px);
+  //   }
+  // `;
+
+  // //---------------------------------------//
+  // const CheckMark = styled.span<any>`
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   height: 25px;
+  //   width: 25px;
+  //   background-color: #eee;
+  //   transition: 0.2s;
+
+  //   &:after {
+  //     content: "";
+  //     position: absolute;
+  //     display: none;
+  //     left: 9px;
+  //     top: 5px;
+  //     width: 5px;
+  //     height: 10px;
+  //     border: solid white;
+  //     border-width: 0 3px 3px 0;
+  //     -webkit-transform: rotate(45deg);
+  //     -ms-transform: rotate(45deg);
+  //     transform: rotate(45deg);
+  //   }
+  // `;
+
+  // const CheckInput = styled.input<any>`
+  //   position: absolute;
+  //   opacity: 0;
+  //   cursor: pointer;
+  //   height: 0;
+  //   width: 0;
+  // `;
+
+  // const Checkbox = styled.label<any>`
+  //   display: block;
+  //   position: relative;
+  //   padding-left: 35px;
+  //   margin-bottom: 12px;
+  //   cursor: pointer;
+  //   font-size: 22px;
+  //   -webkit-user-select: none;
+  //   -moz-user-select: none;
+  //   -ms-user-select: none;
+  //   user-select: none;
+
+  //   &:hover ${CheckInput} ~ ${CheckMark} {
+  //     background-color: #ccc;
+  //   }
+
+  //   ${CheckInput}:checked ~ ${CheckMark} {
+  //     background-color: #2196f3;
+  //   }
+
+  //   ${CheckInput}:checked ~ ${CheckMark}:after {
+  //     display: block;
+  //   }
+  // `;
+
+  /* Style the checkmark/indicator */
+
   return (
-    <Wrapper width={`100%`} padding={`100px 0px 0px`}>
-      {/* {check === true ? (
-        <CheckBox
-          kindOf={`Checked`}
-          onClick={() => {
-            setCheck(!check);
-          }}
-        >
-          <BsCheckLg />
-        </CheckBox>
-      ) : (
-        <CheckBox
-          kindOf={`unChecked`}
-          onClick={() => {
-            setCheck(!check);
-          }}
-        >
-          <BsCheckLg />
-        </CheckBox>
-      )} */}
-      {/* <CheckboxContainer>
-        <CheckBox1 checked={toggle}>
-          <HiddenCheckbox type="checkbox" onChange={!toggle} checked={toggle} />
-          <AiFillCheckSquare width="14px" height="14px" />
-        </CheckBox1>
-        {label ? <Label1>{label}</Label1> : null}
-      </CheckboxContainer> */}
-      <CheckboxContainer>
-        <CheckBoxLine kindOf={`${toggle}`}>
-          <HiddenCheckbox
-            type="checkbox"
-            onChange={() => {
-              setToggle(!toggle);
-            }}
-          />
-          <CheckBoxIcon>
-            <BsCheckLg />
-          </CheckBoxIcon>
-        </CheckBoxLine>
-      </CheckboxContainer>
-      <Wrapper>dsfjkdlskf</Wrapper>
-
-      {/* <CheckBox
-        kindOf={`${toggle}`}
-        onClick={() => {
-          setToggle(!toggle);
-        }}
-      >
-        <BsCheckLg />
-      </CheckBox> */}
-
-      {/* {toggle === true ? (
-        <Switch
-          kindOf={`on`}
-          onClick={() => {
-            setToggle(!toggle);
-          }}
-        >
-          <MdToggleOff />
-        </Switch>
-      ) : (
-        <Switch
-          onClick={() => {
-            setToggle(!toggle);
-          }}
-        >
-          <MdToggleOn />
-        </Switch>
-      )} */}
-
-      {/* <Switch>
-        <MdToggleOff />
+    <Wrapper>
+      <Switch>
+        <SwitchInput type="checkbox" />
+        <SwitchSlider />
       </Switch>
-      <Switch kindOf={`on`}>
-        <MdToggleOff />
-      </Switch> */}
-      <TableWrapper width={`1200px`}>
-        <TableHead>
-          <TableHeadLIST width={`25%`}>가나다라</TableHeadLIST>
-          <TableHeadLIST width={`25%`}>마바</TableHeadLIST>
-          <TableHeadLIST width={`25%`}>사아자</TableHeadLIST>
-          <TableHeadLIST width={`25%`}>차카타파하</TableHeadLIST>
-        </TableHead>
-        <TableBody>
-          <TableRowLIST width={`25%`}>차카타파하</TableRowLIST>
-          <TableRowLIST width={`25%`}>사아자</TableRowLIST>
-          <TableRowLIST width={`25%`}>마바</TableRowLIST>
-          <TableRowLIST width={`25%`}>가나다라</TableRowLIST>
-        </TableBody>
-      </TableWrapper>
+      <Checkbox>
+        One
+        <CheckInput type="checkbox" />
+        <CheckMark></CheckMark>
+      </Checkbox>
     </Wrapper>
   );
 };
