@@ -52,7 +52,7 @@ export const RsWrapper = styled.div<any>`
   flex-wrap: ${(props) => props.wrap || `wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || ``};
+  padding: ${(props) => props.padding || `0px 0px 100px 0px`};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
   font-size: ${(props) => props.fontSize};
@@ -274,21 +274,29 @@ export const CommonTitleWrapper = styled.div<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
   margin: ${(props) => props.margin || `0px`};
+  padding: 150px 0px 0px;
   font-size: 34px;
   font-weight: 700;
   color: ${(props) => props.color};
   text-align: ${(props) => props.textAlign || `center`};
-  background-color: #eee;
+  background-color: #fff;
 `;
 
 export const CommonTitle = styled.h2<any>`
   width: ${(props) => props.width};
+  background: linear-gradient(
+    360deg,
+    hsla(224, 54%, 42%, 1) 0%,
+    hsla(216, 100%, 63%, 1) 100%
+  );
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
   display: ${(props) => props.display};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || ` 0px 0px`};
   font-size: 34px;
   font-weight: 700;
-  color: ${(props) => props.color || `#343a40`};
+
   text-align: ${(props) => props.textAlign || `center`};
   @media (max-width: 1439px) {
     font-size: 32px;
@@ -296,6 +304,14 @@ export const CommonTitle = styled.h2<any>`
   @media (max-width: 500px) {
     font-size: 24px;
   }
+
+  ${(props) =>
+    props.kindOf === `gradient` &&
+    `background : linear-gradient(180deg, hsla(224, 54%, 42%, 1) 0%, hsla(216, 100%, 63%, 1) 100%);`}
+
+  ${(props) => props.kindOf === `gradient` && ` -webkit-background-clip: text;`}
+  ${(props) =>
+    props.kindOf === `gradient` && ` -webkit-text-fill-color: transparent;`}
 `;
 
 export const CommonSubTitle = styled.h2<any>`
@@ -304,10 +320,46 @@ export const CommonSubTitle = styled.h2<any>`
   position: relative;
   margin: ${(props) => props.margin || `0px`};
   font-size: 22px;
-  color: ${(props) => props.color || `#314FA5`};
+  color: ${(props) => props.color || `#000`};
   font-weight: ${(props) => props.fontWeight || `400`};
   text-align: ${(props) => props.textAlign || `center`};
   padding: 10px 0px 0px;
+`;
+
+export const CommonBigTitle = styled.h2<any>`
+  width: ${(props) => props.width};
+  position: relative;
+  margin: 30px 0px 0px;
+  font-size: 34px;
+  font-weight: 600;
+  background: linear-gradient(
+    360deg,
+    hsla(224, 54%, 42%, 1) 0%,
+    hsla(216, 100%, 63%, 1) 100%
+  );
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+`;
+
+export const CommonBigSubTitle = styled.h2<any>`
+  width: ${(props) => props.width};
+  position: relative;
+  margin: 20px 0px 30px;
+  padding-bottom: 10px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #000;
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -14px;
+    width: 30px;
+    height: 100%;
+    border-bottom: 6px solid ${(props) => props.theme.black_C};
+  }
 `;
 
 export const CommonSmallTitle = styled.h2<any>`

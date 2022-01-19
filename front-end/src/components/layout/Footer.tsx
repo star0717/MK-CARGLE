@@ -71,10 +71,9 @@ const Footer: NextPage = () => {
         isRelative={true}
         marginTop={`auto`}
         height={`150px`}
-        bgColor={`#fff`}
+        bgColor={`#343a40`}
       >
         <Wrapper
-          borderTop={`1px solid #c4c4c4`}
           padding={`10px 100px 0px`}
           height={`1px`}
           width={`100%`}

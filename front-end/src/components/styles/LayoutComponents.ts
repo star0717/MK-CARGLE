@@ -182,7 +182,7 @@ export const BodyWrapper = styled.div<any>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   padding: ${(props) => props.padding || `80px 0px 150px`};
 
   ${(props) =>
