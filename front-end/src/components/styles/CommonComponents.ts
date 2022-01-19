@@ -35,6 +35,7 @@ export const WholeWrapper = styled.div<any>`
   min-height: ${(props) => props.minHeight || ``};
   min-width: ${(props) => props.minWidth || ``};
   box-shadow: ${(props) => props.shadow};
+  overflow: ${(props) => props.overflow || ``};
 `;
 
 export const RsWrapper = styled.div<any>`
