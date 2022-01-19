@@ -1352,6 +1352,12 @@ export const TableRow = styled.ul<any>`
     text-decoration: underline;
     ${(props) => props.kindOf === `focus` && `text-decoration : none;`}
   }
+
+  ${(props) =>
+    props.kindOf === `selectClass` &&
+    `background: gray; color: #fff; &:hover {background: gray; color: #fff; text-decoration: none;}`}
+  ${(props) =>
+    props.kindOf === `noSelectClass` && `background: #fff; color: #343a40;`}
 `;
 
 export const TableRowLIST = styled.li<any>`
