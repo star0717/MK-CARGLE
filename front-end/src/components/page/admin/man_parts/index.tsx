@@ -328,7 +328,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                         e.stopPropagation()
                       }
                     >
-                      <Checkbox>
+                      <Checkbox kindOf={`TableCheckBox`}>
                         <CheckInput
                           type="checkbox"
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -367,7 +367,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                             e.stopPropagation()
                           }
                         >
-                          <Checkbox>
+                          <Checkbox kindOf={`TableCheckBox`}>
                             <CheckInput
                               type="checkbox"
                               onChange={(

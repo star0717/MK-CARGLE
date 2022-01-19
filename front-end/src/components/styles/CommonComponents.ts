@@ -1768,6 +1768,8 @@ export const Checkbox = styled.label<any>`
   -ms-user-select: none;
   user-select: none;
 
+  ${(props) => props.kindOf === `TableCheckBox` && `margin : 0px 0px 26px 0px;`}
+
   &:hover ${CheckInput} ~ ${CheckMark} {
     background-color: #ccc;
   }
