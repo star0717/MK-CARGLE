@@ -2,6 +2,9 @@ import { TransformFnParams } from 'class-transformer';
 import { isNumber } from 'class-validator';
 import { defTakeNum, maxTakeNum } from './model.const';
 
+/***************************************************
+ * Base 모델 참조 상수
+ ***************************************************/
 // 페이지번호 검증
 export function getValidPageNumber(params: TransformFnParams) {
   // console.log('getValidPageNumber');
@@ -47,3 +50,5 @@ export function strToBoolean(params: TransformFnParams) {
 
   return params.value;
 }
+
+export function startOfToday() {}

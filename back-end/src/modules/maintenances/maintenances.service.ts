@@ -19,8 +19,8 @@ export class MaintenancesService extends SafeService<Maintenance> {
     readonly partsService: PartsService,
   ) {
     super(model, commonService);
-    // this.prepareAllParts();
-    this.logOrderId();
+    this.prepareAllParts();
+    this.genIdNumber();
   }
 
   async prepareAllParts() {
@@ -32,16 +32,8 @@ export class MaintenancesService extends SafeService<Maintenance> {
     return this.allParts;
   }
 
-  async logOrderId() {
-    // for (let i = 0; i < 1; i++) await this.genOrderID();
-  }
-  async genOrderID() {
-    // const now = new Date();
-    // console.log(now.getTime());
-    // // console.log(now.getFullYear());
-    // console.log(now.getHours() * 1000 * 60 * 60);
-    // console.log(now.getMinutes() * 1000 * 60);
-    // console.log(now.getSeconds() * 1000);
-    // console.log(now.getMilliseconds());
+  async genIdNumber() {
+    const count = await this.model.count();
+    console.log(count);
   }
 }
