@@ -21,18 +21,13 @@ import {
   TableBody,
   TableRow,
   TableRowLIST,
-  // CheckboxContainer,
-  // CheckBoxIcon,
-  // CheckBoxLine,
-  // HiddenCheckbox,
   Checkbox,
   CheckInput,
   CheckMark,
 } from "../../../styles/CommonComponents";
-import { BsCheckLg, BsSearch } from "react-icons/bs";
-import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
+import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
-import PartsModal from "./parts_Modal";
+import PartsModal from "./partsModal";
 import ReactModal from "react-modal";
 import { PartClass, partClassList } from "../../../../constants/part.const";
 
@@ -51,9 +46,8 @@ import {
   _iGetAdminPartsClass,
 } from "../../../../../store/interfaces";
 import { Part } from "../../../../models/part.entity";
-import { DeleteObjectIds } from "../../../../models/base.entity";
-import PartsInfo_Modal from "./partsInfo_Modal";
 import { _pAdminManParts } from "../../../../configure/_pProps.entity";
+import PartsInfoModal from "./partsInfoModal";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -431,7 +425,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
               {modalOption === "addPart" ? (
                 <PartsModal {...ARCModalProps} />
               ) : (
-                <PartsInfo_Modal {...ARCModalProps} />
+                <PartsInfoModal {...ARCModalProps} />
               )}
             </Wrapper>
           </ReactModal>

@@ -31,12 +31,10 @@ import {
   _aPostAdminPart,
 } from "../../../../../store/action/user.action";
 import { BsPlus } from "react-icons/bs";
-// import Part from "../../../../models/part.entity"
 import { Part } from "../../../../models/part.entity";
-import wrapper from "../../../../../store";
 import { _pAdminManParts } from "../../../../configure/_pProps.entity";
 
-const PartsModal: NextPage<_pAdminManParts> = (props) => {
+const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -44,15 +42,11 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   const [partClass, setPartClass] = useState<PartClass[]>(partClassList);
   const [tsClass, setTsClass] = useState<TsClass[]>(TsClassList);
   const [tsItem, setTsItem] = useState<TsItem[]>(tsItemListB);
-  const [partCode, setPartCode] = useState<string>("");
+
   const [partNickName, setPartNickName] = useState<string>("");
-  const [partInfo, setPartInfo] = useState<Partial<Part>>({
-    label: "",
-    name: "",
-    nickName: [],
-    code: "",
-    tsCode: "",
-  });
+  const [partInfo, setPartInfo] = useState<Partial<Part>>(props.clickDoc);
+
+  console.log(props.clickDoc);
 
   /*********************************************************************
    * 2. State settings
@@ -63,16 +57,8 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
    *********************************************************************/
   const onSaveFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const plusPartInfo = {
-      label: partInfo.label,
-      name: partInfo.name,
-      nickName: partInfo.nickName,
-      code: partCode,
-      tsCode: partInfo.tsCode,
-    };
 
-    dispatch(_aPostAdminPart(plusPartInfo)).then((res: any) => {
-      console.log("?>?", plusPartInfo);
+    dispatch(_aPostAdminPart(partInfo)).then((res: any) => {
       alert("정상적으로 등록 되었습니다.");
       props.setModalOpen(false);
     });
@@ -112,22 +98,28 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
           <Combo
             width={`400px`}
             margin={`0px`}
+            value={partInfo.label}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              if (e.target.value === "") {
-                return setPartCode("");
-              }
-              setPartInfo({ ...partInfo, label: `${e.target.value}` });
+              // setPartInfo({ ...partInfo, label: e.target.value });
+              let label: string = e.target.value;
               dispatch(_aGetAdminPartGenCode(e.target.value)).then(
                 (res: any) => {
-                  setPartCode(res.payload);
+                  setPartInfo({
+                    ...partInfo,
+                    label: label,
+                    code: res.payload,
+                  });
                 }
               );
             }}
           >
-            <option value="">선택</option>
-            {partClass.map((item: PartClass) => (
-              <option value={item.label}>{item.description}</option>
-            ))}
+            {partClass.map((item: PartClass) => {
+              return (
+                <option key={item.label} value={item.label}>
+                  {item.description}
+                </option>
+              );
+            })}
           </Combo>
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
@@ -135,6 +127,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
           <TextInput2
             placeholder="부품명입니다~"
             width={`400px`}
+            value={partInfo.name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onInputHandler(e);
             }}
@@ -142,7 +135,12 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품코드</Text>
-          <TextInput2 placeholder="부품코드" width={`400px`} value={partCode} />
+          <TextInput2
+            placeholder="부품코드"
+            width={`400px`}
+            readOnly
+            value={partInfo.code}
+          />
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>국토부</Text>
@@ -166,15 +164,15 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
                 }
               }}
             >
-              <option value="">선택</option>
               {tsClass.map((item: TsClass) => (
-                <option value={`${item.label}`}>{item.description}</option>
+                <option key={item.label} value={`${item.label}`}>
+                  {item.description}
+                </option>
               ))}
             </Combo>
             <Combo width={`245px`} margin={`0px`}>
-              <option value="">선택</option>
               {tsItem.map((item: TsItem) => (
-                <option>{item.name}</option>
+                <option key={item.index}>{item.name}</option>
               ))}
             </Combo>
           </Wrapper>
@@ -283,4 +281,4 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   );
 };
 
-export default PartsModal;
+export default PartsInfoModal;
