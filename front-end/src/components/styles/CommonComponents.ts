@@ -1335,13 +1335,6 @@ export const TableRow = styled.ul<any>`
   background: ${(props) => props.bgColor};
   color: ${(props) => props.color};
 
-  & span {
-    font-size: 26px;
-    display: none;
-    margin-top: 5px;
-    ${(props) => props.kindOf === `focus` && `display : block;`}
-  }
-
   ${(props) => !props.kindOf && `background : ${props.theme.White_C};`}
 
   ${(props) => props.kindOf === `focus` && `background : #f5f5f5;`}
