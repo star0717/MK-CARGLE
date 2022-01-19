@@ -1355,7 +1355,7 @@ export const TableRow = styled.ul<any>`
 
   ${(props) =>
     props.kindOf === `selectClass` &&
-    `background: gray; color: #fff; &:hover {background: gray; color: #fff; text-decoration: none;}`}
+    `background: #8DAFCE; color: #fff; &:hover {background: #8DAFCE; color: #fff; text-decoration: none;}`}
   ${(props) =>
     props.kindOf === `noSelectClass` && `background: #fff; color: #343a40;`}
 `;
@@ -1732,8 +1732,7 @@ export const CheckMark = styled.span<any>`
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: #fff;
-  border: 1px solid #314fa5;
+  background-color: #ddd;
   border-radius: 4px;
   transition: 0.2s;
 
@@ -1776,15 +1775,17 @@ export const Checkbox = styled.label<any>`
 
   ${(props) => props.kindOf === `TableCheckBox` && `margin : 0px 0px 26px 0px;`}
 
-  &:hover ${CheckInput} ~ ${CheckMark} {
-    background-color: #ccc;
-  }
-
   ${CheckInput}:checked ~ ${CheckMark} {
     background-color: #314fa5;
+    ${(props) =>
+      props.kindOf === `TableCheckBox` && `background-color: #8DAFCE;`}
   }
 
   ${CheckInput}:checked ~ ${CheckMark}:after {
     display: block;
   }
 `;
+
+// &:hover ${CheckInput} ~ ${CheckMark} {
+//   background-color: #edeeff;
+// }
