@@ -232,7 +232,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                   setModalOpen(true);
                 }}
               >
-                부품 추가하기
+                부품추가
               </SmallButton>
               <SmallButton
                 kindOf={`cancle`}
@@ -285,8 +285,9 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     <TableRow
-                      color={selectClass === "all" ? `#fff` : `#343a40`}
-                      bgColor={selectClass === "all" ? `#343a40` : `#fff`}
+                      kindOf={
+                        selectClass === "all" ? `selectClass` : `noSelectClass`
+                      }
                     >
                       <TableRowLIST
                         width={`100%`}
@@ -300,9 +301,10 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                     {partClassList.map((item: PartClass) => (
                       <TableRow
                         key={item.label}
-                        color={selectClass === item.label ? `#fff` : `#343a40`}
-                        bgColor={
-                          selectClass === item.label ? `#343a40` : `#fff`
+                        kindOf={
+                          selectClass === item.label
+                            ? `selectClass`
+                            : `noSelectClass`
                         }
                         onClick={() => {
                           setSelectClass(item.label);
@@ -328,7 +330,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                         e.stopPropagation()
                       }
                     >
-                      <Checkbox>
+                      <Checkbox kindOf={`TableCheckBox`}>
                         <CheckInput
                           type="checkbox"
                           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -367,7 +369,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                             e.stopPropagation()
                           }
                         >
-                          <Checkbox>
+                          <Checkbox kindOf={`TableCheckBox`}>
                             <CheckInput
                               type="checkbox"
                               onChange={(

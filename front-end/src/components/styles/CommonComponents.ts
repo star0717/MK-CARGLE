@@ -322,9 +322,9 @@ export const CommonSmallTitle = styled.h2<any>`
   &:before {
     content: "";
     position: absolute;
-    bottom: 0px;
+    bottom: -5px;
     left: 50%;
-    margin-left: -20px;
+    margin-left: -14px;
     width: 30px;
     height: 100%;
     border-bottom: 6px solid ${(props) => props.theme.basicTheme_C};
@@ -1352,6 +1352,12 @@ export const TableRow = styled.ul<any>`
     text-decoration: underline;
     ${(props) => props.kindOf === `focus` && `text-decoration : none;`}
   }
+
+  ${(props) =>
+    props.kindOf === `selectClass` &&
+    `background: gray; color: #fff; &:hover {background: gray; color: #fff; text-decoration: none;}`}
+  ${(props) =>
+    props.kindOf === `noSelectClass` && `background: #fff; color: #343a40;`}
 `;
 
 export const TableRowLIST = styled.li<any>`
@@ -1767,6 +1773,8 @@ export const Checkbox = styled.label<any>`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  ${(props) => props.kindOf === `TableCheckBox` && `margin : 0px 0px 26px 0px;`}
 
   &:hover ${CheckInput} ~ ${CheckMark} {
     background-color: #ccc;
