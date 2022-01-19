@@ -267,7 +267,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
               </SmallButton>
             </Wrapper>
           </Wrapper>
-          <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
+          <Wrapper dr={`row`} padding={`40px 0px 50px`} ju={`space-between`}>
             {/* 부품분류 */}
             <Wrapper width={`24%`}>
               <TableWrapper>
