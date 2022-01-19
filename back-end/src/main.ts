@@ -49,9 +49,5 @@ async function bootstrap() {
 
   // 서버 실행
   await app.listen(process.env.SV_PORT);
-
-  for (var i = 0; i < 5; i++) {
-    console.log(new Date().getTime());
-  }
 }
 bootstrap();

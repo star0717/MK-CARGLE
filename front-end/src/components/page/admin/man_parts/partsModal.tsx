@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useDispatch } from "react-redux";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   CommonButton,
   CommonButtonWrapper,
@@ -51,6 +52,17 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
     tsCode: "",
   });
 
+  // react-hook-form 사용을 위한 선언
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    clearErrors,
+    setValue,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -58,8 +70,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  const onSaveFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSaveFormHandler: SubmitHandler<Partial<Part>> = (data) => {
     const plusPartInfo = {
       label: partInfo.label,
       name: partInfo.name,
@@ -69,7 +80,6 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
     };
 
     dispatch(_aPostAdminPart(plusPartInfo)).then((res: any) => {
-      console.log("?>?", plusPartInfo);
       alert("정상적으로 등록 되었습니다.");
       props.setModalOpen(false);
     });
@@ -90,7 +100,10 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
     setPartInfo({ ...partInfo, nickName: newArr });
   };
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPartInfo({ ...partInfo, name: e.target.value });
+    setPartInfo({
+      ...partInfo,
+      name: e.target.value.replace(" ", ""),
+    });
   };
 
   /*********************************************************************
@@ -103,23 +116,33 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   return (
     <WholeWrapper>
       <CommonSmallTitle>부품등록</CommonSmallTitle>
-      <form id="savePartForm" onSubmit={onSaveFormHandler}>
+      <form id="savePartForm" onSubmit={handleSubmit(onSaveFormHandler)}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>분류</Text>
           <Combo
             width={`400px`}
             margin={`0px`}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              if (e.target.value === "") {
-                return setPartInfo({ ...partInfo, code: "" });
-              }
-              let label: string = e.target.value;
-              dispatch(_aGetAdminPartGenCode(e.target.value)).then(
-                (res: any) => {
-                  setPartInfo({ ...partInfo, label: label, code: res.payload });
+            {...register("label", {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                if (e.target.value === "") {
+                  return setPartInfo({ ...partInfo, code: "" });
                 }
-              );
-            }}
+                let label: string = e.target.value;
+                dispatch(_aGetAdminPartGenCode(e.target.value)).then(
+                  (res: any) => {
+                    setPartInfo({
+                      ...partInfo,
+                      label: label,
+                      code: res.payload,
+                    });
+                  }
+                );
+              },
+              required: {
+                value: true,
+                message: "필수 입력사항입니다.",
+              },
+            })}
           >
             <option value="">선택</option>
             {partClass.map((item: PartClass) => (
@@ -128,16 +151,47 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
               </option>
             ))}
           </Combo>
+          {errors.label?.type === "required" && (
+            <Text
+              margin={`0px 0px 10px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.label.message}
+            </Text>
+          )}
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품명</Text>
           <TextInput2
             placeholder="부품명입니다~"
             width={`400px`}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              onInputHandler(e);
-            }}
+            value={partInfo.name}
+            {...register("name", {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputHandler(e);
+              },
+              required: {
+                value: true,
+                message: "필수 입력사항입니다.",
+              },
+            })}
           />
+          {errors.name?.type === "required" && (
+            <Text
+              margin={`0px 0px 10px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.name.message}
+            </Text>
+          )}
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품코드</Text>

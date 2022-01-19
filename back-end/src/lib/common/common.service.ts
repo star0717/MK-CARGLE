@@ -6,13 +6,20 @@ import { readdirSync, rmSync, writeFileSync } from 'fs';
 import { Address } from 'nodemailer/lib/mailer';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
 import { OptionalInfo } from 'src/models/base.entity';
+import * as dayjs from 'dayjs';
+import * as timezone from 'dayjs/plugin/timezone';
+import * as utc from 'dayjs/plugin/utc';
 
 @Injectable()
 export class CommonService {
   constructor(
     private readonly mailerService: MailerService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) {
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
+    dayjs.tz.setDefault('Asia/Seoul');
+  }
 
   /**
    * 메일 전송
@@ -183,5 +190,15 @@ export class CommonService {
         `${comName}의 대표자가 작업자의 계정을 삭제했습니다.<br>` +
         `현 시점부터 시스템에 로그인 할 수 없습니다.`,
     };
+  }
+
+  getStartOfDay() {
+    console.log(dayjs().startOf('day').toString());
+  }
+
+  getEndOfDay() {
+    // const m = moment();
+    // console.log(m);
+    // console.log(m.endOf('day'));
   }
 }
