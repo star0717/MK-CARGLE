@@ -42,14 +42,14 @@ const PartsInfo_Modal: NextPage<any> = (props) => {
   const [partClass, setPartClass] = useState<PartClass[]>(partClassList);
   const [tsClass, setTsClass] = useState<TsClass[]>(TsClassList);
   const [tsItem, setTsItem] = useState<TsItem[]>(tsItemListB);
-  const [partCode, setPartCode] = useState<string>("");
+
   const [partNickName, setPartNickName] = useState<string>("");
   const [partInfo, setPartInfo] = useState<Partial<Part>>({
-    // label: p,
-    // name: props.,
-    // nickName: props.,
-    // code: props.,
-    // tsCode: props.,
+    label: props.clickDoc.label,
+    name: props.clickDoc.name,
+    nickName: props.clickDoc.nickName,
+    code: props.clickDoc.code,
+    tsCode: props.clickDoc.tsCode,
   });
 
   /*********************************************************************
@@ -61,16 +61,8 @@ const PartsInfo_Modal: NextPage<any> = (props) => {
    *********************************************************************/
   const onSaveFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const plusPartInfo = {
-      label: partInfo.label,
-      name: partInfo.name,
-      nickName: partInfo.nickName,
-      code: partCode,
-      tsCode: partInfo.tsCode,
-    };
 
-    dispatch(_aPostAdminPart(plusPartInfo)).then((res: any) => {
-      console.log("?>?", plusPartInfo);
+    dispatch(_aPostAdminPart(partInfo)).then((res: any) => {
       alert("정상적으로 등록 되었습니다.");
       props.setModalOpen(false);
     });
@@ -110,19 +102,18 @@ const PartsInfo_Modal: NextPage<any> = (props) => {
           <Combo
             width={`400px`}
             margin={`0px`}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              if (e.target.value === "") {
-                return setPartCode("");
-              }
-              setPartInfo({ ...partInfo, label: `${e.target.value}` });
+            value={partInfo.label}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              console.log("target", e.target.value);
+              setPartInfo({ ...partInfo, label: e.target.value });
               dispatch(_aGetAdminPartGenCode(e.target.value)).then(
                 (res: any) => {
-                  setPartCode(res.payload);
+                  setPartInfo({ ...partInfo, code: res.payload });
                 }
               );
+              console.log("~", partInfo.label);
             }}
           >
-            <option value="">선택</option>
             {partClass.map((item: PartClass) => (
               <option value={item.label}>{item.description}</option>
             ))}
@@ -133,6 +124,7 @@ const PartsInfo_Modal: NextPage<any> = (props) => {
           <TextInput2
             placeholder="부품명입니다~"
             width={`400px`}
+            value={partInfo.name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onInputHandler(e);
             }}
@@ -140,7 +132,12 @@ const PartsInfo_Modal: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품코드</Text>
-          <TextInput2 placeholder="부품코드" width={`400px`} value={partCode} />
+          <TextInput2
+            placeholder="부품코드"
+            width={`400px`}
+            readOnly
+            value={partInfo.code}
+          />
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>국토부</Text>
