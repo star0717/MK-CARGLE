@@ -26,8 +26,13 @@ import {
   tsItemListH,
   tsItemListS,
 } from "../../../../constants/part.const";
-import { _aGetAdminPartGenCode } from "../../../../../store/action/user.action";
+import {
+  _aGetAdminPartGenCode,
+  _aPostAdminPart,
+} from "../../../../../store/action/user.action";
 import { BsPlus } from "react-icons/bs";
+// import Part from "../../../../models/part.entity"
+import { Part } from "../../../../models/part.entity";
 
 const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
@@ -38,6 +43,15 @@ const PartsModal: NextPage<any> = (props) => {
   const [partCode, setPartCode] = useState<String>("");
   const [tsClass, setTsClass] = useState<TsClass[]>(TsClassList);
   const [tsItem, setTsItem] = useState<TsItem[]>(tsItemListB);
+  const [partNickName, setPartNickName] = useState<string>("");
+  const [partInfo, setPartInfo] = useState<Partial<Part>>({
+    label: "",
+    name: "",
+    nickName: [],
+    code: "",
+    tsCode: "",
+    __v: 0,
+  });
 
   /*********************************************************************
    * 2. State settings
@@ -47,9 +61,35 @@ const PartsModal: NextPage<any> = (props) => {
    * 3. Handlers
    *********************************************************************/
   const onSaveFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("저장~");
+    e.preventDefault();
+    const plusPartInfo = {
+      label: partCode,
+      name: "",
+      nickName: partInfo.nickName,
+      code: partCode,
+    };
+
+    dispatch(_aPostAdminPart(partInfo));
     alert("정상적으로 등록 되었습니다.");
   };
+  const onInputNickNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPartNickName(e.target.value);
+  };
+
+  const onInputPlusHandler = () => {
+    const newArr: string[] = [...partInfo.nickName];
+    newArr.push(partNickName);
+    setPartInfo({ ...partInfo, nickName: newArr });
+  };
+  const onInputDelHandler = (item: string) => {
+    const newArr: string[] = partInfo.nickName.filter((exItem: string) => {
+      return exItem !== item;
+    });
+    setPartInfo({ ...partInfo, nickName: newArr });
+  };
+
+  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {};
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -60,21 +100,25 @@ const PartsModal: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <CommonSmallTitle>부품등록</CommonSmallTitle>
-      <form onSubmit={onSaveFormHandler}>
+      <form id="savePartForm" onSubmit={onSaveFormHandler}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>분류</Text>
           <Combo
             width={`400px`}
             margin={`0px`}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              dispatch(_aGetAdminPartGenCode(`${e.target.value}`)).then(
+              if (e.target.value === "") {
+                return setPartCode("");
+              }
+              setPartInfo({ ...partInfo, label: `${e.target.value}` });
+              dispatch(_aGetAdminPartGenCode(e.target.value)).then(
                 (res: any) => {
-                  console.log("Code: ", res.payload);
                   setPartCode(res.payload);
                 }
               );
             }}
           >
+            <option value="">선택</option>
             {partClass.map((item: PartClass) => (
               <option value={item.label}>{item.description}</option>
             ))}
@@ -128,8 +172,12 @@ const PartsModal: NextPage<any> = (props) => {
             <TextInput2
               placeholder="동의어입니다 4"
               width={`350px`}
-            ></TextInput2>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputNickNameHandler(e);
+              }}
+            />
             <IconButton
+              type="button"
               kindOf={`hover`}
               shadow={`none`}
               radius={`4px`}
@@ -137,6 +185,7 @@ const PartsModal: NextPage<any> = (props) => {
               height={`40px`}
               al={`center`}
               fontSize={`24px`}
+              onClick={onInputPlusHandler}
             >
               <BsPlus />
             </IconButton>
@@ -166,40 +215,36 @@ const PartsModal: NextPage<any> = (props) => {
             overflow={`auto`}
             ju={`flex-start`}
           >
-            <Wrapper
-              height={`30px`}
-              bgColor={`#fff`}
-              border={`1px solid #c4c4c4`}
-              dr={`row`}
-              radius={`5px`}
-              padding={`0px 20px`}
-              margin={`0px 0px 5px`}
-            >
-              <Wrapper al={`flex-start`}>
-                <Text>동의어 입니다. (01)</Text>
+            {partInfo.nickName.map((item: string, idx: number) => (
+              <Wrapper
+                key={idx}
+                height={`30px`}
+                bgColor={`#fff`}
+                border={`1px solid #c4c4c4`}
+                dr={`row`}
+                radius={`5px`}
+                padding={`0px 20px`}
+                margin={`0px 0px 5px`}
+              >
+                <Wrapper al={`flex-start`}>
+                  <Text>{item}</Text>
+                </Wrapper>
+                <Wrapper width={`22px`} fontSize={`22px`}>
+                  <IconButton
+                    type="button"
+                    bgColor={`inherit`}
+                    shadow={`none`}
+                    width={`30px`}
+                    height={`30px`}
+                    onClick={() => {
+                      onInputDelHandler(item);
+                    }}
+                  >
+                    <IoIosCloseCircle />
+                  </IconButton>
+                </Wrapper>
               </Wrapper>
-              <Wrapper width={`22px`} fontSize={`22px`}>
-                <IoIosCloseCircle />
-              </Wrapper>
-            </Wrapper>
-
-            {/* focus */}
-            <Wrapper
-              height={`30px`}
-              bgColor={`#eee`}
-              border={`1px solid #c4c4c4`}
-              dr={`row`}
-              radius={`5px`}
-              padding={`0px 20px`}
-              margin={`0px 0px 5px`}
-            >
-              <Wrapper al={`flex-start`}>
-                <Text>동의어 입니다. (02)</Text>
-              </Wrapper>
-              <Wrapper width={`22px`} fontSize={`22px`}>
-                <IoIosCloseCircle />
-              </Wrapper>
-            </Wrapper>
+            ))}
           </Wrapper>
         </Wrapper>
         <CommonButtonWrapper kindOf={`column`}>
@@ -212,7 +257,11 @@ const PartsModal: NextPage<any> = (props) => {
           >
             닫 기
           </CommonButton>
-          <CommonButton type={"submit"} kindOf={`circleTheme`}>
+          <CommonButton
+            type={"submit"}
+            kindOf={`circleTheme`}
+            form="savePartForm"
+          >
             저 장
           </CommonButton>
         </CommonButtonWrapper>
