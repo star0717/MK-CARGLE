@@ -116,7 +116,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
         }
       );
     }
-  }, [selectClass, reset]);
+  }, [selectClass, reset, modalOpen]);
 
   /**
    * 전체 선택 기능
