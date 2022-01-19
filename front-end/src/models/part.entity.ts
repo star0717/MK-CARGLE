@@ -8,5 +8,5 @@ export declare class Part extends BaseEntity {
     nickName: string[];
     code: string;
     tsCode?: string;
-    __v: number;
+    __v?: number;
 }

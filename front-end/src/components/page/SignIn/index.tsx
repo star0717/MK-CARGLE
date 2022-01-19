@@ -127,7 +127,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
             >
               CARGLE
             </Text>
-            <Text color={`#292929`} fontSize={`22px`} fontWeight={`400`}>
+            <Text color={`#292929`} fontSize={`22px`} fontWeight={`500`}>
               정비관리도 이젠 편리하게
             </Text>
 
@@ -156,11 +156,12 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   <Wrapper>
                     <Text
                       fontSize={width < 500 ? `12px` : `16px`}
-                      fontWeight={`700`}
+                      fontWeight={`500`}
                       margin={`5px 0px 10px 0px`}
                       width={`100%`}
                       display={`flex`}
                       ju={`flex-start`}
+                      color={`#314FA5`}
                     >
                       TIP! 아이디는 가입 시 입력한 이메일을 입력해주세요.
                     </Text>
@@ -221,13 +222,17 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                     icon={faQuestionCircle}
                     style={{ width: "18px", margin: "0px 3px 4px 0px" }}
                   />
-                  <Text margin={`0px 3px 0px`} fontSize={`16px`}>
+                  <Text
+                    margin={`0px 3px 0px`}
+                    fontSize={`16px`}
+                    fontWeight={`400`}
+                  >
                     아직 회원이 아니신가요?
                   </Text>
                   <Text decoration={`underline`}>
                     <Link href={UseLink.SIGNUP}>
                       <a
-                        style={{ fontWeight: "bold", fontSize: "16px" }}
+                        style={{ fontWeight: "600", fontSize: "16px" }}
                         onClick={userInit}
                       >
                         회원가입
@@ -240,12 +245,16 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                     icon={faQuestionCircle}
                     style={{ width: "18px", margin: "0px 3px 4px 0px" }}
                   />
-                  <Text margin={`0px 3px 0px`} fontSize={`16px`}>
+                  <Text
+                    margin={`0px 3px 0px`}
+                    fontSize={`16px`}
+                    fontWeight={`400`}
+                  >
                     계정을 찾고 싶으신가요?
                   </Text>
                   <Text decoration={`underline`}>
                     <Link href={UseLink.FIND_EMAIL}>
-                      <a style={{ fontWeight: "bold", fontSize: "16px" }}>
+                      <a style={{ fontWeight: "600", fontSize: "16px" }}>
                         계정찾기
                       </a>
                     </Link>
