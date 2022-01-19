@@ -1355,7 +1355,7 @@ export const TableRow = styled.ul<any>`
 
   ${(props) =>
     props.kindOf === `selectClass` &&
-    `background: gray; color: #fff; &:hover {background: gray; color: #fff; text-decoration: none;}`}
+    `background: #8DAFCE; color: #fff; &:hover {background: #8DAFCE; color: #fff; text-decoration: none;}`}
   ${(props) =>
     props.kindOf === `noSelectClass` && `background: #fff; color: #343a40;`}
 `;
