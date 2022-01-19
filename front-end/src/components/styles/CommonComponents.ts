@@ -1676,7 +1676,7 @@ export const Switch = styled.label<any>`
   position: relative;
   display: inline-block;
   width: 60px;
-  height: 34px;
+  height: 30px;
 `;
 
 export const SwitchSlider = styled.span<any>`
@@ -1694,10 +1694,10 @@ export const SwitchSlider = styled.span<any>`
   &:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
+    height: 24px;
+    width: 24px;
+    left: 5px;
+    bottom: 3px;
     background-color: white;
     -webkit-transition: 0.4s;
     transition: 0.4s;
