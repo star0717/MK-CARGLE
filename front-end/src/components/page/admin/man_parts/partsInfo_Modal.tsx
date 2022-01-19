@@ -45,11 +45,11 @@ const PartsInfo_Modal: NextPage<any> = (props) => {
   const [partCode, setPartCode] = useState<string>("");
   const [partNickName, setPartNickName] = useState<string>("");
   const [partInfo, setPartInfo] = useState<Partial<Part>>({
-    label: "",
-    name: "",
-    nickName: [],
-    code: "",
-    tsCode: "",
+    // label: p,
+    // name: props.,
+    // nickName: props.,
+    // code: props.,
+    // tsCode: props.,
   });
 
   /*********************************************************************
