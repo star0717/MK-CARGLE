@@ -734,6 +734,18 @@ export const IconButton = styled.button<any>`
     color: ${(props) => props.color || props.basicTheme_C};
     font-size: 28px;
   }
+
+  ${(props) => props.kindOf === `hover` && `background-color : #f5f5f5;`}
+  ${(props) => props.kindOf === `hover` && `color : #314fa5;`}
+  ${(props) => props.kindOf === `hover` && `border : 1px solid #314fa5;`}
+
+  &:hover {
+    background-color: ;
+    ${(props) => props.kindOf === `hover` && `background-color : #314FA5;`}
+
+    color:;
+    ${(props) => props.kindOf === `hover` && `color : #fff;`}
+  }
 `;
 
 export const HeaderIconButton = styled.button<any>`

@@ -9,6 +9,8 @@ import {
   WholeWrapper,
   Wrapper,
   CommonSmallTitle,
+  SmallButton,
+  IconButton,
 } from "../../../styles/CommonComponents";
 import React, { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -25,6 +27,7 @@ import {
   tsItemListS,
 } from "../../../../constants/part.const";
 import { _aGetAdminPartGenCode } from "../../../../../store/action/user.action";
+import { BsPlus } from "react-icons/bs";
 
 const PartsModal: NextPage<any> = (props) => {
   /*********************************************************************
@@ -121,7 +124,23 @@ const PartsModal: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 20px 0px`}>
           <Text>동의어 설정</Text>
-          <TextInput2 placeholder="동의어입니다 4" width={`400px`}></TextInput2>
+          <Wrapper dr={`row`} ju={`space-between`} width={`400px`}>
+            <TextInput2
+              placeholder="동의어입니다 4"
+              width={`350px`}
+            ></TextInput2>
+            <IconButton
+              kindOf={`hover`}
+              shadow={`none`}
+              radius={`4px`}
+              width={`40px`}
+              height={`40px`}
+              al={`center`}
+              fontSize={`24px`}
+            >
+              <BsPlus />
+            </IconButton>
+          </Wrapper>
         </Wrapper>
         <Wrapper
           width={`400px`}
