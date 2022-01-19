@@ -27,7 +27,7 @@ export declare class BaseEntity {
   _cID: string;
   _uID: string;
   /**  버전값 (조회되진 않음) */
-  __v: number;
+  __v?: number;
 }
 export declare class FindParameters {
   page?: number;

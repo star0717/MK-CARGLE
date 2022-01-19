@@ -64,8 +64,8 @@ export class Part extends BaseEntity {
   tsCode?: string;
 
   @ApiProperty({
-    description: '버전',
+    description: '버전값. Back-end에서 자동 기입',
   })
   @prop()
-  __v: number;
+  __v?: number;
 }

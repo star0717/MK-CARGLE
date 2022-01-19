@@ -10,6 +10,8 @@ import { PartsService } from '../admin/parts/parts.service';
 
 @Injectable()
 export class MaintenancesService extends SafeService<Maintenance> {
+  private allParts: FindResult<Part>;
+
   constructor(
     @InjectModel(Maintenance)
     readonly model: ReturnModelType<typeof Maintenance>,
@@ -17,17 +19,29 @@ export class MaintenancesService extends SafeService<Maintenance> {
     readonly partsService: PartsService,
   ) {
     super(model, commonService);
-    this.prepareAllParts();
+    // this.prepareAllParts();
+    this.logOrderId();
   }
 
   async prepareAllParts() {
-    this.result = await this.partsService.findAllPart();
-    // console.log(this.result);
+    this.allParts = await this.partsService.findAllPart();
+    console.log('AllParts.length: ' + this.allParts.totalDocs);
   }
 
-  async findAllParts() {
-    return this.result;
+  async findAllParts(): Promise<FindResult<Part>> {
+    return this.allParts;
   }
 
-  private result: FindResult<Part>;
+  async logOrderId() {
+    // for (let i = 0; i < 1; i++) await this.genOrderID();
+  }
+  async genOrderID() {
+    // const now = new Date();
+    // console.log(now.getTime());
+    // // console.log(now.getFullYear());
+    // console.log(now.getHours() * 1000 * 60 * 60);
+    // console.log(now.getMinutes() * 1000 * 60);
+    // console.log(now.getSeconds() * 1000);
+    // console.log(now.getMilliseconds());
+  }
 }

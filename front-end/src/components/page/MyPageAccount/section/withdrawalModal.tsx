@@ -30,6 +30,7 @@ const WithdrawalModal: NextPage<_pWithdrawalModalProps> = (props) => {
       _id: props.accountInfo.user._uID,
       PWD: props.password,
     };
+
     dispatch(withdrawalAction(ConfirmPWD)).then(
       (res: any) => {
         alert("정상적으로 탈퇴 되었습니다.");

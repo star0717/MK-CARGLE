@@ -59,7 +59,7 @@ export class BaseEntity extends TypegooseModule {
   /**  버전값 (조회되진 않음) */
   @prop({ type: Number, select: false }) // 버전값은 조회되지 않도록 할 때
   // @prop()
-  __v: number;
+  __v?: number;
 }
 
 export class FindParameters {

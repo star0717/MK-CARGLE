@@ -274,7 +274,7 @@ export const CommonTitleWrapper = styled.div<any>`
   flex-direction: ${(props) => props.dr || `column`};
   margin: ${(props) => props.margin || `0px`};
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 700;
   color: ${(props) => props.color};
   text-align: ${(props) => props.textAlign || `center`};
   background-color: #eee;
@@ -286,7 +286,7 @@ export const CommonTitle = styled.h2<any>`
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || ` 0px 0px`};
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 700;
   color: ${(props) => props.color || `#343a40`};
   text-align: ${(props) => props.textAlign || `center`};
   @media (max-width: 1439px) {
@@ -362,6 +362,7 @@ export const Text = styled.p<any>`
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
+  text-decoration: ${(props) => props.decoration};
 
   & svg {
     color: ${(props) => props.color};
@@ -703,6 +704,7 @@ export const CloseButton = styled.button<any>`
   color: ${(props) => props.color || props.black_C};
   cursor: pointer;
   border: none;
+  position: ${(props) => (props.isFixed ? `fixed` : ``)};
 
   & svg {
     color: ${(props) => props.color || props.black_C};
@@ -848,7 +850,8 @@ export const TextInput2 = styled.input<any>`
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
   font-size: 16px;
-
+  align-items: ${(props) => props.al || ``};
+  justify-content: ${(props) => props.ju || ``};
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
   border: ${(props) => props.theme.border};
@@ -857,6 +860,52 @@ export const TextInput2 = styled.input<any>`
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
+  line-height: ${(props) => props.lineHeight};
+  text-align: ${(props) => props.textAlign};
+  vertical-align: ${(props) => props.vertical};
+
+  &:focus {
+    outline: none;
+    border: 1px solid ${(props) => props.theme.basicTheme_C};
+  }
+
+  &:read-only:focus {
+    box-shadow: none;
+    border: ${(props) => props.theme.border};
+  }
+
+  &:read-only {
+    box-shadow: none;
+    border: ${(props) => props.theme.border};
+    background-color: #f5f5f5;
+    cursor: default;
+  }
+`;
+
+export const TextArea = styled.textarea<any>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.theme.border};
+  padding: ${(props) => props.padding || props.theme.inputPadding};
+  border-radius: ${(props) => props.theme.radius};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
+  font-size: 16px;
+  align-items: ${(props) => props.al || ``};
+  justify-content: ${(props) => props.ju || ``};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height || `40px`};
+  border: ${(props) => props.theme.border};
+  padding: ${(props) => props.padding || props.theme.inputPadding};
+  border-radius: ${(props) => props.theme.radius};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  background-color: ${(props) => props.bgColor};
+  line-height: ${(props) => props.lineHeight};
+  text-align: ${(props) => props.textAlign};
+  vertical-align: ${(props) => props.vertical};
+  resize: none;
 
   &:focus {
     outline: none;
@@ -1611,7 +1660,7 @@ export const CheckBoxIcon = styled.p<any>`
   font-size: 16px;
   color: #fff;
   text-align: ${(props) => props.textAlign || `center`};
-  line-height: 2;
+  line-height: 1.6;
 `;
 
 // export const Label1 = styled.label<any>`
