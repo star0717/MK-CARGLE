@@ -4,10 +4,14 @@ import wrapper from "../store";
 import GlobalStyle from "../styles/globals";
 import theme from "../styles/theme";
 import { ThemeProvider } from "styled-components";
+import Head from "next/head";
 
 const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <>
+      <Head>
+        <title>MK SOLUTION</title>
+      </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Component {...pageProps} />
