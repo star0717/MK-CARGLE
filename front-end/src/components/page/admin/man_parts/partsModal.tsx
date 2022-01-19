@@ -56,10 +56,6 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   const {
     register,
     handleSubmit,
-    watch,
-    setError,
-    clearErrors,
-    setValue,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
