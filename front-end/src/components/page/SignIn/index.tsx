@@ -183,7 +183,12 @@ const SignIn: NextPage<_SignInProps> = (props) => {
 
                   {/* 체크박스 div */}
 
-                  <Wrapper dr={`row`} ju={`flex-end`}>
+                  <Wrapper
+                    dr={`row`}
+                    ju={`flex-end`}
+                    height={`40px`}
+                    al={`center`}
+                  >
                     <Checkbox>
                       아이디 저장
                       <CheckInput
