@@ -34,7 +34,7 @@ import { BsPlus } from "react-icons/bs";
 // import Part from "../../../../models/part.entity"
 import { Part } from "../../../../models/part.entity";
 
-const PartsModal: NextPage<any> = (props) => {
+const PartsInfo_Modal: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -164,13 +164,11 @@ const PartsModal: NextPage<any> = (props) => {
                 }
               }}
             >
-              <option value="">선택</option>
               {tsClass.map((item: TsClass) => (
                 <option value={`${item.label}`}>{item.description}</option>
               ))}
             </Combo>
             <Combo width={`245px`} margin={`0px`}>
-              <option value="">선택</option>
               {tsItem.map((item: TsItem) => (
                 <option>{item.name}</option>
               ))}
@@ -281,4 +279,4 @@ const PartsModal: NextPage<any> = (props) => {
   );
 };
 
-export default PartsModal;
+export default PartsInfo_Modal;
