@@ -35,6 +35,7 @@ export const WholeWrapper = styled.div<any>`
   min-height: ${(props) => props.minHeight || ``};
   min-width: ${(props) => props.minWidth || ``};
   box-shadow: ${(props) => props.shadow};
+  overflow: ${(props) => props.overflow || ``};
 `;
 
 export const RsWrapper = styled.div<any>`
@@ -1335,13 +1336,6 @@ export const TableRow = styled.ul<any>`
   background: ${(props) => props.bgColor};
   color: ${(props) => props.color};
 
-  & span {
-    font-size: 26px;
-    display: none;
-    margin-top: 5px;
-    ${(props) => props.kindOf === `focus` && `display : block;`}
-  }
-
   ${(props) => !props.kindOf && `background : ${props.theme.White_C};`}
 
   ${(props) => props.kindOf === `focus` && `background : #f5f5f5;`}
@@ -1676,7 +1670,7 @@ export const Switch = styled.label<any>`
   position: relative;
   display: inline-block;
   width: 60px;
-  height: 34px;
+  height: 30px;
 `;
 
 export const SwitchSlider = styled.span<any>`
@@ -1694,10 +1688,10 @@ export const SwitchSlider = styled.span<any>`
   &:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
+    height: 24px;
+    width: 24px;
+    left: 5px;
+    bottom: 3px;
     background-color: white;
     -webkit-transition: 0.4s;
     transition: 0.4s;
@@ -1732,7 +1726,9 @@ export const CheckMark = styled.span<any>`
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: #eee;
+  background-color: #fff;
+  border: 1px solid #314fa5;
+  border-radius: 4px;
   transition: 0.2s;
 
   &:after {
@@ -1763,9 +1759,10 @@ export const Checkbox = styled.label<any>`
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 26px;
+  margin: ${(props) => props.margin || `10px 0px`};
   cursor: pointer;
-  font-size: 22px;
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1776,7 +1773,7 @@ export const Checkbox = styled.label<any>`
   }
 
   ${CheckInput}:checked ~ ${CheckMark} {
-    background-color: #2196f3;
+    background-color: #314fa5;
   }
 
   ${CheckInput}:checked ~ ${CheckMark}:after {
