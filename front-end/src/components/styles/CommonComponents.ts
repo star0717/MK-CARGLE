@@ -322,9 +322,9 @@ export const CommonSmallTitle = styled.h2<any>`
   &:before {
     content: "";
     position: absolute;
-    bottom: 0px;
+    bottom: -5px;
     left: 50%;
-    margin-left: -20px;
+    margin-left: -14px;
     width: 30px;
     height: 100%;
     border-bottom: 6px solid ${(props) => props.theme.basicTheme_C};
