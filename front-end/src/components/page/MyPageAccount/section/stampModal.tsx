@@ -146,6 +146,8 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
+  console.log(imgStyle);
+
   return (
     <WholeWrapper ref={ref} padding={`0px 30px 30px`}>
       <CommonSmallTitle>사업자 도장</CommonSmallTitle>
