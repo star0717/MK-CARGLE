@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   CommonButton,
   CommonButtonWrapper,
@@ -80,8 +80,7 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  const onSaveFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSaveFormHandler: SubmitHandler<Partial<Part>> = (data) => {
     const savePartInfo = {
       label: partInfo.label,
       name: partInfo.name,
@@ -105,6 +104,7 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
     const newArr: string[] = [...partInfo.nickName];
     newArr.push(partNickName);
     setPartInfo({ ...partInfo, nickName: newArr });
+    setPartNickName("");
   };
   //nickName 삭제
   const onInputDelHandler = (item: string) => {
@@ -127,7 +127,7 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   return (
     <WholeWrapper>
       <CommonSmallTitle>부품상세</CommonSmallTitle>
-      <form id="savePartForm" onSubmit={onSaveFormHandler}>
+      <form id="savePartForm" onSubmit={handleSubmit(onSaveFormHandler)}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>분류</Text>
           <Combo
@@ -255,6 +255,7 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
             <TextInput2
               placeholder="동의어입니다 4"
               width={`350px`}
+              value={partNickName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputNickNameHandler(e);
               }}
