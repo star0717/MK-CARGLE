@@ -94,7 +94,7 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
     const newList: TsItem[] = [];
     tsItemList.forEach((tsItem: TsItem) => {
       if (
-        tsItem.class.description.includes(searchText) ||
+        // tsItem.class.description.includes(searchText) ||
         tsItem.class.label.includes(searchText) ||
         tsItem.index.includes(searchText) ||
         tsItem.name.includes(searchText) ||
@@ -176,7 +176,7 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
                   <SearchInput
                     width={`632px`}
                     padding={`0px 5px 0px 5px`}
-                    placeholder="찾고싶은 부품명을 입력하세요."
+                    placeholder="코드 또는 작업내용을 입력하세요."
                     type="text"
                     value={searchText}
                     onChange={onInputSearchHandler}
@@ -260,7 +260,7 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
                           {item.class.label}
                           {item.index}
                         </TableRowLIST>
-                        <TableRowLIST width={`40%`}>
+                        <TableRowLIST width={`60%`}>
                           {genTsContent(item.name, {
                             nickName: item.nickName,
                             options: item.options,
