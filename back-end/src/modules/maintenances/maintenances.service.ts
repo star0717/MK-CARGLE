@@ -35,5 +35,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
   async genIdNumber() {
     const count = await this.model.count();
     console.log(count);
+
+    this.commonService.testDayJS();
   }
 }
