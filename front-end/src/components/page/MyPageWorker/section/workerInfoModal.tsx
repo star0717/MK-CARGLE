@@ -28,6 +28,9 @@ import {
   CommonSmallTitle,
   CommonButton,
   CommonButtonWrapper,
+  SwitchInput,
+  Switch,
+  SwitchSlider,
 } from "../../../styles/CommonComponents";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
@@ -145,11 +148,21 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
               </Text>
             )}
           </Wrapper>
-          <input
+          {/* <input
             type="checkbox"
             checked={approval}
             onChange={onChangeApproval}
-          />
+          /> */}
+          <Wrapper width={`60px`} al={`flex-end`}>
+            <Switch>
+              <SwitchInput
+                type="checkbox"
+                checked={approval}
+                onChange={onChangeApproval}
+              />
+              <SwitchSlider />
+            </Switch>
+          </Wrapper>
         </Wrapper>
       </Wrapper>
       <form onSubmit={onChangeWorkerInfo}>
