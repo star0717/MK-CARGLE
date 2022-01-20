@@ -25,6 +25,12 @@ import styled from "styled-components";
  * @returns
  */
 const StampModal: NextPage<_pStampModalProps> = (props) => {
+  class ImgStyle {
+    margin: string;
+    maxWidth?: string;
+    maxHeight?: string;
+  }
+
   const dispatch = useDispatch();
 
   // state 관리
@@ -39,7 +45,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
     aspect: 9 / 9,
   });
   const [completedCrop, setCompletedCrop] = useState<any>(null); // React-crop
-
+  const [imgStyle, setImgStyle] = useState<ImgStyle>();
   /**
    * 도장 파일 업로드 handler
    * @param canvas
@@ -123,6 +129,18 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
       crop.width * scaleX,
       crop.height * scaleY
     );
+
+    if (imgRef.current.height > imgRef.current.width) {
+      setImgStyle({
+        margin: `0 auto`,
+        maxHeight: `100%`,
+      });
+    } else {
+      setImgStyle({
+        margin: `0 auto`,
+        maxWidth: `100%`,
+      });
+    }
   }, [completedCrop]);
 
   // resize 변수 선언
@@ -168,11 +186,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
               ruleOfThirds
               onChange={(c) => setCrop(c)}
               onComplete={(c) => setCompletedCrop(c)}
-              style={{
-                margin: `0 auto`,
-                maxWidth: `100%`,
-                maxHeight: `100%`,
-              }}
+              style={imgStyle}
               imageStyle={{ border: `1px solid black` }}
             />
           </Wrapper>
