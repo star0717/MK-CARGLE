@@ -55,7 +55,7 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
    * 5. Page configuration
    *********************************************************************/
   return (
-    <WholeWrapper ref={ref} padding={`0px 50px 50px`}>
+    <WholeWrapper ref={ref} padding={`0px 30px 30px`}>
       <CommonSmallTitle>승인처리</CommonSmallTitle>
       <Wrapper>
         <Wrapper

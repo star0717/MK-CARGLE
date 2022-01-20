@@ -20,13 +20,12 @@ import {
   CommonSubTitle,
   CommonTitleWrapper,
   RsWrapper,
-  CheckboxContainer,
-  CheckBoxIcon,
-  CheckBoxLine,
-  HiddenCheckbox,
   TextInput2,
   CommonButtonWrapper,
   CommonButton,
+  Checkbox,
+  CheckInput,
+  CheckMark,
 } from "../../../styles/CommonComponents";
 import {
   _pMyPageAccountProps,
@@ -35,6 +34,7 @@ import {
 import { BsCheckLg } from "react-icons/bs";
 import router from "next/router";
 import { UseLink } from "../../../../configure/router.entity";
+import { actionTypesUser } from "../../../../../store/interfaces";
 
 Modal.setAppElement("body");
 
@@ -115,13 +115,13 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
   return (
     <>
       <WholeWrapper ref={ref}>
-        <CommonTitleWrapper>
-          <CommonTitle>회원탈퇴</CommonTitle>
-          <CommonSubTitle>
-            회원탈퇴를 위해 약관 동의 후 비밀번호를 입력해주세요.
-          </CommonSubTitle>
-        </CommonTitleWrapper>
-        <RsWrapper padding={`5% 0px 5%`}>
+        <RsWrapper>
+          <CommonTitleWrapper>
+            <CommonTitle>회원탈퇴</CommonTitle>
+            <CommonSubTitle>
+              회원탈퇴를 위해 약관 동의 후 비밀번호를 입력해주세요.
+            </CommonSubTitle>
+          </CommonTitleWrapper>
           <Wrapper al={`flex-start`} width={`500px`}>
             <form onSubmit={handleSubmit(pwCheckHandler)}>
               <Wrapper
@@ -150,34 +150,26 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
                   repellat
                 </Text>
               </Wrapper>
-              <Wrapper dr={`row-reverse`} padding={`10px 0px`}>
-                <Wrapper al={`flex-end`}>
-                  <CheckboxContainer>
-                    <CheckBoxLine kindOf={`${termCheck}`}>
-                      <HiddenCheckbox
-                        margin={`0px`}
-                        type="checkbox"
-                        {...register("withdrawalTerm", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            setTermCheck(e.target.checked);
-                          },
-                          required: {
-                            value: true,
-                            message: "약관에 동의해주세요.",
-                          },
-                        })}
-                      />
-                      <CheckBoxIcon>
-                        <BsCheckLg />
-                      </CheckBoxIcon>
-                    </CheckBoxLine>
-                    동의합니다.
-                  </CheckboxContainer>
-                </Wrapper>
+              <Wrapper dr={`row`} width={`auto`} ju={`flex-end`}>
+                <Checkbox>
+                  동의합니다.
+                  <CheckInput
+                    type="checkbox"
+                    {...register("withdrawalTerm", {
+                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        setTermCheck(e.target.checked);
+                      },
+                      required: {
+                        value: true,
+                        message: "약관에 동의해주세요.",
+                      },
+                    })}
+                  />
+                  <CheckMark></CheckMark>
+                </Checkbox>
+              </Wrapper>
 
-                {/* <Text>
+              {/* <Text>
                   회원탈퇴 약관을 상세히 읽고 숙지하였으며, 동의합니다.
                 </Text>
 
@@ -192,19 +184,18 @@ const Withdrawal: NextPage<_pMyPageAccountProps> = (props) => {
                   })}
                 /> */}
 
-                {errors.withdrawalTerm?.type === "required" && (
-                  <Text
-                    margin={`0px 0px 10px`}
-                    width={`100%`}
-                    color={`#d6263b`}
-                    al={`flex-start`}
-                    fontSize={`14px`}
-                    textAlign={`left`}
-                  >
-                    {errors.withdrawalTerm.message}
-                  </Text>
-                )}
-              </Wrapper>
+              {errors.withdrawalTerm?.type === "required" && (
+                <Text
+                  margin={`0px 0px 10px`}
+                  width={`100%`}
+                  color={`#d6263b`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  {errors.withdrawalTerm.message}
+                </Text>
+              )}
               <TextInput
                 width={`500px`}
                 type="password"

@@ -45,7 +45,7 @@ const Approval: NextPage = () => {
   return (
     <BodyWrapper>
       <WholeWrapper ref={ref}>
-        <RsWrapper padding={`12% 0px 12%`}>
+        <RsWrapper>
           <Wrapper>
             <Wrapper padding={`0px 0px 20px`} transform={`rotate(15deg)`}>
               <JoinStepBar kindOf={`progress`}>

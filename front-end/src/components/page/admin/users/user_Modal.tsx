@@ -106,7 +106,7 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref} padding={`0px 50px 50px`}>
+    <WholeWrapper ref={ref} padding={`0px 30px 30px`}>
       <CommonSmallTitle>직원 상세 정보</CommonSmallTitle>
       <Wrapper
         dr={`row`}

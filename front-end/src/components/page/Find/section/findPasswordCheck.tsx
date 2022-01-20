@@ -75,7 +75,7 @@ const FindPasswordPresenter: NextPage<_pFindPassword> = (props) => {
           패스워드 찾기를 위하여 계정 정보를 입력해주세요.
         </CommonSubTitle>
       </CommonTitleWrapper>
-      <RsWrapper padding={`5% 0px 5%`}>
+      <RsWrapper>
         <Wrapper
           width={`auto`}
           padding={`50px`}

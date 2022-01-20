@@ -93,6 +93,9 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.ADMIN_MAN_PARTS:
       return <AdminManPartsPage {...props} />;
+
+    case UseLink.ADMIN_MOLIT_ITEMS:
+      return <AdminMolitItemsPage {...props} />;
   }
 };
 

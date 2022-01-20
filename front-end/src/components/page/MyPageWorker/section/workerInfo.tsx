@@ -55,13 +55,13 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref} padding={`0px`}>
-      <CommonTitleWrapper>
-        <CommonTitle>직원관리</CommonTitle>
-        <CommonSubTitle>
-          이곳에서 직원 정보를 확인 및 수정할 수 있습니다.
-        </CommonSubTitle>
-      </CommonTitleWrapper>
       <RsWrapper>
+        <CommonTitleWrapper>
+          <CommonTitle>직원관리</CommonTitle>
+          <CommonSubTitle>
+            이곳에서 직원 정보를 확인 및 수정할 수 있습니다.
+          </CommonSubTitle>
+        </CommonTitleWrapper>
         <TableWrapper margin={`50px 0px 0px`}>
           <TableHead>
             <TableHeadLIST width={`25%`}>직원명</TableHeadLIST>

@@ -31,7 +31,7 @@ const FindEmailComplete: NextPage<_pFindEmail> = (props) => {
         </CommonTitle>
         <CommonSubTitle>회원님의 이메일은 다음과 같습니다.</CommonSubTitle>
       </CommonTitleWrapper>
-      <RsWrapper padding={`5% 0px 5%`}>
+      <RsWrapper>
         <Wrapper
           width={`500px`}
           height={`100px`}
