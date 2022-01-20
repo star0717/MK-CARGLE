@@ -122,7 +122,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                   >
                     <Text
                       fontSize={width < 1510 ? `16px` : `18px`}
-                      fontWeight={`6 mnjbh00`}
+                      fontWeight={`600`}
                       padding={width < 1510 ? `5px 15px` : `5px 30px`}
                     >
                       <Link href={menu.link}>
@@ -185,7 +185,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                               key={sub.key}
                               cursor={`pointer`}
                               fontSize={width < 1510 ? `14px` : `16px`}
-                              fontWeight={`600`}
+                              fontWeight={`400`}
                               padding={width < 1510 ? `5px 15px` : `5px 30px`}
                             >
                               <Link href={sub.subMenuLink}>
@@ -246,12 +246,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
           {props.tokenValue &&
             props.tokenValue.cApproval === CompanyApproval.DONE && (
               <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                <HeaderIconButton
-                  radius={`100px`}
-                  al={`center`}
-                  margin={`0px 10px`}
-                  border={`1px solid #ddd`}
-                >
+                <HeaderIconButton>
                   <FaBell />
                 </HeaderIconButton>
                 {/* <HeaderIconAlarmWrapper>
@@ -281,16 +276,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
           {props.tokenValue &&
             (props.tokenValue.cApproval === CompanyApproval.DONE ||
               props.tokenValue.cApproval === CompanyApproval.ING) && (
-              <HeaderIconButton
-                radius={`100px`}
-                al={`center`}
-                margin={`0px 10px`}
-                border={`1px solid #ddd`}
-                width={`45px`}
-                height={`45px`}
-                color={`#ccc`}
-                onClick={onSignOutHandler}
-              >
+              <HeaderIconButton onClick={onSignOutHandler}>
                 <MdLogout />
               </HeaderIconButton>
             )}
