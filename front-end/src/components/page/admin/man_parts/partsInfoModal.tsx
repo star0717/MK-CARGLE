@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 import {
   CommonButton,
   CommonButtonWrapper,
@@ -12,7 +13,7 @@ import {
   SmallButton,
   IconButton,
 } from "../../../styles/CommonComponents";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import {
   PartClass,
@@ -29,6 +30,7 @@ import {
 import {
   _aGetAdminPartGenCode,
   _aPostAdminPart,
+  _aPatchAdminPart,
 } from "../../../../../store/action/user.action";
 import { BsPlus } from "react-icons/bs";
 import { Part } from "../../../../models/part.entity";
@@ -41,7 +43,7 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   const dispatch = useDispatch();
   const [partClass, setPartClass] = useState<PartClass[]>(partClassList);
   const [tsClass, setTsClass] = useState<TsClass[]>(TsClassList);
-  const [tsItemList, setTsItemList] = useState<TsItem[]>(tsItemListB);
+  const [tsItemList, setTsItemList] = useState<TsItem[]>([]);
   const [partNickName, setPartNickName] = useState<string>("");
   const [partInfo, setPartInfo] = useState<Partial<Part>>(props.clickDoc);
 
@@ -49,8 +51,28 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   const [tsItem, setTsItem] = useState<string>(partInfo.tsCode.substring(0, 1));
   const [tsIndex, setTsIndex] = useState<string>(partInfo.tsCode.substring(1));
 
-  console.log(props.clickDoc);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
 
+  useEffect(() => {
+    switch (tsItem) {
+      case "B":
+        return setTsItemList(tsItemListB);
+      case "D":
+        return setTsItemList(tsItemListD);
+      case "E":
+        return setTsItemList(tsItemListE);
+      case "H":
+        return setTsItemList(tsItemListH);
+      case "S":
+        return setTsItemList(tsItemListS);
+      default:
+        return setTsItemList([]), setTsIndex("");
+    }
+  }, [tsItem]);
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -65,23 +87,26 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
       name: partInfo.name,
       nickName: partInfo.nickName,
       code: partInfo.code,
-      tsCode: `${tsItem} + ${tsIndex}`,
+      tsCode: `${tsItem}${tsIndex}`,
     };
 
-    dispatch(_aPostAdminPart(savePartInfo)).then((res: any) => {
-      alert("정상적으로 등록 되었습니다.");
-      props.setModalOpen(false);
-    });
+    dispatch(_aPatchAdminPart(props.clickDoc._id, savePartInfo)).then(
+      (res: any) => {
+        alert("정상적으로 등록 되었습니다.");
+        props.setModalOpen(false);
+      }
+    );
   };
   const onInputNickNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPartNickName(e.target.value);
   };
-
+  //nickName 추가
   const onInputPlusHandler = () => {
     const newArr: string[] = [...partInfo.nickName];
     newArr.push(partNickName);
     setPartInfo({ ...partInfo, nickName: newArr });
   };
+  //nickName 삭제
   const onInputDelHandler = (item: string) => {
     const newArr: string[] = partInfo.nickName.filter((exItem: string) => {
       return exItem !== item;
@@ -101,7 +126,7 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper>
-      <CommonSmallTitle>부품등록</CommonSmallTitle>
+      <CommonSmallTitle>부품상세</CommonSmallTitle>
       <form id="savePartForm" onSubmit={onSaveFormHandler}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>분류</Text>
@@ -109,19 +134,25 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
             width={`400px`}
             margin={`0px`}
             value={partInfo.label}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              // setPartInfo({ ...partInfo, label: e.target.value });
-              let label: string = e.target.value;
-              dispatch(_aGetAdminPartGenCode(e.target.value)).then(
-                (res: any) => {
-                  setPartInfo({
-                    ...partInfo,
-                    label: label,
-                    code: res.payload,
-                  });
-                }
-              );
-            }}
+            {...register("label", {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                // setPartInfo({ ...partInfo, label: e.target.value });
+                let label: string = e.target.value;
+                dispatch(_aGetAdminPartGenCode(e.target.value)).then(
+                  (res: any) => {
+                    setPartInfo({
+                      ...partInfo,
+                      label: label,
+                      code: res.payload,
+                    });
+                  }
+                );
+              },
+              required: {
+                value: true,
+                message: "필수 입력사항입니다.",
+              },
+            })}
           >
             {partClass.map((item: PartClass) => {
               return (
@@ -131,17 +162,47 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
               );
             })}
           </Combo>
+          {errors.label?.type === "required" && (
+            <Text
+              margin={`0px 0px 10px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.label.message}
+            </Text>
+          )}
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품명</Text>
           <TextInput2
             placeholder="부품명입니다~"
             width={`400px`}
-            value={partInfo.name.trim()}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              onInputHandler(e);
-            }}
+            value={partInfo.name}
+            {...register("name", {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputHandler(e);
+              },
+              required: {
+                value: true,
+                message: "필수 입력사항입니다.",
+              },
+            })}
           />
+          {errors.name?.type === "required" && (
+            <Text
+              margin={`0px 0px 10px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.name.message}
+            </Text>
+          )}
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품코드</Text>
@@ -161,22 +222,12 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
               value={tsItem}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setTsItem(e.target.value);
-                switch (e.target.value) {
-                  case "B":
-                    return setTsItemList(tsItemListB);
-                  case "D":
-                    return setTsItemList(tsItemListD);
-                  case "E":
-                    return setTsItemList(tsItemListE);
-                  case "H":
-                    return setTsItemList(tsItemListH);
-                  case "S":
-                    return setTsItemList(tsItemListS);
-                }
+                setTsIndex("");
               }}
             >
+              <option value="">선택</option>
               {tsClass.map((item: TsClass) => (
-                <option key={item.label} value={`${item.label}`}>
+                <option key={item.label} value={item.label}>
                   {item.description}
                 </option>
               ))}
@@ -189,8 +240,11 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
                 setTsIndex(`${e.target.value}`);
               }}
             >
+              <option value="">선택</option>
               {tsItemList.map((item: TsItem) => (
-                <option key={item.index}>{item.name}</option>
+                <option key={item.index} value={item.index}>
+                  {item.name}
+                </option>
               ))}
             </Combo>
           </Wrapper>

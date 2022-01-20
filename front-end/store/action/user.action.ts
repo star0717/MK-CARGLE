@@ -740,9 +740,9 @@ export async function _aPostAdminPart(setPart: Partial<Part>) {
  * @param id
  * @returns
  */
-export async function _aPatchAdminPart(id: string) {
+export async function _aPatchAdminPart(id: string, setPart: Partial<Part>) {
   const req = await axios
-    .patch(genApiPath(AdminApiPath.parts), id)
+    .patch(genApiPath(AdminApiPath.parts, { id: id }), setPart)
     .then((res: AxiosResponse<string, string[]>): string => {
       return res.data;
     });
@@ -759,9 +759,9 @@ export async function _aPatchAdminPart(id: string) {
  * @param id
  * @returns
  */
-export async function _aGetAdminPart(_id: string) {
+export async function _aGetAdminPart(id: string) {
   const req = await axios
-    .get(genApiPath(AdminApiPath.parts, { id: _id }))
+    .get(genApiPath(AdminApiPath.parts, { id: id }))
     .then((res: AxiosResponse<string, string[]>): string => {
       return res.data;
     });
