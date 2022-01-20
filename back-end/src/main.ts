@@ -7,7 +7,6 @@ import * as cookieParser from 'cookie-parser';
 import { existsSync, mkdirSync } from 'fs';
 import config from './config/configuration';
 import { JwtAuthGuard } from './lib/auth/guard/jwt-auth.guard';
-import { getTsCode, getTsItem } from './constants/part.const';
 
 async function bootstrap() {
   const env = config();

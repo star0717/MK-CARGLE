@@ -92,6 +92,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
     const newArr: string[] = [...partInfo.nickName];
     newArr.push(partNickName);
     setPartInfo({ ...partInfo, nickName: newArr });
+    setPartNickName("");
   };
   //nickName 삭제
   const onInputDelHandler = (item: string) => {
@@ -256,6 +257,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
             <TextInput2
               placeholder="동의어입니다 4"
               width={`350px`}
+              value={partNickName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputNickNameHandler(e);
               }}

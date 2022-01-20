@@ -460,6 +460,13 @@ export const tsItemListS: TsItem[] = [
   },
 ];
 
+export const tsItemListAll: TsItem[] = tsItemListB.concat(
+  tsItemListD,
+  tsItemListE,
+  tsItemListH,
+  tsItemListS,
+);
+
 /**
  * 클래스에 해당하는 국토부 정비이력 리스트 반환
  * @param tsClass 국토부 정비이력 클래스
