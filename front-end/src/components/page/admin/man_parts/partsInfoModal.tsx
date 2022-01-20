@@ -48,9 +48,11 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   const [partInfo, setPartInfo] = useState<Partial<Part>>(props.clickDoc);
 
   //partInfo.tsCode (B10)에서 B는 tsItem 으로 , 10은 tsIndex로...
-  const [tsItem, setTsItem] = useState<string>(partInfo.tsCode.substring(0, 1));
-  const [tsIndex, setTsIndex] = useState<string>(partInfo.tsCode.substring(1));
-
+  const [tsItem, setTsItem] = useState<string>(
+    partInfo.tsCode?.substring(0, 1)
+  );
+  const [tsIndex, setTsIndex] = useState<string>(partInfo.tsCode?.substring(1));
+  console.log(tsItem, tsIndex);
   const {
     register,
     handleSubmit,
@@ -81,17 +83,25 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
    * 3. Handlers
    *********************************************************************/
   const onSaveFormHandler: SubmitHandler<Partial<Part>> = (data) => {
-    const savePartInfo = {
+    const savePartInfo: Partial<Part> = {
       label: partInfo.label,
       name: partInfo.name,
       nickName: partInfo.nickName,
       code: partInfo.code,
-      tsCode: `${tsItem}${tsIndex}`,
+      // tsCode: `${tsItem}${tsIndex}`,
     };
+
+    if (partInfo.tsCode !== "") {
+      savePartInfo.tsCode = `${tsItem}${tsIndex}`;
+    }
 
     dispatch(_aPatchAdminPart(props.clickDoc._id, savePartInfo)).then(
       (res: any) => {
         alert("정상적으로 등록 되었습니다.");
+        props.setModalOpen(false);
+      },
+      (err) => {
+        alert("수정에 실패했습니다. 확인후 다시 시도해 주세요.");
         props.setModalOpen(false);
       }
     );
@@ -118,6 +128,13 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   };
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPartInfo({ ...partInfo, name: e.target.value.replace(" ", "") });
+  };
+
+  const press = (e: any) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      return onInputPlusHandler();
+    }
   };
 
   /*********************************************************************
@@ -259,6 +276,7 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
               placeholder="동의어 추가"
               width={`350px`}
               value={partNickName}
+              onKeyDown={press}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputNickNameHandler(e);
               }}
