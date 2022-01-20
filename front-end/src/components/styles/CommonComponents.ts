@@ -567,12 +567,11 @@ export const SmallButton = styled.button<any>`
   cursor: pointer;
 
   ${(props) =>
-    props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
-  ${(props) =>
-    props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
+    props.kindOf === `default` && `background ${props.theme.subTheme_C};`}
+  ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
   ${(props) =>
     props.kindOf === `default` &&
-    `border : 1px solid ${props.theme.basicTheme_C};`}
+    `border : 1px solid ${props.theme.subTheme_C};`}
 
     ${(props) =>
     props.kindOf === `cancle` && `background ${props.theme.subWhite_C};`}
@@ -595,8 +594,11 @@ export const SmallButton = styled.button<any>`
   &:hover {
     box-shadow: ${(props) => props.theme.boxShadow};
     ${(props) =>
-      props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
+      props.kindOf === `default` && `background ${props.theme.black_C};`}
     ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
+    ${(props) =>
+      props.kindOf === `default` &&
+      `border : 1px solid ${props.theme.black_C};`}
 
     ${(props) =>
       props.kindOf === `cancle` && `background ${props.theme.red_C};`}
