@@ -9,6 +9,7 @@ import { OptionalInfo } from 'src/models/base.entity';
 import * as dayjs from 'dayjs';
 import * as timezone from 'dayjs/plugin/timezone';
 import * as utc from 'dayjs/plugin/utc';
+import 'dayjs/locale/ko';
 
 @Injectable()
 export class CommonService {
@@ -19,6 +20,7 @@ export class CommonService {
     dayjs.extend(utc);
     dayjs.extend(timezone);
     dayjs.tz.setDefault('Asia/Seoul');
+    dayjs.locale('ko');
   }
 
   /**
@@ -192,13 +194,16 @@ export class CommonService {
     };
   }
 
-  getStartOfDay() {
-    console.log(dayjs().startOf('day').toString());
-  }
+  getStartOfDay() {}
 
   getEndOfDay() {
     // const m = moment();
     // console.log(m);
     // console.log(m.endOf('day'));
+  }
+
+  testDayJS() {
+    const date = dayjs().toDate();
+    console.log(date);
   }
 }
