@@ -17,6 +17,7 @@ import {
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import styled from "styled-components";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -159,19 +160,22 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
           />
         </Wrapper>
         {upImg && (
-          <ReactCrop
-            src={upImg}
-            onImageLoaded={onLoad}
-            crop={crop}
-            ruleOfThirds
-            onChange={(c) => setCrop(c)}
-            onComplete={(c) => setCompletedCrop(c)}
-            style={{
-              width: `400px`,
-              height: `300px`,
-            }}
-            imageStyle={{ objectFit: `contain` }}
-          />
+          <Wrapper width={`400px`} height={`300px`} bgColor={`#e2e2e2`}>
+            <ReactCrop
+              src={upImg}
+              onImageLoaded={onLoad}
+              crop={crop}
+              ruleOfThirds
+              onChange={(c) => setCrop(c)}
+              onComplete={(c) => setCompletedCrop(c)}
+              style={{
+                margin: `0 auto`,
+                maxWidth: `100%`,
+                maxHeight: `100%`,
+              }}
+              imageStyle={{ border: `1px solid black` }}
+            />
+          </Wrapper>
         )}
         {completedCrop && (
           <canvas
