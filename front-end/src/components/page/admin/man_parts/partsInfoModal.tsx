@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
 import {
   CommonButton,
   CommonButtonWrapper,
@@ -49,6 +50,12 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   //partInfo.tsCode (B10)에서 B는 tsItem 으로 , 10은 tsIndex로...
   const [tsItem, setTsItem] = useState<string>(partInfo.tsCode.substring(0, 1));
   const [tsIndex, setTsIndex] = useState<string>(partInfo.tsCode.substring(1));
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   useEffect(() => {
     switch (tsItem) {
@@ -110,9 +117,6 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
     setPartInfo({ ...partInfo, name: e.target.value.replace(" ", "") });
   };
 
-  console.log("tsItem :", tsItem);
-  console.log("tsIndex :", tsIndex);
-
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -130,19 +134,25 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
             width={`400px`}
             margin={`0px`}
             value={partInfo.label}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              // setPartInfo({ ...partInfo, label: e.target.value });
-              let label: string = e.target.value;
-              dispatch(_aGetAdminPartGenCode(e.target.value)).then(
-                (res: any) => {
-                  setPartInfo({
-                    ...partInfo,
-                    label: label,
-                    code: res.payload,
-                  });
-                }
-              );
-            }}
+            {...register("label", {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                // setPartInfo({ ...partInfo, label: e.target.value });
+                let label: string = e.target.value;
+                dispatch(_aGetAdminPartGenCode(e.target.value)).then(
+                  (res: any) => {
+                    setPartInfo({
+                      ...partInfo,
+                      label: label,
+                      code: res.payload,
+                    });
+                  }
+                );
+              },
+              required: {
+                value: true,
+                message: "필수 입력사항입니다.",
+              },
+            })}
           >
             {partClass.map((item: PartClass) => {
               return (
@@ -152,6 +162,18 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
               );
             })}
           </Combo>
+          {errors.label?.type === "required" && (
+            <Text
+              margin={`0px 0px 10px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.label.message}
+            </Text>
+          )}
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품명</Text>
@@ -159,10 +181,28 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
             placeholder="부품명입니다~"
             width={`400px`}
             value={partInfo.name}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              onInputHandler(e);
-            }}
+            {...register("name", {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputHandler(e);
+              },
+              required: {
+                value: true,
+                message: "필수 입력사항입니다.",
+              },
+            })}
           />
+          {errors.name?.type === "required" && (
+            <Text
+              margin={`0px 0px 10px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.name.message}
+            </Text>
+          )}
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품코드</Text>

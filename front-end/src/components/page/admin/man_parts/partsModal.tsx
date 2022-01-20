@@ -107,9 +107,6 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
     });
   };
 
-  console.log("tsItem :", tsItem);
-  console.log("tsIndex", tsIndex);
-
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
