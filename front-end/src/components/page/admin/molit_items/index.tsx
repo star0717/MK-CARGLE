@@ -245,7 +245,7 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
                   <TableBody>
                     {tsItemList.map((item: TsItem, idx: number) => (
                       // <TableRow key={`${item.class.label}${item.index}`}>
-                      <TableRow key={idx}>
+                      <TableRow key={idx} kindOf={`noHover`}>
                         <TableRowLIST width={`20%`}>
                           {item.class.description}
                         </TableRowLIST>

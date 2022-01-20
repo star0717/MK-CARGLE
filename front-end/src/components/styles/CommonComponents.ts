@@ -1353,6 +1353,9 @@ export const TableRow = styled.ul<any>`
     `background: #8DAFCE; color: #fff; &:hover {background: #8DAFCE; color: #fff; text-decoration: none;}`}
   ${(props) =>
     props.kindOf === `noSelectClass` && `background: #fff; color: #343a40;`}
+    ${(props) =>
+    props.kindOf === `noHover` &&
+    `&:hover {background: inherit; color: inherit; text-decoration: none; cursor: default;}`}
 `;
 
 export const TableRowLIST = styled.li<any>`
