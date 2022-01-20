@@ -31,6 +31,7 @@ import {
   TableBody,
   TableRowLIST,
   TableRow,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 
 const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
@@ -84,10 +85,11 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
 
   return (
     <WholeWrapper>
-      <CommonTitleWrapper>
-        <CommonTitle>업체관리</CommonTitle>
-      </CommonTitleWrapper>
       <RsWrapper>
+        <CommonTitleWrapper>
+          <CommonTitle>업체관리</CommonTitle>
+          <CommonSubTitle></CommonSubTitle>
+        </CommonTitleWrapper>
         <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
           <Combo
             value={props.searchOption}

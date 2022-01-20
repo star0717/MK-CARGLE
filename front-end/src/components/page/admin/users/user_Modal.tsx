@@ -135,7 +135,7 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
             <SwitchSlider />
           </Switch>
         </Wrapper>
-      </Wrapper>{" "}
+      </Wrapper>
       <form onSubmit={onChangeWorkerInfo}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px`}>
           <Text>직원명</Text>

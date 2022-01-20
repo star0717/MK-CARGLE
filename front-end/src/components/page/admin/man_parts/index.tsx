@@ -24,6 +24,7 @@ import {
   Checkbox,
   CheckInput,
   CheckMark,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -179,11 +180,11 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   return (
     <BodyWrapper ref={ref}>
       <WholeWrapper>
-        <CommonTitleWrapper>
-          <CommonTitle>부품관리</CommonTitle>
-        </CommonTitleWrapper>
-
         <RsWrapper>
+          <CommonTitleWrapper>
+            <CommonTitle>부품관리</CommonTitle>
+            <CommonSubTitle></CommonSubTitle>
+          </CommonTitleWrapper>
           <Wrapper padding={`50px 0px 0px`}>
             <form onSubmit={onSearchFormHandler}>
               <SearchInputWrapper

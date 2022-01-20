@@ -66,7 +66,7 @@ const FindEmailCheck: NextPage<_pFindEmail> = (props) => {
             계정찾기
           </CommonTitle>
           <CommonSubTitle>
-            패스워드 찾기를 위하여 계정 정보를 입력해주세요.
+            이메일 찾기를 위하여 계정 정보를 입력해주세요.
           </CommonSubTitle>
         </CommonTitleWrapper>
         <Wrapper

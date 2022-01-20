@@ -23,7 +23,7 @@ const FindPasswordComplete: NextPage = () => {
 
   return (
     <WholeWrapper>
-      <RsWrapper>
+      <RsWrapper kindOf={`short`}>
         <Wrapper padding={`0px 0px 20px`}>
           <JoinStepBar kindOf={`progress`}>
             <FaPaperPlane />

@@ -25,13 +25,13 @@ const FindEmailComplete: NextPage<_pFindEmail> = (props) => {
 
   return (
     <WholeWrapper>
-      <CommonTitleWrapper>
-        <CommonTitle textAlign={`center`} margin={`0px`}>
-          계정찾기
-        </CommonTitle>
-        <CommonSubTitle>회원님의 이메일은 다음과 같습니다.</CommonSubTitle>
-      </CommonTitleWrapper>
-      <RsWrapper>
+      <RsWrapper kindOf={`short`}>
+        <CommonTitleWrapper>
+          <CommonTitle textAlign={`center`} margin={`0px`}>
+            계정찾기
+          </CommonTitle>
+          <CommonSubTitle>회원님의 이메일은 다음과 같습니다.</CommonSubTitle>
+        </CommonTitleWrapper>
         <Wrapper
           width={`500px`}
           height={`100px`}

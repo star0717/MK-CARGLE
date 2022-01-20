@@ -7,6 +7,9 @@ import {
   CommonButtonWrapper,
   CommonSmallTitle,
   FocusButton,
+  Switch,
+  SwitchInput,
+  SwitchSlider,
   Text,
   TextArea,
   TextInput2,
@@ -64,10 +67,10 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
           padding={`0px 0px 20px`}
           width={`400px`}
         >
-          <Text textAlign={`left`} margin={`0px 10px 0px 0px`}>
+          <Text textAlign={`left`} padding={`0px 0px 20px`}>
             승인여부
           </Text>
-          <Wrapper width={`180px`} dr={`row`}>
+          {/* <Wrapper width={`180px`} dr={`row`}>
             <FocusButton
               type="button"
               kindOf={approval === true ? `true` : `default`}
@@ -89,6 +92,36 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
             >
               반려
             </FocusButton>
+          </Wrapper> */}
+          <Wrapper
+            dr={`row`}
+            ju={`flex-end`}
+            padding={`0px 0px 20px`}
+            width={`auto`}
+          >
+            <Wrapper al={`flex-end`} margin={`0px 10px 0px 0px`}>
+              {approval ? (
+                <Text color={`#314FA5`} fontWeight={`400`}>
+                  승인 완료되었습니다!
+                </Text>
+              ) : (
+                <Text color={`#9d9d9d`} fontWeight={`400`}>
+                  승인 하시겠습니까?
+                </Text>
+              )}
+            </Wrapper>
+            <Wrapper width={`60px`} al={`flex-end`}>
+              <Switch>
+                <SwitchInput
+                  type="checkbox"
+                  checked={approval}
+                  onChange={() => {
+                    setApproval(!approval);
+                  }}
+                />
+                <SwitchSlider />
+              </Switch>
+            </Wrapper>
           </Wrapper>
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
