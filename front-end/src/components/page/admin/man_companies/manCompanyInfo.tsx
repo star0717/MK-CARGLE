@@ -168,7 +168,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
 
             {/* ----------------------------------------사용자-------------------------------------- */}
             <Wrapper
-              border={`1px solid #ccc`}
+              border={`1px solid #7985c3`}
               radius={`5px`}
               shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               margin={`0px 0px 50px`}
@@ -272,7 +272,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
             </Wrapper>
             {/* -------------------------------------업체정보----------------------------------------- */}
             <Wrapper
-              border={`1px solid #ccc`}
+              border={`1px solid #7985c3`}
               radius={`5px`}
               shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               margin={`0px 0px 50px`}
