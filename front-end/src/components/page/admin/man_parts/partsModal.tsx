@@ -71,18 +71,28 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
    * 3. Handlers
    *********************************************************************/
   const onSaveFormHandler: SubmitHandler<Partial<Part>> = (data) => {
-    const plusPartInfo = {
+    const plusPartInfo: Partial<Part> = {
       label: partInfo.label,
       name: partInfo.name,
       nickName: partInfo.nickName,
       code: partInfo.code,
-      tsCode: `${tsItem}${tsIndex}`,
+      // tsCode: `${tsItem}${tsIndex}`,
     };
 
-    dispatch(_aPostAdminPart(plusPartInfo)).then((res: any) => {
-      alert("정상적으로 등록 되었습니다.");
-      props.setModalOpen(false);
-    });
+    if (partInfo.tsCode !== "") {
+      plusPartInfo.tsCode = `${tsItem}${tsIndex}`;
+    }
+
+    dispatch(_aPostAdminPart(plusPartInfo)).then(
+      (res: any) => {
+        alert("정상적으로 등록 되었습니다.");
+        props.setModalOpen(false);
+      },
+      (err) => {
+        alert("수정에 실패했습니다. 확인후 다시 시도해 주세요.");
+        props.setModalOpen(false);
+      }
+    );
   };
   const onInputNickNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPartNickName(e.target.value);
@@ -109,6 +119,13 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
       ...partInfo,
       name: e.target.value.replace(" ", ""),
     });
+  };
+
+  const press = (e: any) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      return onInputPlusHandler();
+    }
   };
 
   /*********************************************************************
@@ -261,6 +278,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
               placeholder="동의어 추가"
               width={`350px`}
               value={partNickName}
+              onKeyDown={press}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputNickNameHandler(e);
               }}
