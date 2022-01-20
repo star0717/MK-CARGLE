@@ -89,6 +89,9 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   };
   //nickName 추가
   const onInputPlusHandler = () => {
+    if (partNickName === "") {
+      return;
+    }
     const newArr: string[] = [...partInfo.nickName];
     newArr.push(partNickName);
     setPartInfo({ ...partInfo, nickName: newArr });
@@ -169,7 +172,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품명</Text>
           <TextInput2
-            placeholder="부품명입니다~"
+            placeholder="부품명을 입력해주세요."
             width={`400px`}
             value={partInfo.name}
             {...register("name", {
@@ -255,7 +258,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
           <Text>동의어 설정</Text>
           <Wrapper dr={`row`} ju={`space-between`} width={`400px`}>
             <TextInput2
-              placeholder="동의어입니다 4"
+              placeholder="동의어 추가"
               width={`350px`}
               value={partNickName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
