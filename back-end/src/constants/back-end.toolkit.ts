@@ -5,6 +5,7 @@ import * as dayjs from 'dayjs';
 import * as timezone from 'dayjs/plugin/timezone';
 import * as utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/ko';
+import { BadRequestException } from '@nestjs/common';
 
 /***************************************************
  * 툴킷 초기화
@@ -60,6 +61,21 @@ export function strToBoolean(params: TransformFnParams) {
     params.value = false;
   }
 
+  return params.value;
+}
+
+export function removePropertyWithEmptyValue(params: TransformFnParams) {
+  console.log('removePropertyWithEmptyValue');
+  console.log('value: ' + params.value);
+
+  // 빈값 null 처리
+  if (
+    params.value == '' ||
+    params.value == undefined ||
+    params.value == 'undefined'
+  ) {
+    return null;
+  }
   return params.value;
 }
 

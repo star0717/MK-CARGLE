@@ -42,4 +42,22 @@ export class PartsService extends SafeService<Part> {
     };
     return result;
   }
+
+  /**
+   * tsCode를 제거했을 때 tsCode 필드를 uset함
+   * @param id 해당 Part의 ID
+   * @param key
+   * @returns
+   */
+  async _upsetFieldTsCode(id: string) {
+    return await this.model.findByIdAndUpdate(
+      id,
+      {
+        $unset: {
+          tsCode: '',
+        },
+      },
+      { new: true },
+    );
+  }
 }

@@ -4,7 +4,15 @@
 
 import { ApiProperty } from '@nestjs/swagger';
 import { prop } from '@typegoose/typegoose';
-import { IsArray, IsOptional, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
+import {
+  IsArray,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import { removePropertyWithEmptyValue } from 'src/constants/back-end.toolkit';
 import { BaseEntity } from './base.entity';
 
 // 부품 아이템 클래스
@@ -57,6 +65,9 @@ export class Part extends BaseEntity {
   })
   @IsOptional()
   @IsString()
+  @MinLength(3)
+  @MaxLength(3)
+  @Transform(removePropertyWithEmptyValue)
   @prop({
     required: false,
     trim: true,

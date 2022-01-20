@@ -45,11 +45,9 @@ export class PartsController {
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<Part> {
     console.log(part);
-    if (part.tsCode) console.log('tsCode 있음');
+    // 빈값 제거
     if (part.tsCode == '') {
-      console.log('tsCode 빈값');
       delete part.tsCode;
-      console.log(part);
     }
     return this.service.create(token, part);
   }
@@ -123,7 +121,7 @@ export class PartsController {
     @Param('id') id: string,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<Part> {
-    return this.service.findById(token, id);
+    return await this.service.findById(token, id);
   }
 
   @Patch(':id')
@@ -137,9 +135,18 @@ export class PartsController {
     @Body() doc: Part,
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<Part> {
-    console.log('update in BaseController');
     console.log(doc);
-    return this.service.findByIdAndUpdate(token, id, doc);
+    let part = await this.service.findByIdAndUpdate(token, id, doc);
+
+    /**
+     * tsCode에 코드를 부여한 뒤 다시 해제하면 문제 발생
+     * - Class Validation 단계에서 removePropertyWithEmptyValue를 통해 null 강제 주입
+     * - tsCode의 값이 null일 경우 tsCode Field를 unset함
+     */
+    if (part.tsCode == null) {
+      part = await this.service._upsetFieldTsCode(id);
+    }
+    return part;
   }
 
   @Delete(':id')

@@ -96,7 +96,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       @Body() doc: T,
       @AuthToken() token: AuthTokenInfo,
     ): Promise<T> {
-      return this.safeService.create(token, doc);
+      return await this.safeService.create(token, doc);
     }
 
     @Get()
@@ -111,7 +111,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       @Query() fParams: FindParameters,
       @AuthToken() token: AuthTokenInfo,
     ): Promise<FindResult<T>> {
-      return this.safeService.findByOptions(token, fParams);
+      return await this.safeService.findByOptions(token, fParams);
     }
 
     @Get(':id')
@@ -127,7 +127,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       @Param('id') id: string,
       @AuthToken() token: AuthTokenInfo,
     ): Promise<T> {
-      return this.safeService.findById(token, id);
+      return await this.safeService.findById(token, id);
     }
 
     @Patch(':id')
@@ -143,7 +143,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
     ): Promise<T> {
       console.log('update in BaseController');
       console.log(doc);
-      return this.safeService.findByIdAndUpdate(token, id, doc);
+      return await this.safeService.findByIdAndUpdate(token, id, doc);
     }
 
     @Delete(':id')
@@ -159,7 +159,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       @Param('id') id: string,
       @AuthToken() token: AuthTokenInfo,
     ): Promise<DeleteResult> {
-      return this.safeService.findByIdAndRemove(token, id);
+      return await this.safeService.findByIdAndRemove(token, id);
     }
   }
   return SafeController;
