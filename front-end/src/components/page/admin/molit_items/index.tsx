@@ -1,11 +1,8 @@
 import { NextPage } from "next";
 import { useResizeDetector } from "react-resize-detector";
-
 import React, { useEffect, useState } from "react";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
-import { AiFillPlusSquare, AiFillMinusSquare } from "react-icons/ai";
-import { BsSearch, BsCheckLg } from "react-icons/bs";
-import { IoIosCloseCircle } from "react-icons/io";
+import { BsSearch } from "react-icons/bs";
 import {
   WholeWrapper,
   CommonTitleWrapper,
@@ -15,22 +12,25 @@ import {
   SearchInputWrapper,
   SearchInput,
   IconButton,
-  SmallButton,
   TableWrapper,
   TableHead,
   TableHeadLIST,
   TableBody,
   TableRow,
   TableRowLIST,
-  CheckboxContainer,
-  CheckBoxLine,
-  HiddenCheckbox,
-  CheckBoxIcon,
-  CommonButton,
   Text,
-  CloseButton,
 } from "../../../styles/CommonComponents";
-import { MdOutlineNavigateNext } from "react-icons/md";
+import {
+  TsItem,
+  TsClass,
+  TsClassList,
+  tsItemListAll,
+  tsItemListB,
+  tsItemListD,
+  tsItemListE,
+  tsItemListH,
+  tsItemListS,
+} from "../../../../constants/part.const";
 
 const AdminMolitItemsPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -40,32 +40,106 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [partClass, setPartClass] = useState<any>();
-  const [allPart, setAllPart] = useState<any>();
+  const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
+  const [selectClass, setSelectClass] = useState<string>("all"); // 선택한 분류
+  const [tsItemList, setTsItemList] = useState<TsItem[]>(tsItemListAll); // 선택한 국토부 리스트
+  const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 부품 분류 선택 handler -> 리스트 출력
+   */
+  useEffect(() => {
+    if (selectClass === "all") {
+      setTsItemList(tsItemListAll);
+    } else {
+      switch (selectClass) {
+        case "B":
+          return setTsItemList(tsItemListB);
+        case "D":
+          return setTsItemList(tsItemListD);
+        case "E":
+          return setTsItemList(tsItemListE);
+        case "H":
+          return setTsItemList(tsItemListH);
+        case "S":
+          return setTsItemList(tsItemListS);
+      }
+    }
+  }, [selectClass, reset]);
+
+  /**
+   * 검색 input handler
+   * @param e
+   */
+  const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  /**
+   * 검색 handler
+   * @param e
+   */
+  const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!searchText) {
+      setReset(reset + 1);
+    }
+    const newList: TsItem[] = [];
+    tsItemList.forEach((tsItem: TsItem) => {
+      if (
+        tsItem.class.description.includes(searchText) ||
+        tsItem.class.label.includes(searchText) ||
+        tsItem.index.includes(searchText) ||
+        tsItem.name.includes(searchText) ||
+        tsItem.nickName?.includes(searchText) ||
+        tsItem.options?.toString().includes(searchText)
+      ) {
+        newList.push(tsItem);
+      }
+    });
+    setTsItemList(newList);
+  };
+
+  /**
+   * 국토부 작업내용 표출을 위한 생성 함수
+   * @param name
+   * @param nickName
+   * @returns
+   */
+  const genTsContent = (name: string, nickName?: any) => {
+    let tsContent = name;
+    if (nickName) tsContent += `(${nickName})`;
+    return tsContent;
+  };
+
+  /**
+   * 국토부 옵션 표출을 위한 생성 함수
+   * @param options
+   * @returns
+   */
+  const genTsOption = (options: any) => {
+    let tsOption = "";
+    if (options) {
+      for (let i = 0; i < options.length; i++) {
+        if (i === options.length - 1) {
+          tsOption += options[i];
+        } else {
+          tsOption += `${options[i]}, `;
+        }
+      }
+    } else {
+      tsOption += "-";
+    }
+    return tsOption;
+  };
 
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  // const closeModal = () => {
-  //   setModalOpen(false);
-  // };
 
-  // modal 창 팝업 시 뒤에 배경 scroll 막기
-  // useEffect(() => {
-  //   modalOpen === true
-  //     ? (document.body.style.overflow = "hidden")
-  //     : (document.body.style.overflow = "unset");
-  // }, [modalOpen]);
-
-  // const ARCModalProps: any = {
-  //   ...props,
-  //   setModalOpen,
-  //   style: { height: "500px" },
-  // };
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -82,39 +156,33 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
 
         <RsWrapper>
           <Wrapper padding={`50px 0px 0px`}>
-            <SearchInputWrapper
-              type="text"
-              width={`678px`}
-              padding={`0px 5px`}
-              dr={`row`}
-              borderBottom={`1px solid #000`}
-            >
-              <Wrapper width={`auto`}>
-                <SearchInput
-                  width={`632px`}
-                  padding={`0px 5px 0px 5px`}
-                  placeholder="찾고싶은 부품명을 입력하세요."
-                  type="text"
-                />
-              </Wrapper>
-              <Wrapper width={`36px`} height={`46px`}>
-                <Text fontSize={`24px`}>
-                  <IconButton type="submit" shadow={`none`}>
-                    <BsSearch />
-                  </IconButton>
-                </Text>
-              </Wrapper>
-            </SearchInputWrapper>
-          </Wrapper>
-          <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
-            <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
-              <SmallButton kindOf={`default`} width={`150px`} fontSize={`16px`}>
-                항목 추가하기
-              </SmallButton>
-              <SmallButton kindOf={`cancle`} width={`150px`} fontSize={`16px`}>
-                선택삭제
-              </SmallButton>
-            </Wrapper>
+            <form onSubmit={onSearchFormHandler}>
+              <SearchInputWrapper
+                type="text"
+                width={`678px`}
+                padding={`0px 5px`}
+                dr={`row`}
+                borderBottom={`1px solid #000`}
+              >
+                <Wrapper width={`auto`}>
+                  <SearchInput
+                    width={`632px`}
+                    padding={`0px 5px 0px 5px`}
+                    placeholder="찾고싶은 부품명을 입력하세요."
+                    type="text"
+                    value={searchText}
+                    onChange={onInputSearchHandler}
+                  />
+                </Wrapper>
+                <Wrapper width={`36px`} height={`46px`}>
+                  <Text fontSize={`24px`}>
+                    <IconButton type="submit" shadow={`none`}>
+                      <BsSearch />
+                    </IconButton>
+                  </Text>
+                </Wrapper>
+              </SearchInputWrapper>
+            </form>
           </Wrapper>
           <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
             {/* 부품분류 */}
@@ -122,50 +190,42 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
               <TableWrapper>
                 <Wrapper isSticky={true}>
                   <TableHead radius={`8px 8px 0px 0px`}>
-                    <TableHeadLIST
-                      width={`30%`}
-                      color={`#51b351`}
-                      fontSize={`24px`}
-                    >
-                      {/* 제 이름은 플러스 버튼이에요!! */}
-                      <AiFillPlusSquare />
-                      {/* 플러스 버튼은 여기까지랍니당 \^0^/ */}
-                    </TableHeadLIST>
-                    <TableHeadLIST width={`70%`}>작업분류</TableHeadLIST>
+                    <TableHeadLIST width={`100%`}>작업분류</TableHeadLIST>
                   </TableHead>
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
-                    <TableRow kindOf={`focus`}>
+                    <TableRow
+                      kindOf={
+                        selectClass === "all" ? `selectClass` : `noSelectClass`
+                      }
+                    >
                       <TableRowLIST
-                        width={` 30%`}
-                        color={`#d6263b`}
-                        fontSize={`24px`}
+                        width={`100%`}
+                        onClick={() => {
+                          setSelectClass("all");
+                        }}
                       >
-                        <AiFillMinusSquare />
-                      </TableRowLIST>
-                      <TableRowLIST width={`70%`}>
-                        분류명
-                        <span>
-                          <MdOutlineNavigateNext />
-                        </span>
+                        전체보기
                       </TableRowLIST>
                     </TableRow>
-                    <TableRow>
-                      <TableRowLIST
-                        width={` 30%`}
-                        color={`#d6263b`}
-                        fontSize={`24px`}
+                    {TsClassList.map((tsClass: TsClass) => (
+                      <TableRow
+                        key={tsClass.label}
+                        kindOf={
+                          selectClass === tsClass.label
+                            ? `selectClass`
+                            : `noSelectClass`
+                        }
+                        onClick={() => {
+                          setSelectClass(tsClass.label);
+                        }}
                       >
-                        <AiFillMinusSquare />
-                      </TableRowLIST>
-                      <TableRowLIST width={`70%`}>
-                        분류명
-                        <span>
-                          <MdOutlineNavigateNext />
-                        </span>
-                      </TableRowLIST>
-                    </TableRow>
+                        <TableRowLIST width={`100%`}>
+                          {tsClass.description}
+                        </TableRowLIST>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
@@ -175,40 +235,32 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
               <TableWrapper overflow={`auto`}>
                 <Wrapper isSticky={true}>
                   <TableHead radius={`8px 8px 0px 0px`}>
-                    <TableHeadLIST width={`10%`}>
-                      <CheckboxContainer>
-                        <CheckBoxLine>
-                          <HiddenCheckbox type="checkbox" />
-                          <CheckBoxIcon>
-                            <BsCheckLg />
-                          </CheckBoxIcon>
-                        </CheckBoxLine>
-                      </CheckboxContainer>
-                    </TableHeadLIST>
                     <TableHeadLIST width={`20%`}>분류</TableHeadLIST>
-                    <TableHeadLIST width={`15%`}>코드</TableHeadLIST>
-                    <TableHeadLIST width={`55%`}>작업내용</TableHeadLIST>
+                    <TableHeadLIST width={`20%`}>코드</TableHeadLIST>
+                    <TableHeadLIST width={`40%`}>작업내용</TableHeadLIST>
+                    <TableHeadLIST width={`20%`}>옵션</TableHeadLIST>
                   </TableHead>
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
-                    <TableRow>
-                      <TableRowLIST width={`10%`}>
-                        <CheckboxContainer>
-                          <CheckBoxLine>
-                            <HiddenCheckbox type="checkbox" />
-                            <CheckBoxIcon>
-                              <BsCheckLg />
-                            </CheckBoxIcon>
-                          </CheckBoxLine>
-                        </CheckboxContainer>
-                      </TableRowLIST>
-                      <TableRowLIST width={`20%`}>차체(보디)(B)</TableRowLIST>
-                      <TableRowLIST width={`15%`}>B01</TableRowLIST>
-                      <TableRowLIST width={`55%`}>
-                        전조등(헤드램프)(좌)(우)
-                      </TableRowLIST>
-                    </TableRow>
+                    {tsItemList.map((item: TsItem, idx: number) => (
+                      // <TableRow key={`${item.class.label}${item.index}`}>
+                      <TableRow key={idx}>
+                        <TableRowLIST width={`20%`}>
+                          {item.class.description}
+                        </TableRowLIST>
+                        <TableRowLIST width={`20%`}>
+                          {item.class.label}
+                          {item.index}
+                        </TableRowLIST>
+                        <TableRowLIST width={`40%`}>
+                          {genTsContent(item.name, item.nickName)}
+                        </TableRowLIST>
+                        <TableRowLIST width={`20%`}>
+                          {genTsOption(item.options)}
+                        </TableRowLIST>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>

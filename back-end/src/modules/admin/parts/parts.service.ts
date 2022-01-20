@@ -24,12 +24,10 @@ export class PartsService extends SafeService<Part> {
 
     let newPostfix = '1';
     if (part) {
-      console.log(part.code);
       const currentPostfix = parseInt(part.code.substring(2));
-      console.log(currentPostfix);
       newPostfix = (currentPostfix + 1).toString();
     }
-    console.log('id: ', id, 'newPostfix: ', newPostfix);
+    // console.log('id: ', id, 'newPostfix: ', newPostfix);
     return `${id}${newPostfix.padStart(4, '0')}`;
   }
 
