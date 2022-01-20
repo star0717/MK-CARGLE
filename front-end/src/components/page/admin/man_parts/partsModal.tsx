@@ -42,7 +42,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   const dispatch = useDispatch();
   const [partClass, setPartClass] = useState<PartClass[]>(partClassList);
   const [tsClass, setTsClass] = useState<TsClass[]>(TsClassList);
-  const [tsItem, setTsItem] = useState<TsItem[]>(tsItemListB);
+  const [tsItemList, setTsItemList] = useState<TsItem[]>([]);
   const [partNickName, setPartNickName] = useState<string>("");
   const [partInfo, setPartInfo] = useState<Partial<Part>>({
     label: "",
@@ -51,6 +51,10 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
     code: "",
     tsCode: "",
   });
+
+  //partInfo.tsCode (B10)에서 B는 tsItem 으로 , 10은 tsIndex로...
+  const [tsItem, setTsItem] = useState<string>(partInfo.tsCode.substring(0, 1));
+  const [tsIndex, setTsIndex] = useState<string>(partInfo.tsCode.substring(1));
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -72,7 +76,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
       name: partInfo.name,
       nickName: partInfo.nickName,
       code: partInfo.code,
-      tsCode: partInfo.tsCode,
+      tsCode: `${tsItem}${tsIndex}`,
     };
 
     dispatch(_aPostAdminPart(plusPartInfo)).then((res: any) => {
@@ -83,12 +87,13 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   const onInputNickNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPartNickName(e.target.value);
   };
-
+  //nickName 추가
   const onInputPlusHandler = () => {
     const newArr: string[] = [...partInfo.nickName];
     newArr.push(partNickName);
     setPartInfo({ ...partInfo, nickName: newArr });
   };
+  //nickName 삭제
   const onInputDelHandler = (item: string) => {
     const newArr: string[] = partInfo.nickName.filter((exItem: string) => {
       return exItem !== item;
@@ -205,18 +210,20 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
               width={`145px`}
               margin={`0px`}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setPartInfo({ ...partInfo, tsCode: e.target.value });
+                setTsItem(e.target.value);
                 switch (e.target.value) {
                   case "B":
-                    return setTsItem(tsItemListB);
+                    return setTsItemList(tsItemListB);
                   case "D":
-                    return setTsItem(tsItemListD);
+                    return setTsItemList(tsItemListD);
                   case "E":
-                    return setTsItem(tsItemListE);
+                    return setTsItemList(tsItemListE);
                   case "H":
-                    return setTsItem(tsItemListH);
+                    return setTsItemList(tsItemListH);
                   case "S":
-                    return setTsItem(tsItemListS);
+                    return setTsItemList(tsItemListS);
+                  default:
+                    return setTsItemList([]);
                 }
               }}
             >
@@ -227,10 +234,18 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
                 </option>
               ))}
             </Combo>
-            <Combo width={`245px`} margin={`0px`}>
+            <Combo
+              width={`245px`}
+              margin={`0px`}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setTsIndex(`${e.target.value}`);
+              }}
+            >
               <option value="">선택</option>
-              {tsItem.map((item: TsItem) => (
-                <option key={item.index}>{item.name}</option>
+              {tsItemList.map((item: TsItem) => (
+                <option key={item.index} value={item.index}>
+                  {item.name}
+                </option>
               ))}
             </Combo>
           </Wrapper>
