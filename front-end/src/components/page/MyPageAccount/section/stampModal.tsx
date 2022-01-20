@@ -158,24 +158,34 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
             accept="image/*"
           />
         </Wrapper>
-        <ReactCrop
-          src={upImg}
-          onImageLoaded={onLoad}
-          crop={crop}
-          ruleOfThirds
-          onChange={(c) => setCrop(c)}
-          onComplete={(c) => setCompletedCrop(c)}
-        />
-        <Wrapper width={`150px`} height={`150px`} bgColor={`#ccc`}>
+        {upImg && (
+          <ReactCrop
+            src={upImg}
+            onImageLoaded={onLoad}
+            crop={crop}
+            ruleOfThirds
+            onChange={(c) => setCrop(c)}
+            onComplete={(c) => setCompletedCrop(c)}
+            style={{
+              width: `400px`,
+              height: `300px`,
+            }}
+            imageStyle={{ objectFit: `contain` }}
+          />
+        )}
+        {completedCrop && (
           <canvas
             ref={previewCanvasRef}
             // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
             style={{
-              width: Math.round(completedCrop?.width ?? 0),
-              height: Math.round(completedCrop?.height ?? 0),
+              // width: Math.round(completedCrop?.width ?? 0),
+              // height: Math.round(completedCrop?.height ?? 0),
+              width: `150px`,
+              height: `150px`,
+              margin: `0 auto`,
             }}
           />
-        </Wrapper>
+        )}
         {completedCrop?.width && completedCrop?.height && (
           <Wrapper>
             <Text margin={`10px 0px 0px`}>선택한 영역이 업로드됩니다.</Text>
