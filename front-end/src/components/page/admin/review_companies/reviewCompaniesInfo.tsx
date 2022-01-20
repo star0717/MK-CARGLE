@@ -19,6 +19,7 @@ import {
   CommonSmallTitle,
   CommonButtonWrapper,
   CommonButton,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import { useResizeDetector } from "react-resize-detector";
 import { makeFullAddress } from "../../../../modules/commonModule";
@@ -87,10 +88,11 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <CommonTitleWrapper>
-        <CommonTitle>승인관리</CommonTitle>
-      </CommonTitleWrapper>
-      <RsWrapper wrap={`no-wrap`} margin={`100px 0px 0px 0px`}>
+      <RsWrapper wrap={`no-wrap`}>
+        <CommonTitleWrapper>
+          <CommonTitle>승인관리</CommonTitle>
+          <CommonSubTitle></CommonSubTitle>
+        </CommonTitleWrapper>
         <Wrapper width={`1070px`}>
           <Wrapper dr={`row`} ju={`space-between`} padding={`0px 0px 30px`}>
             <Wrapper width={`auto`} dr={`row`}>

@@ -60,15 +60,15 @@ const FindEmailCheck: NextPage<_pFindEmail> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <CommonTitleWrapper>
-        <CommonTitle textAlign={`center`} margin={`0px`}>
-          계정찾기
-        </CommonTitle>
-        <CommonSubTitle>
-          패스워드 찾기를 위하여 계정 정보를 입력해주세요.
-        </CommonSubTitle>
-      </CommonTitleWrapper>
-      <RsWrapper>
+      <RsWrapper kindOf={`short`}>
+        <CommonTitleWrapper>
+          <CommonTitle textAlign={`center`} margin={`0px`}>
+            계정찾기
+          </CommonTitle>
+          <CommonSubTitle>
+            이메일 찾기를 위하여 계정 정보를 입력해주세요.
+          </CommonSubTitle>
+        </CommonTitleWrapper>
         <Wrapper
           width={`auto`}
           padding={`50px`}

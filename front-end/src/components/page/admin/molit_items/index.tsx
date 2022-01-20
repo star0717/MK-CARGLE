@@ -19,6 +19,7 @@ import {
   TableRow,
   TableRowLIST,
   Text,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import {
   TsItem,
@@ -157,12 +158,12 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
   return (
     <BodyWrapper ref={ref}>
       <WholeWrapper>
-        <CommonTitleWrapper>
-          <CommonTitle>국토부항목관리</CommonTitle>
-        </CommonTitleWrapper>
-
         <RsWrapper>
-          <Wrapper padding={`50px 0px 0px`}>
+          <CommonTitleWrapper>
+            <CommonTitle>국토부항목관리</CommonTitle>
+            <CommonSubTitle></CommonSubTitle>
+          </CommonTitleWrapper>
+          <Wrapper>
             <form onSubmit={onSearchFormHandler}>
               <SearchInputWrapper
                 type="text"
