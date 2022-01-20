@@ -203,30 +203,28 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   return (
     <>
       <WholeWrapper ref={ref}>
-        <CommonTitleWrapper>
-          <CommonTitle>계정정보</CommonTitle>
-          <CommonSubTitle>
-            이곳에서 계정정보를 확인 및 수정할 수 있습니다.
-          </CommonSubTitle>
-        </CommonTitleWrapper>
-        <RsWrapper wrap={`no-wrap`} margin={`100px 0px 0px 0px`}>
+        <RsWrapper>
+          <CommonTitleWrapper>
+            <CommonTitle>계정정보</CommonTitle>
+            <CommonSubTitle>
+              이곳에서 계정정보를 확인 및 수정할 수 있습니다.
+            </CommonSubTitle>
+          </CommonTitleWrapper>
           <form id="saveform" onSubmit={handleSubmit(onChangeInfoHandler)}>
             <Wrapper
-              border={`1px solid #ccc`}
+              border={`1px solid #7985c3`}
               radius={`5px`}
               shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               margin={`0px 0px 50px`}
             >
               <Wrapper dr={`row`} radius={`5px`} margin={`0px 0px 5px 0px`}>
-                <Wrapper dr={`row`} width={`auto`}>
-                  <CommonSmallTitle
-                    fontSize={`18px`}
-                    fontWeight={`800`}
-                    padding={`10px 0px`}
-                  >
-                    사용자 정보
-                  </CommonSmallTitle>
-                </Wrapper>
+                <CommonSmallTitle
+                  fontSize={`18px`}
+                  fontWeight={`800`}
+                  padding={`10px 0px`}
+                >
+                  사용자 정보
+                </CommonSmallTitle>
               </Wrapper>
               <Wrapper dr={`row`} al={`center`} margin={`0px 0px 50px`}>
                 <Wrapper dr={`column`} width={`auto`} padding={`10px 0px`}>
@@ -433,7 +431,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
             </Wrapper>
             {/* 사업자정보  */}
             <Wrapper
-              border={`1px solid #ccc`}
+              border={`1px solid #7985c3`}
               radius={`5px`}
               shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               margin={`0px 0px 50px`}
@@ -816,8 +814,8 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
           },
           content: {
             background: "white",
-            width: "45rem",
-            height: "575px",
+            width: "500px",
+            height: "800px",
             maxWidth: "calc(100vw - 2rem)",
             maxHeight: "calc(100vh - 2rem)",
             overflowY: "auto",

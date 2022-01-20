@@ -28,6 +28,9 @@ import {
   CommonSmallTitle,
   CommonButton,
   CommonButtonWrapper,
+  SwitchInput,
+  Switch,
+  SwitchSlider,
 } from "../../../styles/CommonComponents";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
@@ -125,7 +128,7 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref} padding={`0px 50px 50px`}>
+    <WholeWrapper ref={ref} padding={`0px 30px 30px`}>
       <CommonSmallTitle>직원 상세 정보</CommonSmallTitle>
       <Wrapper dr={`row`} ju={`flex-end`} padding={`0px 0px 20px`}>
         <Wrapper width={`80px`}>{/* <Text>승인상태&nbsp;|</Text> */}</Wrapper>
@@ -145,11 +148,21 @@ const WorkerInfoModal: NextPage<_pWorkerDataProps> = (props) => {
               </Text>
             )}
           </Wrapper>
-          <input
+          {/* <input
             type="checkbox"
             checked={approval}
             onChange={onChangeApproval}
-          />
+          /> */}
+          <Wrapper width={`60px`} al={`flex-end`}>
+            <Switch>
+              <SwitchInput
+                type="checkbox"
+                checked={approval}
+                onChange={onChangeApproval}
+              />
+              <SwitchSlider />
+            </Switch>
+          </Wrapper>
         </Wrapper>
       </Wrapper>
       <form onSubmit={onChangeWorkerInfo}>

@@ -12,6 +12,7 @@ import {
   CommonTitleWrapper,
   CommonTitle,
   CommonSmallTitle,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import React, { useState } from "react";
 import { _pAdminManCompanies } from "../../../../configure/_pProps.entity";
@@ -130,10 +131,11 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <CommonTitleWrapper>
-        <CommonTitle>업체관리</CommonTitle>
-      </CommonTitleWrapper>
-      <RsWrapper wrap={`no-wrap`} margin={`100px 0px 0px 0px`}>
+      <RsWrapper wrap={`no-wrap`}>
+        <CommonTitleWrapper>
+          <CommonTitle>업체관리</CommonTitle>
+          <CommonSubTitle></CommonSubTitle>
+        </CommonTitleWrapper>
         <form onSubmit={handleSubmit(onChangeCompany)}>
           <Wrapper width={`1070px`}>
             <Wrapper dr={`row`} ju={`space-between`} padding={`0px 0px 30px`}>
@@ -166,7 +168,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
 
             {/* ----------------------------------------사용자-------------------------------------- */}
             <Wrapper
-              border={`1px solid #ccc`}
+              border={`1px solid #7985c3`}
               radius={`5px`}
               shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               margin={`0px 0px 50px`}
@@ -270,7 +272,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
             </Wrapper>
             {/* -------------------------------------업체정보----------------------------------------- */}
             <Wrapper
-              border={`1px solid #ccc`}
+              border={`1px solid #7985c3`}
               radius={`5px`}
               shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               margin={`0px 0px 50px`}

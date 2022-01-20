@@ -19,6 +19,7 @@ import {
   CommonSmallTitle,
   CommonButtonWrapper,
   CommonButton,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import { useResizeDetector } from "react-resize-detector";
 import { makeFullAddress } from "../../../../modules/commonModule";
@@ -87,10 +88,11 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <CommonTitleWrapper>
-        <CommonTitle>승인관리</CommonTitle>
-      </CommonTitleWrapper>
-      <RsWrapper wrap={`no-wrap`} margin={`100px 0px 0px 0px`}>
+      <RsWrapper wrap={`no-wrap`}>
+        <CommonTitleWrapper>
+          <CommonTitle>승인관리</CommonTitle>
+          <CommonSubTitle></CommonSubTitle>
+        </CommonTitleWrapper>
         <Wrapper width={`1070px`}>
           <Wrapper dr={`row`} ju={`space-between`} padding={`0px 0px 30px`}>
             <Wrapper width={`auto`} dr={`row`}>
@@ -117,7 +119,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             <Wrapper width={`auto`}>
               <SmallButton
                 type="button"
-                kindOf={`default`}
+                kindOf={`back`}
                 margin={`0px 0px 0px 10px`}
                 onClick={() => {
                   router.back();
@@ -130,7 +132,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
 
           {/* ----------------------------------------사용자-------------------------------------- */}
           <Wrapper
-            border={`1px solid #ccc`}
+            border={`1px solid #7985c3`}
             radius={`5px`}
             shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
             margin={`0px 0px 50px`}
@@ -201,7 +203,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
           </Wrapper>
           {/* -------------------------------------업체정보----------------------------------------- */}
           <Wrapper
-            border={`1px solid #ccc`}
+            border={`1px solid #7985c3`}
             radius={`5px`}
             shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
             margin={`0px 0px 50px`}

@@ -15,8 +15,6 @@ import {
   CommonSubTitle,
   CommonTitleWrapper,
   RsWrapper,
-  CommonBigTitle,
-  CommonBigSubTitle,
 } from "../../../styles/CommonComponents";
 import { _pMyPageAccountProps } from "../../../../configure/_pProps.entity";
 
@@ -77,13 +75,13 @@ const AccountCheck: NextPage<_pMyPageAccountProps> = (props) => {
           회원탈퇴를 위해 약관 동의 후 비밀번호를 입력해주세요.
         </CommonSubTitle>
       </CommonTitleWrapper> */}
-      <RsWrapper>
-        <Wrapper padding={`0px 0px 50px 0px`}>
-          <CommonBigTitle>계정관리</CommonBigTitle>
-          <CommonBigSubTitle>
+      <RsWrapper kindOf={`short`}>
+        <CommonTitleWrapper>
+          <CommonTitle>계정관리</CommonTitle>
+          <CommonSubTitle>
             계정관리를 위해 비밀번호를 입력해주세요.
-          </CommonBigSubTitle>
-        </Wrapper>
+          </CommonSubTitle>
+        </CommonTitleWrapper>
         <Wrapper>
           <form onSubmit={pwCheckHandler}>
             <TextInput2

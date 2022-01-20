@@ -11,9 +11,13 @@ import {
   TextInput2,
   LabelButton,
   SmallButton,
+  CommonSmallTitle,
+  CommonButtonWrapper,
+  CommonButton,
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import styled from "styled-components";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -21,6 +25,12 @@ import "react-image-crop/dist/ReactCrop.css";
  * @returns
  */
 const StampModal: NextPage<_pStampModalProps> = (props) => {
+  class ImgStyle {
+    margin: string;
+    maxWidth?: string;
+    maxHeight?: string;
+  }
+
   const dispatch = useDispatch();
 
   // state 관리
@@ -35,7 +45,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
     aspect: 9 / 9,
   });
   const [completedCrop, setCompletedCrop] = useState<any>(null); // React-crop
-
+  const [imgStyle, setImgStyle] = useState<ImgStyle>();
   /**
    * 도장 파일 업로드 handler
    * @param canvas
@@ -119,21 +129,33 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
       crop.width * scaleX,
       crop.height * scaleY
     );
+
+    if (imgRef.current.height > imgRef.current.width) {
+      setImgStyle({
+        margin: `0 auto`,
+        maxHeight: `100%`,
+      });
+    } else {
+      setImgStyle({
+        margin: `0 auto`,
+        maxWidth: `100%`,
+      });
+    }
   }, [completedCrop]);
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
+  console.log(imgStyle);
+
   return (
-    <WholeWrapper ref={ref}>
-      <Wrapper>
-        <Text fontSize={`18px`} fontWeight={`800`} padding={`0px 0px 20px`}>
-          도장이미지
-        </Text>
+    <WholeWrapper ref={ref} padding={`0px 30px 30px`}>
+      <CommonSmallTitle>사업자 도장</CommonSmallTitle>
+      <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+        <Text>파일 선택</Text>
         <Wrapper>
           <TextInput2
-            width={`500px`}
-            height={`60px`}
+            width={`400px`}
             type="text"
             placeholder="이미지 파일을 선택해주세요 (png,jpg)"
             value={fileName}
@@ -157,38 +179,49 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
             accept="image/*"
           />
         </Wrapper>
-        <ReactCrop
-          src={upImg}
-          onImageLoaded={onLoad}
-          crop={crop}
-          ruleOfThirds
-          onChange={(c) => setCrop(c)}
-          onComplete={(c) => setCompletedCrop(c)}
-        />
-        <Wrapper>
+        {upImg && (
+          <Wrapper width={`400px`} height={`300px`} bgColor={`#e2e2e2`}>
+            <ReactCrop
+              src={upImg}
+              onImageLoaded={onLoad}
+              crop={crop}
+              ruleOfThirds
+              onChange={(c) => setCrop(c)}
+              onComplete={(c) => setCompletedCrop(c)}
+              style={imgStyle}
+              imageStyle={{ border: `1px solid black` }}
+            />
+          </Wrapper>
+        )}
+        {completedCrop && (
           <canvas
             ref={previewCanvasRef}
             // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
             style={{
-              width: Math.round(completedCrop?.width ?? 0),
-              height: Math.round(completedCrop?.height ?? 0),
+              // width: Math.round(completedCrop?.width ?? 0),
+              // height: Math.round(completedCrop?.height ?? 0),
+              width: `150px`,
+              height: `150px`,
+              margin: `0 auto`,
             }}
           />
-        </Wrapper>
+        )}
         {completedCrop?.width && completedCrop?.height && (
           <Wrapper>
-            <Text>선택한 영역이 업로드됩니다.</Text>
-            <SmallButton
-              type="button"
-              kindOf={`default`}
-              margin={`0px 0px 0px 20px`}
-              disabled={!completedCrop?.width || !completedCrop?.height}
-              onClick={() =>
-                stampFileUpload(previewCanvasRef.current, completedCrop)
-              }
-            >
-              업로드
-            </SmallButton>
+            <Text margin={`10px 0px 0px`}>선택한 영역이 업로드됩니다.</Text>
+            <CommonButtonWrapper kindOf={`column`}>
+              <CommonButton
+                type="button"
+                kindOf={`circleTheme`}
+                margin={`0px 0px 0px 20px`}
+                disabled={!completedCrop?.width || !completedCrop?.height}
+                onClick={() =>
+                  stampFileUpload(previewCanvasRef.current, completedCrop)
+                }
+              >
+                업로드
+              </CommonButton>
+            </CommonButtonWrapper>
           </Wrapper>
         )}
       </Wrapper>

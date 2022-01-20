@@ -20,6 +20,9 @@ import {
   CommonButton,
   LabelButton,
   RsWrapper,
+  CommonSubTitle,
+  CommonTitle,
+  CommonTitleWrapper,
 } from "../../../styles/CommonComponents";
 import { BsFillLightbulbFill, BsFillQuestionCircleFill } from "react-icons/bs";
 import { parseJwt } from "../../../../modules/commonModule";
@@ -129,135 +132,134 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <BodyWrapper ref={ref}>
-      <WholeWrapper>
-        <RsWrapper>
-          <form onSubmit={onFileUploadHandler}>
+    <WholeWrapper ref={ref}>
+      <RsWrapper>
+        <CommonTitleWrapper>
+          <CommonTitle>회원가입</CommonTitle>
+          <CommonSubTitle>가입 승인을 위해 서류를 제출해주세요</CommonSubTitle>
+        </CommonTitleWrapper>
+        <form onSubmit={onFileUploadHandler}>
+          <Wrapper
+            width={`auto`}
+            padding={`50px`}
+            border={`1px solid #ccc`}
+            radius={`5px`}
+          >
             <Wrapper
+              ju={`flex-start`}
+              al={`flex-start`}
               width={`auto`}
-              padding={`50px`}
-              border={`1px solid #ccc`}
-              radius={`5px`}
+              margin={`0px 0px 10px`}
             >
+              <Text margin={`0px 0px 10px`}>사업자등록증</Text>
               <Wrapper
+                dr={`row`}
                 ju={`flex-start`}
-                al={`flex-start`}
-                width={`auto`}
                 margin={`0px 0px 10px`}
+                width={`auto`}
               >
-                <Text margin={`0px 0px 10px`}>사업자등록증</Text>
-                <Wrapper
-                  dr={`row`}
-                  ju={`flex-start`}
-                  margin={`0px 0px 10px`}
-                  width={`auto`}
+                <TextInput2
+                  width={`300px`}
+                  type="text"
+                  placeholder="jpg, png, pdf 형식"
+                  value={fileName.comFile}
+                  required
+                  readOnly
+                />
+                <LabelButton
+                  kindOf={`default`}
+                  margin={`0px 0px 0px 20px`}
+                  htmlFor="comFile"
                 >
-                  <TextInput2
-                    width={`300px`}
-                    type="text"
-                    placeholder="jpg, png, pdf 형식"
-                    value={fileName.comFile}
-                    required
-                    readOnly
-                  />
-                  <LabelButton
-                    kindOf={`default`}
-                    margin={`0px 0px 0px 20px`}
-                    htmlFor="comFile"
-                  >
-                    파일선택
-                  </LabelButton>
-                  <TextInput2
-                    style={{ display: "none" }}
-                    type="file"
-                    id="comFile"
-                    name="comFile"
-                    key={file.comFile}
-                    onChange={onFileSelectHandler}
-                    accept=".jpg, .png, .pdf"
-                  />
-                </Wrapper>
+                  파일선택
+                </LabelButton>
+                <TextInput2
+                  style={{ display: "none" }}
+                  type="file"
+                  id="comFile"
+                  name="comFile"
+                  key={file.comFile}
+                  onChange={onFileSelectHandler}
+                  accept=".jpg, .png, .pdf"
+                />
               </Wrapper>
-              <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
-                <Text margin={`0px 0px 10px`}>정비업등록증</Text>
+            </Wrapper>
+            <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
+              <Text margin={`0px 0px 10px`}>정비업등록증</Text>
+              <Wrapper dr={`row`} ju={`flex-start`} al={`flex-start`}>
+                <TextInput2
+                  width={`300px`}
+                  type="text"
+                  placeholder="jpg, png, pdf 형식"
+                  value={fileName.manFile}
+                  required
+                  readOnly
+                />
+                <LabelButton
+                  kindOf={`default`}
+                  margin={`0px 0px 0px 20px`}
+                  htmlFor="manFile"
+                >
+                  파일선택
+                </LabelButton>
+                <TextInput2
+                  style={{ display: "none" }}
+                  type="file"
+                  id="manFile"
+                  name="manFile"
+                  key={file.manFile}
+                  onChange={onFileSelectHandler}
+                  accept=".jpg, .png, .pdf"
+                />
+              </Wrapper>
+            </Wrapper>
+          </Wrapper>
+          <Wrapper padding={`50px 0px 50px 0px`}>
+            <CommonButton
+              type="button"
+              margin={`0px 0px 10px 0px`}
+              kindOf={`white`}
+              onClick={onSignOutHandler}
+            >
+              다음에하기
+            </CommonButton>
+            <CommonButton type="submit" margin={`10px 0px 0px 0px`}>
+              제출하기
+            </CommonButton>
+          </Wrapper>
+          <Wrapper padding={`0px 0px 0px`}>
+            <Wrapper
+              borderTop={`1px solid #c4c4c4`}
+              al={`flex-start`}
+              width={`500px`}
+            >
+              <Wrapper al={`flex-end`} padding={`30px 15px 10px 0px`}></Wrapper>
+              <Wrapper padding={`0px 10px 30px`}>
+                <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
+                  <Text padding={`3px 15px 0px 0px`}>
+                    <BsFillQuestionCircleFill />
+                  </Text>
+                  <Text>아직 서류가 준비되지 않으셨나요?</Text>
+                </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-start`} al={`flex-start`}>
-                  <TextInput2
-                    width={`300px`}
-                    type="text"
-                    placeholder="jpg, png, pdf 형식"
-                    value={fileName.manFile}
-                    required
-                    readOnly
-                  />
-                  <LabelButton
-                    kindOf={`default`}
-                    margin={`0px 0px 0px 20px`}
-                    htmlFor="manFile"
-                  >
-                    파일선택
-                  </LabelButton>
-                  <TextInput2
-                    style={{ display: "none" }}
-                    type="file"
-                    id="manFile"
-                    name="manFile"
-                    key={file.manFile}
-                    onChange={onFileSelectHandler}
-                    accept=".jpg, .png, .pdf"
-                  />
+                  <Text padding={`3px 15px 0px 0px`}>
+                    <BsFillLightbulbFill />
+                  </Text>
+                  <Text textAlign={`start`}>
+                    서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
+                    <br />
+                    로그인하면 이어서 진행이 가능해요.
+                    <br />
+                    <br />
+                    서류가 제출되면 최종 가입 심사가 시작됩니다!
+                  </Text>
                 </Wrapper>
               </Wrapper>
             </Wrapper>
-            <Wrapper padding={`50px 0px 50px 0px`}>
-              <CommonButton
-                type="button"
-                margin={`0px 0px 10px 0px`}
-                kindOf={`white`}
-                onClick={onSignOutHandler}
-              >
-                다음에하기
-              </CommonButton>
-              <CommonButton type="submit" margin={`10px 0px 0px 0px`}>
-                제출하기
-              </CommonButton>
-            </Wrapper>
-            <Wrapper padding={`0px 0px 0px`}>
-              <Wrapper
-                borderTop={`1px solid #c4c4c4`}
-                al={`flex-start`}
-                width={`500px`}
-              >
-                <Wrapper
-                  al={`flex-end`}
-                  padding={`30px 15px 10px 0px`}
-                ></Wrapper>
-                <Wrapper padding={`0px 10px 30px`}>
-                  <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
-                    <Text padding={`3px 15px 0px 0px`}>
-                      <BsFillQuestionCircleFill />
-                    </Text>
-                    <Text>아직 서류가 준비되지 않으셨나요?</Text>
-                  </Wrapper>
-                  <Wrapper dr={`row`} ju={`flex-start`} al={`flex-start`}>
-                    <Text padding={`3px 15px 0px 0px`}>
-                      <BsFillLightbulbFill />
-                    </Text>
-                    <Text textAlign={`start`}>
-                      서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
-                      <br />
-                      로그인하면 이어서 진행이 가능해요.
-                      <br />
-                      <br />
-                      서류가 제출되면 최종 가입 심사가 시작됩니다!
-                    </Text>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
-          </form>
-        </RsWrapper>
-      </WholeWrapper>
-    </BodyWrapper>
+          </Wrapper>
+        </form>
+      </RsWrapper>
+    </WholeWrapper>
   );
 };
 

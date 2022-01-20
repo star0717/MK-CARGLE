@@ -14,6 +14,9 @@ import {
   CheckInput,
   Checkbox,
   CheckMark,
+  CommonSubTitle,
+  CommonTitle,
+  CommonTitleWrapper,
 } from "../../../styles/CommonComponents";
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
@@ -48,225 +51,211 @@ const Term: NextPage<_pSignUpProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
   console.log(props.formCheck.mkTerm);
   return (
-    <BodyWrapper ref={ref}>
-      <WholeWrapper>
-        <RsWrapper>
-          <Wrapper>
-            <form onSubmit={handleSubmit(agreeTermHandler)}>
-              <Wrapper al={`flex-start`} width={`500px`}>
-                <Wrapper padding={`0px 0px 30px`}>
-                  <CommonSmallTitle>
-                    CARGLE 서비스 이용약관(필수)
-                  </CommonSmallTitle>
-                </Wrapper>
-                <Wrapper
-                  height={`200px`}
-                  width={`500px`}
-                  border={`1px solid #ccc`}
-                  al={`flex-start`}
-                  ju={`flex-start`}
-                  padding={`10px`}
-                  radius={`5px`}
-                  overflow={`auto`}
-                  shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
-                >
-                  <Text textAlign={`flex-start`}>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Enim modi in exercitationem explicabo, at rem officia autem
-                    non porro soluta dolorum officiis ipsa repellat, laudantium
-                    ea unde labore, temporibus quas?Lorem ipsum dolor sit amet,
-                    consectetur adipisicing elit. Eveniet eius totam quam
-                    pariatur ratione, in voluptatem dignissimos laboriosam sint
-                    aut! Repudiandae consectetur odit quo corrupti quidem
-                    perferendis aut dolores quis?Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Placeat nam optio dolore
-                    recusandae fuga voluptatibus. Ea quam deserunt consectetur
-                    quo aut eligendi, molestiae incidunt molestias ullam?
-                    Repellendus ratione repellat
-                  </Text>
-                </Wrapper>
-                <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
-                  <Wrapper width={`auto`}>
-                    {errors.mkTerm && (
-                      <Text
-                        width={`100%`}
-                        textAlign={`right`}
-                        color={`#d6263b`}
-                      >
-                        필수사항입니다.
-                      </Text>
-                    )}
-                  </Wrapper>
-                  <Wrapper dr={`row`} width={`auto`}>
-                    <Checkbox>
-                      동의합니다.
-                      <CheckInput
-                        type="checkbox"
-                        {...register("mkTerm", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            dispatch({
-                              type: actionTypesUser.FORM_CHECK,
-                              payload: {
-                                ...props.formCheck,
-                                mkTerm: e.target.checked,
-                              },
-                            });
-                          },
-                          required: true,
-                        })}
-                      />
-                      <CheckMark></CheckMark>
-                    </Checkbox>
-                  </Wrapper>
-                </Wrapper>
+    <WholeWrapper ref={ref}>
+      <RsWrapper>
+        <CommonTitleWrapper>
+          <CommonTitle>회원가입</CommonTitle>
+          <CommonSubTitle>
+            서비스 이용을 위해 약관 동의가 필요해요.
+          </CommonSubTitle>
+        </CommonTitleWrapper>
+        <Wrapper>
+          <form onSubmit={handleSubmit(agreeTermHandler)}>
+            <Wrapper al={`flex-start`} width={`500px`}>
+              <Wrapper padding={`0px 0px 30px`}>
+                <CommonSmallTitle>
+                  CARGLE 서비스 이용약관(필수)
+                </CommonSmallTitle>
               </Wrapper>
               <Wrapper
-                al={`flex-start`}
+                height={`200px`}
                 width={`500px`}
-                padding={`0px 0px 30px`}
+                border={`1px solid #ccc`}
+                al={`flex-start`}
+                ju={`flex-start`}
+                padding={`10px`}
+                radius={`5px`}
+                overflow={`auto`}
+                shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
               >
-                <Wrapper>
-                  <CommonSmallTitle>
-                    개인정보 수집 및 이용약관(필수)
-                  </CommonSmallTitle>
-                </Wrapper>
-                <Wrapper
-                  height={`200px`}
-                  width={`500px`}
-                  border={`1px solid #ccc`}
-                  al={`flex-start`}
-                  ju={`flex-start`}
-                  padding={`10px`}
-                  radius={`5px`}
-                  overflow={`auto`}
-                  shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
-                >
-                  <Text textAlign={`flex-start`}>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Enim modi in exercitationem explicabo, at rem officia autem
-                    non porro soluta dolorum officiis ipsa repellat, laudantium
-                    ea unde labore, temporibus quas?Lorem ipsum dolor sit amet,
-                    consectetur adipisicing elit. Eveniet eius totam quam
-                    pariatur ratione, in voluptatem dignissimos laboriosam sint
-                    aut! Repudiandae consectetur odit quo corrupti quidem
-                    perferendis aut dolores quis?Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Placeat nam optio dolore
-                    recusandae fuga voluptatibus. Ea quam deserunt consectetur
-                    quo aut eligendi, molestiae incidunt molestias ullam?
-                    Repellendus ratione repellat
-                  </Text>
-                </Wrapper>
-                <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
-                  <Wrapper width={`auto`}>
-                    {errors.privacyTerm && (
-                      <Text width={`auto`} al={`flex-start`} color={`#d6263b`}>
-                        필수사항입니다.
-                      </Text>
-                    )}
-                  </Wrapper>
-                  <Wrapper dr={`row`} width={`auto`}>
-                    <Checkbox>
-                      동의합니다.
-                      <CheckInput
-                        type="checkbox"
-                        {...register("privacyTerm", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            dispatch({
-                              type: actionTypesUser.FORM_CHECK,
-                              payload: {
-                                ...props.formCheck,
-                                privacyTerm: e.target.checked,
-                              },
-                            });
-                          },
-                          required: true,
-                        })}
-                      />
-                      <CheckMark></CheckMark>
-                    </Checkbox>
-                  </Wrapper>
-                </Wrapper>
+                <Text textAlign={`flex-start`}>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
+                  modi in exercitationem explicabo, at rem officia autem non
+                  porro soluta dolorum officiis ipsa repellat, laudantium ea
+                  unde labore, temporibus quas?Lorem ipsum dolor sit amet,
+                  consectetur adipisicing elit. Eveniet eius totam quam pariatur
+                  ratione, in voluptatem dignissimos laboriosam sint aut!
+                  Repudiandae consectetur odit quo corrupti quidem perferendis
+                  aut dolores quis?Lorem ipsum dolor sit amet consectetur
+                  adipisicing elit. Placeat nam optio dolore recusandae fuga
+                  voluptatibus. Ea quam deserunt consectetur quo aut eligendi,
+                  molestiae incidunt molestias ullam? Repellendus ratione
+                  repellat
+                </Text>
               </Wrapper>
-              <Wrapper
-                al={`flex-start`}
-                width={`500px`}
-                padding={`0px 0px 30px`}
-              >
-                <Wrapper>
-                  <CommonSmallTitle>
-                    마케팅 정보 수신 동의(선택)
-                  </CommonSmallTitle>
+              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
+                <Wrapper width={`auto`}>
+                  {errors.mkTerm && (
+                    <Text width={`100%`} textAlign={`right`} color={`#d6263b`}>
+                      필수사항입니다.
+                    </Text>
+                  )}
                 </Wrapper>
-                <Wrapper
-                  height={`200px`}
-                  width={`500px`}
-                  border={`1px solid #ccc`}
-                  al={`flex-start`}
-                  ju={`flex-start`}
-                  padding={`10px`}
-                  radius={`5px`}
-                  overflow={`auto`}
-                  shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
-                >
-                  <Text textAlign={`flex-start`}>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Enim modi in exercitationem explicabo, at rem officia autem
-                    non porro soluta dolorum officiis ipsa repellat, laudantium
-                    ea unde labore, temporibus quas?Lorem ipsum dolor sit amet,
-                    consectetur adipisicing elit. Eveniet eius totam quam
-                    pariatur ratione, in voluptatem dignissimos laboriosam sint
-                    aut! Repudiandae consectetur odit quo corrupti quidem
-                    perferendis aut dolores quis?Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Placeat nam optio dolore
-                    recusandae fuga voluptatibus. Ea quam deserunt consectetur
-                    quo aut eligendi, molestiae incidunt molestias ullam?
-                    Repellendus ratione repellat
-                  </Text>
-                </Wrapper>
-                <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
+                <Wrapper dr={`row`} width={`auto`}>
                   <Checkbox>
                     동의합니다.
                     <CheckInput
                       type="checkbox"
-                      {...register("marketTerm", {
+                      {...register("mkTerm", {
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                           dispatch({
                             type: actionTypesUser.FORM_CHECK,
                             payload: {
                               ...props.formCheck,
-                              marketTerm: e.target.checked,
+                              mkTerm: e.target.checked,
                             },
                           });
                         },
+                        required: true,
                       })}
                     />
                     <CheckMark></CheckMark>
                   </Checkbox>
                 </Wrapper>
               </Wrapper>
-              <CommonButtonWrapper kindOf={`column`}>
-                <CommonButton
-                  onClick={(_e: React.MouseEvent<HTMLButtonElement>) => {
-                    props.setStepNumber(props.stepNumber - 1);
-                  }}
-                  kindOf={`white`}
-                  margin={`0px 0px 10px 0px`}
-                >
-                  이전
-                </CommonButton>
-                <CommonButton type="submit" margin={`10px 0px 0px 0px`}>
-                  다음
-                </CommonButton>
-              </CommonButtonWrapper>
-            </form>
-          </Wrapper>
-        </RsWrapper>
-      </WholeWrapper>
-    </BodyWrapper>
+            </Wrapper>
+            <Wrapper al={`flex-start`} width={`500px`} padding={`0px 0px 30px`}>
+              <Wrapper>
+                <CommonSmallTitle>
+                  개인정보 수집 및 이용약관(필수)
+                </CommonSmallTitle>
+              </Wrapper>
+              <Wrapper
+                height={`200px`}
+                width={`500px`}
+                border={`1px solid #ccc`}
+                al={`flex-start`}
+                ju={`flex-start`}
+                padding={`10px`}
+                radius={`5px`}
+                overflow={`auto`}
+                shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
+              >
+                <Text textAlign={`flex-start`}>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
+                  modi in exercitationem explicabo, at rem officia autem non
+                  porro soluta dolorum officiis ipsa repellat, laudantium ea
+                  unde labore, temporibus quas?Lorem ipsum dolor sit amet,
+                  consectetur adipisicing elit. Eveniet eius totam quam pariatur
+                  ratione, in voluptatem dignissimos laboriosam sint aut!
+                  Repudiandae consectetur odit quo corrupti quidem perferendis
+                  aut dolores quis?Lorem ipsum dolor sit amet consectetur
+                  adipisicing elit. Placeat nam optio dolore recusandae fuga
+                  voluptatibus. Ea quam deserunt consectetur quo aut eligendi,
+                  molestiae incidunt molestias ullam? Repellendus ratione
+                  repellat
+                </Text>
+              </Wrapper>
+              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
+                <Wrapper width={`auto`}>
+                  {errors.privacyTerm && (
+                    <Text width={`auto`} al={`flex-start`} color={`#d6263b`}>
+                      필수사항입니다.
+                    </Text>
+                  )}
+                </Wrapper>
+                <Wrapper dr={`row`} width={`auto`}>
+                  <Checkbox>
+                    동의합니다.
+                    <CheckInput
+                      type="checkbox"
+                      {...register("privacyTerm", {
+                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                          dispatch({
+                            type: actionTypesUser.FORM_CHECK,
+                            payload: {
+                              ...props.formCheck,
+                              privacyTerm: e.target.checked,
+                            },
+                          });
+                        },
+                        required: true,
+                      })}
+                    />
+                    <CheckMark></CheckMark>
+                  </Checkbox>
+                </Wrapper>
+              </Wrapper>
+            </Wrapper>
+            <Wrapper al={`flex-start`} width={`500px`} padding={`0px 0px 30px`}>
+              <Wrapper>
+                <CommonSmallTitle>마케팅 정보 수신 동의(선택)</CommonSmallTitle>
+              </Wrapper>
+              <Wrapper
+                height={`200px`}
+                width={`500px`}
+                border={`1px solid #ccc`}
+                al={`flex-start`}
+                ju={`flex-start`}
+                padding={`10px`}
+                radius={`5px`}
+                overflow={`auto`}
+                shadow={`0px 10px 15px rgba(220, 220, 220, 1)`}
+              >
+                <Text textAlign={`flex-start`}>
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim
+                  modi in exercitationem explicabo, at rem officia autem non
+                  porro soluta dolorum officiis ipsa repellat, laudantium ea
+                  unde labore, temporibus quas?Lorem ipsum dolor sit amet,
+                  consectetur adipisicing elit. Eveniet eius totam quam pariatur
+                  ratione, in voluptatem dignissimos laboriosam sint aut!
+                  Repudiandae consectetur odit quo corrupti quidem perferendis
+                  aut dolores quis?Lorem ipsum dolor sit amet consectetur
+                  adipisicing elit. Placeat nam optio dolore recusandae fuga
+                  voluptatibus. Ea quam deserunt consectetur quo aut eligendi,
+                  molestiae incidunt molestias ullam? Repellendus ratione
+                  repellat
+                </Text>
+              </Wrapper>
+              <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
+                <Checkbox>
+                  동의합니다.
+                  <CheckInput
+                    type="checkbox"
+                    {...register("marketTerm", {
+                      onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        dispatch({
+                          type: actionTypesUser.FORM_CHECK,
+                          payload: {
+                            ...props.formCheck,
+                            marketTerm: e.target.checked,
+                          },
+                        });
+                      },
+                    })}
+                  />
+                  <CheckMark></CheckMark>
+                </Checkbox>
+              </Wrapper>
+            </Wrapper>
+            <CommonButtonWrapper kindOf={`column`}>
+              <CommonButton
+                onClick={(_e: React.MouseEvent<HTMLButtonElement>) => {
+                  props.setStepNumber(props.stepNumber - 1);
+                }}
+                kindOf={`white`}
+                margin={`0px 0px 10px 0px`}
+              >
+                이전
+              </CommonButton>
+              <CommonButton type="submit" margin={`10px 0px 0px 0px`}>
+                다음
+              </CommonButton>
+            </CommonButtonWrapper>
+          </form>
+        </Wrapper>
+      </RsWrapper>
+    </WholeWrapper>
   );
 };
 

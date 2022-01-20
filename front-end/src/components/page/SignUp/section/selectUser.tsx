@@ -10,6 +10,9 @@ import {
   Image,
   RsWrapper,
   CommonButtonWrapper,
+  CommonSubTitle,
+  CommonTitle,
+  CommonTitleWrapper,
 } from "../../../styles/CommonComponents";
 import Link from "next/link";
 import React from "react";
@@ -32,8 +35,12 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref} padding={`80px 0px 0px`}>
+    <WholeWrapper ref={ref}>
       <RsWrapper>
+        <CommonTitleWrapper>
+          <CommonTitle>회원가입</CommonTitle>
+          <CommonSubTitle>가입 유형을 선택해주세요.</CommonSubTitle>
+        </CommonTitleWrapper>
         <Wrapper dr={`row`}>
           {/* 사업자 회원가입 버튼 */}
           <Wrapper padding={`20px`} width={`auto`} ju={`center`} al={`center`}>

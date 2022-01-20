@@ -16,6 +16,7 @@ import { PagenationSection } from "../../../common/sections";
 import {
   CloseButton,
   Combo,
+  CommonSubTitle,
   CommonTitle,
   CommonTitleWrapper,
   IconButton,
@@ -110,10 +111,11 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
 
   return (
     <WholeWrapper>
-      <CommonTitleWrapper>
-        <CommonTitle>직원관리</CommonTitle>
-      </CommonTitleWrapper>
       <RsWrapper>
+        <CommonTitleWrapper>
+          <CommonTitle>직원관리</CommonTitle>
+          <CommonSubTitle></CommonSubTitle>
+        </CommonTitleWrapper>
         <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
           <Combo
             value={props.searchOption}

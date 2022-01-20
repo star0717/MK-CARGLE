@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   CommonButton,
   CommonButtonWrapper,
@@ -9,9 +9,9 @@ import {
   TextInput2,
   WholeWrapper,
   Wrapper,
-  CommonSmallTitle,
   SmallButton,
   IconButton,
+  CommonSmallTitle,
 } from "../../../styles/CommonComponents";
 import React, { useEffect, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -48,9 +48,11 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   const [partInfo, setPartInfo] = useState<Partial<Part>>(props.clickDoc);
 
   //partInfo.tsCode (B10)에서 B는 tsItem 으로 , 10은 tsIndex로...
-  const [tsItem, setTsItem] = useState<string>(partInfo.tsCode.substring(0, 1));
-  const [tsIndex, setTsIndex] = useState<string>(partInfo.tsCode.substring(1));
-
+  const [tsItem, setTsItem] = useState<string>(
+    partInfo.tsCode?.substring(0, 1)
+  );
+  const [tsIndex, setTsIndex] = useState<string>(partInfo.tsCode?.substring(1));
+  console.log(tsItem, tsIndex);
   const {
     register,
     handleSubmit,
@@ -80,19 +82,26 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  const onSaveFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const savePartInfo = {
+  const onSaveFormHandler: SubmitHandler<Partial<Part>> = (data) => {
+    const savePartInfo: Partial<Part> = {
       label: partInfo.label,
       name: partInfo.name,
       nickName: partInfo.nickName,
       code: partInfo.code,
-      tsCode: `${tsItem}${tsIndex}`,
+      // tsCode: `${tsItem}${tsIndex}`,
     };
+
+    if (partInfo.tsCode !== "") {
+      savePartInfo.tsCode = `${tsItem}${tsIndex}`;
+    }
 
     dispatch(_aPatchAdminPart(props.clickDoc._id, savePartInfo)).then(
       (res: any) => {
         alert("정상적으로 등록 되었습니다.");
+        props.setModalOpen(false);
+      },
+      (err) => {
+        alert("수정에 실패했습니다. 확인후 다시 시도해 주세요.");
         props.setModalOpen(false);
       }
     );
@@ -102,9 +111,13 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   };
   //nickName 추가
   const onInputPlusHandler = () => {
+    if (partNickName === "") {
+      return;
+    }
     const newArr: string[] = [...partInfo.nickName];
     newArr.push(partNickName);
     setPartInfo({ ...partInfo, nickName: newArr });
+    setPartNickName("");
   };
   //nickName 삭제
   const onInputDelHandler = (item: string) => {
@@ -117,6 +130,13 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
     setPartInfo({ ...partInfo, name: e.target.value.replace(" ", "") });
   };
 
+  const press = (e: any) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      return onInputPlusHandler();
+    }
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -127,7 +147,7 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
   return (
     <WholeWrapper>
       <CommonSmallTitle>부품상세</CommonSmallTitle>
-      <form id="savePartForm" onSubmit={onSaveFormHandler}>
+      <form id="savePartForm" onSubmit={handleSubmit(onSaveFormHandler)}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>분류</Text>
           <Combo
@@ -178,7 +198,7 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품명</Text>
           <TextInput2
-            placeholder="부품명입니다~"
+            placeholder="부품명을 입력해주세요."
             width={`400px`}
             value={partInfo.name}
             {...register("name", {
@@ -253,8 +273,10 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
           <Text>동의어 설정</Text>
           <Wrapper dr={`row`} ju={`space-between`} width={`400px`}>
             <TextInput2
-              placeholder="동의어입니다 4"
+              placeholder="동의어 추가"
               width={`350px`}
+              value={partNickName}
+              onKeyDown={press}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputNickNameHandler(e);
               }}

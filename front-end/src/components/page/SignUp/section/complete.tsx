@@ -44,7 +44,7 @@ const Complete: NextPage<_pSignUpProps> = (props) => {
 
   return (
     <WholeWrapper ref={ref} padding={`0px`}>
-      <RsWrapper padding={`12% 0px 12%`}>
+      <RsWrapper kindOf={`short`}>
         <Wrapper>
           <Wrapper padding={`0px 0px 20px`}>
             <JoinStepBar kindOf={`progress`}>

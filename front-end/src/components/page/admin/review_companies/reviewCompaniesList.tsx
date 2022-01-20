@@ -24,6 +24,7 @@ import {
   TableBody,
   TableRow,
   TableRowLIST,
+  CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { _MainProps } from "../../../../configure/_props.entity";
@@ -67,10 +68,11 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper>
-      <CommonTitleWrapper>
-        <CommonTitle>승인관리</CommonTitle>
-      </CommonTitleWrapper>
       <RsWrapper>
+        <CommonTitleWrapper>
+          <CommonTitle>승인관리</CommonTitle>
+          <CommonSubTitle></CommonSubTitle>
+        </CommonTitleWrapper>
         <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
           <Combo
             value={props.searchOption}

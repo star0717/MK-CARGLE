@@ -1,7 +1,8 @@
 const theme = {
   basicTheme_C: "#314FA5",
-  lightTheme_C: "#448fff",
-  darkTheme_C: "#203462",
+  lightTheme_C: "#7985c3",
+  darkTheme_C: "#20346e",
+  subTheme_C: "#8DAFCE",
 
   //
   black_C: "#343a40",

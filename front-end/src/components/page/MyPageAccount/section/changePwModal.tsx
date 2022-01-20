@@ -14,6 +14,9 @@ import {
   Text,
   TextInput2,
   SmallButton,
+  CommonSmallTitle,
+  CommonButton,
+  CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "../../../../configure/router.entity";
@@ -91,156 +94,136 @@ const ChangePwModal: NextPage<_pMyPageAccountProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <WholeWrapper ref={ref}>
-      <Wrapper>
-        <form onSubmit={handleSubmit(onChangePwHandler)}>
-          <Wrapper>
-            <Text fontSize={`18px`} fontWeight={`800`} padding={`0px 0px 20px`}>
-              비밀번호 변경
+    <WholeWrapper ref={ref} padding={`0px 30px 30px`}>
+      <CommonSmallTitle>비밀번호 변경</CommonSmallTitle>
+      <form onSubmit={handleSubmit(onChangePwHandler)}>
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+          <Text margin={`10px 0px 5px`}>현재 비밀번호</Text>
+          <TextInput2
+            width={`400px`}
+            type="password"
+            value={password}
+            placeholder="현재 비밀번호를 입력하세요."
+            {...register("password", {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                setPassword(e.target.value);
+              },
+            })}
+          />
+        </Wrapper>
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+          <Text>새로운 비밀번호</Text>
+          <TextInput2
+            width={`400px`}
+            type="password"
+            value={newPassword}
+            placeholder="새로운 비밀번호를 입력하세요."
+            {...register("newPassword", {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                setNewPassword(e.target.value);
+              },
+              required: { value: true, message: "필수 입력사항입니다." },
+              pattern: {
+                value: formRegEx.PASSWORD,
+                message: "8~16자 영문, 숫자, 특수문자를 사용하세요.",
+              },
+              validate: (value: string) => value !== watch("newpassword"),
+            })}
+          />
+          {(errors.newPassword?.type === "required" ||
+            errors.newPassword?.type === "pattern") && (
+            <Text
+              margin={`0px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.newPassword.message}
             </Text>
-          </Wrapper>
-          <Wrapper>
-            <Text margin={`10px 0px 5px`}>현재 비밀번호</Text>
-            <TextInput2
-              width={`500px`}
-              height={`60px`}
-              type="password"
-              value={password}
-              placeholder="현재 비밀번호를 입력하세요."
-              {...register("password", {
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  setPassword(e.target.value);
-                },
-              })}
-            />
-          </Wrapper>
-          <Wrapper>
-            <Text margin={`10px 0px 5px`}>새로운 비밀번호</Text>
-            <TextInput2
-              width={`500px`}
-              height={`60px`}
-              type="password"
-              value={newPassword}
-              placeholder="새로운 비밀번호를 입력하세요."
-              {...register("newPassword", {
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  setNewPassword(e.target.value);
-                },
-                required: { value: true, message: "필수 입력사항입니다." },
-                pattern: {
-                  value: formRegEx.PASSWORD,
-                  message: "8~16자 영문, 숫자, 특수문자를 사용하세요.",
-                },
-                validate: (value: string) => value !== watch("newpassword"),
-              })}
-            />
-            {(errors.newPassword?.type === "required" ||
-              errors.newPassword?.type === "pattern") && (
-              <Text
-                margin={`0px 0px`}
-                width={`100%`}
-                color={`#d6263b`}
-                al={`flex-start`}
-                fontSize={`14px`}
-                textAlign={`left`}
-              >
-                {errors.newPassword.message}
-              </Text>
-            )}
-            {errors.newPassword?.type === "validate" && (
-              <Text
-                margin={`0px 0px`}
-                width={`100%`}
-                color={`#d6263b`}
-                al={`flex-start`}
-                fontSize={`14px`}
-                textAlign={`left`}
-              >
-                현재 비밀번호와 다르게 설정하세요.
-              </Text>
-            )}
-          </Wrapper>
-          <Wrapper dr={`column`}>
-            <Text margin={`10px 0px 5px`}>새로운 비밀번호 확인</Text>
-            <TextInput2
-              width={`500px`}
-              height={`60px`}
-              type="password"
-              value={newPasswordCheck}
-              placeholder="비밀번호 확인을 위해 다시 입력해주세요."
-              {...register("newPasswordCheck", {
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  setNewPasswordCheck(e.target.value);
-                },
-                required: { value: true, message: "필수 입력사항입니다." },
-                validate: (value: string) => value === watch("newPassword"),
-              })}
-            />
-            {errors.newPasswordCheck?.type === "required" && (
-              <Text
-                margin={`0px 0px`}
-                width={`100%`}
-                color={`#d6263b`}
-                al={`flex-start`}
-                fontSize={`14px`}
-                textAlign={`left`}
-              >
-                8~16자 영문, 숫자, 특수문자를 사용하세요.
-              </Text>
-            )}
-            {errors.newPasswordCheck?.type === "validate" && (
-              <Text
-                margin={`0px 0px`}
-                width={`100%`}
-                color={`#d6263b`}
-                al={`flex-start`}
-                fontSize={`14px`}
-                textAlign={`left`}
-              >
-                비밀번호가 일치하지 않습니다.
-              </Text>
-            )}
-            {watch("newPasswordCheck", "") !== "" &&
-              errors.newPasswordCheck?.type !== "validate" && (
-                <Text
-                  margin={`0px 0px`}
-                  width={`100%`}
-                  color={`#51b351`}
-                  al={`flex-start`}
-                  fontSize={`14px`}
-                  textAlign={`left`}
-                >
-                  비밀번호가 일치합니다.
-                </Text>
-              )}
-          </Wrapper>
-          <Wrapper padding={` 30px 0px 0px`} dr={`row`}>
-            <SmallButton
-              width={`240px`}
-              fontSize={`16px`}
-              height={`40px`}
-              type="button"
-              kindOf={`cancle`}
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                props.setModalOpen(false)
-              }
-              margin={`0px 10px 0px 0px`}
+          )}
+          {errors.newPassword?.type === "validate" && (
+            <Text
+              margin={`0px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
             >
-              취소
-            </SmallButton>
-            <SmallButton
-              width={`240px`}
-              fontSize={`16px`}
-              height={`40px`}
-              type="submit"
-              kindOf={`default`}
-              margin={`0px 0px 0px 10px`}
+              현재 비밀번호와 다르게 설정하세요.
+            </Text>
+          )}
+        </Wrapper>
+        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+          <Text>새로운 비밀번호 확인</Text>
+          <TextInput2
+            width={`400px`}
+            type="password"
+            value={newPasswordCheck}
+            placeholder="비밀번호 확인을 위해 다시 입력해주세요."
+            {...register("newPasswordCheck", {
+              onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                setNewPasswordCheck(e.target.value);
+              },
+              required: { value: true, message: "필수 입력사항입니다." },
+              validate: (value: string) => value === watch("newPassword"),
+            })}
+          />
+          {errors.newPasswordCheck?.type === "required" && (
+            <Text
+              margin={`0px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
             >
-              확인
-            </SmallButton>
-          </Wrapper>
-        </form>
-      </Wrapper>
+              8~16자 영문, 숫자, 특수문자를 사용하세요.
+            </Text>
+          )}
+          {errors.newPasswordCheck?.type === "validate" && (
+            <Text
+              margin={`0px 0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              비밀번호가 일치하지 않습니다.
+            </Text>
+          )}
+          {watch("newPasswordCheck", "") !== "" &&
+            errors.newPasswordCheck?.type !== "validate" && (
+              <Text
+                margin={`0px 0px`}
+                width={`100%`}
+                color={`#51b351`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                비밀번호가 일치합니다.
+              </Text>
+            )}
+        </Wrapper>
+        <CommonButtonWrapper kindOf={`column`}>
+          <CommonButton
+            type="button"
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+              props.setModalOpen(false)
+            }
+            kindOf={`circleWhite`}
+          >
+            취소
+          </CommonButton>
+          <CommonButton type="submit" kindOf={`circleTheme`}>
+            확인
+          </CommonButton>
+        </CommonButtonWrapper>
+      </form>
     </WholeWrapper>
   );
 };

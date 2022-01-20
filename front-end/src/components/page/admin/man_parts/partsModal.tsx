@@ -71,27 +71,41 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
    * 3. Handlers
    *********************************************************************/
   const onSaveFormHandler: SubmitHandler<Partial<Part>> = (data) => {
-    const plusPartInfo = {
+    const plusPartInfo: Partial<Part> = {
       label: partInfo.label,
       name: partInfo.name,
       nickName: partInfo.nickName,
       code: partInfo.code,
-      tsCode: `${tsItem}${tsIndex}`,
+      // tsCode: `${tsItem}${tsIndex}`,
     };
 
-    dispatch(_aPostAdminPart(plusPartInfo)).then((res: any) => {
-      alert("정상적으로 등록 되었습니다.");
-      props.setModalOpen(false);
-    });
+    if (partInfo.tsCode !== "") {
+      plusPartInfo.tsCode = `${tsItem}${tsIndex}`;
+    }
+
+    dispatch(_aPostAdminPart(plusPartInfo)).then(
+      (res: any) => {
+        alert("정상적으로 등록 되었습니다.");
+        props.setModalOpen(false);
+      },
+      (err) => {
+        alert("수정에 실패했습니다. 확인후 다시 시도해 주세요.");
+        props.setModalOpen(false);
+      }
+    );
   };
   const onInputNickNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPartNickName(e.target.value);
   };
   //nickName 추가
   const onInputPlusHandler = () => {
+    if (partNickName === "") {
+      return;
+    }
     const newArr: string[] = [...partInfo.nickName];
     newArr.push(partNickName);
     setPartInfo({ ...partInfo, nickName: newArr });
+    setPartNickName("");
   };
   //nickName 삭제
   const onInputDelHandler = (item: string) => {
@@ -105,6 +119,13 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
       ...partInfo,
       name: e.target.value.replace(" ", ""),
     });
+  };
+
+  const press = (e: any) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      return onInputPlusHandler();
+    }
   };
 
   /*********************************************************************
@@ -168,7 +189,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
           <Text>부품명</Text>
           <TextInput2
-            placeholder="부품명입니다~"
+            placeholder="부품명을 입력해주세요."
             width={`400px`}
             value={partInfo.name}
             {...register("name", {
@@ -254,8 +275,10 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
           <Text>동의어 설정</Text>
           <Wrapper dr={`row`} ju={`space-between`} width={`400px`}>
             <TextInput2
-              placeholder="동의어입니다 4"
+              placeholder="동의어 추가"
               width={`350px`}
+              value={partNickName}
+              onKeyDown={press}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputNickNameHandler(e);
               }}

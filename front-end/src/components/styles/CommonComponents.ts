@@ -38,6 +38,7 @@ export const WholeWrapper = styled.div<any>`
   overflow: ${(props) => props.overflow || ``};
 `;
 
+// 컨텐츠가 짧을 때는 short로 감싸주세요
 export const RsWrapper = styled.div<any>`
   width: 1200px;
   height: ${(props) => props.height || `100%`};
@@ -49,60 +50,19 @@ export const RsWrapper = styled.div<any>`
   flex-direction: ${(props) => props.dr || `column`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
-  flex-wrap: ${(props) => props.wrap || `wrap`};
+  flex-wrap: ${(props) => props.wrap || `no-wrap`};
   backdrop-filter: ${(props) => props.filter};
   margin: ${(props) => props.margin};
-  padding: ${(props) => props.padding || `0px 0px 100px 0px`};
+  padding: ${(props) => props.padding || `100px 0px`};
   border-bottom: ${(props) => props.borderBottom};
   border: ${(props) => props.border};
   font-size: ${(props) => props.fontSize};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
 }
 
-${(props) => props.kindOf === `RsWrapper2` && `padding:120px 0px 120px`}
+${(props) => props.kindOf === `short` && `padding:0px 0px 120px 0px`}
 
 `;
-
-// export const CommonTitleWrapper = styled.div<any>`
-//   width: ${(props) => props.width || `100%`};
-//   display: ${(props) => props.display || `flex`};
-//   flex-direction: ${(props) => props.dr || `column`};
-//   position: ${(props) => (props.isAbsolute ? `absolute` : `relatuve`)};
-//   top: 80px;
-//   margin: ${(props) => props.margin || `0px 0px 80px`};
-//   margintop: ${(props) => props.marginTop};
-//   padding: ${(props) => props.padding || `50px 0px 30px`};
-//   padding-bottom: ${(props) => props.paddingBottom};
-//   font-size: 34px;
-//   font-weight: 800;
-//   color: ${(props) => props.color};
-//   text-align: ${(props) => props.textAlign || `center`};
-//   background-color: #292929;
-// `;
-
-// @media (max-width: 1500px) {
-//   width: 1350px;
-// }
-// @media (max-width: 1350px) {
-//   width: 1280px;
-// }
-// @media (max-width: 1350px) {
-//   width: 1100px;
-// }
-// @media (max-width: 1100px) {
-//   width: 900px;
-// }
-// @media (max-width: 900px) {
-//   width: 800px;
-// }
-// @media (max-width: 800px) {
-//   width: 700px;
-// }
-// @media (max-width: 700px) {
-//   width: 100%;
-//   padding-left: 10px;
-//   padding-right: 10px;
-// }
 
 export const Wrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
@@ -267,69 +227,20 @@ export const Wrapper = styled.div<any>`
 /**text */
 
 export const CommonTitleWrapper = styled.div<any>`
-  align-items: ${(props) => props.al || `center`};
-  justify-content: ${(props) => props.ju || `center`};
   width: ${(props) => props.width || `100%`};
-  height: ${(props) => props.height || `150px`};
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
-  margin: ${(props) => props.margin || `0px`};
-  padding: 150px 0px 0px;
-  font-size: 34px;
-  font-weight: 700;
+  padding: ${(props) => props.padding || `0px 0px 50px 0px`};
+  padding-bottom: ${(props) => props.paddingBottom};
   color: ${(props) => props.color};
   text-align: ${(props) => props.textAlign || `center`};
-  background-color: #fff;
 `;
 
 export const CommonTitle = styled.h2<any>`
   width: ${(props) => props.width};
-  background: linear-gradient(
-    360deg,
-    hsla(224, 54%, 42%, 1) 0%,
-    hsla(216, 100%, 63%, 1) 100%
-  );
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-  display: ${(props) => props.display};
-  margin: ${(props) => props.margin || `0px`};
-  padding: ${(props) => props.padding || ` 0px 0px`};
-  font-size: 34px;
-  font-weight: 700;
-
-  text-align: ${(props) => props.textAlign || `center`};
-  @media (max-width: 1439px) {
-    font-size: 32px;
-  }
-  @media (max-width: 500px) {
-    font-size: 24px;
-  }
-
-  ${(props) =>
-    props.kindOf === `gradient` &&
-    `background : linear-gradient(180deg, hsla(224, 54%, 42%, 1) 0%, hsla(216, 100%, 63%, 1) 100%);`}
-
-  ${(props) => props.kindOf === `gradient` && ` -webkit-background-clip: text;`}
-  ${(props) =>
-    props.kindOf === `gradient` && ` -webkit-text-fill-color: transparent;`}
-`;
-
-export const CommonSubTitle = styled.h2<any>`
-  width: ${(props) => props.width};
-  display: ${(props) => props.display};
   position: relative;
-  margin: ${(props) => props.margin || `0px`};
-  font-size: 22px;
-  color: ${(props) => props.color || `#000`};
-  font-weight: ${(props) => props.fontWeight || `400`};
-  text-align: ${(props) => props.textAlign || `center`};
-  padding: 10px 0px 0px;
-`;
-
-export const CommonBigTitle = styled.h2<any>`
-  width: ${(props) => props.width};
-  position: relative;
-  margin: 30px 0px 0px;
+  margin: 20px 0px 10px;
+  padding-bottom: 10px;
   font-size: 34px;
   font-weight: 600;
   background: linear-gradient(
@@ -341,46 +252,78 @@ export const CommonBigTitle = styled.h2<any>`
   -webkit-background-clip: text;
 `;
 
-export const CommonBigSubTitle = styled.h2<any>`
+export const CommonSubTitle = styled.h2<any>`
   width: ${(props) => props.width};
   position: relative;
-  margin: 20px 0px 30px;
+  margin: 0px 0px 10px;
   padding-bottom: 10px;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
-  color: #000;
+  color: #9d9d9d;
 
   &:before {
     content: "";
     position: absolute;
-    bottom: -10px;
+    bottom: -20px;
     left: 50%;
     margin-left: -14px;
     width: 30px;
-    height: 100%;
-    border-bottom: 6px solid ${(props) => props.theme.black_C};
+    height: 8px;
+    border-bottom: 6px solid transparent;
+    background: linear-gradient(
+      360deg,
+      hsla(230, 38%, 62%, 1) 0%,
+      hsla(224, 54%, 42%, 1) 50%,
+      hsla(225, 55%, 28%, 1) 100%
+    );
+    background-origin: border-box;
+    background-clip: content-box, border-box;
   }
 `;
+
+// export const CommonBigTitle = styled.h2<any>`
+//   width: ${(props) => props.width};
+//   position: relative;
+//   margin: 30px 0px 0px;
+//   font-size: 34px;
+//   font-weight: 600;
+//   background: linear-gradient(
+//     360deg,
+//     hsla(224, 54%, 42%, 1) 0%,
+//     hsla(216, 100%, 63%, 1) 100%
+//   );
+//   -webkit-text-fill-color: transparent;
+//   -webkit-background-clip: text;
+// `;
+
+// export const CommonBigSubTitle = styled.h2<any>`
+//   width: ${(props) => props.width};
+//   position: relative;
+//   margin: 20px 0px 30px;
+//   padding-bottom: 10px;
+//   font-size: 22px;
+//   font-weight: 500;
+//   color: #000;
+
+//   &:before {
+//     content: "";
+//     position: absolute;
+//     bottom: -10px;
+//     left: 50%;
+//     margin-left: -14px;
+//     width: 30px;
+//     height: 100%;
+//     border-bottom: 6px solid ${(props) => props.theme.black_C};
+//   }
+// `;
 
 export const CommonSmallTitle = styled.h2<any>`
   width: ${(props) => props.width};
   position: relative;
   margin: 30px 0px;
-  padding-bottom: 10px;
   font-size: 20px;
   font-weight: 500;
   color: ${(props) => props.color};
-
-  &:before {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    margin-left: -14px;
-    width: 30px;
-    height: 100%;
-    border-bottom: 6px solid ${(props) => props.theme.basicTheme_C};
-  }
 `;
 
 export const Text = styled.p<any>`
@@ -654,6 +597,9 @@ export const SmallButton = styled.button<any>`
     ${(props) =>
       props.kindOf === `default` && `background ${props.theme.basicTheme_C};`}
     ${(props) => props.kindOf === `default` && `color ${props.theme.white_C};`}
+    ${(props) =>
+      props.kindOf === `default` &&
+      `border : 1px solid ${props.theme.black_C};`}
 
     ${(props) =>
       props.kindOf === `cancle` && `background ${props.theme.red_C};`}
@@ -1410,6 +1356,9 @@ export const TableRow = styled.ul<any>`
     `background: #8DAFCE; color: #fff; &:hover {background: #8DAFCE; color: #fff; text-decoration: none;}`}
   ${(props) =>
     props.kindOf === `noSelectClass` && `background: #fff; color: #343a40;`}
+    ${(props) =>
+    props.kindOf === `noHover` &&
+    `&:hover {background: inherit; color: inherit; text-decoration: none; cursor: default;}`}
 `;
 
 export const TableRowLIST = styled.li<any>`
