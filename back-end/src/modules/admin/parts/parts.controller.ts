@@ -18,7 +18,6 @@ import {
 } from '@nestjs/swagger';
 import { UserAuthority } from 'src/constants/model.const';
 import { AuthToken } from 'src/lib/decorators/decorators';
-import { SafeControllerFactory } from 'src/lib/safe-crud/safe-crud.controller';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   DeleteObjectIds,
@@ -46,6 +45,12 @@ export class PartsController {
     @AuthToken({ auth: UserAuthority.ADMIN }) token: AuthTokenInfo,
   ): Promise<Part> {
     console.log(part);
+    if (part.tsCode) console.log('tsCode 있음');
+    if (part.tsCode == '') {
+      console.log('tsCode 빈값');
+      delete part.tsCode;
+      console.log(part);
+    }
     return this.service.create(token, part);
   }
 

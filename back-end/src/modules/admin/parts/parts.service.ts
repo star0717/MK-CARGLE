@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { FilterQuery } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
-import { startOfToday } from 'src/constants/back-end.toolkit';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { FindResult } from 'src/models/base.entity';
@@ -15,7 +14,6 @@ export class PartsService extends SafeService<Part> {
     readonly commonService: CommonService,
   ) {
     super(model, commonService);
-    this.genIdNumber();
   }
 
   async genPartCode(id: string): Promise<string> {
@@ -43,11 +41,5 @@ export class PartsService extends SafeService<Part> {
       totalDocs: docs.length,
     };
     return result;
-  }
-
-  private async genIdNumber() {
-    this.commonService.getStartOfDay();
-    this.commonService.getEndOfDay();
-    startOfToday();
   }
 }
