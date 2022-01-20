@@ -37,7 +37,10 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  class GenTsArgs {
+    nickName?: string;
+    options?: string[];
+  }
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -110,9 +113,13 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
    * @param nickName
    * @returns
    */
-  const genTsContent = (name: string, nickName?: any) => {
+  const genTsContent = (name: string, args?: GenTsArgs) => {
     let tsContent = name;
-    if (nickName) tsContent += `(${nickName})`;
+    if (args?.nickName) tsContent += `(${args.nickName})`;
+    if (args?.options)
+      for (let i = 0; i < args.options.length; i++) {
+        tsContent += `(${args.options[i]})`;
+      }
     return tsContent;
   };
 
@@ -238,8 +245,7 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
                   <TableHead radius={`8px 8px 0px 0px`}>
                     <TableHeadLIST width={`20%`}>분류</TableHeadLIST>
                     <TableHeadLIST width={`20%`}>코드</TableHeadLIST>
-                    <TableHeadLIST width={`40%`}>작업내용</TableHeadLIST>
-                    <TableHeadLIST width={`20%`}>옵션</TableHeadLIST>
+                    <TableHeadLIST width={`60%`}>작업내용</TableHeadLIST>
                   </TableHead>
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
@@ -255,10 +261,10 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
                           {item.index}
                         </TableRowLIST>
                         <TableRowLIST width={`40%`}>
-                          {genTsContent(item.name, item.nickName)}
-                        </TableRowLIST>
-                        <TableRowLIST width={`20%`}>
-                          {genTsOption(item.options)}
+                          {genTsContent(item.name, {
+                            nickName: item.nickName,
+                            options: item.options,
+                          })}
                         </TableRowLIST>
                       </TableRow>
                     ))}
