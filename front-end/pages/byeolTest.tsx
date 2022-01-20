@@ -142,33 +142,32 @@ const ByeolTest: NextPage = () => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        <Wrapper padding={`50px 0px 0px`} dr={`row`} ju={`space-between`}>
+        <Wrapper padding={`50px 0px 0px`} dr={`row`}>
           <Wrapper width={`auto`}>
-            <Wrapper al={`flex-start`}>
+            <Wrapper>
               <Text
-                fontSize={`72px`}
+                fontSize={`114px`}
                 fontWeight={`800`}
-                color={`#c4c4c4`}
+                color={`#f0f0f0`}
                 padding={`0px`}
               >
                 <BsEmojiDizzyFill />
               </Text>
               <Text
-                fontSize={`48px`}
+                fontSize={`80px`}
                 fontWeight={`800`}
-                color={`#c4c4c4`}
+                color={`#f0f0f0`}
                 padding={`0px 0px 10px`}
-                textAlign={`start`}
                 margin={`-30px 0px 0px`}
               >
                 404 ERROR!
               </Text>
               <Text
-                fontSize={`24px`}
-                fontWeight={`400`}
+                fontSize={`32px`}
+                fontWeight={`600`}
                 color={`#314FA5`}
                 padding={`50px 0px 10px`}
-                textAlign={`start`}
+                margin={`-120px 0px 0px`}
               >
                 죄송합니다. <br />
                 현재 찾을 수 없는 페이지를 요청 하셨습니다.
@@ -177,7 +176,6 @@ const ByeolTest: NextPage = () => {
                 fontSize={`18px`}
                 padding={`0px 0px 10px`}
                 fontWeight={`300`}
-                textAlign={`start`}
               >
                 존재하지 않는 주소를 입력하셨거나,
                 <br />
@@ -189,34 +187,11 @@ const ByeolTest: NextPage = () => {
                 fontSize={`18px`}
                 fontWeight={`300`}
                 padding={`0px 0px 10px`}
-                textAlign={`start`}
               >
                 감사합니다.
               </Text>
-              <Wrapper width={`auto`}>
-                <Text
-                  fontSize={`18px`}
-                  fontWeight={`400`}
-                  padding={`0px 0px 10px`}
-                  textAlign={`start`}
-                >
-                  <AiOutlineArrowLeft />
-                  &nbsp;이전페이지
-                </Text>
-              </Wrapper>
-              <Wrapper width={`auto`}>
-                <Text
-                  fontSize={`18px`}
-                  fontWeight={`400`}
-                  padding={`0px 0px 10px`}
-                  textAlign={`start`}
-                >
-                  <AiFillHome />
-                  홈으로 돌아가기
-                </Text>
-              </Wrapper>
             </Wrapper>
-            {/* <Wrapper padding={`50px 0px 0px`}>
+            <Wrapper padding={`50px 0px 0px`}>
               <CommonButton
                 type="button"
                 margin={`10px`}
@@ -237,10 +212,6 @@ const ByeolTest: NextPage = () => {
                 홈으로 돌아가기
               </CommonButton>
             </Wrapper>
-          </Wrapper> */}
-            {/* <Wrapper width={`500px`}>
-            <Image src="/images/404.png" alt="404 에러" />
-          </Wrapper> */}
           </Wrapper>
         </Wrapper>
       </RsWrapper>
