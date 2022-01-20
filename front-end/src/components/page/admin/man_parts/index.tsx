@@ -185,7 +185,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
             <CommonTitle>부품관리</CommonTitle>
             <CommonSubTitle></CommonSubTitle>
           </CommonTitleWrapper>
-          <Wrapper padding={`50px 0px 0px`}>
+          <Wrapper>
             <form onSubmit={onSearchFormHandler}>
               <SearchInputWrapper
                 type="text"
