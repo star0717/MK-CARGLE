@@ -122,7 +122,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                   >
                     <Text
                       fontSize={width < 1510 ? `16px` : `18px`}
-                      fontWeight={`600`}
+                      fontWeight={`6 mnjbh00`}
                       padding={width < 1510 ? `5px 15px` : `5px 30px`}
                     >
                       <Link href={menu.link}>
@@ -251,10 +251,6 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                   al={`center`}
                   margin={`0px 10px`}
                   border={`1px solid #ddd`}
-                  width={`45px`}
-                  height={`45px`}
-                  fontSize={`24px`}
-                  color={`#ccc`}
                 >
                   <FaBell />
                 </HeaderIconButton>

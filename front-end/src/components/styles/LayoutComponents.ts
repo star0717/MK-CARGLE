@@ -112,20 +112,20 @@ export const HeaderText = styled.p<any>`
 `;
 
 export const HeaderIconButton = styled.button<any>`
-  width: ${(props) => props.width || `34px`};
+  width: ${(props) => props.width || `45px`};
   min-width: ${(props) => props.minWidth};
-  height: ${(props) => props.height || `34px`};
+  height: ${(props) => props.height || `45px`};
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
-  font-size: ${(props) => props.fontSize || `28px`};
+  font-size: ${(props) => props.fontSize || `24px`};
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `flex-end`};
   justify-content: ${(props) => props.ju || `center`};
   background-color: ${(props) => props.bgColor || `#fff`};
-  color: ${(props) => props.color || props.basicTheme_C};
+  color: ${(props) => props.color || props.theme.subTheme_C};
   cursor: pointer;
   border: ${(props) => props.border || `none`};
   border-radius: ${(props) => props.radius || props.theme.radius};
