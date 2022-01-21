@@ -14,6 +14,7 @@ import {
   CommonSmallTitle,
   CommonButtonWrapper,
   CommonButton,
+  StampWrapper,
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
@@ -184,11 +185,10 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
           />
         </Wrapper>
         {upImg && (
-          <Wrapper
+          <StampWrapper
             width={`400px`}
             height={`300px`}
             margin={`20px 0px 0px`}
-            bgColor={`#e2e2e2`}
           >
             <ReactCrop
               src={upImg}
@@ -200,7 +200,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
               style={imgStyle}
               imageStyle={{ border: `1px solid black` }}
             />
-          </Wrapper>
+          </StampWrapper>
         )}
         {!completedCrop ? null : completedCrop?.width &&
           completedCrop?.height ? (

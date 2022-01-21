@@ -1790,3 +1790,30 @@ export const Checkbox = styled.label<any>`
 // &:hover ${CheckInput} ~ ${CheckMark} {
 //   background-color: #edeeff;
 // }
+
+export const StampWrapper = styled.div<any>`
+  width: ${(props) => props.width || ``};
+  height: ${(props) => props.height || ``};
+  margin: ${(props) => props.margin || ``};
+  display: flex;
+  background-color: #ffffff;
+  opacity: 0.8;
+  background-image: repeating-linear-gradient(
+      45deg,
+      #c1c1c1 25%,
+      transparent 25%,
+      transparent 75%,
+      #c1c1c1 75%,
+      #c1c1c1
+    ),
+    repeating-linear-gradient(
+      45deg,
+      #c1c1c1 25%,
+      #ffffff 25%,
+      #ffffff 75%,
+      #c1c1c1 75%,
+      #c1c1c1
+    );
+  background-position: 0 0, 10px 10px;
+  background-size: 20px 20px;
+`;
