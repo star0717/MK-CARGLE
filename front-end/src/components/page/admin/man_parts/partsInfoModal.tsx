@@ -93,8 +93,6 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
       savePartInfo.tsCode = `${tsItem}${tsIndex}`;
     else savePartInfo.tsCode = "undefined";
 
-    console.log("submit", savePartInfo.tsCode);
-
     dispatch(_aPatchAdminPart(props.clickDoc._id, savePartInfo)).then(
       (res: any) => {
         alert("정상적으로 등록 되었습니다.");

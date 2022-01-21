@@ -65,8 +65,8 @@ export function strToBoolean(params: TransformFnParams) {
 }
 
 export function removePropertyWithEmptyValue(params: TransformFnParams) {
-  console.log('removePropertyWithEmptyValue');
-  console.log('value: ' + params.value);
+  // console.log('removePropertyWithEmptyValue');
+  // console.log('value: ' + params.value);
 
   // 빈값 null 처리
   if (
