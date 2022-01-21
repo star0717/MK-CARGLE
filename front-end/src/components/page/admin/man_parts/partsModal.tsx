@@ -53,8 +53,8 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   });
 
   //partInfo.tsCode (B10)에서 B는 tsItem 으로 , 10은 tsIndex로...
-  const [tsItem, setTsItem] = useState<string>(partInfo.tsCode.substring(0, 1));
-  const [tsIndex, setTsIndex] = useState<string>(partInfo.tsCode.substring(1));
+  const [tsItem, setTsItem] = useState<string>("");
+  const [tsIndex, setTsIndex] = useState<string>("");
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -76,10 +76,9 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
       name: partInfo.name,
       nickName: partInfo.nickName,
       code: partInfo.code,
-      // tsCode: `${tsItem}${tsIndex}`,
     };
 
-    if (partInfo.tsCode !== "") {
+    if (tsItem !== "" && tsIndex !== "") {
       plusPartInfo.tsCode = `${tsItem}${tsIndex}`;
     }
 

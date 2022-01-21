@@ -1395,7 +1395,7 @@ export const PagenationWrapper = styled.div<any>`
   box-shadow: ${(props) => props.shadow};
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
-  margin: ${(props) => props.margin || `20px 0px 20px`};
+  margin: ${(props) => props.margin || `50px 0px 20px`};
   padding: ${(props) => props.padding};
 `;
 

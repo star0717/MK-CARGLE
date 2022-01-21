@@ -119,7 +119,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             <Wrapper width={`auto`}>
               <SmallButton
                 type="button"
-                kindOf={`back`}
+                kindOf={`default`}
                 margin={`0px 0px 0px 10px`}
                 onClick={() => {
                   router.back();
