@@ -60,7 +60,7 @@ const FindEmailCheck: NextPage<_pFindEmail> = (props) => {
 
   return (
     <WholeWrapper ref={ref}>
-      <RsWrapper kindOf={`short`}>
+      <RsWrapper>
         <CommonTitleWrapper>
           <CommonTitle textAlign={`center`} margin={`0px`}>
             계정찾기

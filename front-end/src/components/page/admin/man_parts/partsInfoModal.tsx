@@ -52,7 +52,6 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
     partInfo.tsCode?.substring(0, 1)
   );
   const [tsIndex, setTsIndex] = useState<string>(partInfo.tsCode?.substring(1));
-  console.log(tsItem, tsIndex);
   const {
     register,
     handleSubmit,
@@ -88,12 +87,11 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
       name: partInfo.name,
       nickName: partInfo.nickName,
       code: partInfo.code,
-      // tsCode: `${tsItem}${tsIndex}`,
     };
 
-    if (partInfo.tsCode !== "") {
+    if (tsIndex !== "" && tsIndex !== "")
       savePartInfo.tsCode = `${tsItem}${tsIndex}`;
-    }
+    else savePartInfo.tsCode = "undefined";
 
     dispatch(_aPatchAdminPart(props.clickDoc._id, savePartInfo)).then(
       (res: any) => {
