@@ -133,7 +133,9 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
     if (imgRef.current.height > imgRef.current.width) {
       setImgStyle({
         margin: `0 auto`,
-        maxHeight: `100%`,
+        maxWidth: `${Math.round(
+          (imgRef.current.width / imgRef.current.height) * 100
+        )}%`,
       });
     } else {
       setImgStyle({
@@ -189,7 +191,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
               onChange={(c) => setCrop(c)}
               onComplete={(c) => setCompletedCrop(c)}
               style={imgStyle}
-              imageStyle={{ border: `1px solid black` }}
+              imageStyle={{ border: `1px solid black`, objectFit: `contain` }}
             />
           </Wrapper>
         )}
