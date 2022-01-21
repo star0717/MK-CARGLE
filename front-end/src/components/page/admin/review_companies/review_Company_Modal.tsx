@@ -48,7 +48,6 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
    *********************************************************************/
   const onInputreasonHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReason({ ...reason, info1: e.target.value });
-    console.log(reason);
   };
   /*********************************************************************
    * 4. Props settings
@@ -70,29 +69,6 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
           <Text textAlign={`left`} padding={`0px 0px 20px`}>
             승인여부
           </Text>
-          {/* <Wrapper width={`180px`} dr={`row`}>
-            <FocusButton
-              type="button"
-              kindOf={approval === true ? `true` : `default`}
-              onClick={() => {
-                setApproval(true);
-                console.log("승인");
-              }}
-            >
-              승인
-            </FocusButton>
-            <FocusButton
-              type="button"
-              kindOf={approval === false ? `true` : `default`}
-              margin={`0px 0px 0px 20px`}
-              onClick={() => {
-                setApproval(false);
-                console.log("반려");
-              }}
-            >
-              반려
-            </FocusButton>
-          </Wrapper> */}
           <Wrapper
             dr={`row`}
             ju={`flex-end`}
@@ -167,7 +143,6 @@ const AdminReviewCompaniesModal: NextPage<any> = (props) => {
                 props.findDocHandler(props.findResult.currentPage); //리렌더링
                 router.push(`${UseLink.ADMIN_REVIEW_COMPANIES}`); //list page 전환
               } else if (approval == false) {
-                console.log(reason);
                 dispatch(rejectCompany(props.data.company._cID, reason)).then(
                   (res: any) => {
                     alert("반려처리 되었습니다.");

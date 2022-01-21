@@ -218,7 +218,6 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
    * @param data
    */
   const onSignUpUserHandler: SubmitHandler<Partial<SignUpInfo>> = (data) => {
-    console.log("로그인하자");
     if (!props.formCheck.authNumCheck) {
       alert("이메일 인증을 해주세요.");
     } else {

@@ -71,7 +71,6 @@ const AdminManPartsPage: NextPage<any> = (props) => {
   const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchText) {
-      console.log("없음");
     }
     const newList: any[] = [];
     props.data.part.forEach((part: any) => {
@@ -103,8 +102,6 @@ const AdminManPartsPage: NextPage<any> = (props) => {
     },
     [partList]
   );
-
-  console.log(checkedList);
 
   /**
    * 개별 선택 기능
