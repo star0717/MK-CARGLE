@@ -92,7 +92,8 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
     };
 
     if (partInfo.tsCode !== "") {
-      savePartInfo.tsCode = `${tsItem}${tsIndex}`;
+      if (tsIndex !== "" && tsIndex !== "")
+        savePartInfo.tsCode = `${tsItem}${tsIndex}`;
     }
 
     dispatch(_aPatchAdminPart(props.clickDoc._id, savePartInfo)).then(
