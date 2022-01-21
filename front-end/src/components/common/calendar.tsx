@@ -35,7 +35,6 @@ const Calendar: NextPage<CalendarProps> = (props) => {
     setDay(day);
     setSchedule(`${day.toLocaleDateString()} 일정`);
   };
-  console.log("데이데이 : ", day);
   return (
     <div>
       <DayPicker

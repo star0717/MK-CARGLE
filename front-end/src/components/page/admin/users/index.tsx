@@ -37,7 +37,6 @@ const AdminUsersPage: NextPage<_MainProps> = (props) => {
    * 3. Handlers
    *********************************************************************/
   useEffect(() => {
-    console.log("타야지");
     setFindResult(props.data);
   }, [props]);
 
@@ -62,7 +61,6 @@ const AdminUsersPage: NextPage<_MainProps> = (props) => {
       );
     } else {
       dispatch(_aGetAdminUsers(param)).then((res: _iGetAdminUsers) => {
-        console.log(res.payload);
         setFindResult(res.payload);
       });
     }

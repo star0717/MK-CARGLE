@@ -198,7 +198,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                   <SearchInput
                     width={`632px`}
                     padding={`0px 5px 0px 5px`}
-                    placeholder="찾고싶은 부품명을 입력하세요."
+                    placeholder="부품코드, 부품명 또는 국토부코드를 입력하세요."
                     type="text"
                     value={searchText}
                     onChange={onInputSearchHandler}
