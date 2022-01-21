@@ -44,19 +44,29 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  /**
+   * 검색 옵션 handler
+   * @param e
+   */
   const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.setSearchOption(e.target.value);
   };
 
+  /**
+   *
+   * @param e 검색 내용 handler
+   */
   const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.setFilterValue(e.target.value);
   };
 
-  const handleKeyUp = (e: any) => {
-    if (e.keyCode === 13) {
-      props.findDocHandler(1);
-    }
+  /**
+   * 검색 기능 handler
+   * @param e
+   */
+  const onSearchHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    props.findDocHandler(1);
   };
 
   /*********************************************************************
@@ -82,44 +92,45 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
             height={`46px`}
             width={`150px`}
           >
-            <option value="name">이름 검색</option>
-            <option value="phoneNum">전화번호 검색</option>
+            <option value="name">상호명 검색</option>
+            <option value="comRegNum">사업자번호 검색</option>
           </Combo>
-          <SearchInputWrapper
-            type="text"
-            placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              onInputSearchHandler(e);
-            }}
-            onKeyUp={handleKeyUp}
-            width={`678px`}
-            padding={`0px 5px`}
-            dr={`row`}
-            margin={`10px 0px 0px`}
-            borderBottom={`1px solid #000`}
-          >
-            <Wrapper width={`auto`}>
-              <SearchInput
-                width={`632px`}
-                padding={`0px 5px 0px 5px`}
-                placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
-                type="text"
-              />
-            </Wrapper>
-            <Wrapper width={`36px`} height={`46px`}>
-              <Text fontSize={`24px`}>
-                <IconButton
-                  type="submit"
-                  onClick={() => {
-                    props.findDocHandler(1);
-                  }}
-                  shadow={`none`}
-                >
-                  <BsSearch />
-                </IconButton>
-              </Text>
-            </Wrapper>
-          </SearchInputWrapper>
+          <form onSubmit={onSearchHandler}>
+            <SearchInputWrapper
+              type="text"
+              placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputSearchHandler(e);
+              }}
+              width={`678px`}
+              padding={`0px 5px`}
+              dr={`row`}
+              margin={`10px 0px 0px`}
+              borderBottom={`1px solid #000`}
+            >
+              <Wrapper width={`auto`}>
+                <SearchInput
+                  width={`632px`}
+                  padding={`0px 5px 0px 5px`}
+                  placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+                  type="text"
+                />
+              </Wrapper>
+              <Wrapper width={`36px`} height={`46px`}>
+                <Text fontSize={`24px`}>
+                  <IconButton
+                    type="submit"
+                    onClick={() => {
+                      props.findDocHandler(1);
+                    }}
+                    shadow={`none`}
+                  >
+                    <BsSearch />
+                  </IconButton>
+                </Text>
+              </Wrapper>
+            </SearchInputWrapper>
+          </form>
         </Wrapper>
         <Wrapper al={`flex-end`} margin={`50px 0px 0px`}>
           <Text>

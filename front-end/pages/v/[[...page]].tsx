@@ -252,7 +252,6 @@ export const getServerSideProps: GetServerSideProps = async (
             )
             .then((res: AxiosResponse<Company, Company>) => res.data);
         } else {
-          console.log("11");
           successResult.props.data = await axios
             .get(
               genApiPath(AdminApiPath.ing_companies, {
@@ -265,7 +264,6 @@ export const getServerSideProps: GetServerSideProps = async (
               (res: AxiosResponse<FindResult<Company>, Company>) => res.data
             );
         }
-        console.log(successResult);
         return successResult;
       }
       case UseLink.ADMIN_MAN_COMPANIES: {

@@ -38,7 +38,6 @@ const Term: NextPage<_pSignUpProps> = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm({ criteriaMode: "all" });
-  console.log(props.stepNumber);
   /**
    * 이용약관 form submit handler
    * @param _data
@@ -49,7 +48,6 @@ const Term: NextPage<_pSignUpProps> = (props) => {
 
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
-  console.log(props.formCheck.mkTerm);
   return (
     <WholeWrapper ref={ref}>
       <RsWrapper>
