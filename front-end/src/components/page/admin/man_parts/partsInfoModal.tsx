@@ -87,7 +87,6 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
       name: partInfo.name,
       nickName: partInfo.nickName,
       code: partInfo.code,
-      // tsCode: `${tsItem}${tsIndex}`,
     };
 
     if (tsIndex !== "" && tsIndex !== "")
