@@ -42,7 +42,8 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
     // React-crop
     unit: "%",
     width: 30,
-    aspect: 9 / 9,
+    aspect: 1,
+    zoom: 1,
   });
   const [completedCrop, setCompletedCrop] = useState<any>(null); // React-crop
   const [imgStyle, setImgStyle] = useState<ImgStyle>();
@@ -148,16 +149,17 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
-  console.log(imgStyle);
+  // console.log(imgStyle);
+  console.log(previewCanvasRef);
 
   return (
     <WholeWrapper ref={ref} padding={`0px 30px 30px`}>
       <CommonSmallTitle>사업자 도장</CommonSmallTitle>
       <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
         <Text>파일 선택</Text>
-        <Wrapper>
+        <Wrapper dr={`row`} ju={`center`}>
           <TextInput2
-            width={`400px`}
+            width={`300px`}
             type="text"
             placeholder="이미지 파일을 선택해주세요 (png,jpg)"
             value={fileName}
@@ -167,7 +169,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
 
           <LabelButton
             kindOf={`default`}
-            margin={`20px 0px 0px 20px`}
+            margin={`0px 0px 0px 20px`}
             htmlFor="stamp"
           >
             파일선택
@@ -182,7 +184,12 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
           />
         </Wrapper>
         {upImg && (
-          <Wrapper width={`400px`} height={`300px`} bgColor={`#e2e2e2`}>
+          <Wrapper
+            width={`400px`}
+            height={`300px`}
+            margin={`20px 0px 0px`}
+            bgColor={`#e2e2e2`}
+          >
             <ReactCrop
               src={upImg}
               onImageLoaded={onLoad}
@@ -191,11 +198,12 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
               onChange={(c) => setCrop(c)}
               onComplete={(c) => setCompletedCrop(c)}
               style={imgStyle}
-              imageStyle={{ border: `1px solid black`, objectFit: `contain` }}
+              imageStyle={{ border: `1px solid black` }}
             />
           </Wrapper>
         )}
-        {completedCrop && (
+        {!completedCrop ? null : completedCrop?.width &&
+          completedCrop?.height ? (
           <canvas
             ref={previewCanvasRef}
             // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
@@ -204,11 +212,14 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
               // height: Math.round(completedCrop?.height ?? 0),
               width: `150px`,
               height: `150px`,
-              margin: `0 auto`,
+              margin: `20px auto`,
+              border: `1px solid black`,
             }}
           />
+        ) : (
+          <Text margin={`20px auto`}>영역을 선택해주세요.</Text>
         )}
-        {completedCrop?.width && completedCrop?.height && (
+        {completedCrop?.width && completedCrop?.height ? (
           <Wrapper>
             <Text margin={`10px 0px 0px`}>선택한 영역이 업로드됩니다.</Text>
             <CommonButtonWrapper kindOf={`column`}>
@@ -225,7 +236,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
               </CommonButton>
             </CommonButtonWrapper>
           </Wrapper>
-        )}
+        ) : null}
       </Wrapper>
     </WholeWrapper>
   );
