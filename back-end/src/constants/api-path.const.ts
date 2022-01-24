@@ -71,3 +71,17 @@ export class SettingsApiPath {
   static management_delete_workers =
     SettingsApiPath.BASE + 'management/delete/workers';
 }
+
+// 정비내역 API
+export class MaintenancesApiPath {
+  static BASE = '/maintenances/';
+  static maintenances = MaintenancesApiPath.BASE;
+  static maintenances_allParts = MaintenancesApiPath.BASE + 'allparts';
+}
+
+// 거래처 관리 API
+export class AgenciesApiPath {
+  static BASE = '/agencies/';
+  static agencies = AgenciesApiPath.BASE;
+  static agencies_deleteMany = AgenciesApiPath.BASE + 'deletemany';
+}
