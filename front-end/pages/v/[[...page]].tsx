@@ -34,6 +34,8 @@ import AdminReviewCompaniesPage from "../../src/components/page/admin/review_com
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import {
   AdminApiPath,
+  AgenciesApiPath,
+  MaintenancesApiPath,
   SettingsApiPath,
 } from "../../src/constants/api-path.const";
 import AdminUsersPage from "../../src/components/page/admin/users";
@@ -44,6 +46,7 @@ import ManPartsPage from "src/components/page/ManPart";
 import ManSetPage from "src/components/page/ManSet";
 import ManBusinessPage from "src/components/page/ManBusiness";
 import { Part } from "src/models/part.entity";
+import { Agency } from "src/models/agency.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -203,55 +206,43 @@ export const getServerSideProps: GetServerSideProps = async (
   try {
     switch (pagePath) {
       case UseLink.TEST:
-        successResult.props.data = {
-          class: [
-            { _id: "1", name: "분류명1" },
-            { _id: "2", name: "분류명2" },
-          ],
-          part: [
-            {
-              _id: "1",
-              class: "분류명1",
-              code: "code1",
-              name: "name1",
-              molit: "molit1",
-            },
-            {
-              _id: "2",
-              class: "분류명2",
-              code: "code2",
-              name: "name2",
-              molit: "molit2",
-            },
-            {
-              _id: "3",
-              class: "분류명1",
-              code: "code3",
-              name: "name3",
-              molit: "molit3",
-            },
-            {
-              _id: "4",
-              class: "분류명2",
-              code: "code4",
-              name: "name4",
-              molit: "molit4",
-            },
-          ],
-        };
+        successResult.props.data = await axios
+          .get(
+            genApiPath(AgenciesApiPath.agencies, {
+              findParams: params,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<FindResult<Agency>, Agency>) => res.data);
         return successResult;
 
-      // case UseLink.MAN_PARTS: {
-      //   successResult.props.data = await axios
-      //     .get(
-      //       genApiPath(MaintenanceApiPath.all_parts, {
-      //         isServerSide: true,
-      //       }),
-      //       authConfig
-      //     )
-      //     .then((res: AxiosResponse<FindResult<Part>, Part>) => res.data);
-      //   return successResult;
-      // }
+      // 부품 관리
+      case UseLink.MAN_PARTS: {
+        successResult.props.data = await axios
+          .get(
+            genApiPath(MaintenancesApiPath.maintenances_allParts, {
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<FindResult<Part>, Part>) => res.data);
+        return successResult;
+      }
+
+      // 거래처 관리
+      case UseLink.MAN_BUSINESS: {
+        successResult.props.data = await axios
+          .get(
+            genApiPath(AgenciesApiPath.agencies, {
+              findParams: params,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<FindResult<Agency>, Agency>) => res.data);
+        return successResult;
+      }
 
       case UseLink.MYPAGE_WORKER: {
         successResult.props.data = await axios
