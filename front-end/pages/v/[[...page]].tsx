@@ -2,7 +2,6 @@ import type {
   GetServerSideProps,
   GetServerSidePropsContext,
   NextPage,
-  PreviewData,
 } from "next";
 import Head from "next/head";
 import { NextRouter } from "next/router";
@@ -41,9 +40,9 @@ import AdminUsersPage from "../../src/components/page/admin/users";
 import AdminManPartsPage from "../../src/components/page/admin/man_parts";
 import AdminMolitItemsPage from "../../src/components/page/admin/molit_items";
 import { CompanyApproval } from "../../src/constants/model.const";
-import ManPartsPage from "../../src/components/page/ManPart";
-import ManSetPage from "../../src/components/page/ManSet";
-import ManBusinessPage from "../../src/components/page/ManBusiness";
+import ManPartsPage from "src/components/page/ManPart";
+import ManSetPage from "src/components/page/ManSet";
+import ManBusinessPage from "src/components/page/ManBusiness";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트

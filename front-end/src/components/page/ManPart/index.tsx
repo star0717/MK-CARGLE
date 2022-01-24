@@ -1,7 +1,10 @@
 import React from "react";
 import { NextPage } from "next";
-import { WholeWrapper } from "../../styles/CommonComponents";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
+import {
+  RsWrapper,
+  WholeWrapper,
+} from "src/components/styles/CommonComponents";
 
 const ManPartsPage: NextPage = () => {
   /*********************************************************************
@@ -23,7 +26,13 @@ const ManPartsPage: NextPage = () => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return <BodyWrapper>부품관리여</BodyWrapper>;
+  return (
+    <BodyWrapper>
+      <WholeWrapper>
+        <RsWrapper>부품관리여</RsWrapper>
+      </WholeWrapper>
+    </BodyWrapper>
+  );
 };
 
 export default ManPartsPage;

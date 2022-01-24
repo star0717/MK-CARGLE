@@ -1,8 +1,12 @@
 import React from "react";
 import { NextPage } from "next";
-import { WholeWrapper } from "src/components/styles/CommonComponents";
+import { BodyWrapper } from "src/components/styles/LayoutComponents";
+import {
+  RsWrapper,
+  WholeWrapper,
+} from "src/components/styles/CommonComponents";
 
-const ManBusinessPage: NextPage = () => {
+const ManPartsPage: NextPage = () => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -22,7 +26,13 @@ const ManBusinessPage: NextPage = () => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return <WholeWrapper>거래처 관리여</WholeWrapper>;
+  return (
+    <BodyWrapper>
+      <WholeWrapper>
+        <RsWrapper>거래처관리여</RsWrapper>
+      </WholeWrapper>
+    </BodyWrapper>
+  );
 };
 
-export default ManBusinessPage;
+export default ManPartsPage;

@@ -1,8 +1,12 @@
 import React from "react";
 import { NextPage } from "next";
-import { WholeWrapper } from "src/components/styles/CommonComponents";
+import { BodyWrapper } from "src/components/styles/LayoutComponents";
+import {
+  RsWrapper,
+  WholeWrapper,
+} from "src/components/styles/CommonComponents";
 
-const ManSetPage: NextPage = () => {
+const ManPartsPage: NextPage = () => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -22,7 +26,13 @@ const ManSetPage: NextPage = () => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return <WholeWrapper>세트관리여</WholeWrapper>;
+  return (
+    <BodyWrapper>
+      <WholeWrapper>
+        <RsWrapper>세트관리여</RsWrapper>
+      </WholeWrapper>
+    </BodyWrapper>
+  );
 };
 
-export default ManSetPage;
+export default ManPartsPage;
