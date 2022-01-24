@@ -41,6 +41,9 @@ import AdminUsersPage from "../../src/components/page/admin/users";
 import AdminManPartsPage from "../../src/components/page/admin/man_parts";
 import AdminMolitItemsPage from "../../src/components/page/admin/molit_items";
 import { CompanyApproval } from "../../src/constants/model.const";
+import ManPartsPage from "../../src/components/page/ManPart";
+import ManSetPage from "../../src/components/page/ManSet";
+import ManBusinessPage from "../../src/components/page/ManBusiness";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -72,6 +75,15 @@ const SubComponent: NextPage<_MainProps> = (props) => {
   switch (pathName) {
     case UseLink.MAIN:
       return <Main {...props} />;
+
+    case UseLink.MAN_PARTS:
+      return <ManPartsPage {...props} />;
+
+    case UseLink.MAN_SET:
+      return <ManSetPage {...props} />;
+
+    case UseLink.MAN_BUSINESS:
+      return <ManBusinessPage {...props} />;
 
     case UseLink.MYPAGE_ACCOUNT:
       return <MyPageAccount {...props} />;
@@ -122,7 +134,7 @@ export default MainPage;
  * @returns
  */
 export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+  context: GetServerSidePropsContext<ParsedUrlQuery>
 ) => {
   // 현재 URL
   const url: string = context.resolvedUrl;

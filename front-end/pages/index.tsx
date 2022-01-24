@@ -32,7 +32,7 @@ const Home: NextPage<_SignInProps> = (props) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+  context: GetServerSidePropsContext<ParsedUrlQuery>
 ) => {
   // 쿠키 확인 - 아이디 저장, props로 전달(있을 경우 : 쿠키 / 없을 경우 : "")
   const saveId: string = context.req.cookies.saveId
