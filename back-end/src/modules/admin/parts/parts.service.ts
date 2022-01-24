@@ -8,7 +8,7 @@ import { FindResult } from 'src/models/base.entity';
 import { Part } from 'src/models/part.entity';
 
 @Injectable()
-export class PartsService extends SafeService<Part> {
+export class AdminPartsService extends SafeService<Part> {
   constructor(
     @InjectModel(Part) readonly model: ReturnModelType<typeof Part>,
     readonly commonService: CommonService,

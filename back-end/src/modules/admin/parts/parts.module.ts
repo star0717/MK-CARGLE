@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { PartsService } from './parts.service';
-import { PartsController } from './parts.controller';
+import { AdminPartsService } from './parts.service';
+import { AdminPartsController } from './parts.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { Part } from 'src/models/part.entity';
 import { CommonModule } from 'src/lib/common/common.module';
 
 @Module({
   imports: [TypegooseModule.forFeature([Part]), CommonModule],
-  controllers: [PartsController],
-  providers: [PartsService],
-  exports: [PartsService],
+  controllers: [AdminPartsController],
+  providers: [AdminPartsService],
+  exports: [AdminPartsService],
 })
-export class PartsModule {}
+export class AdminPartsModule {}

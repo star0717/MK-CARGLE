@@ -17,7 +17,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { AuthToken } from 'src/lib/decorators/decorators';
-import { Agency } from 'src/models/agency.entity';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   DeleteObjectIds,
@@ -25,69 +24,70 @@ import {
   FindParameters,
   FindResult,
 } from 'src/models/base.entity';
-import { AgenciesService } from './agencies.service';
+import { PartsSet } from 'src/models/partsset.entity';
+import { PartssetsService } from './partssets.service';
 
-@Controller('agencies')
-@ApiTags('거래처 관리 API')
-export class AgenciesController {
-  constructor(private readonly service: AgenciesService) {}
+@Controller('partssets')
+@ApiTags('세트 부품 관리 API')
+export class PartssetsController {
+  constructor(private readonly service: PartssetsService) {}
 
   @Post()
-  @ApiOperation({ summary: `[WORKER] 새로운 Agency 데이터 추가` })
-  @ApiBody({ description: `추가할 Agency 데이터`, type: Agency })
+  @ApiOperation({ summary: `[WORKER] 새로운 PartsSet 데이터 추가` })
+  @ApiBody({ description: `추가할 PartsSet 데이터`, type: PartsSet })
   @ApiCreatedResponse({
-    description: `추가된 Agency 데이터`,
-    type: Agency,
+    description: `추가된 PartsSet 데이터`,
+    type: PartsSet,
   })
   async create(
-    @Body() doc: Agency,
+    @Body() doc: PartsSet,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<Agency> {
+  ): Promise<PartsSet> {
     return await this.service.create(token, doc);
   }
 
   @Get()
   @ApiOperation({
-    summary: `[WORKER] 조건에 해당하는 Agency 배열 데이터를 페이징 정보와 함께 반환`,
+    summary: `[WORKER] 조건에 해당하는 PartsSet 배열 데이터를 페이징 정보와 함께 반환`,
   })
   @ApiResponse({
-    description: `검색된 Agency 배열 데이터와 페이징 정보`,
+    description: `검색된 PartsSet 배열 데이터와 페이징 정보`,
     type: FindResult,
   })
   async findByOptions(
     @Query() fParams: FindParameters,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<FindResult<Agency>> {
+  ): Promise<FindResult<PartsSet>> {
     return await this.service.findByOptions(token, fParams);
   }
 
   @Get(':id')
   @ApiOperation({
-    summary: `[WORKER] id에 해당하는 Agency 데이터 반환`,
+    summary: `[WORKER] id에 해당하는 PartsSet 데이터 반환`,
   })
-  @ApiParam({ name: 'id', description: `해당 Agency의 오브젝트 ID` })
+  @ApiParam({ name: 'id', description: `해당 PartsSet의 오브젝트 ID` })
   @ApiResponse({
-    description: `검색된 Agency 데이터`,
-    type: Agency,
+    description: `검색된 PartsSet 데이터`,
+    type: PartsSet,
   })
   async findById(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<Agency> {
+  ): Promise<PartsSet> {
     return await this.service.findById(token, id);
   }
 
   @Patch(':id')
   @ApiOperation({
-    summary: `[WORKER] id에 해당하는 Agency 데이터 갱신`,
+    summary: `[WORKER] id에 해당하는 PartsSet 데이터 갱신`,
   })
-  @ApiParam({ name: 'id', description: `해당 Agency의 오브젝트 ID` })
-  @ApiBody({ description: `갱신된 Agency 데이터`, type: Agency })
+  @ApiParam({ name: 'id', description: `해당 PartsSet의 오브젝트 ID` })
+  @ApiBody({ description: `갱신된 PartsSet 데이터`, type: PartsSet })
   async findByIdAndUpdate(
     @Param('id') id: string,
-    @Body() doc: Agency,
+    @Body() doc: PartsSet,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<Agency> {
+  ): Promise<PartsSet> {
     console.log('update in BaseController');
     console.log(doc);
     return await this.service.findByIdAndUpdate(token, id, doc);
@@ -95,11 +95,11 @@ export class AgenciesController {
 
   @Delete(':id')
   @ApiOperation({
-    summary: `[WORKER] id에 해당하는 Agency 데이터 삭제`,
+    summary: `[WORKER] id에 해당하는 PartsSet 데이터 삭제`,
   })
-  @ApiParam({ name: 'id', description: `해당 Agency의 오브젝트 ID` })
+  @ApiParam({ name: 'id', description: `해당 PartsSet의 오브젝트 ID` })
   @ApiResponse({
-    description: `삭제된 Agency 데이터의 수`,
+    description: `삭제된 PartsSet 데이터의 수`,
     type: DeleteResult,
   })
   async findByIdAndRemove(
@@ -111,14 +111,14 @@ export class AgenciesController {
 
   @Post('/deletemany')
   @ApiOperation({
-    summary: `[ADMIN] 복수 오브젝트 ID에 해당하는 Agency 데이터들을 삭제`,
+    summary: `[ADMIN] 복수 오브젝트 ID에 해당하는 PartsSet 데이터들을 삭제`,
   })
   @ApiBody({
     description: `삭제할 데이터들의 오브젝트ID들`,
     type: DeleteObjectIds,
   })
   @ApiResponse({
-    description: `삭제된 Agency 데이터의 수`,
+    description: `삭제된 PartsSet 데이터의 수`,
     type: DeleteResult,
   })
   async deleteManyByIds(

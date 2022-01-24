@@ -26,12 +26,12 @@ import {
   FindResult,
 } from 'src/models/base.entity';
 import { Part } from 'src/models/part.entity';
-import { PartsService } from './parts.service';
+import { AdminPartsService } from './parts.service';
 
 @Controller('admin/parts')
 @ApiTags('시스템 관리자용 부품관리 API')
-export class PartsController {
-  constructor(private readonly service: PartsService) {}
+export class AdminPartsController {
+  constructor(private readonly service: AdminPartsService) {}
 
   @Post()
   @ApiOperation({ summary: `[ADMIN] 새로운 Part를 추가` })
