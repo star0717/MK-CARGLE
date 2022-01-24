@@ -1,13 +1,8 @@
 import React from "react";
 import { NextPage } from "next";
-import { BodyWrapper } from "src/components/styles/LayoutComponents";
-import {
-  RsWrapper,
-  WholeWrapper,
-} from "src/components/styles/CommonComponents";
-import { _MainProps } from "src/configure/_props.entity";
+import { WholeWrapper } from "src/components/styles/CommonComponents";
 
-const ManPartsPage: NextPage<_MainProps> = (props) => {
+const EditBusinessModal: NextPage<any> = () => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -27,13 +22,7 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return (
-    <BodyWrapper>
-      <WholeWrapper>
-        <RsWrapper>세트관리여</RsWrapper>
-      </WholeWrapper>
-    </BodyWrapper>
-  );
+  return <WholeWrapper></WholeWrapper>;
 };
 
-export default ManPartsPage;
+export default EditBusinessModal;

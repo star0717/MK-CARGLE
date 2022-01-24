@@ -1289,7 +1289,7 @@ export const TableHead = styled.ul<any>`
   justify-content: space-between;
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
-  border-radius: ${(props) => props.radius || ``};
+  border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
   background: #343a40;
   color: #fff;
   padding: ${(props) => props.padding || `0px 20px`};
@@ -1816,4 +1816,36 @@ export const StampWrapper = styled.div<any>`
     );
   background-position: 0 0, 10px 10px;
   background-size: 20px 20px;
+`;
+
+export const Comment = styled.div<any>`
+  display: none;
+  position: absolute;
+  width: 100px;
+  padding: 8px;
+  left: 0;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+
+  &:after {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -10px;
+    border: solid transparent;
+    border-color: rgba(51, 51, 51, 0);
+    border-bottom-color: #333;
+    border-width: 10px;
+    pointer-events: none;
+    content: " ";
+  }
+
+  &span {
+  }
 `;
