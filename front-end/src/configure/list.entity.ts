@@ -18,25 +18,25 @@ export const menuList = [
   {
     key: "1",
     menuName: "부품",
-    link: "#",
+    link: UseLink.MAN_PARTS,
     auth: UserAuthority.WORKER,
     subMenu: [
       {
         key: "1.1",
         subMenuName: "부품 관리",
-        subMenuLink: "#",
+        subMenuLink: UseLink.MAN_PARTS,
         subMenuAuth: UserAuthority.WORKER,
       },
       {
         key: "1.2",
         subMenuName: "세트 관리",
-        subMenuLink: "#",
+        subMenuLink: UseLink.MAN_SET,
         subMenuAuth: UserAuthority.WORKER,
       },
       {
         key: "1.3",
         subMenuName: "거래처 관리",
-        subMenuLink: "#",
+        subMenuLink: UseLink.MAN_BUSINESS,
         subMenuAuth: UserAuthority.WORKER,
       },
     ],

@@ -53,7 +53,7 @@ const SignUpPage: NextPage = () => {
 export default SignUpPage;
 
 export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
+  context: GetServerSidePropsContext<ParsedUrlQuery>
 ) => {
   const url: string = context.resolvedUrl; // 현재 url (query 제외)
   const useUrlArray: string[] = Object.values(UseLink); // 사용가능한 url 배열

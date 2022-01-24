@@ -15,6 +15,7 @@ export const MainRoute = {
   MYPAGE: "mypage",
   TEST: "test",
   ADMIN: "admin",
+  PARTS: "parts",
 };
 
 /**
@@ -27,6 +28,8 @@ export const SubRoute = {
   MAN_COMPANIES: "man_companies",
   USERS: "users",
   MAN_PARTS: "man_parts",
+  MAN_SET: "man_set",
+  MAN_BUSINESS: "man_business",
   MOLIT_ITEMS: "molit_items",
   TEST: "test",
 };
@@ -64,6 +67,9 @@ export const UseLink = {
   FIND_EMAIL: `${BaseLink.SIGN}/${SignRoute.FINDEMAIL}`,
   FIND_PASSWORD: `${BaseLink.SIGN}/${SignRoute.FINDPASSWORD}`,
   MAIN: `${BaseLink.V}/${MainRoute.MAIN}`,
+  MAN_PARTS: `${BaseLink.V}/${MainRoute.PARTS}/${SubRoute.MAN_PARTS}`,
+  MAN_SET: `${BaseLink.V}/${MainRoute.PARTS}/${SubRoute.MAN_SET}`,
+  MAN_BUSINESS: `${BaseLink.V}/${MainRoute.PARTS}/${SubRoute.MAN_BUSINESS}`,
   MYPAGE_ACCOUNT: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.ACCOUNT}`,
   MYPAGE_WORKER: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.WORKER}`,
   TEST: `${BaseLink.V}/${MainRoute.TEST}`,
