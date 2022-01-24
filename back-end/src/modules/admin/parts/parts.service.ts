@@ -40,6 +40,7 @@ export class AdminPartsService extends SafeService<Part> {
       docs,
       totalDocs: docs.length,
     };
+    this.commonService.setAllParts(result);
     return result;
   }
 
