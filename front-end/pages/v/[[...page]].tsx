@@ -43,6 +43,7 @@ import { CompanyApproval } from "../../src/constants/model.const";
 import ManPartsPage from "src/components/page/ManPart";
 import ManSetPage from "src/components/page/ManSet";
 import ManBusinessPage from "src/components/page/ManBusiness";
+import { Part } from "src/models/part.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -239,6 +240,18 @@ export const getServerSideProps: GetServerSideProps = async (
           ],
         };
         return successResult;
+
+      // case UseLink.MAN_PARTS: {
+      //   successResult.props.data = await axios
+      //     .get(
+      //       genApiPath(MaintenanceApiPath.all_parts, {
+      //         isServerSide: true,
+      //       }),
+      //       authConfig
+      //     )
+      //     .then((res: AxiosResponse<FindResult<Part>, Part>) => res.data);
+      //   return successResult;
+      // }
 
       case UseLink.MYPAGE_WORKER: {
         successResult.props.data = await axios

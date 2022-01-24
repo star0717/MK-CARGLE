@@ -5,8 +5,9 @@ import {
   RsWrapper,
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
+import { _MainProps } from "src/configure/_props.entity";
 
-const ManPartsPage: NextPage = () => {
+const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
