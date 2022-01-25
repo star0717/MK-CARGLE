@@ -1,3 +1,7 @@
+import {
+  _iAgencies,
+  _iDeleteAgencies,
+} from "./../interfaces/user/userAct.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
   ConfirmPWD,
@@ -35,17 +39,19 @@ import {
   _iGetAdminParts,
   _iGetAdminPartsClass,
   _iDeleteAdminPartsMany,
-  _iPostAdminParts,
+  _iAdminParts,
 } from "../interfaces";
 
 import {
   AuthApiPath,
   AdminApiPath,
   SettingsApiPath,
+  AgenciesApiPath,
 } from "../../src/constants/api-path.const";
 import { genApiPath } from "../../src/modules/commonModule";
 import { DeleteObjectIds } from "../../src/models/base.entity";
 import { Part } from "../../src/models/part.entity";
+import { Agency } from "src/models/agency.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -721,14 +727,13 @@ export async function _aDeleteAdminPartsMany(ids: string[]) {
  * @returns
  */
 export async function _aPostAdminPart(setPart: Partial<Part>) {
-  console.log("API : ", setPart);
   const req = await axios
     .post(genApiPath(AdminApiPath.parts), setPart)
     .then((res: AxiosResponse<string, string[]>): string => {
       return res.data;
     });
 
-  const result: _iPostAdminParts = {
+  const result: _iAdminParts = {
     type: ActionAPIs.ADMIN_PARTS,
     payload: req,
   };
@@ -747,7 +752,7 @@ export async function _aPatchAdminPart(id: string, setPart: Partial<Part>) {
       return res.data;
     });
 
-  const result: _iPostAdminParts = {
+  const result: _iAdminParts = {
     type: ActionAPIs.ADMIN_PARTS,
     payload: req,
   };
@@ -766,8 +771,106 @@ export async function _aGetAdminPart(id: string) {
       return res.data;
     });
 
-  const result: _iPostAdminParts = {
+  const result: _iAdminParts = {
     type: ActionAPIs.ADMIN_PARTS,
+    payload: req,
+  };
+  return result;
+}
+
+// /**
+//  * 모든 직원 리스트 반환
+//  * @param findParams
+//  * @returns
+//  */
+//  export async function _aGetAdminUsers(findParams: FindParameters) {
+//   const req: FindResult<User> = await axios
+//     .get(genApiPath(AdminApiPath.users, { findParams: findParams }))
+//     .then((res: AxiosResponse<FindResult<User>, User>): FindResult<User> => {
+//       return res.data;
+//     });
+
+//   const result: _iGetAdminUsers = {
+//     type: ActionAPIs.ADMIN_GET_USERS,
+//     payload: req,
+//   };
+//   return result;
+// }
+
+/**
+ * Agency 데이터 반환
+ * @param findParams
+ * @returns
+ */
+export async function GetAgencyPage(findParams: FindParameters) {
+  const req: FindResult<Agency> = await axios
+    .get(genApiPath(AgenciesApiPath.agencies, { findParams: findParams }))
+    .then(
+      (res: AxiosResponse<FindResult<Agency>, Agency>): FindResult<Agency> => {
+        return res.data;
+      }
+    );
+
+  const result: _iAgencies = {
+    type: ActionAPIs.AGENCIES,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Agency 데이터 추가
+ * @param dataToSubmit
+ * @returns
+ */
+export async function PostAgency(dataToSubmit: Partial<Agency>) {
+  const req = await axios
+    .post(genApiPath(AgenciesApiPath.agencies), dataToSubmit)
+    .then((res: AxiosResponse<Agency, Agency[]>): Agency => {
+      return res.data;
+    });
+
+  const result: _iAgencies = {
+    type: ActionAPIs.AGENCIES,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Agency 데이터 갱신
+ * @param id _id
+ * @param dataToSubmit Agency
+ * @returns
+ */
+export async function PatchAgency(id: string, dataToSubmit: Partial<Agency>) {
+  const req = await axios
+    .patch(genApiPath(AgenciesApiPath.agencies, { id: id }), dataToSubmit)
+    .then((res: AxiosResponse<Agency, Agency[]>): Agency => {
+      return res.data;
+    });
+
+  const result: _iAgencies = {
+    type: ActionAPIs.AGENCIES,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Agency 데이터 삭제
+ * @param id _id
+ * @returns
+ */
+export async function DeleteAgency(id: string) {
+  const req: DeleteResult = await axios
+    .delete(genApiPath(AgenciesApiPath.agencies, { id: id }))
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteAgencies = {
+    type: ActionAPIs.AGENCIES,
     payload: req,
   };
   return result;

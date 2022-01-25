@@ -34,19 +34,25 @@ import { PagenationSection } from "src/components/common/sections";
 import { IoIosCloseCircle } from "react-icons/io";
 import EditBusinessModal from "./editBusinessModal";
 import AddBusinessModal from "./addBusinessModal";
+import { useResizeDetector } from "react-resize-detector";
+import { useDispatch } from "react-redux";
+import { DeleteAgency, GetAgencyPage } from "store/action/user.action";
+import { _iAgencies } from "store/interfaces";
+import { FindParameters } from "src/models/base.entity";
 
 const ManBusinessList: NextPage<any> = (props) => {
+  console.log(props);
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  const dispatch = useDispatch();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [modalOption, setModalOption] = useState<string>(""); // modal 내용
   const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
-  const [agencyList, setAgencyList] = useState<Agency[]>(props.data.docs); // 거래처 선택 리스트
+  const [agencyList, setAgencyList] = useState<Agency[]>(props.findResult); // 거래처 선택 리스트
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
   const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
   const [clickDoc, setClickDoc] = useState<Agency>(); // 선택한 부품 항목 데이터
@@ -82,6 +88,22 @@ const ManBusinessList: NextPage<any> = (props) => {
       return setAgencyList(newList);
     });
   };
+
+  /**
+   * 부품 분류 선택 handler -> 리스트 출력
+   */
+  useEffect(() => {
+    setCheckedList([]);
+    const param: FindParameters = {
+      take: 10,
+      filterKey: props.searchOption,
+      filterValue: props.filterValue,
+      useRegSearch: true,
+    };
+    dispatch(GetAgencyPage(param)).then((res: any) => {
+      setAgencyList(res.payload.docs);
+    });
+  }, [reset, modalOpen]);
 
   /**
    * 전체 선택 기능
@@ -139,8 +161,11 @@ const ManBusinessList: NextPage<any> = (props) => {
     setModalOpen(false);
   };
 
+  // resize 변수 선언
+  const { width, height, ref } = useResizeDetector();
+
   return (
-    <BodyWrapper>
+    <BodyWrapper ref={ref}>
       <WholeWrapper>
         <RsWrapper>
           <CommonTitleWrapper>
@@ -166,7 +191,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                     placeholder="검색할 업체의 상호명 또는, 담당자명을 입력하세요"
                     type="text"
                     value={searchText}
-                    onChagne={onInputSearchHandler}
+                    onChange={onInputSearchHandler}
                   />
                 </Wrapper>
                 <Wrapper width={`36px`} height={`46px`}>
@@ -203,6 +228,15 @@ const ManBusinessList: NextPage<any> = (props) => {
                   }
                   if (window.confirm("삭제하시겠습니까?")) {
                     if (checkedList.length === 1) {
+                      dispatch(DeleteAgency(checkedList[0])).then(
+                        (res: any) => {
+                          alert("삭제되었습니다.");
+                          setReset(reset + 1);
+                        },
+                        (err) => {
+                          alert("삭제에 실패했습니다.");
+                        }
+                      );
                       // dispatch(_aDeleteAdminPartsOne(checkedList[0])).then(
                       //   (res: _iDeleteAdminPartsOne) => {
                       //     alert("삭제되었습니다.");
@@ -317,7 +351,7 @@ const ManBusinessList: NextPage<any> = (props) => {
               )}
             </TableBody>
           </TableWrapper>
-          {/* <PagenationSection {...props} /> */}
+          <PagenationSection {...props} />
         </RsWrapper>
       </WholeWrapper>
       <Modal

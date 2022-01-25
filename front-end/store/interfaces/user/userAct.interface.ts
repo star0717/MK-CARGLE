@@ -273,6 +273,7 @@ export enum ActionAPIs {
   ADMIN_GET_USERS = "ADMIN_GET_USERS", // 모든 직원 리스트 반환
   ADMIN_GET_USERS_ID = "ADMIN_GET_USERS_ID", // 해당 직원 리스트 반환
   ADMIN_PARTS = "ADMIN_PARTS", //부품 추가,반환,수정...
+  AGENCIES = "AGENCIES", //거래처 관련 추가,반환,수정,삭제...
 
   // 고유 API
   ADMIN_PATCH_SINGUP_INFO = "ADMIN_PATCH_SINGUP_INFO", // 업체 가입 정보 수정
@@ -381,9 +382,19 @@ export class _iDeleteAdminPartsMany implements baseActionInterface {
   payload: DeleteResult;
 }
 
-export class _iPostAdminParts implements baseActionInterface {
+export class _iAdminParts implements baseActionInterface {
   type: ActionAPIs.ADMIN_PARTS;
   payload: string;
+}
+
+export class _iDeleteAgencies implements baseActionInterface {
+  type: ActionAPIs.AGENCIES;
+  payload: DeleteResult;
+}
+
+export class _iAgencies implements baseActionInterface {
+  type: ActionAPIs.AGENCIES;
+  payload: any;
 }
 
 /*****************************************************
@@ -401,4 +412,6 @@ export type ActionInterfaces =
   | _iGetAdminPartsClass
   | _iDeleteAdminPartsOne
   | _iDeleteAdminPartsMany
-  | _iPostAdminParts;
+  | _iAdminParts
+  | _iDeleteAgencies
+  | _iAgencies;
