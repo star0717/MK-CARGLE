@@ -149,13 +149,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                 <Wrapper
                   height={`80px`}
                   al={`flex-start`}
-                  padding={
-                    width < 1510
-                      ? width < 1080
-                        ? `0px 20px`
-                        : `0px 50px`
-                      : `0px 100px`
-                  }
+                  padding={width < 1450 ? `0px 50px` : `0px 100px`}
                   dr={`row`}
                   bgColor={`#fafafa`}
                 >
@@ -211,24 +205,27 @@ const Header: NextPage<_pLayoutProps> = (props) => {
                     }
                     dr={`row`}
                     al={`flex-start`}
+                    wrap={`no-wrap`}
                   >
-                    <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                      <Wrapper
-                        radius={`100px`}
-                        al={`center`}
-                        margin={`0px 10px`}
-                        width={`45px`}
-                        height={`45px`}
-                      ></Wrapper>
-                    </Wrapper>
-
-                    <Wrapper
-                      radius={`100px`}
-                      al={`center`}
-                      margin={`0px 10px`}
-                      width={`45px`}
-                      height={`45px`}
-                    ></Wrapper>
+                    {props.tokenValue &&
+                      props.tokenValue.cApproval === CompanyApproval.DONE && (
+                        <Wrapper
+                          isRelative={true}
+                          width={`auto`}
+                          al={`flex-end`}
+                        >
+                          <HeaderIconButton>
+                            <FaBell />
+                          </HeaderIconButton>
+                        </Wrapper>
+                      )}
+                    {props.tokenValue &&
+                      (props.tokenValue.cApproval === CompanyApproval.DONE ||
+                        props.tokenValue.cApproval === CompanyApproval.ING) && (
+                        <HeaderIconButton onClick={onSignOutHandler}>
+                          <MdLogout />
+                        </HeaderIconButton>
+                      )}
                   </Wrapper>
                 </Wrapper>
               </HeaderHover>

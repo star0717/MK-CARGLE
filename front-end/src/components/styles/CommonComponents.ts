@@ -1924,7 +1924,7 @@ export const ToolTip = styled.span<any>`
   margin-top: ${(props) => props.marginTop};
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
   text-decoration: ${(props) => props.decoration};
-  text-overflow: ellipsis;
+  text-overflow: ${(props) => props.textOverflow || `ellipsis`};
 
   &:hover ${ToolTipText} {
     display: ${(props) => props.display || `block`};

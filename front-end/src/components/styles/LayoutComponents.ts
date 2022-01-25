@@ -39,6 +39,7 @@ export const HeaderWrapper = styled.div<any>`
   animation: ${appearAnimation} 1s forwards;
   overflow-x: hidden;
   box-shadow: ${(props) => props.shadow};
+  flex-wrap: ${(props) => props.wrap || `no-wrap`};
 `;
 
 export const HeaderHover = styled.div<any>`
@@ -48,6 +49,7 @@ export const HeaderHover = styled.div<any>`
   box-shadow: ${(props) => props.shadow};
   position: absolute;
   flex-direction: ${(props) => props.dr};
+  flex-wrap: ${(props) => props.wrap || `no-wrap`};
 `;
 
 export const HeaderFixed = styled.div<any>`
@@ -68,6 +70,7 @@ export const HeaderFixed = styled.div<any>`
     position: absolute;
     transition: 0.5s;
     flex-direction: ${(props) => props.dr};
+    flex-wrap: ${(props) => props.wrap || `no-wrap`};
   }
 `;
 
@@ -100,6 +103,7 @@ export const HeaderText = styled.p<any>`
   white-space: pre-wrap;
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
+  flex-wrap: ${(props) => props.wrap || `no-wrap`};
 
   & span {
     font-weight: 700;
