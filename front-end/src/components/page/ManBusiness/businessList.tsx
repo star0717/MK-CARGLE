@@ -156,12 +156,26 @@ const ManBusinessList: NextPage<any> = (props) => {
                       setModalOpen(true);
                     }}
                   >
-                    <TableRowLIST>{doc.name}</TableRowLIST>
-                    <TableRowLIST>{doc.hpNum}</TableRowLIST>
-                    <TableRowLIST>{doc.address1}</TableRowLIST>
-                    <TableRowLIST>{doc.manager}</TableRowLIST>
-                    <TableRowLIST>
-                      <ToolTipWrapper>
+                    <TableRowLIST width={`10%`}>
+                      <Checkbox kindOf={`TableCheckBox`}>
+                        <CheckInput type="checkbox" />
+                        <CheckMark></CheckMark>
+                      </Checkbox>
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`} zIndex={`1`}>
+                      {doc.name}
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`} zIndex={`1`}>
+                      {doc.hpNum}
+                    </TableRowLIST>
+                    <TableRowLIST width={`22%`} zIndex={`1`}>
+                      {doc.address1}
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`} zIndex={`1`}>
+                      {doc.manager}
+                    </TableRowLIST>
+                    <TableRowLIST width={`23%`} zIndex={`1`}>
+                      <ToolTipWrapper isRelative={`true`} zIndex={`100`}>
                         <ToolTip>
                           {doc.memo}
                           <ToolTipText>{doc.memo}</ToolTipText>
@@ -171,7 +185,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                   </TableRow>
                 ))
               ) : (
-                <Wrapper minHeight={`500px`}>
+                <Wrapper minHeight={`445x`}>
                   <Text fontSize={`48px`} color={`#c4c4c4`}>
                     <BsEmojiFrownFill />
                   </Text>

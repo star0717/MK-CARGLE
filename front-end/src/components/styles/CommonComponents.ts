@@ -1831,7 +1831,7 @@ export const ToolTipWrapper = styled.p<any>`
   justify-content: ${(props) => props.ju};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || `500`};
-  line-height: ${(props) => props.lineHeight || `1.6`};
+
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
@@ -1847,12 +1847,10 @@ export const ToolTipWrapper = styled.p<any>`
   font-style: ${(props) => props.fontStyle};
   cursor: ${(props) => props.cursor};
   z-index: 1;
-  white-space: pre-wrap;
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
   text-decoration: ${(props) => props.decoration};
-  text-overflow: ellipsis;
 
   & svg {
   }
@@ -1871,6 +1869,7 @@ export const ToolTipText = styled.span<any>`
   max-width: ${(props) => props.maxWidth || `280px`};
   max-height: ${(props) => props.maxHeight || `100px`};
   overflow: auto;
+  white-space: pre-wrap;
   border: 1px solid;
   border-radius: 5px;
   padding: 5px;
@@ -1878,7 +1877,6 @@ export const ToolTipText = styled.span<any>`
   color: #fff;
   background: #343a40;
   text-align: start;
-  text-overflow: ellipsis;
   padding: 10px 20px;
 
   & svg {
@@ -1892,7 +1890,7 @@ export const ToolTipText = styled.span<any>`
 `;
 
 export const ToolTip = styled.span<any>`
-  overflow: ${(props) => props.overflow};
+  overflow: ${(props) => props.overflow || `hidden`};
   width: ${(props) => props.width || `260px`};
   height: ${(props) => props.height};
   min-height: ${(props) => props.minHeight};
@@ -1925,6 +1923,7 @@ export const ToolTip = styled.span<any>`
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
   text-decoration: ${(props) => props.decoration};
   text-overflow: ${(props) => props.textOverflow || `ellipsis`};
+  white-space: nowrap;
 
   &:hover ${ToolTipText} {
     display: ${(props) => props.display || `block`};

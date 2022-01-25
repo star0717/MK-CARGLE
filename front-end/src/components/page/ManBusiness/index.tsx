@@ -43,13 +43,15 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-
+  const businessListProps: any = {
+    ...props,
+  };
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
   return (
     <BodyWrapper>
-      <ManBusinessList {...props} />
+      <ManBusinessList {...businessListProps} />
     </BodyWrapper>
   );
 };
