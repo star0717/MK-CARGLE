@@ -109,7 +109,6 @@ export const Wrapper = styled.div<any>`
   line-height: ${(props) => props.lineHeight};
   text-align: ${(props) => props.textAlign};
   animation: ${appearAnimation} 1s forwards;
-  opacity: ${(props) => props.opacity};
 
   &.active div {
     color: ${(props) => props.theme.black_C};
@@ -1869,8 +1868,8 @@ export const ToolTipText = styled.span<any>`
   width: ${(props) => props.width || `280px`};
   max-width: ${(props) => props.maxWidth || `280px`};
   max-height: ${(props) => props.maxHeight || `100px`};
-  overflow: auto;
-  white-space: pre-wrap;
+  overflow: hidden;
+  white-space: pre-wrap
   border: 1px solid;
   border-radius: 5px;
   padding: 5px;

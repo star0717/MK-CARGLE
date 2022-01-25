@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { NextPage } from "next";
 import Modal from "react-modal";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
@@ -45,16 +45,81 @@ const ManBusinessList: NextPage<any> = (props) => {
    *********************************************************************/
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [modalOption, setModalOption] = useState<string>(""); // modal 내용
+  const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
+  const [agencyList, setAgencyList] = useState<Agency[]>(props.data.docs); // 거래처 선택 리스트
+  const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
+  const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
+  const [clickDoc, setClickDoc] = useState<Agency>(); // 선택한 부품 항목 데이터
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
 
+  /**
+   * 검색 input handler
+   * @param e
+   */
+  const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  /**
+   * 검색 handler
+   * @param e
+   */
+  const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const newList: Agency[] = [];
+    if (!searchText) {
+      setReset(reset + 1);
+    }
+    agencyList.forEach((agency: Agency) => {
+      if (
+        agency.manager.includes(searchText) ||
+        agency.name.includes(searchText)
+      ) {
+        newList.push(agency);
+      }
+      return setAgencyList(newList);
+    });
+  };
+
+  /**
+   * 전체 선택 기능
+   */
+  const onCheckedAll = useCallback(
+    (checked) => {
+      if (checked) {
+        const checkedListArray: string[] = [];
+        agencyList.forEach((list: Agency) => checkedListArray.push(list._id));
+        setCheckedList(checkedListArray);
+      } else {
+        setCheckedList([]);
+      }
+    },
+    [agencyList]
+  );
+
+  /**
+   * 개별 선택 기능
+   */
+  const onCheckedElement = useCallback(
+    (checked: boolean, list: Agency) => {
+      if (checked) {
+        setCheckedList([...checkedList, list._id]);
+      } else {
+        setCheckedList(checkedList.filter((el) => el !== list._id));
+      }
+    },
+    [checkedList]
+  );
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
   const BusinessModalProps: any = {
     ...props,
     setModalOpen,
+    clickDoc,
+    setClickDoc,
     style: { height: "800px", width: "500px" },
   };
   /*********************************************************************
@@ -85,10 +150,9 @@ const ManBusinessList: NextPage<any> = (props) => {
             </CommonSubTitle>
           </CommonTitleWrapper>
           <Wrapper>
-            <form>
+            <form onSubmit={onSearchFormHandler}>
               <SearchInputWrapper
                 type="text"
-                placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
                 width={`678px`}
                 padding={`0px 5px`}
                 dr={`row`}
@@ -99,8 +163,10 @@ const ManBusinessList: NextPage<any> = (props) => {
                   <SearchInput
                     width={`632px`}
                     padding={`0px 5px 0px 5px`}
-                    placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+                    placeholder="검색할 업체의 상호명 또는, 담당자명을 입력하세요"
                     type="text"
+                    value={searchText}
+                    onChagne={onInputSearchHandler}
                   />
                 </Wrapper>
                 <Wrapper width={`36px`} height={`46px`}>
@@ -127,16 +193,67 @@ const ManBusinessList: NextPage<any> = (props) => {
               >
                 신규등록
               </SmallButton>
-              <SmallButton width={`150px`} fontSize={`16px`} kindOf={`cancle`}>
+              <SmallButton
+                width={`150px`}
+                fontSize={`16px`}
+                kindOf={`cancle`}
+                onClick={() => {
+                  if (checkedList.length === 0) {
+                    return alert("항목을 선택해주세요.");
+                  }
+                  if (window.confirm("삭제하시겠습니까?")) {
+                    if (checkedList.length === 1) {
+                      // dispatch(_aDeleteAdminPartsOne(checkedList[0])).then(
+                      //   (res: _iDeleteAdminPartsOne) => {
+                      //     alert("삭제되었습니다.");
+                      //     setReset(reset + 1);
+                      //   },
+                      //   (err) => {
+                      //     alert("삭제에 실패했습니다.");
+                      //   }
+                      // );
+                    } else {
+                      // dispatch(_aDeleteAdminPartsMany(checkedList)).then(
+                      //   (res: _iDeleteAdminPartsMany) => {
+                      //     alert("삭제되었습니다.");
+                      //     setReset(reset + 1);
+                      //   },
+                      //   (err) => {
+                      //     alert("삭제에 실패했습니다.");
+                      //   }
+                      // );
+                    }
+                  } else {
+                    return false;
+                  }
+                }}
+              >
                 삭제하기
               </SmallButton>
             </Wrapper>
           </Wrapper>
           <TableWrapper margin={`50px 0px 0px`}>
             <TableHead>
-              <TableHeadLIST width={`10%`}>
+              <TableHeadLIST
+                width={`10%`}
+                onClick={(e: React.MouseEvent<HTMLLIElement>) => {
+                  e.stopPropagation();
+                }}
+              >
                 <Checkbox kindOf={`TableCheckBox`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      onCheckedAll(e.target.checked);
+                    }}
+                    checked={
+                      checkedList.length === 0
+                        ? false
+                        : checkedList.length === agencyList.length
+                        ? true
+                        : false
+                    }
+                  />
                   <CheckMark></CheckMark>
                 </Checkbox>
               </TableHeadLIST>
@@ -147,38 +264,44 @@ const ManBusinessList: NextPage<any> = (props) => {
               <TableHeadLIST width={`23%`}>메모</TableHeadLIST>
             </TableHead>
             <TableBody>
-              {props.data.totalDocs > 0 ? (
-                props.data.docs.map((doc: Agency) => (
+              {agencyList.length > 0 ? (
+                agencyList.map((list: Agency) => (
                   <TableRow
-                    key={doc._id}
+                    key={list._id}
                     onClick={() => {
+                      setClickDoc(list);
                       setModalOption("edit");
                       setModalOpen(true);
                     }}
                   >
-                    <TableRowLIST width={`10%`}>
+                    <TableRowLIST
+                      width={`10%`}
+                      onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                        e.stopPropagation()
+                      }
+                    >
                       <Checkbox kindOf={`TableCheckBox`}>
-                        <CheckInput type="checkbox" />
+                        <CheckInput
+                          type="checkbox"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            onCheckedElement(e.target.checked, list)
+                          }
+                          checked={
+                            checkedList.includes(list._id) ? true : false
+                          }
+                        />
                         <CheckMark></CheckMark>
                       </Checkbox>
                     </TableRowLIST>
-                    <TableRowLIST width={`15%`} zIndex={`1`}>
-                      {doc.name}
-                    </TableRowLIST>
-                    <TableRowLIST width={`15%`} zIndex={`1`}>
-                      {doc.hpNum}
-                    </TableRowLIST>
-                    <TableRowLIST width={`22%`} zIndex={`1`}>
-                      {doc.address1}
-                    </TableRowLIST>
-                    <TableRowLIST width={`15%`} zIndex={`1`}>
-                      {doc.manager}
-                    </TableRowLIST>
-                    <TableRowLIST width={`23%`} zIndex={`1`}>
-                      <ToolTipWrapper isRelative={`true`} zIndex={`100`}>
+                    <TableRowLIST width={`15%`}>{list.name}</TableRowLIST>
+                    <TableRowLIST width={`15%`}>{list.hpNum}</TableRowLIST>
+                    <TableRowLIST width={`22%`}>{list.address1}</TableRowLIST>
+                    <TableRowLIST width={`15%`}>{list.manager}</TableRowLIST>
+                    <TableRowLIST width={`23%`}>
+                      <ToolTipWrapper>
                         <ToolTip>
-                          {doc.memo}
-                          <ToolTipText>{doc.memo}</ToolTipText>
+                          {list.memo}
+                          <ToolTipText>{list.memo}</ToolTipText>
                         </ToolTip>
                       </ToolTipWrapper>
                     </TableRowLIST>
@@ -192,39 +315,6 @@ const ManBusinessList: NextPage<any> = (props) => {
                   <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
                 </Wrapper>
               )}
-              {/* <TableRow>
-                <TableRowLIST width={`10%`}>
-                  <Checkbox kindOf={`TableCheckBox`}>
-                    <CheckInput type="checkbox" />
-                    <CheckMark></CheckMark>
-                  </Checkbox>
-                </TableRowLIST>
-                <TableRowLIST width={`15%`}>상호명</TableRowLIST>
-                <TableRowLIST width={`15%`}>전화번호</TableRowLIST>
-                <TableRowLIST width={`22%`}>주소</TableRowLIST>
-                <TableRowLIST width={`15%`}>담당자명</TableRowLIST>
-                <TableRowLIST width={`23%`}>
-                  <ToolTipWrapper>
-                    <ToolTip>
-                      메모
-                      <ToolTipText>
-                        와 나 진짜 이거 만드느라 죽을뻔 했는데 다행히 잘
-                        만들어진 것 같은 느낌이 드는게 이제 이게 글자 수가
-                        길어져도 알아서 줄바꿈도 될거고 그쵸? 그리고 이제 이게
-                        스크롤도 기가 막히게 되니까 별 문제가 없길 바라는 마음
-                        뿐이네요.아 근데 이게 너무 빡빡하게 보이니까 패딩을
-                        추가해야겠네 그러네
-                      </ToolTipText>
-                    </ToolTip>
-                  </ToolTipWrapper>
-                </TableRowLIST>
-              </TableRow>
-              <Wrapper minHeight={`445px`}>
-                <Text fontSize={`48px`} color={`#c4c4c4`}>
-                  <BsEmojiFrownFill />
-                </Text>
-                <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
-              </Wrapper> */}
             </TableBody>
           </TableWrapper>
           {/* <PagenationSection {...props} /> */}
