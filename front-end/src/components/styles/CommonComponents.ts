@@ -1376,6 +1376,38 @@ export const TableRowLIST = styled.li<any>`
   text-align: start;
 `;
 
+export const Comment = styled.div<any>`
+  display: none;
+  position: absolute;
+  width: 100px;
+  padding: 8px;
+  left: 0;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background: #333;
+  color: #fff;
+  font-size: 14px;
+
+  &:after {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -10px;
+    border: solid transparent;
+    border-color: rgba(51, 51, 51, 0);
+    border-bottom-color: #333;
+    border-width: 10px;
+    pointer-events: none;
+    content: " ";
+  }
+
+  &span {
+  }
+`;
+
 /** pagenation */
 
 export const PagenationWrapper = styled.div<any>`
@@ -1787,6 +1819,126 @@ export const Checkbox = styled.label<any>`
   }
 `;
 
+export const ToolTipWrapper = styled.p<any>`
+  overflow: ${(props) => props.overflow};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
+  display: ${(props) => props.display};
+  flex-direction: ${(props) => props.dr};
+  align-items: ${(props) => props.al};
+  justify-content: ${(props) => props.ju};
+  font-size: ${(props) => props.fontSize || `16px`};
+  font-weight: ${(props) => props.fontWeight || `500`};
+  line-height: ${(props) => props.lineHeight || `1.6`};
+  color: ${(props) => props.color};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  background: ${(props) => props.background};
+  text-align: ${(props) => props.textAlign || `center`};
+  transition: 0.5s;
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+  font-style: ${(props) => props.fontStyle};
+  cursor: ${(props) => props.cursor};
+  z-index: 1;
+  white-space: pre-wrap;
+  margin-bottom: ${(props) => props.marginBottom};
+  margin-top: ${(props) => props.marginTop};
+  letter-spacing: ${(props) => props.letterSpacing || `0px`};
+  text-decoration: ${(props) => props.decoration};
+  text-overflow: ellipsis;
+
+  & svg {
+  }
+
+  & span {
+  }
+
+  &:hover {
+  }
+`;
+export const ToolTipText = styled.span<any>`
+  display: none;
+  position: absolute;
+  width: ${(props) => props.width || `280px`};
+  max-width: ${(props) => props.maxWidth || `280px`};
+  max-height: ${(props) => props.maxHeight || `100px`};
+  overflow: auto;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  color: #fff;
+  background: #343a40;
+  text-align: start;
+  text-overflow: ellipsis;
+  padding: 10px 20px;
+
+  & svg {
+  }
+
+  & span {
+  }
+
+  &:hover {
+  }
+`;
+
+export const ToolTip = styled.span<any>`
+  overflow: ${(props) => props.overflow};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
+  display: ${(props) => props.display || `inline-block`};
+  flex-direction: ${(props) => props.dr};
+  align-items: ${(props) => props.al};
+  justify-content: ${(props) => props.ju};
+  font-size: ${(props) => props.fontSize || `16px`};
+  font-weight: ${(props) => props.fontWeight || `500`};
+  line-height: ${(props) => props.lineHeight || `1.6`};
+  color: ${(props) => props.color};
+  margin: ${(props) => props.margin || `0px`};
+  padding: ${(props) => props.padding};
+  background: ${(props) => props.background};
+  text-align: ${(props) => props.textAlign || `center`};
+  transition: 0.5s;
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+  font-style: ${(props) => props.fontStyle};
+  cursor: ${(props) => props.cursor};
+  z-index: 1;
+  white-space: pre-wrap;
+  margin-bottom: ${(props) => props.marginBottom};
+  margin-top: ${(props) => props.marginTop};
+  letter-spacing: ${(props) => props.letterSpacing || `0px`};
+  text-decoration: ${(props) => props.decoration};
+  text-overflow: ellipsis;
+
+  &:hover ${ToolTipText} {
+    display: ${(props) => props.display || `block`};
+  }
+
+  &:hover {
+    background-color: #f5f5f5;
+    ${(props) => props.kindOf === `focus` && `background : #f5f5f5;`}
+    color: #314fa5;
+    ${(props) => props.kindOf === `focus` && `color : #314FA5;`}
+    text-decoration: underline;
+    ${(props) => props.kindOf === `focus` && `text-decoration : none;`}
+  }
+`;
+
 // &:hover ${CheckInput} ~ ${CheckMark} {
 //   background-color: #edeeff;
 // }
@@ -1816,37 +1968,4 @@ export const StampWrapper = styled.div<any>`
     );
   background-position: 0 0, 10px 10px;
   background-size: 20px 20px;
-`;
-
-export const Comment = styled.div<any>`
-  display: none;
-  position: absolute;
-  width: 100px;
-  padding: 8px;
-  left: 0;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  background: #333;
-  color: #fff;
-  font-size: 14px;
-
-  &:after {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    margin-left: -10px;
-    border: solid transparent;
-    border-color: rgba(51, 51, 51, 0);
-    border-bottom-color: #333;
-    border-width: 10px;
-    pointer-events: none;
-    content: " ";
-  }
-
-  &span {
-    
-  }
 `;
