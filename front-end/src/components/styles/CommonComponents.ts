@@ -109,6 +109,7 @@ export const Wrapper = styled.div<any>`
   line-height: ${(props) => props.lineHeight};
   text-align: ${(props) => props.textAlign};
   animation: ${appearAnimation} 1s forwards;
+  opacity: ${(props) => props.opacity};
 
   &.active div {
     color: ${(props) => props.theme.black_C};
