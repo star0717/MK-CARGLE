@@ -1847,5 +1847,6 @@ export const Comment = styled.div<any>`
   }
 
   &span {
+    
   }
 `;
