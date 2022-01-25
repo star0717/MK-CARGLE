@@ -221,7 +221,7 @@ export const getServerSideProps: GetServerSideProps = async (
       case UseLink.MAN_PARTS: {
         successResult.props.data = await axios
           .get(
-            genApiPath(MaintenancesApiPath.maintenances_allParts, {
+            genApiPath(MaintenancesApiPath.maintenances, {
               isServerSide: true,
             }),
             authConfig
