@@ -48,7 +48,7 @@ export const HeaderHover = styled.div<any>`
   flex-direction: ${(props) => props.dr};
   box-shadow: ${(props) => props.shadow};
   position: absolute;
-  flex-direction: ${(props) => props.dr};
+  justify-content: ${(props) => props.ju || `space-between`};
   flex-wrap: ${(props) => props.wrap || `no-wrap`};
 `;
 
