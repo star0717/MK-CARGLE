@@ -5,7 +5,8 @@ import { Response } from 'express';
 import { readdirSync, rmSync, writeFileSync } from 'fs';
 import { Address } from 'nodemailer/lib/mailer';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
-import { OptionalInfo } from 'src/models/base.entity';
+import { FindResult, OptionalInfo } from 'src/models/base.entity';
+import { Part } from 'src/models/part.entity';
 
 @Injectable()
 export class CommonService {
@@ -183,5 +184,15 @@ export class CommonService {
         `${comName}의 대표자가 작업자의 계정을 삭제했습니다.<br>` +
         `현 시점부터 시스템에 로그인 할 수 없습니다.`,
     };
+  }
+
+  private allParts: FindResult<Part>;
+
+  setAllParts(parts: FindResult<Part>) {
+    this.allParts = parts;
+  }
+
+  getAllParts(): FindResult<Part> {
+    return this.allParts;
   }
 }

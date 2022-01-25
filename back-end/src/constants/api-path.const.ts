@@ -76,7 +76,6 @@ export class SettingsApiPath {
 export class MaintenancesApiPath {
   static BASE = '/maintenances/';
   static maintenances = MaintenancesApiPath.BASE;
-  static maintenances_allParts = MaintenancesApiPath.BASE + 'allparts';
 }
 
 // 거래처 관리 API
@@ -84,4 +83,9 @@ export class AgenciesApiPath {
   static BASE = '/agencies/';
   static agencies = AgenciesApiPath.BASE;
   static agencies_deleteMany = AgenciesApiPath.BASE + 'deletemany';
+}
+
+export class PartsApiPath {
+  static BASE = '/parts/';
+  static parts = PartsApiPath.BASE;
 }

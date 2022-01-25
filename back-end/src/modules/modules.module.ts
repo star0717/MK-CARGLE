@@ -2,11 +2,22 @@ import { Module } from '@nestjs/common';
 import { CompaniesModule } from './companies/companies.module';
 import { UsersModule } from './users/users.module';
 import { SettingsModule } from './settings/settings.module';
-import { PartsModule } from './admin/parts/parts.module';
+import { AdminPartsModule } from './admin/parts/parts.module';
 import { MaintenancesModule } from './maintenances/maintenances.module';
 import { AgenciesModule } from './agencies/agencies.module';
+import { PartssetsModule } from './partssets/partssets.module';
+import { PartsModule } from './parts/parts.module';
 
 @Module({
-  imports: [CompaniesModule, UsersModule, SettingsModule, PartsModule, MaintenancesModule, AgenciesModule],
+  imports: [
+    CompaniesModule,
+    UsersModule,
+    SettingsModule,
+    AdminPartsModule,
+    MaintenancesModule,
+    AgenciesModule,
+    PartssetsModule,
+    PartsModule,
+  ],
 })
 export class ModulesModule {}

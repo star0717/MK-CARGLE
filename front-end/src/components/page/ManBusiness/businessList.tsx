@@ -5,9 +5,8 @@ import {
   RsWrapper,
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
-import { _MainProps } from "src/configure/_props.entity";
 
-const ManPartsPage: NextPage<_MainProps> = (props) => {
+const ManBusinessList: NextPage<any> = () => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -30,10 +29,10 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   return (
     <BodyWrapper>
       <WholeWrapper>
-        <RsWrapper>세트관리여</RsWrapper>
+        <RsWrapper></RsWrapper>
       </WholeWrapper>
     </BodyWrapper>
   );
 };
 
-export default ManPartsPage;
+export default ManBusinessList;

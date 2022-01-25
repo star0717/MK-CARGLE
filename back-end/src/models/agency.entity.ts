@@ -12,7 +12,7 @@ export class Agency extends BaseEntity {
   @IsString()
   @prop({
     unique: false,
-    required: [true, '상호명은 필수 항목입니다.'],
+    required: true,
     trim: true,
   })
   public name: string;

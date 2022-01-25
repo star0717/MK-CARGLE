@@ -123,27 +123,6 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
     return tsContent;
   };
 
-  /**
-   * 국토부 옵션 표출을 위한 생성 함수
-   * @param options
-   * @returns
-   */
-  const genTsOption = (options: any) => {
-    let tsOption = "";
-    if (options) {
-      for (let i = 0; i < options.length; i++) {
-        if (i === options.length - 1) {
-          tsOption += options[i];
-        } else {
-          tsOption += `${options[i]}, `;
-        }
-      }
-    } else {
-      tsOption += "-";
-    }
-    return tsOption;
-  };
-
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/

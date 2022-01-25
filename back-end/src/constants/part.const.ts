@@ -5,6 +5,8 @@
  * 국토부 정비이력 관련 체계
  *****************************************************************/
 
+import { Part } from 'src/models/part.entity';
+
 // 국토부 정비이력 분류 클래스
 export class TsClass {
   label: string; // 레이블
@@ -580,4 +582,44 @@ export const getPartClass = (label: string): PartClass => {
     if (partClassList[i].label == label) return partClassList[i];
   }
   return null;
+};
+
+/**
+ * 코드에 해당하는 부품 아이템 반환
+ * @param code 부품의 코드
+ * @param list 부품 리스트
+ * @returns 부품 아이템 데이터
+ */
+export const getPartByCode = (code: string, list: Part[]): Part => {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].code == code) return list[i];
+  }
+  return null;
+};
+
+/**
+ * tsCode(국토교통부 이력코드)에 해당하는 부품 아이템 반환
+ * @param tsCode 부품의 tsCode
+ * @param list 부품 리스트
+ * @returns 부품 아이템 데이터
+ */
+export const getPartByTsCode = (tsCode: string, list: Part[]): Part => {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].tsCode == tsCode) return list[i];
+  }
+  return null;
+};
+
+/**
+ * 국토교통부 이력코드를 가지는 부품 리스트 반환
+ * @param list 전체 부품 리스트
+ * @returns tsCode를 가지는 부품 리스트
+ */
+export const getTsParts = (list: Part[]): Part[] => {
+  let tsParts: Part[] = [];
+  list.forEach((element) => {
+    if (element.tsCode) tsParts.push(element);
+  });
+
+  return tsParts;
 };

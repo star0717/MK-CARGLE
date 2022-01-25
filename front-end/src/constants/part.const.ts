@@ -5,6 +5,8 @@
  * 국토부 정비이력 관련 체계
  *****************************************************************/
 
+import { Part } from "src/models/part.entity";
+
 // 국토부 정비이력 분류 클래스
 export class TsClass {
   label: string; // 레이블
@@ -12,11 +14,11 @@ export class TsClass {
 }
 
 // 국토부 정비이력 분류
-export const tsClassB: TsClass = { label: 'B', description: '차체(보디)' };
-export const tsClassD: TsClass = { label: 'D', description: '외장' };
-export const tsClassE: TsClass = { label: 'E', description: '엔진' };
-export const tsClassH: TsClass = { label: 'H', description: '고전원전기장치' };
-export const tsClassS: TsClass = { label: 'S', description: '섀시' };
+export const tsClassB: TsClass = { label: "B", description: "차체(보디)" };
+export const tsClassD: TsClass = { label: "D", description: "외장" };
+export const tsClassE: TsClass = { label: "E", description: "엔진" };
+export const tsClassH: TsClass = { label: "H", description: "고전원전기장치" };
+export const tsClassS: TsClass = { label: "S", description: "섀시" };
 
 // 국토부 정비이력 분류 리스트
 export const TsClassList: TsClass[] = [
@@ -40,423 +42,423 @@ export class TsItem {
 export const tsItemListB: TsItem[] = [
   {
     class: tsClassB,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '02',
-    name: '후미등',
-    nickName: '콤비네이션램프',
-    options: ['좌', '우'],
+    index: "02",
+    name: "후미등",
+    nickName: "콤비네이션램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '03',
-    name: '전면범퍼',
-    nickName: '프런트범퍼',
+    index: "03",
+    name: "전면범퍼",
+    nickName: "프런트범퍼",
   },
   {
     class: tsClassB,
-    index: '04',
-    name: '후면범퍼',
-    nickName: '리어범퍼',
+    index: "04",
+    name: "후면범퍼",
+    nickName: "리어범퍼",
   },
   {
     class: tsClassB,
-    index: '05',
-    name: '보닛',
-    nickName: '후드',
+    index: "05",
+    name: "보닛",
+    nickName: "후드",
   },
   {
     class: tsClassB,
-    index: '06',
-    name: '전ㆍ후패널',
+    index: "06",
+    name: "전ㆍ후패널",
   },
   {
     class: tsClassB,
-    index: '07',
-    name: '전ㆍ후펜더',
-    options: ['좌', '우'],
+    index: "07",
+    name: "전ㆍ후펜더",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '08',
-    name: '앞문',
-    nickName: '프런트도어',
-    options: ['좌', '우'],
+    index: "08",
+    name: "앞문",
+    nickName: "프런트도어",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '09',
-    name: '사이드미러',
-    options: ['좌', '우'],
+    index: "09",
+    name: "사이드미러",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '10',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "10",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '11',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "11",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '12',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "12",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '13',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "13",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '14',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "14",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '15',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "15",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '16',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "16",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '17',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "17",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '18',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "18",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '19',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "19",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassB,
-    index: '20',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "20",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
 ];
 
 export const tsItemListD: TsItem[] = [
   {
     class: tsClassD,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassD,
-    index: '02',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "02",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassD,
-    index: '03',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "03",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassD,
-    index: '04',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "04",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassD,
-    index: '05',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "05",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassD,
-    index: '06',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "06",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassD,
-    index: '07',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "07",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassD,
-    index: '08',
-    name: '안전벨트',
+    index: "08",
+    name: "안전벨트",
   },
   {
     class: tsClassD,
-    index: '09',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "09",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
 ];
 
 export const tsItemListE: TsItem[] = [
   {
     class: tsClassE,
-    index: '01',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "01",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '02',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "02",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '03',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "03",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '04',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "04",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '05',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "05",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '06',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "06",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '07',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "07",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '08',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "08",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '09',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "09",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '10',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "10",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '11',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "11",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '12',
-    name: '연료분사펌프',
-    options: ['엔진', '전기', '하체'],
+    index: "12",
+    name: "연료분사펌프",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '13',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "13",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
   {
     class: tsClassE,
-    index: '14',
-    name: '침수차량 정비',
-    options: ['엔진', '전기', '하체'],
+    index: "14",
+    name: "침수차량 정비",
+    options: ["엔진", "전기", "하체"],
   },
 ];
 
 export const tsItemListH: TsItem[] = [
   {
     class: tsClassH,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassH,
-    index: '02',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "02",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassH,
-    index: '03',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "03",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassH,
-    index: '04',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "04",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassH,
-    index: '05',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "05",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
 ];
 
 export const tsItemListS: TsItem[] = [
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '01',
-    name: '전조등',
-    nickName: '헤드램프',
-    options: ['좌', '우'],
+    index: "01",
+    name: "전조등",
+    nickName: "헤드램프",
+    options: ["좌", "우"],
   },
   {
     class: tsClassS,
-    index: '14',
-    name: '차동기어',
+    index: "14",
+    name: "차동기어",
   },
 ];
 
@@ -464,7 +466,7 @@ export const tsItemListAll: TsItem[] = tsItemListB.concat(
   tsItemListD,
   tsItemListE,
   tsItemListH,
-  tsItemListS,
+  tsItemListS
 );
 
 /**
@@ -532,24 +534,24 @@ export class PartClass {
 }
 
 // 부품 분류
-export const partClassEA: PartClass = { label: 'EA', description: '오일/기타' };
-export const partClassEB: PartClass = { label: 'EB', description: '필터' };
-export const partClassEC: PartClass = { label: 'EC', description: '브레이크' };
-export const partClassED: PartClass = { label: 'ED', description: '램프' };
+export const partClassEA: PartClass = { label: "EA", description: "오일/기타" };
+export const partClassEB: PartClass = { label: "EB", description: "필터" };
+export const partClassEC: PartClass = { label: "EC", description: "브레이크" };
+export const partClassED: PartClass = { label: "ED", description: "램프" };
 export const partClassEE: PartClass = {
-  label: 'EE',
-  description: '타이밍밸트',
+  label: "EE",
+  description: "타이밍밸트",
 };
-export const partClassEF: PartClass = { label: 'EF', description: '배터리' };
-export const partClassEG: PartClass = { label: 'EG', description: '타이어' };
-export const partClassEH: PartClass = { label: 'EH', description: '연료/점화' };
-export const partClassEI: PartClass = { label: 'EI', description: '전기/전자' };
-export const partClassEJ: PartClass = { label: 'EJ', description: '센서' };
-export const partClassEK: PartClass = { label: 'EK', description: '바디' };
-export const partClassEL: PartClass = { label: 'EL', description: '조향/하부' };
-export const partClassEM: PartClass = { label: 'EM', description: '엔진' };
-export const partClassEN: PartClass = { label: 'EN', description: '냉각/히터' };
-export const partClassEO: PartClass = { label: 'EO', description: '의장/실내' };
+export const partClassEF: PartClass = { label: "EF", description: "배터리" };
+export const partClassEG: PartClass = { label: "EG", description: "타이어" };
+export const partClassEH: PartClass = { label: "EH", description: "연료/점화" };
+export const partClassEI: PartClass = { label: "EI", description: "전기/전자" };
+export const partClassEJ: PartClass = { label: "EJ", description: "센서" };
+export const partClassEK: PartClass = { label: "EK", description: "바디" };
+export const partClassEL: PartClass = { label: "EL", description: "조향/하부" };
+export const partClassEM: PartClass = { label: "EM", description: "엔진" };
+export const partClassEN: PartClass = { label: "EN", description: "냉각/히터" };
+export const partClassEO: PartClass = { label: "EO", description: "의장/실내" };
 
 // 부품 분류 리스트
 export const partClassList: PartClass[] = [
@@ -580,4 +582,44 @@ export const getPartClass = (label: string): PartClass => {
     if (partClassList[i].label == label) return partClassList[i];
   }
   return null;
+};
+
+/**
+ * 코드에 해당하는 부품 아이템 반환
+ * @param code 부품의 코드
+ * @param list 부품 리스트
+ * @returns 부품 아이템 데이터
+ */
+export const getPartByCode = (code: string, list: Part[]): Part => {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].code == code) return list[i];
+  }
+  return null;
+};
+
+/**
+ * tsCode(국토교통부 이력코드)에 해당하는 부품 아이템 반환
+ * @param tsCode 부품의 tsCode
+ * @param list 부품 리스트
+ * @returns 부품 아이템 데이터
+ */
+export const getPartByTsCode = (tsCode: string, list: Part[]): Part => {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].tsCode == tsCode) return list[i];
+  }
+  return null;
+};
+
+/**
+ * 국토교통부 이력코드를 가지는 부품 리스트 반환
+ * @param list 전체 부품 리스트
+ * @returns tsCode를 가지는 부품 리스트
+ */
+export const getTsParts = (list: Part[]): Part[] => {
+  let tsParts: Part[] = [];
+  list.forEach((element) => {
+    if (element.tsCode) tsParts.push(element);
+  });
+
+  return tsParts;
 };
