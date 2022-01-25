@@ -100,7 +100,9 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
         <RsWrapper>
           <CommonTitleWrapper>
             <CommonTitle>부품관리</CommonTitle>
-            <CommonSubTitle></CommonSubTitle>
+            <CommonSubTitle>
+              어떤 부품을 많이 사용했는지 확인할 수 있어요
+            </CommonSubTitle>
           </CommonTitleWrapper>
           <Wrapper>
             <form onSubmit={onSearchFormHandler}>
