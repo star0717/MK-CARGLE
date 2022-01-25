@@ -1866,6 +1866,7 @@ export const ToolTipWrapper = styled.p<any>`
 export const ToolTipText = styled.span<any>`
   display: none;
   position: absolute;
+  z-index: 9999;
   width: ${(props) => props.width || `280px`};
   max-width: ${(props) => props.maxWidth || `280px`};
   max-height: ${(props) => props.maxHeight || `100px`};
@@ -1892,10 +1893,10 @@ export const ToolTipText = styled.span<any>`
 
 export const ToolTip = styled.span<any>`
   overflow: ${(props) => props.overflow};
-  width: ${(props) => props.width};
+  width: ${(props) => props.width || `260px`};
   height: ${(props) => props.height};
   min-height: ${(props) => props.minHeight};
-  max-height: ${(props) => props.maxHeight};
+  max-height: ${(props) => props.maxWidth || `260px`};
   display: ${(props) => props.display || `inline-block`};
   flex-direction: ${(props) => props.dr};
   align-items: ${(props) => props.al};
@@ -1907,7 +1908,7 @@ export const ToolTip = styled.span<any>`
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
   background: ${(props) => props.background};
-  text-align: ${(props) => props.textAlign || `center`};
+  text-align: ${(props) => props.textAlign || `start`};
   transition: 0.5s;
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
@@ -1917,7 +1918,7 @@ export const ToolTip = styled.span<any>`
   right: ${(props) => props.right};
   font-style: ${(props) => props.fontStyle};
   cursor: ${(props) => props.cursor};
-  z-index: 1;
+  z-index: 0;
   white-space: pre-wrap;
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
@@ -1927,10 +1928,10 @@ export const ToolTip = styled.span<any>`
 
   &:hover ${ToolTipText} {
     display: ${(props) => props.display || `block`};
+    z-index: 9999;
   }
 
   &:hover {
-    background-color: #f5f5f5;
     ${(props) => props.kindOf === `focus` && `background : #f5f5f5;`}
     color: #314fa5;
     ${(props) => props.kindOf === `focus` && `color : #314FA5;`}

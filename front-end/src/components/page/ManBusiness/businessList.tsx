@@ -139,26 +139,6 @@ const ManBusinessList: NextPage<any> = () => {
                   </ToolTipWrapper>
                 </TableRowLIST>
               </TableRow>
-              <TableRow>
-                <TableRowLIST width={`10%`}>
-                  <Checkbox kindOf={`TableCheckBox`}>
-                    <CheckInput type="checkbox" />
-                    <CheckMark></CheckMark>
-                  </Checkbox>
-                </TableRowLIST>
-                <TableRowLIST width={`15%`}>상호명</TableRowLIST>
-                <TableRowLIST width={`15%`}>전화번호</TableRowLIST>
-                <TableRowLIST width={`22%`}>주소</TableRowLIST>
-                <TableRowLIST width={`15%`}>담당자명</TableRowLIST>
-                <TableRowLIST width={`23%`}>
-                  <ToolTipWrapper>
-                    <ToolTip>
-                      메모
-                      <ToolTipText>짧아도 잘 나오나요 혹시 ?</ToolTipText>
-                    </ToolTip>
-                  </ToolTipWrapper>
-                </TableRowLIST>
-              </TableRow>
               <Wrapper minHeight={`445px`}>
                 <Text fontSize={`48px`} color={`#c4c4c4`}>
                   <BsEmojiFrownFill />
