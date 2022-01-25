@@ -49,7 +49,7 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   return (
     <BodyWrapper>
-      <ManBusinessList />
+      <ManBusinessList {...props} />
     </BodyWrapper>
   );
 };

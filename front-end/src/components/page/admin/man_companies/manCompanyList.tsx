@@ -11,7 +11,6 @@ import {
 } from "../../../../configure/_pProps.entity";
 import { CompanyApproval } from "../../../../constants/model.const";
 import { Company } from "../../../../models/company.entity";
-import { genApiPath } from "../../../../modules/commonModule";
 import { PagenationSection } from "../../../common/sections";
 import {
   Combo,

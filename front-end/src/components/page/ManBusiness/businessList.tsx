@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
+import Modal from "react-modal";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
   Checkbox,
@@ -25,10 +26,16 @@ import {
   ToolTipWrapper,
   ToolTip,
   ToolTipText,
+  CloseButton,
 } from "src/components/styles/CommonComponents";
 import { BsSearch, BsEmojiFrownFill } from "react-icons/bs";
+import { Agency } from "src/models/agency.entity";
+import { PagenationSection } from "src/components/common/sections";
+import { IoIosCloseCircle } from "react-icons/io";
+import EditBusinessModal from "./editBusinessModal";
+import AddBusinessModal from "./addBusinessModal";
 
-const ManBusinessList: NextPage<any> = () => {
+const ManBusinessList: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -36,7 +43,8 @@ const ManBusinessList: NextPage<any> = () => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
+  const [modalOption, setModalOption] = useState<string>(""); // modal 내용
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -44,10 +52,28 @@ const ManBusinessList: NextPage<any> = () => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-
+  const BusinessModalProps: any = {
+    ...props,
+    setModalOpen,
+    style: { height: "800px", width: "500px" },
+  };
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
+
+  /**
+   * modal 창 닫기 기능
+   */
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <BodyWrapper>
       <WholeWrapper>
@@ -89,7 +115,16 @@ const ManBusinessList: NextPage<any> = () => {
           </Wrapper>
           <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
             <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
-              <SmallButton width={`150px`} fontSize={`16px`} kindOf={`default`}>
+              <SmallButton
+                width={`150px`}
+                fontSize={`16px`}
+                kindOf={`default`}
+                type="button"
+                onClick={() => {
+                  setModalOption("add");
+                  setModalOpen(true);
+                }}
+              >
                 신규등록
               </SmallButton>
               <SmallButton width={`150px`} fontSize={`16px`} kindOf={`cancle`}>
@@ -112,7 +147,38 @@ const ManBusinessList: NextPage<any> = () => {
               <TableHeadLIST width={`23%`}>메모</TableHeadLIST>
             </TableHead>
             <TableBody>
-              <TableRow>
+              {props.data.totalDocs > 0 ? (
+                props.data.docs.map((doc: Agency) => (
+                  <TableRow
+                    key={doc._id}
+                    onClick={() => {
+                      setModalOption("edit");
+                      setModalOpen(true);
+                    }}
+                  >
+                    <TableRowLIST>{doc.name}</TableRowLIST>
+                    <TableRowLIST>{doc.hpNum}</TableRowLIST>
+                    <TableRowLIST>{doc.address1}</TableRowLIST>
+                    <TableRowLIST>{doc.manager}</TableRowLIST>
+                    <TableRowLIST>
+                      <ToolTipWrapper>
+                        <ToolTip>
+                          {doc.memo}
+                          <ToolTipText>{doc.memo}</ToolTipText>
+                        </ToolTip>
+                      </ToolTipWrapper>
+                    </TableRowLIST>
+                  </TableRow>
+                ))
+              ) : (
+                <Wrapper minHeight={`500px`}>
+                  <Text fontSize={`48px`} color={`#c4c4c4`}>
+                    <BsEmojiFrownFill />
+                  </Text>
+                  <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
+                </Wrapper>
+              )}
+              {/* <TableRow>
                 <TableRowLIST width={`10%`}>
                   <Checkbox kindOf={`TableCheckBox`}>
                     <CheckInput type="checkbox" />
@@ -144,12 +210,53 @@ const ManBusinessList: NextPage<any> = () => {
                   <BsEmojiFrownFill />
                 </Text>
                 <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
-              </Wrapper>
+              </Wrapper> */}
             </TableBody>
           </TableWrapper>
           {/* <PagenationSection {...props} /> */}
         </RsWrapper>
       </WholeWrapper>
+      <Modal
+        isOpen={modalOpen}
+        style={{
+          overlay: {
+            position: "fixed",
+            zIndex: 9999,
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(71, 71, 71, 0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            background: "white",
+            width: "500px",
+            height: "800px",
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "calc(100vh - 2rem)",
+            overflowY: "auto",
+            position: "relative",
+            border: "1px solid #ccc",
+            borderRadius: "0.3rem",
+            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
+            inset: 0,
+          },
+        }}
+      >
+        <Wrapper fontSize={`28px`} al={`flex-end`}>
+          <CloseButton onClick={closeModal}>
+            <IoIosCloseCircle />
+          </CloseButton>
+        </Wrapper>
+        {modalOption === "edit" ? (
+          <EditBusinessModal {...BusinessModalProps} />
+        ) : (
+          <AddBusinessModal {...BusinessModalProps} />
+        )}
+      </Modal>
     </BodyWrapper>
   );
 };
