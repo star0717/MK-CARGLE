@@ -36,6 +36,8 @@ import {
   AdminApiPath,
   AgenciesApiPath,
   MaintenancesApiPath,
+  PartsApiPath,
+  PartsSetsApiPath,
   SettingsApiPath,
 } from "../../src/constants/api-path.const";
 import AdminUsersPage from "../../src/components/page/admin/users";
@@ -47,6 +49,7 @@ import ManSetPage from "src/components/page/ManSet";
 import ManBusinessPage from "src/components/page/ManBusiness";
 import { Part } from "src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
+import { PartsSet } from "src/models/partsset.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -221,12 +224,27 @@ export const getServerSideProps: GetServerSideProps = async (
       case UseLink.MAN_PARTS: {
         successResult.props.data = await axios
           .get(
-            genApiPath(MaintenancesApiPath.maintenances, {
+            genApiPath(PartsApiPath.parts, {
               isServerSide: true,
             }),
             authConfig
           )
           .then((res: AxiosResponse<FindResult<Part>, Part>) => res.data);
+        return successResult;
+      }
+
+      // 세트 관리
+      case UseLink.MAN_SET: {
+        successResult.props.data = await axios
+          .get(
+            genApiPath(PartsSetsApiPath.partsSets, {
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then(
+            (res: AxiosResponse<FindResult<PartsSet>, PartsSet>) => res.data
+          );
         return successResult;
       }
 

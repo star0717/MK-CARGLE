@@ -22,7 +22,7 @@ import {
 import { _MainProps } from "src/configure/_props.entity";
 import { Part } from "src/models/part.entity";
 import { BsSearch } from "react-icons/bs";
-import { partClassList, PartClass } from "src/constants/part.const";
+import { partClassList, PartClass, getTsParts } from "src/constants/part.const";
 
 const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -74,16 +74,33 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
    * 부품 분류 선택 handler -> 리스트 출력
    */
   useEffect(() => {
-    if (selectClass === "all") {
-      setPartList(props.data.docs);
-    } else {
-      const newList: Part[] = [];
-      props.data.docs.forEach((part: Part) => {
-        if (part.label === selectClass) {
-          newList.push(part);
-        }
-      });
-      setPartList(newList);
+    // if (selectClass === "all") {
+    //   setPartList(props.data.docs);
+    // } else {
+    //   const newList: Part[] = [];
+    //   props.data.docs.forEach((part: Part) => {
+    //     if (part.label === selectClass) {
+    //       newList.push(part);
+    //     }
+    //   });
+    //   setPartList(newList);
+    // }
+    switch (selectClass) {
+      case "all":
+        setPartList(props.data.docs);
+        break;
+      case "ETS":
+        setPartList(getTsParts(props.data.docs));
+        break;
+      default:
+        const newList: Part[] = [];
+        props.data.docs.forEach((part: Part) => {
+          if (part.label === selectClass) {
+            newList.push(part);
+          }
+        });
+        setPartList(newList);
+        break;
     }
   }, [selectClass, reset]);
 
@@ -175,6 +192,20 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                         </TableRowLIST>
                       </TableRow>
                     ))}
+                    <TableRow
+                      kindOf={
+                        selectClass === "ETS" ? `selectClass` : `noSelectClass`
+                      }
+                    >
+                      <TableRowLIST
+                        width={`100%`}
+                        onClick={() => {
+                          setSelectClass("ETS");
+                        }}
+                      >
+                        국토부
+                      </TableRowLIST>
+                    </TableRow>
                   </TableBody>
                 </Wrapper>
               </TableWrapper>

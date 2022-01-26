@@ -39,6 +39,7 @@ import {
   _iAgencies,
   _iAgency,
   _iDeleteByUser,
+  _iPartssetsOne,
 } from "../interfaces";
 
 import {
@@ -46,11 +47,13 @@ import {
   AdminApiPath,
   SettingsApiPath,
   AgenciesApiPath,
+  PartsSetsApiPath,
 } from "../../src/constants/api-path.const";
 import { genApiPath } from "../../src/modules/commonModule";
 import { DeleteObjectIds } from "../../src/models/base.entity";
 import { Part } from "../../src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
+import { PartsSet } from "src/models/partsset.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -772,6 +775,20 @@ export async function _aGetAdminPart(id: string) {
 
   const result: _iAdminParts = {
     type: ActionAPIs.ADMIN_PARTS,
+    payload: req,
+  };
+  return result;
+}
+
+export async function _aGetPartssetsOne(id: string) {
+  const req = await axios
+    .get(genApiPath(PartsSetsApiPath.partsSets, { id: id }))
+    .then((res: AxiosResponse<PartsSet, string>): PartsSet => {
+      return res.data;
+    });
+
+  const result: _iPartssetsOne = {
+    type: ActionAPIs.USER_API,
     payload: req,
   };
   return result;
