@@ -18,8 +18,9 @@ import { IoIosCloseCircle } from "react-icons/io";
 import DaumPostcode from "react-daum-postcode";
 import Modal from "react-modal";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { _aPostAgency } from "store/action/user.action";
+import { _aPatchAgency, _aPostAgency } from "store/action/user.action";
 import { _iAgency } from "store/interfaces";
+import { AxiosError } from "axios";
 
 const EditBusinessModal: NextPage<any> = (props) => {
   /*********************************************************************
@@ -37,25 +38,25 @@ const EditBusinessModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [addAgency, setAddAgency] = useState<Partial<Agency>>({
-    name: "",
-    comRegNum: "",
-    manager: "",
-    email: "",
-    phoneNum: "",
-    hpNum: "",
-    faxNum: "",
-    postcode: "",
-    address1: "",
-    address2: "",
-    memo: "",
+  const [editAgency, setEditAgency] = useState<Partial<Agency>>({
+    name: props.clickDoc.name,
+    comRegNum: props.clickDoc.comRegNum,
+    manager: props.clickDoc.manager,
+    email: props.clickDoc.email,
+    phoneNum: props.clickDoc.phoneNum,
+    hpNum: props.clickDoc.hpNum,
+    faxNum: props.clickDoc.faxNum,
+    postcode: props.clickDoc.postcode,
+    address1: props.clickDoc.address1,
+    address2: props.clickDoc.address2,
+    memo: props.clickDoc.memo,
   });
   const [addressModal, setAddressModal] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddAgency({ ...addAgency, [e.target.name]: e.target.value });
+    setEditAgency({ ...editAgency, [e.target.name]: e.target.value });
   };
 
   /**
@@ -78,16 +79,24 @@ const EditBusinessModal: NextPage<any> = (props) => {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    setAddAgency({ ...addAgency, address1: fullAddress, postcode: zonecode });
+    setEditAgency({ ...editAgency, address1: fullAddress, postcode: zonecode });
     setValue("address1", fullAddress, { shouldValidate: true });
     setAddressModal(false);
   };
 
   const saveData: SubmitHandler<Partial<Agency>> = (data) => {
-    dispatch(_aPostAgency(addAgency)).then((res: _iAgency) => {
-      alert("저장되었습니다.");
-      props.setModalOpen(false);
-    });
+    dispatch(_aPatchAgency(props.clickDoc._id, editAgency))
+      .then((res: _iAgency) => {
+        alert("수정 되었습니다.");
+        props.setModalOpen(false);
+      })
+      .catch((err: AxiosError<any, any>) => {
+        if (err.response.data.key === "name") {
+          alert("상호명을 입력해 주세요.");
+        } else {
+          alert("예기치 못한 이유로 등록에 실패하였습니다.");
+        }
+      });
   };
 
   /*********************************************************************
@@ -97,12 +106,6 @@ const EditBusinessModal: NextPage<any> = (props) => {
     setAddressModal(false);
   };
 
-  // modal 창 팝업 시 뒤에 배경 scroll 막기
-  useEffect(() => {
-    addressModal === true
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "unset");
-  }, [addressModal]);
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -118,34 +121,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="name"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputHandler(e);
-                }}
-              />
-            </Wrapper>
-          </Wrapper>
-
-          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-            <Text>담당자명</Text>
-            <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2
-                width={`400px`}
-                type="text"
-                name="manager"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputHandler(e);
-                }}
-              />
-            </Wrapper>
-          </Wrapper>
-
-          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-            <Text>사업자등록번호</Text>
-            <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2
-                width={`400px`}
-                type="text"
-                name="comRegNum"
+                value={editAgency.name}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -160,6 +136,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="phoneNum"
+                value={editAgency.phoneNum}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -174,6 +151,37 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="hpNum"
+                value={editAgency.hpNum}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>담당자명</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="manager"
+                value={editAgency.manager}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>사업자등록번호</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="comRegNum"
+                value={editAgency.comRegNum}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -188,6 +196,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="faxNum"
+                value={editAgency.faxNum}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -202,6 +211,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="email"
+                value={editAgency.email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -218,7 +228,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
                   // margin={`0px 0px 10px 0px`}
                   type="text"
                   name="address1"
-                  value={addAgency.address1}
+                  value={editAgency.address1}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     onInputHandler(e);
                   }}
@@ -239,6 +249,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="address2"
+                value={editAgency.address2}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -257,6 +268,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 al={`flex-start`}
                 type="text"
                 name="memo"
+                value={editAgency.memo}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}

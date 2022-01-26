@@ -86,17 +86,16 @@ const AddBusinessModal: NextPage<any> = (props) => {
 
   const saveData: SubmitHandler<Partial<Agency>> = (data) => {
     dispatch(_aPostAgency(addAgency))
-      .then(
-        (res: _iAgency) => {
-          alert("새로운 거래처가 등록되었습니다.");
-          props.setModalOpen(false);
-        }
-        // (err) => {
-        //   alert("등록에 실패하였습니다.");
-        // }
-      )
+      .then((res: _iAgency) => {
+        alert("새로운 거래처가 등록되었습니다.");
+        props.setModalOpen(false);
+      })
       .catch((err: AxiosError<any, any>) => {
-        console.log("hi", err.response.data);
+        if (err.response.data.key === "name") {
+          alert("상호명을 입력해 주세요.");
+        } else {
+          alert("예기치 못한 이유로 등록에 실패하였습니다.");
+        }
       });
   };
 
@@ -107,12 +106,6 @@ const AddBusinessModal: NextPage<any> = (props) => {
     setAddressModal(false);
   };
 
-  // modal 창 팝업 시 뒤에 배경 scroll 막기
-  useEffect(() => {
-    addressModal === true
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "unset");
-  }, [addressModal]);
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -128,34 +121,6 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="name"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputHandler(e);
-                }}
-              />
-            </Wrapper>
-          </Wrapper>
-
-          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-            <Text>담당자명</Text>
-            <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2
-                width={`400px`}
-                type="text"
-                name="manager"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputHandler(e);
-                }}
-              />
-            </Wrapper>
-          </Wrapper>
-
-          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-            <Text>사업자등록번호</Text>
-            <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2
-                width={`400px`}
-                type="text"
-                name="comRegNum"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -184,6 +149,34 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="hpNum"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>담당자명</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="manager"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>사업자등록번호</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="comRegNum"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
