@@ -1,7 +1,3 @@
-import {
-  _iAgencies,
-  _iDeleteAgencies,
-} from "./../interfaces/user/userAct.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
   ConfirmPWD,
@@ -40,6 +36,9 @@ import {
   _iGetAdminPartsClass,
   _iDeleteAdminPartsMany,
   _iAdminParts,
+  _iAgencies,
+  _iAgency,
+  _iDeleteByUser,
 } from "../interfaces";
 
 import {
@@ -802,7 +801,7 @@ export async function _aGetAdminPart(id: string) {
  * @param findParams
  * @returns
  */
-export async function GetAgencyPage(findParams: FindParameters) {
+export async function _aGetAgencies(findParams: FindParameters) {
   const req: FindResult<Agency> = await axios
     .get(genApiPath(AgenciesApiPath.agencies, { findParams: findParams }))
     .then(
@@ -812,7 +811,7 @@ export async function GetAgencyPage(findParams: FindParameters) {
     );
 
   const result: _iAgencies = {
-    type: ActionAPIs.AGENCIES,
+    type: ActionAPIs.USER_API,
     payload: req,
   };
   return result;
@@ -823,15 +822,15 @@ export async function GetAgencyPage(findParams: FindParameters) {
  * @param dataToSubmit
  * @returns
  */
-export async function PostAgency(dataToSubmit: Partial<Agency>) {
+export async function _aPostAgency(dataToSubmit: Partial<Agency>) {
   const req = await axios
     .post(genApiPath(AgenciesApiPath.agencies), dataToSubmit)
     .then((res: AxiosResponse<Agency, Agency[]>): Agency => {
       return res.data;
     });
 
-  const result: _iAgencies = {
-    type: ActionAPIs.AGENCIES,
+  const result: _iAgency = {
+    type: ActionAPIs.USER_API,
     payload: req,
   };
   return result;
@@ -843,15 +842,15 @@ export async function PostAgency(dataToSubmit: Partial<Agency>) {
  * @param dataToSubmit Agency
  * @returns
  */
-export async function PatchAgency(id: string, dataToSubmit: Partial<Agency>) {
+export async function _aPatchAgency(id: string, dataToSubmit: Partial<Agency>) {
   const req = await axios
     .patch(genApiPath(AgenciesApiPath.agencies, { id: id }), dataToSubmit)
     .then((res: AxiosResponse<Agency, Agency[]>): Agency => {
       return res.data;
     });
 
-  const result: _iAgencies = {
-    type: ActionAPIs.AGENCIES,
+  const result: _iAgency = {
+    type: ActionAPIs.USER_API,
     payload: req,
   };
   return result;
@@ -862,15 +861,29 @@ export async function PatchAgency(id: string, dataToSubmit: Partial<Agency>) {
  * @param id _id
  * @returns
  */
-export async function DeleteAgency(id: string) {
+export async function _aDeleteAgency(id: string) {
   const req: DeleteResult = await axios
     .delete(genApiPath(AgenciesApiPath.agencies, { id: id }))
     .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
       return res.data;
     });
 
-  const result: _iDeleteAgencies = {
-    type: ActionAPIs.AGENCIES,
+  const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+export async function _aPostAgenciesDeleteMany(ids: DeleteObjectIds) {
+  const req: DeleteResult = await axios
+    .post(genApiPath(AgenciesApiPath.agencies_deleteMany), ids)
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
     payload: req,
   };
   return result;

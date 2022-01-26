@@ -1,3 +1,4 @@
+import { Agency } from "src/models/agency.entity";
 import { SignUpInfo } from "../../../src/models/auth.entity";
 import { DeleteResult, FindResult } from "../../../src/models/base.entity";
 import { Company } from "../../../src/models/company.entity";
@@ -273,7 +274,6 @@ export enum ActionAPIs {
   ADMIN_GET_USERS = "ADMIN_GET_USERS", // 모든 직원 리스트 반환
   ADMIN_GET_USERS_ID = "ADMIN_GET_USERS_ID", // 해당 직원 리스트 반환
   ADMIN_PARTS = "ADMIN_PARTS", //부품 추가,반환,수정...
-  AGENCIES = "AGENCIES", //거래처 관련 추가,반환,수정,삭제...
 
   // 고유 API
   ADMIN_PATCH_SINGUP_INFO = "ADMIN_PATCH_SINGUP_INFO", // 업체 가입 정보 수정
@@ -283,6 +283,9 @@ export enum ActionAPIs {
   ADMIN_GET_PARTS_CLASS = "ADMIN_GET_PARTS_CLASS", // 부품 선택 리스트 반환
   ADMIN_DELETE_PARTS_ONE = "ADMIN_DELETE_PARTS_ONE", // 부품 하나 삭제
   ADMIN_DELETE_PARTS_MANY = "ADMIN_DELETE_PARTS_MANY", // 부품 하나 삭제
+
+  ADMIN_API = "ADMIN_API", // 관리자용 기본 API
+  USER_API = "USER_API", // 사용자용 기본 API
 }
 
 /*****************************************************
@@ -387,14 +390,29 @@ export class _iAdminParts implements baseActionInterface {
   payload: string;
 }
 
-export class _iDeleteAgencies implements baseActionInterface {
-  type: ActionAPIs.AGENCIES;
+/**
+ * 공통 인터페이스
+ */
+export class _iDeleteByAdmin implements baseActionInterface {
+  type: ActionAPIs.ADMIN_API;
   payload: DeleteResult;
 }
 
+export class _iDeleteByUser implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: DeleteResult;
+}
+
+/** 거래처 인터페이스 */
+
 export class _iAgencies implements baseActionInterface {
-  type: ActionAPIs.AGENCIES;
-  payload: any;
+  type: ActionAPIs.USER_API;
+  payload: FindResult<Agency>;
+}
+
+export class _iAgency implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: Agency;
 }
 
 /*****************************************************
@@ -413,5 +431,6 @@ export type ActionInterfaces =
   | _iDeleteAdminPartsOne
   | _iDeleteAdminPartsMany
   | _iAdminParts
-  | _iDeleteAgencies
+  | _iDeleteByAdmin
+  | _iDeleteByUser
   | _iAgencies;
