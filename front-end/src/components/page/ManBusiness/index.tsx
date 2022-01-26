@@ -62,10 +62,8 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
       filterValue: filterValue,
       useRegSearch: true,
     };
-    console.log("???", param);
-    dispatch(_aGetAgencies(param)).then((res: any) => {
-      console.log("res", res.payload);
 
+    dispatch(_aGetAgencies(param)).then((res: any) => {
       setFindResult(res.payload);
     });
   };

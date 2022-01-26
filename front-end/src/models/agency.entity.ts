@@ -4,10 +4,14 @@ import { BaseEntity } from './base.entity';
  */
 export declare class Agency extends BaseEntity {
     name: string;
+    comRegNum: string;
     manager: string;
+    email: string;
     phoneNum: string;
     hpNum: string;
+    faxNum: string;
+    postcode: string;
     address1: string;
     address2: string;
-    memo?: string;
+    memo: string;
 }
