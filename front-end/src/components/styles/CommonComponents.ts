@@ -1820,38 +1820,15 @@ export const Checkbox = styled.label<any>`
   }
 `;
 
-export const ToolTipWrapper = styled.p<any>`
-  overflow: ${(props) => props.overflow};
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  min-height: ${(props) => props.minHeight};
-  max-height: ${(props) => props.maxHeight};
-  display: ${(props) => props.display};
-  flex-direction: ${(props) => props.dr};
-  align-items: ${(props) => props.al};
-  justify-content: ${(props) => props.ju};
+export const ToolTipWrapper = styled.div<any>`
+  display: ${(props) => props.display || `block`};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || `500`};
-
-  color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
-  padding: ${(props) => props.padding};
-  background: ${(props) => props.background};
   text-align: ${(props) => props.textAlign || `center`};
   transition: 0.5s;
-  position: ${(props) => (props.isRelative ? `relative` : ``)};
-  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
-  top: ${(props) => props.top};
-  bottom: ${(props) => props.bottom};
-  left: ${(props) => props.left};
-  right: ${(props) => props.right};
-  font-style: ${(props) => props.fontStyle};
-  cursor: ${(props) => props.cursor};
-  z-index: 1;
-  margin-bottom: ${(props) => props.marginBottom};
-  margin-top: ${(props) => props.marginTop};
+  position: relative;
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
-  text-decoration: ${(props) => props.decoration};
 
   & svg {
   }
@@ -1862,7 +1839,7 @@ export const ToolTipWrapper = styled.p<any>`
   &:hover {
   }
 `;
-export const ToolTipText = styled.span<any>`
+export const ToolTipText = styled.div<any>`
   display: none;
   position: absolute;
   z-index: 9999;
@@ -1890,39 +1867,21 @@ export const ToolTipText = styled.span<any>`
   }
 `;
 
-export const ToolTip = styled.span<any>`
+export const ToolTip = styled.p<any>`
   overflow: ${(props) => props.overflow || `hidden`};
   width: ${(props) => props.width || `260px`};
-  height: ${(props) => props.height};
-  min-height: ${(props) => props.minHeight};
   max-height: ${(props) => props.maxWidth || `260px`};
-  display: ${(props) => props.display || `inline-block`};
-  flex-direction: ${(props) => props.dr};
-  align-items: ${(props) => props.al};
-  justify-content: ${(props) => props.ju};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || `500`};
   line-height: ${(props) => props.lineHeight || `1.6`};
-  color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
-  padding: ${(props) => props.padding};
-  background: ${(props) => props.background};
   text-align: ${(props) => props.textAlign || `start`};
   transition: 0.5s;
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
-  top: ${(props) => props.top};
-  bottom: ${(props) => props.bottom};
-  left: ${(props) => props.left};
-  right: ${(props) => props.right};
-  font-style: ${(props) => props.fontStyle};
-  cursor: ${(props) => props.cursor};
   z-index: 0;
   white-space: pre-wrap;
-  margin-bottom: ${(props) => props.marginBottom};
-  margin-top: ${(props) => props.marginTop};
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
-  text-decoration: ${(props) => props.decoration};
   text-overflow: ${(props) => props.textOverflow || `ellipsis`};
   white-space: nowrap;
 
