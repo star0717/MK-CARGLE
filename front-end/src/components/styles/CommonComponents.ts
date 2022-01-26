@@ -1371,7 +1371,7 @@ export const TableRowLIST = styled.li<any>`
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
-  padding: ${(props) => props.padding};
+  padding-right: ${(props) => props.paddingRight || `5px`};
   line-height: ${(props) => props.lineHeight || `2.6`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
   text-align: start;
@@ -1895,7 +1895,7 @@ export const ToolTipText = styled.span<any>`
 
 export const ToolTip = styled.span<any>`
   overflow: ${(props) => props.overflow || `hidden`};
-  width: ${(props) => props.width || `260px`};
+  width: ${(props) => props.width || `100%`};
   height: ${(props) => props.height};
   min-height: ${(props) => props.minHeight};
   max-height: ${(props) => props.maxWidth || `260px`};
