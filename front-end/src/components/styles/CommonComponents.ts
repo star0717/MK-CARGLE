@@ -1374,6 +1374,7 @@ export const TableRowLIST = styled.li<any>`
   line-height: ${(props) => props.lineHeight || `1.2`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
   text-align: start;
+  margin-right: 5px;
 `;
 
 export const Comment = styled.div<any>`
