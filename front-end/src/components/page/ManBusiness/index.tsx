@@ -30,7 +30,7 @@ import ManBusinessList from "./businessList";
 import { Agency } from "src/models/agency.entity";
 import { FindParameters, FindResult } from "src/models/base.entity";
 import { useDispatch } from "react-redux";
-import { GetAgencyPage } from "store/action/user.action";
+import { _aGetAgencies } from "store/action/user.action";
 
 const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -62,7 +62,7 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
       filterValue: filterValue,
       useRegSearch: true,
     };
-    dispatch(GetAgencyPage(param)).then((res: any) => {
+    dispatch(_aGetAgencies(param)).then((res: any) => {
       setFindResult(res.payload);
     });
   };
