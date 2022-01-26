@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
@@ -25,14 +25,18 @@ import {
 import { _MainProps } from "src/configure/_props.entity";
 import { BsFillPlusSquareFill, BsPencilSquare, BsSearch } from "react-icons/bs";
 import { partClassList, PartClass } from "src/constants/part.const";
-import { Part } from "src/models/part.entity";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { PartsSet } from "src/models/partsset.entity";
+import { Part } from "src/models/part.entity";
+import { useDispatch } from "react-redux";
+import { _aGetPartssetsOne } from "store/action/user.action";
+import { _iPartssetsOne } from "store/interfaces";
 
 const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const dispatch = useDispatch();
 
   /*********************************************************************
    * 2. State settings
@@ -40,13 +44,24 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
     props.data.docs
   ); // 세트 항목
-  const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(); // 세트 데이터
+  const [selectClass, setSelectClass] = useState<string>(
+    props.data.docs[0]._id
+  );
+  const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
+    props.data.docs[0]
+  ); // 세트 데이터
+  const [partsList, setPartsList] = useState<Part>();
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  useEffect(() => {
+    dispatch(_aGetPartssetsOne(selectClass)).then((res: _iPartssetsOne) => {
+      setPartSetData(res.payload);
+    });
+  }, [selectClass]);
+
   const addPartSetClass = async () => {
-    console.log("hi");
     const basicPartClass: Partial<PartsSet> = {
       name: "세트명입니다.",
       partsCodes: [],
@@ -128,11 +143,11 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                       </TableRowLIST>
                       <TableRowLIST width={`85%`}>세트명입니다</TableRowLIST>
                     </TableRow> */}
-                    {partSetClass.map((set: PartsSet) => (
+                    {partSetClass.map((set: Partial<PartsSet>, idx: number) => (
                       <TableRow
-                        key={set._id}
+                        key={idx}
                         onClick={() => {
-                          console.log("테이블 로우 클릭");
+                          setSelectClass(set._id);
                         }}
                       >
                         <TableRowLIST
@@ -176,36 +191,41 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                   <Text color={`#fff`}>상세정보</Text>
                 </Wrapper>
                 <Wrapper height={`100px`} al={`flex-start`}>
-                  <form>
-                    <Wrapper dr={`row`} padding={`0px 20px`}>
-                      <Wrapper width={`auto`}>
-                        <Text padding={`0px 10px 0px 0px`}>세트명</Text>
-                      </Wrapper>
-                      <SearchInputWrapper
-                        type="text"
-                        width={`378px`}
-                        padding={`0px 5px`}
-                        dr={`row`}
-                        borderBottom={`1px solid #000`}
-                      >
-                        <Wrapper width={`auto`}>
-                          <SearchInput
-                            width={`332px`}
-                            padding={`0px 5px 0px 5px`}
-                            placeholder="세트명을 지정해주세요."
-                            type="text"
-                          />
-                        </Wrapper>
-                        <Wrapper width={`36px`} height={`46px`}>
-                          <Text fontSize={`24px`}>
-                            <IconButton type="submit" shadow={`none`}>
-                              <BsPencilSquare />
-                            </IconButton>
-                          </Text>
-                        </Wrapper>
-                      </SearchInputWrapper>
+                  <Wrapper dr={`row`} padding={`0px 20px`} ju={`flex-start`}>
+                    <Wrapper width={`auto`}>
+                      <Text padding={`0px 10px 0px 0px`}>세트명</Text>
                     </Wrapper>
-                  </form>
+                    <SearchInputWrapper
+                      type="text"
+                      width={`378px`}
+                      padding={`0px 5px`}
+                      dr={`row`}
+                      borderBottom={`1px solid #000`}
+                    >
+                      <Wrapper width={`auto`}>
+                        <SearchInput
+                          width={`332px`}
+                          padding={`0px 5px 0px 5px`}
+                          placeholder="세트명을 지정해주세요."
+                          type="text"
+                          value={partSetData.name}
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setPartSetData({
+                              ...partSetData,
+                              name: e.target.value,
+                            });
+                          }}
+                        />
+                      </Wrapper>
+                      <Wrapper width={`36px`} height={`46px`}>
+                        <Text fontSize={`24px`} lineHeight={`1`}>
+                          <BsPencilSquare />
+                        </Text>
+                      </Wrapper>
+                    </SearchInputWrapper>
+                  </Wrapper>
                 </Wrapper>
               </Wrapper>
               <Wrapper
@@ -233,7 +253,7 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                 </Wrapper>
                 <Wrapper overflow={`auto`} ju={`flex-start`}>
                   <TableBody>
-                    <TableRow>
+                    {/* <TableRow>
                       <TableRowLIST
                         width={`20%`}
                         color={`#d6263b`}
@@ -241,9 +261,13 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                       >
                         <AiFillMinusSquare />
                       </TableRowLIST>
-                      <TableRowLIST width={`40%`}>부품명입니다</TableRowLIST>
-                      <TableRowLIST width={`40%`}>국토부입니다</TableRowLIST>
-                    </TableRow>
+                      <TableRowLIST width={`40%`}>
+                        {partsList.name}
+                      </TableRowLIST>
+                      <TableRowLIST width={`40%`}>
+                        {partsList.tsCode}
+                      </TableRowLIST>
+                    </TableRow> */}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>

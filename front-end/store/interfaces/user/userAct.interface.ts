@@ -1,4 +1,5 @@
 import { Agency } from "src/models/agency.entity";
+import { PartsSet } from "src/models/partsset.entity";
 import { SignUpInfo } from "../../../src/models/auth.entity";
 import { DeleteResult, FindResult } from "../../../src/models/base.entity";
 import { Company } from "../../../src/models/company.entity";
@@ -403,6 +404,12 @@ export class _iDeleteByUser implements baseActionInterface {
   payload: DeleteResult;
 }
 
+/** 부품 세트 인터페이스 */
+export class _iPartssetsOne implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: PartsSet;
+}
+
 /** 거래처 인터페이스 */
 
 export class _iAgencies implements baseActionInterface {
@@ -433,4 +440,5 @@ export type ActionInterfaces =
   | _iAdminParts
   | _iDeleteByAdmin
   | _iDeleteByUser
+  | _iPartssetsOne
   | _iAgencies;
