@@ -36,6 +36,7 @@ import {
   AdminApiPath,
   AgenciesApiPath,
   MaintenancesApiPath,
+  PartsApiPath,
   SettingsApiPath,
 } from "../../src/constants/api-path.const";
 import AdminUsersPage from "../../src/components/page/admin/users";
@@ -221,7 +222,20 @@ export const getServerSideProps: GetServerSideProps = async (
       case UseLink.MAN_PARTS: {
         successResult.props.data = await axios
           .get(
-            genApiPath(MaintenancesApiPath.maintenances, {
+            genApiPath(PartsApiPath.parts, {
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<FindResult<Part>, Part>) => res.data);
+        return successResult;
+      }
+
+      // 세트 관리
+      case UseLink.MAN_SET: {
+        successResult.props.data = await axios
+          .get(
+            genApiPath(PartsApiPath.parts, {
               isServerSide: true,
             }),
             authConfig

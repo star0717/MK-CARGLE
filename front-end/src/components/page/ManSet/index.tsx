@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
@@ -27,6 +27,7 @@ import { BsFillPlusSquareFill, BsPencilSquare, BsSearch } from "react-icons/bs";
 import { partClassList, PartClass } from "src/constants/part.const";
 import { Part } from "src/models/part.entity";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
+import { PartsSet } from "src/models/partsset.entity";
 
 const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -36,6 +37,24 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [setClass, setSetClass] = useState<Partial<PartsSet>[]>([
+    {
+      _id: "61f0b73fcfd30cda7aa16f07",
+      // "createdAt": "2022-01-26T02:51:43.979Z",
+      _cID: "61b9a13b8c179628017295a4",
+      _uID: "61b9a13b8c179628017295a6",
+      name: "세트1",
+      partsCodes: ["EA0001", "EA0002"],
+    },
+    {
+      _id: "61f0b753cfd30cda7aa16f09",
+      // "createdAt": "2022-01-26T02:52:03.715Z",
+      _cID: "61b9a13b8c179628017295a4",
+      _uID: "61b9a13b8c179628017295a6",
+      name: "세트2",
+      partsCodes: ["EB0001", "EB0002"],
+    },
+  ]);
 
   /*********************************************************************
    * 3. Handlers
@@ -74,23 +93,51 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                       color={`#51b351`}
                       fontSize={`26px`}
                     >
-                      <AiFillPlusSquare />
+                      <IconButton
+                        type="button"
+                        color={`inherit`}
+                        bgColor={`inherit`}
+                        shadow={`none`}
+                        padding={`0px`}
+                        ju={`flex-start`}
+                        al={`center`}
+                        onClick={() => {
+                          console.log("hi");
+                        }}
+                      >
+                        <AiFillPlusSquare />
+                      </IconButton>
                     </TableHeadLIST>
                     <TableHeadLIST width={`85%`}>세트항목</TableHeadLIST>
                   </TableHead>
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
-                    <TableRow>
+                    {/* <TableRow>
                       <TableRowLIST
                         width={`15%`}
                         color={`#d6263b`}
                         fontSize={`26px`}
                       >
-                        <AiFillMinusSquare />
+                        <IconButton
+                          type="button"
+                          color={`inherit`}
+                          bgColor={`inherit`}
+                          shadow={`none`}
+                          padding={`0px`}
+                          ju={`flex-start`}
+                          al={`center`}
+                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            e.stopPropagation();
+                            console.log("hi");
+                          }}
+                        >
+                          <AiFillMinusSquare />
+                        </IconButton>
                       </TableRowLIST>
                       <TableRowLIST width={`85%`}>세트명입니다</TableRowLIST>
-                    </TableRow>
+                    </TableRow> */}
+                    {setClass.map((class) => ())}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
