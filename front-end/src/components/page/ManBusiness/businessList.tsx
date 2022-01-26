@@ -27,6 +27,7 @@ import {
   ToolTip,
   ToolTipText,
   CloseButton,
+  Combo,
 } from "src/components/styles/CommonComponents";
 import { BsSearch, BsEmojiFrownFill } from "react-icons/bs";
 import { Agency } from "src/models/agency.entity";
@@ -41,7 +42,6 @@ import { _iAgencies } from "store/interfaces";
 import { FindParameters } from "src/models/base.entity";
 
 const ManBusinessList: NextPage<any> = (props) => {
-  console.log(props);
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -52,41 +52,59 @@ const ManBusinessList: NextPage<any> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [modalOption, setModalOption] = useState<string>(""); // modal 내용
   const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
-  const [agencyList, setAgencyList] = useState<Agency[]>(props.findResult); // 거래처 선택 리스트
+  // const [agencyList, setAgencyList] = useState<Agency[]>(props.findResult); // 거래처 선택 리스트
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
   const [checkedList, setCheckedList] = useState([]); // 체크한 리스트
   const [clickDoc, setClickDoc] = useState<Agency>(); // 선택한 부품 항목 데이터
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  console.log(props.findResult);
   /**
    * 검색 input handler
    * @param e
    */
   const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    // setSearchText(e.target.value);
+    props.setFilterValue(e.target.value);
+  };
+
+  // /**
+  //  * 검색 handler
+  //  * @param e
+  //  */
+  // const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const newList: Agency[] = [];
+  //   if (!searchText) {
+  //     setReset(reset + 1);
+  //   }
+  //   agencyList.forEach((agency: Agency) => {
+  //     if (
+  //       agency.manager.includes(searchText) ||
+  //       agency.name.includes(searchText)
+  //     ) {
+  //       newList.push(agency);
+  //     }
+  //     return setAgencyList(newList);
+  //   });
+  // };
+
+  /**
+   * 검색 기능 handler
+   * @param e
+   */
+  const onSearchHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    props.findDocHandler(1);
   };
 
   /**
-   * 검색 handler
+   * 검색 옵션 handler
    * @param e
    */
-  const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newList: Agency[] = [];
-    if (!searchText) {
-      setReset(reset + 1);
-    }
-    agencyList.forEach((agency: Agency) => {
-      if (
-        agency.manager.includes(searchText) ||
-        agency.name.includes(searchText)
-      ) {
-        newList.push(agency);
-      }
-      return setAgencyList(newList);
-    });
+  const onSearchOptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    props.setSearchOption(e.target.value);
   };
 
   /**
@@ -101,7 +119,7 @@ const ManBusinessList: NextPage<any> = (props) => {
       useRegSearch: true,
     };
     dispatch(GetAgencyPage(param)).then((res: any) => {
-      setAgencyList(res.payload.docs);
+      props.setFindResult(res.payload.docs);
     });
   }, [reset, modalOpen]);
 
@@ -112,13 +130,15 @@ const ManBusinessList: NextPage<any> = (props) => {
     (checked) => {
       if (checked) {
         const checkedListArray: string[] = [];
-        agencyList.forEach((list: Agency) => checkedListArray.push(list._id));
+        props.FindResult.forEach((list: Agency) =>
+          checkedListArray.push(list._id)
+        );
         setCheckedList(checkedListArray);
       } else {
         setCheckedList([]);
       }
     },
-    [agencyList]
+    [props.FindResult]
   );
 
   /**
@@ -165,8 +185,8 @@ const ManBusinessList: NextPage<any> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <BodyWrapper ref={ref}>
-      <WholeWrapper>
+    <>
+      <WholeWrapper ref={ref}>
         <RsWrapper>
           <CommonTitleWrapper>
             <CommonTitle>거래처관리</CommonTitle>
@@ -174,8 +194,19 @@ const ManBusinessList: NextPage<any> = (props) => {
               거래처 정보를 저장하고 관리할 수 있어요.
             </CommonSubTitle>
           </CommonTitleWrapper>
-          <Wrapper>
-            <form onSubmit={onSearchFormHandler}>
+          <Wrapper dr={`row`}>
+            <Combo
+              value={props.searchOption}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onSearchOptionHandler(e);
+              }}
+              height={`46px`}
+              width={`150px`}
+            >
+              <option value="name">상호명 검색</option>
+              <option value="manager">담당자명 검색</option>
+            </Combo>
+            <form onSubmit={onSearchHandler}>
               <SearchInputWrapper
                 type="text"
                 width={`678px`}
@@ -190,7 +221,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                     padding={`0px 5px 0px 5px`}
                     placeholder="검색할 업체의 상호명 또는, 담당자명을 입력하세요"
                     type="text"
-                    value={searchText}
+                    value={props.filterValue}
                     onChange={onInputSearchHandler}
                   />
                 </Wrapper>
@@ -283,7 +314,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                     checked={
                       checkedList.length === 0
                         ? false
-                        : checkedList.length === agencyList.length
+                        : checkedList.length === props.findResult.length
                         ? true
                         : false
                     }
@@ -298,8 +329,8 @@ const ManBusinessList: NextPage<any> = (props) => {
               <TableHeadLIST width={`23%`}>메모</TableHeadLIST>
             </TableHead>
             <TableBody>
-              {agencyList.length > 0 ? (
-                agencyList.map((list: Agency) => (
+              {props.findResult.totalDocs > 0 ? (
+                props.findResult.docs.map((list: Agency) => (
                   <TableRow
                     key={list._id}
                     onClick={() => {
@@ -395,7 +426,7 @@ const ManBusinessList: NextPage<any> = (props) => {
           <AddBusinessModal {...BusinessModalProps} />
         )}
       </Modal>
-    </BodyWrapper>
+    </>
   );
 };
 
