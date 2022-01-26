@@ -1322,7 +1322,6 @@ export const TableRow = styled.ul<any>`
   width: 100%;
   height: ${(props) => props.height || `45px`};
   padding: ${(props) => props.padding || `0px`};
-
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1365,20 +1364,16 @@ export const TableRow = styled.ul<any>`
 export const TableRowLIST = styled.li<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `100%`};
-  display: ${(props) => props.display || `inline-block`};
+  display: ${(props) => props.display || `flex`};
   color: ${(props) => props.color || ``};
   font-size: ${(props) => props.fontSize || `16px`};
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
-  padding: ${(props) => props.padding || `0px 5px 0px 0px`};
-  line-height: ${(props) => props.lineHeight || `2.6`};
+  padding: ${(props) => props.padding};
+  line-height: ${(props) => props.lineHeight || `1.2`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
-  margin-top: ${(props) => props.marginTop || `0px`};
   text-align: start;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 export const Comment = styled.div<any>`
@@ -1896,7 +1891,7 @@ export const ToolTipText = styled.span<any>`
 
 export const ToolTip = styled.span<any>`
   overflow: ${(props) => props.overflow || `hidden`};
-  width: ${(props) => props.width || `100%`};
+  width: ${(props) => props.width || `260px`};
   height: ${(props) => props.height};
   min-height: ${(props) => props.minHeight};
   max-height: ${(props) => props.maxWidth || `260px`};
@@ -1906,7 +1901,7 @@ export const ToolTip = styled.span<any>`
   justify-content: ${(props) => props.ju};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || `500`};
-  line-height: ${(props) => props.lineHeight || `2.6`};
+  line-height: ${(props) => props.lineHeight || `1.6`};
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
@@ -1922,6 +1917,7 @@ export const ToolTip = styled.span<any>`
   font-style: ${(props) => props.fontStyle};
   cursor: ${(props) => props.cursor};
   z-index: 0;
+  white-space: pre-wrap;
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
@@ -1931,7 +1927,6 @@ export const ToolTip = styled.span<any>`
 
   &:hover ${ToolTipText} {
     display: ${(props) => props.display || `block`};
-    line-height: 1.6;
     z-index: 9999;
   }
 
