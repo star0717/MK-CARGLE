@@ -1372,7 +1372,7 @@ export const TableRowLIST = styled.li<any>`
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
   padding: ${(props) => props.padding};
-  line-height: ${(props) => props.lineHeight || `1.2`};
+  line-height: ${(props) => props.lineHeight || `2.6`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
   text-align: start;
   white-space: nowrap;
