@@ -780,6 +780,11 @@ export async function _aGetAdminPart(id: string) {
   return result;
 }
 
+/**
+ * 부품 세트 데이터 반환
+ * @param id
+ * @returns
+ */
 export async function _aGetPartssetsOne(id: string) {
   const req = await axios
     .get(genApiPath(PartsSetsApiPath.partsSets, { id: id }))
@@ -788,6 +793,44 @@ export async function _aGetPartssetsOne(id: string) {
     });
 
   const result: _iPartssetsOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 부품 세트 추가
+ * @param partSet
+ * @returns
+ */
+export async function _aPostPartssetsOne(partSet: Partial<PartsSet>) {
+  const req = await axios
+    .post(genApiPath(PartsSetsApiPath.partsSets), partSet)
+    .then((res: AxiosResponse<PartsSet, PartsSet>): PartsSet => {
+      return res.data;
+    });
+
+  const result: _iPartssetsOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 부품 세트 삭제
+ * @param id
+ * @returns
+ */
+export async function _aDeletePartssetsOne(id: string) {
+  const req = await axios
+    .delete(genApiPath(PartsSetsApiPath.partsSets, { id: id }))
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteByUser = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

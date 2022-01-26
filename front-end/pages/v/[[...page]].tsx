@@ -235,7 +235,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
       // 세트 관리
       case UseLink.MAN_SET: {
-        successResult.props.data = await axios
+        const setList: FindResult<PartsSet> = await axios
           .get(
             genApiPath(PartsSetsApiPath.partsSets, {
               isServerSide: true,
@@ -245,6 +245,18 @@ export const getServerSideProps: GetServerSideProps = async (
           .then(
             (res: AxiosResponse<FindResult<PartsSet>, PartsSet>) => res.data
           );
+        const allParts: FindResult<Part> = await axios
+          .get(
+            genApiPath(PartsApiPath.parts, {
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<FindResult<Part>, Part>) => res.data);
+        successResult.props.data = {
+          setList: setList,
+          allParts: allParts,
+        };
         return successResult;
       }
 

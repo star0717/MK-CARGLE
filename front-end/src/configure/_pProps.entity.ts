@@ -9,6 +9,7 @@ import { User } from "../models/user.entity";
 import { _fTermData, _fWithdrawal } from "./_fProps.entity";
 import { _MainProps } from "./_props.entity";
 import { Part } from "../models/part.entity";
+import { PartsSet } from "src/models/partsset.entity";
 
 /***********************************************************************
  * 기본
@@ -131,6 +132,13 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
   style?: {
     height: string;
   };
+}
+
+// 부품 세트 관리 props
+export interface _pPartsSetProps extends _MainProps {
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  partSetClass?: Partial<PartsSet>[];
+  setPartSetClass?: React.Dispatch<React.SetStateAction<Partial<PartsSet>[]>>;
 }
 
 /***********************************************************************
