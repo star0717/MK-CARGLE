@@ -253,21 +253,23 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                 </Wrapper>
                 <Wrapper overflow={`auto`} ju={`flex-start`}>
                   <TableBody>
-                    {/* <TableRow>
-                      <TableRowLIST
-                        width={`20%`}
-                        color={`#d6263b`}
-                        fontSize={`26px`}
-                      >
-                        <AiFillMinusSquare />
-                      </TableRowLIST>
-                      <TableRowLIST width={`40%`}>
-                        {partsList.name}
-                      </TableRowLIST>
-                      <TableRowLIST width={`40%`}>
-                        {partsList.tsCode}
-                      </TableRowLIST>
-                    </TableRow> */}
+                    {partSetData.partsCodes?.map((part: any) => (
+                      // <TableRow key={part._id}>
+                      <TableRow key={part}>
+                        <TableRowLIST
+                          width={`20%`}
+                          color={`#d6263b`}
+                          fontSize={`26px`}
+                        >
+                          <AiFillMinusSquare />
+                        </TableRowLIST>
+                        <TableRowLIST width={`40%`}>{part}</TableRowLIST>
+                        {/* <TableRowLIST width={`40%`}>{part.name}</TableRowLIST>
+                        <TableRowLIST width={`40%`}>
+                          {part.tsCode ? part.tsCode : "-"}
+                        </TableRowLIST> */}
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
