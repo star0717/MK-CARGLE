@@ -37,8 +37,8 @@ import EditBusinessModal from "./editBusinessModal";
 import AddBusinessModal from "./addBusinessModal";
 import { useResizeDetector } from "react-resize-detector";
 import { useDispatch } from "react-redux";
-import { DeleteAgency, GetAgencyPage } from "store/action/user.action";
-import { _iAgencies } from "store/interfaces";
+import { _aDeleteAgency, _aGetAgencies } from "store/action/user.action";
+import { _iAgency } from "store/interfaces";
 import { FindParameters } from "src/models/base.entity";
 
 const ManBusinessList: NextPage<any> = (props) => {
@@ -118,7 +118,8 @@ const ManBusinessList: NextPage<any> = (props) => {
       filterValue: props.filterValue,
       useRegSearch: true,
     };
-    dispatch(GetAgencyPage(param)).then((res: any) => {
+
+    dispatch(_aGetAgencies(param)).then((res: any) => {
       props.setFindResult(res.payload.docs);
     });
   }, [reset, modalOpen]);
@@ -259,7 +260,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                   }
                   if (window.confirm("삭제하시겠습니까?")) {
                     if (checkedList.length === 1) {
-                      dispatch(DeleteAgency(checkedList[0])).then(
+                      dispatch(_aDeleteAgency(checkedList[0])).then(
                         (res: any) => {
                           alert("삭제되었습니다.");
                           setReset(reset + 1);
