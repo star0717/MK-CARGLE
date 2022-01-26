@@ -85,7 +85,15 @@ export class AgenciesApiPath {
   static agencies_deleteMany = AgenciesApiPath.BASE + "deletemany";
 }
 
+// 부품 조회 API (유저용)
 export class PartsApiPath {
   static BASE = "/parts/";
   static parts = PartsApiPath.BASE;
+}
+
+// 부품세트 API
+export class PartsSetsApiPath {
+  static BASE = "/partssets";
+  static partsSets = PartsSetsApiPath.BASE;
+  static partsSets_deleteMany = PartsSetsApiPath.BASE + "deletemany";
 }
