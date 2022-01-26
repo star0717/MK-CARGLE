@@ -31,10 +31,12 @@ import { Part } from "src/models/part.entity";
 import { useDispatch } from "react-redux";
 import {
   _aDeletePartssetsOne,
+  _aGetPartssets,
   _aGetPartssetsOne,
+  _aPatchPartssetsOne,
   _aPostPartssetsOne,
 } from "store/action/user.action";
-import { _iDeleteByUser, _iPartssetsOne } from "store/interfaces";
+import { _iDeleteByUser, _iPartssets, _iPartssetsOne } from "store/interfaces";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
 
 const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
@@ -46,12 +48,8 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [selectClass, setSelectClass] = useState<string>(
-    props.partSetClass[0]._id
+    props.partSetClass[0]?._id
   ); // 선택한 세트 항목
-  const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
-    props.partSetClass[0]
-  ); // 세트 데이터
-  const [partsList, setPartsList] = useState<Part>();
 
   /*********************************************************************
    * 3. Handlers
@@ -60,15 +58,36 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    * 세트 항목에 따라 데이터 반환
    */
   useEffect(() => {
+    if (!selectClass) {
+      return props.setPartSetData(undefined);
+    }
     dispatch(_aGetPartssetsOne(selectClass)).then((res: _iPartssetsOne) => {
-      setPartSetData(res.payload);
+      props.setPartSetData(res.payload);
     });
   }, [selectClass]);
 
   /**
+   * 세트 클래스 변경
+   * @param set
+   * @returns
+   */
+  const onSelectPartSet = (set: Partial<PartsSet>) => {
+    if (set.partsCodes?.length !== props.partSetData.partsCodes?.length) {
+      if (
+        window.confirm("추가된 부품이 저장되지 않았습니다. 계속하시겠습니까?")
+      ) {
+        return setSelectClass(set._id);
+      } else {
+        return false;
+      }
+    }
+    setSelectClass(set._id);
+  };
+
+  /**
    * 세트 추가
    */
-  const addPartSetClass = () => {
+  const onAddPartSetClass = () => {
     const basePartSet: Partial<PartsSet> = {
       name: "세트명입니다.",
     };
@@ -86,7 +105,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
   /**
    * 세트 삭제
    */
-  const deletePartSetClass = (id: string) => {
+  const onDeletePartSetClass = (id: string) => {
     dispatch(_aDeletePartssetsOne(id)).then(
       (res: _iDeleteByUser) => {
         props.setPartSetClass(
@@ -99,6 +118,46 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
       }
     );
   };
+
+  /** 세트 저장(실제타는 api는 수정) */
+  const onSavePartsSet = () => {
+    console.log(props.partSetData);
+    dispatch(
+      _aPatchPartssetsOne(props.partSetData._id, props.partSetData)
+    ).then(
+      (res: _iPartssetsOne) => {
+        dispatch(_aGetPartssets()).then(
+          (res: _iPartssets) => {
+            props.setPartSetClass(res.payload.docs);
+          },
+          (err) => {
+            alert("세트 리스트를 불러오는데 실패했습니다.");
+          }
+        );
+      },
+      (err) => {
+        alert("세트 저장에 실패했습니다.");
+      }
+    );
+  };
+
+  /**
+   * 세트부품 리스트 초기화
+   */
+  const onResetPartCodeList = () => {
+    const existSet: Partial<PartsSet>[] = props.partSetClass.filter(
+      (set: Partial<PartsSet>) => set._id === selectClass
+    );
+    if (
+      existSet[0].partsCodes?.length !== props.partSetData.partsCodes?.length
+    ) {
+      props.setPartSetData({
+        ...props.partSetData,
+        partsCodes: existSet[0].partsCodes,
+      });
+    }
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -140,7 +199,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                         padding={`0px`}
                         ju={`flex-start`}
                         al={`center`}
-                        onClick={addPartSetClass}
+                        onClick={onAddPartSetClass}
                       >
                         <AiFillPlusSquare />
                       </IconButton>
@@ -154,9 +213,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                       (set: Partial<PartsSet>, idx: number) => (
                         <TableRow
                           key={idx}
-                          onClick={() => {
-                            setSelectClass(set._id);
-                          }}
+                          onClick={() => onSelectPartSet(set)}
                           kindOf={
                             selectClass === set._id
                               ? `selectClass`
@@ -180,7 +237,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                                 e: React.MouseEvent<HTMLButtonElement>
                               ) => {
                                 e.stopPropagation();
-                                deletePartSetClass(set._id);
+                                onDeletePartSetClass(set._id);
                               }}
                             >
                               <AiFillMinusSquare />
@@ -196,116 +253,141 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
             {/* 상세정보 */}
             <Wrapper width={`74%`} border={`1px solid #ccc`}>
-              <Wrapper>
-                <Wrapper
-                  bgColor={`#343a40`}
-                  height={`50px`}
-                  radius={`8px 8px 0px 0px`}
-                >
-                  <Text color={`#fff`}>상세정보</Text>
-                </Wrapper>
-                <Wrapper height={`100px`} al={`flex-start`}>
-                  <Wrapper dr={`row`} padding={`0px 20px`} ju={`flex-start`}>
-                    <Wrapper width={`auto`}>
-                      <Text padding={`0px 10px 0px 0px`}>세트명</Text>
-                    </Wrapper>
-                    <SearchInputWrapper
-                      type="text"
-                      width={`378px`}
-                      padding={`0px 5px`}
-                      dr={`row`}
-                      borderBottom={`1px solid #000`}
-                    >
-                      <Wrapper width={`auto`}>
-                        <SearchInput
-                          width={`332px`}
-                          padding={`0px 5px 0px 5px`}
-                          placeholder="세트명을 지정해주세요."
-                          type="text"
-                          value={partSetData.name}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            setPartSetData({
-                              ...partSetData,
-                              name: e.target.value,
-                            });
-                          }}
-                        />
-                      </Wrapper>
-                      <Wrapper width={`36px`} height={`46px`}>
-                        <Text fontSize={`24px`} lineHeight={`1`}>
-                          <BsPencilSquare />
-                        </Text>
-                      </Wrapper>
-                    </SearchInputWrapper>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
               <Wrapper
-                dr={`row`}
-                ju={`space-between`}
-                padding={`0px 20px`}
-                margin={`10px 0px`}
+                bgColor={`#343a40`}
+                height={`50px`}
+                radius={`8px 8px 0px 0px`}
               >
-                <Text>세트부품항목</Text>
-                <SmallButton
-                  kindOf={`default`}
-                  width={`150px`}
-                  onClick={() => {
-                    props.setModalOpen(true);
-                  }}
-                >
-                  부품추가하기
-                </SmallButton>
+                <Text color={`#fff`}>상세정보</Text>
               </Wrapper>
-              <TableWrapper
-                overflow={`auto`}
-                minHeight={`220px`}
-                height={`220px`}
-              >
-                <Wrapper isSticky={true}>
-                  <TableHead radius={`0px`}>
-                    <TableHeadLIST width={`20%`}>삭제</TableHeadLIST>
-                    <TableHeadLIST width={`40%`}>부품명</TableHeadLIST>
-                    <TableHeadLIST width={`40%`}>국토부</TableHeadLIST>
-                  </TableHead>
+              {props.partSetData ? (
+                <Wrapper>
+                  <Wrapper height={`100px`} al={`flex-start`}>
+                    <Wrapper dr={`row`} padding={`0px 20px`} ju={`flex-start`}>
+                      <Wrapper width={`auto`}>
+                        <Text padding={`0px 10px 0px 0px`}>세트명</Text>
+                      </Wrapper>
+                      <SearchInputWrapper
+                        type="text"
+                        width={`378px`}
+                        padding={`0px 5px`}
+                        dr={`row`}
+                        borderBottom={`1px solid #000`}
+                      >
+                        <Wrapper width={`auto`}>
+                          <SearchInput
+                            width={`332px`}
+                            padding={`0px 5px 0px 5px`}
+                            placeholder="세트명을 지정해주세요."
+                            type="text"
+                            value={props.partSetData.name}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              props.setPartSetData({
+                                ...props.partSetData,
+                                name: e.target.value,
+                              });
+                            }}
+                          />
+                        </Wrapper>
+                        <Wrapper width={`36px`} height={`46px`}>
+                          <Text fontSize={`24px`} lineHeight={`1`}>
+                            <BsPencilSquare />
+                          </Text>
+                        </Wrapper>
+                      </SearchInputWrapper>
+                    </Wrapper>
+                  </Wrapper>
+                  <Wrapper
+                    dr={`row`}
+                    ju={`space-between`}
+                    padding={`0px 20px`}
+                    margin={`10px 0px`}
+                  >
+                    <Text>세트부품항목</Text>
+                    <SmallButton
+                      kindOf={`default`}
+                      width={`150px`}
+                      onClick={() => {
+                        props.setModalOpen(true);
+                      }}
+                    >
+                      부품추가하기
+                    </SmallButton>
+                  </Wrapper>
+                  <TableWrapper
+                    overflow={`auto`}
+                    minHeight={`220px`}
+                    height={`220px`}
+                  >
+                    <Wrapper isSticky={true}>
+                      <TableHead radius={`0px`}>
+                        <TableHeadLIST width={`20%`}>삭제</TableHeadLIST>
+                        <TableHeadLIST width={`40%`}>부품명</TableHeadLIST>
+                        <TableHeadLIST width={`40%`}>국토부</TableHeadLIST>
+                      </TableHead>
+                    </Wrapper>
+                    <Wrapper overflow={`auto`} ju={`flex-start`}>
+                      <TableBody>
+                        {props.partSetData.partsCodes.length !== 0 ? (
+                          props.partSetData.partsCodes.map((code: string) => {
+                            const part: Part = getPartByCode(
+                              code,
+                              props.data.allParts.docs
+                            );
+                            return (
+                              <TableRow key={part._id}>
+                                <TableRowLIST
+                                  width={`20%`}
+                                  color={`#d6263b`}
+                                  fontSize={`26px`}
+                                >
+                                  <AiFillMinusSquare />
+                                </TableRowLIST>
+                                <TableRowLIST width={`40%`}>
+                                  {part.name}
+                                </TableRowLIST>
+                                <TableRowLIST width={`40%`}>
+                                  {part.tsCode ? part.tsCode : "-"}
+                                </TableRowLIST>
+                              </TableRow>
+                            );
+                          })
+                        ) : (
+                          <Text margin={`10px`} fontSize={`20px`}>
+                            부품을 추가해주세요.
+                          </Text>
+                        )}
+                      </TableBody>
+                    </Wrapper>
+                  </TableWrapper>
+                  <CommonButtonWrapper
+                    ju={`space-between`}
+                    padding={`0px 30px 30px`}
+                  >
+                    <CommonButton
+                      type="button"
+                      kindOf={`white`}
+                      width={`400px`}
+                      onClick={onResetPartCodeList}
+                    >
+                      취소
+                    </CommonButton>
+                    <CommonButton
+                      type="button"
+                      width={`400px`}
+                      onClick={onSavePartsSet}
+                    >
+                      저장
+                    </CommonButton>
+                  </CommonButtonWrapper>
                 </Wrapper>
-                <Wrapper overflow={`auto`} ju={`flex-start`}>
-                  <TableBody>
-                    {partSetData.partsCodes?.map((code: string) => {
-                      const part: Part = getPartByCode(
-                        code,
-                        props.data.allParts.docs
-                      );
-                      return (
-                        <TableRow key={part._id}>
-                          <TableRowLIST
-                            width={`20%`}
-                            color={`#d6263b`}
-                            fontSize={`26px`}
-                          >
-                            <AiFillMinusSquare />
-                          </TableRowLIST>
-                          <TableRowLIST width={`40%`}>{part.name}</TableRowLIST>
-                          <TableRowLIST width={`40%`}>
-                            {part.tsCode ? part.tsCode : "-"}
-                          </TableRowLIST>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
+              ) : (
+                <Wrapper height={`500px`}>
+                  <Text fontSize={`24px`}>세트를 추가해주세요.</Text>
                 </Wrapper>
-              </TableWrapper>
-              <CommonButtonWrapper
-                ju={`space-between`}
-                padding={`0px 30px 30px`}
-              >
-                <CommonButton kindOf={`white`} width={`400px`}>
-                  취소
-                </CommonButton>
-                <CommonButton width={`400px`}>저장</CommonButton>
-              </CommonButtonWrapper>
+              )}
             </Wrapper>
           </Wrapper>
         </RsWrapper>

@@ -23,6 +23,7 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -31,6 +32,9 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
     props.data.setList.docs
   ); // 전체 세트 항목
+  const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
+    partSetClass[0]
+  ); // 선택한 세트 데이터
 
   /*********************************************************************
    * 3. Handlers
@@ -49,12 +53,15 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   const closeModal = () => {
     setModalOpen(false);
   };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
   const partsSetProps: _pPartsSetProps = {
     ...props,
     setModalOpen,
+    partSetData,
+    setPartSetData,
     partSetClass,
     setPartSetClass,
   };

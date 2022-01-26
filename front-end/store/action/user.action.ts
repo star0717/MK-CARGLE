@@ -40,6 +40,7 @@ import {
   _iAgency,
   _iDeleteByUser,
   _iPartssetsOne,
+  _iPartssets,
 } from "../interfaces";
 
 import {
@@ -781,6 +782,28 @@ export async function _aGetAdminPart(id: string) {
 }
 
 /**
+ * 부품 세트 데이터 전체 리스트 반환
+ * @returns
+ */
+export async function _aGetPartssets() {
+  const req = await axios
+    .get(genApiPath(PartsSetsApiPath.partsSets))
+    .then(
+      (
+        res: AxiosResponse<FindResult<PartsSet>, PartsSet>
+      ): FindResult<PartsSet> => {
+        return res.data;
+      }
+    );
+
+  const result: _iPartssets = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
  * 부품 세트 데이터 반환
  * @param id
  * @returns
@@ -807,6 +830,28 @@ export async function _aGetPartssetsOne(id: string) {
 export async function _aPostPartssetsOne(partSet: Partial<PartsSet>) {
   const req = await axios
     .post(genApiPath(PartsSetsApiPath.partsSets), partSet)
+    .then((res: AxiosResponse<PartsSet, PartsSet>): PartsSet => {
+      return res.data;
+    });
+
+  const result: _iPartssetsOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 부품 세트 수정
+ * @param partSet
+ * @returns
+ */
+export async function _aPatchPartssetsOne(
+  id: string,
+  partSet: Partial<PartsSet>
+) {
+  const req = await axios
+    .patch(genApiPath(PartsSetsApiPath.partsSets, { id: id }), partSet)
     .then((res: AxiosResponse<PartsSet, PartsSet>): PartsSet => {
       return res.data;
     });

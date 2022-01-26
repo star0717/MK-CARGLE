@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
+  CommonButton,
+  CommonButtonWrapper,
   CommonSubTitle,
   CommonTitle,
   CommonTitleWrapper,
@@ -21,7 +23,12 @@ import {
 } from "src/components/styles/CommonComponents";
 import { Part } from "src/models/part.entity";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
-import { getTsParts, PartClass, partClassList } from "src/constants/part.const";
+import {
+  getPartClass,
+  getTsParts,
+  PartClass,
+  partClassList,
+} from "src/constants/part.const";
 import { BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 
@@ -32,7 +39,7 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
   const [searchText, setSearchText] = useState<string>("");
   const [selectClass, setSelectClass] = useState<string>("all");
   const [partList, setPartList] = useState<Part[]>(props.data.allParts.docs);
-  const [selectPart, setSelectPart] = useState<Part[]>();
+  const [selectPart, setSelectPart] = useState<Part[]>([]);
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
   /*********************************************************************
    * 2. State settings
@@ -93,6 +100,30 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
         break;
     }
   }, [selectClass, reset]);
+
+  /**
+   * 세트에 부품 추가
+   * @returns
+   */
+  const addPartToSet = () => {
+    if (selectPart.length === 0) {
+      return alert("부품을 추가해주세요.");
+    }
+    const partCodeList: string[] = [];
+    for (let i = 0; i < selectPart.length; i++) {
+      for (let j = 0; j < props.partSetData.partsCodes?.length; j++) {
+        if (selectPart[i].code === props.partSetData.partsCodes[j])
+          return alert(`${selectPart[i].name}은 이미 추가된 부품입니다.`);
+      }
+      partCodeList.push(selectPart[i].code);
+    }
+    props.setPartSetData({
+      ...props.partSetData,
+      partsCodes: props.partSetData.partsCodes.concat(partCodeList),
+    });
+    props.setModalOpen(false);
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -219,6 +250,10 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
                         padding={`0px`}
                         ju={`flex-start`}
                         al={`center`}
+                        onClick={() => {
+                          if (selectPart.includes(list)) return false;
+                          setSelectPart(selectPart.concat(list));
+                        }}
                       >
                         <AiFillPlusSquare />
                       </IconButton>
@@ -240,7 +275,7 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
             <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
               <TableBody>
-                {selectPart ? (
+                {selectPart.length !== 0 ? (
                   selectPart?.map((part: Part) => (
                     <TableRow key={part._id} kindOf={`noHover`}>
                       <TableRowLIST width={`20%`}>
@@ -252,11 +287,18 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
                           padding={`0px`}
                           ju={`flex-start`}
                           al={`center`}
+                          onClick={() => {
+                            setSelectPart(
+                              selectPart.filter(
+                                (select) => select._id !== part._id
+                              )
+                            );
+                          }}
                         >
                           <AiFillMinusSquare />
                         </IconButton>
                       </TableRowLIST>
-                      {/* <TableRowLIST width={`80%`}>{list.name}</TableRowLIST> */}
+                      <TableRowLIST width={`80%`}>{part.name}</TableRowLIST>
                     </TableRow>
                   ))
                 ) : (
@@ -268,6 +310,29 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
           </TableWrapper>
         </Wrapper>
+      </Wrapper>
+      <Wrapper>
+        <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+          <CommonButton
+            type="button"
+            kindOf={`white`}
+            width={`300px`}
+            height={`50px`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
+            취소
+          </CommonButton>
+          <CommonButton
+            type="button"
+            width={`300px`}
+            height={`50px`}
+            onClick={addPartToSet}
+          >
+            저장
+          </CommonButton>
+        </CommonButtonWrapper>
       </Wrapper>
     </WholeWrapper>
   );

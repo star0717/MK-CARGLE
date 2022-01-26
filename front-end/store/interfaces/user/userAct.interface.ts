@@ -405,6 +405,10 @@ export class _iDeleteByUser implements baseActionInterface {
 }
 
 /** 부품 세트 인터페이스 */
+export class _iPartssets implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: FindResult<PartsSet>;
+}
 export class _iPartssetsOne implements baseActionInterface {
   type: ActionAPIs.USER_API;
   payload: PartsSet;
