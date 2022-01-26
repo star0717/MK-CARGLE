@@ -875,9 +875,12 @@ export async function _aDeleteAgency(id: string) {
   return result;
 }
 
-export async function _aPostAgenciesDeleteMany(ids: DeleteObjectIds) {
+export async function _aPostAgenciesDeleteMany(ids: string[]) {
+  const oids: DeleteObjectIds = {
+    ids,
+  };
   const req: DeleteResult = await axios
-    .post(genApiPath(AgenciesApiPath.agencies_deleteMany), ids)
+    .post(genApiPath(AgenciesApiPath.agencies_deleteMany), oids)
     .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
       return res.data;
     });
