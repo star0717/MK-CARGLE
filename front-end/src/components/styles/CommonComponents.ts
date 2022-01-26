@@ -1322,6 +1322,7 @@ export const TableRow = styled.ul<any>`
   width: 100%;
   height: ${(props) => props.height || `45px`};
   padding: ${(props) => props.padding || `0px`};
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1364,7 +1365,7 @@ export const TableRow = styled.ul<any>`
 export const TableRowLIST = styled.li<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `100%`};
-  display: ${(props) => props.display || `flex`};
+  display: ${(props) => props.display || `inline-block`};
   color: ${(props) => props.color || ``};
   font-size: ${(props) => props.fontSize || `16px`};
   flex-direction: ${(props) => props.dr || `row`};
@@ -1374,6 +1375,9 @@ export const TableRowLIST = styled.li<any>`
   line-height: ${(props) => props.lineHeight || `1.2`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
   text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Comment = styled.div<any>`
@@ -1868,8 +1872,8 @@ export const ToolTipText = styled.span<any>`
   width: ${(props) => props.width || `280px`};
   max-width: ${(props) => props.maxWidth || `280px`};
   max-height: ${(props) => props.maxHeight || `100px`};
-  overflow: hidden;
-  white-space: pre-wrap
+  overflow: auto;
+  white-space: pre-line;
   border: 1px solid;
   border-radius: 5px;
   padding: 5px;
@@ -1917,7 +1921,6 @@ export const ToolTip = styled.span<any>`
   font-style: ${(props) => props.fontStyle};
   cursor: ${(props) => props.cursor};
   z-index: 0;
-  white-space: pre-wrap;
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
