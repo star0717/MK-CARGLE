@@ -328,7 +328,9 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                   >
                     <Wrapper isSticky={true}>
                       <TableHead radius={`0px`}>
-                        <TableHeadLIST width={`20%`}>삭제</TableHeadLIST>
+                        <TableHeadLIST width={`20%`}>
+                          삭제dfdfdfdfdfdfdfdfdfdfdfdfdsfsdfsfsdfsfs
+                        </TableHeadLIST>
                         <TableHeadLIST width={`40%`}>부품명</TableHeadLIST>
                         <TableHeadLIST width={`40%`}>국토부</TableHeadLIST>
                       </TableHead>
