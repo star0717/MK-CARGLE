@@ -37,29 +37,22 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [setClass, setSetClass] = useState<Partial<PartsSet>[]>([
-    {
-      _id: "61f0b73fcfd30cda7aa16f07",
-      // "createdAt": "2022-01-26T02:51:43.979Z",
-      _cID: "61b9a13b8c179628017295a4",
-      _uID: "61b9a13b8c179628017295a6",
-      name: "세트1",
-      partsCodes: ["EA0001", "EA0002"],
-    },
-    {
-      _id: "61f0b753cfd30cda7aa16f09",
-      // "createdAt": "2022-01-26T02:52:03.715Z",
-      _cID: "61b9a13b8c179628017295a4",
-      _uID: "61b9a13b8c179628017295a6",
-      name: "세트2",
-      partsCodes: ["EB0001", "EB0002"],
-    },
-  ]);
+  const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
+    props.data.docs
+  ); // 세트 항목
+  const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(); // 세트 데이터
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  const addPartSetClass = async () => {
+    console.log("hi");
+    const basicPartClass: Partial<PartsSet> = {
+      name: "세트명입니다.",
+      partsCodes: [],
+    };
+    setPartSetClass(partSetClass.concat(basicPartClass));
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -101,9 +94,7 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                         padding={`0px`}
                         ju={`flex-start`}
                         al={`center`}
-                        onClick={() => {
-                          console.log("hi");
-                        }}
+                        onClick={addPartSetClass}
                       >
                         <AiFillPlusSquare />
                       </IconButton>
@@ -137,7 +128,39 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                       </TableRowLIST>
                       <TableRowLIST width={`85%`}>세트명입니다</TableRowLIST>
                     </TableRow> */}
-                    {setClass.map((class) => ())}
+                    {partSetClass.map((set: PartsSet) => (
+                      <TableRow
+                        key={set._id}
+                        onClick={() => {
+                          console.log("테이블 로우 클릭");
+                        }}
+                      >
+                        <TableRowLIST
+                          width={`15%`}
+                          color={`#d6263b`}
+                          fontSize={`26px`}
+                        >
+                          <IconButton
+                            type="button"
+                            color={`inherit`}
+                            bgColor={`inherit`}
+                            shadow={`none`}
+                            padding={`0px`}
+                            ju={`flex-start`}
+                            al={`center`}
+                            onClick={(
+                              e: React.MouseEvent<HTMLButtonElement>
+                            ) => {
+                              e.stopPropagation();
+                              console.log("버튼 클릭");
+                            }}
+                          >
+                            <AiFillMinusSquare />
+                          </IconButton>
+                        </TableRowLIST>
+                        <TableRowLIST width={`85%`}>{set.name}</TableRowLIST>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
