@@ -259,7 +259,7 @@ export const CommonSubTitle = styled.h2<any>`
   padding-bottom: 10px;
   font-size: 20px;
   font-weight: 500;
-  color: ${(props) => props.color || `#9d9d9d`};
+  color: #9d9d9d;
 
   &:before {
     content: "";
@@ -732,7 +732,6 @@ export const IconButton = styled.button<any>`
   box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
 
   & svg {
-    background-color: ${(props) => props.bgColor || `#fff`};
     color: ${(props) => props.color || props.basicTheme_C};
     font-size: 28px;
   }
