@@ -315,7 +315,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                       e.stopPropagation()
                     }
                   >
-                    <Checkbox kindOf={`TableCheckBox`}>
+                    <Checkbox kindOf={`TableCheckBox`} lineHeight={`2.6`}>
                       <CheckInput
                         type="checkbox"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -326,10 +326,26 @@ const ManBusinessList: NextPage<any> = (props) => {
                       <CheckMark></CheckMark>
                     </Checkbox>
                   </TableRowLIST>
-                  <TableRowLIST width={`15%`}>{list.name}</TableRowLIST>
-                  <TableRowLIST width={`15%`}>{list.hpNum}</TableRowLIST>
-                  <TableRowLIST width={`22%`}>{list.address1}</TableRowLIST>
-                  <TableRowLIST width={`15%`}>{list.manager}</TableRowLIST>
+                  <TableRowLIST width={`15%`}>
+                    <ToolTipWrapper>
+                      <ToolTip>{list.name}</ToolTip>
+                    </ToolTipWrapper>
+                  </TableRowLIST>
+                  <TableRowLIST width={`15%`}>
+                    <ToolTipWrapper>
+                      <ToolTip>{list.hpNum}</ToolTip>
+                    </ToolTipWrapper>
+                  </TableRowLIST>
+                  <TableRowLIST width={`22%`}>
+                    <ToolTipWrapper>
+                      <ToolTip>{list.address1}</ToolTip>
+                    </ToolTipWrapper>
+                  </TableRowLIST>
+                  <TableRowLIST width={`15%`}>
+                    <ToolTipWrapper>
+                      <ToolTip>{list.manager}</ToolTip>
+                    </ToolTipWrapper>
+                  </TableRowLIST>
                   <TableRowLIST width={`23%`}>
                     <ToolTipWrapper>
                       <ToolTip>
