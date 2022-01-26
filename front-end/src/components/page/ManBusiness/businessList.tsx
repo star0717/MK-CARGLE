@@ -338,7 +338,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                   </TableRowLIST>
                   <TableRowLIST width={`22%`}>
                     <ToolTipWrapper>
-                      <ToolTip>{list.address1}</ToolTip>
+                      <ToolTip width={`100%`}>{list.address1}</ToolTip>
                     </ToolTipWrapper>
                   </TableRowLIST>
                   <TableRowLIST width={`15%`}>
