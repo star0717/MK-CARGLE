@@ -1371,9 +1371,10 @@ export const TableRowLIST = styled.li<any>`
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
-  padding-right: ${(props) => props.paddingRight || `5px`};
+  padding: ${(props) => props.padding || `0px 5px 0px 0px`};
   line-height: ${(props) => props.lineHeight || `2.6`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
+  margin-top: ${(props) => props.marginTop || `0px`};
   text-align: start;
   white-space: nowrap;
   overflow: hidden;

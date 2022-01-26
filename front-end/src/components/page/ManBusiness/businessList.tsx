@@ -311,6 +311,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                 >
                   <TableRowLIST
                     width={`10%`}
+                    padding={`10px 5px 0px 0px`}
                     onClick={(e: React.MouseEvent<HTMLLIElement>) =>
                       e.stopPropagation()
                     }
@@ -326,27 +327,27 @@ const ManBusinessList: NextPage<any> = (props) => {
                       <CheckMark></CheckMark>
                     </Checkbox>
                   </TableRowLIST>
-                  <TableRowLIST width={`15%`}>
+                  <TableRowLIST width={`15%`} padding={`10px 5px 0px 0px`}>
                     <ToolTipWrapper>
                       <ToolTip>{list.name}</ToolTip>
                     </ToolTipWrapper>
                   </TableRowLIST>
-                  <TableRowLIST width={`15%`}>
+                  <TableRowLIST width={`15%`} padding={`10px 5px 0px 0px`}>
                     <ToolTipWrapper>
                       <ToolTip>{list.hpNum}</ToolTip>
                     </ToolTipWrapper>
                   </TableRowLIST>
-                  <TableRowLIST width={`22%`}>
+                  <TableRowLIST width={`22%`} padding={`10px 5px 0px 0px`}>
                     <ToolTipWrapper>
-                      <ToolTip width={`100%`}>{list.address1}</ToolTip>
+                      <ToolTip>{list.address1}</ToolTip>
                     </ToolTipWrapper>
                   </TableRowLIST>
-                  <TableRowLIST width={`15%`}>
+                  <TableRowLIST width={`15%`} padding={`10px 5px 0px 0px`}>
                     <ToolTipWrapper>
                       <ToolTip>{list.manager}</ToolTip>
                     </ToolTipWrapper>
                   </TableRowLIST>
-                  <TableRowLIST width={`23%`}>
+                  <TableRowLIST width={`23%`} padding={`10px 5px 0px 0px`}>
                     <ToolTipWrapper>
                       <ToolTip>
                         {list.memo}
