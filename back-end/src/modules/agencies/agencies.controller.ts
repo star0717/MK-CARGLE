@@ -43,6 +43,7 @@ export class AgenciesController {
     @Body() doc: Agency,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<Agency> {
+    console.log('doc: ', doc);
     return await this.service.create(token, doc);
   }
 

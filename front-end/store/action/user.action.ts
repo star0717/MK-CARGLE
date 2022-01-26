@@ -980,6 +980,11 @@ export async function _aDeleteAgency(id: string) {
   return result;
 }
 
+/**
+ * Agency 데이터 삭제
+ * @param ids DeleteObjectIds
+ * @returns
+ */
 export async function _aPostAgenciesDeleteMany(ids: string[]) {
   const oids: DeleteObjectIds = {
     ids,

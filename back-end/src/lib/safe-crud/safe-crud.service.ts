@@ -59,10 +59,9 @@ export class SafeService<T extends BaseEntity> {
     doc.createdAt = new Date(Date.now());
 
     try {
-      console.log(doc);
+      // console.log(doc);
       return await this.model.create(doc);
     } catch (err: unknown) {
-      console.log(err);
       this.handelError(err);
     }
   }
@@ -72,7 +71,6 @@ export class SafeService<T extends BaseEntity> {
     doc._cID = token.cID;
     doc._uID = token.uID;
 
-    console.log(doc);
     return await this._create(doc);
   }
 
@@ -216,13 +214,25 @@ export class SafeService<T extends BaseEntity> {
   }
 
   handelError(err: any) {
+    console.error('[에러발생]', err.name);
+
+    let info: DbErrorInfo = {
+      name: err.name,
+    };
     if (err.name == 'MongoServerError' && err.code == 11000) {
       const mse = err as MongoServerError;
-      var info: DbErrorInfo = {
-        name: err.name,
-        code: mse.code,
-      };
-
+      info.code = mse.code;
+      for (var i: number = 0; i < this.modelKeys.length; i++) {
+        if (mse.message.includes(this.modelKeys[i])) {
+          info.key = this.modelKeys[i];
+          break;
+        }
+      }
+      throw new HttpException(info, HttpStatus.NOT_ACCEPTABLE);
+    } else if (err.name == 'ValidationError') {
+      console.log(info);
+      const mse = err as MongoServerError;
+      console.log(mse.message);
       for (var i: number = 0; i < this.modelKeys.length; i++) {
         if (mse.message.includes(this.modelKeys[i])) {
           info.key = this.modelKeys[i];

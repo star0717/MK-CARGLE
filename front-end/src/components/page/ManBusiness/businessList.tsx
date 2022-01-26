@@ -257,15 +257,6 @@ const ManBusinessList: NextPage<any> = (props) => {
                         alert("삭제에 실패했습니다.");
                       }
                     );
-                    // dispatch(_aDeleteAdminPartsMany(checkedList)).then(
-                    //   (res: _iDeleteAdminPartsMany) => {
-                    //     alert("삭제되었습니다.");
-                    //     setReset(reset + 1);
-                    //   },
-                    //   (err) => {
-                    //     alert("삭제에 실패했습니다.");
-                    //   }
-                    // );
                   }
                 } else {
                   return false;

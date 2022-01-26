@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import {
   CommonButton,
@@ -9,36 +9,102 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
+  SmallButton,
+  CloseButton,
 } from "src/components/styles/CommonComponents";
 import { useDispatch } from "react-redux";
 import { Agency } from "src/models/agency.entity";
+import { IoIosCloseCircle } from "react-icons/io";
+import DaumPostcode from "react-daum-postcode";
+import Modal from "react-modal";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { _aPostAgency } from "store/action/user.action";
+import { _iAgency } from "store/interfaces";
+import { AxiosError } from "axios";
 
-const AddBusinessModal: NextPage<any> = () => {
+const AddBusinessModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+  // react-hook-form 사용을 위한 선언
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [addAgency, setAddAgency] = useState<Partial<Agency>>({
     name: "",
+    comRegNum: "",
     manager: "",
+    email: "",
     phoneNum: "",
     hpNum: "",
+    faxNum: "",
+    postcode: "",
     address1: "",
     address2: "",
     memo: "",
   });
+  const [addressModal, setAddressModal] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddAgency({ ...addAgency, [e.target.name]: [e.target.value] });
+    setAddAgency({ ...addAgency, [e.target.name]: e.target.value });
   };
+
+  /**
+   * 주소 검색 api handler
+   * @param data
+   */
+  const addressHandler = (data: any) => {
+    let fullAddress = data.address;
+    let zonecode = data.zonecode;
+    let extraAddress = "";
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== "") {
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
+    }
+
+    setAddAgency({ ...addAgency, address1: fullAddress, postcode: zonecode });
+    setValue("address1", fullAddress, { shouldValidate: true });
+    setAddressModal(false);
+  };
+
+  const saveData: SubmitHandler<Partial<Agency>> = (data) => {
+    dispatch(_aPostAgency(addAgency))
+      .then((res: _iAgency) => {
+        alert("새로운 거래처가 등록되었습니다.");
+        props.setModalOpen(false);
+      })
+      .catch((err: AxiosError<any, any>) => {
+        if (err.response.data.key === "name") {
+          alert("상호명을 입력해 주세요.");
+        } else {
+          alert("예기치 못한 이유로 등록에 실패하였습니다.");
+        }
+      });
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
+  const closeModal = () => {
+    setAddressModal(false);
+  };
 
   /*********************************************************************
    * 5. Page configuration
@@ -46,92 +112,217 @@ const AddBusinessModal: NextPage<any> = () => {
   return (
     <WholeWrapper>
       <CommonSmallTitle>거래처추가</CommonSmallTitle>
+      <form onSubmit={handleSubmit(saveData)}>
+        <Wrapper>
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>*상호명</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="name"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>전화번호</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="phoneNum"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>휴대전화번호</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="hpNum"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>담당자명</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="manager"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>사업자등록번호</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="comRegNum"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>팩스번호</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="faxNum"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>이메일</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="email"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>주소</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <Wrapper dr={`row`} margin={`0px 0px 10px 0px`}>
+                <TextInput2
+                  width={`400px`}
+                  // margin={`0px 0px 10px 0px`}
+                  type="text"
+                  name="address1"
+                  value={addAgency.address1}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputHandler(e);
+                  }}
+                />
+                <SmallButton
+                  type="button"
+                  kindOf={`default`}
+                  margin={`0px 0px 0px 20px`}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    setAddressModal(!addressModal);
+                  }}
+                >
+                  주소 검색
+                </SmallButton>
+              </Wrapper>
+
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="address2"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+            <Text>메모</Text>
+            <Wrapper width={`400px`} ju={`flex-start`}>
+              <TextArea
+                padding={`10px`}
+                width={`400px`}
+                height={`150px`}
+                placeholder="메모를 입력하세요."
+                al={`flex-start`}
+                type="text"
+                name="memo"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputHandler(e);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+          <CommonButtonWrapper kindOf={`column`}>
+            <CommonButton
+              kindOf={`circleWhite`}
+              type="button"
+              onClick={() => {
+                props.setModalOpen(false);
+              }}
+            >
+              취소
+            </CommonButton>
+            <CommonButton kindOf={`circleTheme`} type="submit">
+              저장
+            </CommonButton>
+          </CommonButtonWrapper>
+        </Wrapper>
+      </form>
       <Wrapper>
-        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-          <Text>*상호명</Text>
-          <Wrapper width={`400px`} ju={`flex-start`}>
-            <TextInput2 width={`400px`} type="text" name="name" />
-          </Wrapper>
-        </Wrapper>
-
-        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-          <Text>담당자명</Text>
-          <Wrapper width={`400px`} ju={`flex-start`}>
-            <TextInput2 width={`400px`} type="text" name="manager" />
-          </Wrapper>
-        </Wrapper>
-
-        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-          <Text>사업자등록번호</Text>
-          <Wrapper width={`400px`} ju={`flex-start`}>
-            <TextInput2 width={`400px`} type="text" name="" />
-          </Wrapper>
-        </Wrapper>
-
-        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-          <Text>전화번호</Text>
-          <Wrapper width={`400px`} ju={`flex-start`}>
-            <TextInput2 width={`400px`} type="text" name="phoneNum" />
-          </Wrapper>
-        </Wrapper>
-
-        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-          <Text>휴대전화번호</Text>
-          <Wrapper width={`400px`} ju={`flex-start`}>
-            <TextInput2 width={`400px`} type="text" name="hpNum" />
-          </Wrapper>
-        </Wrapper>
-
-        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-          <Text>팩스번호</Text>
-          <Wrapper width={`400px`} ju={`flex-start`}>
-            <TextInput2 width={`400px`} type="text" name="" />
-          </Wrapper>
-        </Wrapper>
-
-        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-          <Text>이메일</Text>
-          <Wrapper width={`400px`} ju={`flex-start`}>
-            <TextInput2 width={`400px`} type="text" name="" />
-          </Wrapper>
-        </Wrapper>
-
-        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-          <Text>주소</Text>
-          <Wrapper width={`400px`} ju={`flex-start`}>
-            <TextInput2
-              width={`400px`}
-              margin={`0px 0px 10px 0px`}
-              type="text"
-              name="address1"
-            />
-
-            <TextInput2 width={`400px`} type="text" name="address2" />
-          </Wrapper>
-        </Wrapper>
-
-        <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-          <Text>메모</Text>
-          <Wrapper width={`400px`} ju={`flex-start`}>
-            <TextArea
-              padding={`10px`}
-              width={`400px`}
-              height={`150px`}
-              placeholder="메모를 입력하세요."
-              al={`flex-start`}
-              type="text"
-              name="memo"
+        <Modal
+          isOpen={addressModal}
+          style={{
+            overlay: {
+              position: "fixed",
+              zIndex: 9999,
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(71, 71, 71, 0.75)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+            content: {
+              background: "white",
+              width: "500px",
+              height: "800px",
+              maxWidth: "calc(100vw - 2rem)",
+              maxHeight: "calc(100vh - 2rem)",
+              overflowY: "auto",
+              position: "relative",
+              border: "1px solid #ccc",
+              borderRadius: "0.3rem",
+              boxShadow: "0px 10px 15px rgba(61,61,61,1)",
+              inset: 0,
+            },
+          }}
+        >
+          <Wrapper fontSize={`28px`} al={`flex-end`}>
+            <CloseButton onClick={closeModal}>
+              <IoIosCloseCircle />
+            </CloseButton>
+            <DaumPostcode
+              onComplete={addressHandler}
+              style={{ height: "500px" }}
             />
           </Wrapper>
-        </Wrapper>
-        <CommonButtonWrapper kindOf={`column`}>
-          <CommonButton kindOf={`circleWhite`} type="button">
-            취소
-          </CommonButton>
-          <CommonButton kindOf={`circleTheme`} type="button">
-            저장
-          </CommonButton>
-        </CommonButtonWrapper>
+        </Modal>
       </Wrapper>
     </WholeWrapper>
   );

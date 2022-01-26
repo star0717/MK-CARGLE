@@ -134,7 +134,7 @@ export class DeleteResult {
 
 export class DbErrorInfo {
   name: string;
-  code: string | number;
+  code?: string | number;
   key?: string;
 }
 
