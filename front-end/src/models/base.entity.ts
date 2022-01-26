@@ -52,7 +52,7 @@ export declare class DeleteResult {
 }
 export declare class DbErrorInfo {
   name: string;
-  code: string | number;
+  code?: string | number;
   key?: string;
 }
 export declare class OptionalInfo {

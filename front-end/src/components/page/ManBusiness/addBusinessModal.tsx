@@ -20,6 +20,7 @@ import Modal from "react-modal";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { _aPostAgency } from "store/action/user.action";
 import { _iAgency } from "store/interfaces";
+import { AxiosError } from "axios";
 
 const AddBusinessModal: NextPage<any> = (props) => {
   /*********************************************************************
@@ -84,15 +85,19 @@ const AddBusinessModal: NextPage<any> = (props) => {
   };
 
   const saveData: SubmitHandler<Partial<Agency>> = (data) => {
-    dispatch(_aPostAgency(addAgency)).then(
-      (res: _iAgency) => {
-        alert("새로운 거래처가 등록되었습니다.");
-        props.setModalOpen(false);
-      },
-      (err) => {
-        alert("등록에 실패하였습니다.");
-      }
-    );
+    dispatch(_aPostAgency(addAgency))
+      .then(
+        (res: _iAgency) => {
+          alert("새로운 거래처가 등록되었습니다.");
+          props.setModalOpen(false);
+        }
+        // (err) => {
+        //   alert("등록에 실패하였습니다.");
+        // }
+      )
+      .catch((err: AxiosError<any, any>) => {
+        console.log("hi", err.response.data);
+      });
   };
 
   /*********************************************************************
