@@ -315,7 +315,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                       e.stopPropagation()
                     }
                   >
-                    <Checkbox kindOf={`TableCheckBox`} lineHeight={`2.6`}>
+                    <Checkbox kindOf={`TableCheckBox`}>
                       <CheckInput
                         type="checkbox"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

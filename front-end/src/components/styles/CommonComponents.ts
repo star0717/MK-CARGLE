@@ -1905,7 +1905,7 @@ export const ToolTip = styled.span<any>`
   justify-content: ${(props) => props.ju};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || `500`};
-  line-height: ${(props) => props.lineHeight || `1.6`};
+  line-height: ${(props) => props.lineHeight || `2.6`};
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding};
@@ -1930,6 +1930,7 @@ export const ToolTip = styled.span<any>`
 
   &:hover ${ToolTipText} {
     display: ${(props) => props.display || `block`};
+    line-height: 1.6;
     z-index: 9999;
   }
 
