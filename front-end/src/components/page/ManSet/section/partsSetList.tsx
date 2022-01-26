@@ -71,17 +71,22 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    * @param set
    * @returns
    */
-  const onSelectPartSet = (set: Partial<PartsSet>) => {
-    if (set.partsCodes?.length !== props.partSetData.partsCodes?.length) {
+  const onSelectPartSet = (select: Partial<PartsSet>) => {
+    const existSet: Partial<PartsSet>[] = props.partSetClass.filter(
+      (set: Partial<PartsSet>) => set._id === selectClass
+    );
+    if (
+      existSet[0].partsCodes?.length !== props.partSetData.partsCodes?.length
+    ) {
       if (
         window.confirm("추가된 부품이 저장되지 않았습니다. 계속하시겠습니까?")
       ) {
-        return setSelectClass(set._id);
+        return setSelectClass(select._id);
       } else {
         return false;
       }
     }
-    setSelectClass(set._id);
+    setSelectClass(select._id);
   };
 
   /**
@@ -121,7 +126,6 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
 
   /** 세트 저장(실제타는 api는 수정) */
   const onSavePartsSet = () => {
-    console.log(props.partSetData);
     dispatch(
       _aPatchPartssetsOne(props.partSetData._id, props.partSetData)
     ).then(
@@ -129,6 +133,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
         dispatch(_aGetPartssets()).then(
           (res: _iPartssets) => {
             props.setPartSetClass(res.payload.docs);
+            alert("저장되었습니다.");
           },
           (err) => {
             alert("세트 리스트를 불러오는데 실패했습니다.");
@@ -337,7 +342,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                               props.data.allParts.docs
                             );
                             return (
-                              <TableRow key={part._id}>
+                              <TableRow key={part?._id}>
                                 <TableRowLIST
                                   width={`20%`}
                                   color={`#d6263b`}
@@ -346,10 +351,10 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                                   <AiFillMinusSquare />
                                 </TableRowLIST>
                                 <TableRowLIST width={`40%`}>
-                                  {part.name}
+                                  {part?.name}
                                 </TableRowLIST>
                                 <TableRowLIST width={`40%`}>
-                                  {part.tsCode ? part.tsCode : "-"}
+                                  {part?.tsCode ? part.tsCode : "-"}
                                 </TableRowLIST>
                               </TableRow>
                             );
