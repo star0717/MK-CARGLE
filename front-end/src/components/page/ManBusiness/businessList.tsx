@@ -345,7 +345,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                 </TableRow>
               ))
             ) : (
-              <Wrapper minHeight={`445x`}>
+              <Wrapper minHeight={`445px`}>
                 <Text fontSize={`48px`} color={`#c4c4c4`}>
                   <BsEmojiFrownFill />
                 </Text>

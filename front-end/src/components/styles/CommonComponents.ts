@@ -1317,6 +1317,7 @@ export const TableBody = styled.div<any>`
   margin: ${(props) => props.margin || `0px`};
   overflow: ${(props) => props.overflow || ``};
   font-size: ${(props) => props.fontSize || `16px`};
+  min-height: ${(props) => props.minHeight || `450px`};
 `;
 export const TableRow = styled.ul<any>`
   width: 100%;

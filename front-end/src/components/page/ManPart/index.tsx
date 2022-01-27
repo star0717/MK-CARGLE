@@ -21,7 +21,7 @@ import {
 } from "src/components/styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
 import { Part } from "src/models/part.entity";
-import { BsSearch } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { partClassList, PartClass, getTsParts } from "src/constants/part.const";
 
 const ManPartsPage: NextPage<_MainProps> = (props) => {
@@ -223,14 +223,34 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
-                    {partList.map((list: Part) => (
+                    {partList.length > 0 ? (
+                      partList.map((list: Part) => (
+                        <TableRow key={list._id} kindOf={`noHover`}>
+                          <TableRowLIST width={`25%`}>{list.code}</TableRowLIST>
+                          <TableRowLIST width={`25%`}>{list.name}</TableRowLIST>
+                          <TableRowLIST width={`25%`}>
+                            {list.tsCode}
+                          </TableRowLIST>
+                          <TableRowLIST width={`25%`}>-</TableRowLIST>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <Wrapper minHeight={`445px`}>
+                        <Text fontSize={`48px`} color={`#c4c4c4`}>
+                          <BsEmojiFrownFill />
+                        </Text>
+                        <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
+                      </Wrapper>
+                    )}
+
+                    {/* {partList.map((list: Part) => (
                       <TableRow key={list._id} kindOf={`noHover`}>
                         <TableRowLIST width={`25%`}>{list.code}</TableRowLIST>
                         <TableRowLIST width={`25%`}>{list.name}</TableRowLIST>
                         <TableRowLIST width={`25%`}>{list.tsCode}</TableRowLIST>
                         <TableRowLIST width={`25%`}>-</TableRowLIST>
                       </TableRow>
-                    ))}
+                    ))} */}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
