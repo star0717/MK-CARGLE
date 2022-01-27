@@ -346,7 +346,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                       <TableHeadLIST width={`40%`}>국토부</TableHeadLIST>
                     </TableHead>
                   </Wrapper>
-                  <Wrapper overflow={`auto`} ju={`flex-start`}>
+                  <Wrapper overflow={`auto`} height={`300px`} ju={`flex-start`}>
                     <TableBody>
                       {props.partSetData.partsCodes.length !== 0 ? (
                         props.partSetData.partsCodes.map((code: string) => {
