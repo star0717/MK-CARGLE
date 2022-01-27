@@ -23,7 +23,7 @@ import {
   Wrapper,
 } from "src/components/styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
-import { BsPencilSquare } from "react-icons/bs";
+import { BsEmojiFrownFill, BsPencilSquare } from "react-icons/bs";
 import { getPartByCode } from "src/constants/part.const";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { PartsSet } from "src/models/partsset.entity";
@@ -334,11 +334,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                     부품추가하기
                   </SmallButton>
                 </Wrapper>
-                <TableWrapper
-                  overflow={`auto`}
-                  minHeight={`220px`}
-                  height={`220px`}
-                >
+                <TableWrapper>
                   <Wrapper isSticky={true}>
                     <TableHead radius={`0px`}>
                       <TableHeadLIST width={`20%`}>삭제</TableHeadLIST>
@@ -346,7 +342,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                       <TableHeadLIST width={`40%`}>국토부</TableHeadLIST>
                     </TableHead>
                   </Wrapper>
-                  <Wrapper overflow={`auto`} height={`300px`} ju={`flex-start`}>
+                  <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                     <TableBody>
                       {props.partSetData.partsCodes.length !== 0 ? (
                         props.partSetData.partsCodes.map((code: string) => {
@@ -389,9 +385,12 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                           );
                         })
                       ) : (
-                        <Text margin={`10px`} fontSize={`20px`}>
-                          부품을 추가해주세요.
-                        </Text>
+                        <Wrapper minHeight={`445px`}>
+                          <Text fontSize={`48px`} color={`#c4c4c4`}>
+                            <BsEmojiFrownFill />
+                          </Text>
+                          <Text color={`#c4c4c4`}>부품이 없습니다.</Text>
+                        </Wrapper>
                       )}
                     </TableBody>
                   </Wrapper>

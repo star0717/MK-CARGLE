@@ -29,7 +29,7 @@ import {
   PartClass,
   partClassList,
 } from "src/constants/part.const";
-import { BsSearch } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 
 const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
@@ -302,9 +302,12 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
                     </TableRow>
                   ))
                 ) : (
-                  <Text margin={`10px`} fontSize={`18px`}>
-                    부품을 추가해주세요.
-                  </Text>
+                  <Wrapper minHeight={`445px`}>
+                    <Text fontSize={`48px`} color={`#c4c4c4`}>
+                      <BsEmojiFrownFill />
+                    </Text>
+                    <Text color={`#c4c4c4`}>부품이 없습니다.</Text>
+                  </Wrapper>
                 )}
               </TableBody>
             </Wrapper>
