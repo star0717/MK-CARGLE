@@ -20,6 +20,7 @@ import {
   Text,
   WholeWrapper,
   Wrapper,
+  CommonSmallTitle,
 } from "src/components/styles/CommonComponents";
 import { Part } from "src/models/part.entity";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
@@ -133,9 +134,7 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper>
-      <CommonTitleWrapper>
-        <CommonSubTitle color={`#000`}>세트부품등록</CommonSubTitle>
-      </CommonTitleWrapper>
+      <CommonSmallTitle>세트부품등록</CommonSmallTitle>
       <Wrapper>
         <form onSubmit={onSearchFormHandler}>
           <SearchInputWrapper
@@ -230,18 +229,18 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
           <TableWrapper overflow={`auto`}>
             <Wrapper isSticky={true}>
               <TableHead radius={`8px 8px 0px 0px`}>
-                <TableHeadLIST width={`40%`}>부품명</TableHeadLIST>
-                <TableHeadLIST width={`40%`}>국토부</TableHeadLIST>
-                <TableHeadLIST width={`20%`}>추가</TableHeadLIST>
+                <TableHeadLIST width={`45%`}>부품명</TableHeadLIST>
+                <TableHeadLIST width={`45%`}>국토부</TableHeadLIST>
+                <TableHeadLIST width={`10%`}>추가</TableHeadLIST>
               </TableHead>
             </Wrapper>
             <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
               <TableBody>
                 {partList?.map((list: Part) => (
                   <TableRow key={list._id} kindOf={`noHover`}>
-                    <TableRowLIST width={`40%`}>{list.name}</TableRowLIST>
-                    <TableRowLIST width={`40%`}>{list.tsCode}</TableRowLIST>
-                    <TableRowLIST width={`20%`}>
+                    <TableRowLIST width={`45%`}>{list.name}</TableRowLIST>
+                    <TableRowLIST width={`45%`}>{list.tsCode}</TableRowLIST>
+                    <TableRowLIST width={`10%`}>
                       <IconButton
                         type="button"
                         color={`#51b351`}
