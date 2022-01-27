@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import React, { useState } from "react";
 import DayPicker from "react-day-picker";
 import "react-day-picker/lib/style.css";
+import { Wrapper } from "../styles/CommonComponents";
 
 interface CalendarProps {
   schedule: any;
@@ -9,10 +10,6 @@ interface CalendarProps {
 }
 
 const Calendar: NextPage<CalendarProps> = (props) => {
-  // props 재정의
-  const schedule = props.schedule;
-  const setSchedule = props.setSchedule;
-
   const [day, setDay] = useState(new Date()); // 날짜 state
 
   const modifiers = {
@@ -33,17 +30,17 @@ const Calendar: NextPage<CalendarProps> = (props) => {
   // 날짜 클릭 이벤트
   const handleDayClick = (day: any) => {
     setDay(day);
-    setSchedule(`${day.toLocaleDateString()} 일정`);
+    props.setSchedule(`${day.toLocaleDateString()} 일정`);
   };
   return (
-    <div>
+    <Wrapper>
       <DayPicker
         onDayClick={handleDayClick}
         modifiers={modifiers}
         modifiersStyles={modifiersStyles}
       />
       {/* <p>{day ? day.toLocaleDateString() : "Please select a day 👻"}</p> */}
-    </div>
+    </Wrapper>
   );
 };
 
