@@ -151,7 +151,6 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    * @param id
    */
   const onDeletePart = (code: string) => {
-    console.log(props.partSetData);
     props.setPartSetData({
       ...props.partSetData,
       partsCodes: props.partSetData.partsCodes.filter(

@@ -43,8 +43,6 @@ import {
 } from "../../../../configure/_pProps.entity";
 import { User } from "../../../../models/user.entity";
 
-Modal.setAppElement("body");
-
 /**
  * 마이 페이지: 계정관리 수정 컴포넌트(기능)
  * @param props

@@ -36,9 +36,6 @@ import { mbTypeOption } from "../../../../configure/list.entity";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { BodyWrapper } from "../../../styles/LayoutComponents";
 
-// modal setting
-Modal.setAppElement("body");
-
 /**
  * 회원가입: 업체정보 컴포넌트(기능)
  * @param props

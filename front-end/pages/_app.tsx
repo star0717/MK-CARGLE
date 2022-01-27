@@ -5,8 +5,11 @@ import GlobalStyle from "../styles/globals";
 import theme from "../styles/theme";
 import { ThemeProvider } from "styled-components";
 import Head from "next/head";
+import Modal from "react-modal";
 
 const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
+  // modal setting
+  Modal.setAppElement("body");
   return (
     <>
       <Head>

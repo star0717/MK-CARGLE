@@ -29,7 +29,7 @@ import {
 import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import PartsModal from "./partsModal";
-import ReactModal from "react-modal";
+import Modal from "react-modal";
 import { PartClass, partClassList } from "../../../../constants/part.const";
 
 import { _MainProps } from "../../../../configure/_props.entity";
@@ -387,7 +387,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
           </Wrapper>
         </RsWrapper>
         <Wrapper>
-          <ReactModal
+          <Modal
             isOpen={modalOpen}
             style={{
               overlay: {
@@ -427,7 +427,7 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 <PartsInfoModal {...ARCModalProps} />
               )}
             </Wrapper>
-          </ReactModal>
+          </Modal>
         </Wrapper>
       </WholeWrapper>
     </BodyWrapper>

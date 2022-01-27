@@ -14,7 +14,7 @@ import {
   Wrapper,
 } from "../../styles/CommonComponents";
 import { BsSearch } from "react-icons/bs";
-import ReactModal from "react-modal";
+import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
 import { Agency } from "src/models/agency.entity";
 
@@ -143,7 +143,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
           </Wrapper>
         </RsWrapper>
         <Wrapper>
-          <ReactModal
+          <Modal
             isOpen={modalOpen}
             style={{
               overlay: {
@@ -179,7 +179,7 @@ const AdminManPartsPage: NextPage<any> = (props) => {
               </CloseButton>
               {modalOption === "addBusiness" ? "추가" : "수정"}
             </Wrapper>
-          </ReactModal>
+          </Modal>
         </Wrapper>
       </WholeWrapper>
     </BodyWrapper>

@@ -41,9 +41,6 @@ import {
 import { BodyWrapper } from "../../../styles/LayoutComponents";
 import { UserAuthority } from "../../../../constants/model.const";
 
-// modal setting
-Modal.setAppElement("body");
-
 /**
  * 회원가입: 계정정보 컴포넌트(기능)
  * @param props

@@ -5,8 +5,8 @@ import "react-day-picker/lib/style.css";
 import { Wrapper } from "../styles/CommonComponents";
 
 interface CalendarProps {
-  schedule: any;
-  setSchedule: React.Dispatch<React.SetStateAction<any>>;
+  schedule: string;
+  setSchedule: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Calendar: NextPage<CalendarProps> = (props) => {

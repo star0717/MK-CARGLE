@@ -36,8 +36,6 @@ import router from "next/router";
 import { UseLink } from "../../../../configure/router.entity";
 import { actionTypesUser } from "../../../../../store/interfaces";
 
-Modal.setAppElement("body");
-
 /**
  * 마이 페이지: 계정관리 회원탈퇴 컴포넌트(기능)
  * @param props

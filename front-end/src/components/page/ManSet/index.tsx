@@ -10,7 +10,7 @@ import {
 } from "store/action/user.action";
 import { _iDeleteByUser, _iPartssetsOne } from "store/interfaces";
 import PartsSetList from "./section/partsSetList";
-import ReactModal from "react-modal";
+import Modal from "react-modal";
 import { CloseButton, Wrapper } from "src/components/styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
 import { Part } from "src/models/part.entity";
@@ -71,7 +71,7 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   return (
     <BodyWrapper>
       <PartsSetList {...partsSetProps} />
-      <ReactModal
+      <Modal
         isOpen={modalOpen}
         style={{
           overlay: {
@@ -107,7 +107,7 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
           </CloseButton>
         </Wrapper>
         <PartsSetModal {...partsSetProps} />
-      </ReactModal>
+      </Modal>
     </BodyWrapper>
   );
 };

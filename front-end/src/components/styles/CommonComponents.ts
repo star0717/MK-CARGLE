@@ -1868,7 +1868,7 @@ export const ToolTipText = styled.div<any>`
   }
 `;
 
-export const ToolTip = styled.p<any>`
+export const ToolTip = styled.div<any>`
   overflow: ${(props) => props.overflow || `hidden`};
   width: ${(props) => props.width || `260px`};
   max-height: ${(props) => props.maxWidth || `260px`};
