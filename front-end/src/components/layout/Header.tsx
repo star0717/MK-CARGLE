@@ -11,6 +11,9 @@ import {
   HeaderHover,
   HeaderText,
   HeaderIconButton,
+  MobileHeader,
+  MobileMenu,
+  MobileSubMenu,
 } from "../styles/LayoutComponents";
 import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";
@@ -18,6 +21,8 @@ import { MdLogout } from "react-icons/md";
 import { menuList } from "../../configure/list.entity";
 import { _pLayoutProps } from "../../configure/_pProps.entity";
 import { CompanyApproval, UserAuthority } from "../../constants/model.const";
+import React from "react";
+import { AiOutlineMenu } from "react-icons/ai";
 
 const Header: NextPage<_pLayoutProps> = (props) => {
   const dispatch = useDispatch();
@@ -95,6 +100,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
         shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
         bgColor={`#fafafa`}
         wrap={`no-wrap`}
+        display={width < 1200 ? `none` : ``}
       >
         <Wrapper width={`auto`} al={`cneter`}>
           <Link href={UseLink.MAIN}>
@@ -282,6 +288,25 @@ const Header: NextPage<_pLayoutProps> = (props) => {
             )}
         </Wrapper>
       </Wrapper>
+      <MobileHeader>
+        <Wrapper width={`auto`}>
+          <Image
+            src="/images/cargle.png"
+            alt="Cargle Logo"
+            width={width < 1450 ? `80px` : `100px`}
+          />
+        </Wrapper>
+        <Wrapper width={`auto`}>
+          <AiOutlineMenu />
+        </Wrapper>
+
+        {/* <MobileMenu>
+          <MobileSubMenu
+            width={width < 800 ? `120px` : `150px`}
+            height={`80px`}
+          ></MobileSubMenu>
+        </MobileMenu> */}
+      </MobileHeader>
     </HeaderWrapper>
   );
 };

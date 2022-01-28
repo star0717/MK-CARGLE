@@ -179,6 +179,57 @@ export const HeaderIconAlarm = styled.div<any>`
   }
 `;
 
+export const MobileHeader = styled.div<any>`
+  width: 100%;
+  height: 80px;
+  padding: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  display: none;
+  color: #0b0b0b;
+
+  @media (max-width: 1200px) {
+    display: flex;
+  }
+  & svg {
+    font-size: 25px;
+    cursor: pointer;
+  }
+`;
+
+export const MobileMenu = styled.div<any>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  animation: ${appearAnimation} 0.5s forwards;
+
+  & svg {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    cursor: pointer;
+  }
+`;
+
+export const MobileSubMenu = styled.div<any>`
+  font-size: 25px;
+  height: 40px;
+  margin-bottom: 20px;
+
+  &:hover {
+    border-bottom: 1px solid #fff;
+  }
+`;
+
 // -----------Body----------- //
 
 export const BodyWrapper = styled.div<any>`
