@@ -23,8 +23,9 @@ import {
 } from "../../../../../store/action/user.action";
 import { OptionalInfo } from "../../../../models/base.entity";
 import { UseLink } from "../../../../configure/router.entity";
+import { _pComPageModalProps } from "src/configure/_pProps.entity";
 
-const AdminReviewCompaniesModal: NextPage<any> = (props) => {
+const AdminReviewCompaniesModal: NextPage<_pComPageModalProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/

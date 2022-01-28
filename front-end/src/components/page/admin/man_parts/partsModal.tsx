@@ -120,8 +120,8 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
     });
   };
 
-  const press = (e: any) => {
-    if (e.keyCode === 13) {
+  const press = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
       e.preventDefault();
       return onInputPlusHandler();
     }
