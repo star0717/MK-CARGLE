@@ -13,7 +13,6 @@ import {
   Text,
   WholeWrapper,
   Wrapper,
-  CommonButton,
   SmallButton,
   TableWrapper,
   TableHead,

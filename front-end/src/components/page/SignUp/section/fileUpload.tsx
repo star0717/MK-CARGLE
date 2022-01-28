@@ -29,7 +29,6 @@ import { parseJwt } from "../../../../modules/commonModule";
 import { AuthTokenInfo } from "../../../../models/auth.entity";
 import { FileInit } from "../../../../configure/etc.entity";
 import { _pFileUploadProps } from "../../../../configure/_pProps.entity";
-import { BodyWrapper } from "../../../styles/LayoutComponents";
 
 /**
  * 파일 데이터 초기화

@@ -242,15 +242,6 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                         <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
                       </Wrapper>
                     )}
-
-                    {/* {partList.map((list: Part) => (
-                      <TableRow key={list._id} kindOf={`noHover`}>
-                        <TableRowLIST width={`25%`}>{list.code}</TableRowLIST>
-                        <TableRowLIST width={`25%`}>{list.name}</TableRowLIST>
-                        <TableRowLIST width={`25%`}>{list.tsCode}</TableRowLIST>
-                        <TableRowLIST width={`25%`}>-</TableRowLIST>
-                      </TableRow>
-                    ))} */}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>
