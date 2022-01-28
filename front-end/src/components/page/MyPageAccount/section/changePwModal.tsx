@@ -13,7 +13,6 @@ import {
   Wrapper,
   Text,
   TextInput2,
-  SmallButton,
   CommonSmallTitle,
   CommonButton,
   CommonButtonWrapper,

@@ -21,8 +21,6 @@ import {
 import { useDispatch } from "react-redux";
 import { actionTypesUser } from "../../../../../store/interfaces";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
-import { BodyWrapper } from "../../../styles/LayoutComponents";
-import { BsCheckLg } from "react-icons/bs";
 
 /**
  * 회원가입: 이용약관 컴포넌트(기능)

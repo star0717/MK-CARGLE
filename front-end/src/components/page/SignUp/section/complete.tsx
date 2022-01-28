@@ -14,7 +14,6 @@ import {
   RsWrapper,
   JoinStepBar,
 } from "../../../styles/CommonComponents";
-import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { GoCheck } from "react-icons/go";

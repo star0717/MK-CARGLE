@@ -12,7 +12,6 @@ import {
   Text,
   SearchInput,
   IconButton,
-  RsWrapper,
   CommonSmallTitle,
   SearchInputWrapper,
   TableWrapper,

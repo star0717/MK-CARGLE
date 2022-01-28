@@ -10,7 +10,6 @@ import {
   Text,
   TextInput2,
   LabelButton,
-  SmallButton,
   CommonSmallTitle,
   CommonButtonWrapper,
   CommonButton,
@@ -18,7 +17,6 @@ import {
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import styled from "styled-components";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)

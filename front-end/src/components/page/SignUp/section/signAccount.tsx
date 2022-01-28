@@ -38,7 +38,6 @@ import {
   _pComFindModalProps,
   _pSignUpProps,
 } from "../../../../configure/_pProps.entity";
-import { BodyWrapper } from "../../../styles/LayoutComponents";
 import { UserAuthority } from "../../../../constants/model.const";
 
 /**

@@ -1,7 +1,5 @@
 import type { NextPage } from "next";
 import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
-import WithdrawalModal from "./withdrawalModal";
 import { useDispatch } from "react-redux";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -15,12 +13,10 @@ import {
   Wrapper,
   Text,
   TextInput,
-  SmallButton,
   CommonTitle,
   CommonSubTitle,
   CommonTitleWrapper,
   RsWrapper,
-  TextInput2,
   CommonButtonWrapper,
   CommonButton,
   Checkbox,

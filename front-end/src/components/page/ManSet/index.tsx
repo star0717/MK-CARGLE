@@ -13,7 +13,6 @@ import PartsSetList from "./section/partsSetList";
 import Modal from "react-modal";
 import { CloseButton, Wrapper } from "src/components/styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
-import { Part } from "src/models/part.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import PartsSetModal from "./section/partsSetModal";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
