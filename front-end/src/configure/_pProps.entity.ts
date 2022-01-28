@@ -180,3 +180,12 @@ export interface _pAdminManParts extends _MainProps {
     height: string;
   };
 }
+
+export interface _pComPageModalProps extends _pFindDocs<Company> {
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  clickDoc?: Part;
+  setClickDoc?: React.Dispatch<React.SetStateAction<Part>>;
+  style?: {
+    height: string;
+  };
+}

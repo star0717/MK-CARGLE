@@ -2,7 +2,10 @@ import Modal from "react-modal";
 import { NextPage } from "next";
 import React, { useState, useEffect } from "react";
 import { IoIosArrowForward, IoIosCloseCircle } from "react-icons/io";
-import { _pAdminReviewCompanies } from "../../../../configure/_pProps.entity";
+import {
+  _pAdminReviewCompanies,
+  _pComPageModalProps,
+} from "../../../../configure/_pProps.entity";
 import { Company } from "../../../../models/company.entity";
 import AdminReviewCompaniesModal from "./review_Company_Modal";
 import {
@@ -67,7 +70,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
    * 계정 정보 변경 handler
    * @param data
    */
-  const onChangeInfoHandler: SubmitHandler<SignUpInfo> = (e: any) => {
+  const onChangeInfoHandler: SubmitHandler<SignUpInfo> = (data) => {
     const changeData: SignUpInfo = {
       company: comData,
       user: userData,
@@ -80,7 +83,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
     );
   };
 
-  const ARCModalProps: any = {
+  const ARCModalProps: _pComPageModalProps = {
     ...props,
     setModalOpen,
     style: { height: "500px" },
