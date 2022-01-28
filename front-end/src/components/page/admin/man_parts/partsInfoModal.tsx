@@ -128,8 +128,8 @@ const PartsInfoModal: NextPage<_pAdminManParts> = (props) => {
     setPartInfo({ ...partInfo, name: e.target.value.replace(" ", "") });
   };
 
-  const press = (e: any) => {
-    if (e.keyCode === 13) {
+  const press = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
       e.preventDefault();
       return onInputPlusHandler();
     }
