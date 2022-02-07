@@ -24,17 +24,20 @@ export class CarInfo {
   @ApiProperty({ description: '트림 (프리스티지)' })
   model?: string;
 
-  @ApiProperty({ description: '차량 등록번호' })
-  regNumber: string;
-
-  @ApiProperty({ description: '주행거리' })
-  distance?: string;
+  @ApiProperty({ description: '연식' })
+  age?: string;
 
   @ApiProperty({ description: '차량 등록일' })
   regDate?: string;
 
   @ApiProperty({ description: '차대번호' })
   idNumber: string;
+
+  @ApiProperty({ description: '차량 등록번호' })
+  regNumber: string;
+
+  @ApiProperty({ description: '주행거리' })
+  distance?: string;
 }
 
 // 정비내역서에 들어가 고객 정보
