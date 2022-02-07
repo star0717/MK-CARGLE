@@ -28,6 +28,7 @@ import { _MainProps } from "src/configure/_props.entity";
 import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import EditReservation from "./editReservationModal";
+import { PagenationSection } from "src/components/common/sections";
 
 const ManReservationPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -204,6 +205,7 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
               editModal
             </CommonButton>
           </Wrapper>
+          <PagenationSection {...props} />
         </Wrapper>
       </RsWrapper>
       <Modal
