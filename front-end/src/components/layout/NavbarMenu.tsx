@@ -71,7 +71,7 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
   return (
     <Wrapper
       isAbsolute
-      height={`100vh`}
+      height={`100%`}
       background={`rgba(0, 0, 0, 0.5)`}
       top={`0`}
       left={`0`}
@@ -80,7 +80,7 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
       zIndex={`9999`}
     >
       <Wrapper
-        height={`100vh`}
+        height={`100%`}
         color={`#314FA5`}
         padding={`50px`}
         bgColor={`#000`}
