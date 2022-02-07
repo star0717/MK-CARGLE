@@ -55,7 +55,7 @@ export const menuList = [
       },
       {
         key: "2.2",
-        subMenuName: "고객/차량 관리",
+        subMenuName: "고객관리",
         subMenuLink: "#",
         subMenuAuth: UserAuthority.WORKER,
       },
