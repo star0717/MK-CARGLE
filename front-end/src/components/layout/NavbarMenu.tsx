@@ -49,7 +49,7 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  //   const [openSubMenu, setOpenSubMenu] = useState<boolean>(false);
+  const [openSubMenu, setOpenSubMenu] = useState<boolean>(false);
   const [menuKey, setMenuKey] = useState<string>("1");
   /*********************************************************************
    * 3. Handlers
@@ -96,43 +96,31 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
             <AiOutlineClose />
           </CloseButton>
         </Wrapper>
-        <Wrapper padding={`100px 0px`} dr={`row`} al={`flex-start`}>
-          <Wrapper width={`50%`}>
-            {mainMenu.map((menu) => {
-              return (
-                <Wrapper
-                  key={menu.key}
-                  padding={`20px 0px`}
-                  al={`flex-start`}
-                  fontSize={`22px`}
-                  onClick={() => {
-                    //   setOpenSubMenu(!openSubMenu);
-                    setMenuKey(menu.key);
-                  }}
-                >
-                  <Text
-                    decoration={menu.key === menuKey && `underline`}
-                    cursor={`pointer`}
-                  >
-                    {menu.menuName}
-                  </Text>
-                </Wrapper>
-              );
-            })}
-          </Wrapper>
-          <Wrapper width={`50%`}>
-            {subMenu.map((menu, idx) => {
-              const sub = menu.filter(
-                (sub) => sub.key.substring(0, 1) === menuKey
-              );
-              if (menuKey)
-                return (
-                  <Wrapper
-                    key={idx}
-                    padding={`20px 0px`}
-                    al={`flex-start`}
-                    fontSize={`22px`}
-                  >
+        <Wrapper padding={`100px 0px`} cursor={`pointer`}>
+          {mainMenu.map((menu) => {
+            return (
+              <Wrapper
+                key={menu.key}
+                padding={`20px 0px`}
+                al={`flex-start`}
+                fontSize={`22px`}
+                onClick={() => {
+                  setOpenSubMenu(!openSubMenu);
+                  setMenuKey(menu.key);
+                }}
+              >
+                <Text>{menu.menuName}</Text>
+              </Wrapper>
+            );
+          })}
+          {subMenu.map((menu, idx) => {
+            const sub = menu.filter(
+              (sub) => sub.key.substring(0, 1) === menuKey
+            );
+            return (
+              <>
+                {openSubMenu && (
+                  <Wrapper key={idx}>
                     {sub.map((sub) => {
                       return (
                         <Text
@@ -149,9 +137,10 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
                       );
                     })}
                   </Wrapper>
-                );
-            })}
-          </Wrapper>
+                )}
+              </>
+            );
+          })}
         </Wrapper>
 
         {/* <Wrapper al={`flex-start`}>
