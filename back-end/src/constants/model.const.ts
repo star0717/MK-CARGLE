@@ -57,6 +57,7 @@ export enum MaintenanceStatus {
   STORED = 'stored', // 정비시작 전
   ING = 'ing', // 정비중
   DONE = 'done', // 정비완료
+  PAID = 'paid', // 결재완료
   RELEASED = 'released', // 출고완료
   CANCELED = 'canceled', // 최소
 }
@@ -76,6 +77,8 @@ export const getStrMaintenanceStatus = (status: MaintenanceStatus): string => {
       return '정비중';
     case MaintenanceStatus.DONE:
       return '정비완료';
+    case MaintenanceStatus.PAID:
+      return '결제완료';
     case MaintenanceStatus.RELEASED:
       return '출고';
     case MaintenanceStatus.CANCELED:
