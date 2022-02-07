@@ -3,7 +3,6 @@ import type {
   GetServerSidePropsContext,
   NextPage,
 } from "next";
-import Head from "next/head";
 import { NextRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import Footer from "../../src/components/layout/Footer";
@@ -31,7 +30,10 @@ import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
 
-import { PageWrapper } from "../../src/components/styles/LayoutComponents";
+import {
+  BodyWrapper,
+  PageWrapper,
+} from "../../src/components/styles/LayoutComponents";
 import {
   AdminApiPath,
   AgenciesApiPath,
@@ -53,6 +55,9 @@ import { PartsSet } from "src/models/partsset.entity";
 import MaintenanceBookPage from "src/components/page/MaintenanceBook";
 import ManCustomerPage from "src/components/page/ManCustomer";
 import ManReservationPage from "src/components/page/ManReservation";
+import React, { useState } from "react";
+import { Wrapper } from "src/components/styles/CommonComponents";
+import { useResizeDetector } from "react-resize-detector";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -137,10 +142,28 @@ const SubComponent: NextPage<_MainProps> = (props) => {
  * @returns
  */
 const MainPage: NextPage<_MainProps> = (props) => {
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+
+  const mainProps: _MainProps = {
+    ...props,
+    openMenu,
+    setOpenMenu,
+  };
+
+  const { width, height, ref } = useResizeDetector();
+
   return (
-    <PageWrapper>
-      <Header {...props} />
-      <MainComponent {...props} />
+    <PageWrapper ref={ref}>
+      <Header {...mainProps} />
+      {openMenu && width < 1200 ? (
+        <BodyWrapper>
+          <Wrapper width={`100%`} height={`100vh`} bgColor={`#000`}>
+            hi
+          </Wrapper>
+        </BodyWrapper>
+      ) : (
+        <MainComponent {...mainProps} />
+      )}
       <Footer />
     </PageWrapper>
   );

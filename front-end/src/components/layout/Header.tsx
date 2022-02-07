@@ -19,12 +19,12 @@ import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { menuList } from "../../configure/list.entity";
-import { _pLayoutProps } from "../../configure/_pProps.entity";
 import { CompanyApproval, UserAuthority } from "../../constants/model.const";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
+import { _MainProps } from "src/configure/_props.entity";
 
-const Header: NextPage<_pLayoutProps> = (props) => {
+const Header: NextPage<_MainProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -289,10 +289,7 @@ const Header: NextPage<_pLayoutProps> = (props) => {
         </Wrapper>
       </Wrapper>
       <MobileHeader>
-        <Wrapper width={`30%`} al={`flex-start`}>
-          <AiOutlineMenu />
-        </Wrapper>
-        <Wrapper width={`40%`}>
+        <Wrapper width={`auto`}>
           <Image
             src="/images/cargle.png"
             alt="Cargle Logo"
@@ -300,29 +297,13 @@ const Header: NextPage<_pLayoutProps> = (props) => {
           />
         </Wrapper>
         <Wrapper
-          width={`30%`}
-          padding={
-            width < 1510 ? (width < 1080 ? `0px 10px` : `0px 10px`) : `0px 20px`
-          }
-          dr={`row`}
-          al={`flex-start`}
-          wrap={`no-wrap`}
+          width={`auto`}
+          onClick={() => {
+            props.setOpenMenu(!props.openMenu);
+            console.log(props.openMenu);
+          }}
         >
-          {props.tokenValue &&
-            props.tokenValue.cApproval === CompanyApproval.DONE && (
-              <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                <HeaderIconButton>
-                  <FaBell />
-                </HeaderIconButton>
-              </Wrapper>
-            )}
-          {props.tokenValue &&
-            (props.tokenValue.cApproval === CompanyApproval.DONE ||
-              props.tokenValue.cApproval === CompanyApproval.ING) && (
-              <HeaderIconButton onClick={onSignOutHandler}>
-                <MdLogout />
-              </HeaderIconButton>
-            )}
+          <AiOutlineMenu />
         </Wrapper>
 
         {/* <MobileMenu>
