@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
-import AddReservation from "./addReservationModal";
 import {
   CommonSubTitle,
   CommonTitle,
@@ -27,10 +26,11 @@ import Modal from "react-modal";
 import { _MainProps } from "src/configure/_props.entity";
 import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
-import EditReservation from "./editReservationModal";
 import { PagenationSection } from "src/components/common/sections";
+import AddCustomer from "./addCustomerModal";
+import EditCustomer from "./editCustomerModal";
 
-const ManReservationPage: NextPage<_MainProps> = (props) => {
+const CustomerList: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -63,16 +63,16 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
     <WholeWrapper>
       <RsWrapper>
         <CommonTitleWrapper>
-          <CommonTitle>예약관리</CommonTitle>
+          <CommonTitle>고객관리</CommonTitle>
           <CommonSubTitle>
-            예약을 등록하고 일정을 관리할 수 있어요.
+            고객(차량)을 등록하고 관리할 수 있어요.
           </CommonSubTitle>
         </CommonTitleWrapper>
         <Wrapper dr={`row`}>
           <form>
             <SearchInputWrapper
               type="text"
-              placeholder="찾고싶은 예약의 차량번호 또는 휴대전화번호를 입력하세요."
+              placeholder="찾고싶은 고객(차량)의 차량번호 또는 휴대전화번호를 입력하세요."
               dr={`row`}
               width={`678px`}
               padding={`0px 5px`}
@@ -83,7 +83,7 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
                 <SearchInput
                   width={`632px`}
                   type="text"
-                  placeholder="찾고싶은 예약의 차량번호 또는 휴대전화번호를 입력하세요."
+                  placeholder="찾고싶은 고객(차량)의 차량번호 또는 휴대전화번호를 입력하세요."
                 />
               </Wrapper>
               <Wrapper>
@@ -95,9 +95,9 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
               </Wrapper>
             </SearchInputWrapper>
           </form>
-          <SmallButton>캘린더</SmallButton>
+
           <SmallButton>선택삭제</SmallButton>
-          <SmallButton>+신규예약등록</SmallButton>
+          <SmallButton>+신규고객등록</SmallButton>
         </Wrapper>
         <Wrapper margin={`10px 0px 30px`}>
           <TableWrapper>
@@ -125,11 +125,12 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
                   <CheckMark></CheckMark>
                 </Checkbox>
               </TableHeadLIST>
-              <TableHeadLIST width={`20%`}>예약접수일자</TableHeadLIST>
-              <TableHeadLIST width={`24%`}>정비희망일자</TableHeadLIST>
-              <TableHeadLIST width={`18%`}>차량번호</TableHeadLIST>
-              <TableHeadLIST width={`25%`}>전화번호</TableHeadLIST>
-              <TableHeadLIST width={`8%`}>예약상태</TableHeadLIST>
+              <TableHeadLIST width={`17%`}>차량번호</TableHeadLIST>
+              <TableHeadLIST width={`17%`}>차량명</TableHeadLIST>
+              <TableHeadLIST width={`17%`}>고객명</TableHeadLIST>
+              <TableHeadLIST width={`17%`}>전화번호</TableHeadLIST>
+              <TableHeadLIST width={`17%`}>개인정보활용동의</TableHeadLIST>
+              <TableHeadLIST width={`10%`}>정비이력</TableHeadLIST>
             </TableHead>
             <TableBody>
               {/* {props.findResult.totalDocs > 0 ? (
@@ -250,13 +251,13 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
             /> */}
         </Wrapper>
         {modalOption === "add" ? (
-          <AddReservation {...ModalProps} />
+          <AddCustomer {...ModalProps} />
         ) : (
-          <EditReservation {...ModalProps} />
+          <EditCustomer {...ModalProps} />
         )}
       </Modal>
     </WholeWrapper>
   );
 };
 
-export default ManReservationPage;
+export default CustomerList;
