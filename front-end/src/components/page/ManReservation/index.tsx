@@ -1,39 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
-import {
-  RsWrapper,
-  WholeWrapper,
-} from "src/components/styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
+import { Agency } from "src/models/agency.entity";
+import { FindParameters, FindResult } from "src/models/base.entity";
+import { useDispatch } from "react-redux";
+import { _aGetAgencies } from "store/action/user.action";
+import ManReservationPage from "./section/reservationList";
 
-const ManReservationPage: NextPage<_MainProps> = (props) => {
+const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  const dispatch = useDispatch();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [findResult, setFindResult] = useState<FindResult<Agency>>(props.data);
+  const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
+  const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  useEffect(() => {
+    setFindResult(props.data);
+  }, [props]);
 
+  /**
+   * 작업자의 정보를 조회함
+   * @param page 조회할 페이지
+   */
+  const findCompanyHandler = (page: number) => {
+    const param: FindParameters = {
+      page,
+      take: 10,
+      filterKey: searchOption,
+      filterValue: filterValue,
+      useRegSearch: true,
+    };
+
+    // dispatch(_aGetAgencies(param)).then((res: any) => {
+    //   setFindResult(res.payload);
+    // });
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-
+  const reservationListProps: any = {
+    ...props,
+    findResult,
+    setFindResult,
+    findDocHandler: findCompanyHandler,
+    searchOption,
+    setSearchOption,
+    filterValue,
+    setFilterValue,
+  };
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
   return (
     <BodyWrapper>
-      <WholeWrapper>
-        <RsWrapper>예약관리</RsWrapper>
-      </WholeWrapper>
+      <ManReservationPage {...reservationListProps} />
     </BodyWrapper>
   );
 };
 
-export default ManReservationPage;
+export default ManPartsPage;
