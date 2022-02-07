@@ -4,7 +4,7 @@ import { appearAnimation } from "./AnimationCommon";
 // -----------PageWrapper----------- //
 
 export const PageWrapper = styled.div<any>`
-  width: 100%;
+  width: ${(props) => props.width || `100%`};
   min-height: 100vh;
   position: relative;
   display: flex;

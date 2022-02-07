@@ -74,7 +74,7 @@ export const Wrapper = styled.div<any>`
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
   flex-wrap: ${(props) => props.wrap || `no-wrap`};
-  background: ${(props) => props.white_C};
+  background: ${(props) => props.background || ``};
   color: ${(props) => props.color};
   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
@@ -109,6 +109,7 @@ export const Wrapper = styled.div<any>`
   line-height: ${(props) => props.lineHeight};
   text-align: ${(props) => props.textAlign};
   animation: ${appearAnimation} 1s forwards;
+  opacity: ${(props) => props.opacity};
 
   &.active div {
     color: ${(props) => props.theme.black_C};
@@ -707,7 +708,7 @@ export const CloseButton = styled.button<any>`
 
   & svg {
     color: ${(props) => props.color || props.black_C};
-    font-size: 28px;
+    font-size: ${(props) => props.fontSize || `28px`};
   }
 `;
 

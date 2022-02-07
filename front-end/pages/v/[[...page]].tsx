@@ -3,7 +3,6 @@ import type {
   GetServerSidePropsContext,
   NextPage,
 } from "next";
-import Head from "next/head";
 import { NextRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import Footer from "../../src/components/layout/Footer";
@@ -31,7 +30,10 @@ import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
 
-import { PageWrapper } from "../../src/components/styles/LayoutComponents";
+import {
+  BodyWrapper,
+  PageWrapper,
+} from "../../src/components/styles/LayoutComponents";
 import {
   AdminApiPath,
   AgenciesApiPath,
@@ -53,6 +55,15 @@ import { PartsSet } from "src/models/partsset.entity";
 import MaintenanceBookPage from "src/components/page/MaintenanceBook";
 import ManCustomerPage from "src/components/page/ManCustomer";
 import ManReservationPage from "src/components/page/ManReservation";
+import React, { useState } from "react";
+import {
+  CloseButton,
+  Image,
+  Wrapper,
+} from "src/components/styles/CommonComponents";
+import { useResizeDetector } from "react-resize-detector";
+import { IoIosCloseCircle } from "react-icons/io";
+import { AiOutlineClose } from "react-icons/ai";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -137,11 +148,82 @@ const SubComponent: NextPage<_MainProps> = (props) => {
  * @returns
  */
 const MainPage: NextPage<_MainProps> = (props) => {
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+
+  const [openSubMenu, setOpenSubMenu] = useState<boolean>(false);
+
+  const [name, setName] = useState<string>("");
+
+  const mainProps: _MainProps = {
+    ...props,
+    openMenu,
+    setOpenMenu,
+  };
+
+  const { width, height, ref } = useResizeDetector();
+
   return (
-    <PageWrapper>
-      <Header {...props} />
-      <MainComponent {...props} />
-      <Footer />
+    <PageWrapper ref={ref}>
+      {openMenu && width < 1200 ? (
+        <Wrapper
+          height={`100vh`}
+          color={`#314FA5`}
+          padding={`50px`}
+          ju={`flex-start`}
+          isAbsolute
+          width={`60%`}
+        >
+          <Wrapper fontSize={`28px`} al={`flex-end`}>
+            <CloseButton
+              type="button"
+              onClick={() => {
+                setOpenMenu(false);
+              }}
+              color={`#314FA5`}
+              bgColor={`#fff`}
+              ju={`flex-start`}
+              fontSize={`34px`}
+            >
+              <AiOutlineClose />
+            </CloseButton>
+          </Wrapper>
+          <Wrapper padding={`100px 0px`} cursor={`pointer`}>
+            <Wrapper
+              padding={`20px 0px`}
+              al={`flex-start`}
+              fontSize={`22px`}
+              onClick={() => {
+                setOpenSubMenu(!openSubMenu);
+              }}
+            >
+              MAIN MENU01
+            </Wrapper>
+
+            {openSubMenu ? (
+              <Wrapper padding={`10px 0px`} al={`flex-start`} fontSize={`20px`}>
+                SUB MENU01
+              </Wrapper>
+            ) : (
+              <Wrapper />
+            )}
+          </Wrapper>
+
+          {/* <Wrapper al={`flex-start`}>
+              <Image
+                src="/images/cargle.png"
+                alt="Cargle Logo"
+                width={`120px`}
+                opacity={`0.5`}
+              />
+            </Wrapper> */}
+        </Wrapper>
+      ) : (
+        <>
+          <Header {...mainProps} />
+          <MainComponent {...mainProps} />
+          <Footer />
+        </>
+      )}
     </PageWrapper>
   );
 };

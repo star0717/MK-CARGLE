@@ -16,4 +16,6 @@ export interface _SignInProps {
 export interface _MainProps {
   tokenValue: AuthTokenInfo;
   data?: any;
+  openMenu?: boolean;
+  setOpenMenu?: React.Dispatch<React.SetStateAction<boolean>>;
 }
