@@ -50,6 +50,9 @@ import ManBusinessPage from "src/components/page/ManBusiness";
 import { Part } from "src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
+import MaintenanceBookPage from "src/components/page/MaintenanceBook";
+import ManCustomerPage from "src/components/page/ManCustomer";
+import ManReservationPage from "src/components/page/ManReservation";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -79,6 +82,7 @@ const SubComponent: NextPage<_MainProps> = (props) => {
   const pathName: string = getPathName(router.asPath);
 
   switch (pathName) {
+    // 일반 메뉴
     case UseLink.MAIN:
       return <Main {...props} />;
 
@@ -97,9 +101,19 @@ const SubComponent: NextPage<_MainProps> = (props) => {
     case UseLink.MYPAGE_WORKER:
       return <MyPageWorker {...props} />;
 
+    case UseLink.MAINTENANCE_BOOK:
+      return <MaintenanceBookPage {...props} />;
+
+    case UseLink.MAN_CUSTOMER:
+      return <ManCustomerPage {...props} />;
+
+    case UseLink.MAN_RESERVATION:
+      return <ManReservationPage {...props} />;
+
     case UseLink.TEST:
       return <Test {...props} />;
 
+    // 관리자(Admin) 메뉴
     case UseLink.ADMIN_REVIEW_COMPANIES:
       return <AdminReviewCompaniesPage {...props} />;
 

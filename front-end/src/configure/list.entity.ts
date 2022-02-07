@@ -50,19 +50,19 @@ export const menuList = [
       {
         key: "2.1",
         subMenuName: "정비장부",
-        subMenuLink: "#",
+        subMenuLink: UseLink.MAINTENANCE_BOOK,
         subMenuAuth: UserAuthority.WORKER,
       },
       {
         key: "2.2",
         subMenuName: "고객관리",
-        subMenuLink: "#",
+        subMenuLink: UseLink.MAN_CUSTOMER,
         subMenuAuth: UserAuthority.WORKER,
       },
       {
         key: "2.3",
         subMenuName: "예약관리",
-        subMenuLink: "#",
+        subMenuLink: UseLink.MAN_RESERVATION,
         subMenuAuth: UserAuthority.WORKER,
       },
     ],
