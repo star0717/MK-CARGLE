@@ -300,7 +300,6 @@ const Header: NextPage<_MainProps> = (props) => {
           width={`auto`}
           onClick={() => {
             props.setOpenMenu(!props.openMenu);
-            console.log(props.openMenu);
           }}
         >
           <AiOutlineMenu />
