@@ -11,6 +11,14 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  /*********************************************************************
+   * 2. State settings
+   *********************************************************************/
+  //   const [openSubMenu, setOpenSubMenu] = useState<boolean>(false);
+  const [menuKey, setMenuKey] = useState<string>("1");
+  /*********************************************************************
+   * 3. Handlers
+   *********************************************************************/
   /**
    * Auth 별 메인 메뉴
    */
@@ -46,14 +54,12 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
       }
     });
   });
-  /*********************************************************************
-   * 2. State settings
-   *********************************************************************/
-  //   const [openSubMenu, setOpenSubMenu] = useState<boolean>(false);
-  const [menuKey, setMenuKey] = useState<string>("1");
-  /*********************************************************************
-   * 3. Handlers
-   *********************************************************************/
+
+  const clickMenu = subMenu.map((menu) => {
+    return menu.filter((sub) => {
+      return sub.key.substring(0, 1) === menuKey;
+    });
+  });
 
   /*********************************************************************
    * 4. Props settings
@@ -121,11 +127,8 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
             })}
           </Wrapper>
           <Wrapper width={`50%`}>
-            {subMenu.map((menu, idx) => {
-              const sub = menu.filter(
-                (sub) => sub.key.substring(0, 1) === menuKey
-              );
-              if (menuKey)
+            {menuKey &&
+              clickMenu[parseInt(menuKey) - 1].map((sub, idx) => {
                 return (
                   <Wrapper
                     key={idx}
@@ -133,24 +136,20 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
                     al={`flex-start`}
                     fontSize={`22px`}
                   >
-                    {sub.map((sub) => {
-                      return (
-                        <Text
-                          key={sub.key}
-                          cursor={`pointer`}
-                          onClick={() => {
-                            props.setOpenMenu(false);
-                          }}
-                        >
-                          <Link href={sub.subMenuLink}>
-                            <a>{sub.subMenuName}</a>
-                          </Link>
-                        </Text>
-                      );
-                    })}
+                    <Text
+                      key={sub.key}
+                      cursor={`pointer`}
+                      onClick={() => {
+                        props.setOpenMenu(false);
+                      }}
+                    >
+                      <Link href={sub.subMenuLink}>
+                        <a>{sub.subMenuName}</a>
+                      </Link>
+                    </Text>
                   </Wrapper>
                 );
-            })}
+              })}
           </Wrapper>
         </Wrapper>
 
