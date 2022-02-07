@@ -19,12 +19,12 @@ import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { menuList } from "../../configure/list.entity";
-import { _pLayoutProps } from "../../configure/_pProps.entity";
 import { CompanyApproval, UserAuthority } from "../../constants/model.const";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
+import { _MainProps } from "src/configure/_props.entity";
 
-const Header: NextPage<_pLayoutProps> = (props) => {
+const Header: NextPage<_MainProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -296,7 +296,13 @@ const Header: NextPage<_pLayoutProps> = (props) => {
             width={width < 1450 ? `80px` : `100px`}
           />
         </Wrapper>
-        <Wrapper width={`auto`}>
+        <Wrapper
+          width={`auto`}
+          onClick={() => {
+            props.setOpenMenu(!props.openMenu);
+            console.log(props.openMenu);
+          }}
+        >
           <AiOutlineMenu />
         </Wrapper>
 
