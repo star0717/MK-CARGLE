@@ -162,11 +162,8 @@ const MainPage: NextPage<_MainProps> = (props) => {
   return (
     <PageWrapper ref={ref}>
       <Header {...mainProps} />
-      {openMenu && width < 1200 ? (
-        <NavbarMenu {...mainProps} />
-      ) : (
-        <MainComponent {...mainProps} />
-      )}
+      {openMenu && width < 1200 && <NavbarMenu {...mainProps} />}
+      <MainComponent {...mainProps} />
       <Footer />
     </PageWrapper>
   );

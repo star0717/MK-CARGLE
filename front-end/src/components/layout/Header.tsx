@@ -289,28 +289,35 @@ const Header: NextPage<_MainProps> = (props) => {
         </Wrapper>
       </Wrapper>
       <MobileHeader>
-        <Wrapper width={`auto`}>
-          <Image
-            src="/images/cargle.png"
-            alt="Cargle Logo"
-            width={width < 1450 ? `80px` : `100px`}
-          />
-        </Wrapper>
         <Wrapper
-          width={`auto`}
+          width={`20%`}
+          al={`flex-start`}
           onClick={() => {
             props.setOpenMenu(!props.openMenu);
           }}
         >
           <AiOutlineMenu />
         </Wrapper>
-
-        {/* <MobileMenu>
-          <MobileSubMenu
-            width={width < 800 ? `120px` : `150px`}
-            height={`80px`}
-          ></MobileSubMenu>
-        </MobileMenu> */}
+        <Wrapper width={`60%`}>
+          <Image src="/images/cargle.png" alt="Cargle Logo" width={`100px`} />
+        </Wrapper>
+        <Wrapper width={`20%`} dr={`row`} ju={`flex-end`} wrap={`no-wrap`}>
+          {props.tokenValue &&
+            props.tokenValue.cApproval === CompanyApproval.DONE && (
+              <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
+                <HeaderIconButton>
+                  <FaBell />
+                </HeaderIconButton>
+              </Wrapper>
+            )}
+          {props.tokenValue &&
+            (props.tokenValue.cApproval === CompanyApproval.DONE ||
+              props.tokenValue.cApproval === CompanyApproval.ING) && (
+              <HeaderIconButton onClick={onSignOutHandler}>
+                <MdLogout />
+              </HeaderIconButton>
+            )}
+        </Wrapper>
       </MobileHeader>
     </HeaderWrapper>
   );
