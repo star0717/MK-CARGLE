@@ -289,15 +289,40 @@ const Header: NextPage<_pLayoutProps> = (props) => {
         </Wrapper>
       </Wrapper>
       <MobileHeader>
-        <Wrapper width={`auto`}>
+        <Wrapper width={`30%`} al={`flex-start`}>
+          <AiOutlineMenu />
+        </Wrapper>
+        <Wrapper width={`40%`}>
           <Image
             src="/images/cargle.png"
             alt="Cargle Logo"
             width={width < 1450 ? `80px` : `100px`}
           />
         </Wrapper>
-        <Wrapper width={`auto`}>
-          <AiOutlineMenu />
+        <Wrapper
+          width={`30%`}
+          padding={
+            width < 1510 ? (width < 1080 ? `0px 10px` : `0px 10px`) : `0px 20px`
+          }
+          dr={`row`}
+          al={`flex-start`}
+          wrap={`no-wrap`}
+        >
+          {props.tokenValue &&
+            props.tokenValue.cApproval === CompanyApproval.DONE && (
+              <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
+                <HeaderIconButton>
+                  <FaBell />
+                </HeaderIconButton>
+              </Wrapper>
+            )}
+          {props.tokenValue &&
+            (props.tokenValue.cApproval === CompanyApproval.DONE ||
+              props.tokenValue.cApproval === CompanyApproval.ING) && (
+              <HeaderIconButton onClick={onSignOutHandler}>
+                <MdLogout />
+              </HeaderIconButton>
+            )}
         </Wrapper>
 
         {/* <MobileMenu>
