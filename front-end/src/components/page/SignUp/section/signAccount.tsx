@@ -185,7 +185,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
   };
 
   /**
-   * 주소 검색 api handler
+   * 주소검색 api handler
    * @param data
    */
   const addressHandler = (data: any) => {
@@ -612,7 +612,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
                     setModalOption("address");
                   }}
                 >
-                  주소 검색
+                  주소검색
                 </SmallButton>
               </Wrapper>
               <TextInput2

@@ -60,7 +60,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
   };
 
   /**
-   * 주소 검색 api handler
+   * 주소검색 api handler
    * @param data
    */
   const addressHandler = (data: any) => {
@@ -115,7 +115,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
       <form onSubmit={handleSubmit(saveData)}>
         <Wrapper>
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-            <Text>*상호명</Text>
+            <Text color={`#314FA5`}>*상호명</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
               <TextInput2
                 width={`400px`}
@@ -234,7 +234,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
                     setAddressModal(!addressModal);
                   }}
                 >
-                  주소 검색
+                  주소검색
                 </SmallButton>
               </Wrapper>
 
