@@ -25,7 +25,7 @@ import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 const SignUpHeader: NextPage<_pSignUpProps> = (props) => {
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
-
+  console.log("@@@@@@@@@@@@@@@@@@userAuth : ", props.userAuth);
   return (
     <>
       {props.userAuth === UserAuthority.OWNER &&

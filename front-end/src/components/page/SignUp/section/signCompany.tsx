@@ -26,6 +26,8 @@ import {
   CommonSubTitle,
   CommonTitle,
   CommonTitleWrapper,
+  JoinStepBar,
+  JoinStepBarWrapper,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
 import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
@@ -34,6 +36,9 @@ import { AxiosError } from "axios";
 import { DbErrorInfo } from "../../../../models/base.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
+import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
+import { GoCheck } from "react-icons/go";
+import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 
 /**
  * 회원가입: 업체정보 컴포넌트(기능)
@@ -230,6 +235,69 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
           <CommonTitle>회원가입</CommonTitle>
           <CommonSubTitle>사업자 정보를 입력해주세요.</CommonSubTitle>
         </CommonTitleWrapper>
+        <JoinStepBarWrapper>
+          <Wrapper width={`auto`}>
+            <JoinStepBar
+              kindOf={props.stepNumber === 2 ? `progress` : `complete`}
+            >
+              {props.stepNumber === 2 ? <AiOutlineFileText /> : <GoCheck />}
+            </JoinStepBar>
+            <Text height={`0px`} padding={`10px 0px 0px`}>
+              약관동의
+            </Text>
+          </Wrapper>
+          <JoinStepBar
+            kindOf={props.stepNumber > 2 ? `line` : `line2`}
+          ></JoinStepBar>
+          <Wrapper width={`auto`}>
+            <JoinStepBar
+              kindOf={
+                props.stepNumber < 3
+                  ? `before`
+                  : props.stepNumber === 3
+                  ? `progress`
+                  : `complete`
+              }
+            >
+              {props.stepNumber > 3 ? <GoCheck /> : <AiOutlineUser />}
+            </JoinStepBar>
+            <Text height={`0px`} padding={`10px 0px 0px`}>
+              계정정보
+            </Text>
+          </Wrapper>
+          <JoinStepBar
+            kindOf={props.stepNumber > 3 ? `line` : `line2`}
+          ></JoinStepBar>
+          <Wrapper width={`auto`}>
+            <JoinStepBar
+              kindOf={
+                props.stepNumber < 4
+                  ? `before`
+                  : props.stepNumber === 4
+                  ? `progress`
+                  : `complete`
+              }
+            >
+              {props.stepNumber > 4 ? <GoCheck /> : <MdOutlineBusinessCenter />}
+            </JoinStepBar>
+            <Text height={`0px`} padding={`10px 0px 0px`}>
+              사업자정보
+            </Text>
+          </Wrapper>
+          <JoinStepBar
+            kindOf={props.stepNumber > 4 ? `line` : `line2`}
+          ></JoinStepBar>
+          <Wrapper width={`auto`}>
+            <JoinStepBar
+              kindOf={props.stepNumber === 5 ? `progress` : `before`}
+            >
+              <MdOutlineUploadFile />
+            </JoinStepBar>
+            <Text height={`0px`} padding={`10px 0px 0px`}>
+              서류제출
+            </Text>
+          </Wrapper>
+        </JoinStepBarWrapper>
         <form onSubmit={handleSubmit(onSignUpCompanyHandler)}>
           <Wrapper
             width={`auto`}

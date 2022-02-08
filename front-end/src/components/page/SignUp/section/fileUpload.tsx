@@ -23,12 +23,17 @@ import {
   CommonSubTitle,
   CommonTitle,
   CommonTitleWrapper,
+  JoinStepBar,
+  JoinStepBarWrapper,
 } from "../../../styles/CommonComponents";
 import { BsFillLightbulbFill, BsFillQuestionCircleFill } from "react-icons/bs";
 import { parseJwt } from "../../../../modules/commonModule";
 import { AuthTokenInfo } from "../../../../models/auth.entity";
 import { FileInit } from "../../../../configure/etc.entity";
 import { _pFileUploadProps } from "../../../../configure/_pProps.entity";
+import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
+import { GoCheck } from "react-icons/go";
+import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 
 /**
  * 파일 데이터 초기화
@@ -137,6 +142,69 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
           <CommonTitle>회원가입</CommonTitle>
           <CommonSubTitle>가입 승인을 위해 서류를 제출해주세요</CommonSubTitle>
         </CommonTitleWrapper>
+        <JoinStepBarWrapper>
+          <Wrapper width={`auto`}>
+            <JoinStepBar
+              kindOf={props.stepNumber === 2 ? `progress` : `complete`}
+            >
+              {props.stepNumber === 2 ? <AiOutlineFileText /> : <GoCheck />}
+            </JoinStepBar>
+            <Text height={`0px`} padding={`10px 0px 0px`}>
+              약관동의
+            </Text>
+          </Wrapper>
+          <JoinStepBar
+            kindOf={props.stepNumber > 2 ? `line` : `line2`}
+          ></JoinStepBar>
+          <Wrapper width={`auto`}>
+            <JoinStepBar
+              kindOf={
+                props.stepNumber < 3
+                  ? `before`
+                  : props.stepNumber === 3
+                  ? `progress`
+                  : `complete`
+              }
+            >
+              {props.stepNumber > 3 ? <GoCheck /> : <AiOutlineUser />}
+            </JoinStepBar>
+            <Text height={`0px`} padding={`10px 0px 0px`}>
+              계정정보
+            </Text>
+          </Wrapper>
+          <JoinStepBar
+            kindOf={props.stepNumber > 3 ? `line` : `line2`}
+          ></JoinStepBar>
+          <Wrapper width={`auto`}>
+            <JoinStepBar
+              kindOf={
+                props.stepNumber < 4
+                  ? `before`
+                  : props.stepNumber === 4
+                  ? `progress`
+                  : `complete`
+              }
+            >
+              {props.stepNumber > 4 ? <GoCheck /> : <MdOutlineBusinessCenter />}
+            </JoinStepBar>
+            <Text height={`0px`} padding={`10px 0px 0px`}>
+              사업자정보
+            </Text>
+          </Wrapper>
+          <JoinStepBar
+            kindOf={props.stepNumber > 4 ? `line` : `line2`}
+          ></JoinStepBar>
+          <Wrapper width={`auto`}>
+            <JoinStepBar
+              kindOf={props.stepNumber === 5 ? `progress` : `before`}
+            >
+              <MdOutlineUploadFile />
+            </JoinStepBar>
+            <Text height={`0px`} padding={`10px 0px 0px`}>
+              서류제출
+            </Text>
+          </Wrapper>
+        </JoinStepBarWrapper>
         <form onSubmit={onFileUploadHandler}>
           <Wrapper
             width={`auto`}
