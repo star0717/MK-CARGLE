@@ -1,6 +1,5 @@
 import React from "react";
 import { NextPage } from "next";
-import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
   RsWrapper,
   WholeWrapper,

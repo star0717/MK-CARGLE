@@ -11,12 +11,23 @@ import { useDispatch } from "react-redux";
 import { Agency } from "src/models/agency.entity";
 import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
+import { useRouter } from "next/router";
+
+const StepMaintenance: NextPage<_MainProps> = (props) => {
+  const router = useRouter();
+
+  console.log("라우터", router);
+  return null;
+};
 
 const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  console.log("라우터", router.query);
   /*********************************************************************
    * 2. State settings
    *********************************************************************/

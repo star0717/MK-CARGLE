@@ -5,7 +5,7 @@ import {
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
 
-const MaintenanceIng: NextPage<any> = (props) => {
+const ReleaseComplete: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -27,9 +27,9 @@ const MaintenanceIng: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper>
-      <RsWrapper>정비 중</RsWrapper>
+      <RsWrapper>출고 완료</RsWrapper>
     </WholeWrapper>
   );
 };
 
-export default MaintenanceIng;
+export default ReleaseComplete;
