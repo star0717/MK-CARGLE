@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NextPage } from "next";
 import AddReservation from "./addReservationModal";
 import {
@@ -29,6 +29,7 @@ import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import EditReservation from "./editReservationModal";
 import { PagenationSection } from "src/components/common/sections";
+import { Agency } from "src/models/agency.entity";
 
 const ManReservationPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -40,20 +41,63 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalOption, setModalOption] = useState<string>("");
+  const [checkedList, setCheckedList] = useState<string>("");
+  const [clickDoc, setClickDoc] = useState<string>("");
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
 
-  /*********************************************************************
-   * 4. Props settings
-   *********************************************************************/
+  //   /**
+  //  * 전체 선택 기능
+  //  */
+  //    const onCheckedAll = useCallback(
+  //     (checked) => {
+  //       if (checked) {
+  //         const checkedListArray: string[] = [];
+  //         props.findResult.docs.forEach((list: Agency) =>
+  //           checkedListArray.push(list._id)
+  //         );
+  //         setCheckedList(checkedListArray);
+  //       } else {
+  //         setCheckedList([]);
+  //       }
+  //     },
+  //     [props.findResult.docs]
+  //   );
+
+  //   /**
+  //    * 개별 선택 기능
+  //    */
+  //   const onCheckedElement = useCallback(
+  //     (checked: boolean, list: Agency) => {
+  //       if (checked) {
+  //         setCheckedList([...checkedList, list._id]);
+  //       } else {
+  //         setCheckedList(checkedList.filter((el) => el !== list._id));
+  //       }
+  //     },
+  //     [checkedList]
+  //   );
+
   const closeModal = () => {
     setModalOpen(false);
   };
 
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
+  /*********************************************************************
+   * 4. Props settings
+   *********************************************************************/
+
   const ModalProps: any = {
     ...props,
     setModalOpen,
+    clickDoc,
+    setClickDoc,
     style: { height: "800px", width: "500px" },
   };
   /*********************************************************************
