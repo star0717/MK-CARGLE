@@ -60,7 +60,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
   };
 
   /**
-   * 주소 검색 api handler
+   * 주소검색 api handler
    * @param data
    */
   const addressHandler = (data: any) => {
@@ -234,7 +234,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
                     setAddressModal(!addressModal);
                   }}
                 >
-                  주소 검색
+                  주소검색
                 </SmallButton>
               </Wrapper>
 
