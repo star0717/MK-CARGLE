@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NextPage } from "next";
+import { BodyWrapper } from "src/components/styles/LayoutComponents";
+import {
+  RsWrapper,
+  WholeWrapper,
+} from "src/components/styles/CommonComponents";
 
-import { Wrapper } from "src/components/styles/CommonComponents";
-import { _MainProps } from "src/configure/_props.entity";
-import { useRouter } from "next/router";
-
-const AddMaintenance: NextPage<_MainProps> = (props) => {
+const CustomerPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-  const router = useRouter();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -26,14 +27,12 @@ const AddMaintenance: NextPage<_MainProps> = (props) => {
    * 5. Page configuration
    *********************************************************************/
   return (
-    <Wrapper
-      onClick={() => {
-        router.back();
-      }}
-    >
-      추가추가
-    </Wrapper>
+    <BodyWrapper>
+      <WholeWrapper>
+        <RsWrapper></RsWrapper>
+      </WholeWrapper>
+    </BodyWrapper>
   );
 };
 
-export default AddMaintenance;
+export default CustomerPage;

@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NextPage } from "next";
+import { BodyWrapper } from "src/components/styles/LayoutComponents";
+import {
+  RsWrapper,
+  WholeWrapper,
+} from "src/components/styles/CommonComponents";
 
-import { Wrapper } from "src/components/styles/CommonComponents";
-import { _MainProps } from "src/configure/_props.entity";
-import { useRouter } from "next/router";
-
-const EditMaintenance: NextPage<_MainProps> = (props) => {
+const SelectCar: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-  const router = useRouter();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -26,14 +27,10 @@ const EditMaintenance: NextPage<_MainProps> = (props) => {
    * 5. Page configuration
    *********************************************************************/
   return (
-    <Wrapper
-      onClick={() => {
-        router.back();
-      }}
-    >
-      수정수정
-    </Wrapper>
+    <WholeWrapper>
+      <RsWrapper>차량선택</RsWrapper>
+    </WholeWrapper>
   );
 };
 
-export default EditMaintenance;
+export default SelectCar;

@@ -27,8 +27,9 @@ import { _MainProps } from "src/configure/_props.entity";
 import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import { PagenationSection } from "src/components/common/sections";
+import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 
-const MaintenenanceList: NextPage<_MainProps> = (props) => {
+const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/

@@ -10,6 +10,7 @@ import MaintenenanceList from "./section/maintenanceList";
 import { useDispatch } from "react-redux";
 import { Agency } from "src/models/agency.entity";
 import { FindResult, FindParameters } from "src/models/base.entity";
+import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 
 const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -49,7 +50,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const maintenanceListProps: any = {
+  const maintenanceListProps: _pMaintenanceProps = {
     ...props,
     findResult,
     setFindResult,
