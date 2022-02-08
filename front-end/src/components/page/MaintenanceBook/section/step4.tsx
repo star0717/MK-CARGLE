@@ -2,14 +2,17 @@ import React from "react";
 import { NextPage } from "next";
 import {
   RsWrapper,
+  SmallButton,
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
+import { useRouter } from "next/router";
+import { StepQuery, UseLink } from "src/configure/router.entity";
 
 const ReleaseComplete: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  const router = useRouter();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -27,7 +30,18 @@ const ReleaseComplete: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper>
-      <RsWrapper>출고 완료</RsWrapper>
+      <RsWrapper>
+        출고 완료
+        <SmallButton
+          type="button"
+          kindOf={`default`}
+          onClick={() => {
+            alert("어림도 없지 아암");
+          }}
+        >
+          수정
+        </SmallButton>
+      </RsWrapper>
     </WholeWrapper>
   );
 };

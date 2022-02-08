@@ -28,12 +28,14 @@ import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
+import { useRouter } from "next/router";
+import { StepQuery, UseLink } from "src/configure/router.entity";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  const router = useRouter();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -76,16 +78,28 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper>
                 <Text>
-                  <IconButton>
+                  <IconButton type="button">
                     <BsSearch />
                   </IconButton>
                 </Text>
               </Wrapper>
             </SearchInputWrapper>
           </form>
-          <SmallButton>상세검색</SmallButton>
-          <SmallButton>선택삭제</SmallButton>
-          <SmallButton>+신규정비등록</SmallButton>
+          <SmallButton type="button" kindOf={`default`}>
+            상세검색
+          </SmallButton>
+          <SmallButton type="button" kindOf={`default`}>
+            선택삭제
+          </SmallButton>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            onClick={() => {
+              router.push(`${UseLink.MAINTENANCE_BOOK}/${StepQuery.FIRST}`);
+            }}
+          >
+            +신규정비등록
+          </SmallButton>
         </Wrapper>
         <Wrapper margin={`10px 0px 30px`}>
           <TableWrapper>
@@ -179,10 +193,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 )} */}
             </TableBody>
           </TableWrapper>
-          <Wrapper dr={`row`}>
-            <CommonButton onClick={() => {}}>add</CommonButton>
-            <CommonButton onClick={() => {}}>edit</CommonButton>
-          </Wrapper>
+          <Wrapper dr={`row`}></Wrapper>
           {/* <PagenationSection {...props} /> */}
         </Wrapper>
       </RsWrapper>

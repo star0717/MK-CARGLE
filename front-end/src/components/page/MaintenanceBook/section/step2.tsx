@@ -2,14 +2,17 @@ import React from "react";
 import { NextPage } from "next";
 import {
   RsWrapper,
+  SmallButton,
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
+import { useRouter } from "next/router";
+import { StepQuery, UseLink } from "src/configure/router.entity";
 
 const MaintenanceIng: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  const router = useRouter();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -27,7 +30,18 @@ const MaintenanceIng: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper>
-      <RsWrapper>정비 중</RsWrapper>
+      <RsWrapper>
+        정비 중
+        <SmallButton
+          type="button"
+          kindOf={`default`}
+          onClick={() => {
+            router.push(`${UseLink.MAINTENANCE_BOOK}/${StepQuery.THIRD}`);
+          }}
+        >
+          정비 완료
+        </SmallButton>
+      </RsWrapper>
     </WholeWrapper>
   );
 };

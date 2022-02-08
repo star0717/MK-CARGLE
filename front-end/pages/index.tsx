@@ -2,16 +2,13 @@ import type {
   GetServerSideProps,
   GetServerSidePropsContext,
   NextPage,
-  PreviewData,
 } from "next";
-import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
 import Footer from "../src/components/layout/Footer";
 import Header from "../src/components/layout/Header";
 import SignIn from "../src/components/page/SignIn";
-import { WholeWrapper } from "../src/components/styles/CommonComponents";
 import { PageWrapper } from "../src/components/styles/LayoutComponents";
-import { _SignInProps } from "../src/configure/_props.entity";
+import { _MainProps, _SignInProps } from "../src/configure/_props.entity";
 import { UseLink } from "../src/configure/router.entity";
 
 /**
@@ -20,9 +17,13 @@ import { UseLink } from "../src/configure/router.entity";
  * @returns
  */
 const Home: NextPage<_SignInProps> = (props) => {
+  const nullProps: _MainProps = {
+    tokenValue: undefined,
+  };
+
   return (
     <PageWrapper>
-      <Header />
+      <Header {...nullProps} />
       <SignIn {...props} />
       <Footer />
     </PageWrapper>

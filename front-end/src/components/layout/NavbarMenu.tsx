@@ -7,16 +7,23 @@ import { menuList } from "src/configure/list.entity";
 import { UserAuthority } from "src/constants/model.const";
 import Link from "next/link";
 import { MdOutlineNavigateNext } from "react-icons/md";
+import { useRouter } from "next/router";
 
 const NavbarMenu: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const router = useRouter();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   //   const [openSubMenu, setOpenSubMenu] = useState<boolean>(false);
-  const [menuKey, setMenuKey] = useState<string>("1");
+  const [menuKey, setMenuKey] = useState<string>(
+    props.tokenValue.uAuth === UserAuthority.ADMIN ? "7" : "1"
+  );
+  const [arrNum, setArrNum] = useState<number>(
+    props.tokenValue.uAuth === UserAuthority.ADMIN ? 7 : 1
+  );
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -121,7 +128,7 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
                   ju={`flex-start`}
                   al={`center`}
                   fontSize={`22px`}
-                  bgColor={menu.key === menuKey && `#8DAFCE`}
+                  bgColor={menu.key === menuKey ? `#8DAFCE` : ``}
                   borderBottom={`1px solid #8DAFCE`}
                   cursor={`pointer`}
                   dr={`row`}
@@ -131,8 +138,8 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
                   }}
                 >
                   <Text
-                    fontWeight={menu.key === menuKey && `700`}
-                    color={menu.key === menuKey && `#fff`}
+                    fontWeight={menu.key === menuKey ? `700` : ``}
+                    color={menu.key === menuKey ? `#fff` : ``}
                     fontSize={`18px`}
                   >
                     {menu.menuName}
@@ -146,7 +153,7 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
           </Wrapper>
           <Wrapper width={`50%`}>
             {menuKey &&
-              clickMenu[parseInt(menuKey) - 1].map((sub, idx) => {
+              clickMenu[parseInt(menuKey) - arrNum].map((sub, idx) => {
                 return (
                   <Wrapper
                     key={idx}
@@ -155,17 +162,13 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
                     bgColor={`#eee`}
                     borderBottom={`1px solid #fff`}
                     cursor={`pointer`}
+                    onClick={() => {
+                      props.setOpenMenu(false);
+                      router.push(sub.subMenuLink);
+                    }}
                   >
-                    <Text
-                      key={sub.key}
-                      fontSize={`18px`}
-                      onClick={() => {
-                        props.setOpenMenu(false);
-                      }}
-                    >
-                      <Link href={sub.subMenuLink}>
-                        <a>{sub.subMenuName}</a>
-                      </Link>
+                    <Text key={sub.key} fontSize={`18px`}>
+                      {sub.subMenuName}
                     </Text>
                   </Wrapper>
                 );

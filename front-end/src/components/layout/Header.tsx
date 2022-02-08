@@ -100,9 +100,9 @@ const Header: NextPage<_MainProps> = (props) => {
         shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
         bgColor={`#fafafa`}
         wrap={`no-wrap`}
-        display={width < 1200 ? `none` : ``}
+        display={width <= 1200 ? `none` : ``}
       >
-        <Wrapper width={`auto`} al={`cneter`}>
+        <Wrapper width={`auto`} al={`center`}>
           <Link href={UseLink.MAIN}>
             <a>
               <Image
@@ -166,7 +166,7 @@ const Header: NextPage<_MainProps> = (props) => {
                   bgColor={`#fafafa`}
                 >
                   {/* 서브메뉴 빈 wrapper */}
-                  <Wrapper width={`auto`} al={`cneter`}>
+                  <Wrapper width={`auto`} al={`center`}>
                     <a>
                       <Image
                         src="/images/cargle.png"
@@ -290,6 +290,7 @@ const Header: NextPage<_MainProps> = (props) => {
       </Wrapper>
       <MobileHeader>
         <Wrapper
+          display={props.tokenValue ? `` : `none`}
           width={`20%`}
           al={`flex-start`}
           onClick={() => {
@@ -298,10 +299,16 @@ const Header: NextPage<_MainProps> = (props) => {
         >
           <AiOutlineMenu />
         </Wrapper>
-        <Wrapper width={`60%`}>
+        <Wrapper width={props.tokenValue ? `60%` : `100%`}>
           <Image src="/images/cargle.png" alt="Cargle Logo" width={`100px`} />
         </Wrapper>
-        <Wrapper width={`20%`} dr={`row`} ju={`flex-end`} wrap={`no-wrap`}>
+        <Wrapper
+          display={props.tokenValue ? `` : `none`}
+          width={`20%`}
+          dr={`row`}
+          ju={`flex-end`}
+          wrap={`no-wrap`}
+        >
           {props.tokenValue &&
             props.tokenValue.cApproval === CompanyApproval.DONE && (
               <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
