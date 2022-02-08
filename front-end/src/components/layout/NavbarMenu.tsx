@@ -6,6 +6,7 @@ import { _MainProps } from "src/configure/_props.entity";
 import { menuList } from "src/configure/list.entity";
 import { UserAuthority } from "src/constants/model.const";
 import Link from "next/link";
+import { MdOutlineNavigateNext } from "react-icons/md";
 
 const NavbarMenu: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -117,11 +118,13 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
                 <Wrapper
                   key={menu.key}
                   padding={`20px 30px`}
-                  al={`flex-start`}
+                  ju={`flex-start`}
+                  al={`center`}
                   fontSize={`22px`}
                   bgColor={menu.key === menuKey && `#8DAFCE`}
                   borderBottom={`1px solid #8DAFCE`}
                   cursor={`pointer`}
+                  dr={`row`}
                   onClick={() => {
                     //   setOpenSubMenu(!openSubMenu);
                     setMenuKey(menu.key);
@@ -133,6 +136,9 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
                     fontSize={`18px`}
                   >
                     {menu.menuName}
+                  </Text>
+                  <Text fontSize={`18px`} marginTop={`0px`} color={`#fff`}>
+                    {menuKey === menu.key && <MdOutlineNavigateNext />}
                   </Text>
                 </Wrapper>
               );
