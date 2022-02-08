@@ -90,8 +90,19 @@ export const getStrMaintenanceStatus = (status: MaintenanceStatus): string => {
 
 export enum MaintenanceCustomerType {
   NORMAL = 'normal',
-  CORPORATION = 'corporation',
+  INSURANCE = 'insurance',
 }
+
+export const MaintenanceCustomerTypeList = [
+  MaintenanceCustomerType.NORMAL,
+  MaintenanceCustomerType.INSURANCE,
+];
+
+export const MaintenanceCustomerTypeList2 = Object.keys(
+  MaintenanceCustomerType,
+).map((e) => {
+  return e;
+});
 
 export const getStrMaintenanceCustomerType = (
   type: MaintenanceCustomerType,
@@ -99,8 +110,8 @@ export const getStrMaintenanceCustomerType = (
   switch (type) {
     case MaintenanceCustomerType.NORMAL:
       return '일반';
-    case MaintenanceCustomerType.CORPORATION:
-      return '법인';
+    case MaintenanceCustomerType.INSURANCE:
+      return '보험';
     default:
       return null;
   }

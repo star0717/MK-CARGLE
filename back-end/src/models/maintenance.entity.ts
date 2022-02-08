@@ -50,12 +50,12 @@ export class CustomerInfo {
 }
 
 // 정비내역 정보
-export class PartInfo {
-  @ApiProperty({ description: '부품명. Part에서 복사' })
+export class WorkInfo {
+  @ApiProperty({ description: '작업내용/부품명. Part에서 복사' })
   name: string;
 
   @ApiProperty({ description: '부품코드. Part에서 복사' })
-  code: string;
+  code?: string;
 
   @ApiProperty({ description: '국토교통부 정비내역 코드. Part에서 복사' })
   tsCode?: string;
