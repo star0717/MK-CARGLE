@@ -550,7 +550,7 @@ ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
 `;
 
 export const SmallButton = styled.button<any>`
-  width: ${(props) => props.width || `100px`};
+  width: ${(props) => props.width || `80px`};
   min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height || `40px`};
   transition: ${(props) => props.transition || props.theme.transition};
