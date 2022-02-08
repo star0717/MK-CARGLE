@@ -64,6 +64,7 @@ import {
 import { useResizeDetector } from "react-resize-detector";
 import { IoIosCloseCircle } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
+import NavbarMenu from "src/components/layout/NavbarMenu";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -150,10 +151,6 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 const MainPage: NextPage<_MainProps> = (props) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
 
-  const [openSubMenu, setOpenSubMenu] = useState<boolean>(false);
-
-  const [name, setName] = useState<string>("");
-
   const mainProps: _MainProps = {
     ...props,
     openMenu,
@@ -164,66 +161,10 @@ const MainPage: NextPage<_MainProps> = (props) => {
 
   return (
     <PageWrapper ref={ref}>
-      {openMenu && width < 1200 ? (
-        <Wrapper
-          height={`100vh`}
-          color={`#314FA5`}
-          padding={`50px`}
-          ju={`flex-start`}
-          isAbsolute
-          width={`60%`}
-        >
-          <Wrapper fontSize={`28px`} al={`flex-end`}>
-            <CloseButton
-              type="button"
-              onClick={() => {
-                setOpenMenu(false);
-              }}
-              color={`#314FA5`}
-              bgColor={`#fff`}
-              ju={`flex-start`}
-              fontSize={`34px`}
-            >
-              <AiOutlineClose />
-            </CloseButton>
-          </Wrapper>
-          <Wrapper padding={`100px 0px`} cursor={`pointer`}>
-            <Wrapper
-              padding={`20px 0px`}
-              al={`flex-start`}
-              fontSize={`22px`}
-              onClick={() => {
-                setOpenSubMenu(!openSubMenu);
-              }}
-            >
-              MAIN MENU01
-            </Wrapper>
-
-            {openSubMenu ? (
-              <Wrapper padding={`10px 0px`} al={`flex-start`} fontSize={`20px`}>
-                SUB MENU01
-              </Wrapper>
-            ) : (
-              <Wrapper />
-            )}
-          </Wrapper>
-
-          {/* <Wrapper al={`flex-start`}>
-              <Image
-                src="/images/cargle.png"
-                alt="Cargle Logo"
-                width={`120px`}
-                opacity={`0.5`}
-              />
-            </Wrapper> */}
-        </Wrapper>
-      ) : (
-        <>
-          <Header {...mainProps} />
-          <MainComponent {...mainProps} />
-          <Footer />
-        </>
-      )}
+      <Header {...mainProps} />
+      {openMenu && width < 1200 && <NavbarMenu {...mainProps} />}
+      <MainComponent {...mainProps} />
+      <Footer />
     </PageWrapper>
   );
 };

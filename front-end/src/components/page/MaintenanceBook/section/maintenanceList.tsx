@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
-import AddReservation from "./addReservationModal";
 import {
   CommonSubTitle,
   CommonTitle,
@@ -27,10 +26,9 @@ import Modal from "react-modal";
 import { _MainProps } from "src/configure/_props.entity";
 import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
-import EditReservation from "./editReservationModal";
 import { PagenationSection } from "src/components/common/sections";
 
-const ManReservationPage: NextPage<_MainProps> = (props) => {
+const MaintenenanceList: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -38,8 +36,7 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [modalOption, setModalOption] = useState<string>("");
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -47,15 +44,7 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const closeModal = () => {
-    setModalOpen(false);
-  };
 
-  const ModalProps: any = {
-    ...props,
-    setModalOpen,
-    style: { height: "800px", width: "500px" },
-  };
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -63,16 +52,14 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
     <WholeWrapper>
       <RsWrapper>
         <CommonTitleWrapper>
-          <CommonTitle>예약관리</CommonTitle>
-          <CommonSubTitle>
-            예약을 등록하고 일정을 관리할 수 있어요.
-          </CommonSubTitle>
+          <CommonTitle>정비장부</CommonTitle>
+          <CommonSubTitle>정비내역을 관리할 수 있어요.</CommonSubTitle>
         </CommonTitleWrapper>
         <Wrapper dr={`row`}>
           <form>
             <SearchInputWrapper
               type="text"
-              placeholder="찾고싶은 예약의 차량번호 또는 휴대전화번호를 입력하세요."
+              placeholder="차량번호를 입력하세요."
               dr={`row`}
               width={`678px`}
               padding={`0px 5px`}
@@ -83,7 +70,7 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
                 <SearchInput
                   width={`632px`}
                   type="text"
-                  placeholder="찾고싶은 예약의 차량번호 또는 휴대전화번호를 입력하세요."
+                  placeholder="차량번호를 입력하세요."
                 />
               </Wrapper>
               <Wrapper>
@@ -95,9 +82,9 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
               </Wrapper>
             </SearchInputWrapper>
           </form>
-          <SmallButton>캘린더</SmallButton>
+          <SmallButton>상세검색</SmallButton>
           <SmallButton>선택삭제</SmallButton>
-          <SmallButton>+신규예약등록</SmallButton>
+          <SmallButton>+신규정비등록</SmallButton>
         </Wrapper>
         <Wrapper margin={`10px 0px 30px`}>
           <TableWrapper>
@@ -125,11 +112,13 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
                   <CheckMark></CheckMark>
                 </Checkbox>
               </TableHeadLIST>
-              <TableHeadLIST width={`20%`}>예약접수일자</TableHeadLIST>
-              <TableHeadLIST width={`24%`}>정비희망일자</TableHeadLIST>
-              <TableHeadLIST width={`18%`}>차량번호</TableHeadLIST>
-              <TableHeadLIST width={`25%`}>전화번호</TableHeadLIST>
-              <TableHeadLIST width={`8%`}>예약상태</TableHeadLIST>
+              <TableHeadLIST width={`15%`}>입고일자</TableHeadLIST>
+              <TableHeadLIST width={`15%`}>차량번호</TableHeadLIST>
+              <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
+              <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
+              <TableHeadLIST width={`14%`}>문서발급</TableHeadLIST>
+              <TableHeadLIST width={`14%`}>국토부</TableHeadLIST>
+              <TableHeadLIST width={`8%`}>정비상태</TableHeadLIST>
             </TableHead>
             <TableBody>
               {/* {props.findResult.totalDocs > 0 ? (
@@ -190,73 +179,14 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
             </TableBody>
           </TableWrapper>
           <Wrapper dr={`row`}>
-            <CommonButton
-              onClick={() => {
-                setModalOption("add");
-                setModalOpen(true);
-              }}
-            >
-              addModal
-            </CommonButton>
-            <CommonButton
-              onClick={() => {
-                setModalOption("edit");
-                setModalOpen(true);
-              }}
-            >
-              editModal
-            </CommonButton>
+            <CommonButton onClick={() => {}}>add</CommonButton>
+            <CommonButton onClick={() => {}}>edit</CommonButton>
           </Wrapper>
           {/* <PagenationSection {...props} /> */}
         </Wrapper>
       </RsWrapper>
-      <Modal
-        isOpen={modalOpen}
-        style={{
-          overlay: {
-            position: "fixed",
-            zIndex: 9999,
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            background: "rgba(71, 71, 71, 0.75)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-          content: {
-            background: "white",
-            width: "500px",
-            height: "800px",
-            maxWidth: "calc(100vw - 2rem)",
-            maxHeight: "calc(100vh - 2rem)",
-            overflowY: "auto",
-            position: "relative",
-            border: "1px solid #ccc",
-            borderRadius: "0.3rem",
-            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
-            inset: 0,
-          },
-        }}
-      >
-        <Wrapper fontSize={`28px`} al={`flex-end`}>
-          <CloseButton onClick={closeModal}>
-            <IoIosCloseCircle />
-          </CloseButton>
-          {/* <DaumPostcode
-              onComplete={addressHandler}
-              style={{ height: "500px" }}
-            /> */}
-        </Wrapper>
-        {modalOption === "add" ? (
-          <AddReservation {...ModalProps} />
-        ) : (
-          <EditReservation {...ModalProps} />
-        )}
-      </Modal>
     </WholeWrapper>
   );
 };
 
-export default ManReservationPage;
+export default MaintenenanceList;
