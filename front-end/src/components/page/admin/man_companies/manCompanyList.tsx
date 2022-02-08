@@ -95,6 +95,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
               onSearchOptionHandler(e);
             }}
             height={`46px`}
+            width={`150px`}
           >
             <option value="name">상호명 검색</option>
             <option value="comRegNum">사업자번호 검색</option>

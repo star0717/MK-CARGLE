@@ -1535,7 +1535,7 @@ export const JoinStepBarWrapper = styled.div<any>`
   text-align: center;
   font-size: 18px;
   margin: 0px;
-  padding: 80px 0px 0px 0px;
+  padding: 0px 0px 100px 0px;
   flex-direction: row;
 `;
 
