@@ -237,7 +237,6 @@ const EditBusinessModal: NextPage<any> = (props) => {
                   type="button"
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
-                  width={`100px`}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     setAddressModal(!addressModal);
                   }}
