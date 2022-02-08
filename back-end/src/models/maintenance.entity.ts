@@ -51,13 +51,13 @@ export class CustomerInfo {
 
 // 정비내역 정보
 export class PartInfo {
-  @ApiProperty({ description: '부품명' })
+  @ApiProperty({ description: '부품명. Part에서 복사' })
   name: string;
 
-  @ApiProperty({ description: '부품코드' })
+  @ApiProperty({ description: '부품코드. Part에서 복사' })
   code: string;
 
-  @ApiProperty({ description: '국토교통부 정비내역 코드' })
+  @ApiProperty({ description: '국토교통부 정비내역 코드. Part에서 복사' })
   tsCode?: string;
 
   @ApiProperty({ description: '부품 타입' })
@@ -91,7 +91,7 @@ export class Maintenance extends BaseEntity {
   })
   releasedAt?: Date;
 
-  @ApiProperty({ description: '작업자명' })
+  @ApiProperty({ description: '작업자명. 작업을 시작한 사람' })
   @IsOptional()
   @IsString()
   @prop({
