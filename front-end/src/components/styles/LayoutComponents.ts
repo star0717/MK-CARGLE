@@ -189,6 +189,7 @@ export const MobileHeader = styled.div<any>`
   justify-content: space-between;
   display: none;
   color: #0b0b0b;
+  background-color: #fff;
 
   @media (max-width: 1200px) {
     display: flex;
