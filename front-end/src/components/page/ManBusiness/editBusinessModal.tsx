@@ -224,7 +224,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
             <Wrapper width={`400px`} ju={`flex-start`}>
               <Wrapper dr={`row`} margin={`0px 0px 10px 0px`}>
                 <TextInput2
-                  width={`400px`}
+                  width={`300px`}
                   // margin={`0px 0px 10px 0px`}
                   type="text"
                   name="address1"
