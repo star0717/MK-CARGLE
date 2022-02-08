@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
 import { AiOutlineClose } from "react-icons/ai";
-import { Wrapper, CloseButton, Text } from "../styles/CommonComponents";
+import { Wrapper, CloseButton, Text, Image } from "../styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
 import { menuList } from "src/configure/list.entity";
 import { UserAuthority } from "src/constants/model.const";
 import Link from "next/link";
+import { MdOutlineNavigateNext } from "react-icons/md";
 
 const NavbarMenu: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -72,7 +73,7 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
     <Wrapper
       isAbsolute
       height={`100%`}
-      background={`rgba(0, 0, 0, 0.5)`}
+      background={`rgba(0, 0, 0, 0.7)`}
       top={`0`}
       left={`0`}
       ju={`flex-start`}
@@ -81,46 +82,63 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
     >
       <Wrapper
         height={`100%`}
-        color={`#314FA5`}
-        padding={`50px`}
-        bgColor={`#000`}
+        color={`#000`}
+        padding={`22px 0px`}
+        bgColor={`#fff`}
         ju={`flex-start`}
         al={`flex-start`}
         width={`60%`}
       >
-        <Wrapper fontSize={`28px`} al={`flex-end`}>
+        <Wrapper fontSize={`28px`} ju={`space-between`} dr={`row`}>
+          <Wrapper width={`auto`} padding={`0px 30px`}>
+            <Image src="/images/cargle.png" alt="Cargle Logo" width={`100px`} />
+          </Wrapper>
           <CloseButton
             type="button"
             onClick={() => {
               props.setOpenMenu(false);
             }}
-            color={`#314FA5`}
+            color={`#343a40`}
             bgColor={`#fff`}
-            ju={`flex-start`}
-            fontSize={`34px`}
+            fontSize={`25px`}
+            padding={`0px 30px`}
           >
             <AiOutlineClose />
           </CloseButton>
         </Wrapper>
-        <Wrapper padding={`100px 0px`} dr={`row`} al={`flex-start`}>
+        <Wrapper
+          margin={`22px 0px 0px`}
+          dr={`row`}
+          al={`flex-start`}
+          borderTop={`1px solid #8dafce`}
+        >
           <Wrapper width={`50%`}>
             {mainMenu.map((menu) => {
               return (
                 <Wrapper
                   key={menu.key}
-                  padding={`20px 0px`}
-                  al={`flex-start`}
+                  padding={`20px 30px`}
+                  ju={`flex-start`}
+                  al={`center`}
                   fontSize={`22px`}
+                  bgColor={menu.key === menuKey && `#8DAFCE`}
+                  borderBottom={`1px solid #8DAFCE`}
+                  cursor={`pointer`}
+                  dr={`row`}
                   onClick={() => {
                     //   setOpenSubMenu(!openSubMenu);
                     setMenuKey(menu.key);
                   }}
                 >
                   <Text
-                    decoration={menu.key === menuKey && `underline`}
-                    cursor={`pointer`}
+                    fontWeight={menu.key === menuKey && `700`}
+                    color={menu.key === menuKey && `#fff`}
+                    fontSize={`18px`}
                   >
                     {menu.menuName}
+                  </Text>
+                  <Text fontSize={`18px`} marginTop={`0px`} color={`#fff`}>
+                    {menuKey === menu.key && <MdOutlineNavigateNext />}
                   </Text>
                 </Wrapper>
               );
@@ -132,13 +150,15 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
                 return (
                   <Wrapper
                     key={idx}
-                    padding={`20px 0px`}
+                    padding={`20px 30px`}
                     al={`flex-start`}
-                    fontSize={`22px`}
+                    bgColor={`#eee`}
+                    borderBottom={`1px solid #fff`}
+                    cursor={`pointer`}
                   >
                     <Text
                       key={sub.key}
-                      cursor={`pointer`}
+                      fontSize={`18px`}
                       onClick={() => {
                         props.setOpenMenu(false);
                       }}
