@@ -111,7 +111,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper>
-      <CommonSmallTitle>거래처추가</CommonSmallTitle>
+      <CommonSmallTitle>거래처 상세정보</CommonSmallTitle>
       <form onSubmit={handleSubmit(saveData)}>
         <Wrapper>
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
@@ -237,6 +237,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
                   type="button"
                   kindOf={`default`}
                   margin={`0px 0px 0px 20px`}
+                  width={`90px`}
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     setAddressModal(!addressModal);
                   }}
