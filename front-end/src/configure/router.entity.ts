@@ -42,6 +42,7 @@ export const Step = {
   FIRST: "1",
   SECOND: "2",
   THIRD: "3",
+  FOURTH: "4",
 };
 
 /**
@@ -51,6 +52,7 @@ export const StepQuery = {
   FIRST: "?step=1",
   SECOND: "?step=2",
   THIRD: "?step=3",
+  FOURTH: "?step=4",
 };
 
 /**

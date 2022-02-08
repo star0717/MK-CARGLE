@@ -12,12 +12,30 @@ import { Agency } from "src/models/agency.entity";
 import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
+import SelectCar from "./section/step1";
+import MaintenanceIng from "./section/step2";
+import MaintenanceComplete from "./section/step3";
+import ReleaseComplete from "./section/step4";
 
-const StepMaintenance: NextPage<_MainProps> = (props) => {
+const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
 
-  console.log("라우터", router);
-  return null;
+  switch (router.query.step) {
+    case "1":
+      return <SelectCar />;
+
+    case "2":
+      return <MaintenanceIng />;
+
+    case "3":
+      return <MaintenanceComplete />;
+
+    case "4":
+      return <ReleaseComplete />;
+
+    default:
+      return <MaintenenanceList {...props} />;
+  }
 };
 
 const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
@@ -25,9 +43,6 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
-  const router = useRouter();
-
-  console.log("라우터", router.query);
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -76,7 +91,8 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   return (
     <BodyWrapper>
-      <MaintenenanceList {...maintenanceListProps} />
+      {/* <MaintenenanceList {...maintenanceListProps} /> */}
+      <StepMaintenance {...maintenanceListProps} />
     </BodyWrapper>
   );
 };
