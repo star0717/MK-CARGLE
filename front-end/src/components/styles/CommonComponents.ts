@@ -60,7 +60,7 @@ export const RsWrapper = styled.div<any>`
   position: ${(props) => (props.isRelative ? `relative` : ``)};
 
   @media (max-width: 1200px) {
-    width: auto;
+    width: 100%;
   }
 }
 

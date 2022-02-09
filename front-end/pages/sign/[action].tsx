@@ -52,7 +52,7 @@ const SignUpPage: NextPage = () => {
 
   return (
     <PageWrapper ref={ref}>
-      {width < 500 ? (
+      {width < 600 ? (
         <BlackWrapper />
       ) : (
         <>
