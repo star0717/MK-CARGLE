@@ -40,6 +40,10 @@ export const HeaderWrapper = styled.div<any>`
   overflow-x: hidden;
   box-shadow: ${(props) => props.shadow};
   flex-wrap: ${(props) => props.wrap || `no-wrap`};
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
 `;
 
 export const HeaderHover = styled.div<any>`
@@ -180,16 +184,32 @@ export const HeaderIconAlarm = styled.div<any>`
 `;
 
 export const MobileHeader = styled.div<any>`
-  width: 100%;
-  padding: 30px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  width: ${(props) => props.width || `100%`};
+  color: ${(props) => props.color};
   display: none;
-  color: #0b0b0b;
-  background-color: #fff;
-  position: fixed;
+  background-color: ${(props) => props.bgColor};
+  color: ${(props) => props.theme.black_C};
+  flex-direction: ${(props) => props.dr || `row`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `flex-start`};
+  background-image: ${(props) => props.bgImg};
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  box-shadow: ${(props) => props.shadow};
+  z-index: ${(props) => props.index};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+  position: ${(props) => (props.isFixed ? `fixed` : ``)};
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+  bottom: ${(props) => props.bottom};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding || `0px`};
+  animation: ${appearAnimation} 1s forwards;
+  overflow-x: hidden;
+  box-shadow: ${(props) => props.shadow};
+  flex-wrap: ${(props) => props.wrap || `no-wrap`};
 
   @media (max-width: 1200px) {
     display: flex;
@@ -198,6 +218,13 @@ export const MobileHeader = styled.div<any>`
     font-size: 25px;
     cursor: pointer;
   }
+`;
+
+export const MobileFixed = styled.div<any>`
+  width: ${(props) => props.width || ``};
+  height: 80px;
+  display: flex;
+  align-items: center;
 `;
 
 export const MobileMenu = styled.div<any>`

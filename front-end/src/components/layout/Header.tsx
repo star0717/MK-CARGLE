@@ -4,7 +4,7 @@ import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { _aGetAuthSignout } from "../../../store/action/user.action";
-import { Wrapper, Text, Image } from "../styles/CommonComponents";
+import { WholeWrapper, Wrapper, Text, Image } from "../styles/CommonComponents";
 import {
   HeaderWrapper,
   HeaderFixed,
@@ -12,13 +12,16 @@ import {
   HeaderText,
   HeaderIconButton,
   MobileHeader,
+  MobileMenu,
+  MobileSubMenu,
+  MobileFixed,
 } from "../styles/LayoutComponents";
 import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { menuList } from "../../configure/list.entity";
 import { CompanyApproval, UserAuthority } from "../../constants/model.const";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { _MainProps } from "src/configure/_props.entity";
 
@@ -100,6 +103,7 @@ const Header: NextPage<_MainProps> = (props) => {
         wrap={`no-wrap`}
         display={width <= 1185 ? `none` : ``}
       >
+<<<<<<< HEAD
         <Wrapper width={`auto`} al={`center`}>
           <Link href={UseLink.MAIN}>
             <a>
@@ -146,6 +150,43 @@ const Header: NextPage<_MainProps> = (props) => {
                       : `0px 10px`
                     : `0px 20px`
                 }
+=======
+        <Wrapper
+          height={`80px`}
+          ju={`space-between`}
+          al={`center`}
+          padding={
+            width < 1510
+              ? width < 1080
+                ? `0px 20px`
+                : `0px 50px`
+              : `0px 100px`
+          }
+          dr={`row`}
+          isFixed={true}
+          top={`0`}
+          left={`0`}
+          right={`0`}
+          shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
+          bgColor={`#fafafa`}
+          wrap={`no-wrap`}
+        >
+          <Wrapper width={`auto`} al={`center`}>
+            <Link href={UseLink.MAIN}>
+              <a>
+                <Image
+                  src="/images/cargle.png"
+                  alt="Cargle Logo"
+                  width={width < 1450 ? `80px` : `100px`}
+                />
+              </a>
+            </Link>
+          </Wrapper>
+          {props.tokenValue &&
+            props.tokenValue.cApproval === CompanyApproval.DONE && (
+              <HeaderFixed
+                width={`auto`}
+>>>>>>> 05e7bdab680d47f318f48af72eb9bafd52f0203d
                 dr={`row`}
                 shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
                 bgColor={`#fafafa`}
@@ -285,6 +326,7 @@ const Header: NextPage<_MainProps> = (props) => {
               </HeaderIconButton>
             )}
         </Wrapper>
+<<<<<<< HEAD
       </Wrapper>
       <MobileHeader>
         <Wrapper
@@ -325,6 +367,62 @@ const Header: NextPage<_MainProps> = (props) => {
         </Wrapper>
       </MobileHeader>
     </HeaderWrapper>
+=======
+      </HeaderWrapper>
+      <MobileHeader
+        ref={ref}
+        shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
+        isFixed={true}
+        index={`9999`}
+        padding={`0px`}
+        margin={`0px 0px 80px`}
+        ju={`space-between`}
+      >
+        <MobileFixed
+          width={`100%`}
+          dr={`row`}
+          padding={width < 1450 ? `0px 50px` : `0px 100px`}
+        >
+          <Wrapper
+            display={props.tokenValue ? `` : `none`}
+            width={`20%`}
+            al={`flex-start`}
+            onClick={() => {
+              props.setOpenMenu(!props.openMenu);
+            }}
+          >
+            <AiOutlineMenu />
+          </Wrapper>
+          <Wrapper width={props.tokenValue ? `60%` : `100%`}>
+            <Image src="/images/cargle.png" alt="Cargle Logo" width={`100px`} />
+          </Wrapper>
+          <Wrapper
+            display={props.tokenValue ? `` : `none`}
+            width={`20%`}
+            dr={`row`}
+            ju={`flex-end`}
+            wrap={`no-wrap`}
+          >
+            {props.tokenValue &&
+              props.tokenValue.cApproval === CompanyApproval.DONE && (
+                <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
+                  <HeaderIconButton>
+                    <FaBell />
+                  </HeaderIconButton>
+                </Wrapper>
+              )}
+            {props.tokenValue &&
+              (props.tokenValue.cApproval === CompanyApproval.DONE ||
+                props.tokenValue.cApproval === CompanyApproval.ING) && (
+                <HeaderIconButton onClick={onSignOutHandler}>
+                  <MdLogout />
+                </HeaderIconButton>
+              )}
+          </Wrapper>
+        </MobileFixed>
+      </MobileHeader>
+    </>
+>>>>>>> 05e7bdab680d47f318f48af72eb9bafd52f0203d
   );
 };
 
