@@ -10,6 +10,8 @@ import SignIn from "../src/components/page/SignIn";
 import { PageWrapper } from "../src/components/styles/LayoutComponents";
 import { _MainProps, _SignInProps } from "../src/configure/_props.entity";
 import { UseLink } from "../src/configure/router.entity";
+import { useResizeDetector } from "react-resize-detector";
+import BlackWrapper from "src/components/layout/BlackWrapper";
 
 /**
  * Index: 로그인 페이지
@@ -21,11 +23,20 @@ const Home: NextPage<_SignInProps> = (props) => {
     tokenValue: undefined,
   };
 
+  const { width, height, ref } = useResizeDetector();
+
   return (
     <PageWrapper>
-      <Header {...nullProps} />
-      <SignIn {...props} />
-      <Footer />
+      {width < 500 ? (
+        <BlackWrapper />
+      ) : (
+        <>
+          {" "}
+          <Header {...nullProps} />
+          <SignIn {...props} />
+          <Footer />
+        </>
+      )}
     </PageWrapper>
   );
 };
