@@ -8,7 +8,7 @@ import {
 import { useRouter } from "next/router";
 import { StepQuery, UseLink } from "src/configure/router.entity";
 
-const ReleaseComplete: NextPage<any> = (props) => {
+const MaintenanceComplete: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -31,19 +31,19 @@ const ReleaseComplete: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        출고 완료
+        정비 완료
         <SmallButton
           type="button"
           kindOf={`default`}
           onClick={() => {
-            alert("어림도 없지 아암");
+            router.push(`${UseLink.MAINTENANCE_BOOK}/${StepQuery.FIFTH}`);
           }}
         >
-          수정
+          출고완료
         </SmallButton>
       </RsWrapper>
     </WholeWrapper>
   );
 };
 
-export default ReleaseComplete;
+export default MaintenanceComplete;

@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
-import {
-  RsWrapper,
-  WholeWrapper,
-} from "src/components/styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
 import MaintenenanceList from "./section/maintenanceList";
 import { useDispatch } from "react-redux";
@@ -13,24 +9,28 @@ import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
 import SelectCar from "./section/step1";
-import MaintenanceIng from "./section/step2";
-import MaintenanceComplete from "./section/step3";
-import ReleaseComplete from "./section/step4";
+import PayComplete from "./section/step2";
+import MaintenanceIng from "./section/step3";
+import MaintenanceComplete from "./section/step4";
+import ReleaseComplete from "./section/step5";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
 
   switch (router.query.step) {
     case "1":
-      return <SelectCar />;
+      return <SelectCar {...props} />;
 
     case "2":
-      return <MaintenanceIng />;
+      return <PayComplete />;
 
     case "3":
-      return <MaintenanceComplete />;
+      return <MaintenanceIng />;
 
     case "4":
+      return <MaintenanceComplete />;
+
+    case "5":
       return <ReleaseComplete />;
 
     default:
