@@ -1947,3 +1947,7 @@ export const StampWrapper = styled.div<any>`
   background-position: 0 0, 10px 10px;
   background-size: 20px 20px;
 `;
+
+export const ColorSpan = styled.span<any>`
+  color: ${(props) => props.color};
+`;
