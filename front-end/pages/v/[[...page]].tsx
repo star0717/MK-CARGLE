@@ -150,7 +150,7 @@ const MainPage: NextPage<_MainProps> = (props) => {
 
   return (
     <PageWrapper ref={ref}>
-      {width < 600 ? (
+      {width < 860 ? (
         <BlackWrapper />
       ) : (
         <>
