@@ -21,7 +21,7 @@ const Custom404: NextPage = () => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        <Wrapper padding={`50px 0px 0px`} dr={`row`}>
+        <Wrapper padding={`50px 50px 0px`} dr={`row`}>
           <Wrapper width={`auto`}>
             <Wrapper>
               <Text
@@ -42,7 +42,7 @@ const Custom404: NextPage = () => {
                 404 ERROR!
               </Text>
               <Text
-                fontSize={`32px`}
+                fontSize={`26px`}
                 fontWeight={`600`}
                 color={`#314FA5`}
                 padding={`50px 0px 10px`}

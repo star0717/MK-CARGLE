@@ -303,7 +303,7 @@ const Header: NextPage<_MainProps> = (props) => {
         shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
         isFixed={true}
         index={`9999`}
-        padding={`0px`}
+        padding={`0px 30px`}
         margin={`0px 0px 80px`}
         ju={`space-between`}
       >

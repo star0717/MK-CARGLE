@@ -73,7 +73,7 @@ const Custom500: NextPage = () => {
         </Wrapper>
       </Wrapper> */}
       <RsWrapper>
-        <Wrapper padding={`50px 0px 0px`} dr={`row`}>
+        <Wrapper padding={`50px 50px 0px`} dr={`row`}>
           <Wrapper width={`auto`}>
             <Wrapper>
               <Text
@@ -94,7 +94,7 @@ const Custom500: NextPage = () => {
                 500 ERROR!
               </Text>
               <Text
-                fontSize={`32px`}
+                fontSize={`26px`}
                 fontWeight={`600`}
                 color={`#314FA5`}
                 padding={`50px 0px 10px`}
