@@ -98,7 +98,7 @@ export const MaintenanceCustomerTypeList = [
   MaintenanceCustomerType.INSURANCE,
 ];
 
-export const MaintenanceCustomerTypeList2 = Object.keys(
+export const MaintenanceCustomerTypeList2 = Object.values(
   MaintenanceCustomerType,
 ).map((e) => {
   return e;
