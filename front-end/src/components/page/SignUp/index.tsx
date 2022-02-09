@@ -46,7 +46,7 @@ const SignUp: NextPage = () => {
         `NoneTitleBodyWrapper`
       }
     >
-      {/* <Header {...SignUpProps} /> */}
+      {/* <SignUpHeader {...SignUpProps} /> */}
       {stepNumber === 1 && <SelectUser {...SignUpProps} />}
       {stepNumber === 2 && <TermSignUp {...SignUpProps} />}
       {stepNumber === 3 && <SignAccount {...SignUpProps} />}

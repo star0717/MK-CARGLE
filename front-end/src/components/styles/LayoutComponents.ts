@@ -181,7 +181,6 @@ export const HeaderIconAlarm = styled.div<any>`
 
 export const MobileHeader = styled.div<any>`
   width: 100%;
-  height: 80px;
   padding: 30px;
   display: flex;
   flex-direction: row;
@@ -189,6 +188,8 @@ export const MobileHeader = styled.div<any>`
   justify-content: space-between;
   display: none;
   color: #0b0b0b;
+  background-color: #fff;
+  position: fixed;
 
   @media (max-width: 1200px) {
     display: flex;

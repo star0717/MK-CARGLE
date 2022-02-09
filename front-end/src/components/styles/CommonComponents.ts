@@ -58,6 +58,10 @@ export const RsWrapper = styled.div<any>`
   border: ${(props) => props.border};
   font-size: ${(props) => props.fontSize};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
+
+  @media (max-width: 1200px) {
+    width: auto;
+  }
 }
 
 ${(props) => props.kindOf === `short` && `padding:0px 0px 120px 0px`}
@@ -1535,7 +1539,7 @@ export const JoinStepBarWrapper = styled.div<any>`
   text-align: center;
   font-size: 18px;
   margin: 0px;
-  padding: 80px 0px 0px 0px;
+  padding: 0px 0px 100px 0px;
   flex-direction: row;
 `;
 

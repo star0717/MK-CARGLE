@@ -182,3 +182,11 @@ export interface _pComPageModalProps extends _pFindDocs<Company> {
     height: string;
   };
 }
+
+// 정비장부용 props
+export interface _pMaintenanceProps extends _pFindDocs<any> {
+  searchOption: string;
+  setSearchOption: React.Dispatch<React.SetStateAction<string>>;
+  filterValue: string;
+  setFilterValue: React.Dispatch<React.SetStateAction<string>>;
+}

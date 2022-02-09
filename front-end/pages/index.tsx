@@ -2,17 +2,16 @@ import type {
   GetServerSideProps,
   GetServerSidePropsContext,
   NextPage,
-  PreviewData,
 } from "next";
-import Head from "next/head";
 import { ParsedUrlQuery } from "querystring";
 import Footer from "../src/components/layout/Footer";
 import Header from "../src/components/layout/Header";
 import SignIn from "../src/components/page/SignIn";
-import { WholeWrapper } from "../src/components/styles/CommonComponents";
 import { PageWrapper } from "../src/components/styles/LayoutComponents";
-import { _SignInProps } from "../src/configure/_props.entity";
+import { _MainProps, _SignInProps } from "../src/configure/_props.entity";
 import { UseLink } from "../src/configure/router.entity";
+import { useResizeDetector } from "react-resize-detector";
+import BlackWrapper from "src/components/layout/BlackWrapper";
 
 /**
  * Index: 로그인 페이지
@@ -20,11 +19,24 @@ import { UseLink } from "../src/configure/router.entity";
  * @returns
  */
 const Home: NextPage<_SignInProps> = (props) => {
+  const nullProps: _MainProps = {
+    tokenValue: undefined,
+  };
+
+  const { width, height, ref } = useResizeDetector();
+
   return (
-    <PageWrapper>
-      <Header />
-      <SignIn {...props} />
-      <Footer />
+    <PageWrapper ref={ref}>
+      {width < 500 ? (
+        <BlackWrapper />
+      ) : (
+        <>
+          {" "}
+          <Header {...nullProps} />
+          <SignIn {...props} />
+          <Footer />
+        </>
+      )}
     </PageWrapper>
   );
 };

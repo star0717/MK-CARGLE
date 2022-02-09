@@ -215,10 +215,9 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
               <TableWrapper overflow={`auto`}>
                 <Wrapper isSticky={true}>
                   <TableHead radius={`8px 8px 0px 0px`}>
-                    <TableHeadLIST width={`25%`}>부품코드</TableHeadLIST>
-                    <TableHeadLIST width={`25%`}>부품명</TableHeadLIST>
-                    <TableHeadLIST width={`25%`}>국토부</TableHeadLIST>
-                    <TableHeadLIST width={`25%`}>사용량</TableHeadLIST>
+                    <TableHeadLIST width={`33%`}>부품코드</TableHeadLIST>
+                    <TableHeadLIST width={`33%`}>부품명</TableHeadLIST>
+                    <TableHeadLIST width={`34%`}>국토부</TableHeadLIST>
                   </TableHead>
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
@@ -226,12 +225,11 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                     {partList.length > 0 ? (
                       partList.map((list: Part) => (
                         <TableRow key={list._id} kindOf={`noHover`}>
-                          <TableRowLIST width={`25%`}>{list.code}</TableRowLIST>
-                          <TableRowLIST width={`25%`}>{list.name}</TableRowLIST>
-                          <TableRowLIST width={`25%`}>
+                          <TableRowLIST width={`33%`}>{list.code}</TableRowLIST>
+                          <TableRowLIST width={`33%`}>{list.name}</TableRowLIST>
+                          <TableRowLIST width={`34%`}>
                             {list.tsCode}
                           </TableRowLIST>
-                          <TableRowLIST width={`25%`}>-</TableRowLIST>
                         </TableRow>
                       ))
                     ) : (

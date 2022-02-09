@@ -16,6 +16,9 @@ import { UseLink } from "../../src/configure/router.entity";
 import Find from "../../src/components/page/Find";
 import { getPathName } from "../../src/modules/commonModule";
 import { PageWrapper } from "../../src/components/styles/LayoutComponents";
+import { _MainProps } from "src/configure/_props.entity";
+import BlackWrapper from "src/components/layout/BlackWrapper";
+import { useResizeDetector } from "react-resize-detector";
 
 /**
  * 계정관련: url에 따른 컴포넌트
@@ -41,11 +44,24 @@ const SignComponent: NextPage = () => {
  * @returns
  */
 const SignUpPage: NextPage = () => {
+  const nullProps: _MainProps = {
+    tokenValue: undefined,
+  };
+
+  const { width, height, ref } = useResizeDetector();
+
   return (
-    <PageWrapper>
-      <Header />
-      <SignComponent />
-      <Footer />
+    <PageWrapper ref={ref}>
+      {width < 500 ? (
+        <BlackWrapper />
+      ) : (
+        <>
+          {" "}
+          <Header {...nullProps} />
+          <SignComponent />
+          <Footer />
+        </>
+      )}
     </PageWrapper>
   );
 };
