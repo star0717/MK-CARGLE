@@ -51,7 +51,7 @@ const SignUpPage: NextPage = () => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <PageWrapper>
+    <PageWrapper ref={ref}>
       {width < 500 ? (
         <BlackWrapper />
       ) : (
