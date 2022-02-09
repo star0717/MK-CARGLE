@@ -48,10 +48,9 @@ const TestPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  const { width, height, ref } = useResizeDetector();
-  console.log("width: !!!", width);
+
   return (
-    <WholeWrapper ref={ref}>
+    <WholeWrapper>
       <RsWrapper>
         <CommonTitleWrapper>
           <CommonTitle>정비장부</CommonTitle>
