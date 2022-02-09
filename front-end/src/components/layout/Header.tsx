@@ -98,7 +98,7 @@ const Header: NextPage<_MainProps> = (props) => {
         shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
         bgColor={`#fafafa`}
         wrap={`no-wrap`}
-        display={width <= 1200 ? `none` : ``}
+        display={width <= 1185 ? `none` : ``}
       >
         <Wrapper width={`auto`} al={`center`}>
           <Link href={UseLink.MAIN}>
