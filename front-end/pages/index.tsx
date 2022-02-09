@@ -26,7 +26,7 @@ const Home: NextPage<_SignInProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <PageWrapper>
+    <PageWrapper ref={ref}>
       {width < 500 ? (
         <BlackWrapper />
       ) : (
