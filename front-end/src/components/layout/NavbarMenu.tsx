@@ -5,7 +5,6 @@ import { Wrapper, CloseButton, Text, Image } from "../styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
 import { menuList } from "src/configure/list.entity";
 import { UserAuthority } from "src/constants/model.const";
-import Link from "next/link";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { useRouter } from "next/router";
 
