@@ -10,6 +10,7 @@ import Modal from "react-modal";
 const MyApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   // modal setting
   Modal.setAppElement("body");
+
   return (
     <>
       <Head>
