@@ -58,6 +58,10 @@ export const RsWrapper = styled.div<any>`
   border: ${(props) => props.border};
   font-size: ${(props) => props.fontSize};
   position: ${(props) => (props.isRelative ? `relative` : ``)};
+
+  @media (max-width: 1200px) {
+    width: auto;
+  }
 }
 
 ${(props) => props.kindOf === `short` && `padding:0px 0px 120px 0px`}

@@ -29,15 +29,10 @@ import { FindParameters, FindResult } from "../../src/models/base.entity";
 import { User } from "../../src/models/user.entity";
 import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
 import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
-
-import {
-  BodyWrapper,
-  PageWrapper,
-} from "../../src/components/styles/LayoutComponents";
+import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import {
   AdminApiPath,
   AgenciesApiPath,
-  MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
   SettingsApiPath,
@@ -56,14 +51,7 @@ import MaintenanceBookPage from "src/components/page/MaintenanceBook";
 import ManCustomerPage from "src/components/page/ManCustomer";
 import ManReservationPage from "src/components/page/ManReservation";
 import React, { useState } from "react";
-import {
-  CloseButton,
-  Image,
-  Wrapper,
-} from "src/components/styles/CommonComponents";
 import { useResizeDetector } from "react-resize-detector";
-import { IoIosCloseCircle } from "react-icons/io";
-import { AiOutlineClose } from "react-icons/ai";
 import NavbarMenu from "src/components/layout/NavbarMenu";
 
 /**
@@ -161,6 +149,7 @@ const MainPage: NextPage<_MainProps> = (props) => {
 
   return (
     <PageWrapper ref={ref}>
+      {/* {width < 500 ? } */}
       <Header {...mainProps} />
       {openMenu && width < 1200 && <NavbarMenu {...mainProps} />}
       <MainComponent {...mainProps} />

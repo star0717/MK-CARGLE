@@ -4,7 +4,7 @@ import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { _aGetAuthSignout } from "../../../store/action/user.action";
-import { WholeWrapper, Wrapper, Text, Image } from "../styles/CommonComponents";
+import { Wrapper, Text, Image } from "../styles/CommonComponents";
 import {
   HeaderWrapper,
   HeaderFixed,
@@ -12,15 +12,13 @@ import {
   HeaderText,
   HeaderIconButton,
   MobileHeader,
-  MobileMenu,
-  MobileSubMenu,
 } from "../styles/LayoutComponents";
 import { UseLink } from "../../configure/router.entity";
 import { FaBell } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { menuList } from "../../configure/list.entity";
 import { CompanyApproval, UserAuthority } from "../../constants/model.const";
-import React, { useState } from "react";
+import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { _MainProps } from "src/configure/_props.entity";
 
@@ -100,7 +98,7 @@ const Header: NextPage<_MainProps> = (props) => {
         shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
         bgColor={`#fafafa`}
         wrap={`no-wrap`}
-        display={width <= 1185 ? `none` : ``}
+        display={width <= 1200 ? `none` : ``}
       >
         <Wrapper width={`auto`} al={`center`}>
           <Link href={UseLink.MAIN}>
