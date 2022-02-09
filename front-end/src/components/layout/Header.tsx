@@ -306,6 +306,7 @@ const Header: NextPage<_MainProps> = (props) => {
         padding={`0px 30px`}
         margin={`0px 0px 80px`}
         ju={`space-between`}
+        bgColor={`#fff`}
       >
         <MobileFixed
           width={`100%`}
