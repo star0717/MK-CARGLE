@@ -590,11 +590,15 @@ export const SmallButton = styled.button<any>`
   ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
   ${(props) => props.kindOf === `ghost` && `cursor : default;`}
   ${(props) => props.kindOf === `ghost` && `border : none;`}
+
+  ${(props) =>
+    props.kindOf === `fillDefault` && `background ${props.theme.basicTheme_C};`}
+  ${(props) =>
+    props.kindOf === `fillDefault` && `color ${props.theme.white_C};`}
+  ${(props) => props.kindOf === `fillDefault` && `border : none;`}
   
 
   & svg {
-    font-size: 25px;
-    color: #fff;
   }
 
   &:hover {
@@ -609,6 +613,13 @@ export const SmallButton = styled.button<any>`
     ${(props) =>
       props.kindOf === `cancle` && `background ${props.theme.red_C};`}
     ${(props) => props.kindOf === `cancle` && `color ${props.theme.white_C};`}
+
+    ${(props) =>
+      props.kindOf === `fillDefault` &&
+      `background ${props.theme.darkTheme_C};`}
+    ${(props) =>
+      props.kindOf === `fillDefault` && `color ${props.theme.white_C};`}
+    ${(props) => props.kindOf === `fillDefault` && `border : none;`}
   }
 `;
 
@@ -1805,6 +1816,7 @@ export const Checkbox = styled.label<any>`
   position: relative;
   padding-left: 35px;
   margin: ${(props) => props.margin || `10px 0px`};
+  width: ${(props) => props.width};
   cursor: pointer;
   font-size: 16px;
   line-height: 1.6;
