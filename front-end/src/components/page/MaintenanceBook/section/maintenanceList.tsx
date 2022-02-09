@@ -21,6 +21,7 @@ import {
   TableBody,
   CloseButton,
   CommonButton,
+  TextInput2,
 } from "src/components/styles/CommonComponents";
 import Modal from "react-modal";
 import { _MainProps } from "src/configure/_props.entity";
@@ -30,6 +31,7 @@ import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
 import { StepQuery, UseLink } from "src/configure/router.entity";
+import { GiEgyptianWalk } from "react-icons/gi";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -39,7 +41,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [searchMenu, setSearchMenu] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -85,8 +87,15 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
             </SearchInputWrapper>
           </form>
-          <SmallButton type="button" kindOf={`default`}>
+          <SmallButton
+            type="button"
+            kindOf={`default`}
+            onClick={() => {
+              setSearchMenu(!searchMenu);
+            }}
+          >
             상세검색
+            <GiEgyptianWalk />
           </SmallButton>
           <SmallButton type="button" kindOf={`default`}>
             선택삭제
@@ -101,6 +110,103 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
             +신규정비등록
           </SmallButton>
         </Wrapper>
+        {searchMenu === true && (
+          <Wrapper margin={`10px 0px 10px 0px`} width={`1200px`}>
+            <Wrapper dr={`row`}>
+              <text>기간</text>
+              <TextInput2
+                type="date"
+                // value={dayjs(userData.joinDate).format("YYYY-MM-DD")}
+                // {...register("joinDate", {
+                //   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                //     onInputUserHandler(e);
+                //   },
+                // })}
+                width={`500px`}
+              />
+              <text> ~ </text>
+              <TextInput2
+                type="date"
+                // value={dayjs(userData.joinDate).format("YYYY-MM-DD")}
+                // {...register("joinDate", {
+                //   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                //     onInputUserHandler(e);
+                //   },
+                // })}
+                width={`500px`}
+              />
+            </Wrapper>
+            <Wrapper dr={`row`}>
+              <text>정비상태</text>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                전체
+              </Checkbox>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                정비중
+              </Checkbox>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                정비완료
+              </Checkbox>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                출고완료
+              </Checkbox>
+            </Wrapper>
+            <Wrapper dr={`row`}>
+              <text>국토부</text>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                전체
+              </Checkbox>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                해당없음
+              </Checkbox>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                전송오류
+              </Checkbox>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                전송완료
+              </Checkbox>
+            </Wrapper>
+            <Wrapper dr={`row`}>
+              <text>구분</text>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                전체
+              </Checkbox>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                일반
+              </Checkbox>
+              <Checkbox>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+                보험
+              </Checkbox>
+            </Wrapper>
+            <Wrapper dr={`row`}>
+              <SmallButton type="button" kindOf={`default`}>
+                검 색
+              </SmallButton>
+            </Wrapper>
+          </Wrapper>
+        )}
         <Wrapper margin={`10px 0px 30px`}>
           <TableWrapper>
             <TableHead>
