@@ -78,79 +78,15 @@ const Header: NextPage<_MainProps> = (props) => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <HeaderWrapper
-      ref={ref}
-      shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
-      isFixed={true}
-      index={`9999`}
-      padding={`0px`}
-      margin={`0px 0px 80px`}
-    >
-      <Wrapper
-        height={`80px`}
-        ju={`space-between`}
-        al={`center`}
-        padding={
-          width < 1510 ? (width < 1080 ? `0px 20px` : `0px 50px`) : `0px 100px`
-        }
-        dr={`row`}
-        isFixed={true}
-        top={`0`}
-        left={`0`}
-        right={`0`}
+    <>
+      <HeaderWrapper
+        ref={ref}
         shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
-        bgColor={`#fafafa`}
-        wrap={`no-wrap`}
-        display={width <= 1185 ? `none` : ``}
+        isFixed={true}
+        index={`9999`}
+        padding={`0px`}
+        margin={`0px 0px 80px`}
       >
-<<<<<<< HEAD
-        <Wrapper width={`auto`} al={`center`}>
-          <Link href={UseLink.MAIN}>
-            <a>
-              <Image
-                src="/images/cargle.png"
-                alt="Cargle Logo"
-                width={width < 1450 ? `80px` : `100px`}
-              />
-            </a>
-          </Link>
-        </Wrapper>
-        {props.tokenValue &&
-          props.tokenValue.cApproval === CompanyApproval.DONE && (
-            <HeaderFixed
-              width={`auto`}
-              dr={`row`}
-              padding={width < 1450 ? `0px 50px` : `0px 100px`}
-            >
-              {mainMenu.map((menu) => {
-                return (
-                  <Wrapper
-                    key={menu.key}
-                    width={width < 1510 ? `140px` : `168px`}
-                  >
-                    <Text
-                      fontSize={width < 1510 ? `16px` : `18px`}
-                      fontWeight={`600`}
-                      padding={width < 1510 ? `5px 15px` : `5px 30px`}
-                    >
-                      <Link href={menu.link}>
-                        <a>{menu.menuName}</a>
-                      </Link>
-                    </Text>
-                  </Wrapper>
-                );
-              })}
-              <HeaderHover
-                ju={``}
-                al={`center`}
-                padding={
-                  width < 1510
-                    ? width < 1080
-                      ? `0px 10px`
-                      : `0px 10px`
-                    : `0px 20px`
-                }
-=======
         <Wrapper
           height={`80px`}
           ju={`space-between`}
@@ -186,78 +122,117 @@ const Header: NextPage<_MainProps> = (props) => {
             props.tokenValue.cApproval === CompanyApproval.DONE && (
               <HeaderFixed
                 width={`auto`}
->>>>>>> 05e7bdab680d47f318f48af72eb9bafd52f0203d
                 dr={`row`}
-                shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
-                bgColor={`#fafafa`}
+                padding={width < 1450 ? `0px 50px` : `0px 100px`}
               >
-                <Wrapper
-                  height={`80px`}
-                  al={`flex-start`}
+                {mainMenu.map((menu) => {
+                  return (
+                    <Wrapper
+                      key={menu.key}
+                      width={width < 1510 ? `140px` : `168px`}
+                    >
+                      <Text
+                        fontSize={width < 1510 ? `16px` : `18px`}
+                        fontWeight={`600`}
+                        padding={width < 1510 ? `5px 15px` : `5px 30px`}
+                      >
+                        <Link href={menu.link}>
+                          <a>{menu.menuName}</a>
+                        </Link>
+                      </Text>
+                    </Wrapper>
+                  );
+                })}
+                <HeaderHover
+                  ju={``}
+                  al={`center`}
                   padding={
                     width < 1510
                       ? width < 1080
-                        ? `0px 20px`
-                        : `0px 50px`
-                      : `0px 100px`
+                        ? `0px 10px`
+                        : `0px 10px`
+                      : `0px 20px`
                   }
                   dr={`row`}
+                  shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
                   bgColor={`#fafafa`}
                 >
-                  {/* 서브메뉴 빈 wrapper */}
-                  <Wrapper width={`auto`} al={`center`}>
-                    <a>
-                      <Image
-                        src="/images/cargle.png"
-                        alt="Cargle Logo"
-                        width={width < 1450 ? `80px` : `100px`}
-                        isTransparency={`true`}
-                      />
-                    </a>
-                  </Wrapper>
-                  {/* 서브메뉴 빈 wrapper 끝 */}
-
-                  {/* 서브메뉴 시작 */}
-                  {subMenu.map((menu, idx) => {
-                    return (
-                      <Wrapper
-                        key={idx}
-                        width={width < 1510 ? `140px` : `168px`}
-                      >
-                        {menu.map((sub) => {
-                          return (
-                            <HeaderText
-                              key={sub.key}
-                              cursor={`pointer`}
-                              fontSize={width < 1510 ? `14px` : `16px`}
-                              fontWeight={`400`}
-                              padding={width < 1510 ? `5px 15px` : `5px 30px`}
-                            >
-                              <Link href={sub.subMenuLink}>
-                                <a>{sub.subMenuName}</a>
-                              </Link>
-                            </HeaderText>
-                          );
-                        })}
-                      </Wrapper>
-                    );
-                  })}
-                  {/* 서브메뉴 끝 */}
-
-                  {/* 서브메뉴 빈 wrapper */}
                   <Wrapper
-                    width={`auto`}
+                    height={`80px`}
+                    al={`flex-start`}
                     padding={
                       width < 1510
                         ? width < 1080
-                          ? `0px 10px`
-                          : `0px 10px`
-                        : `0px 20px`
+                          ? `0px 20px`
+                          : `0px 50px`
+                        : `0px 100px`
                     }
                     dr={`row`}
-                    al={`flex-start`}
+                    bgColor={`#fafafa`}
                   >
-                    <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
+                    {/* 서브메뉴 빈 wrapper */}
+                    <Wrapper width={`auto`} al={`center`}>
+                      <a>
+                        <Image
+                          src="/images/cargle.png"
+                          alt="Cargle Logo"
+                          width={width < 1450 ? `80px` : `100px`}
+                          isTransparency={`true`}
+                        />
+                      </a>
+                    </Wrapper>
+                    {/* 서브메뉴 빈 wrapper 끝 */}
+
+                    {/* 서브메뉴 시작 */}
+                    {subMenu.map((menu, idx) => {
+                      return (
+                        <Wrapper
+                          key={idx}
+                          width={width < 1510 ? `140px` : `168px`}
+                        >
+                          {menu.map((sub) => {
+                            return (
+                              <HeaderText
+                                key={sub.key}
+                                cursor={`pointer`}
+                                fontSize={width < 1510 ? `14px` : `16px`}
+                                fontWeight={`400`}
+                                padding={width < 1510 ? `5px 15px` : `5px 30px`}
+                              >
+                                <Link href={sub.subMenuLink}>
+                                  <a>{sub.subMenuName}</a>
+                                </Link>
+                              </HeaderText>
+                            );
+                          })}
+                        </Wrapper>
+                      );
+                    })}
+                    {/* 서브메뉴 끝 */}
+
+                    {/* 서브메뉴 빈 wrapper */}
+                    <Wrapper
+                      width={`auto`}
+                      padding={
+                        width < 1510
+                          ? width < 1080
+                            ? `0px 10px`
+                            : `0px 10px`
+                          : `0px 20px`
+                      }
+                      dr={`row`}
+                      al={`flex-start`}
+                    >
+                      <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
+                        <Wrapper
+                          radius={`100px`}
+                          al={`center`}
+                          margin={`0px 10px`}
+                          width={`45px`}
+                          height={`45px`}
+                        ></Wrapper>
+                      </Wrapper>
+
                       <Wrapper
                         radius={`100px`}
                         al={`center`}
@@ -266,35 +241,30 @@ const Header: NextPage<_MainProps> = (props) => {
                         height={`45px`}
                       ></Wrapper>
                     </Wrapper>
-
-                    <Wrapper
-                      radius={`100px`}
-                      al={`center`}
-                      margin={`0px 10px`}
-                      width={`45px`}
-                      height={`45px`}
-                    ></Wrapper>
                   </Wrapper>
-                </Wrapper>
-              </HeaderHover>
-            </HeaderFixed>
-          )}
-        <Wrapper
-          width={`auto`}
-          padding={
-            width < 1510 ? (width < 1080 ? `0px 10px` : `0px 10px`) : `0px 20px`
-          }
-          dr={`row`}
-          al={`flex-start`}
-          wrap={`no-wrap`}
-        >
-          {props.tokenValue &&
-            props.tokenValue.cApproval === CompanyApproval.DONE && (
-              <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                <HeaderIconButton>
-                  <FaBell />
-                </HeaderIconButton>
-                {/* <HeaderIconAlarmWrapper>
+                </HeaderHover>
+              </HeaderFixed>
+            )}
+          <Wrapper
+            width={`auto`}
+            padding={
+              width < 1510
+                ? width < 1080
+                  ? `0px 10px`
+                  : `0px 10px`
+                : `0px 20px`
+            }
+            dr={`row`}
+            al={`flex-start`}
+            wrap={`no-wrap`}
+          >
+            {props.tokenValue &&
+              props.tokenValue.cApproval === CompanyApproval.DONE && (
+                <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
+                  <HeaderIconButton>
+                    <FaBell />
+                  </HeaderIconButton>
+                  {/* <HeaderIconAlarmWrapper>
                 <HeaderIconAlarm>
                   <Wrapper al={`flex-start`}>
                     <Text>나는 안읽은 알림이야.</Text>
@@ -316,58 +286,17 @@ const Header: NextPage<_MainProps> = (props) => {
                   </Wrapper>
                 </HeaderIconAlarm>
               </HeaderIconAlarmWrapper> */}
-              </Wrapper>
-            )}
-          {props.tokenValue &&
-            (props.tokenValue.cApproval === CompanyApproval.DONE ||
-              props.tokenValue.cApproval === CompanyApproval.ING) && (
-              <HeaderIconButton onClick={onSignOutHandler}>
-                <MdLogout />
-              </HeaderIconButton>
-            )}
-        </Wrapper>
-<<<<<<< HEAD
-      </Wrapper>
-      <MobileHeader>
-        <Wrapper
-          display={props.tokenValue ? `` : `none`}
-          width={`20%`}
-          al={`flex-start`}
-          onClick={() => {
-            props.setOpenMenu(!props.openMenu);
-          }}
-        >
-          <AiOutlineMenu />
-        </Wrapper>
-        <Wrapper width={props.tokenValue ? `60%` : `100%`}>
-          <Image src="/images/cargle.png" alt="Cargle Logo" width={`100px`} />
-        </Wrapper>
-        <Wrapper
-          display={props.tokenValue ? `` : `none`}
-          width={`20%`}
-          dr={`row`}
-          ju={`flex-end`}
-          wrap={`no-wrap`}
-        >
-          {props.tokenValue &&
-            props.tokenValue.cApproval === CompanyApproval.DONE && (
-              <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                <HeaderIconButton>
-                  <FaBell />
+                </Wrapper>
+              )}
+            {props.tokenValue &&
+              (props.tokenValue.cApproval === CompanyApproval.DONE ||
+                props.tokenValue.cApproval === CompanyApproval.ING) && (
+                <HeaderIconButton onClick={onSignOutHandler}>
+                  <MdLogout />
                 </HeaderIconButton>
-              </Wrapper>
-            )}
-          {props.tokenValue &&
-            (props.tokenValue.cApproval === CompanyApproval.DONE ||
-              props.tokenValue.cApproval === CompanyApproval.ING) && (
-              <HeaderIconButton onClick={onSignOutHandler}>
-                <MdLogout />
-              </HeaderIconButton>
-            )}
+              )}
+          </Wrapper>
         </Wrapper>
-      </MobileHeader>
-    </HeaderWrapper>
-=======
       </HeaderWrapper>
       <MobileHeader
         ref={ref}
@@ -422,7 +351,6 @@ const Header: NextPage<_MainProps> = (props) => {
         </MobileFixed>
       </MobileHeader>
     </>
->>>>>>> 05e7bdab680d47f318f48af72eb9bafd52f0203d
   );
 };
 

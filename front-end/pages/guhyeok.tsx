@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
   RsWrapper,
+  SmallButton,
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
 
@@ -29,7 +30,11 @@ const TestPage: NextPage<any> = (props) => {
   return (
     <BodyWrapper>
       <WholeWrapper>
-        <RsWrapper>구혁씨꺼</RsWrapper>
+        <RsWrapper>
+          <SmallButton type="button" kindOf={`default`}>
+            상세검색
+          </SmallButton>
+        </RsWrapper>
       </WholeWrapper>
     </BodyWrapper>
   );
