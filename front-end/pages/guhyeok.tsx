@@ -25,12 +25,14 @@ import { useRouter } from "next/router";
 import { BsSearch } from "react-icons/bs";
 import { GiEgyptianWalk } from "react-icons/gi";
 import { UseLink, StepQuery } from "src/configure/router.entity";
+import { useResizeDetector } from "react-resize-detector";
 
 const TestPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -46,8 +48,10 @@ const TestPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
+  const { width, height, ref } = useResizeDetector();
+  console.log("width: !!!", width);
   return (
-    <WholeWrapper>
+    <WholeWrapper ref={ref}>
       <RsWrapper>
         <CommonTitleWrapper>
           <CommonTitle>정비장부</CommonTitle>
