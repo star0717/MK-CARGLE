@@ -194,6 +194,37 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
                 </Combo>
               </Wrapper>
             </Wrapper>
+            <Wrapper dr={`row`}>
+              <Text>정비내역</Text>
+              <Wrapper dr={`row`}>
+                <Wrapper
+                  dr={`row`}
+                  ju={`flex-end`}
+                  height={`40px`}
+                  al={`center`}
+                >
+                  <Checkbox>
+                    부품조회
+                    <CheckInput type="checkbox" onChange={() => {}} />
+                    <CheckMark></CheckMark>
+                  </Checkbox>
+                </Wrapper>
+                <SmallButton
+                  type="button"
+                  kindOf={`default`}
+                  onClick={() => {}}
+                >
+                  부품조회
+                </SmallButton>
+                <SmallButton
+                  type="button"
+                  kindOf={`default`}
+                  onClick={() => {}}
+                >
+                  세트부품
+                </SmallButton>
+              </Wrapper>
+            </Wrapper>
             <Wrapper>
               <TableWrapper>
                 <TableHead>
@@ -207,13 +238,13 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
                 </TableHead>
                 <TableBody>
                   <TableRowLIST>
-                    <TableRow width={`15%`}>작업내용</TableRow>
-                    <TableRow width={`15%`}>국토부</TableRow>
-                    <TableRow width={`14%`}>구분</TableRow>
-                    <TableRow width={`15%`}>단가</TableRow>
-                    <TableRow width={`14%`}>수량</TableRow>
-                    <TableRow width={`14%`}>계</TableRow>
-                    <TableRow width={`8%`}>기술료</TableRow>
+                    <TableRow width={`15%`}>1</TableRow>
+                    <TableRow width={`15%`}>2</TableRow>
+                    <TableRow width={`14%`}>3</TableRow>
+                    <TableRow width={`15%`}>4</TableRow>
+                    <TableRow width={`14%`}>5</TableRow>
+                    <TableRow width={`14%`}>6</TableRow>
+                    <TableRow width={`8%`}>7</TableRow>
                   </TableRowLIST>
                 </TableBody>
               </TableWrapper>
