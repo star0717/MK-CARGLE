@@ -54,7 +54,7 @@ const MyPageWorker: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   return (
     <BodyWrapper>
-      <WorkerInfo {...myPageWorkerProps} />;
+      <WorkerInfo {...myPageWorkerProps} />
     </BodyWrapper>
   );
 };

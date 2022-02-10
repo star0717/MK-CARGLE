@@ -66,19 +66,15 @@ const Footer: NextPage = () => {
   const { width, height, ref } = useResizeDetector();
 
   return (
-    <FooterWrapper>
+    <FooterWrapper ref={ref}>
       <Wrapper
         isRelative={true}
         marginTop={`auto`}
-        height={`150px`}
+        height={width < 1200 ? `auto` : `150px`}
         bgColor={`#343a40`}
+        padding={width < 1200 ? `24px 0px` : ``}
       >
-        <Wrapper
-          padding={`10px 100px 0px`}
-          height={`1px`}
-          width={`100%`}
-        ></Wrapper>
-        <Wrapper dr={`row`} width={`1200px`} ju={`flex-start`}>
+        <Wrapper ju={`center`} dr={width < 1200 ? `column` : `row`}>
           <Image
             src="/images/footerLogo.png"
             alt="Cargle Logo"
@@ -89,11 +85,15 @@ const Footer: NextPage = () => {
           <Wrapper
             fontSize={`14px`}
             lineHeignt={`22px`}
-            padding={`10px 0px 20px 0px`}
+            padding={width < 1200 ? `10px 0px` : `10px 0px 20px 0px`}
             width={`auto`}
             color={`#c4c4c4`}
           >
-            <Wrapper dr={`row`} al={width < 956 ? `center` : `flex-start`}>
+            <Wrapper
+              dr={width < 1200 ? `column` : `row`}
+              al={width < 1200 ? `center` : `flex-start`}
+              display={width < 1200 ? `none` : ``}
+            >
               <Text>MK Co.,Ltd. 대전광역시 유성구 대학로 227 3층 &nbsp;</Text>
               <Text>Tel 1644-3486&nbsp;</Text>
               <Text>Fax +82-42-368-0224&nbsp;</Text>

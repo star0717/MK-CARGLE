@@ -267,9 +267,11 @@ export const BodyWrapper = styled.div<any>`
   align-items: center;
   justify-content: center;
   padding: ${(props) => props.padding || `80px 0px 150px`};
-
+  background-color: ${(props) => props.bgColor};
+  background: ${(props) => props.background};
+  background-image: ${(props) => props.bgImg};
   ${(props) =>
-    props.kindOf === `NoneTitleBodyWrapper` && `justify-content:center`}
+    props.kindOf === `NoneTitleBodyWrapper` && `justify-content:center`};
 `;
 
 // -----------Footer----------- //
