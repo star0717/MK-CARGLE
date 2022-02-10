@@ -1,10 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { prop, Ref } from '@typegoose/typegoose';
+import { prop } from '@typegoose/typegoose';
 import { Type } from 'class-transformer';
 import {
-  IsArray,
   IsBoolean,
-  IsDate,
   IsEnum,
   IsMongoId,
   IsNumber,
@@ -12,7 +10,6 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { ObjectId } from 'mongodb';
 import {
   MainCustomerType,
   MainPartsType,
@@ -26,43 +23,43 @@ export class Car {
   @ApiProperty({ description: '차명 (카렌스)' })
   @IsOptional()
   @IsString()
-  @prop()
-  name?: string;
+  @prop({ trim: true, required: true })
+  name: string;
 
-  @ApiProperty({ description: '트림 (프리스티지)' })
+  @ApiProperty({ description: '트림 (프리스티지)', required: false })
   @IsOptional()
   @IsString()
-  @prop()
+  @prop({ trim: true })
   model?: string;
 
-  @ApiProperty({ description: '연식' })
+  @ApiProperty({ description: '연식', required: false })
   @IsOptional()
   @IsString()
-  @prop()
+  @prop({ trim: true })
   age?: string;
 
-  @ApiProperty({ description: '차량 등록일' })
+  @ApiProperty({ description: '차량 등록일', required: false })
   @IsOptional()
   @IsString()
-  @prop()
+  @prop({ trim: true })
   regDate?: string;
 
-  @ApiProperty({ description: '차대번호' })
+  @ApiProperty({ description: '차대번호', required: false })
   @IsOptional()
   @IsString()
-  @prop({ required: true })
-  idNumber: string;
+  @prop({ trim: true })
+  idNumber?: string;
 
   @ApiProperty({ description: '차량 등록번호' })
   @IsOptional()
   @IsString()
-  @prop()
-  regNumber?: string;
+  @prop({ trim: true, required: true })
+  regNumber: string;
 
-  @ApiProperty({ description: '주행거리' })
+  @ApiProperty({ description: '주행거리', required: false })
   @IsOptional()
   @IsString()
-  @prop()
+  @prop({ trim: true })
   distance?: string;
 }
 
@@ -71,13 +68,13 @@ export class Customer {
   @ApiProperty({ description: '전화번호' })
   @IsOptional()
   @IsString()
-  @prop()
+  @prop({ trim: true, required: true })
   phoneNumber: string;
 
-  @ApiProperty({ description: '고객 오브젝트ID' })
+  @ApiProperty({ description: '고객 오브젝트ID', required: false })
   @IsOptional()
   @IsMongoId()
-  @prop()
+  @prop({ trim: true })
   _oID?: string;
 }
 
@@ -86,43 +83,50 @@ export class Work {
   @ApiProperty({ description: '작업내용/부품명. Part에서 복사' })
   @IsOptional()
   @IsString()
-  @prop({ required: true })
+  @prop({ trim: true, required: true })
   name: string;
 
-  @ApiProperty({ description: '부품코드. Part에서 복사' })
+  @ApiProperty({ description: '부품코드. Part에서 복사', required: false })
   @IsOptional()
   @IsString()
-  @prop()
+  @prop({ trim: true })
   code?: string;
 
-  @ApiProperty({ description: '국토교통부 정비내역 코드. Part에서 복사' })
+  @ApiProperty({
+    description: '국토교통부 정비내역 코드. Part에서 복사',
+    required: false,
+  })
   @IsOptional()
   @IsString()
-  @prop()
+  @prop({ trim: true })
   tsCode?: string;
 
-  @ApiProperty({ description: '부품 타입', default: MainPartsType.A })
+  @ApiProperty({
+    description: '부품 타입',
+    default: MainPartsType.A,
+    required: false,
+  })
   @IsOptional()
   @IsEnum(MainPartsType)
-  @prop()
-  type?: MainPartsType;
+  @prop({ trim: true })
+  type?: MainPartsType; // 작업일 경우 기입 불필요
 
   @ApiProperty({ description: '단가' })
   @IsOptional()
   @IsNumber()
-  @prop({ required: true })
+  @prop({ trim: true, required: true })
   price: number;
 
   @ApiProperty({ description: '수량' })
   @IsOptional()
   @IsNumber()
-  @prop({ required: true })
+  @prop({ trim: true, required: true })
   quantity: number;
 
   @ApiProperty({ description: '기술료' })
   @IsOptional()
   @IsNumber()
-  @prop({ required: true })
+  @prop({ trim: true, required: true })
   wage: number;
 }
 
@@ -197,25 +201,25 @@ export class Price {
 
 // 시간 정보
 export class Dates {
-  @ApiProperty({ description: '입고일' }) // 견적진행 클릭(DB 추가)
+  @ApiProperty({ description: '입고일', required: false }) // 견적진행 클릭(DB 추가)
   @IsOptional()
   @IsString()
   @prop()
   stored?: Date;
 
-  @ApiProperty({ description: '정비시작' }) // 정비 진행 클릭
+  @ApiProperty({ description: '정비시작', required: false }) // 정비 진행 클릭
   @IsOptional()
   @IsString()
   @prop()
   startMa?: Date;
 
-  @ApiProperty({ description: '정비완료' }) // 정비 완료 클릭
+  @ApiProperty({ description: '정비완료', required: false }) // 정비 완료 클릭
   @IsOptional()
   @IsString()
   @prop()
   endMa?: Date;
 
-  @ApiProperty({ description: '출고' }) // 실제 출고시(국토부 신고)
+  @ApiProperty({ description: '출고', required: false }) // 실제 출고시(국토부 신고)
   @IsOptional()
   @IsString()
   @prop()
@@ -224,14 +228,14 @@ export class Dates {
 
 // 정비내역서
 export class Maintenance extends BaseEntity {
-  @ApiProperty({ description: '문서번호(자동생성)' })
+  @ApiProperty({ description: '문서번호(자동생성)', required: false })
+  @prop({ trim: true, required: true }) // 자동생성
   docNum?: string;
 
-  @ApiProperty({ description: '작업자명. 작업을 시작한 사람' })
+  @ApiProperty({ description: '작업자명. 작업을 시작한 사람', required: false })
   @IsOptional()
   @IsString()
   @prop({
-    required: true,
     trim: true,
   })
   workerName?: string;
@@ -243,7 +247,6 @@ export class Maintenance extends BaseEntity {
   @IsOptional()
   @IsMongoId()
   @prop({
-    required: false,
     trim: true,
   })
   public _tsID?: string;
@@ -259,8 +262,9 @@ export class Maintenance extends BaseEntity {
   status: MainStatus;
 
   @ApiProperty({
-    description: '고객 타입',
+    description: '고객 타입(기본값으로 자동기입)',
     default: MainCustomerType.NORMAL,
+    required: false,
   })
   @IsOptional()
   @IsEnum(MainCustomerType)
@@ -268,41 +272,45 @@ export class Maintenance extends BaseEntity {
     enum: MainCustomerType,
     required: true,
     default: MainCustomerType.NORMAL,
-  })
+  }) // 자동 기입
   costomerType: MainCustomerType;
 
-  @ApiProperty({ description: '각종 시간 정보', type: Dates })
+  @ApiProperty({
+    description: '각종 시간 정보(자동생성)',
+    type: Dates,
+    required: false,
+  })
   @IsOptional()
   @ValidateNested()
   @Type(() => Dates)
-  @prop({ type: () => Dates, _id: false })
-  dates: Dates;
+  @prop({ required: true, type: () => Dates, _id: false }) // 자동생성
+  dates?: Dates;
 
   @ApiProperty({ description: '차량정보', type: Car })
   @IsOptional()
   @ValidateNested()
   @Type(() => Car)
-  @prop({ type: () => Car, _id: false })
+  @prop({ required: true, type: () => Car, _id: false })
   car: Car;
 
-  @ApiProperty({ description: '작업정보', type: [Work] })
+  @ApiProperty({ description: '작업정보', type: [Work], required: false })
   @IsOptional()
   @ValidateNested({ each: true }) // 배열일 경우 each 속성 추가
   @Type(() => Work)
   @prop({ type: () => Work, _id: false })
-  works: Work[];
+  works?: Work[];
 
-  @ApiProperty({ description: '결재정보', type: Price })
+  @ApiProperty({ description: '결재정보', type: Price, required: false })
   @IsOptional()
   @ValidateNested() // 배열일 경우 each 속성 추가
   @Type(() => Price)
   @prop({ type: () => Price, _id: false })
-  price: Price;
+  price?: Price;
 
   @ApiProperty({ description: '고객정보', type: Customer })
   @IsOptional()
   @ValidateNested()
   @Type(() => Customer)
-  @prop({ type: () => Customer, _id: false })
+  @prop({ required: true, type: () => Customer, _id: false })
   customer: Customer;
 }
