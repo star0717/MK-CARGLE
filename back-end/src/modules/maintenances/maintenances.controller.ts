@@ -1,3 +1,4 @@
+import { getStrMainStatus } from './../../constants/maintenance.const';
 import { FindParameters, DeleteResult } from 'src/models/base.entity';
 import { FindResult } from 'src/models/base.entity';
 import { AuthTokenInfo } from 'src/models/auth.entity';
@@ -23,10 +24,10 @@ import {
 import { Maintenance } from 'src/models/maintenance.entity';
 import { MaintenancesService } from './maintenances.service';
 import {
-  getStrMaintenanceCustomerType,
-  MaintenanceCustomerTypeList,
-  MaintenanceCustomerTypeList2,
-} from 'src/constants/model.const';
+  getStrMainCustomerType,
+  mainStatusList,
+  mainCustomerTypeList,
+} from 'src/constants/maintenance.const';
 
 @Controller('maintenances')
 @ApiTags('정비내역 API')
@@ -44,6 +45,7 @@ export class MaintenancesController {
     @Body() doc: Maintenance,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<Maintenance> {
+    console.log(doc);
     return await this.service.create(token, doc);
   }
 
@@ -59,14 +61,6 @@ export class MaintenancesController {
     @Query() fParams: FindParameters,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<FindResult<Maintenance>> {
-    console.log('첫번째');
-    console.log(MaintenanceCustomerTypeList.length);
-    console.log(MaintenanceCustomerTypeList[0]);
-    console.log(getStrMaintenanceCustomerType(MaintenanceCustomerTypeList[0]));
-    console.log('두번째');
-    console.log(MaintenanceCustomerTypeList2.length);
-    console.log(MaintenanceCustomerTypeList2[0]);
-    console.log(getStrMaintenanceCustomerType(MaintenanceCustomerTypeList2[0]));
     return await this.service.findByOptions(token, fParams);
   }
 
