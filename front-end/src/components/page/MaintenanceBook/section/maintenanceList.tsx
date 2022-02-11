@@ -452,11 +452,11 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     <TableRowLIST width={`15%`}>
                       {list.works.length > 1
                         ? `${list.works[0].name}외 ${list.works.length - 1}건`
-                        : list.works[0].name}{" "}
+                        : list.works[0].name}
                     </TableRowLIST>
                     <TableRowLIST width={`13%`}>{}</TableRowLIST>
                     <TableRowLIST width={`13%`}></TableRowLIST>
-                    <TableRowLIST width={`13%`}></TableRowLIST>
+                    <TableRowLIST width={`13%`}>{list.status}</TableRowLIST>
                   </TableRow>
                 ))
               ) : (
