@@ -89,7 +89,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  console.log(findResult);
+
   return (
     <BodyWrapper>
       {/* <MaintenenanceList {...maintenanceListProps} /> */}

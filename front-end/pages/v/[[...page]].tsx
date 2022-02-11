@@ -55,6 +55,7 @@ import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import NavbarMenu from "src/components/layout/NavbarMenu";
 import BlackWrapper from "src/components/layout/BlackWrapper";
+import { Maintenance } from "src/models/maintenance.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
