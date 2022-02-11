@@ -38,7 +38,7 @@ export class Car extends BaseEntity {
   @ApiProperty({ description: '차량 등록번호' })
   @IsOptional()
   @IsString()
-  @prop({ trim: true, required: true })
+  @prop({ trim: true, required: true, unique: true })
   regNumber: string;
 
   @ApiProperty({ description: '주행거리', required: false })

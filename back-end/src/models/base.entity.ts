@@ -7,7 +7,7 @@ import {
   getValidPageNumber,
   getValidTakeNumber,
   strToBoolean,
-} from 'src/constants/back-end.toolkit';
+} from 'src/lib/toolkit/back-end.toolkit';
 import { defTakeNum, maxTakeNum, minTakeNum } from 'src/constants/model.const';
 
 /**

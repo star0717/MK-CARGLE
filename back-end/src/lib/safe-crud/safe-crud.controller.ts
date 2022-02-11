@@ -135,7 +135,7 @@ export function SafeControllerFactory<T extends BaseEntity = BaseEntity>(
       summary: `[WORKER] id에 해당하는 ${bodyDto.name} 데이터 갱신`,
     })
     @ApiParam({ name: 'id', description: `해당 ${bodyDto.name}의 오브젝트 ID` })
-    @ApiBody({ description: `갱신된 ${bodyDto.name} 데이터`, type: bodyDto })
+    @ApiBody({ description: `갱신할 ${bodyDto.name} 데이터`, type: bodyDto })
     async findByIdAndUpdate(
       @Param('id') id: string,
       @Body() doc: T,
