@@ -27,7 +27,7 @@ import {
 } from "src/components/styles/CommonComponents";
 import Modal from "react-modal";
 import { _MainProps } from "src/configure/_props.entity";
-import { BsSearch } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
@@ -337,7 +337,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TableHeadLIST width={`13%`}>정비상태</TableHeadLIST>
             </TableHead>
             <TableBody>
-              <TableRow>
+              {/* <TableRow>
                 <TableRowLIST width={`5%`}>
                   <Checkbox kindOf={`TableCheckBox`}>
                     <CheckInput type="checkbox" />
@@ -411,63 +411,62 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   해당없음
                 </TableRowLIST>
                 <TableRowLIST width={`13%`}>정비중</TableRowLIST>
-              </TableRow>
+              </TableRow> */}
 
-              {/* {props.findResult.totalDocs > 0 ? (
-                  props.findResult.docs.map((list: Agency) => (
-                    <TableRow
-                      key={list._id}
-                      onClick={() => {
-                        setClickDoc(list);
-                        setModalOption("edit");
-                        setModalOpen(true);
-                      }}
+              {props.findResult.totalDocs > 0 ? (
+                props.findResult.docs.map((list: any) => (
+                  <TableRow
+                    key={list._id}
+                    // onClick={() => {
+                    //   setClickDoc(list);
+                    //   setModalOption("edit");
+                    //   setModalOpen(true);
+                    // }}
+                  >
+                    <TableRowLIST
+                      width={`5%`}
+                      onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                        e.stopPropagation()
+                      }
                     >
-                      <TableRowLIST
-                        width={`10%`}
-                        onClick={(e: React.MouseEvent<HTMLLIElement>) =>
-                          e.stopPropagation()
-                        }
-                      >
-                        <Checkbox kindOf={`TableCheckBox`}>
-                          <CheckInput
-                            type="checkbox"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => onCheckedElement(e.target.checked, list)}
-                            checked={
-                              checkedList.includes(list._id) ? true : false
-                            }
-                          />
-                          <CheckMark></CheckMark>
-                        </Checkbox>
-                      </TableRowLIST>
-                      <TableRowLIST width={`15%`}>{list.name}</TableRowLIST>
-                      <TableRowLIST width={`15%`}>{list.hpNum}</TableRowLIST>
-                      <TableRowLIST width={`22%`}>
-                        <ToolTipWrapper>
-                          <ToolTip>{list.address1}</ToolTip>
-                        </ToolTipWrapper>
-                      </TableRowLIST>
-                      <TableRowLIST width={`15%`}>{list.manager}</TableRowLIST>
-                      <TableRowLIST width={`23%`}>
-                        <ToolTipWrapper>
-                          <ToolTip>
-                            {list.memo}
-                            <ToolTipText>{list.memo}</ToolTipText>
-                          </ToolTip>
-                        </ToolTipWrapper>
-                      </TableRowLIST>
-                    </TableRow>
-                  ))
-                ) : (
-                  <Wrapper minHeight={`445px`}>
-                    <Text fontSize={`48px`} color={`#c4c4c4`}>
-                      <BsEmojiFrownFill />
-                    </Text>
-                    <Text color={`#c4c4c4`}>                    <GoPrimitiveDot />검색 결과가 없습니다.</Text>
-                  </Wrapper>
-                )} */}
+                      <Checkbox kindOf={`TableCheckBox`}>
+                        <CheckInput
+                          type="checkbox"
+                          // onChange={(
+                          //   e: React.ChangeEvent<HTMLInputElement>
+                          // ) => onCheckedElement(e.target.checked, list)}
+                          checked={
+                            checkedList.includes(list._id) ? true : false
+                          }
+                        />
+                        <CheckMark></CheckMark>
+                      </Checkbox>
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`}>{list.createdAt}</TableRowLIST>
+                    <TableRowLIST width={`15%`}>
+                      {list.car.regNumber}
+                    </TableRowLIST>
+                    <TableRowLIST width={`11%`}>
+                      {list.costomerType}
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`}>{list.works.name}</TableRowLIST>
+                    <TableRowLIST width={`13%`}>{}</TableRowLIST>
+                    <TableRowLIST width={`13%`}></TableRowLIST>
+                    <TableRowLIST width={`13%`}></TableRowLIST>
+                  </TableRow>
+                ))
+              ) : (
+                <Wrapper minHeight={`445px`}>
+                  <Text fontSize={`48px`} color={`#c4c4c4`}>
+                    <BsEmojiFrownFill />
+                  </Text>
+                  <Text color={`#c4c4c4`}>
+                    {" "}
+                    <GoPrimitiveDot />
+                    검색 결과가 없습니다.
+                  </Text>
+                </Wrapper>
+              )}
             </TableBody>
           </TableWrapper>
           <Wrapper dr={`row`}></Wrapper>

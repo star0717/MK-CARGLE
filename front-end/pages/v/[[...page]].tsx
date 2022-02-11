@@ -33,6 +33,7 @@ import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import {
   AdminApiPath,
   AgenciesApiPath,
+  MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
   SettingsApiPath,
@@ -317,6 +318,19 @@ export const getServerSideProps: GetServerSideProps = async (
             authConfig
           )
           .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
+        return successResult;
+      }
+
+      case UseLink.MAINTENANCE_BOOK: {
+        successResult.props.data = await axios
+          .get(
+            genApiPath(MaintenancesApiPath.maintenances, {
+              findParams: params,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<FindResult<any>, any>) => res.data);
         return successResult;
       }
 

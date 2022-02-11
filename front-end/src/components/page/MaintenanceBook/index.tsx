@@ -46,7 +46,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [findResult, setFindResult] = useState<FindResult<Agency>>(props.data);
+  const [findResult, setFindResult] = useState<FindResult<any>>(props.data);
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   /*********************************************************************
@@ -89,6 +89,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
+  console.log(findResult);
   return (
     <BodyWrapper>
       {/* <MaintenenanceList {...maintenanceListProps} /> */}
