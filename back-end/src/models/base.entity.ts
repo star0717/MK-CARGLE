@@ -27,11 +27,20 @@ export class BaseEntity extends TypegooseModule {
    * 데코레이터 주입 방법
    * 하단의 4종의 데코레이터를 용도에 맞게 사용
    * @ApiProperty(): Swagger를 통한 API 문서 생성용 주석 주입에 사용
+   *  - 필수가 아닐 경우 required: false 추가
    * @IsOptional(): 데이터 패치시 생략되어도 class-validator에 의해 exception이 발생되지 않도록 주입
    *                - 데이터 포스트시 필수 항목은 prop의 required 항목에서 설정
    *                - 사실상 모든 필드에 본 옵션을 주입해야 함
    * @IsEmail(): class-validator의 데이터 타입 검증을 위해 주입(해당하는 타입으로 주입)
    * @prop(): 스키마 옵션으로 사용
+   *  - 필수일 경우 , required: true 추가. 기본값은 false
+   *
+   * required 처리
+   * - 실제 key 선언에서 ? 처리
+   * - true: ApiProperty에 required:false 추가. 기본값은 false
+   * - false: ApiProperty에 required:false 추가. 기본값은 true
+   * - DTO로는 불필요하지만 스키마로는 필요하다면 ApiProperty에 required:false,
+   *   ApiProperty에 required:false로 설정
    */
 
   @ApiProperty({ description: '오브젝트 ID (자동 생성)', required: false })
