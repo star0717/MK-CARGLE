@@ -49,6 +49,11 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   const [searchMenu, setSearchMenu] = useState<boolean>(false);
   const [checkedList, setCheckedList] = useState([]);
 
+  /** 상세검색 checkBox state 관리 */
+  const [statusOne, setStatusOne] = useState<boolean>(false);
+  const [statusTwo, setStatusTwo] = useState<boolean>(false);
+  const [statusThree, setStatusThree] = useState<boolean>(false);
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -124,7 +129,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   </Text>
                 </Wrapper>
               </SearchInputWrapper>
-              <SmallButton
+              <Text
                 type="button"
                 width={`150px`}
                 fontSize={`16px`}
@@ -135,7 +140,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 }}
               >
                 상세검색
-              </SmallButton>
+              </Text>
             </Wrapper>
           </form>
         </Wrapper>
@@ -193,22 +198,39 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`0px 0px 0px 50px`}
               >
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusOne(!statusOne);
+                    }}
+                  />
                   <CheckMark></CheckMark>
                   전체
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusOne}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   정비중
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusOne}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   정비완료
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusOne}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   출고완료
                 </Checkbox>
@@ -224,22 +246,39 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`0px 0px 0px 50px`}
               >
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusTwo(!statusTwo);
+                    }}
+                  />
                   <CheckMark></CheckMark>
                   전체
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusTwo}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   해당없음
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusTwo}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   전송오류
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusTwo}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   전송완료
                 </Checkbox>
@@ -255,17 +294,30 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`0px 0px 0px 50px`}
               >
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusThree(!statusThree);
+                    }}
+                  />
                   <CheckMark></CheckMark>
                   전체
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   일반
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   보험
                 </Checkbox>
