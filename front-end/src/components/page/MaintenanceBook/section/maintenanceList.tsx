@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
 import {
   CommonSubTitle,
@@ -36,6 +36,7 @@ import { StepQuery, UseLink } from "src/configure/router.entity";
 import { GiEgyptianWalk } from "react-icons/gi";
 import { AiOutlineDown, AiTwotoneCheckCircle } from "react-icons/ai";
 import { GoPrimitiveDot } from "react-icons/go";
+import { Maintenance } from "src/models/maintenance.entity";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -46,10 +47,42 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [searchMenu, setSearchMenu] = useState<boolean>(false);
+  const [checkedList, setCheckedList] = useState([]);
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  // /**
+  //  * 전체 선택 기능
+  //  */
+  // const onCheckedAll = useCallback(
+  //   (checked) => {
+  //     if (checked) {
+  //       const checkedListArray: string[] = [];
+  //       props.findResult.docs.forEach((list: Maintenance) =>
+  //         checkedListArray.push(list._id)
+  //       );
+  //       setCheckedList(checkedListArray);
+  //     } else {
+  //       setCheckedList([]);
+  //     }
+  //   },
+  //   [props.findResult.docs]
+  // );
 
+  // /**
+  //  * 개별 선택 기능
+  //  */
+  // const onCheckedElement = useCallback(
+  //   (checked: boolean, list: Maintenance) => {
+  //     if (checked) {
+  //       setCheckedList([...checkedList, list._id]);
+  //     } else {
+  //       setCheckedList(checkedList.filter((el) => el !== list._id));
+  //     }
+  //   },
+  //   [checkedList]
+  // );
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -281,13 +314,13 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 <Checkbox kindOf={`TableCheckBox`}>
                   <CheckInput
                     type="checkbox"
-                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    //   onCheckedAll(e.target.checked);
-                    // }}
+                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    //   onCheckedAll(e.target.checked)
+                    // }
                     // checked={
                     //   checkedList.length === 0
                     //     ? false
-                    //     : checkedList.length === props.findResult.docs.length
+                    //     : checkedList.length === partList.length
                     //     ? true
                     //     : false
                     // }
