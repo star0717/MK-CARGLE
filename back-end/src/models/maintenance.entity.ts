@@ -19,7 +19,7 @@ import {
 import { BaseEntity } from './base.entity';
 
 // 정비내역서에 들어가 차량 정보
-export class Car {
+export class CarInfo {
   @ApiProperty({ description: '차명 (카렌스)' })
   @IsOptional()
   @IsString()
@@ -114,20 +114,20 @@ export class Work {
   @ApiProperty({ description: '단가' })
   @IsOptional()
   @IsNumber()
-  @prop({ trim: true, required: true })
-  price: number;
+  @prop({ required: true })
+  price: number = 0;
 
   @ApiProperty({ description: '수량' })
   @IsOptional()
   @IsNumber()
-  @prop({ trim: true, required: true })
-  quantity: number;
+  @prop({ required: true })
+  quantity: number = 1;
 
   @ApiProperty({ description: '기술료' })
   @IsOptional()
   @IsNumber()
-  @prop({ trim: true, required: true })
-  wage: number;
+  @prop({ required: true })
+  wage: number = 0;
 }
 
 // 가격 정보
@@ -136,67 +136,67 @@ export class Price {
   @IsOptional()
   @IsBoolean()
   @prop({ required: true, default: true })
-  isIncluded: boolean;
+  isIncluded: boolean = true;
 
   @ApiProperty({ description: '부품계' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  partsSum: number;
+  partsSum: number = 0;
 
   @ApiProperty({ description: '기술료계' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  wageSum: number;
+  wageSum: number = 0;
 
   @ApiProperty({ description: '합계' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  sum: number;
+  sum: number = 0;
 
   @ApiProperty({ description: '할인' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  discount: number;
+  discount: number = 0;
 
   @ApiProperty({ description: '부가세' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  vat: number;
+  vat: number = 0;
 
   @ApiProperty({ description: '총계' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  total: number;
+  total: number = 0;
 
   @ApiProperty({ description: '현금' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  cash: number;
+  cash: number = 0;
 
   @ApiProperty({ description: '카드' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  credit: number;
+  credit: number = 0;
 
   @ApiProperty({ description: '보험' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  insurance: number;
+  insurance: number = 0;
 
   @ApiProperty({ description: '잔액(외상)' })
   @IsOptional()
   @IsNumber()
   @prop({ required: true })
-  balance: number;
+  balance: number = 0;
 }
 
 // 시간 정보
@@ -286,12 +286,12 @@ export class Maintenance extends BaseEntity {
   @prop({ required: true, type: () => Dates, _id: false }) // 자동생성
   dates?: Dates;
 
-  @ApiProperty({ description: '차량정보', type: Car })
+  @ApiProperty({ description: '차량정보', type: CarInfo })
   @IsOptional()
   @ValidateNested()
-  @Type(() => Car)
-  @prop({ required: true, type: () => Car, _id: false })
-  car: Car;
+  @Type(() => CarInfo)
+  @prop({ required: true, type: () => CarInfo, _id: false })
+  car: CarInfo;
 
   @ApiProperty({ description: '작업정보', type: [Work], required: false })
   @IsOptional()
