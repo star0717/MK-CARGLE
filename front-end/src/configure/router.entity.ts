@@ -43,6 +43,7 @@ export const Step = {
   SECOND: "2",
   THIRD: "3",
   FOURTH: "4",
+  FIFTH: "5",
 };
 
 /**
@@ -53,6 +54,7 @@ export const StepQuery = {
   SECOND: "?step=2",
   THIRD: "?step=3",
   FOURTH: "?step=4",
+  FIFTH: "?step=5",
 };
 
 /**
