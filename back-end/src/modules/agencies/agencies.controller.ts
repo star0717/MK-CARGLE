@@ -33,7 +33,7 @@ export class AgenciesController {
   constructor(private readonly service: AgenciesService) {}
 
   @Post()
-  @ApiOperation({ summary: `[WORKER] 1새로운 Agency 데이터 추가` })
+  @ApiOperation({ summary: `[WORKER] 새로운 Agency 데이터 추가` })
   @ApiBody({ description: `추가할 Agency 데이터`, type: Agency })
   @ApiCreatedResponse({
     description: `추가된 Agency 데이터`,
