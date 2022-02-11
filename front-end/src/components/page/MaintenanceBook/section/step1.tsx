@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 import {
   Checkbox,
@@ -44,7 +44,7 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  console.log(props.filterValue);
+  const [showCar, setShowCar] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
