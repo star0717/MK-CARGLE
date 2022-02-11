@@ -37,7 +37,7 @@ export class BaseEntity extends TypegooseModule {
    *
    * required 처리
    * - 실제 key 선언에서 ? 처리
-   * - true: ApiProperty에 required:false 추가. 기본값은 false
+   * - true: prop에 required:true 추가. 기본값은 false
    * - false: ApiProperty에 required:false 추가. 기본값은 true
    * - DTO로는 불필요하지만 스키마로는 필요하다면 ApiProperty에 required:false,
    *   ApiProperty에 required:false로 설정

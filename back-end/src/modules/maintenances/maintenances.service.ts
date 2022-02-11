@@ -1,3 +1,4 @@
+import { AuthTokenInfo } from './../../models/auth.entity';
 import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
@@ -7,18 +8,23 @@ import {
 } from 'src/constants/back-end.toolkit';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
-import { FindResult } from 'src/models/base.entity';
-import { Maintenance } from 'src/models/maintenance.entity';
-import { Part } from 'src/models/part.entity';
+import { Car } from 'src/models/car.entity';
+import {
+  CarInfo,
+  Dates,
+  Maintenance,
+  Price,
+} from 'src/models/maintenance.entity';
+import { CarsService } from '../cars/cars.service';
+import { MainCustomerType, MainStatus } from 'src/constants/maintenance.const';
 
 @Injectable()
 export class MaintenancesService extends SafeService<Maintenance> {
-  private allParts: FindResult<Part>;
-
   constructor(
     @InjectModel(Maintenance)
     readonly model: ReturnModelType<typeof Maintenance>,
     readonly commonService: CommonService,
+    readonly carsService: CarsService,
   ) {
     super(model, commonService);
     this.genDocNumber();
@@ -47,5 +53,39 @@ export class MaintenancesService extends SafeService<Maintenance> {
     console.log(docNum);
 
     return docNum;
+  }
+
+  async findCarByRegNumber(id: string): Promise<CarInfo> {
+    const car: Car = await this.carsService.findByRegNumber(id);
+    if (!car) return null;
+    const carInfo: CarInfo = {
+      name: car.name,
+      regNumber: car.regNumber,
+    };
+    if (car.model) carInfo.model = car.model;
+    if (car.age) carInfo.age = car.age;
+    if (car.regDate) carInfo.regDate = car.regDate;
+    if (car.idNumber) carInfo.idNumber = car.idNumber;
+
+    return carInfo;
+  }
+
+  async storeCar(token: AuthTokenInfo, doc: Maintenance): Promise<Maintenance> {
+    // console.log('오리지날', doc);
+
+    let mt: Maintenance = new Maintenance();
+    mt.docNum = await this.genDocNumber();
+    mt.status = MainStatus.STORED;
+    mt.costomerType = MainCustomerType.NORMAL;
+    const mtDates: Dates = {
+      stored: new Date(Date.now()),
+    };
+    mt.dates = mtDates;
+    mt.car = doc.car;
+    mt.customer = doc.customer;
+
+    console.log(mt);
+
+    return await this.create(token, mt);
   }
 }
