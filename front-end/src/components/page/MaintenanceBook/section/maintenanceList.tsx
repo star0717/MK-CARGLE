@@ -337,7 +337,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TableHeadLIST width={`13%`}>정비상태</TableHeadLIST>
             </TableHead>
             <TableBody>
-              {/* <TableRow>
+              <TableRow>
                 <TableRowLIST width={`5%`}>
                   <Checkbox kindOf={`TableCheckBox`}>
                     <CheckInput type="checkbox" />
@@ -411,9 +411,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   해당없음
                 </TableRowLIST>
                 <TableRowLIST width={`13%`}>정비중</TableRowLIST>
-              </TableRow> */}
+              </TableRow>
 
-              {props.findResult.totalDocs > 0 ? (
+              {/* {props.findResult.totalDocs > 0 ? (
                 props.findResult.docs.map((list: any) => (
                   <TableRow
                     key={list._id}
@@ -470,7 +470,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     검색 결과가 없습니다.
                   </Text>
                 </Wrapper>
-              )}
+              )} */}
             </TableBody>
           </TableWrapper>
           <Wrapper dr={`row`}></Wrapper>
