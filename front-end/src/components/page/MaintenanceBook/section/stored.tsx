@@ -31,22 +31,25 @@ import {
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import {
+  AiFillAliwangwang,
+  AiFillCar,
+  AiFillCheckCircle,
   AiFillCloseCircle,
-  AiOutlineFileText,
-  AiOutlineUser,
+  AiFillFlag,
+  AiTwotoneSetting,
 } from "react-icons/ai";
-import { GoCheck } from "react-icons/go";
-import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
-import { BsChevronDoubleUp, BsPencilSquare, BsSearch } from "react-icons/bs";
+import { BsChevronDoubleUp, BsSearch } from "react-icons/bs";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
-import { faCar } from "@fortawesome/free-solid-svg-icons";
 import { FaCar } from "react-icons/fa";
-import { Car } from "src/models/car.entity";
 import { useDispatch } from "react-redux";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
-import { _aGetMaintenancesCarInfo } from "store/action/user.action";
-import { _iGetMaintenancesCarInfo } from "store/interfaces";
+import {
+  _aGetMaintenancesCarInfo,
+  _aPostMaintenancesStore,
+} from "store/action/user.action";
+import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
 import { MainStatus } from "src/constants/maintenance.const";
+import { CarInfo, Maintenance } from "src/models/maintenance.entity";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -67,7 +70,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [searchCarText, setSearchCarText] = useState<string>("");
-  const [carInfo, setCarInfo] = useState<Partial<Car>>({
+  const [carInfo, setCarInfo] = useState<CarInfo>({
     name: "",
     regNumber: "",
     distance: "",
@@ -92,10 +95,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * 차량 조회 handler
    * @param data
    */
-  const onSearchCarHandler: SubmitHandler<Partial<Car>> = (data) => {
+  const onSearchCarHandler: SubmitHandler<Partial<CarInfo>> = (data) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
-        console.log(res);
         setCarInfo(res.payload);
         setShowCar(true);
       },
@@ -115,9 +117,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     setValue("searchCarText", "");
   };
 
-  const onCarStoredHandler: SubmitHandler<Partial<Car>> = (data) => {
-    console.log("안뇽");
-    // router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
+  const onCarStoredHandler: SubmitHandler<Partial<Maintenance>> = (data) => {
+    const MaintenanceData: Partial<Maintenance> = {
+      car: { ...carInfo, regNumber: searchCarText },
+      customer: cusInfo,
+    };
+    dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
+      (res: _iMaintenances) => {
+        if (!res.payload) return alert("차량 입고에 실패했습니다.");
+        router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
+      },
+      (err) => {
+        alert("차량 입고에 실패했습니다.");
+      }
+    );
   };
 
   /*********************************************************************
@@ -134,11 +147,13 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           {/* <CommonTitle>
             차량선택 후 정비진행 버튼 클릭 시 정비가 진행됩니다.
           </CommonTitle> */}
-          <CommonSubTitle>차량선택 후 차량입고를 해주세요</CommonSubTitle>
+          <CommonSubTitle color={`#314FA5`} kindOf={`sub`}>
+            차량선택 후 차량입고를 해주세요
+          </CommonSubTitle>
           <JoinStepBarWrapper>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`progress`}>
-                <AiOutlineFileText />
+                <AiFillCheckCircle />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량선택
@@ -147,7 +162,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`before`}>
-                <AiOutlineFileText />
+                <AiFillCar />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량입고
@@ -155,7 +170,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>{<AiOutlineUser />}</JoinStepBar>
+              <JoinStepBar kindOf={`before`}>
+                <AiTwotoneSetting />
+              </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>
@@ -163,7 +180,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <JoinStepBar kindOf={"line2"}></JoinStepBar>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`before`}>
-                <MdOutlineBusinessCenter />
+                <AiFillAliwangwang />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비완료
@@ -172,7 +189,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`before`}>
-                <MdOutlineUploadFile />
+                <AiFillFlag />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 출고완료
@@ -186,7 +203,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           ju={`space-between`}
           al={`flex-start`}
         >
-          <Wrapper width={`35%`}>
+          <Wrapper width={`30%`}>
             {showCar ? (
               <Wrapper dr={`row`} fontSize={`24px`}>
                 <Text fontSize={`24px`}>{searchCarText}</Text>
@@ -247,18 +264,18 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 )}
               </form>
             )}
-            <Wrapper width={`35%`}>
+            <Wrapper width={`100%`}>
               {showCar ? (
-                <form
-                  id="carInfoForm"
-                  onSubmit={handleSubmit(onCarStoredHandler)}
-                >
-                  <Wrapper>
-                    <Wrapper dr={`row`}>
+                <Wrapper>
+                  <form
+                    id="carInfoForm"
+                    onSubmit={handleSubmit(onCarStoredHandler)}
+                  >
+                    <Wrapper dr={`row`} ju={`space-between`}>
                       <Text fontSize={`14px`}>주행거리</Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
+                        width={`50%`}
                         value={carInfo.distance}
                         {...register("distance", {
                           onChange: (
@@ -290,11 +307,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         {errors.distance.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
+                    <Wrapper dr={`row`} ju={`space-between`}>
                       <Text fontSize={`14px`}>고객명</Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
+                        width={`50%`}
                         value={cusInfo.customerName}
                         {...register("customerName", {
                           onChange: (
@@ -308,11 +325,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
+                    <Wrapper dr={`row`} ju={`space-between`}>
                       <Text fontSize={`14px`}>전화번호</Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
+                        width={`50%`}
                         value={cusInfo.phoneNumber}
                         {...register("phoneNumber", {
                           onChange: (
@@ -347,11 +364,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         {errors.phoneNumber.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
+                    <Wrapper dr={`row`} ju={`space-between`}>
                       <Text fontSize={`14px`}>차량명</Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
+                        width={`50%`}
                         value={carInfo.name}
                         {...register("name", {
                           onChange: (
@@ -378,11 +395,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         {errors.name.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
+                    <Wrapper dr={`row`} ju={`space-between`}>
                       <Text fontSize={`14px`}>모델명</Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
+                        width={`50%`}
                         value={carInfo.model}
                         {...register("model", {
                           onChange: (
@@ -393,11 +410,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
+                    <Wrapper dr={`row`} ju={`space-between`}>
                       <Text fontSize={`14px`}>연식</Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
+                        width={`50%`}
                         value={carInfo.age}
                         {...register("age", {
                           onChange: (
@@ -408,11 +425,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
+                    <Wrapper dr={`row`} ju={`space-between`}>
                       <Text fontSize={`14px`}>차대번호</Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
+                        width={`50%`}
                         value={carInfo.idNumber}
                         {...register("idNumber", {
                           onChange: (
@@ -423,11 +440,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
+                    <Wrapper dr={`row`} ju={`space-between`}>
                       <Text fontSize={`14px`}>등록일자</Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
+                        width={`50%`}
                         value={carInfo.regDate}
                         {...register("regDate", {
                           onChange: (
@@ -438,8 +455,23 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         })}
                       />
                     </Wrapper>
+                  </form>
+                  <Wrapper>
+                    <Wrapper dr={`row`}>
+                      <SmallButton type="button" kindOf={`default`}>
+                        정비요청사항
+                      </SmallButton>
+                      <SmallButton type="button" kindOf={`default`}>
+                        차량정보공유
+                      </SmallButton>
+                    </Wrapper>
+                    <Wrapper dr={`row`}>
+                      <SmallButton type="button" kindOf={`default`}>
+                        정비사진확인
+                      </SmallButton>
+                    </Wrapper>
                   </Wrapper>
-                </form>
+                </Wrapper>
               ) : (
                 <Wrapper>
                   <BsChevronDoubleUp />
@@ -451,7 +483,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
           </Wrapper>
 
-          <Wrapper width={`65%`}>
+          <Wrapper width={`70%`}>
             <Wrapper dr={`row`} ju={`flex-end`}>
               <SmallButton
                 type="button"
@@ -465,28 +497,28 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>정비기간</Text>
-              <TextInput2 type="date" />
+              <TextInput2 type="date" disabled />
               <Text>~</Text>
-              <TextInput2 type="date" />
+              <TextInput2 type="date" disabled />
               <Text>차량출고일</Text>
-              <TextInput2 type="date" />
+              <TextInput2 type="date" disabled />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>정비책임자</Text>
-              <TextInput2 type="text" />
+              <TextInput2 type="text" disabled />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Wrapper dr={`row`}>
                 <Text>정비구분</Text>
-                <Combo>
+                <Combo disabled>
                   <option value="1">일반</option>
                 </Combo>
-                <TextInput2 type="text" />
-                <TextInput2 type="text" />
+                <TextInput2 type="text" disabled />
+                <TextInput2 type="text" disabled />
               </Wrapper>
               <Wrapper dr={`row`}>
                 <Text>추가정비동의</Text>
-                <Combo>
+                <Combo disabled>
                   <option value="1">동의</option>
                 </Combo>
               </Wrapper>
@@ -501,8 +533,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   al={`center`}
                 >
                   <Checkbox>
-                    부품조회
-                    <CheckInput type="checkbox" onChange={() => {}} />
+                    부가세포함
+                    <CheckInput type="checkbox" disabled />
                     <CheckMark></CheckMark>
                   </Checkbox>
                 </Wrapper>
@@ -533,7 +565,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
               <TableBody>
-                <TableRowLIST>
+                {/* <TableRowLIST>
                   <TableRow width={`15%`}>1</TableRow>
                   <TableRow width={`15%`}>2</TableRow>
                   <TableRow width={`14%`}>3</TableRow>
@@ -541,9 +573,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   <TableRow width={`14%`}>5</TableRow>
                   <TableRow width={`14%`}>6</TableRow>
                   <TableRow width={`8%`}>7</TableRow>
-                </TableRowLIST>
+                </TableRowLIST> */}
               </TableBody>
             </TableWrapper>
+            <Wrapper dr={`row`} ju={`flex-end`} al={`center`}>
+              <Text>부품계 : 0</Text>
+              <Text margin={`0px 5px`}>|</Text>
+              <Text>기술료계 : 0</Text>
+              <Text margin={`0px 5px`}>|</Text>
+              <Text>합계 : 0</Text>
+              <Text margin={`0px 5px`}>|</Text>
+              <Text>부가세 : 0</Text>
+              <Text margin={`0px 5px`}>|</Text>
+              <Text fontSize={`24px`}>총계 0</Text>
+            </Wrapper>
             <Wrapper>
               <SmallButton
                 form="carInfoForm"

@@ -43,6 +43,7 @@ import {
   _iPartssetsOne,
   _iPartssets,
   _iGetMaintenancesCarInfo,
+  _iMaintenances,
 } from "../interfaces";
 
 import {
@@ -58,6 +59,7 @@ import { Part } from "../../src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Car } from "src/models/car.entity";
+import { Maintenance } from "src/models/maintenance.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1005,6 +1007,11 @@ export async function _aPostAgenciesDeleteMany(ids: string[]) {
   return result;
 }
 
+/**
+ * 차량 정보 불러오기
+ * @param id
+ * @returns
+ */
 export async function _aGetMaintenancesCarInfo(id: string) {
   const req: Car = await axios
     .get(genApiPath(MaintenancesApiPath.carinfo, { id: id }))
@@ -1013,6 +1020,22 @@ export async function _aGetMaintenancesCarInfo(id: string) {
     });
 
   const result: _iGetMaintenancesCarInfo = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+export async function _aPostMaintenancesStore(data: Partial<Maintenance>) {
+  const req: Maintenance = await axios
+    .post(genApiPath(MaintenancesApiPath.store), data)
+    .then(
+      (res: AxiosResponse<Maintenance, Partial<Maintenance>>): Maintenance => {
+        return res.data;
+      }
+    );
+
+  const result: _iMaintenances = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

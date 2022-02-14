@@ -98,6 +98,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     },
     [checkedList]
   );
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -486,55 +487,61 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               </TableRow> */}
 
               {props.findResult.totalDocs > 0 ? (
-                maintenanceList.map((list: any) => (
-                  <TableRow
-                    key={list._id}
-                    onClick={() => {
-                      router.push(
-                        `${UseLink.MAINTENANCE_BOOK}?id=${list._id}&step=${list.status}`
-                      );
-                    }}
-                  >
-                    <TableRowLIST
-                      width={`5%`}
-                      onClick={(e: React.MouseEvent<HTMLLIElement>) =>
-                        e.stopPropagation()
-                      }
+                maintenanceList.map((list: any) => {
+                  return (
+                    <TableRow
+                      key={list._id}
+                      onClick={() => {
+                        router.push(
+                          `${UseLink.MAINTENANCE_BOOK}?id=${list._id}&step=${list.status}`
+                        );
+                      }}
                     >
-                      <Checkbox kindOf={`TableCheckBox`}>
-                        <CheckInput
-                          type="checkbox"
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            onCheckedElement(e.target.checked, list)
-                          }
-                          checked={
-                            checkedList.includes(list._id) ? true : false
-                          }
-                        />
-                        <CheckMark></CheckMark>
-                      </Checkbox>
-                    </TableRowLIST>
-                    <TableRowLIST width={`15%`}>
-                      {dayjs(list.createdAt).format("YYYY-MM-DD")}
-                    </TableRowLIST>
-                    <TableRowLIST width={`15%`}>
-                      {list.car.regNumber}
-                    </TableRowLIST>
-                    <TableRowLIST width={`11%`}>
-                      {getStrMainCustomerType(list.costomerType)}
-                    </TableRowLIST>
-                    <TableRowLIST width={`15%`}>
-                      {list.works.length > 1
-                        ? `${list.works[0].name}외 ${list.works.length - 1}건`
-                        : list.works[0].name}
-                    </TableRowLIST>
-                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
-                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
-                    <TableRowLIST width={`13%`}>
-                      {getStrMainStatus(list.status)}
-                    </TableRowLIST>
-                  </TableRow>
-                ))
+                      <TableRowLIST
+                        width={`5%`}
+                        onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                          e.stopPropagation()
+                        }
+                      >
+                        <Checkbox kindOf={`TableCheckBox`}>
+                          <CheckInput
+                            type="checkbox"
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => onCheckedElement(e.target.checked, list)}
+                            checked={
+                              checkedList.includes(list._id) ? true : false
+                            }
+                          />
+                          <CheckMark></CheckMark>
+                        </Checkbox>
+                      </TableRowLIST>
+                      <TableRowLIST width={`15%`}>
+                        {dayjs(list.createdAt).format("YYYY-MM-DD")}
+                      </TableRowLIST>
+                      <TableRowLIST width={`15%`}>
+                        {list.car.regNumber}
+                      </TableRowLIST>
+                      <TableRowLIST width={`11%`}>
+                        {getStrMainCustomerType(list.costomerType)}
+                      </TableRowLIST>
+                      <TableRowLIST width={`15%`}>
+                        {list.works.length === 0
+                          ? "-"
+                          : list.works.length === 1
+                          ? list.works[0].name
+                          : `${list.works[0].name}외 ${
+                              list.works.length - 1
+                            }건`}
+                      </TableRowLIST>
+                      <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                      <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                      <TableRowLIST width={`13%`}>
+                        {getStrMainStatus(list.status)}
+                      </TableRowLIST>
+                    </TableRow>
+                  );
+                })
               ) : (
                 <Wrapper minHeight={`445px`}>
                   <Text fontSize={`48px`} color={`#c4c4c4`}>
