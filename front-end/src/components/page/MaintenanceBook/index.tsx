@@ -13,24 +13,25 @@ import PayComplete from "./section/step2";
 import MaintenanceIng from "./section/step3";
 import MaintenanceComplete from "./section/step4";
 import ReleaseComplete from "./section/step5";
+import { MainStatus } from "src/constants/maintenance.const";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
 
   switch (router.query.step) {
-    case "stored":
+    case MainStatus.STORED:
       return <SelectCar {...props} />;
 
-    case "ing":
+    case MainStatus.ING:
       return <PayComplete />;
 
-    case "done":
+    case MainStatus.DONE:
       return <MaintenanceIng />;
 
-    case "paid":
+    case MainStatus.PAID:
       return <MaintenanceComplete />;
 
-    case "released":
+    case MainStatus.RELEASED:
       return <ReleaseComplete />;
 
     default:
