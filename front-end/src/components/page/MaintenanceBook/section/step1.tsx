@@ -36,6 +36,7 @@ import { BsChevronDoubleUp, BsPencilSquare, BsSearch } from "react-icons/bs";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { faCar } from "@fortawesome/free-solid-svg-icons";
 import { FaCar } from "react-icons/fa";
+import { Car } from "src/models/car.entity";
 
 const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -45,6 +46,10 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [carInfo, setCarInfo] = useState<Partial<Car>>({
+    name: "",
+    regNumber: "",
+  });
   const [showCar, setShowCar] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
@@ -136,10 +141,11 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
                     padding={`0px 5px 0px 5px`}
                     placeholder="차량번호를 입력하세요."
                     type="text"
-                    value={props.filterValue}
+                    value={carInfo.regNumber}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      props.setFilterValue(e.target.value);
+                      setCarInfo({ ...carInfo, regNumber: e.target.value });
                     }}
+                    required
                   />
                 </Wrapper>
                 <Wrapper width={`36px`} height={`46px`}>
