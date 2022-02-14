@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
+import dayjs from "dayjs";
 import {
   CommonSubTitle,
   CommonTitle,
@@ -389,7 +390,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TableHeadLIST width={`13%`}>정비상태</TableHeadLIST>
             </TableHead>
             <TableBody>
-              <TableRow>
+              {/* <TableRow>
                 <TableRowLIST width={`5%`}>
                   <Checkbox kindOf={`TableCheckBox`}>
                     <CheckInput type="checkbox" />
@@ -463,9 +464,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   해당없음
                 </TableRowLIST>
                 <TableRowLIST width={`13%`}>정비중</TableRowLIST>
-              </TableRow>
+              </TableRow> */}
 
-              {/* {props.findResult.totalDocs > 0 ? (
+              {props.findResult.totalDocs > 0 ? (
                 props.findResult.docs.map((list: any) => (
                   <TableRow
                     key={list._id}
@@ -494,7 +495,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                         <CheckMark></CheckMark>
                       </Checkbox>
                     </TableRowLIST>
-                    <TableRowLIST width={`15%`}>{list.createdAt}</TableRowLIST>
+                    <TableRowLIST width={`15%`}>
+                      {dayjs(list.createdAt).format("YYYY-MM-DD")}
+                    </TableRowLIST>
                     <TableRowLIST width={`15%`}>
                       {list.car.regNumber}
                     </TableRowLIST>
@@ -506,8 +509,8 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                         ? `${list.works[0].name}외 ${list.works.length - 1}건`
                         : list.works[0].name}
                     </TableRowLIST>
-                    <TableRowLIST width={`13%`}>{}</TableRowLIST>
-                    <TableRowLIST width={`13%`}></TableRowLIST>
+                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
                     <TableRowLIST width={`13%`}>{list.status}</TableRowLIST>
                   </TableRow>
                 ))
@@ -522,7 +525,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     검색 결과가 없습니다.
                   </Text>
                 </Wrapper>
-              )} */}
+              )}
             </TableBody>
           </TableWrapper>
           <Wrapper dr={`row`}></Wrapper>
