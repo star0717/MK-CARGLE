@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
+import dayjs from "dayjs";
 import {
   CommonSubTitle,
   CommonTitle,
@@ -32,11 +33,16 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
-import { StepQuery, UseLink } from "src/configure/router.entity";
+import { UseLink } from "src/configure/router.entity";
 import { GiEgyptianWalk } from "react-icons/gi";
 import { AiOutlineDown, AiTwotoneCheckCircle } from "react-icons/ai";
 import { GoPrimitiveDot } from "react-icons/go";
 import { Maintenance } from "src/models/maintenance.entity";
+import {
+  getStrMainCustomerType,
+  getStrMainStatus,
+  MainStatus,
+} from "src/constants/maintenance.const";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -48,8 +54,12 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const [searchMenu, setSearchMenu] = useState<boolean>(false);
   const [checkedList, setCheckedList] = useState([]);
+  const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
+  const [clickDoc, setClickDoc] = useState();
 
   /** 상세검색 checkBox state 관리 */
+  // const [searchFrom, setSearchFrom] = useState<Date>();
+  // const [searchTo, setSearchTo] = useState<Date>();
   const [statusOne, setStatusOne] = useState<boolean>(false);
   const [statusTwo, setStatusTwo] = useState<boolean>(false);
   const [statusThree, setStatusThree] = useState<boolean>(false);
@@ -57,37 +67,37 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  // /**
-  //  * 전체 선택 기능
-  //  */
-  // const onCheckedAll = useCallback(
-  //   (checked) => {
-  //     if (checked) {
-  //       const checkedListArray: string[] = [];
-  //       props.findResult.docs.forEach((list: Maintenance) =>
-  //         checkedListArray.push(list._id)
-  //       );
-  //       setCheckedList(checkedListArray);
-  //     } else {
-  //       setCheckedList([]);
-  //     }
-  //   },
-  //   [props.findResult.docs]
-  // );
+  /**
+   * 전체 선택 기능
+   */
+  const onCheckedAll = useCallback(
+    (checked) => {
+      if (checked) {
+        const checkedListArray: string[] = [];
+        maintenanceList.forEach((list: Maintenance) =>
+          checkedListArray.push(list._id)
+        );
+        setCheckedList(checkedListArray);
+      } else {
+        setCheckedList([]);
+      }
+    },
+    [maintenanceList]
+  );
 
-  // /**
-  //  * 개별 선택 기능
-  //  */
-  // const onCheckedElement = useCallback(
-  //   (checked: boolean, list: Maintenance) => {
-  //     if (checked) {
-  //       setCheckedList([...checkedList, list._id]);
-  //     } else {
-  //       setCheckedList(checkedList.filter((el) => el !== list._id));
-  //     }
-  //   },
-  //   [checkedList]
-  // );
+  /**
+   * 개별 선택 기능
+   */
+  const onCheckedElement = useCallback(
+    (checked: boolean, list: Maintenance) => {
+      if (checked) {
+        setCheckedList([...checkedList, list._id]);
+      } else {
+        setCheckedList(checkedList.filter((el) => el !== list._id));
+      }
+    },
+    [checkedList]
+  );
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -139,7 +149,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   setSearchMenu(!searchMenu);
                 }}
               >
-                상세검색
+                api 준비중(상세검색)
               </Text>
             </Wrapper>
           </form>
@@ -190,7 +200,62 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
               <Wrapper width={`100px`} al={`flex-end`}>
-                <text>정비상태</text>
+                <text>차량번호</text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+              >
+                <TextInput2
+                  placeholder={`예시) 000ㅁ0000`}
+                  width={`300px`}
+                  margin={`10px 0px 10px 30px`}
+                />
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
+                <text>구분</text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+              >
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusThree(!statusThree);
+                    }}
+                  />
+                  <CheckMark></CheckMark>
+                  전체
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  일반
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  보험
+                </Checkbox>
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
+                <text>문서발급</text>
               </Wrapper>
               <Wrapper
                 ju={`flex-start`}
@@ -214,7 +279,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     onChange={() => {}}
                   />
                   <CheckMark></CheckMark>
-                  정비중
+                  발급
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
                   <CheckInput
@@ -223,16 +288,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     onChange={() => {}}
                   />
                   <CheckMark></CheckMark>
-                  정비완료
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusOne}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  출고완료
+                  미발급
                 </Checkbox>
               </Wrapper>
             </Wrapper>
@@ -284,45 +340,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 </Checkbox>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <text>구분</text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-              >
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    onChange={() => {
-                      setStatusThree(!statusThree);
-                    }}
-                  />
-                  <CheckMark></CheckMark>
-                  전체
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  일반
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  보험
-                </Checkbox>
-              </Wrapper>
-            </Wrapper>
+
             <Wrapper dr={`row`} ju={`flex-end`}>
               <SmallButton type="button" kindOf={`default`} width={`150px`}>
                 검색
@@ -346,7 +364,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               fontSize={`16px`}
               kindOf={`fillDefault`}
               onClick={() => {
-                router.push(`${UseLink.MAINTENANCE_BOOK}/${StepQuery.FIRST}`);
+                router.push(
+                  `${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.STORED}`
+                );
               }}
             >
               +신규정비등록
@@ -366,16 +386,16 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 <Checkbox kindOf={`TableCheckBox`}>
                   <CheckInput
                     type="checkbox"
-                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    //   onCheckedAll(e.target.checked)
-                    // }
-                    // checked={
-                    //   checkedList.length === 0
-                    //     ? false
-                    //     : checkedList.length === partList.length
-                    //     ? true
-                    //     : false
-                    // }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onCheckedAll(e.target.checked)
+                    }
+                    checked={
+                      checkedList.length === 0
+                        ? false
+                        : checkedList.length === maintenanceList.length
+                        ? true
+                        : false
+                    }
                   />
                   <CheckMark></CheckMark>
                 </Checkbox>
@@ -389,7 +409,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TableHeadLIST width={`13%`}>정비상태</TableHeadLIST>
             </TableHead>
             <TableBody>
-              <TableRow>
+              {/* <TableRow>
                 <TableRowLIST width={`5%`}>
                   <Checkbox kindOf={`TableCheckBox`}>
                     <CheckInput type="checkbox" />
@@ -463,17 +483,17 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   해당없음
                 </TableRowLIST>
                 <TableRowLIST width={`13%`}>정비중</TableRowLIST>
-              </TableRow>
+              </TableRow> */}
 
-              {/* {props.findResult.totalDocs > 0 ? (
-                props.findResult.docs.map((list: any) => (
+              {props.findResult.totalDocs > 0 ? (
+                maintenanceList.map((list: any) => (
                   <TableRow
                     key={list._id}
-                    // onClick={() => {
-                    //   setClickDoc(list);
-                    //   setModalOption("edit");
-                    //   setModalOpen(true);
-                    // }}
+                    onClick={() => {
+                      router.push(
+                        `${UseLink.MAINTENANCE_BOOK}?id=${list._id}&step=${list.status}`
+                      );
+                    }}
                   >
                     <TableRowLIST
                       width={`5%`}
@@ -484,9 +504,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                       <Checkbox kindOf={`TableCheckBox`}>
                         <CheckInput
                           type="checkbox"
-                          // onChange={(
-                          //   e: React.ChangeEvent<HTMLInputElement>
-                          // ) => onCheckedElement(e.target.checked, list)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            onCheckedElement(e.target.checked, list)
+                          }
                           checked={
                             checkedList.includes(list._id) ? true : false
                           }
@@ -494,21 +514,25 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                         <CheckMark></CheckMark>
                       </Checkbox>
                     </TableRowLIST>
-                    <TableRowLIST width={`15%`}>{list.createdAt}</TableRowLIST>
+                    <TableRowLIST width={`15%`}>
+                      {dayjs(list.createdAt).format("YYYY-MM-DD")}
+                    </TableRowLIST>
                     <TableRowLIST width={`15%`}>
                       {list.car.regNumber}
                     </TableRowLIST>
                     <TableRowLIST width={`11%`}>
-                      {list.costomerType}
+                      {getStrMainCustomerType(list.costomerType)}
                     </TableRowLIST>
                     <TableRowLIST width={`15%`}>
                       {list.works.length > 1
                         ? `${list.works[0].name}외 ${list.works.length - 1}건`
                         : list.works[0].name}
                     </TableRowLIST>
-                    <TableRowLIST width={`13%`}>{}</TableRowLIST>
-                    <TableRowLIST width={`13%`}></TableRowLIST>
-                    <TableRowLIST width={`13%`}>{list.status}</TableRowLIST>
+                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                    <TableRowLIST width={`13%`}>
+                      {getStrMainStatus(list.status)}
+                    </TableRowLIST>
                   </TableRow>
                 ))
               ) : (
@@ -522,7 +546,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     검색 결과가 없습니다.
                   </Text>
                 </Wrapper>
-              )} */}
+              )}
             </TableBody>
           </TableWrapper>
           <Wrapper dr={`row`}></Wrapper>

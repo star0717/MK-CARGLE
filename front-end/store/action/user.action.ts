@@ -1,3 +1,4 @@
+import { MaintenancesApiPath } from "./../../src/constants/api-path.const";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
   ConfirmPWD,
@@ -41,6 +42,7 @@ import {
   _iDeleteByUser,
   _iPartssetsOne,
   _iPartssets,
+  _iGetMaintenancesCarInfo,
 } from "../interfaces";
 
 import {
@@ -55,6 +57,7 @@ import { DeleteObjectIds } from "../../src/models/base.entity";
 import { Part } from "../../src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
+import { Car } from "src/models/car.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -996,6 +999,20 @@ export async function _aPostAgenciesDeleteMany(ids: string[]) {
     });
 
   const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+export async function _aGetMaintenancesCarInfo(id: string) {
+  const req: Car = await axios
+    .get(genApiPath(MaintenancesApiPath.carinfo, { id: id }))
+    .then((res: AxiosResponse<Car, string>): Car => {
+      return res.data;
+    });
+
+  const result: _iGetMaintenancesCarInfo = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

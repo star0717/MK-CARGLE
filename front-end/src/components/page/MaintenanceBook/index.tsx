@@ -8,30 +8,31 @@ import { Agency } from "src/models/agency.entity";
 import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
-import SelectCar from "./section/step1";
-import PayComplete from "./section/step2";
-import MaintenanceIng from "./section/step3";
-import MaintenanceComplete from "./section/step4";
-import ReleaseComplete from "./section/step5";
+import { MainStatus } from "src/constants/maintenance.const";
+import MaintenanceStored from "./section/stored";
+import MaintenanceIng from "./section/ing";
+import MaintenanceDone from "./section/done";
+import MaintenancePaid from "./section/paid";
+import MaintenanceReleased from "./section/released";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
 
   switch (router.query.step) {
-    case "1":
-      return <SelectCar {...props} />;
+    case MainStatus.STORED:
+      return <MaintenanceStored {...props} />;
 
-    case "2":
-      return <PayComplete />;
-
-    case "3":
+    case MainStatus.ING:
       return <MaintenanceIng />;
 
-    case "4":
-      return <MaintenanceComplete />;
+    case MainStatus.DONE:
+      return <MaintenanceDone />;
 
-    case "5":
-      return <ReleaseComplete />;
+    case MainStatus.PAID:
+      return <MaintenancePaid />;
+
+    case MainStatus.RELEASED:
+      return <MaintenanceReleased />;
 
     default:
       return <MaintenenanceList {...props} />;

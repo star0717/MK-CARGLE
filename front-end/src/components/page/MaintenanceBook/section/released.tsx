@@ -6,9 +6,9 @@ import {
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
-import { StepQuery, UseLink } from "src/configure/router.entity";
+import { UseLink } from "src/configure/router.entity";
 
-const MaintenanceComplete: NextPage<any> = (props) => {
+const MaintenanceReleased: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -31,19 +31,19 @@ const MaintenanceComplete: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        정비 완료
+        출고 완료
         <SmallButton
           type="button"
           kindOf={`default`}
           onClick={() => {
-            router.push(`${UseLink.MAINTENANCE_BOOK}/${StepQuery.FIFTH}`);
+            alert("어림도 없지 아암");
           }}
         >
-          출고완료
+          수정
         </SmallButton>
       </RsWrapper>
     </WholeWrapper>
   );
 };
 
-export default MaintenanceComplete;
+export default MaintenanceReleased;

@@ -6,9 +6,10 @@ import {
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
-import { StepQuery, UseLink } from "src/configure/router.entity";
+import { UseLink } from "src/configure/router.entity";
+import { MainStatus } from "src/constants/maintenance.const";
 
-const PayComplete: NextPage<any> = (props) => {
+const MaintenanceIng: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -36,7 +37,7 @@ const PayComplete: NextPage<any> = (props) => {
           type="button"
           kindOf={`default`}
           onClick={() => {
-            router.push(`${UseLink.MAINTENANCE_BOOK}/${StepQuery.THIRD}`);
+            router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.DONE}`);
           }}
         >
           정비 진행
@@ -46,4 +47,4 @@ const PayComplete: NextPage<any> = (props) => {
   );
 };
 
-export default PayComplete;
+export default MaintenanceIng;
