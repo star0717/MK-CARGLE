@@ -49,7 +49,9 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  const onSearchCarHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -75,6 +77,15 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량선택
+              </Text>
+            </Wrapper>
+            <JoinStepBar kindOf={`line2`}></JoinStepBar>
+            <Wrapper width={`auto`}>
+              <JoinStepBar kindOf={`before`}>
+                <AiOutlineFileText />
+              </JoinStepBar>
+              <Text height={`0px`} padding={`10px 0px 0px`}>
+                차량입고
               </Text>
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
@@ -118,7 +129,7 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
               dr={`row`}
               borderBottom={`1px solid #000`}
             >
-              <form>
+              <form onSubmit={onSearchCarHandler}>
                 <Wrapper>
                   <SearchInput
                     width={`332px`}
