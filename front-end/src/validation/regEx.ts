@@ -17,6 +17,7 @@ export const formRegEx = {
   HP_NUM: /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/, // 휴대폰번호(-포함가능)
   PH_NUM: /^\d{2,3}-?\d{3,4}-?\d{4}$/, // 전화번호(-제외)
   FAX_NUM: /^\+?[0-9-]{6,}$/, // fax번호
+  CAR_NUM: /\d{2,3}[가-힣]{1}\d{4}/gm,
 };
 
 export const CHAR_DEL = (str: any) => {
