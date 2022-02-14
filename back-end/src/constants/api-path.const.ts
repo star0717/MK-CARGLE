@@ -75,7 +75,7 @@ export class SettingsApiPath {
 // 정비내역 API
 export class MaintenancesApiPath {
   static BASE = '/maintenances/';
-  // static maintenances = MaintenancesApiPath.BASE;
+  static maintenances = MaintenancesApiPath.BASE;
   static carinfo = MaintenancesApiPath.BASE + 'carinfo';
   static store = MaintenancesApiPath.BASE + 'store';
   static start = MaintenancesApiPath.BASE + 'start';

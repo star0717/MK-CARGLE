@@ -9,6 +9,7 @@ import {
   CommonSubTitle,
   CommonTitle,
   CommonTitleWrapper,
+  IconButton,
   JoinStepBar,
   JoinStepBarWrapper,
   RsWrapper,
@@ -31,10 +32,11 @@ import { StepQuery, UseLink } from "src/configure/router.entity";
 import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
 import { GoCheck } from "react-icons/go";
 import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
-import { BsChevronDoubleUp, BsPencilSquare } from "react-icons/bs";
+import { BsChevronDoubleUp, BsPencilSquare, BsSearch } from "react-icons/bs";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { faCar } from "@fortawesome/free-solid-svg-icons";
 import { FaCar } from "react-icons/fa";
+import { Car } from "src/models/car.entity";
 
 const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -44,11 +46,17 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [carInfo, setCarInfo] = useState<Partial<Car>>({
+    name: "",
+    regNumber: "",
+  });
   const [showCar, setShowCar] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  const onSearchCarHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -74,6 +82,15 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량선택
+              </Text>
+            </Wrapper>
+            <JoinStepBar kindOf={`line2`}></JoinStepBar>
+            <Wrapper width={`auto`}>
+              <JoinStepBar kindOf={`before`}>
+                <AiOutlineFileText />
+              </JoinStepBar>
+              <Text height={`0px`} padding={`10px 0px 0px`}>
+                차량입고
               </Text>
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
@@ -117,23 +134,26 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
               dr={`row`}
               borderBottom={`1px solid #000`}
             >
-              <Wrapper>
-                <SearchInput
-                  width={`332px`}
-                  padding={`0px 5px 0px 5px`}
-                  placeholder="차량번호를 입력하세요."
-                  type="text"
-                  value={props.filterValue}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    props.setFilterValue(e.target.value);
-                  }}
-                />
-              </Wrapper>
-              <Wrapper width={`36px`} height={`46px`}>
-                <Text fontSize={`24px`} lineHeight={`1`}>
-                  <BsPencilSquare />
-                </Text>
-              </Wrapper>
+              <form onSubmit={onSearchCarHandler}>
+                <Wrapper>
+                  <SearchInput
+                    width={`332px`}
+                    padding={`0px 5px 0px 5px`}
+                    placeholder="차량번호를 입력하세요."
+                    type="text"
+                    value={carInfo.regNumber}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setCarInfo({ ...carInfo, regNumber: e.target.value });
+                    }}
+                    required
+                  />
+                </Wrapper>
+                <Wrapper width={`36px`} height={`46px`}>
+                  <IconButton type="submit" shadow={`none`}>
+                    <BsSearch />
+                  </IconButton>
+                </Wrapper>
+              </form>
             </SearchInputWrapper>
             <Wrapper width={`30%`}>
               <BsChevronDoubleUp />
