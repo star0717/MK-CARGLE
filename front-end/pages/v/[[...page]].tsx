@@ -322,18 +322,18 @@ export const getServerSideProps: GetServerSideProps = async (
         return successResult;
       }
 
-      // case UseLink.MAINTENANCE_BOOK: {
-      //   successResult.props.data = await axios
-      //     .get(
-      //       genApiPath(MaintenancesApiPath.maintenances, {
-      //         findParams: params,
-      //         isServerSide: true,
-      //       }),
-      //       authConfig
-      //     )
-      //     .then((res: AxiosResponse<FindResult<any>, any>) => res.data);
-      //   return successResult;
-      // }
+      case UseLink.MAINTENANCE_BOOK: {
+        successResult.props.data = await axios
+          .get(
+            genApiPath(MaintenancesApiPath.maintenances, {
+              findParams: params,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<FindResult<any>, any>) => res.data);
+        return successResult;
+      }
 
       case UseLink.ADMIN_REVIEW_COMPANIES: {
         if (id) {
