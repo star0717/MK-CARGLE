@@ -115,7 +115,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     setValue("searchCarText", "");
   };
 
-  const onCarArrivalHandler: SubmitHandler<Partial<Car>> = (data) => {
+  const onCarStoredHandler: SubmitHandler<Partial<Car>> = (data) => {
     console.log("안뇽");
     // router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
   };
@@ -251,7 +251,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               {showCar ? (
                 <form
                   id="carInfoForm"
-                  onSubmit={handleSubmit(onCarArrivalHandler)}
+                  onSubmit={handleSubmit(onCarStoredHandler)}
                 >
                   <Wrapper>
                     <Wrapper dr={`row`}>
