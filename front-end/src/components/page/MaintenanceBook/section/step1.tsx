@@ -29,7 +29,7 @@ import {
   Wrapper,
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
-import { StepQuery, UseLink } from "src/configure/router.entity";
+import { UseLink } from "src/configure/router.entity";
 import {
   AiFillCloseCircle,
   AiOutlineFileText,

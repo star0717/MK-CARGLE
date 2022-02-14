@@ -28,7 +28,7 @@ import {
   Wrapper,
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
-import { StepQuery, UseLink } from "src/configure/router.entity";
+import { UseLink } from "src/configure/router.entity";
 import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
 import { GoCheck } from "react-icons/go";
 import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
@@ -200,15 +200,7 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
               >
                 뒤로가기
               </SmallButton>
-              <SmallButton
-                type="button"
-                kindOf={`default`}
-                onClick={() => {
-                  router.push(
-                    `${UseLink.MAINTENANCE_BOOK}/${StepQuery.SECOND}`
-                  );
-                }}
-              >
+              <SmallButton type="button" kindOf={`default`}>
                 정비진행
               </SmallButton>
             </Wrapper>

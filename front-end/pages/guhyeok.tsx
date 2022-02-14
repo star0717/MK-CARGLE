@@ -24,7 +24,7 @@ import {
 import { useRouter } from "next/router";
 import { BsSearch } from "react-icons/bs";
 import { GiEgyptianWalk } from "react-icons/gi";
-import { UseLink, StepQuery } from "src/configure/router.entity";
+import { UseLink } from "src/configure/router.entity";
 import { useResizeDetector } from "react-resize-detector";
 
 const TestPage: NextPage<any> = (props) => {
@@ -96,13 +96,7 @@ const TestPage: NextPage<any> = (props) => {
           <SmallButton type="button" kindOf={`default`}>
             선택삭제
           </SmallButton>
-          <SmallButton
-            type="button"
-            kindOf={`default`}
-            onClick={() => {
-              router.push(`${UseLink.MAINTENANCE_BOOK}/${StepQuery.FIRST}`);
-            }}
-          >
+          <SmallButton type="button" kindOf={`default`}>
             +신규정비등록
           </SmallButton>
         </Wrapper>

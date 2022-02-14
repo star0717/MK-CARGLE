@@ -6,7 +6,8 @@ import {
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
-import { StepQuery, UseLink } from "src/configure/router.entity";
+import { UseLink } from "src/configure/router.entity";
+import { MainStatus } from "src/constants/maintenance.const";
 
 const MaintenanceComplete: NextPage<any> = (props) => {
   /*********************************************************************
@@ -36,7 +37,9 @@ const MaintenanceComplete: NextPage<any> = (props) => {
           type="button"
           kindOf={`default`}
           onClick={() => {
-            router.push(`${UseLink.MAINTENANCE_BOOK}/${StepQuery.FIFTH}`);
+            router.push(
+              `${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.RELEASED}`
+            );
           }}
         >
           출고완료
