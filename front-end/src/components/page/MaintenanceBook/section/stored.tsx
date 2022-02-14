@@ -46,6 +46,7 @@ import { useDispatch } from "react-redux";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
 import { _aGetMaintenancesCarInfo } from "store/action/user.action";
 import { _iGetMaintenancesCarInfo } from "store/interfaces";
+import { MainStatus } from "src/constants/maintenance.const";
 
 const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -69,6 +70,7 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   const [carInfo, setCarInfo] = useState<Partial<Car>>({
     name: "",
     regNumber: "",
+    distance: "",
   }); // 차량정보
   const [cusInfo, setCusInfo] = useState<any>({
     customerName: "",
@@ -115,9 +117,7 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
 
   const onCarArrivalHandler: SubmitHandler<Partial<Car>> = (data) => {
     console.log("안뇽");
-    // router.push(
-    //   `${UseLink.MAINTENANCE_BOOK}/${StepQuery.SECOND}`
-    // );
+    // router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
   };
 
   /*********************************************************************
@@ -334,6 +334,19 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
                         })}
                       />
                     </Wrapper>
+                    {(errors.phoneNumber?.type === "required" ||
+                      errors.phoneNumber?.type === "pattern") && (
+                      <Text
+                        margin={`0px`}
+                        width={`100%`}
+                        color={`#d6263b`}
+                        al={`flex-start`}
+                        fontSize={`14px`}
+                        textAlign={`left`}
+                      >
+                        {errors.phoneNumber.message}
+                      </Text>
+                    )}
                     <Wrapper dr={`row`}>
                       <Text fontSize={`14px`}>차량명</Text>
                       <TextInput2
@@ -346,9 +359,25 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
                           ) => {
                             onChangeCarInfo(e);
                           },
+                          required: {
+                            value: true,
+                            message: "필수 입력사항입니다.",
+                          },
                         })}
                       />
                     </Wrapper>
+                    {errors.name?.type === "required" && (
+                      <Text
+                        margin={`0px`}
+                        width={`100%`}
+                        color={`#d6263b`}
+                        al={`flex-start`}
+                        fontSize={`14px`}
+                        textAlign={`left`}
+                      >
+                        {errors.name.message}
+                      </Text>
+                    )}
                     <Wrapper dr={`row`}>
                       <Text fontSize={`14px`}>모델명</Text>
                       <TextInput2
@@ -521,11 +550,6 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
                 type="submit"
                 kindOf={showCar ? `default` : `ghost`}
                 disabled={showCar ? false : true}
-                // onClick={() => {
-                //   router.push(
-                //     `${UseLink.MAINTENANCE_BOOK}/${StepQuery.SECOND}`
-                //   );
-                // }}
               >
                 차량입고
               </SmallButton>

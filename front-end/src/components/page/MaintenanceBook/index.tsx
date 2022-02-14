@@ -8,11 +8,11 @@ import { Agency } from "src/models/agency.entity";
 import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
-import SelectCar from "./section/step1";
-import PayComplete from "./section/step2";
-import MaintenanceIng from "./section/step3";
-import MaintenanceComplete from "./section/step4";
-import ReleaseComplete from "./section/step5";
+import SelectCar from "./section/stored";
+import PayComplete from "./section/ing";
+import MaintenanceIng from "./section/done";
+import MaintenanceComplete from "./section/paid";
+import ReleaseComplete from "./section/released";
 import { MainStatus } from "src/constants/maintenance.const";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
