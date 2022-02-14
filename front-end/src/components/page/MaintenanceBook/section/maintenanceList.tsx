@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { NextPage } from "next";
 import {
   CommonSubTitle,
@@ -27,7 +27,7 @@ import {
 } from "src/components/styles/CommonComponents";
 import Modal from "react-modal";
 import { _MainProps } from "src/configure/_props.entity";
-import { BsSearch } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
@@ -36,6 +36,7 @@ import { StepQuery, UseLink } from "src/configure/router.entity";
 import { GiEgyptianWalk } from "react-icons/gi";
 import { AiOutlineDown, AiTwotoneCheckCircle } from "react-icons/ai";
 import { GoPrimitiveDot } from "react-icons/go";
+import { Maintenance } from "src/models/maintenance.entity";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -46,10 +47,47 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [searchMenu, setSearchMenu] = useState<boolean>(false);
+  const [checkedList, setCheckedList] = useState([]);
+
+  /** 상세검색 checkBox state 관리 */
+  const [statusOne, setStatusOne] = useState<boolean>(false);
+  const [statusTwo, setStatusTwo] = useState<boolean>(false);
+  const [statusThree, setStatusThree] = useState<boolean>(false);
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  // /**
+  //  * 전체 선택 기능
+  //  */
+  // const onCheckedAll = useCallback(
+  //   (checked) => {
+  //     if (checked) {
+  //       const checkedListArray: string[] = [];
+  //       props.findResult.docs.forEach((list: Maintenance) =>
+  //         checkedListArray.push(list._id)
+  //       );
+  //       setCheckedList(checkedListArray);
+  //     } else {
+  //       setCheckedList([]);
+  //     }
+  //   },
+  //   [props.findResult.docs]
+  // );
 
+  // /**
+  //  * 개별 선택 기능
+  //  */
+  // const onCheckedElement = useCallback(
+  //   (checked: boolean, list: Maintenance) => {
+  //     if (checked) {
+  //       setCheckedList([...checkedList, list._id]);
+  //     } else {
+  //       setCheckedList(checkedList.filter((el) => el !== list._id));
+  //     }
+  //   },
+  //   [checkedList]
+  // );
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -91,7 +129,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   </Text>
                 </Wrapper>
               </SearchInputWrapper>
-              <SmallButton
+              <Text
                 type="button"
                 width={`150px`}
                 fontSize={`16px`}
@@ -102,7 +140,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 }}
               >
                 상세검색
-              </SmallButton>
+              </Text>
             </Wrapper>
           </form>
         </Wrapper>
@@ -160,22 +198,39 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`0px 0px 0px 50px`}
               >
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusOne(!statusOne);
+                    }}
+                  />
                   <CheckMark></CheckMark>
                   전체
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusOne}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   정비중
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusOne}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   정비완료
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusOne}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   출고완료
                 </Checkbox>
@@ -191,22 +246,39 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`0px 0px 0px 50px`}
               >
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusTwo(!statusTwo);
+                    }}
+                  />
                   <CheckMark></CheckMark>
                   전체
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusTwo}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   해당없음
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusTwo}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   전송오류
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusTwo}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   전송완료
                 </Checkbox>
@@ -222,17 +294,30 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`0px 0px 0px 50px`}
               >
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusThree(!statusThree);
+                    }}
+                  />
                   <CheckMark></CheckMark>
                   전체
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   일반
                 </Checkbox>
                 <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput type="checkbox" />
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
                   <CheckMark></CheckMark>
                   보험
                 </Checkbox>
@@ -281,13 +366,13 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 <Checkbox kindOf={`TableCheckBox`}>
                   <CheckInput
                     type="checkbox"
-                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    //   onCheckedAll(e.target.checked);
-                    // }}
+                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    //   onCheckedAll(e.target.checked)
+                    // }
                     // checked={
                     //   checkedList.length === 0
                     //     ? false
-                    //     : checkedList.length === props.findResult.docs.length
+                    //     : checkedList.length === partList.length
                     //     ? true
                     //     : false
                     // }
@@ -381,60 +466,63 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               </TableRow>
 
               {/* {props.findResult.totalDocs > 0 ? (
-                  props.findResult.docs.map((list: Agency) => (
-                    <TableRow
-                      key={list._id}
-                      onClick={() => {
-                        setClickDoc(list);
-                        setModalOption("edit");
-                        setModalOpen(true);
-                      }}
+                props.findResult.docs.map((list: any) => (
+                  <TableRow
+                    key={list._id}
+                    // onClick={() => {
+                    //   setClickDoc(list);
+                    //   setModalOption("edit");
+                    //   setModalOpen(true);
+                    // }}
+                  >
+                    <TableRowLIST
+                      width={`5%`}
+                      onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                        e.stopPropagation()
+                      }
                     >
-                      <TableRowLIST
-                        width={`10%`}
-                        onClick={(e: React.MouseEvent<HTMLLIElement>) =>
-                          e.stopPropagation()
-                        }
-                      >
-                        <Checkbox kindOf={`TableCheckBox`}>
-                          <CheckInput
-                            type="checkbox"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => onCheckedElement(e.target.checked, list)}
-                            checked={
-                              checkedList.includes(list._id) ? true : false
-                            }
-                          />
-                          <CheckMark></CheckMark>
-                        </Checkbox>
-                      </TableRowLIST>
-                      <TableRowLIST width={`15%`}>{list.name}</TableRowLIST>
-                      <TableRowLIST width={`15%`}>{list.hpNum}</TableRowLIST>
-                      <TableRowLIST width={`22%`}>
-                        <ToolTipWrapper>
-                          <ToolTip>{list.address1}</ToolTip>
-                        </ToolTipWrapper>
-                      </TableRowLIST>
-                      <TableRowLIST width={`15%`}>{list.manager}</TableRowLIST>
-                      <TableRowLIST width={`23%`}>
-                        <ToolTipWrapper>
-                          <ToolTip>
-                            {list.memo}
-                            <ToolTipText>{list.memo}</ToolTipText>
-                          </ToolTip>
-                        </ToolTipWrapper>
-                      </TableRowLIST>
-                    </TableRow>
-                  ))
-                ) : (
-                  <Wrapper minHeight={`445px`}>
-                    <Text fontSize={`48px`} color={`#c4c4c4`}>
-                      <BsEmojiFrownFill />
-                    </Text>
-                    <Text color={`#c4c4c4`}>                    <GoPrimitiveDot />검색 결과가 없습니다.</Text>
-                  </Wrapper>
-                )} */}
+                      <Checkbox kindOf={`TableCheckBox`}>
+                        <CheckInput
+                          type="checkbox"
+                          // onChange={(
+                          //   e: React.ChangeEvent<HTMLInputElement>
+                          // ) => onCheckedElement(e.target.checked, list)}
+                          checked={
+                            checkedList.includes(list._id) ? true : false
+                          }
+                        />
+                        <CheckMark></CheckMark>
+                      </Checkbox>
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`}>{list.createdAt}</TableRowLIST>
+                    <TableRowLIST width={`15%`}>
+                      {list.car.regNumber}
+                    </TableRowLIST>
+                    <TableRowLIST width={`11%`}>
+                      {list.costomerType}
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`}>
+                      {list.works.length > 1
+                        ? `${list.works[0].name}외 ${list.works.length - 1}건`
+                        : list.works[0].name}
+                    </TableRowLIST>
+                    <TableRowLIST width={`13%`}>{}</TableRowLIST>
+                    <TableRowLIST width={`13%`}></TableRowLIST>
+                    <TableRowLIST width={`13%`}>{list.status}</TableRowLIST>
+                  </TableRow>
+                ))
+              ) : (
+                <Wrapper minHeight={`445px`}>
+                  <Text fontSize={`48px`} color={`#c4c4c4`}>
+                    <BsEmojiFrownFill />
+                  </Text>
+                  <Text color={`#c4c4c4`}>
+                    {" "}
+                    <GoPrimitiveDot />
+                    검색 결과가 없습니다.
+                  </Text>
+                </Wrapper>
+              )} */}
             </TableBody>
           </TableWrapper>
           <Wrapper dr={`row`}></Wrapper>

@@ -33,6 +33,7 @@ import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import {
   AdminApiPath,
   AgenciesApiPath,
+  MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
   SettingsApiPath,
@@ -54,6 +55,7 @@ import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import NavbarMenu from "src/components/layout/NavbarMenu";
 import BlackWrapper from "src/components/layout/BlackWrapper";
+import { Maintenance } from "src/models/maintenance.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -319,6 +321,19 @@ export const getServerSideProps: GetServerSideProps = async (
           .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
         return successResult;
       }
+
+      // case UseLink.MAINTENANCE_BOOK: {
+      //   successResult.props.data = await axios
+      //     .get(
+      //       genApiPath(MaintenancesApiPath.maintenances, {
+      //         findParams: params,
+      //         isServerSide: true,
+      //       }),
+      //       authConfig
+      //     )
+      //     .then((res: AxiosResponse<FindResult<any>, any>) => res.data);
+      //   return successResult;
+      // }
 
       case UseLink.ADMIN_REVIEW_COMPANIES: {
         if (id) {

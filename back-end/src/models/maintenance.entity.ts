@@ -229,6 +229,8 @@ export class Dates {
 // 정비내역서
 export class Maintenance extends BaseEntity {
   @ApiProperty({ description: '문서번호(자동생성)', required: false })
+  @IsOptional()
+  @IsString()
   @prop({ trim: true, required: true }) // 자동생성
   docNum?: string;
 

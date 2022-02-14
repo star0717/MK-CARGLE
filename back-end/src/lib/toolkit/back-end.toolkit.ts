@@ -1,11 +1,10 @@
 import { TransformFnParams } from 'class-transformer';
 import { isNumber } from 'class-validator';
-import { defTakeNum, maxTakeNum } from './model.const';
+import { defTakeNum, maxTakeNum } from '../../constants/model.const';
 import * as dayjs from 'dayjs';
 import * as timezone from 'dayjs/plugin/timezone';
 import * as utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/ko';
-import { BadRequestException } from '@nestjs/common';
 
 /***************************************************
  * 툴킷 초기화

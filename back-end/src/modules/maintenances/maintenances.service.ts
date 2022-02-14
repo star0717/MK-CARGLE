@@ -1,11 +1,11 @@
 import { AuthTokenInfo } from './../../models/auth.entity';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import {
   getStartOfDayDateTime as getStartOfDayDateTime,
   getStrDate,
-} from 'src/constants/back-end.toolkit';
+} from 'src/lib/toolkit/back-end.toolkit';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { Car } from 'src/models/car.entity';
@@ -71,7 +71,9 @@ export class MaintenancesService extends SafeService<Maintenance> {
   }
 
   async storeCar(token: AuthTokenInfo, doc: Maintenance): Promise<Maintenance> {
-    // console.log('오리지날', doc);
+    console.log(doc);
+    // 차량 정보 갱신 (신규차량일 경우 등록)
+    this.carsService.updateOrInsertByCarInfo(doc.car);
 
     let mt: Maintenance = new Maintenance();
     mt.docNum = await this.genDocNumber();
@@ -84,8 +86,85 @@ export class MaintenancesService extends SafeService<Maintenance> {
     mt.car = doc.car;
     mt.customer = doc.customer;
 
-    console.log(mt);
-
     return await this.create(token, mt);
+  }
+
+  async startMain(
+    token: AuthTokenInfo,
+    id: string,
+    doc: Maintenance,
+  ): Promise<Maintenance> {
+    let src = await this._validateReq(token, id, doc);
+
+    //정비 내역과 작업자명이 존재하는지 확인
+    // if (!doc.works || doc.works.length == 0 || !doc.workerName) {
+    //   throw new BadRequestException();
+    // }
+
+    src.works = doc.works;
+    src.workerName = doc.workerName;
+    src.status = MainStatus.ING;
+    src.dates.startMa = new Date(Date.now());
+
+    return await this.findByIdAndUpdate(token, id, src);
+  }
+
+  async endMain(
+    token: AuthTokenInfo,
+    id: string,
+    doc: Maintenance,
+  ): Promise<Maintenance> {
+    console.log(doc);
+    let src = await this._validateReq(token, id, doc);
+
+    src.status = MainStatus.DONE;
+    src.dates.endMa = new Date(Date.now());
+    src.price = new Price();
+
+    return await this.findByIdAndUpdate(token, id, src);
+  }
+
+  async payMain(
+    token: AuthTokenInfo,
+    id: string,
+    doc: Maintenance,
+  ): Promise<Maintenance> {
+    let src = await this._validateReq(token, id, doc);
+
+    if (!doc.price) throw new BadRequestException();
+    src.price = doc.price;
+    src.status = MainStatus.PAID;
+
+    return await this.findByIdAndUpdate(token, id, src);
+  }
+
+  async releaseMain(
+    token: AuthTokenInfo,
+    id: string,
+    doc: Maintenance,
+  ): Promise<Maintenance> {
+    let src = await this._validateReq(token, id, doc);
+
+    src.dates.released = new Date(Date.now());
+    src.status = MainStatus.RELEASED;
+
+    return await this.findByIdAndUpdate(token, id, src);
+  }
+
+  /**
+   * 요청 유효성 검사. 요청한 클라이언트가 유효한지 확인
+   * @param token
+   * @param id
+   * @param doc
+   */
+  private async _validateReq(
+    token: AuthTokenInfo,
+    id: string,
+    doc: Maintenance,
+  ): Promise<Maintenance> {
+    const src: Maintenance = await this.findById(token, id);
+    if (!src) throw new BadRequestException();
+    if (src.docNum != doc.docNum) throw new BadRequestException();
+    return src;
   }
 }

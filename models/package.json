@@ -12,6 +12,7 @@
       "lint": "gts lint",
       "clean": "gts clean",
       "compile": "tsc",
+      "copy": "cp ../back-end/src/constants/* ../front-end/src/constants/",
       "precompile": "npm run clean",
       "fix": "gts fix",
       "prepare": "npm run compile",

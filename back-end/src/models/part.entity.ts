@@ -12,7 +12,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { removePropertyWithEmptyValue } from 'src/constants/back-end.toolkit';
+import { removePropertyWithEmptyValue } from 'src/lib/toolkit/back-end.toolkit';
 import { BaseEntity } from './base.entity';
 
 // 부품 아이템 클래스
