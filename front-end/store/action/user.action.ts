@@ -42,7 +42,7 @@ import {
   _iDeleteByUser,
   _iPartssetsOne,
   _iPartssets,
-  _iMaintenancesCarInfo,
+  _iGetMaintenancesCarInfo,
 } from "../interfaces";
 
 import {
@@ -1012,7 +1012,7 @@ export async function _aGetMaintenancesCarInfo(id: string) {
       return res.data;
     });
 
-  const result: _iMaintenancesCarInfo = {
+  const result: _iGetMaintenancesCarInfo = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

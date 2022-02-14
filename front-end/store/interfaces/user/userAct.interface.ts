@@ -428,7 +428,7 @@ export class _iAgency implements baseActionInterface {
 }
 
 /** 정비장부 인터페이스 */
-export class _iMaintenancesCarInfo implements baseActionInterface {
+export class _iGetMaintenancesCarInfo implements baseActionInterface {
   type: ActionAPIs.USER_API;
   payload: Car;
 }
