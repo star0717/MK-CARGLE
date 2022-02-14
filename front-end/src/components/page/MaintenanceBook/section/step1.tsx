@@ -58,6 +58,7 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
@@ -77,10 +78,18 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 차량정보 input
+   * @param e
+   */
   const onChangeCarInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCarInfo({ ...carInfo, [e.target.name]: e.target.value });
   };
 
+  /**
+   * 차량 조회 handler
+   * @param data
+   */
   const onSearchCarHandler: SubmitHandler<Partial<Car>> = (data) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
@@ -92,6 +101,23 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
         alert("차량번호 조회에 실패했습니다.");
       }
     );
+  };
+
+  /**
+   * 차량 정보 리셋 handler
+   */
+  const onResetCar = () => {
+    setCarInfo({ name: "", regNumber: "" });
+    setShowCar(false);
+    setSearchCarText("");
+    setValue("searchCarText", "");
+  };
+
+  const onCarArrivalHandler: SubmitHandler<Partial<Car>> = (data) => {
+    console.log("안뇽");
+    // router.push(
+    //   `${UseLink.MAINTENANCE_BOOK}/${StepQuery.SECOND}`
+    // );
   };
 
   /*********************************************************************
@@ -162,9 +188,11 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
         >
           <Wrapper width={`35%`}>
             {showCar ? (
-              <Wrapper dr={`row`} ju={`space-between`}>
-                <Text>{searchCarText}</Text>
-                <AiFillCloseCircle />
+              <Wrapper dr={`row`} fontSize={`24px`}>
+                <Text fontSize={`24px`}>{searchCarText}</Text>
+                <IconButton type="button" shadow={`none`} onClick={onResetCar}>
+                  <AiFillCloseCircle />
+                </IconButton>
               </Wrapper>
             ) : (
               <form onSubmit={handleSubmit(onSearchCarHandler)}>
@@ -204,8 +232,8 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
                     </IconButton>
                   </Wrapper>
                 </SearchInputWrapper>
-                {(errors.searchCarNum?.type === "required" ||
-                  errors.searchCarNum?.type === "pattern") && (
+                {(errors.searchCarText?.type === "required" ||
+                  errors.searchCarText?.type === "pattern") && (
                   <Text
                     margin={`0px`}
                     width={`100%`}
@@ -214,34 +242,41 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
                     fontSize={`14px`}
                     textAlign={`left`}
                   >
-                    {errors.searchCarNum.message}
+                    {errors.searchCarText.message}
                   </Text>
                 )}
               </form>
             )}
             <Wrapper width={`35%`}>
               {showCar ? (
-                <Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text fontSize={`14px`}>주행거리</Text>
-                    <TextInput2
-                      type="text"
-                      width={`100px`}
-                      value={carInfo.distance}
-                      {...register("distance", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          onChangeCarInfo(e);
-                        },
-                        required: {
-                          value: true,
-                          message: "필수 입력사항입니다.",
-                        },
-                        pattern: {
-                          value: basicRegEx.NUM,
-                          message: "형식에 맞게 입력하세요.",
-                        },
-                      })}
-                    />
+                <form
+                  id="carInfoForm"
+                  onSubmit={handleSubmit(onCarArrivalHandler)}
+                >
+                  <Wrapper>
+                    <Wrapper dr={`row`}>
+                      <Text fontSize={`14px`}>주행거리</Text>
+                      <TextInput2
+                        type="text"
+                        width={`100px`}
+                        value={carInfo.distance}
+                        {...register("distance", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                          required: {
+                            value: true,
+                            message: "필수 입력사항입니다.",
+                          },
+                          pattern: {
+                            value: basicRegEx.NUM,
+                            message: "형식에 맞게 입력하세요.",
+                          },
+                        })}
+                      />
+                    </Wrapper>
                     {(errors.distance?.type === "required" ||
                       errors.distance?.type === "pattern") && (
                       <Text
@@ -255,113 +290,127 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
                         {errors.distance.message}
                       </Text>
                     )}
+                    <Wrapper dr={`row`}>
+                      <Text fontSize={`14px`}>고객명</Text>
+                      <TextInput2
+                        type="text"
+                        width={`100px`}
+                        value={cusInfo.customerName}
+                        {...register("customerName", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setCusInfo({
+                              ...cusInfo,
+                              customerName: e.target.value,
+                            });
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`}>
+                      <Text fontSize={`14px`}>전화번호</Text>
+                      <TextInput2
+                        type="text"
+                        width={`100px`}
+                        value={cusInfo.phoneNumber}
+                        {...register("phoneNumber", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setCusInfo({
+                              ...cusInfo,
+                              phoneNumber: e.target.value,
+                            });
+                          },
+                          required: {
+                            value: true,
+                            message: "필수 입력사항입니다.",
+                          },
+                          pattern: {
+                            value: formRegEx.HP_NUM,
+                            message: "형식에 맞게 입력하세요.",
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`}>
+                      <Text fontSize={`14px`}>차량명</Text>
+                      <TextInput2
+                        type="text"
+                        width={`100px`}
+                        value={carInfo.name}
+                        {...register("name", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`}>
+                      <Text fontSize={`14px`}>모델명</Text>
+                      <TextInput2
+                        type="text"
+                        width={`100px`}
+                        value={carInfo.model}
+                        {...register("model", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`}>
+                      <Text fontSize={`14px`}>연식</Text>
+                      <TextInput2
+                        type="text"
+                        width={`100px`}
+                        value={carInfo.age}
+                        {...register("age", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`}>
+                      <Text fontSize={`14px`}>차대번호</Text>
+                      <TextInput2
+                        type="text"
+                        width={`100px`}
+                        value={carInfo.idNumber}
+                        {...register("idNumber", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`}>
+                      <Text fontSize={`14px`}>등록일자</Text>
+                      <TextInput2
+                        type="text"
+                        width={`100px`}
+                        value={carInfo.regDate}
+                        {...register("regDate", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                        })}
+                      />
+                    </Wrapper>
                   </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text fontSize={`14px`}>고객명</Text>
-                    <TextInput2
-                      type="text"
-                      width={`100px`}
-                      value={cusInfo.customerName}
-                      {...register("customerName", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          setCusInfo({
-                            ...cusInfo,
-                            customerName: e.target.value,
-                          });
-                        },
-                      })}
-                    />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text fontSize={`14px`}>전화번호</Text>
-                    <TextInput2
-                      type="text"
-                      width={`100px`}
-                      value={cusInfo.phoneNumber}
-                      {...register("phoneNumber", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          setCusInfo({
-                            ...cusInfo,
-                            phoneNumber: e.target.value,
-                          });
-                        },
-                        required: {
-                          value: true,
-                          message: "필수 입력사항입니다.",
-                        },
-                        pattern: {
-                          value: formRegEx.HP_NUM,
-                          message: "형식에 맞게 입력하세요.",
-                        },
-                      })}
-                    />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text fontSize={`14px`}>차량명</Text>
-                    <TextInput2
-                      type="text"
-                      width={`100px`}
-                      value={carInfo.name}
-                      {...register("name", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          onChangeCarInfo(e);
-                        },
-                      })}
-                    />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text fontSize={`14px`}>모델명</Text>
-                    <TextInput2
-                      type="text"
-                      width={`100px`}
-                      value={carInfo.model}
-                      {...register("model", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          onChangeCarInfo(e);
-                        },
-                      })}
-                    />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text fontSize={`14px`}>연식</Text>
-                    <TextInput2
-                      type="text"
-                      width={`100px`}
-                      value={carInfo.age}
-                      {...register("age", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          onChangeCarInfo(e);
-                        },
-                      })}
-                    />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text fontSize={`14px`}>차대번호</Text>
-                    <TextInput2
-                      type="text"
-                      width={`100px`}
-                      value={carInfo.idNumber}
-                      {...register("idNumber", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          onChangeCarInfo(e);
-                        },
-                      })}
-                    />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text fontSize={`14px`}>등록일자</Text>
-                    <TextInput2
-                      type="text"
-                      width={`100px`}
-                      value={carInfo.regDate}
-                      {...register("regDate", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          onChangeCarInfo(e);
-                        },
-                      })}
-                    />
-                  </Wrapper>
-                </Wrapper>
+                </form>
               ) : (
                 <Wrapper>
                   <BsChevronDoubleUp />
@@ -468,14 +517,15 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
             </TableWrapper>
             <Wrapper>
               <SmallButton
-                type="button"
+                form="carInfoForm"
+                type="submit"
                 kindOf={showCar ? `default` : `ghost`}
                 disabled={showCar ? false : true}
-                onClick={() => {
-                  router.push(
-                    `${UseLink.MAINTENANCE_BOOK}/${StepQuery.SECOND}`
-                  );
-                }}
+                // onClick={() => {
+                //   router.push(
+                //     `${UseLink.MAINTENANCE_BOOK}/${StepQuery.SECOND}`
+                //   );
+                // }}
               >
                 차량입고
               </SmallButton>
