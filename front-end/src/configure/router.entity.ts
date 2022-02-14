@@ -1,3 +1,5 @@
+import { MainStatus } from "src/constants/maintenance.const";
+
 /**
  * 계정 페이지(토큰 x) url
  */
@@ -38,24 +40,24 @@ export const SubRoute = {
   TEST: "test",
 };
 
-export const Step = {
-  FIRST: "1",
-  SECOND: "2",
-  THIRD: "3",
-  FOURTH: "4",
-  FIFTH: "5",
-};
+// export const Step = {
+//   FIRST: "1",
+//   SECOND: "2",
+//   THIRD: "3",
+//   FOURTH: "4",
+//   FIFTH: "5",
+// };
 
-/**
- * 컴포넌트 전환을 위한 스탭(Query parse)
- */
-export const StepQuery = {
-  FIRST: "?step=1",
-  SECOND: "?step=2",
-  THIRD: "?step=3",
-  FOURTH: "?step=4",
-  FIFTH: "?step=5",
-};
+// /**
+//  * 컴포넌트 전환을 위한 스탭(Query parse)
+//  */
+// export const StepQuery = {
+//   FIRST: "?step=1",
+//   SECOND: "?step=2",
+//   THIRD: "?step=3",
+//   FOURTH: "?step=4",
+//   FIFTH: "?step=5",
+// };
 
 /**
  * 페이지 분기를 위한 링크

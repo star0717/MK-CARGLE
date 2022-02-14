@@ -33,7 +33,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
-import { StepQuery, UseLink } from "src/configure/router.entity";
+import { UseLink } from "src/configure/router.entity";
 import { GiEgyptianWalk } from "react-icons/gi";
 import { AiOutlineDown, AiTwotoneCheckCircle } from "react-icons/ai";
 import { GoPrimitiveDot } from "react-icons/go";
@@ -41,6 +41,7 @@ import { Maintenance } from "src/models/maintenance.entity";
 import {
   getStrMainCustomerType,
   getStrMainStatus,
+  MainStatus,
 } from "src/constants/maintenance.const";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
@@ -54,6 +55,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   const [searchMenu, setSearchMenu] = useState<boolean>(false);
   const [checkedList, setCheckedList] = useState([]);
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
+  const [clickDoc, setClickDoc] = useState();
 
   /** 상세검색 checkBox state 관리 */
   // const [searchFrom, setSearchFrom] = useState<Date>();
@@ -147,7 +149,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   setSearchMenu(!searchMenu);
                 }}
               >
-                상세검색
+                api 준비중(상세검색)
               </Text>
             </Wrapper>
           </form>
@@ -362,7 +364,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               fontSize={`16px`}
               kindOf={`fillDefault`}
               onClick={() => {
-                router.push(`${UseLink.MAINTENANCE_BOOK}/${StepQuery.FIRST}`);
+                router.push(
+                  `${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.STORED}`
+                );
               }}
             >
               +신규정비등록
@@ -486,9 +490,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   <TableRow
                     key={list._id}
                     onClick={() => {
-                      // setClickDoc(list);
-                      // setModalOption("edit");
-                      // setModalOpen(true);
+                      router.push(
+                        `${UseLink.MAINTENANCE_BOOK}?id=${list._id}&step=${list.status}`
+                      );
                     }}
                   >
                     <TableRowLIST
