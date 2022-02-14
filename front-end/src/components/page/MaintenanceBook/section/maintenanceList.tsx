@@ -147,7 +147,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   setSearchMenu(!searchMenu);
                 }}
               >
-                상세검색
+                api 준비중(상세검색)
               </Text>
             </Wrapper>
           </form>
