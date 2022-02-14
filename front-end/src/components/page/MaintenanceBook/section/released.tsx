@@ -8,7 +8,7 @@ import {
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 
-const ReleaseComplete: NextPage<any> = (props) => {
+const MaintenanceReleased: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -46,4 +46,4 @@ const ReleaseComplete: NextPage<any> = (props) => {
   );
 };
 
-export default ReleaseComplete;
+export default MaintenanceReleased;

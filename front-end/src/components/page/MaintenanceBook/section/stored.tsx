@@ -48,7 +48,7 @@ import { _aGetMaintenancesCarInfo } from "store/action/user.action";
 import { _iGetMaintenancesCarInfo } from "store/interfaces";
 import { MainStatus } from "src/constants/maintenance.const";
 
-const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
+const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -562,4 +562,4 @@ const SelectCar: NextPage<_pMaintenanceProps> = (props) => {
   );
 };
 
-export default SelectCar;
+export default MaintenanceStored;

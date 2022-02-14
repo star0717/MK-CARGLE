@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { MainStatus } from "src/constants/maintenance.const";
 
-const MaintenanceComplete: NextPage<any> = (props) => {
+const MaintenancePaid: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -49,4 +49,4 @@ const MaintenanceComplete: NextPage<any> = (props) => {
   );
 };
 
-export default MaintenanceComplete;
+export default MaintenancePaid;
