@@ -1,3 +1,4 @@
+import { dtFormatForDurationSerarch } from './../toolkit/back-end.toolkit';
 /**
  * Safe CRUD Service
  * 공통으로 사용가능한 안전한 CRUD 서비스
@@ -25,6 +26,16 @@ import {
 import { CommonService } from '../common/common.service';
 import { MongoServerError } from 'mongodb';
 import { UserAuthority } from 'src/constants/model.const';
+import {
+  getDuration,
+  getEndOfDayDateTime,
+  getEndOfMonthDateTime,
+  getEndOfYearDateTime,
+  getStartOfDayDateTime,
+  getStartOfMonthDateTime,
+  getStartOfYearDateTime,
+  getStrDate,
+} from '../toolkit/back-end.toolkit';
 
 /* 확장 서비스 클래스용 패키지 - 아래의 내용을 확장 클래스에 주입
 import { InjectModel } from 'nestjs-typegoose';
@@ -79,6 +90,40 @@ export class SafeService<T extends BaseEntity> {
     fParams: FindParameters,
   ): Promise<FindResult<T>> {
     let fQuery: FilterQuery<BaseEntity> = {};
+
+    // 기간 검색 설정
+    if (fParams.useDurationSearch) {
+      // 기간이 존재하면
+      if (fParams.sFrom && fParams.sTo) {
+        const from = getStartOfDayDateTime(fParams.sFrom);
+        const to = getEndOfDayDateTime(fParams.sTo);
+        if (getDuration(from, to) > 365) throw new BadRequestException();
+        getDuration(from, to);
+        fQuery.createdAt = {
+          $gt: from,
+          $lt: to,
+        };
+      }
+      // 연도가 존재하면
+      else if (fParams.sYear) {
+        const date = new Date(fParams.sYear, 0, 1);
+        fQuery.createdAt = {
+          $gt: getStartOfYearDateTime(date),
+          $lt: getEndOfYearDateTime(date),
+        };
+      } else {
+        const from = getStartOfMonthDateTime();
+        const to = getEndOfMonthDateTime();
+        fParams.sFrom = from;
+        fParams.sTo = to;
+        fQuery.createdAt = {
+          $gt: from,
+          $lt: to,
+        };
+      }
+    }
+
+    // 검색어 검색 설정
     if (fParams.filterKey && fParams.filterValue) {
       if (!this.isContainedKey(fParams.filterKey)) {
         throw new BadRequestException();
@@ -117,12 +162,23 @@ export class SafeService<T extends BaseEntity> {
     result.totalDocs = await this.model.countDocuments(
       fQuery as FilterQuery<T>,
     );
+
     result.currentPage = fParams.page;
     result.lastPage = Math.ceil(result.totalDocs / limitOption);
+    if (fParams.useDurationSearch) {
+      // 기간이 존재하면
+      if (fParams.sFrom && fParams.sTo) {
+        result.sFrom = fParams.sFrom;
+        result.sTo = fParams.sTo;
+      } else if (fParams.sYear) {
+        result.sYear = fParams.sYear;
+      }
+    }
     result.docs = await this.model
       .find(fQuery as FilterQuery<T>, fParams.projection)
       .skip(skipOption)
-      .limit(limitOption);
+      .limit(limitOption)
+      .sort({ createAt: -1 });
 
     return result;
   }

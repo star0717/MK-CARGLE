@@ -1,5 +1,5 @@
 import { AuthTokenInfo } from 'src/models/auth.entity';
-import { AuthToken } from 'src/lib/decorators/decorators';
+import { AuthToken, FindParam } from 'src/lib/decorators/decorators';
 import {
   Body,
   Controller,
@@ -54,6 +54,7 @@ export class MaintenancesController {
     @Query() fParams: FindParameters,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<FindResult<Maintenance>> {
+    fParams.useDurationSearch = true;
     return await this.service.findByOptions(token, fParams);
   }
 

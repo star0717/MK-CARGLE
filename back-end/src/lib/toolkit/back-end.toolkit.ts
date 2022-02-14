@@ -5,12 +5,14 @@ import * as dayjs from 'dayjs';
 import * as timezone from 'dayjs/plugin/timezone';
 import * as utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/ko';
+import * as duration from 'dayjs/plugin/duration';
 
 /***************************************************
  * 툴킷 초기화
  ***************************************************/
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(duration);
 dayjs.locale('ko');
 dayjs.tz.setDefault('Asia/Seoul');
 
@@ -78,16 +80,48 @@ export function removePropertyWithEmptyValue(params: TransformFnParams) {
   return params.value;
 }
 
+export function getValidSearchYear(params: TransformFnParams) {
+  params.value = parseInt(params.value);
+  // console.log('sYear: ' + params.value);
+  return params.value;
+}
+
 /***************************************************
  * DayJS 관련
  ***************************************************/
+export const dtFormatForDocNum = 'YYMMDD';
+export const dtFormatForDurationSerarch = 'YYYY-mm-DD';
 
-export function getStartOfDayDateTime(date?: Date) {
+export function getStartOfDayDateTime(date?: Date): Date {
+  console.log(date);
   return dayjs(date).startOf('day').toDate();
 }
 
-export function getEndOfDayDateTime(date?: Date) {
+export function getEndOfDayDateTime(date?: Date): Date {
   return dayjs(date).endOf('day').toDate();
+}
+
+export function getStartOfYearDateTime(date?: Date): Date {
+  return dayjs(date).startOf('year').toDate();
+}
+
+export function getEndOfYearDateTime(date?: Date): Date {
+  return dayjs(date).endOf('year').toDate();
+}
+
+export function getStartOfMonthDateTime(date?: Date): Date {
+  return dayjs(date).startOf('month').toDate();
+}
+
+export function getEndOfMonthDateTime(date?: Date): Date {
+  return dayjs(date).endOf('month').toDate();
+}
+
+export function getDuration(from: Date, to: Date): number {
+  let diff = dayjs(from).diff(dayjs(to), 'days');
+  diff = Math.abs(diff);
+  console.log(diff);
+  return diff;
 }
 
 /**
@@ -95,8 +129,9 @@ export function getEndOfDayDateTime(date?: Date) {
  * @param date 문자열 포맷의 날짜로 변환할 Date
  * @returns 문자열 포맷의 날짜
  */
-export function getStrDate(date?: Date) {
-  return dayjs(date).format('YYMMDD');
+export function getStrDate(date?: Date, format?: string) {
+  if (!format) format = dtFormatForDocNum;
+  return dayjs(date).format(format);
 }
 
 export function testDayJs() {

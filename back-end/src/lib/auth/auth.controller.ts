@@ -80,8 +80,8 @@ export class AuthController {
     }
 
     const newSignInfo: SignUpInfo = await this.authService.signUp(signUpInfo);
-    console.log('여기');
-    console.log(newSignInfo);
+    // console.log('여기');
+    // console.log(newSignInfo);
     this.comService.injectToken(newSignInfo, res);
     return;
   }

@@ -1,10 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { prop } from '@typegoose/typegoose';
+import { index, prop } from '@typegoose/typegoose';
 import { Transform } from 'class-transformer';
-import { IsArray, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsDateString,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 import { TypegooseModule } from 'nestjs-typegoose';
 import {
   getValidPageNumber,
+  getValidSearchYear,
   getValidTakeNumber,
   strToBoolean,
 } from 'src/lib/toolkit/back-end.toolkit';
@@ -13,6 +22,7 @@ import { defTakeNum, maxTakeNum, minTakeNum } from 'src/constants/model.const';
 /**
  * DB의 스키마로 사용할 모든 데이터 모델 클래스에 상속되는 기본 클래스
  */
+@index({ createdAt: 1 })
 export class BaseEntity extends TypegooseModule {
   /**
    * 데이터 모델 개발법
@@ -109,6 +119,37 @@ export class FindParameters {
   @Transform(strToBoolean)
   useRegSearch?: boolean = false;
 
+  /** 검색 기간 조건 */
+  // Back-end 전용. 기간 검색 사용 여부
+  useDurationSearch?: boolean;
+
+  @ApiProperty({
+    description: '검색 시작일. 2022-02-14 형식',
+    required: false,
+  })
+  @IsOptional()
+  @IsDateString()
+  sFrom?: Date;
+
+  @ApiProperty({
+    description: '검색 종료일. 2022-02-14 형식',
+    required: false,
+  })
+  @IsOptional()
+  @IsDateString()
+  sTo?: Date;
+
+  @ApiProperty({
+    description: '검색 연도. 검색 시작일과 종료일 값이 없을 때만 동작',
+    required: false,
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(2022)
+  @Max(2032)
+  @Transform(getValidSearchYear)
+  sYear?: number;
+
   // Back-end 전용. 내부 필요로 활용
   filter?: Object = null;
 
@@ -128,6 +169,33 @@ export class FindResult<T> {
 
   @ApiProperty({ description: '마지막 페이지' })
   lastPage: number;
+
+  @ApiProperty({
+    description: '검색 연도',
+    required: false,
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(2022)
+  @Max(2032)
+  @Transform(getValidSearchYear)
+  sYear?: number;
+
+  @ApiProperty({
+    description: '검색 시작일. 2022-02-14 형식',
+    required: false,
+  })
+  @IsOptional()
+  @IsDateString()
+  sFrom?: Date;
+
+  @ApiProperty({
+    description: '검색 종료일. 2022-02-14 형식',
+    required: false,
+  })
+  @IsOptional()
+  @IsDateString()
+  sTo?: Date;
 }
 
 export class DeleteObjectIds {

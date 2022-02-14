@@ -1,7 +1,6 @@
 import { Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-import { AuthTokenInfo } from 'src/models/auth.entity';
 
 /**
  * 로그인된 사용자 인증 전략

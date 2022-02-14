@@ -19,6 +19,13 @@ export const genFindParamQuery = (data: FindParameters) => {
       query = query + '&useRegSearch=' + data.useRegSearch;
     }
   }
+  if (data?.sFrom && data?.sTo) {
+    query = query + '&sFrom=' + data.sFrom;
+    query = query + '&sTo=' + data.sTo;
+  } else if (data?.sYear) {
+    query = query + '&sYear=' + data.sYear;
+  }
+
   return query;
 };
 
