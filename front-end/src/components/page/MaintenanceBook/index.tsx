@@ -18,19 +18,19 @@ const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
 
   switch (router.query.step) {
-    case "1":
+    case "stored":
       return <SelectCar {...props} />;
 
-    case "2":
+    case "ing":
       return <PayComplete />;
 
-    case "3":
+    case "done":
       return <MaintenanceIng />;
 
-    case "4":
+    case "paid":
       return <MaintenanceComplete />;
 
-    case "5":
+    case "released":
       return <ReleaseComplete />;
 
     default:
