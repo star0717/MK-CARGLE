@@ -105,6 +105,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
+
   return (
     <WholeWrapper>
       <RsWrapper>
@@ -524,9 +525,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                       {getStrMainCustomerType(list.costomerType)}
                     </TableRowLIST>
                     <TableRowLIST width={`15%`}>
-                      {list.works.length > 1
-                        ? `${list.works[0].name}외 ${list.works.length - 1}건`
-                        : list.works[0].name}
+                      {list.works?.length > 1
+                        ? `${list.works[0]?.name}외 ${list.works.length - 1}건`
+                        : list.works[0]?.name}
                     </TableRowLIST>
                     <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
                     <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
@@ -550,7 +551,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
             </TableBody>
           </TableWrapper>
           <Wrapper dr={`row`}></Wrapper>
-          {/* <PagenationSection {...props} /> */}
+          <PagenationSection {...props} />
         </Wrapper>
       </RsWrapper>
     </WholeWrapper>
