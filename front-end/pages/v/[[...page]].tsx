@@ -328,7 +328,7 @@ export const getServerSideProps: GetServerSideProps = async (
           successResult.props.data = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
-                id,
+                id: id,
                 isServerSide: true,
               }),
               authConfig
