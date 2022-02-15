@@ -53,3 +53,8 @@ export declare class Maintenance extends BaseEntity {
     price?: Price;
     customer: Customer;
 }
+export declare class MainFindOptions {
+    regNumber?: string;
+    status?: MainStatus;
+    costomerType?: MainCustomerType;
+}

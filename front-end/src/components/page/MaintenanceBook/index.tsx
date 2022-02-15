@@ -8,12 +8,21 @@ import { Agency } from "src/models/agency.entity";
 import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
-import { MainStatus } from "src/constants/maintenance.const";
+import {
+  genMainOptionQuery,
+  MainCustomerType,
+  MainStatus,
+} from "src/constants/maintenance.const";
 import MaintenanceStored from "./section/stored";
 import MaintenanceIng from "./section/ing";
 import MaintenanceDone from "./section/done";
 import MaintenancePaid from "./section/paid";
 import MaintenanceReleased from "./section/released";
+import { _aGetMaintenancesList } from "store/action/user.action";
+import { MainFindOptions } from "../../../../../back-end/src/models/maintenance.entity";
+import dayjs from "dayjs";
+import { MaintenancesApiPath } from "src/constants/api-path.const";
+import { genApiPath } from "src/modules/commonModule";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
@@ -50,6 +59,13 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   const [findResult, setFindResult] = useState<FindResult<any>>(props.data);
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
+  const [searchFrom, setSearchFrom] = useState<string>("");
+  const [searchTo, setSearchTo] = useState<string>("");
+  const [searchDetails, setSearchDetails] = useState<MainFindOptions>({
+    costomerType: MainCustomerType.INSURANCE,
+    status: MainStatus.STORED,
+    regNumber: "152머1535",
+  });
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -62,13 +78,30 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    * @param page 조회할 페이지
    */
   const findCompanyHandler = (page: number) => {
+    var sFromDate = new Date(searchFrom);
+    var sToDate = new Date(searchTo);
+
+    // console.log("sFrom", sFromDate);
+    // console.log("sTo", sToDate);
+
     const param: FindParameters = {
       page,
       take: 10,
       filterKey: searchOption,
       filterValue: filterValue,
       useRegSearch: true,
+      sFrom: sFromDate,
+      sTo: sToDate,
     };
+    // console.log("query", genMainOptionQuery(searchDetails));
+
+    console.log(
+      "여기",
+      genApiPath(MaintenancesApiPath.maintenances, { findParams: param })
+    );
+    dispatch(_aGetMaintenancesList(param)).then((res: any) => {
+      setFindResult(res.payload);
+    });
 
     // dispatch(_aGetAgencies(param)).then((res: any) => {
     //   setFindResult(res.payload);
@@ -86,11 +119,12 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     setSearchOption,
     filterValue,
     setFilterValue,
+    setSearchFrom,
+    setSearchTo,
   };
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-
   return (
     <BodyWrapper>
       {/* <MaintenenanceList {...maintenanceListProps} /> */}

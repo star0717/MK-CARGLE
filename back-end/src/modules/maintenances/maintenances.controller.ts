@@ -1,6 +1,6 @@
 import { MainFindOptions } from './../../models/maintenance.entity';
 import { AuthTokenInfo } from 'src/models/auth.entity';
-import { AuthToken, FindParam } from 'src/lib/decorators/decorators';
+import { AuthToken } from 'src/lib/decorators/decorators';
 import {
   Body,
   Controller,
@@ -22,30 +22,16 @@ import {
 import { CarInfo, Maintenance } from 'src/models/maintenance.entity';
 import { MaintenancesService } from './maintenances.service';
 import {
+  DeleteObjectIds,
+  DeleteResult,
   FindParameters,
   FindResult,
-  OptionalInfo,
 } from 'src/models/base.entity';
 
 @Controller('maintenances')
 @ApiTags('정비내역 API')
 export class MaintenancesController {
   constructor(private readonly service: MaintenancesService) {}
-
-  // @Post()
-  // @ApiOperation({ summary: `[WORKER] 새로운 Maintenance 데이터 추가` })
-  // @ApiBody({ description: `추가할 Maintenance 데이터`, type: Maintenance })
-  // @ApiCreatedResponse({
-  //   description: `추가된 Maintenance 데이터`,
-  //   type: Maintenance,
-  // })
-  // async create(
-  //   @Body() doc: Maintenance,
-  //   @AuthToken() token: AuthTokenInfo,
-  // ): Promise<Maintenance> {
-  //   console.log(doc);
-  //   return await this.service.create(token, doc);
-  // }
 
   @Get()
   @ApiOperation({
@@ -65,7 +51,13 @@ export class MaintenancesController {
     console.log(fOptions);
 
     fParams.useDurationSearch = true;
-    if (fOptions) fParams.filter = fOptions;
+    if (fOptions) {
+      fParams.filter = fOptions;
+      if (fOptions.regNumber) {
+        fOptions['car.regNumber'] = fOptions.regNumber;
+        delete fOptions.regNumber;
+      }
+    }
 
     return await this.service.findByOptions(token, fParams);
   }
@@ -86,37 +78,40 @@ export class MaintenancesController {
     return await this.service.findById(token, id);
   }
 
-  // @Patch(':id')
-  // @ApiOperation({
-  //   summary: `[WORKER] id에 해당하는 Maintenance 데이터 갱신`,
-  // })
-  // @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
-  // @ApiBody({ description: `갱신된 Maintenance 데이터`, type: Maintenance })
-  // async findByIdAndUpdate(
-  //   @Param('id') id: string,
-  //   @Body() doc: Maintenance,
-  //   @AuthToken() token: AuthTokenInfo,
-  // ): Promise<Maintenance> {
-  //   console.log('update in BaseController');
-  //   console.log(doc);
-  //   return await this.service.findByIdAndUpdate(token, id, doc);
-  // }
+  @Delete(':id')
+  @ApiOperation({
+    summary: `[WORKER] id에 해당하는 Maintenance 데이터 삭제`,
+  })
+  @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
+  @ApiResponse({
+    description: `삭제된 Maintenance 데이터의 수`,
+    type: DeleteResult,
+  })
+  async findByIdAndRemove(
+    @Param('id') id: string,
+    @AuthToken() token: AuthTokenInfo,
+  ): Promise<DeleteResult> {
+    return await this.service.findByIdAndRemove(token, id);
+  }
 
-  // @Delete(':id')
-  // @ApiOperation({
-  //   summary: `[WORKER] id에 해당하는 Maintenance 데이터 삭제`,
-  // })
-  // @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
-  // @ApiResponse({
-  //   description: `삭제된 Maintenance 데이터의 수`,
-  //   type: DeleteResult,
-  // })
-  // async findByIdAndRemove(
-  //   @Param('id') id: string,
-  //   @AuthToken() token: AuthTokenInfo,
-  // ): Promise<DeleteResult> {
-  //   return await this.service.findByIdAndRemove(token, id);
-  // }
+  @Post('/deletemany')
+  @ApiOperation({
+    summary: `[WORKER] 복수 오브젝트 ID에 해당하는 Maintenance의 데이터들을 삭제`,
+  })
+  @ApiBody({
+    description: `삭제할 데이터들의 오브젝트ID들`,
+    type: DeleteObjectIds,
+  })
+  @ApiResponse({
+    description: `삭제된 Maintenance의 데이터의 수`,
+    type: DeleteResult,
+  })
+  async deleteManyByIds(
+    @AuthToken() token: AuthTokenInfo,
+    @Body() objectIds: DeleteObjectIds,
+  ): Promise<DeleteResult> {
+    return this.service.deleteManyByIds(token, objectIds);
+  }
 
   /***** 공통 기능 *****
    * 1 정비이력 조회(리스트)

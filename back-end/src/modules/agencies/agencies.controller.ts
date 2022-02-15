@@ -112,7 +112,7 @@ export class AgenciesController {
 
   @Post('/deletemany')
   @ApiOperation({
-    summary: `[ADMIN] 복수 오브젝트 ID에 해당하는 Agency 데이터들을 삭제`,
+    summary: `[WORKER] 복수 오브젝트 ID에 해당하는 Agency 데이터들을 삭제`,
   })
   @ApiBody({
     description: `삭제할 데이터들의 오브젝트ID들`,
