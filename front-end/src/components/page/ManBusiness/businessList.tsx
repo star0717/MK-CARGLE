@@ -213,7 +213,7 @@ const ManBusinessList: NextPage<any> = (props) => {
               </Wrapper>
             </SearchInputWrapper>
           </form>
-          <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
+          <Wrapper dr={`row`} ju={`flex-end`}>
             <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
               <SmallButton
                 width={`150px`}
