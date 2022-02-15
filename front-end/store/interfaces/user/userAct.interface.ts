@@ -1,3 +1,4 @@
+import { Maintenance } from "./../../../../back-end/src/models/maintenance.entity";
 import { Agency } from "src/models/agency.entity";
 import { Car } from "src/models/car.entity";
 import { PartsSet } from "src/models/partsset.entity";
@@ -431,6 +432,11 @@ export class _iAgency implements baseActionInterface {
 export class _iGetMaintenancesCarInfo implements baseActionInterface {
   type: ActionAPIs.USER_API;
   payload: Car;
+}
+
+export class _iGetMaintenancesList implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: Maintenance;
 }
 
 /*****************************************************

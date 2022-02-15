@@ -1951,3 +1951,26 @@ export const StampWrapper = styled.div<any>`
 export const ColorSpan = styled.span<any>`
   color: ${(props) => props.color};
 `;
+
+export const SpeechBubble = styled.div<any>`
+  position: relative;
+  background: #343a40;
+  border-radius: 0.4em;
+  width: auto;
+  padding: 14px 20px;
+  color: #fff;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-top-color: #343a40;
+    border-bottom: 0;
+    margin-left: -20px;
+    margin-bottom: -12px;
+  }
+`;

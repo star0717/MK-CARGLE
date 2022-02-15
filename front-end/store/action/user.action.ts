@@ -43,6 +43,7 @@ import {
   _iPartssetsOne,
   _iPartssets,
   _iGetMaintenancesCarInfo,
+  _iGetMaintenancesList,
 } from "../interfaces";
 
 import {
@@ -58,6 +59,7 @@ import { Part } from "../../src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Car } from "src/models/car.entity";
+import { Maintenance } from "../../../back-end/src/models/maintenance.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1013,6 +1015,22 @@ export async function _aGetMaintenancesCarInfo(id: string) {
     });
 
   const result: _iGetMaintenancesCarInfo = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+export async function _aGetMaintenancesList(findParams: FindParameters) {
+  const req: Maintenance = await axios
+    .get(
+      genApiPath(MaintenancesApiPath.maintenances, { findParams: findParams })
+    )
+    .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
+      return res.data;
+    });
+
+  const result: _iGetMaintenancesList = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

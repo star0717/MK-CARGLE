@@ -17,6 +17,7 @@ import {
   SearchInput,
   SearchInputWrapper,
   SmallButton,
+  SpeechBubble,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -37,10 +38,18 @@ import {
 } from "react-icons/ai";
 import { GoCheck } from "react-icons/go";
 import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
-import { BsChevronDoubleUp, BsPencilSquare, BsSearch } from "react-icons/bs";
+import {
+  BsChevronDoubleUp,
+  BsFillFileEarmarkCheckFill,
+  BsPencilSquare,
+  BsPlusCircleFill,
+  BsSearch,
+} from "react-icons/bs";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { faCar } from "@fortawesome/free-solid-svg-icons";
-import { FaCar } from "react-icons/fa";
+import { FaCar, FaCarAlt, FaFlagCheckered, FaRegListAlt } from "react-icons/fa";
+import { TiSpanner } from "react-icons/ti";
+import { RiFileList2Fill } from "react-icons/ri";
 import { Car } from "src/models/car.entity";
 import { useDispatch } from "react-redux";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
@@ -130,15 +139,19 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        <CommonTitleWrapper>
+        <Wrapper>
           {/* <CommonTitle>
             차량선택 후 정비진행 버튼 클릭 시 정비가 진행됩니다.
           </CommonTitle> */}
-          <CommonSubTitle>차량선택 후 차량입고를 해주세요</CommonSubTitle>
+          <Wrapper padding={`20px`} margin={`0px 0px 20px`}>
+            <SpeechBubble fontSize={`20px`}>
+              "차량선택 후 차량입고를 해주세요"
+            </SpeechBubble>
+          </Wrapper>
           <JoinStepBarWrapper>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`progress`}>
-                <AiOutlineFileText />
+                <RiFileList2Fill />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량선택
@@ -147,7 +160,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`before`}>
-                <AiOutlineFileText />
+                <FaCarAlt />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량입고
@@ -155,7 +168,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>{<AiOutlineUser />}</JoinStepBar>
+              <JoinStepBar kindOf={`before`}>{<TiSpanner />}</JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>
@@ -163,7 +176,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <JoinStepBar kindOf={"line2"}></JoinStepBar>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`before`}>
-                <MdOutlineBusinessCenter />
+                <BsFillFileEarmarkCheckFill />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비완료
@@ -172,21 +185,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`before`}>
-                <MdOutlineUploadFile />
+                <FaFlagCheckered />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 출고완료
               </Text>
             </Wrapper>
           </JoinStepBarWrapper>
-        </CommonTitleWrapper>
-        <Wrapper
-          dr={`row`}
-          padding={`40px 0px 0px`}
-          ju={`space-between`}
-          al={`flex-start`}
-        >
-          <Wrapper width={`35%`}>
+        </Wrapper>
+        <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
+          <Wrapper width={`25%`}>
             {showCar ? (
               <Wrapper dr={`row`} fontSize={`24px`}>
                 <Text fontSize={`24px`}>{searchCarText}</Text>
@@ -247,7 +255,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 )}
               </form>
             )}
-            <Wrapper width={`35%`}>
+            <Wrapper>
               {showCar ? (
                 <form
                   id="carInfoForm"
@@ -441,17 +449,26 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   </Wrapper>
                 </form>
               ) : (
-                <Wrapper>
-                  <BsChevronDoubleUp />
-                  <Text>선택된 차량이 없습니다</Text>
-                  <Text>차량 선택 후 정비등록을 진행할 수 있습니다</Text>
-                  <FaCar />
+                // <Wrapper>
+                //   <BsChevronDoubleUp />
+                //   <Text>선택된 차량이 없습니다</Text>
+                //   <Text>차량 선택 후 정비등록을 진행할 수 있습니다</Text>
+                //   <FaCar />
+                // </Wrapper>
+                <Wrapper padding={`50% 20px`}>
+                  <Text fontSize={`36px`} color={`#c4c4c4`}>
+                    <BsPlusCircleFill />
+                  </Text>
+                  <Text>
+                    선택된 차량이 없습니다 <br />
+                    차량 선택 후 정비등록을 진행할 수 있습니다.
+                  </Text>
                 </Wrapper>
               )}
             </Wrapper>
           </Wrapper>
 
-          <Wrapper width={`65%`}>
+          <Wrapper width={`70%`}>
             <Wrapper dr={`row`} ju={`flex-end`}>
               <SmallButton
                 type="button"
@@ -463,34 +480,52 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 목록으로
               </SmallButton>
             </Wrapper>
-            <Wrapper dr={`row`}>
-              <Text>정비기간</Text>
-              <TextInput2 type="date" />
-              <Text>~</Text>
-              <TextInput2 type="date" />
-              <Text>차량출고일</Text>
-              <TextInput2 type="date" />
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Text width={`80px`} textAlign={`start`}>
+                정비기간
+              </Text>
+              <TextInput2 width={`140px`} type="date" />
+              <Text textAlign={`start`}>~</Text>
+              <TextInput2 width={`140px`} type="date" />
+              <Text width={`80px`} textAlign={`start`}>
+                차량출고일
+              </Text>
+              <TextInput2 width={`140px`} type="date" />
+              <Text width={`80px`} textAlign={`start`}>
+                정비책임자
+              </Text>
+              <TextInput2 width={`140px`} type="text" />
             </Wrapper>
-            <Wrapper dr={`row`}>
-              <Text>정비책임자</Text>
-              <TextInput2 type="text" />
-            </Wrapper>
-            <Wrapper dr={`row`}>
-              <Wrapper dr={`row`}>
-                <Text>정비구분</Text>
-                <Combo>
+
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper dr={`row`} ju={`flex-start`}>
+                <Text width={`80px`} textAlign={`start`}>
+                  정비구분
+                </Text>
+                <Combo width={`140px`} margin={`0px`}>
                   <option value="1">일반</option>
                 </Combo>
-                <TextInput2 type="text" />
-                <TextInput2 type="text" />
+              </Wrapper>
+              <Wrapper dr={`row`} ju={`flex-end`}>
+                <Text width={`80px`} textAlign={`start`}>
+                  보험사명
+                </Text>
+                <TextInput2 width={`140px`} type="text" />
+                <Text width={`80px`} textAlign={`start`}>
+                  보험번호
+                </Text>
+                <TextInput2 width={`140px`} type="text" />
               </Wrapper>
               <Wrapper dr={`row`}>
-                <Text>추가정비동의</Text>
+                <Text width={`80px`} textAlign={`start`}>
+                  추가정비동의
+                </Text>
                 <Combo>
                   <option value="1">동의</option>
                 </Combo>
               </Wrapper>
             </Wrapper>
+
             <Wrapper dr={`row`}>
               <Text>정비내역</Text>
               <Wrapper dr={`row`}>
@@ -533,15 +568,15 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
               <TableBody>
-                <TableRowLIST>
-                  <TableRow width={`15%`}>1</TableRow>
-                  <TableRow width={`15%`}>2</TableRow>
-                  <TableRow width={`14%`}>3</TableRow>
-                  <TableRow width={`15%`}>4</TableRow>
-                  <TableRow width={`14%`}>5</TableRow>
-                  <TableRow width={`14%`}>6</TableRow>
-                  <TableRow width={`8%`}>7</TableRow>
-                </TableRowLIST>
+                <TableRow>
+                  <TableRowLIST width={`15%`}>1</TableRowLIST>
+                  <TableRowLIST width={`15%`}>2</TableRowLIST>
+                  <TableRowLIST width={`14%`}>3</TableRowLIST>
+                  <TableRowLIST width={`15%`}>4</TableRowLIST>
+                  <TableRowLIST width={`14%`}>5</TableRowLIST>
+                  <TableRowLIST width={`14%`}>6</TableRowLIST>
+                  <TableRowLIST width={`8%`}>7</TableRowLIST>
+                </TableRow>
               </TableBody>
             </TableWrapper>
             <Wrapper>

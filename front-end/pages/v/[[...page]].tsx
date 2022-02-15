@@ -328,7 +328,7 @@ export const getServerSideProps: GetServerSideProps = async (
           successResult.props.data = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
-                id,
+                id: id,
                 isServerSide: true,
               }),
               authConfig
@@ -336,7 +336,7 @@ export const getServerSideProps: GetServerSideProps = async (
             .then((res: AxiosResponse<FindResult<any>, any>) => res.data);
           return successResult;
         } else {
-          console.log("id 없을때");
+          console.log("id 없을때@");
           successResult.props.data = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
@@ -346,6 +346,7 @@ export const getServerSideProps: GetServerSideProps = async (
               authConfig
             )
             .then((res: AxiosResponse<FindResult<any>, any>) => res.data);
+          console.log(successResult);
           return successResult;
         }
       }
