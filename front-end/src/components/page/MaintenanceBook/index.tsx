@@ -78,8 +78,8 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    * @param page 조회할 페이지
    */
   const findCompanyHandler = (page: number) => {
-    var sFromDate = new Date(searchFrom);
-    var sToDate = new Date(searchTo);
+    var sFromDate: Date = new Date(searchFrom);
+    var sToDate: Date = new Date(searchTo);
 
     // console.log("sFrom", sFromDate);
     // console.log("sTo", sToDate);
@@ -90,10 +90,11 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       filterKey: searchOption,
       filterValue: filterValue,
       useRegSearch: true,
-      sFrom: sFromDate,
-      sTo: sToDate,
     };
-    // console.log("query", genMainOptionQuery(searchDetails));
+    if (searchFrom) param.sFrom = sFromDate;
+    if (searchTo) param.sTo = sToDate;
+
+    console.log("param: ", param);
 
     console.log(
       "여기",
