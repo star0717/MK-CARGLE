@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NextPage } from "next";
 import dayjs from "dayjs";
 import {
@@ -34,8 +34,6 @@ import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
-import { GiEgyptianWalk } from "react-icons/gi";
-import { AiOutlineDown, AiTwotoneCheckCircle } from "react-icons/ai";
 import { GoPrimitiveDot } from "react-icons/go";
 import { Maintenance } from "src/models/maintenance.entity";
 import {
@@ -52,14 +50,14 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+
   const [searchMenu, setSearchMenu] = useState<boolean>(false);
   const [checkedList, setCheckedList] = useState([]);
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
-  const [clickDoc, setClickDoc] = useState();
 
   /** 상세검색 checkBox state 관리 */
-  // const [searchFrom, setSearchFrom] = useState<Date>();
-  // const [searchTo, setSearchTo] = useState<Date>();
+  const [searchFrom, setSearchFrom] = useState<string>("");
+  const [searchTo, setSearchTo] = useState<string>("");
   const [statusOne, setStatusOne] = useState<boolean>(false);
   const [statusTwo, setStatusTwo] = useState<boolean>(false);
   const [statusThree, setStatusThree] = useState<boolean>(false);
@@ -98,14 +96,28 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     },
     [checkedList]
   );
+
+  const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "sFrom") {
+      setSearchFrom(e.target.value);
+    } else {
+      setSearchTo(e.target.value);
+    }
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
 
+  // state초기값으로 props를 넣게 되는경우 발생하는 오류방지용
+  useEffect(() => {
+    setMaintenanceList(props.findResult.docs);
+  }, [props.findResult.docs]);
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-
+  console.log(searchFrom, "~", searchTo);
   return (
     <WholeWrapper>
       <RsWrapper>
@@ -174,12 +186,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               >
                 <TextInput2
                   type="date"
-                  // value={dayjs(userData.joinDate).format("YYYY-MM-DD")}
-                  // {...register("joinDate", {
-                  //   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  //     onInputUserHandler(e);
-                  //   },
-                  // })}
+                  name="sFrom"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputUserHandler(e);
+                  }}
                   width={`300px`}
                   margin={`10px 0px 10px 30px`}
                 />
@@ -188,12 +198,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 </Wrapper>
                 <TextInput2
                   type="date"
-                  // value={dayjs(userData.joinDate).format("YYYY-MM-DD")}
-                  // {...register("joinDate", {
-                  //   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  //     onInputUserHandler(e);
-                  //   },
-                  // })}
+                  name="sTo"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputUserHandler(e);
+                  }}
                   width={`300px`}
                   margin={`10px 0px 10px 30px`}
                 />
@@ -487,7 +495,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               </TableRow> */}
 
               {props.findResult.totalDocs > 0 ? (
-                maintenanceList.map((list: any) => (
+                maintenanceList?.map((list: any) => (
                   <TableRow
                     key={list._id}
                     onClick={() => {
