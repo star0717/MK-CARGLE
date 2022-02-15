@@ -18,6 +18,7 @@ import MaintenanceDone from "./section/done";
 import MaintenancePaid from "./section/paid";
 import MaintenanceReleased from "./section/released";
 import { _aGetMaintenancesList } from "store/action/user.action";
+import dayjs from "dayjs";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
@@ -54,6 +55,8 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   const [findResult, setFindResult] = useState<FindResult<any>>(props.data);
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
+  const [searchFrom, setSearchFrom] = useState<string>();
+  const [searchTo, setSearchTo] = useState<string>();
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -66,6 +69,9 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    * @param page 조회할 페이지
    */
   const findCompanyHandler = (page: number) => {
+    var date = new Date(searchFrom);
+    var date2 = dayjs(date).format("YYYY-MM-DD");
+    console.log("string to date", date2);
     const param: FindParameters = {
       page,
       take: 10,
@@ -94,11 +100,14 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     setSearchOption,
     filterValue,
     setFilterValue,
+    setSearchFrom,
+    setSearchTo,
   };
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-
+  console.log("sFrom", searchFrom);
+  console.log("sTo", searchTo);
   return (
     <BodyWrapper>
       {/* <MaintenenanceList {...maintenanceListProps} /> */}

@@ -56,8 +56,6 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
 
   /** 상세검색 checkBox state 관리 */
-  const [searchFrom, setSearchFrom] = useState<string>("");
-  const [searchTo, setSearchTo] = useState<string>("");
   const [statusOne, setStatusOne] = useState<boolean>(false);
   const [statusTwo, setStatusTwo] = useState<boolean>(false);
   const [statusThree, setStatusThree] = useState<boolean>(false);
@@ -100,9 +98,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
 
   const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "sFrom") {
-      setSearchFrom(e.target.value);
+      props.setSearchFrom(e.target.value);
     } else {
-      setSearchTo(e.target.value);
+      props.setSearchTo(e.target.value);
     }
   };
 
@@ -119,6 +117,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
    * 5. Page configuration
    *********************************************************************/
   // console.log(searchFrom, "~", searchTo);
+
   return (
     <WholeWrapper>
       <RsWrapper>
