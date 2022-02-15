@@ -65,7 +65,13 @@ export class MaintenancesController {
     console.log(fOptions);
 
     fParams.useDurationSearch = true;
-    if (fOptions) fParams.filter = fOptions;
+    if (fOptions) {
+      fParams.filter = fOptions;
+      if (fOptions.regNumber) {
+        fOptions['car.regNumber'] = fOptions.regNumber;
+        delete fOptions.regNumber;
+      }
+    }
 
     return await this.service.findByOptions(token, fParams);
   }
