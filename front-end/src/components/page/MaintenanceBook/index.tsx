@@ -4,7 +4,6 @@ import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import { _MainProps } from "src/configure/_props.entity";
 import MaintenenanceList from "./section/maintenanceList";
 import { useDispatch } from "react-redux";
-import { Agency } from "src/models/agency.entity";
 import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
@@ -78,12 +77,6 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    * @param page 조회할 페이지
    */
   const findCompanyHandler = (page: number) => {
-    var sFromDate: Date = new Date(searchFrom);
-    var sToDate: Date = new Date(searchTo);
-
-    // console.log("sFrom", sFromDate);
-    // console.log("sTo", sToDate);
-
     const param: FindParameters = {
       page,
       take: 10,
@@ -91,22 +84,19 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       filterValue: filterValue,
       useRegSearch: true,
     };
-    if (searchFrom) param.sFrom = sFromDate;
-    if (searchTo) param.sTo = sToDate;
 
-    console.log("param: ", param);
+    if (searchFrom) {
+      var sFromDate: Date = new Date(searchFrom);
+      param.sFrom = sFromDate;
+    }
+    if (searchTo) {
+      var sToDate: Date = new Date(searchTo);
+      param.sTo = sToDate;
+    }
 
-    console.log(
-      "여기",
-      genApiPath(MaintenancesApiPath.maintenances, { findParams: param })
-    );
     dispatch(_aGetMaintenancesList(param)).then((res: any) => {
       setFindResult(res.payload);
     });
-
-    // dispatch(_aGetAgencies(param)).then((res: any) => {
-    //   setFindResult(res.payload);
-    // });
   };
   /*********************************************************************
    * 4. Props settings
