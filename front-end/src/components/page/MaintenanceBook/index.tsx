@@ -69,15 +69,17 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    * @param page 조회할 페이지
    */
   const findCompanyHandler = (page: number) => {
-    var date = new Date(searchFrom);
-    var date2 = dayjs(date).format("YYYY-MM-DD");
-    console.log("string to date", date2);
+    // var date = new Date(searchFrom);
+    // var date2 = dayjs(date).format("YYYY-MM-DD");
+    // console.log("string to date", date2);
     const param: FindParameters = {
       page,
       take: 10,
       filterKey: searchOption,
       filterValue: filterValue,
       useRegSearch: true,
+      sFrom: searchFrom,
+      sTo: searchTo,
     };
 
     dispatch(_aGetMaintenancesList(param)).then((res: any) => {
