@@ -60,11 +60,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   const [searchFrom, setSearchFrom] = useState<string>("");
   const [searchTo, setSearchTo] = useState<string>("");
-  const [searchDetails, setSearchDetails] = useState<MainFindOptions>({
-    costomerType: MainCustomerType.INSURANCE,
-    status: MainStatus.STORED,
-    regNumber: "152머1535",
-  });
+  const [searchDetails, setSearchDetails] = useState<MainFindOptions>({});
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -94,7 +90,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       param.sTo = sToDate;
     }
 
-    dispatch(_aGetMaintenancesList(param)).then((res: any) => {
+    dispatch(_aGetMaintenancesList(param, searchDetails)).then((res: any) => {
       setFindResult(res.payload);
     });
   };
