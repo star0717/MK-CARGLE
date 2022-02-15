@@ -184,18 +184,18 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
             <CommonTitle>부품관리</CommonTitle>
             <CommonSubTitle></CommonSubTitle>
           </CommonTitleWrapper>
-          <Wrapper>
+          <Wrapper dr={`row`} al={`flex-end`} margin={`0px 0px 50px`}>
             <form onSubmit={onSearchFormHandler}>
               <SearchInputWrapper
                 type="text"
-                width={`678px`}
+                width={`578px`}
                 padding={`0px 5px`}
                 dr={`row`}
                 borderBottom={`1px solid #000`}
               >
                 <Wrapper width={`auto`}>
                   <SearchInput
-                    width={`632px`}
+                    width={`532px`}
                     padding={`0px 5px 0px 5px`}
                     placeholder="부품코드, 부품명 또는 국토부코드를 입력하세요."
                     type="text"
@@ -212,60 +212,61 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 </Wrapper>
               </SearchInputWrapper>
             </form>
-          </Wrapper>
-          <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
-            <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
-              <SmallButton
-                kindOf={`default`}
-                width={`150px`}
-                fontSize={`16px`}
-                onClick={() => {
-                  setModalOption("addPart");
-                  setModalOpen(true);
-                }}
-              >
-                부품추가
-              </SmallButton>
-              <SmallButton
-                kindOf={`cancle`}
-                width={`150px`}
-                fontSize={`16px`}
-                onClick={() => {
-                  if (checkedList.length === 0) {
-                    return alert("항목을 선택해주세요.");
-                  }
-                  if (window.confirm("삭제하시겠습니까?")) {
-                    if (checkedList.length === 1) {
-                      dispatch(_aDeleteAdminPartsOne(checkedList[0])).then(
-                        (res: _iDeleteAdminPartsOne) => {
-                          alert("삭제되었습니다.");
-                          setReset(reset + 1);
-                        },
-                        (err) => {
-                          alert("삭제에 실패했습니다.");
-                        }
-                      );
-                    } else {
-                      dispatch(_aDeleteAdminPartsMany(checkedList)).then(
-                        (res: _iDeleteAdminPartsMany) => {
-                          alert("삭제되었습니다.");
-                          setReset(reset + 1);
-                        },
-                        (err) => {
-                          alert("삭제에 실패했습니다.");
-                        }
-                      );
+            <Wrapper dr={`row`} ju={`flex-end`}>
+              <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`150px`}
+                  fontSize={`16px`}
+                  onClick={() => {
+                    setModalOption("addPart");
+                    setModalOpen(true);
+                  }}
+                >
+                  부품추가
+                </SmallButton>
+                <SmallButton
+                  kindOf={`cancle`}
+                  width={`150px`}
+                  fontSize={`16px`}
+                  onClick={() => {
+                    if (checkedList.length === 0) {
+                      return alert("항목을 선택해주세요.");
                     }
-                  } else {
-                    return false;
-                  }
-                }}
-              >
-                선택삭제
-              </SmallButton>
+                    if (window.confirm("삭제하시겠습니까?")) {
+                      if (checkedList.length === 1) {
+                        dispatch(_aDeleteAdminPartsOne(checkedList[0])).then(
+                          (res: _iDeleteAdminPartsOne) => {
+                            alert("삭제되었습니다.");
+                            setReset(reset + 1);
+                          },
+                          (err) => {
+                            alert("삭제에 실패했습니다.");
+                          }
+                        );
+                      } else {
+                        dispatch(_aDeleteAdminPartsMany(checkedList)).then(
+                          (res: _iDeleteAdminPartsMany) => {
+                            alert("삭제되었습니다.");
+                            setReset(reset + 1);
+                          },
+                          (err) => {
+                            alert("삭제에 실패했습니다.");
+                          }
+                        );
+                      }
+                    } else {
+                      return false;
+                    }
+                  }}
+                >
+                  선택삭제
+                </SmallButton>
+              </Wrapper>
             </Wrapper>
           </Wrapper>
-          <Wrapper dr={`row`} padding={`40px 0px 50px`} ju={`space-between`}>
+
+          <Wrapper dr={`row`} ju={`space-between`}>
             {/* 부품분류 */}
             <Wrapper width={`24%`}>
               <TableWrapper>

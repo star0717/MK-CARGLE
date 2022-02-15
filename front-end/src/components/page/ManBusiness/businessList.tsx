@@ -173,7 +173,7 @@ const ManBusinessList: NextPage<any> = (props) => {
             거래처 정보를 저장하고 관리할 수 있어요.
           </CommonSubTitle>
         </CommonTitleWrapper>
-        <Wrapper dr={`row`}>
+        <Wrapper dr={`row`} al={`flex-end`}>
           <Combo
             value={props.searchOption}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -188,7 +188,7 @@ const ManBusinessList: NextPage<any> = (props) => {
           <form onSubmit={onSearchHandler}>
             <SearchInputWrapper
               type="text"
-              width={`678px`}
+              width={`578px`}
               padding={`0px 5px`}
               dr={`row`}
               margin={`10px 0px 0px`}
@@ -196,7 +196,7 @@ const ManBusinessList: NextPage<any> = (props) => {
             >
               <Wrapper width={`auto`}>
                 <SearchInput
-                  width={`632px`}
+                  width={`532px`}
                   padding={`0px 5px 0px 5px`}
                   placeholder="검색할 업체의 상호명 또는, 담당자명을 입력하세요"
                   type="text"
@@ -213,60 +213,61 @@ const ManBusinessList: NextPage<any> = (props) => {
               </Wrapper>
             </SearchInputWrapper>
           </form>
-        </Wrapper>
-        <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
-          <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
-            <SmallButton
-              width={`150px`}
-              fontSize={`16px`}
-              kindOf={`default`}
-              type="button"
-              onClick={() => {
-                setModalOption("add");
-                setModalOpen(true);
-              }}
-            >
-              신규등록
-            </SmallButton>
-            <SmallButton
-              width={`150px`}
-              fontSize={`16px`}
-              kindOf={`cancle`}
-              onClick={() => {
-                if (checkedList.length === 0) {
-                  return alert("항목을 선택해주세요.");
-                }
-                if (window.confirm("삭제하시겠습니까?")) {
-                  if (checkedList.length === 1) {
-                    dispatch(_aDeleteAgency(checkedList[0])).then(
-                      (res: _iDeleteByUser) => {
-                        alert("삭제되었습니다.");
-                        setReset(reset + 1);
-                      },
-                      (err) => {
-                        alert("삭제에 실패했습니다.");
-                      }
-                    );
-                  } else {
-                    dispatch(_aPostAgenciesDeleteMany(checkedList)).then(
-                      (res: _iDeleteByUser) => {
-                        alert("삭제되었습니다.");
-                        setReset(reset + 1);
-                      },
-                      (err) => {
-                        alert("삭제에 실패했습니다.");
-                      }
-                    );
+          <Wrapper dr={`row`} ju={`flex-end`}>
+            <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
+              <SmallButton
+                width={`150px`}
+                fontSize={`16px`}
+                kindOf={`default`}
+                type="button"
+                onClick={() => {
+                  setModalOption("add");
+                  setModalOpen(true);
+                }}
+              >
+                신규등록
+              </SmallButton>
+              <SmallButton
+                width={`150px`}
+                fontSize={`16px`}
+                kindOf={`cancle`}
+                onClick={() => {
+                  if (checkedList.length === 0) {
+                    return alert("항목을 선택해주세요.");
                   }
-                } else {
-                  return false;
-                }
-              }}
-            >
-              삭제하기
-            </SmallButton>
+                  if (window.confirm("삭제하시겠습니까?")) {
+                    if (checkedList.length === 1) {
+                      dispatch(_aDeleteAgency(checkedList[0])).then(
+                        (res: _iDeleteByUser) => {
+                          alert("삭제되었습니다.");
+                          setReset(reset + 1);
+                        },
+                        (err) => {
+                          alert("삭제에 실패했습니다.");
+                        }
+                      );
+                    } else {
+                      dispatch(_aPostAgenciesDeleteMany(checkedList)).then(
+                        (res: _iDeleteByUser) => {
+                          alert("삭제되었습니다.");
+                          setReset(reset + 1);
+                        },
+                        (err) => {
+                          alert("삭제에 실패했습니다.");
+                        }
+                      );
+                    }
+                  } else {
+                    return false;
+                  }
+                }}
+              >
+                삭제하기
+              </SmallButton>
+            </Wrapper>
           </Wrapper>
         </Wrapper>
+
         <TableWrapper margin={`50px 0px 0px`}>
           <TableHead>
             <TableHeadLIST

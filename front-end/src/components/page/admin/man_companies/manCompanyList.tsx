@@ -88,7 +88,12 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
           <CommonTitle>업체관리</CommonTitle>
           <CommonSubTitle></CommonSubTitle>
         </CommonTitleWrapper>
-        <Wrapper dr={`row`} al={`flex-end`} padding={`50px 0px 0px`}>
+        <Wrapper
+          dr={`row`}
+          al={`flex-end`}
+          padding={`50px 0px 0px`}
+          ju={`flex-start`}
+        >
           <Combo
             value={props.searchOption}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +112,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputSearchHandler(e);
               }}
-              width={`678px`}
+              width={`578px`}
               padding={`0px 5px`}
               dr={`row`}
               margin={`10px 0px 0px`}
@@ -115,7 +120,7 @@ const ManCompanyList: NextPage<_pAdminManCompanies> = (props) => {
             >
               <Wrapper width={`auto`}>
                 <SearchInput
-                  width={`632px`}
+                  width={`532px`}
                   padding={`0px 5px 0px 5px`}
                   placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
                   type="text"
