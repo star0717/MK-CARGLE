@@ -316,3 +316,17 @@ export class Maintenance extends BaseEntity {
   @prop({ required: true, type: () => Customer, _id: false })
   customer: Customer;
 }
+
+export class MainFindOptions {
+  @ApiProperty({
+    description: '고객 타입(기본값으로 자동기입)',
+    required: false,
+  })
+  @IsOptional()
+  @IsEnum(MainCustomerType)
+  @prop({
+    enum: MainCustomerType,
+    required: true,
+  }) // 자동 기입
+  costomerType?: MainCustomerType;
+}

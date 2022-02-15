@@ -89,12 +89,15 @@ export class SafeService<T extends BaseEntity> {
     token: AuthTokenInfo,
     fParams: FindParameters,
   ): Promise<FindResult<T>> {
+    console.log('fParams :', fParams);
+
     let fQuery: FilterQuery<BaseEntity> = {};
 
     // 기간 검색 설정
     if (fParams.useDurationSearch) {
       // 기간이 존재하면
       if (fParams.sFrom && fParams.sTo) {
+        console.log('기간 검색');
         const from = getStartOfDayDateTime(fParams.sFrom);
         const to = getEndOfDayDateTime(fParams.sTo);
         if (getDuration(from, to) > 365) throw new BadRequestException();
@@ -106,12 +109,14 @@ export class SafeService<T extends BaseEntity> {
       }
       // 연도가 존재하면
       else if (fParams.sYear) {
+        console.log('연간 검색');
         const date = new Date(fParams.sYear, 0, 1);
         fQuery.createdAt = {
           $gt: getStartOfYearDateTime(date),
           $lt: getEndOfYearDateTime(date),
         };
       } else {
+        console.log('기본 검색');
         const from = getStartOfMonthDateTime();
         const to = getEndOfMonthDateTime();
         fParams.sFrom = from;
@@ -156,7 +161,7 @@ export class SafeService<T extends BaseEntity> {
 
     console.log('*** findByOptions');
     console.log('fQuery: ', fQuery);
-    console.log('fParams :', fParams);
+    // console.log('fParams :', fParams);
 
     let result: FindResult<T> = new FindResult<T>();
     result.totalDocs = await this.model.countDocuments(
