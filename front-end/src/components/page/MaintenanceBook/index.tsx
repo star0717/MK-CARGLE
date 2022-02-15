@@ -8,7 +8,10 @@ import { Agency } from "src/models/agency.entity";
 import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
-import { MainStatus } from "src/constants/maintenance.const";
+import {
+  genMainOptionQuery,
+  MainStatus,
+} from "src/constants/maintenance.const";
 import MaintenanceStored from "./section/stored";
 import MaintenanceIng from "./section/ing";
 import MaintenanceDone from "./section/done";
