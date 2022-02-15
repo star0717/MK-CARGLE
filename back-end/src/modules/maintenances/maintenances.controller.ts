@@ -1,3 +1,4 @@
+import { MainFindOptions } from './../../models/maintenance.entity';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { AuthToken, FindParam } from 'src/lib/decorators/decorators';
 import {
@@ -20,7 +21,11 @@ import {
 } from '@nestjs/swagger';
 import { CarInfo, Maintenance } from 'src/models/maintenance.entity';
 import { MaintenancesService } from './maintenances.service';
-import { FindParameters, FindResult } from 'src/models/base.entity';
+import {
+  FindParameters,
+  FindResult,
+  OptionalInfo,
+} from 'src/models/base.entity';
 
 @Controller('maintenances')
 @ApiTags('정비내역 API')
@@ -46,15 +51,22 @@ export class MaintenancesController {
   @ApiOperation({
     summary: `[WORKER] 조건에 해당하는 Maintenance 배열 데이터를 페이징 정보와 함께 반환`,
   })
+  // @ApiBody({ description: '추가 옵션', type: OptionalInfo })
   @ApiResponse({
     description: `검색된 Maintenance 배열 데이터와 페이징 정보`,
     type: FindResult,
   })
   async findByOptions(
     @Query() fParams: FindParameters,
+    @Query() fOptions: MainFindOptions,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<FindResult<Maintenance>> {
+    console.log('test');
+    console.log(fOptions);
+
     fParams.useDurationSearch = true;
+    if (fOptions) fParams.filter = fOptions;
+
     return await this.service.findByOptions(token, fParams);
   }
 
