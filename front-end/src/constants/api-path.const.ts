@@ -82,6 +82,7 @@ export class MaintenancesApiPath {
   static end = MaintenancesApiPath.BASE + 'end';
   static pay = MaintenancesApiPath.BASE + 'pay';
   static release = MaintenancesApiPath.BASE + 'release';
+  static deleteMany = MaintenancesApiPath.BASE + 'deletemany';
 }
 
 // 거래처 관리 API
@@ -99,7 +100,7 @@ export class PartsApiPath {
 
 // 부품세트 API
 export class PartsSetsApiPath {
-  static BASE = '/partssets';
+  static BASE = '/partssets/';
   static partsSets = PartsSetsApiPath.BASE;
   static partsSets_deleteMany = PartsSetsApiPath.BASE + 'deletemany';
 }
