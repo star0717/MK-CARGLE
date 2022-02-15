@@ -61,6 +61,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   const [statusOne, setStatusOne] = useState<boolean>(false);
   const [statusTwo, setStatusTwo] = useState<boolean>(false);
   const [statusThree, setStatusThree] = useState<boolean>(false);
+  const [searchList, setSearchList] = useState([]);
 
   /*********************************************************************
    * 3. Handlers
