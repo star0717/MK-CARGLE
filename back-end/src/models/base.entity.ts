@@ -129,7 +129,7 @@ export class FindParameters {
   })
   @IsOptional()
   @IsDateString()
-  sFrom?: string;
+  sFrom?: Date;
 
   @ApiProperty({
     description: '검색 종료일. 2022-02-14 형식',
@@ -137,7 +137,7 @@ export class FindParameters {
   })
   @IsOptional()
   @IsDateString()
-  sTo?: string;
+  sTo?: Date;
 
   @ApiProperty({
     description: '검색 연도. 검색 시작일과 종료일 값이 없을 때만 동작',
@@ -187,7 +187,7 @@ export class FindResult<T> {
   })
   @IsOptional()
   @IsDateString()
-  sFrom?: string;
+  sFrom?: Date;
 
   @ApiProperty({
     description: '검색 종료일. 2022-02-14 형식',
@@ -195,7 +195,7 @@ export class FindResult<T> {
   })
   @IsOptional()
   @IsDateString()
-  sTo?: string;
+  sTo?: Date;
 }
 
 export class DeleteObjectIds {

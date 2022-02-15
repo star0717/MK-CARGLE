@@ -46,8 +46,8 @@ export declare class FindParameters {
   useRegSearch?: boolean;
   /** 검색 기간 조건 */
   useDurationSearch?: boolean;
-  sFrom?: string;
-  sTo?: string;
+  sFrom?: Date;
+  sTo?: Date;
   sYear?: number;
   filter?: Object;
   projection?: string;
@@ -58,8 +58,8 @@ export declare class FindResult<T> {
   currentPage: number;
   lastPage: number;
   sYear?: number;
-  sFrom?: string;
-  sTo?: string;
+  sFrom?: Date;
+  sTo?: Date;
 }
 export declare class DeleteObjectIds {
   ids: string[];
