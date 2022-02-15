@@ -7,11 +7,7 @@ import { useDispatch } from "react-redux";
 import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
-import {
-  genMainOptionQuery,
-  MainCustomerType,
-  MainStatus,
-} from "src/constants/maintenance.const";
+import { MainStatus } from "src/constants/maintenance.const";
 import MaintenanceStored from "./section/stored";
 import MaintenanceIng from "./section/ing";
 import MaintenanceDone from "./section/done";
@@ -19,9 +15,6 @@ import MaintenancePaid from "./section/paid";
 import MaintenanceReleased from "./section/released";
 import { _aGetMaintenancesList } from "store/action/user.action";
 import { MainFindOptions } from "../../../../../back-end/src/models/maintenance.entity";
-import dayjs from "dayjs";
-import { MaintenancesApiPath } from "src/constants/api-path.const";
-import { genApiPath } from "src/modules/commonModule";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
@@ -108,6 +101,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     setFilterValue,
     setSearchFrom,
     setSearchTo,
+    setSearchDetails,
   };
   /*********************************************************************
    * 5. Page configuration

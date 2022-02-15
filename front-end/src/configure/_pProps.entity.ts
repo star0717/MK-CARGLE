@@ -10,6 +10,7 @@ import { _fTermData, _fWithdrawal } from "./_fProps.entity";
 import { _MainProps } from "./_props.entity";
 import { Part } from "../models/part.entity";
 import { PartsSet } from "src/models/partsset.entity";
+import { MainFindOptions } from "../../../back-end/src/models/maintenance.entity";
 
 /***********************************************************************
  * 기본
@@ -191,4 +192,5 @@ export interface _pMaintenanceProps extends _pFindDocs<any> {
   setFilterValue: React.Dispatch<React.SetStateAction<string>>;
   setSearchFrom: React.Dispatch<React.SetStateAction<string>>;
   setSearchTo: React.Dispatch<React.SetStateAction<string>>;
+  setSearchDetails: React.Dispatch<React.SetStateAction<MainFindOptions>>;
 }
