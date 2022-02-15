@@ -18,6 +18,7 @@ import {
   SearchInputWrapper,
   SmallButton,
   SpeechBubble,
+  SpeechBubbleLeft,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -143,12 +144,17 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           {/* <CommonTitle>
             차량선택 후 정비진행 버튼 클릭 시 정비가 진행됩니다.
           </CommonTitle> */}
-          <Wrapper padding={`20px`} margin={`0px 0px 20px`}>
-            <SpeechBubble fontSize={`20px`}>
+          <Wrapper
+            padding={`20px`}
+            margin={`0px 0px 10px 360px`}
+            al={`flex-start`}
+            left={`100px`}
+          >
+            <SpeechBubbleLeft fontSize={`20px`}>
               "차량선택 후 차량입고를 해주세요"
-            </SpeechBubble>
+            </SpeechBubbleLeft>
           </Wrapper>
-          <JoinStepBarWrapper>
+          <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`progress`}>
                 <RiFileList2Fill />
@@ -203,59 +209,61 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 </IconButton>
               </Wrapper>
             ) : (
-              <form onSubmit={handleSubmit(onSearchCarHandler)}>
-                <SearchInputWrapper
-                  type="text"
-                  width={`100%`}
-                  padding={`0px 5px`}
-                  dr={`row`}
-                  borderBottom={`1px solid #000`}
-                  al={`space-between`}
-                >
-                  <Wrapper>
-                    <SearchInput
-                      width={`332px`}
-                      padding={`0px 5px 0px 5px`}
-                      placeholder="차량번호를 입력하세요."
-                      type="text"
-                      value={searchCarText}
-                      {...register("searchCarText", {
-                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                          setSearchCarText(e.target.value);
-                        },
-                        required: {
-                          value: true,
-                          message: "차량번호를 입력하세요.",
-                        },
-                        pattern: {
-                          value: formRegEx.CAR_NUM,
-                          message: "형식에 맞게 입력하세요.",
-                        },
-                      })}
-                    />
-                  </Wrapper>
-                  <Wrapper width={`36px`} height={`46px`}>
-                    <IconButton type="submit" shadow={`none`}>
-                      <BsSearch />
-                    </IconButton>
-                  </Wrapper>
-                </SearchInputWrapper>
-                {(errors.searchCarText?.type === "required" ||
-                  errors.searchCarText?.type === "pattern") && (
-                  <Text
-                    margin={`0px`}
+              <Wrapper height={`80px`} al={`flex-end`}>
+                <form onSubmit={handleSubmit(onSearchCarHandler)}>
+                  <SearchInputWrapper
+                    type="text"
                     width={`100%`}
-                    color={`#d6263b`}
-                    al={`flex-start`}
-                    fontSize={`14px`}
-                    textAlign={`left`}
+                    dr={`row`}
+                    borderBottom={`1px solid #000`}
+                    al={`space-between`}
                   >
-                    {errors.searchCarText.message}
-                  </Text>
-                )}
-              </form>
+                    <Wrapper>
+                      <SearchInput
+                        width={`264px`}
+                        placeholder="차량번호를 입력하세요."
+                        type="text"
+                        value={searchCarText}
+                        {...register("searchCarText", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setSearchCarText(e.target.value);
+                          },
+                          required: {
+                            value: true,
+                            message: "차량번호를 입력하세요.",
+                          },
+                          pattern: {
+                            value: formRegEx.CAR_NUM,
+                            message: "형식에 맞게 입력하세요.",
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper width={`36px`} height={`46px`}>
+                      <IconButton type="submit" shadow={`none`}>
+                        <BsSearch />
+                      </IconButton>
+                    </Wrapper>
+                  </SearchInputWrapper>
+                  {(errors.searchCarText?.type === "required" ||
+                    errors.searchCarText?.type === "pattern") && (
+                    <Text
+                      margin={`0px`}
+                      width={`100%`}
+                      color={`#d6263b`}
+                      al={`flex-start`}
+                      fontSize={`14px`}
+                      textAlign={`left`}
+                    >
+                      {errors.searchCarText.message}
+                    </Text>
+                  )}
+                </form>
+              </Wrapper>
             )}
-            <Wrapper>
+            <Wrapper border={`1px solid #ccc`}>
               {showCar ? (
                 <form
                   id="carInfoForm"
@@ -468,96 +476,151 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
           </Wrapper>
 
-          <Wrapper width={`70%`}>
-            <Wrapper dr={`row`} ju={`flex-end`}>
-              <SmallButton
-                type="button"
-                kindOf={`default`}
-                onClick={() => {
-                  router.push(UseLink.MAINTENANCE_BOOK);
-                }}
-              >
-                목록으로
-              </SmallButton>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Text width={`80px`} textAlign={`start`}>
-                정비기간
-              </Text>
-              <TextInput2 width={`140px`} type="date" />
-              <Text textAlign={`start`}>~</Text>
-              <TextInput2 width={`140px`} type="date" />
-              <Text width={`80px`} textAlign={`start`}>
-                차량출고일
-              </Text>
-              <TextInput2 width={`140px`} type="date" />
-              <Text width={`80px`} textAlign={`start`}>
-                정비책임자
-              </Text>
-              <TextInput2 width={`140px`} type="text" />
-            </Wrapper>
-
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper dr={`row`} ju={`flex-start`}>
-                <Text width={`80px`} textAlign={`start`}>
-                  정비구분
-                </Text>
-                <Combo width={`140px`} margin={`0px`}>
-                  <option value="1">일반</option>
-                </Combo>
-              </Wrapper>
+          <Wrapper width={`74%`}>
+            <Wrapper height={`80px`} al={`flex-end`}>
               <Wrapper dr={`row`} ju={`flex-end`}>
-                <Text width={`80px`} textAlign={`start`}>
-                  보험사명
-                </Text>
-                <TextInput2 width={`140px`} type="text" />
-                <Text width={`80px`} textAlign={`start`}>
-                  보험번호
-                </Text>
-                <TextInput2 width={`140px`} type="text" />
+                <SmallButton
+                  type="button"
+                  kindOf={`default`}
+                  onClick={() => {
+                    router.push(UseLink.MAINTENANCE_BOOK);
+                  }}
+                >
+                  목록으로
+                </SmallButton>
               </Wrapper>
-              <Wrapper dr={`row`}>
-                <Text width={`80px`} textAlign={`start`}>
-                  추가정비동의
-                </Text>
-                <Combo>
-                  <option value="1">동의</option>
-                </Combo>
+            </Wrapper>
+            <Wrapper
+              border={`1px solid #ccc`}
+              padding={`20px`}
+              margin={`0px 0px 20px`}
+            >
+              <Wrapper
+                dr={`row`}
+                ju={`space-between`}
+                padding={`0px 0px 10px 0px`}
+              >
+                <Wrapper dr={`row`} ju={`flex-end`}>
+                  <Text
+                    textAlign={`end`}
+                    padding={`0px 5px 0px 0px`}
+                    width={`80px`}
+                  >
+                    정비기간
+                  </Text>
+                  <TextInput2 width={`150px`} type="date" />
+                  <Text
+                    textAlign={`end`}
+                    padding={`0px 5px 0px 0px`}
+                    width={`16px`}
+                  >
+                    ~
+                  </Text>
+                  <TextInput2 width={`150px`} type="date" />
+                </Wrapper>
+                <Wrapper dr={`row`} ju={`flex-end`}>
+                  <Text
+                    textAlign={`end`}
+                    padding={`0px 5px 0px 0px`}
+                    width={`100px`}
+                  >
+                    차량출고일
+                  </Text>
+                  <TextInput2 width={`150px`} type="date" />
+                </Wrapper>
+                <Wrapper dr={`row`} ju={`flex-end`}>
+                  <Text
+                    textAlign={`end`}
+                    padding={`0px 5px 0px 0px`}
+                    width={`100px`}
+                  >
+                    정비책임자
+                  </Text>
+                  <TextInput2 width={`100px`} type="text" />
+                </Wrapper>
+              </Wrapper>
+
+              <Wrapper dr={`row`} ju={`space-between`}>
+                <Wrapper dr={`row`} ju={`flex-end`}>
+                  <Text
+                    textAlign={`end`}
+                    padding={`0px 5px 0px 0px`}
+                    width={`80px`}
+                  >
+                    정비구분
+                  </Text>
+                  <Combo width={`150px`} margin={`0px`}>
+                    <option value="1">일반</option>
+                  </Combo>
+                  <Text
+                    textAlign={`end`}
+                    padding={`0px 5px 0px 0px`}
+                    width={`16px`}
+                  ></Text>
+                  <TextInput2 type="text" width={`150px`} />
+                </Wrapper>
+                <Wrapper
+                  dr={`row`}
+                  ju={`flex-end`}
+                  padding={`0px 0px 0px 10px`}
+                >
+                  <TextInput2 type="text" width={`240px`} />
+                </Wrapper>
+                <Wrapper dr={`row`} ju={`flex-end`}>
+                  <Text
+                    textAlign={`end`}
+                    padding={`0px 5px 0px 0px`}
+                    width={`100px`}
+                  >
+                    추가정비동의
+                  </Text>
+                  <Combo width={`100px`} margin={`0`}>
+                    <option value="1">동의</option>
+                  </Combo>
+                </Wrapper>
               </Wrapper>
             </Wrapper>
 
-            <Wrapper dr={`row`}>
-              <Text>정비내역</Text>
-              <Wrapper dr={`row`}>
+            <Wrapper dr={`row`} ju={`space-between`} margin={`10px 0px`}>
+              <Wrapper width={`auto`}>
+                <Text fontSize={`20px`} color={`#314FA5`}>
+                  정비내역
+                </Text>
+              </Wrapper>
+              <Wrapper dr={`row`} width={`auto`}>
                 <Wrapper
                   dr={`row`}
                   ju={`flex-end`}
                   height={`40px`}
                   al={`center`}
+                  margin={`0px 10px 0px 0px`}
+                  width={`auto`}
                 >
                   <Checkbox>
-                    부품조회
+                    부가세 포함
                     <CheckInput type="checkbox" onChange={() => {}} />
                     <CheckMark></CheckMark>
                   </Checkbox>
                 </Wrapper>
-                <SmallButton
-                  type="button"
-                  kindOf={`default`}
-                  onClick={() => {}}
-                >
-                  부품조회
-                </SmallButton>
-                <SmallButton
-                  type="button"
-                  kindOf={`default`}
-                  onClick={() => {}}
-                >
-                  세트부품
-                </SmallButton>
+                <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {}}
+                  >
+                    부품조회
+                  </SmallButton>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {}}
+                  >
+                    세트부품
+                  </SmallButton>
+                </Wrapper>
               </Wrapper>
             </Wrapper>
-            <TableWrapper>
+            <TableWrapper minHeight={`auto`}>
               <TableHead>
                 <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
                 <TableHeadLIST width={`15%`}>국토부</TableHeadLIST>
@@ -567,7 +630,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
-              <TableBody>
+              <TableBody minHeight={`130px`}>
                 <TableRow>
                   <TableRowLIST width={`15%`}>1</TableRowLIST>
                   <TableRowLIST width={`15%`}>2</TableRowLIST>
@@ -579,12 +642,34 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 </TableRow>
               </TableBody>
             </TableWrapper>
+            <Wrapper dr={`row`} ju={`flex-end`}>
+              <Text>부품계 : 0 </Text>
+              <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
+                |
+              </Text>
+              <Text>기술료계 : 0 </Text>
+              <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
+                |
+              </Text>
+              <Text>합계 : 0 </Text>
+              <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
+                |
+              </Text>
+              <Text>부가세 : 0</Text>
+              <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
+                |
+              </Text>
+              <Text fontSize={`24px`}>
+                총계 <ColorSpan color={`#314FA5`}>0</ColorSpan>
+              </Text>
+            </Wrapper>
             <Wrapper>
               <SmallButton
                 form="carInfoForm"
                 type="submit"
                 kindOf={showCar ? `default` : `ghost`}
                 disabled={showCar ? false : true}
+                width={`100%`}
               >
                 차량입고
               </SmallButton>
