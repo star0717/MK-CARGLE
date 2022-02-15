@@ -14,6 +14,7 @@ import MaintenanceIng from "./section/ing";
 import MaintenanceDone from "./section/done";
 import MaintenancePaid from "./section/paid";
 import MaintenanceReleased from "./section/released";
+import { _aGetMaintenancesList } from "store/action/user.action";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
@@ -69,6 +70,10 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       filterValue: filterValue,
       useRegSearch: true,
     };
+
+    dispatch(_aGetMaintenancesList(param)).then((res: any) => {
+      setFindResult(res.payload);
+    });
 
     // dispatch(_aGetAgencies(param)).then((res: any) => {
     //   setFindResult(res.payload);

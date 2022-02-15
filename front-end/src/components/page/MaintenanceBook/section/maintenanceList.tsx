@@ -117,7 +117,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  console.log(searchFrom, "~", searchTo);
+  // console.log(searchFrom, "~", searchTo);
   return (
     <WholeWrapper>
       <RsWrapper>
