@@ -318,15 +318,21 @@ export class Maintenance extends BaseEntity {
 }
 
 export class MainFindOptions {
+  @ApiProperty({ description: '챠량 등록번호', required: false })
+  @IsOptional()
+  @IsString()
+  regNumber?: string;
+
+  @ApiProperty({ description: '작업 상태', required: false })
+  @IsOptional()
+  @IsEnum(MainStatus)
+  status?: MainStatus;
+
   @ApiProperty({
     description: '고객 타입(기본값으로 자동기입)',
     required: false,
   })
   @IsOptional()
   @IsEnum(MainCustomerType)
-  @prop({
-    enum: MainCustomerType,
-    required: true,
-  }) // 자동 기입
   costomerType?: MainCustomerType;
 }
