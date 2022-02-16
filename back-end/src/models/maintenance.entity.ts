@@ -12,6 +12,7 @@ import {
 } from 'class-validator';
 import {
   MainCustomerType,
+  MainDocPubType,
   MainPartsType,
   MainStatus,
 } from 'src/constants/maintenance.const';
@@ -226,6 +227,25 @@ export class Dates {
   released?: Date;
 }
 
+// 문서 발급 정보(견적서와 명세서에서 사용)
+export class Doc {
+  @ApiProperty({ description: '발급 타입. 프린터 or 온라인발급' })
+  @prop({
+    enum: MainDocPubType,
+    required: true,
+    default: MainDocPubType.NOT_ISSUED,
+  })
+  type: MainDocPubType;
+
+  @ApiProperty({ description: '문서 오브젝트ID' })
+  @prop({ trim: true, required: true })
+  _oID: string;
+
+  @ApiProperty({ default: '문서 발급일자' })
+  @prop()
+  pubAt: Date;
+}
+
 // 정비내역서
 export class Maintenance extends BaseEntity {
   @ApiProperty({ description: '문서번호(자동생성)', required: false })
@@ -315,6 +335,20 @@ export class Maintenance extends BaseEntity {
   @Type(() => Customer)
   @prop({ required: true, type: () => Customer, _id: false })
   customer: Customer;
+
+  @ApiProperty({ description: '견적서 정보', type: Doc, required: false })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => Doc)
+  @prop({ type: () => Doc, _id: false })
+  estimate: Doc;
+
+  @ApiProperty({ description: '명세서 정보', type: Doc, required: false })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => Doc)
+  @prop({ type: () => Doc, _id: false })
+  statement: Doc;
 }
 
 export class MainFindOptions {
@@ -335,4 +369,22 @@ export class MainFindOptions {
   @IsOptional()
   @IsEnum(MainCustomerType)
   costomerType?: MainCustomerType;
+}
+
+export class MainPubDocInfo {
+  @ApiProperty({
+    description: '발급 타입. 프린터 or 온라인발급',
+    default: MainDocPubType.ONLINE,
+  })
+  @IsOptional()
+  @IsEnum(MainDocPubType)
+  type: MainDocPubType;
+
+  @ApiProperty({
+    description: '전화번호(옵션). 미입력시 정비장부에 기입된 번호로 전송',
+  })
+  @IsOptional()
+  @IsString()
+  @prop({ trim: true, required: true })
+  phoneNumber?: string;
 }

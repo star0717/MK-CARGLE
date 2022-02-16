@@ -1,4 +1,7 @@
-import { MainFindOptions } from './../../models/maintenance.entity';
+import {
+  MainFindOptions,
+  MainPubDocInfo,
+} from './../../models/maintenance.entity';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { AuthToken } from 'src/lib/decorators/decorators';
 import {
@@ -248,5 +251,25 @@ export class MaintenancesController {
     @AuthToken() token: AuthTokenInfo,
   ): Promise<Maintenance> {
     return await this.service.releaseMain(token, id, doc);
+  }
+
+  /*********** 문서 발급 관련 *********************/
+  @Post('pub/estimate')
+  @ApiOperation({ summary: '[WORKER] 견적서 발급' })
+  @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
+  @ApiBody({
+    description: `발급에 필요한 정보`,
+    type: MainPubDocInfo,
+  })
+  @ApiCreatedResponse({
+    description: `패치 된 Maintenance 데이터`,
+    type: Maintenance,
+  })
+  async pubEstimate(
+    @Param('id') id: string,
+    @Body() doc: MainPubDocInfo,
+    @AuthToken() token: AuthTokenInfo,
+  ): Promise<Maintenance> {
+    return await this.service.pubEstimate(token, id, doc);
   }
 }
