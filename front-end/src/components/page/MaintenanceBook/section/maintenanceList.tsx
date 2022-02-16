@@ -59,12 +59,6 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   const [checkedList, setCheckedList] = useState([]);
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
 
-  /** 상세검색 checkBox state 관리 */
-  const [statusOne, setStatusOne] = useState<boolean>(false);
-  const [statusTwo, setStatusTwo] = useState<boolean>(false);
-  const [statusThree, setStatusThree] = useState<boolean>(false);
-  const [searchList, setSearchList] = useState([]);
-
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
 
   /*********************************************************************
@@ -142,6 +136,11 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     } else {
       alert("삭제할 항목이 없습니다.");
     }
+  };
+
+  const onSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("target name", e.target.name);
+    console.log("target value", e.target.value);
   };
 
   /*********************************************************************
@@ -611,8 +610,16 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <Text>구분</Text>
             </Wrapper>
             <Wrapper al={`flex-end`} width={`auto`}>
-              <Combo value="all" width={`220px`}>
-                <option value="all">전체</option>
+              <Combo
+                width={`220px`}
+                name="costomerType"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onSelectHandler(e);
+                }}
+              >
+                <option value="all" selected>
+                  전체
+                </option>
                 <option value="normal">일반</option>
                 <option value="insurance">보험</option>
               </Combo>
@@ -623,8 +630,16 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <Text>정비상태</Text>
             </Wrapper>
             <Wrapper al={`flex-end`} width={`auto`}>
-              <Combo value="all" width={`220px`}>
-                <option value="all">전체</option>
+              <Combo
+                width={`220px`}
+                name="status"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onSelectHandler(e);
+                }}
+              >
+                <option value="all" selected>
+                  전체
+                </option>
                 <option value="stored">입고</option>
                 <option value="ing">정비중</option>
                 <option value="done">정비완료</option>
