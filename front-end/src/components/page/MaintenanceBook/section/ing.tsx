@@ -86,6 +86,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   //   phoneNumber: "",
   // };
 
+  let inputRef = useRef<HTMLInputElement[]>([]);
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -93,6 +95,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [taxCheck, setTaxCheck] = useState<boolean>(false); // 부가세 체크여부
   const [rowCount, setRowCount] = useState<number>(1); // 열 갯수
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
+  // const [inputRef, setInputRef] =
+  //   useState<React.MutableRefObject<HTMLInputElement[]>>(ref);
+  const [renderRow, setRenderRow] = useState<any>();
 
   /*********************************************************************
    * 3. Handlers
@@ -101,7 +106,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     setMtInfo(props.data);
   }, [props]);
 
-  let inputRef = useRef<HTMLInputElement[]>([]);
+  useEffect(() => {
+    // setInputRef(ref);
+    rowRendering();
+  }, [rowCount]);
 
   /**
    * 키 이벤트 handler
@@ -109,17 +117,15 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    */
   const onFocusHandler = (e: KeyboardEvent, idx: number) => {
     if (e.key === "Enter" || e.key === "Tab" || e.key === "ArrowRight") {
-      const strIdx: string = idx.toString();
-      if (strIdx.substring(strIdx.length - 1, strIdx.length) === "6") {
+      if (idx === cellCount - 1) {
         setRowCount(rowCount + 1);
-        inputRef.current[idx + 4].focus();
-      } else {
+        setCellCount(cellCount + 7);
+      }
+      if (cellCount - 1 > idx) {
         inputRef.current[idx + 1].focus();
       }
     }
   };
-
-  console.log(inputRef);
 
   /**
    * 정비내역 렌더링 함수
@@ -127,84 +133,83 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    */
   const rowRendering = () => {
     const result = [];
-    for (let i = 0; i < rowCount; i++) {
+    for (let i = 1; i < rowCount + 1; i++) {
       result.push(
         <TableRow key={i} kindOf={`noHover`}>
           <TableRowLIST width={`15%`}>
             <TextInput2
               type="text"
               ref={(elem: HTMLInputElement) =>
-                (inputRef.current[cellCount - 7] = elem)
+                (inputRef.current[i * 7 - 7] = elem)
               }
               width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, cellCount - 7)}
-            />
-          </TableRowLIST>
-          <TableRowLIST width={`15%`}>
-            <TextInput2
-              type="text"
-              className="test"
-              ref={(elem: HTMLInputElement) =>
-                (inputRef.current[cellCount - 6] = elem)
-              }
-              width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, cellCount - 6)}
-            />
-          </TableRowLIST>
-          <TableRowLIST width={`14%`}>
-            <TextInput2
-              type="text"
-              ref={(elem: HTMLInputElement) =>
-                (inputRef.current[cellCount - 5] = elem)
-              }
-              width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, cellCount - 5)}
+              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 7)}
             />
           </TableRowLIST>
           <TableRowLIST width={`15%`}>
             <TextInput2
               type="text"
               ref={(elem: HTMLInputElement) =>
-                (inputRef.current[cellCount - 4] = elem)
+                (inputRef.current[i * 7 - 6] = elem)
               }
               width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, cellCount - 4)}
+              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 6)}
             />
           </TableRowLIST>
           <TableRowLIST width={`14%`}>
             <TextInput2
               type="text"
               ref={(elem: HTMLInputElement) =>
-                (inputRef.current[cellCount - 3] = elem)
+                (inputRef.current[i * 7 - 5] = elem)
               }
               width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, cellCount - 3)}
+              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 5)}
+            />
+          </TableRowLIST>
+          <TableRowLIST width={`15%`}>
+            <TextInput2
+              type="text"
+              ref={(elem: HTMLInputElement) =>
+                (inputRef.current[i * 7 - 4] = elem)
+              }
+              width={`100%`}
+              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 4)}
             />
           </TableRowLIST>
           <TableRowLIST width={`14%`}>
             <TextInput2
               type="text"
               ref={(elem: HTMLInputElement) =>
-                (inputRef.current[cellCount - 2] = elem)
+                (inputRef.current[i * 7 - 3] = elem)
               }
               width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, cellCount - 2)}
+              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 3)}
+            />
+          </TableRowLIST>
+          <TableRowLIST width={`14%`}>
+            <TextInput2
+              type="text"
+              ref={(elem: HTMLInputElement) =>
+                (inputRef.current[i * 7 - 2] = elem)
+              }
+              width={`100%`}
+              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 2)}
             />
           </TableRowLIST>
           <TableRowLIST width={`8%`}>
             <TextInput2
               type="text"
               ref={(elem: HTMLInputElement) =>
-                (inputRef.current[cellCount - 1] = elem)
+                (inputRef.current[i * 7 - 1] = elem)
               }
               width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, cellCount - 1)}
+              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 1)}
             />
           </TableRowLIST>
         </TableRow>
       );
     }
-    return result;
+    return setRenderRow(result);
   };
 
   /*********************************************************************
@@ -577,7 +582,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
               <TableBody minHeight={`130px`}>
-                {rowRendering()}
+                {renderRow}
                 {/* <TableRow>
                   <TableRowLIST width={`15%`}>
                     <TextInput2
