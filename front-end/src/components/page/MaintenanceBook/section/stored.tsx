@@ -144,7 +144,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
           // setCarInfo(carInit);
-          // let carInfo: CarInfo = carInit;
+          let carInfo: CarInfo = carInit;
 
           setCarInfo(Object.assign(carInit, res.payload));
         } else {
