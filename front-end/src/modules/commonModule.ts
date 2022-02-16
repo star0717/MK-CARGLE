@@ -134,7 +134,7 @@ export const trim = (str: string) => {
  */
 export const deleteKeyJson = (obj: any) => {
   Object.keys(obj).forEach((key) => {
-    if (obj[key] === "") {
+    if (obj[key] === "" || obj[key] === undefined) {
       delete obj[key];
     }
   });

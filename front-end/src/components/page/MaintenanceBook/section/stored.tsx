@@ -62,7 +62,7 @@ import { MainStatus } from "src/constants/maintenance.const";
 import { CarInfo, Customer, Maintenance } from "src/models/maintenance.entity";
 import { deleteKeyJson, trim } from "src/modules/commonModule";
 
-const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
+const MaintenanceStored: NextPage = () => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -73,7 +73,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
@@ -110,14 +109,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    */
   const onChangeCarInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCarInfo({ ...carInfo, [e.target.name]: trim(e.target.value) });
-  };
-
-  /**
-   * 고객정보 input
-   * @param e
-   */
-  const onChangeCusInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCusInfo({ ...cusInfo, [e.target.name]: trim(e.target.value) });
   };
 
   /**
@@ -159,26 +150,21 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const onCarStoredHandler: SubmitHandler<Partial<Maintenance>> = (data) => {
     const MaintenanceData: Partial<Maintenance> = {
       car: { ...carInfo, regNumber: searchCarText },
-      customer: cusInfo,
+      customer: { ...cusInfo },
     };
     deleteKeyJson(MaintenanceData.car);
     deleteKeyJson(MaintenanceData.customer);
 
-    console.log("메인", MaintenanceData);
-
-    // dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
-    //   (res: _iMaintenances) => {
-    //     if (!res.payload) return alert("차량 입고에 실패했습니다.");
-    //     router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
-    //   },
-    //   (err) => {
-    //     alert("차량 입고에 실패했습니다.");
-    //   }
-    // );
+    dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
+      (res: _iMaintenances) => {
+        if (!res.payload) return alert("차량 입고에 실패했습니다.");
+        router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
+      },
+      (err) => {
+        alert("차량 입고에 실패했습니다.");
+      }
+    );
   };
-
-  console.log("카", carInfo);
-  console.log("고", cusInfo);
 
   /*********************************************************************
    * 4. Props settings
@@ -362,11 +348,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         type="text"
                         width={`100px`}
                         value={cusInfo.name}
-                        {...register("name", {
+                        {...register("cusName", {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            onChangeCusInfo(e);
+                            // onChangeCusInfo(e);
+                            setCusInfo({ ...cusInfo, name: e.target.value });
                           },
                         })}
                       />
@@ -381,7 +368,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            onChangeCusInfo(e);
+                            setCusInfo({
+                              ...cusInfo,
+                              phoneNumber: e.target.value,
+                            });
                           },
                           required: {
                             value: true,
