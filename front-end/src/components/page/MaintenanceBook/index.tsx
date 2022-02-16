@@ -24,16 +24,16 @@ const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
       return <MaintenanceStored {...props} />;
 
     case MainStatus.ING:
-      return <MaintenanceIng />;
+      return <MaintenanceIng {...props} />;
 
     case MainStatus.DONE:
-      return <MaintenanceDone />;
+      return <MaintenanceDone {...props} />;
 
     case MainStatus.PAID:
-      return <MaintenancePaid />;
+      return <MaintenancePaid {...props} />;
 
     case MainStatus.RELEASED:
-      return <MaintenanceReleased />;
+      return <MaintenanceReleased {...props} />;
 
     default:
       return <MaintenenanceList {...props} />;
@@ -82,7 +82,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       var sToDate: Date = new Date(searchTo);
       param.sTo = sToDate;
     }
-
+    console.log("param:", param, "searchDetails:", searchDetails);
     dispatch(_aGetMaintenancesList(param, searchDetails)).then((res: any) => {
       setFindResult(res.payload);
     });
@@ -101,6 +101,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     setFilterValue,
     setSearchFrom,
     setSearchTo,
+    searchDetails,
     setSearchDetails,
   };
   /*********************************************************************

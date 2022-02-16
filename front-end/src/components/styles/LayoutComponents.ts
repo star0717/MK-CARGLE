@@ -41,7 +41,7 @@ export const HeaderWrapper = styled.div<any>`
   box-shadow: ${(props) => props.shadow};
   flex-wrap: ${(props) => props.wrap || `no-wrap`};
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1440px) {
     display: none;
   }
 `;
@@ -211,7 +211,7 @@ export const MobileHeader = styled.div<any>`
   box-shadow: ${(props) => props.shadow};
   flex-wrap: ${(props) => props.wrap || `no-wrap`};
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1440px) {
     display: flex;
   }
   & svg {
