@@ -264,7 +264,7 @@ export const CommonSubTitle = styled.h2<any>`
   padding-bottom: 10px;
   font-size: 20px;
   font-weight: 500;
-  color: #9d9d9d;
+  color: ${(props) => props.color || `#9d9d9d`};
 
   &:before {
     content: "";
@@ -284,6 +284,13 @@ export const CommonSubTitle = styled.h2<any>`
     background-origin: border-box;
     background-clip: content-box, border-box;
   }
+
+  ${(props) =>
+    props.kindOf === `sub` &&
+    `&:before {
+      border-bottom: none;
+      background: none;
+    }`}
 `;
 
 // export const CommonBigTitle = styled.h2<any>`
@@ -1952,6 +1959,8 @@ export const StampWrapper = styled.div<any>`
 
 export const ColorSpan = styled.span<any>`
   color: ${(props) => props.color};
+  margin: ${(props) => props.margin || `0px`};
+  font-size: ${(props) => props.fontSize || `16px`};
 `;
 
 export const SpeechBubbleLeft = styled.div<any>`

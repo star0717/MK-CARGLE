@@ -17,7 +17,6 @@ import {
   SearchInput,
   SearchInputWrapper,
   SmallButton,
-  SpeechBubble,
   SpeechBubbleLeft,
   TableBody,
   TableHead,
@@ -54,9 +53,13 @@ import { RiFileList2Fill } from "react-icons/ri";
 import { Car } from "src/models/car.entity";
 import { useDispatch } from "react-redux";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
-import { _aGetMaintenancesCarInfo } from "store/action/user.action";
-import { _iGetMaintenancesCarInfo } from "store/interfaces";
+import {
+  _aGetMaintenancesCarInfo,
+  _aPostMaintenancesStore,
+} from "store/action/user.action";
+import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
 import { MainStatus } from "src/constants/maintenance.const";
+import { CarInfo, Maintenance } from "src/models/maintenance.entity";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -77,7 +80,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [searchCarText, setSearchCarText] = useState<string>("");
-  const [carInfo, setCarInfo] = useState<Partial<Car>>({
+  const [carInfo, setCarInfo] = useState<CarInfo>({
     name: "",
     regNumber: "",
     distance: "",
@@ -102,10 +105,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * 차량 조회 handler
    * @param data
    */
-  const onSearchCarHandler: SubmitHandler<Partial<Car>> = (data) => {
+  const onSearchCarHandler: SubmitHandler<Partial<CarInfo>> = (data) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
-        console.log(res);
         setCarInfo(res.payload);
         setShowCar(true);
       },
@@ -125,9 +127,24 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     setValue("searchCarText", "");
   };
 
-  const onCarStoredHandler: SubmitHandler<Partial<Car>> = (data) => {
-    console.log("안뇽");
-    // router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
+  /**
+   * 차량 입고 handler
+   * @param data
+   */
+  const onCarStoredHandler: SubmitHandler<Partial<Maintenance>> = (data) => {
+    const MaintenanceData: Partial<Maintenance> = {
+      car: { ...carInfo, regNumber: searchCarText },
+      customer: cusInfo,
+    };
+    dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
+      (res: _iMaintenances) => {
+        if (!res.payload) return alert("차량 입고에 실패했습니다.");
+        router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
+      },
+      (err) => {
+        alert("차량 입고에 실패했습니다.");
+      }
+    );
   };
 
   /*********************************************************************
@@ -457,12 +474,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   </Wrapper>
                 </form>
               ) : (
-                // <Wrapper>
-                //   <BsChevronDoubleUp />
-                //   <Text>선택된 차량이 없습니다</Text>
-                //   <Text>차량 선택 후 정비등록을 진행할 수 있습니다</Text>
-                //   <FaCar />
-                // </Wrapper>
                 <Wrapper padding={`50% 20px`}>
                   <Text fontSize={`36px`} color={`#c4c4c4`}>
                     <BsPlusCircleFill />
@@ -508,7 +519,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비기간
                   </Text>
-                  <TextInput2 width={`150px`} type="date" />
+                  <TextInput2 width={`150px`} type="date" disabled />
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
@@ -516,7 +527,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     ~
                   </Text>
-                  <TextInput2 width={`150px`} type="date" />
+                  <TextInput2 width={`150px`} type="date" disabled />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -526,7 +537,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     차량출고일
                   </Text>
-                  <TextInput2 width={`150px`} type="date" />
+                  <TextInput2 width={`150px`} type="date" disabled />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -536,7 +547,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비책임자
                   </Text>
-                  <TextInput2 width={`100px`} type="text" />
+                  <TextInput2 width={`100px`} type="text" disabled />
                 </Wrapper>
               </Wrapper>
 
@@ -549,7 +560,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비구분
                   </Text>
-                  <Combo width={`150px`} margin={`0px`}>
+                  <Combo width={`150px`} margin={`0px`} disabled>
                     <option value="1">일반</option>
                   </Combo>
                   <Text
@@ -557,14 +568,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                     padding={`0px 5px 0px 0px`}
                     width={`16px`}
                   ></Text>
-                  <TextInput2 type="text" width={`150px`} />
+                  <TextInput2 type="text" width={`150px`} disabled />
                 </Wrapper>
                 <Wrapper
                   dr={`row`}
                   ju={`flex-end`}
                   padding={`0px 0px 0px 10px`}
                 >
-                  <TextInput2 type="text" width={`240px`} />
+                  <TextInput2 type="text" width={`240px`} disabled />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -574,7 +585,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     추가정비동의
                   </Text>
-                  <Combo width={`100px`} margin={`0`}>
+                  <Combo width={`100px`} margin={`0`} disabled>
                     <option value="1">동의</option>
                   </Combo>
                 </Wrapper>
@@ -598,7 +609,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 >
                   <Checkbox>
                     부가세 포함
-                    <CheckInput type="checkbox" onChange={() => {}} />
+                    <CheckInput type="checkbox" disabled />
                     <CheckMark></CheckMark>
                   </Checkbox>
                 </Wrapper>

@@ -25,7 +25,7 @@ import {
   TableRowLIST,
 } from "src/components/styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
-import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch, BsWindowSidebar } from "react-icons/bs";
 import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
@@ -37,12 +37,17 @@ import {
   getStrMainStatus,
   MainStatus,
 } from "src/constants/maintenance.const";
+import { useDispatch } from "react-redux";
+import { _aPostMaintenancesDeleteMany } from "store/action/user.action";
+import { DeleteObjectIds } from "src/models/base.entity";
+import { _iDeleteByUser } from "store/interfaces";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+  const dispatch = useDispatch();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -56,6 +61,8 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   const [statusTwo, setStatusTwo] = useState<boolean>(false);
   const [statusThree, setStatusThree] = useState<boolean>(false);
   const [searchList, setSearchList] = useState([]);
+
+  const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
 
   /*********************************************************************
    * 3. Handlers
@@ -97,6 +104,39 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
       props.setSearchFrom(e.target.value);
     } else {
       props.setSearchTo(e.target.value);
+    }
+  };
+
+  const onDeleteMaintenances = () => {
+    // console.log("list Length = ", checkedList);
+    // if (
+    //   checkedList.length > 1 &&
+    //   window.confirm(`${checkedList.length}건의 정비리스트를 삭제하시겠습니까?`)
+    // ) {
+    //   dispatch(_aPostMaintenancesDeleteMany(checkedList)).then((res: _iDeleteByUser) => {
+    //     alert(`${res.payload}건의 정비리스트가 정상적으로 삭제되었습니다.`)
+    //   });
+    // } else if (checkedList.length === 1 ) {
+
+    // } else {
+    //   alert("삭제할 항목이 없습니다.");
+    // }
+    if (checkedList.length > 0) {
+      if (
+        window.confirm(
+          `${checkedList.length} 건 의 정비리스트를 삭제하시겠습니까?`
+        )
+      ) {
+        if (checkedList.length > 1) {
+          // dispatch(_aPostMaintenancesDeleteMany(checkedList)).then((
+          // ))
+        } else {
+        }
+      } else {
+        alert("삭제를 취소했습니다.");
+      }
+    } else {
+      alert("삭제할 항목이 없습니다.");
     }
   };
 
@@ -516,6 +556,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               kindOf={`cancle`}
               width={`150px`}
               fontSize={`16px`}
+              onClick={onDeleteMaintenances}
             >
               선택삭제
             </SmallButton>
