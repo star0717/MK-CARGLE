@@ -60,7 +60,7 @@ import {
 import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
 import { MainStatus } from "src/constants/maintenance.const";
 import { CarInfo, Maintenance } from "src/models/maintenance.entity";
-import { trim } from "src/modules/commonModule";
+import { deleteKeyJson, trim } from "src/modules/commonModule";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -143,9 +143,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
-          // setCarInfo(carInit);
-          // let carInfo: CarInfo = carInit;
-
           setCarInfo(Object.assign(carInit, res.payload));
         } else {
           setCarInfo(carInit);
@@ -168,30 +165,35 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       car: { ...carInfo, regNumber: searchCarText },
       customer: cusInfo,
     };
-    if (!carInfo.model) {
-      delete MaintenanceData.car.model;
-    }
-    if (!carInfo.age) {
-      delete MaintenanceData.car.age;
-    }
-    if (!carInfo.idNumber) {
-      delete MaintenanceData.car.idNumber;
-    }
-    if (!carInfo.regDate) {
-      delete MaintenanceData.car.regDate;
-    }
+    deleteKeyJson(MaintenanceData.car);
+    deleteKeyJson(MaintenanceData.customer);
+    // if (!carInfo.model) {
+    //   delete MaintenanceData.car.model;
+    // }
+    // if (!carInfo.age) {
+    //   delete MaintenanceData.car.age;
+    // }
+    // if (!carInfo.idNumber) {
+    //   delete MaintenanceData.car.idNumber;
+    // }
+    // if (!carInfo.regDate) {
+    //   delete MaintenanceData.car.regDate;
+    // }
     // if (!cusInfo.customerName) {
     //   delete MaintenanceData.customer.customerName;
     // }
-    dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
-      (res: _iMaintenances) => {
-        if (!res.payload) return alert("차량 입고에 실패했습니다.");
-        router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
-      },
-      (err) => {
-        alert("차량 입고에 실패했습니다.");
-      }
-    );
+
+    console.log(MaintenanceData);
+
+    // dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
+    //   (res: _iMaintenances) => {
+    //     if (!res.payload) return alert("차량 입고에 실패했습니다.");
+    //     router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
+    //   },
+    //   (err) => {
+    //     alert("차량 입고에 실패했습니다.");
+    //   }
+    // );
   };
 
   /*********************************************************************
