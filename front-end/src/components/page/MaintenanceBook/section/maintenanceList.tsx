@@ -20,16 +20,12 @@ import {
   CheckInput,
   CheckMark,
   TableBody,
-  CloseButton,
-  CommonButton,
   TextInput2,
   TableRow,
   TableRowLIST,
 } from "src/components/styles/CommonComponents";
-import Modal from "react-modal";
 import { _MainProps } from "src/configure/_props.entity";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
-import { IoIosCloseCircle } from "react-icons/io";
 import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
@@ -168,6 +164,162 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
           </form>
         </Wrapper>
         {searchMenu === true && (
+          <Wrapper
+            border={`1px solid #8DAFCE`}
+            padding={`30px`}
+            margin={`40px 0px`}
+            radius={`8px`}
+            shadow={`0px 5px 10px rgba(220,220,220,1)`}
+          >
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
+                <Text>기간</Text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+              >
+                <TextInput2
+                  type="date"
+                  name="sFrom"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputUserHandler(e);
+                  }}
+                  width={`300px`}
+                  margin={`10px 0px 10px 30px`}
+                />
+                <Wrapper width={`auto`} margin={`10px 0px 10px 30px`}>
+                  <Text> ~ </Text>
+                </Wrapper>
+                <TextInput2
+                  type="date"
+                  name="sTo"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputUserHandler(e);
+                  }}
+                  width={`300px`}
+                  margin={`10px 0px 10px 30px`}
+                />
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
+                <Text>월별</Text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+                margin={`10px 0px 10px 30px`}
+              >
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  9월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  10월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  11월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  12월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  1월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  2월
+                </SmallButton>
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
+                <Text>차량번호</Text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+              >
+                <TextInput2
+                  placeholder={`예시) 000ㅁ0000`}
+                  width={`300px`}
+                  margin={`10px 0px 10px 30px`}
+                />
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
+                <Text>구분</Text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+              >
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusThree(!statusThree);
+                    }}
+                  />
+                  <CheckMark></CheckMark>
+                  전체
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  일반
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  보험
+                </Checkbox>
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`flex-end`}>
+              <SmallButton type="button" kindOf={`default`} width={`150px`}>
+                검색
+              </SmallButton>
+            </Wrapper>
+          </Wrapper>
+        )}
+        {/* {searchMenu === true && (
           <Wrapper
             border={`1px solid #8DAFCE`}
             padding={`30px`}
@@ -356,7 +508,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               </SmallButton>
             </Wrapper>
           </Wrapper>
-        )}
+        )} */}
         <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
           <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
             <SmallButton

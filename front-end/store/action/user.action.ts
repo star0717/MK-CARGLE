@@ -1,3 +1,4 @@
+import { genMainOptionQuery } from "./../../src/constants/maintenance.const";
 import { MaintenancesApiPath } from "./../../src/constants/api-path.const";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
@@ -60,6 +61,7 @@ import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Car } from "src/models/car.entity";
 import { Maintenance } from "../../../back-end/src/models/maintenance.entity";
+import { MainFindOptions } from "src/models/maintenance.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1021,10 +1023,14 @@ export async function _aGetMaintenancesCarInfo(id: string) {
   return result;
 }
 
-export async function _aGetMaintenancesList(findParams: FindParameters) {
+export async function _aGetMaintenancesList(
+  findParams: FindParameters,
+  options: MainFindOptions
+) {
   const req: Maintenance = await axios
     .get(
-      genApiPath(MaintenancesApiPath.maintenances, { findParams: findParams })
+      genApiPath(MaintenancesApiPath.maintenances, { findParams: findParams }) +
+        genMainOptionQuery(options)
     )
     .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
       return res.data;
