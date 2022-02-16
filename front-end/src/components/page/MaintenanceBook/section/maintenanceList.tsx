@@ -58,12 +58,13 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   const [searchMenu, setSearchMenu] = useState<boolean>(false);
   const [checkedList, setCheckedList] = useState([]);
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
-
-  /** 상세검색 checkBox state 관리 */
-  const [statusOne, setStatusOne] = useState<boolean>(false);
-  const [statusTwo, setStatusTwo] = useState<boolean>(false);
-  const [statusThree, setStatusThree] = useState<boolean>(false);
-  const [searchList, setSearchList] = useState([]);
+  const [carNumber, setCarNumber] = useState<string>("");
+  const [searchList, setSearchList] = useState({
+    sFrom: "",
+    sTo: "",
+    costomerType: "",
+    status: "",
+  });
 
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
 
@@ -144,6 +145,32 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     }
   };
 
+  const onSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "all") {
+      // props.setSearchDetails
+      delete props.searchDetails[e.target.name];
+    } else {
+      props.searchDetails[e.target.name] = e.target.value;
+    }
+  };
+
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (carNumber !== "") {
+      props.searchDetails.regNumber = carNumber;
+    } else {
+      delete props.searchDetails.regNumber;
+    }
+    props.findDocHandler(1);
+  };
+
+  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCarNumber(e.target.value);
+  };
+
+  const onResetHandler = () => {
+    setSearchList({ sFrom: "", sTo: "", costomerType: "", status: "" });
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -170,7 +197,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
           <CommonSubTitle>정비내역을 관리할 수 있어요.</CommonSubTitle>
         </CommonTitleWrapper>
         <Wrapper al={`flex-end`} dr={`row`} ju={`space-between`}>
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <Wrapper dr={`row`} al={`flex-end`}>
               <SearchInputWrapper
                 type="text"
@@ -186,6 +213,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     width={`532px`}
                     type="text"
                     placeholder="차량번호를 입력하세요."
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      onInputHandler(e);
+                    }}
                   />
                 </Wrapper>
                 <Wrapper>
@@ -196,18 +226,18 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   </Text>
                 </Wrapper>
               </SearchInputWrapper>
-              {/* <Text
+              <SmallButton
                 type="button"
                 width={`150px`}
                 fontSize={`16px`}
                 kindOf={`default`}
                 margin={`0px 10px`}
                 onClick={() => {
-                  setSearchMenu(!searchMenu);
+                  onResetHandler();
                 }}
               >
-                api 준비중(상세검색)
-              </Text> */}
+                검색 조건 초기화
+              </SmallButton>
             </Wrapper>
           </form>
           <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
@@ -588,7 +618,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TextInput2
                 type="date"
                 name="sFrom"
+                value={searchList.sFrom}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchList({ ...searchList, sFrom: e.target.value });
                   onInputUserHandler(e);
                 }}
                 width={`220px`}
@@ -599,7 +631,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TextInput2
                 type="date"
                 name="sTo"
+                value={searchList.sTo}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchList({ ...searchList, sTo: e.target.value });
                   onInputUserHandler(e);
                 }}
                 width={`220px`}
@@ -611,8 +645,21 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <Text>구분</Text>
             </Wrapper>
             <Wrapper al={`flex-end`} width={`auto`}>
-              <Combo value="all" width={`220px`}>
-                <option value="all">전체</option>
+              <Combo
+                width={`220px`}
+                name="costomerType"
+                value={searchList.costomerType}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchList({
+                    ...searchList,
+                    costomerType: e.target.value,
+                  });
+                  onSelectHandler(e);
+                }}
+              >
+                <option value="all" selected>
+                  전체
+                </option>
                 <option value="normal">일반</option>
                 <option value="insurance">보험</option>
               </Combo>
@@ -623,8 +670,18 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <Text>정비상태</Text>
             </Wrapper>
             <Wrapper al={`flex-end`} width={`auto`}>
-              <Combo value="all" width={`220px`}>
-                <option value="all">전체</option>
+              <Combo
+                width={`220px`}
+                name="status"
+                value={searchList.status}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchList({ ...searchList, status: e.target.value });
+                  onSelectHandler(e);
+                }}
+              >
+                <option value="all" selected>
+                  전체
+                </option>
                 <option value="stored">입고</option>
                 <option value="ing">정비중</option>
                 <option value="done">정비완료</option>
@@ -800,11 +857,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   <Text fontSize={`48px`} color={`#c4c4c4`}>
                     <BsEmojiFrownFill />
                   </Text>
-                  <Text color={`#c4c4c4`}>
-                    {" "}
-                    <GoPrimitiveDot />
-                    검색 결과가 없습니다.
-                  </Text>
+                  <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
                 </Wrapper>
               )}
             </TableBody>
