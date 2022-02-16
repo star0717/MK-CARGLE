@@ -63,7 +63,7 @@ const MaintenanceReleased: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        {/* <Wrapper>
+        <Wrapper>
           <CommonTitle>
             차량선택 후 정비진행 버튼 클릭 시 정비가 진행됩니다.
           </CommonTitle>
@@ -123,7 +123,7 @@ const MaintenanceReleased: NextPage<any> = (props) => {
           </JoinStepBarWrapper>
         </Wrapper>
         <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
-          <Wrapper width={`25%`}>
+          {/* <Wrapper width={`25%`}>
             {showCar ? (
               <Wrapper dr={`row`} fontSize={`24px`}>
                 <Text fontSize={`24px`}>{searchCarText}</Text>
@@ -401,7 +401,7 @@ const MaintenanceReleased: NextPage<any> = (props) => {
                 </Wrapper>
               )}
             </Wrapper>
-          </Wrapper>
+          </Wrapper> */}
 
           <Wrapper width={`74%`}>
             <Wrapper height={`80px`} al={`flex-end`}>
@@ -586,8 +586,8 @@ const MaintenanceReleased: NextPage<any> = (props) => {
               <SmallButton
                 form="carInfoForm"
                 type="submit"
-                kindOf={showCar ? `default` : `ghost`}
-                disabled={showCar ? false : true}
+                // kindOf={showCar ? `default` : `ghost`}
+                // disabled={showCar ? false : true}
                 width={`100%`}
               >
                 차량입고
@@ -595,7 +595,7 @@ const MaintenanceReleased: NextPage<any> = (props) => {
             </Wrapper>
           </Wrapper>
         </Wrapper>
-        <Wrapper></Wrapper> */}
+        <Wrapper></Wrapper>
       </RsWrapper>
     </WholeWrapper>
   );
