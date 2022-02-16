@@ -26,12 +26,11 @@ import {
   Combo,
 } from "src/components/styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
-import { BsEmojiFrownFill, BsSearch, BsWindowSidebar } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
-import { GoPrimitiveDot } from "react-icons/go";
 import { Maintenance } from "src/models/maintenance.entity";
 import {
   getStrMainCustomerType,
@@ -93,6 +92,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     [checkedList]
   );
 
+  //삭제 기능
   const onDeleteMaintenances = () => {
     if (checkedList.length > 0) {
       if (
