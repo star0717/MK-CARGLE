@@ -109,7 +109,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param e
    */
   const onChangeCarInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCarInfo({ ...carInfo, [e.target.name]: trim(e.target.value) });
+    try {
+      setCarInfo({ ...carInfo, [e.target?.name]: trim(e.target?.value) });
+    } catch (error) {
+      console.log("eeeeee");
+    }
   };
 
   /**
@@ -139,7 +143,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
-          setCarInfo(res.payload);
+          // setCarInfo(carInit);
+          // let carInfo: CarInfo = carInit;
+
+          setCarInfo(Object.assign(carInit, res.payload));
         } else {
           setCarInfo(carInit);
         }

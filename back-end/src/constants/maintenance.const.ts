@@ -106,3 +106,25 @@ export const genMainOptionQuery = (data: MainFindOptions) => {
   if (data?.regNumber) query += 'regNumber=' + data.regNumber;
   return query;
 };
+
+/********** 문서 발급 형태 ******************/
+// 문서 발급 타입
+export enum MainDocPubType {
+  NOT_ISSUED = 'n',
+  PRINT = 'p',
+  ONLINE = 'o',
+}
+
+// 문서 발급 타입 리스트
+export const mainDocPubTypeList = Object.values(MainDocPubType).map((e) => e);
+
+export const getStrMainDocPubType = (type: MainDocPubType): string => {
+  switch (type) {
+    case MainDocPubType.NOT_ISSUED:
+      return '미발급';
+    case MainDocPubType.PRINT:
+      return '출력';
+    case MainDocPubType.ONLINE:
+      return '온라인';
+  }
+};
