@@ -81,6 +81,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   // 차량 조회 초기값
   const carInit: CarInfo = {
     name: "",
+    model: "",
+    age: "",
+    regDate: "",
+    idNumber: "",
     regNumber: "",
     distance: "",
   };
@@ -134,7 +138,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const onSearchCarHandler: SubmitHandler<Partial<CarInfo>> = (data) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
-        if (res.payload) setCarInfo(res.payload);
+        if (res.payload) {
+          setCarInfo(res.payload);
+        } else {
+          setCarInfo(carInit);
+        }
         setShowCar(true);
       },
       (err) => {
@@ -153,6 +161,21 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       car: { ...carInfo, regNumber: searchCarText },
       customer: cusInfo,
     };
+    if (!carInfo.model) {
+      delete MaintenanceData.car.model;
+    }
+    if (!carInfo.age) {
+      delete MaintenanceData.car.age;
+    }
+    if (!carInfo.idNumber) {
+      delete MaintenanceData.car.idNumber;
+    }
+    if (!carInfo.regDate) {
+      delete MaintenanceData.car.regDate;
+    }
+    // if (!cusInfo.customerName) {
+    //   delete MaintenanceData.customer.customerName;
+    // }
     dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
       (res: _iMaintenances) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
