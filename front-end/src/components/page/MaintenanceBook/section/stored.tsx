@@ -88,7 +88,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [cusInfo, setCusInfo] = useState<any>({
     customerName: "",
     phoneNumber: "",
-  });
+  }); // 고객정보
   const [showCar, setShowCar] = useState<boolean>(false); // 차량검색 후 정보표시
   /*********************************************************************
    * 3. Handlers
@@ -121,7 +121,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * 차량 정보 리셋 handler
    */
   const onResetCar = () => {
-    setCarInfo({ name: "", regNumber: "" });
+    setCarInfo({ name: "", regNumber: "", distance: "" });
+    setCusInfo({
+      customerName: "",
+      phoneNumber: "",
+    });
     setShowCar(false);
     setSearchCarText("");
     setValue("searchCarText", "");
@@ -146,6 +150,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       }
     );
   };
+
+  console.log(carInfo);
+  console.log(carInfo.distance);
 
   /*********************************************************************
    * 4. Props settings
@@ -614,18 +621,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   </Checkbox>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
-                  <SmallButton
-                    type="button"
-                    kindOf={`default`}
-                    onClick={() => {}}
-                  >
+                  <SmallButton type="button" kindOf={`ghost`} disabled>
                     부품조회
                   </SmallButton>
-                  <SmallButton
-                    type="button"
-                    kindOf={`default`}
-                    onClick={() => {}}
-                  >
+                  <SmallButton type="button" kindOf={`ghost`} disabled>
                     세트부품
                   </SmallButton>
                 </Wrapper>
