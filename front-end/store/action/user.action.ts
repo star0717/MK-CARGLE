@@ -1,3 +1,4 @@
+import { genMainOptionQuery } from "./../../src/constants/maintenance.const";
 import { MaintenancesApiPath } from "./../../src/constants/api-path.const";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
@@ -59,7 +60,8 @@ import { Part } from "../../src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Car } from "src/models/car.entity";
-import { Maintenance } from "src/models/maintenance.entity";
+import { Maintenance } from "../../../back-end/src/models/maintenance.entity";
+import { MainFindOptions } from "src/models/maintenance.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1008,8 +1010,8 @@ export async function _aPostAgenciesDeleteMany(ids: string[]) {
 }
 
 /**
- * 차량 정보 불러오기
- * @param id
+ * Maintenances 차량정보 조회
+ * @param id _id
  * @returns
  */
 export async function _aGetMaintenancesCarInfo(id: string) {
@@ -1020,6 +1022,73 @@ export async function _aGetMaintenancesCarInfo(id: string) {
     });
 
   const result: _iGetMaintenancesCarInfo = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Maintenances 리스트 조회
+ * @param findParams param
+ * @param options costomerType,status,regNumber
+ * @returns
+ */
+export async function _aGetMaintenancesList(
+  findParams: FindParameters,
+  options: MainFindOptions
+) {
+  const req: Maintenance = await axios
+    .get(
+      genApiPath(MaintenancesApiPath.maintenances, { findParams: findParams }) +
+        genMainOptionQuery(options)
+    )
+    .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
+      return res.data;
+    });
+
+  const result: _iMaintenances = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Maintenances 데이터 삭제
+ * @param id _id
+ * @returns
+ */
+export async function _aDeleteMaintenancesDelete(id: string) {
+  const req: DeleteResult = await axios
+    .delete(genApiPath(MaintenancesApiPath.maintenances, { id: id }))
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Maintenances 데이터 삭제
+ * @param ids DeleteObjectIds
+ * @returns
+ */
+export async function _aPostMaintenancesDeleteMany(ids: string[]) {
+  const oids: DeleteObjectIds = {
+    ids,
+  };
+  const req: DeleteResult = await axios
+    .post(genApiPath(MaintenancesApiPath.deleteMany), oids)
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteByUser = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

@@ -1,3 +1,4 @@
+import { FindParameters } from 'src/models/base.entity';
 import {
   createParamDecorator,
   ExecutionContext,
@@ -69,4 +70,24 @@ export const AuthToken = createParamDecorator(
 export class AuthTokenParas {
   auth: UAuth = UAuth.WORKER;
   allowUnapproved: boolean = false;
+}
+
+export const FindParam = createParamDecorator(
+  (params: DurationParams = new DurationParams()) => {
+    let findParams = params.fp;
+    console.log(findParams);
+    // const start = dayjs(params.sFrom);
+    // const end = dayjs(params.sTo);
+    // console.log(params);
+    // // console.log(params.sFrom);
+    // // console.log(params.sTo);
+    // const duration = dayjs.duration(start.diff(end));
+    // // console.log(duration);
+    // params.useDurationSearch = true;
+    return findParams;
+  },
+);
+
+export class DurationParams {
+  fp: FindParameters;
 }

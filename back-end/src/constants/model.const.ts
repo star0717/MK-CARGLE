@@ -1,4 +1,5 @@
 import { FindParameters } from '../models/base.entity';
+import dayjs from 'dayjs';
 
 /***************************************************
  * Base 모델 참조 상수
@@ -19,6 +20,13 @@ export const genFindParamQuery = (data: FindParameters) => {
       query = query + '&useRegSearch=' + data.useRegSearch;
     }
   }
+  if (data?.sFrom && data?.sTo) {
+    query = query + '&sFrom=' + dayjs(data.sFrom).format('YYYY-MM-DD');
+    query = query + '&sTo=' + dayjs(data.sTo).format('YYYY-MM-DD');
+  } else if (data?.sYear) {
+    query = query + '&sYear=' + data.sYear;
+  }
+
   return query;
 };
 

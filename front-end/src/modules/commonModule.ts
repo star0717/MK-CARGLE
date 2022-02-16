@@ -107,8 +107,10 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   if (args?.isServerSide)
     apiPath = `${process.env.DESTINATION_API}:${process.env.DESTINATION_PORT}${path}`;
 
+  console.log("apiPath: ", apiPath);
   if (args?.id) {
-    apiPath += "/" + args.id;
+    if (!apiPath.endsWith("/")) apiPath += "/" + args.id;
+    else apiPath += args.id;
   }
   if (args?.findParams) {
     apiPath += genFindParamQuery(args.findParams);

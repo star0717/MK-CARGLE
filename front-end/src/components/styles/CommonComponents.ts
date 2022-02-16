@@ -1557,7 +1557,7 @@ export const JoinStepBarWrapper = styled.div<any>`
   text-align: center;
   font-size: 18px;
   margin: 0px;
-  padding: 0px 0px 100px 0px;
+  padding: ${(props) => props.padding || `0px 0px 100px 0px`};
   flex-direction: row;
 `;
 
@@ -1821,7 +1821,7 @@ export const CheckInput = styled.input<any>`
 export const Checkbox = styled.label<any>`
   display: block;
   position: relative;
-  padding-left: 35px;
+  padding-left: 30px;
   margin: ${(props) => props.margin || `10px 0px`};
   width: ${(props) => props.width};
   cursor: pointer;
@@ -1959,4 +1959,75 @@ export const ColorSpan = styled.span<any>`
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
+`;
+
+export const SpeechBubbleLeft = styled.div<any>`
+  position: relative;
+  background: #343a40;
+  border-radius: 0.4em;
+  width: auto;
+  padding: 14px 20px;
+  color: #fff;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-top-color: #343a40;
+    border-bottom: 0;
+    border-right: 0;
+    margin-left: -7.5px;
+    margin-bottom: -15px;
+  }
+`;
+
+export const SpeechBubblecenter = styled.div<any>`
+  position: relative;
+  background: #343a40;
+  border-radius: 0.4em;
+  width: auto;
+  padding: 14px 20px;
+  color: #fff;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-top-color: #383838;
+    border-bottom: 0;
+    margin-left: -15px;
+    margin-bottom: -15px;
+  }
+`;
+
+export const SpeechBubbleRight = styled.div<any>`
+  position: relative;
+  background: #343a40;
+  border-radius: 0.4em;
+  width: auto;
+  padding: 14px 20px;
+  color: #fff;
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-top-color: #343a40;
+    border-bottom: 0;
+    border-left: 0;
+    margin-left: -7.5px;
+    margin-bottom: -15px;
+  }
 `;

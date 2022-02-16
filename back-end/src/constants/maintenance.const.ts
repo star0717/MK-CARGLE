@@ -1,3 +1,4 @@
+import { MainFindOptions } from './../models/maintenance.entity';
 /***************************************************
  * Maintenance 모델 참조 상수
  ***************************************************/
@@ -95,4 +96,13 @@ export const getStrMainPartsType = (type: MainPartsType): string => {
     default:
       return null;
   }
+};
+
+/********** 검색 옵션 쿼리 생성 ******************/
+export const genMainOptionQuery = (data: MainFindOptions) => {
+  let query = '&';
+  if (data?.costomerType) query += 'costomerType=' + data.costomerType + '&';
+  if (data?.status) query += 'status=' + data.status + '&';
+  if (data?.regNumber) query += 'regNumber=' + data.regNumber;
+  return query;
 };

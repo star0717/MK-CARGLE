@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { NextPage } from "next";
 import dayjs from "dayjs";
 import {
@@ -20,22 +20,16 @@ import {
   CheckInput,
   CheckMark,
   TableBody,
-  CloseButton,
-  CommonButton,
   TextInput2,
   TableRow,
   TableRowLIST,
 } from "src/components/styles/CommonComponents";
-import Modal from "react-modal";
 import { _MainProps } from "src/configure/_props.entity";
-import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
-import { IoIosCloseCircle } from "react-icons/io";
+import { BsEmojiFrownFill, BsSearch, BsWindowSidebar } from "react-icons/bs";
 import { PagenationSection } from "src/components/common/sections";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
-import { GiEgyptianWalk } from "react-icons/gi";
-import { AiOutlineDown, AiTwotoneCheckCircle } from "react-icons/ai";
 import { GoPrimitiveDot } from "react-icons/go";
 import { Maintenance } from "src/models/maintenance.entity";
 import {
@@ -43,26 +37,32 @@ import {
   getStrMainStatus,
   MainStatus,
 } from "src/constants/maintenance.const";
+import { useDispatch } from "react-redux";
+import { _aPostMaintenancesDeleteMany } from "store/action/user.action";
+import { DeleteObjectIds } from "src/models/base.entity";
+import { _iDeleteByUser } from "store/interfaces";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+  const dispatch = useDispatch();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+
   const [searchMenu, setSearchMenu] = useState<boolean>(false);
   const [checkedList, setCheckedList] = useState([]);
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
-  const [clickDoc, setClickDoc] = useState();
 
   /** 상세검색 checkBox state 관리 */
-  // const [searchFrom, setSearchFrom] = useState<Date>();
-  // const [searchTo, setSearchTo] = useState<Date>();
   const [statusOne, setStatusOne] = useState<boolean>(false);
   const [statusTwo, setStatusTwo] = useState<boolean>(false);
   const [statusThree, setStatusThree] = useState<boolean>(false);
+  const [searchList, setSearchList] = useState([]);
+
+  const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
 
   /*********************************************************************
    * 3. Handlers
@@ -99,13 +99,61 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     [checkedList]
   );
 
+  const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "sFrom") {
+      props.setSearchFrom(e.target.value);
+    } else {
+      props.setSearchTo(e.target.value);
+    }
+  };
+
+  const onDeleteMaintenances = () => {
+    // console.log("list Length = ", checkedList);
+    // if (
+    //   checkedList.length > 1 &&
+    //   window.confirm(`${checkedList.length}건의 정비리스트를 삭제하시겠습니까?`)
+    // ) {
+    //   dispatch(_aPostMaintenancesDeleteMany(checkedList)).then((res: _iDeleteByUser) => {
+    //     alert(`${res.payload}건의 정비리스트가 정상적으로 삭제되었습니다.`)
+    //   });
+    // } else if (checkedList.length === 1 ) {
+
+    // } else {
+    //   alert("삭제할 항목이 없습니다.");
+    // }
+    if (checkedList.length > 0) {
+      if (
+        window.confirm(
+          `${checkedList.length} 건 의 정비리스트를 삭제하시겠습니까?`
+        )
+      ) {
+        if (checkedList.length > 1) {
+          // dispatch(_aPostMaintenancesDeleteMany(checkedList)).then((
+          // ))
+        } else {
+        }
+      } else {
+        alert("삭제를 취소했습니다.");
+      }
+    } else {
+      alert("삭제할 항목이 없습니다.");
+    }
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
 
+  // state초기값으로 props를 넣게 되는경우 발생하는 오류방지용
+  useEffect(() => {
+    setMaintenanceList(props.findResult.docs);
+  }, [props.findResult.docs]);
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
+  // console.log(searchFrom, "~", searchTo);
+
   return (
     <WholeWrapper>
       <RsWrapper>
@@ -165,6 +213,162 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
           >
             <Wrapper dr={`row`} ju={`space-between`}>
               <Wrapper width={`100px`} al={`flex-end`}>
+                <Text>기간</Text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+              >
+                <TextInput2
+                  type="date"
+                  name="sFrom"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputUserHandler(e);
+                  }}
+                  width={`300px`}
+                  margin={`10px 0px 10px 30px`}
+                />
+                <Wrapper width={`auto`} margin={`10px 0px 10px 30px`}>
+                  <Text> ~ </Text>
+                </Wrapper>
+                <TextInput2
+                  type="date"
+                  name="sTo"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputUserHandler(e);
+                  }}
+                  width={`300px`}
+                  margin={`10px 0px 10px 30px`}
+                />
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
+                <Text>월별</Text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+                margin={`10px 0px 10px 30px`}
+              >
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  9월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  10월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  11월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  12월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  1월
+                </SmallButton>
+                <SmallButton
+                  kindOf={`default`}
+                  width={`80px`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  2월
+                </SmallButton>
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
+                <Text>차량번호</Text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+              >
+                <TextInput2
+                  placeholder={`예시) 000ㅁ0000`}
+                  width={`300px`}
+                  margin={`10px 0px 10px 30px`}
+                />
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
+                <Text>구분</Text>
+              </Wrapper>
+              <Wrapper
+                ju={`flex-start`}
+                dr={`row`}
+                padding={`0px 0px 0px 50px`}
+              >
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusThree(!statusThree);
+                    }}
+                  />
+                  <CheckMark></CheckMark>
+                  전체
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  일반
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  보험
+                </Checkbox>
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`flex-end`}>
+              <SmallButton type="button" kindOf={`default`} width={`150px`}>
+                검색
+              </SmallButton>
+            </Wrapper>
+          </Wrapper>
+        )}
+        {/* {searchMenu === true && (
+          <Wrapper
+            border={`1px solid #8DAFCE`}
+            padding={`30px`}
+            margin={`40px 0px`}
+            radius={`8px`}
+            shadow={`0px 5px 10px rgba(220,220,220,1)`}
+          >
+            <Wrapper dr={`row`} ju={`space-between`}>
+              <Wrapper width={`100px`} al={`flex-end`}>
                 <text>기간</text>
               </Wrapper>
               <Wrapper
@@ -174,12 +378,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               >
                 <TextInput2
                   type="date"
-                  // value={dayjs(userData.joinDate).format("YYYY-MM-DD")}
-                  // {...register("joinDate", {
-                  //   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  //     onInputUserHandler(e);
-                  //   },
-                  // })}
+                  name="sFrom"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputUserHandler(e);
+                  }}
                   width={`300px`}
                   margin={`10px 0px 10px 30px`}
                 />
@@ -188,12 +390,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 </Wrapper>
                 <TextInput2
                   type="date"
-                  // value={dayjs(userData.joinDate).format("YYYY-MM-DD")}
-                  // {...register("joinDate", {
-                  //   onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  //     onInputUserHandler(e);
-                  //   },
-                  // })}
+                  name="sTo"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputUserHandler(e);
+                  }}
                   width={`300px`}
                   margin={`10px 0px 10px 30px`}
                 />
@@ -348,7 +548,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               </SmallButton>
             </Wrapper>
           </Wrapper>
-        )}
+        )} */}
         <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
           <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
             <SmallButton
@@ -356,6 +556,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               kindOf={`cancle`}
               width={`150px`}
               fontSize={`16px`}
+              onClick={onDeleteMaintenances}
             >
               선택삭제
             </SmallButton>
@@ -487,61 +688,55 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               </TableRow> */}
 
               {props.findResult.totalDocs > 0 ? (
-                maintenanceList.map((list: any) => {
-                  return (
-                    <TableRow
-                      key={list._id}
-                      onClick={() => {
-                        router.push(
-                          `${UseLink.MAINTENANCE_BOOK}?id=${list._id}&step=${list.status}`
-                        );
-                      }}
+                maintenanceList?.map((list: any) => (
+                  <TableRow
+                    key={list._id}
+                    onClick={() => {
+                      router.push(
+                        `${UseLink.MAINTENANCE_BOOK}?id=${list._id}&step=${list.status}`
+                      );
+                    }}
+                  >
+                    <TableRowLIST
+                      width={`5%`}
+                      onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                        e.stopPropagation()
+                      }
                     >
-                      <TableRowLIST
-                        width={`5%`}
-                        onClick={(e: React.MouseEvent<HTMLLIElement>) =>
-                          e.stopPropagation()
-                        }
-                      >
-                        <Checkbox kindOf={`TableCheckBox`}>
-                          <CheckInput
-                            type="checkbox"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => onCheckedElement(e.target.checked, list)}
-                            checked={
-                              checkedList.includes(list._id) ? true : false
-                            }
-                          />
-                          <CheckMark></CheckMark>
-                        </Checkbox>
-                      </TableRowLIST>
-                      <TableRowLIST width={`15%`}>
-                        {dayjs(list.createdAt).format("YYYY-MM-DD")}
-                      </TableRowLIST>
-                      <TableRowLIST width={`15%`}>
-                        {list.car.regNumber}
-                      </TableRowLIST>
-                      <TableRowLIST width={`11%`}>
-                        {getStrMainCustomerType(list.costomerType)}
-                      </TableRowLIST>
-                      <TableRowLIST width={`15%`}>
-                        {list.works.length === 0
-                          ? "-"
-                          : list.works.length === 1
-                          ? list.works[0].name
-                          : `${list.works[0].name}외 ${
-                              list.works.length - 1
-                            }건`}
-                      </TableRowLIST>
-                      <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
-                      <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
-                      <TableRowLIST width={`13%`}>
-                        {getStrMainStatus(list.status)}
-                      </TableRowLIST>
-                    </TableRow>
-                  );
-                })
+                      <Checkbox kindOf={`TableCheckBox`}>
+                        <CheckInput
+                          type="checkbox"
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            onCheckedElement(e.target.checked, list)
+                          }
+                          checked={
+                            checkedList.includes(list._id) ? true : false
+                          }
+                        />
+                        <CheckMark></CheckMark>
+                      </Checkbox>
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`}>
+                      {dayjs(list.createdAt).format("YYYY-MM-DD")}
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`}>
+                      {list.car.regNumber}
+                    </TableRowLIST>
+                    <TableRowLIST width={`11%`}>
+                      {getStrMainCustomerType(list.costomerType)}
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`}>
+                      {list.works?.length > 1
+                        ? `${list.works[0]?.name}외 ${list.works.length - 1}건`
+                        : list.works[0]?.name}
+                    </TableRowLIST>
+                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                    <TableRowLIST width={`13%`}>
+                      {getStrMainStatus(list.status)}
+                    </TableRowLIST>
+                  </TableRow>
+                ))
               ) : (
                 <Wrapper minHeight={`445px`}>
                   <Text fontSize={`48px`} color={`#c4c4c4`}>
@@ -557,7 +752,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
             </TableBody>
           </TableWrapper>
           <Wrapper dr={`row`}></Wrapper>
-          {/* <PagenationSection {...props} /> */}
+          <PagenationSection {...props} />
         </Wrapper>
       </RsWrapper>
     </WholeWrapper>

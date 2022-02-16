@@ -112,71 +112,84 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
             예약을 등록하고 일정을 관리할 수 있어요.
           </CommonSubTitle>
         </CommonTitleWrapper>
-        <Wrapper dr={`row`}>
+        <Wrapper
+          dr={`row`}
+          ju={`space-between`}
+          al={`flex-end`}
+          padding={`40px 0px 0px`}
+        >
           <form>
             <SearchInputWrapper
               type="text"
               placeholder="찾고싶은 예약의 차량번호 또는 휴대전화번호를 입력하세요."
               dr={`row`}
-              width={`678px`}
+              width={`578px`}
               padding={`0px 5px`}
               margin={`10px 0px 0px`}
               borderBottom={`1px solid #000`}
             >
               <Wrapper width={`auto`}>
                 <SearchInput
-                  width={`632px`}
+                  width={`532px`}
                   type="text"
                   placeholder="찾고싶은 예약의 차량번호 또는 휴대전화번호를 입력하세요."
                 />
               </Wrapper>
               <Wrapper>
                 <Text>
-                  <IconButton>
+                  <IconButton type="submit" shadow={`none`}>
                     <BsSearch />
                   </IconButton>
                 </Text>
               </Wrapper>
             </SearchInputWrapper>
           </form>
-          <SmallButton>캘린더</SmallButton>
-          <SmallButton>선택삭제</SmallButton>
-          <SmallButton>+신규예약등록</SmallButton>
+          <Wrapper dr={`row`} ju={`space-between`} width={`470px`}>
+            <SmallButton width={`150px`} fontSize={`16px`} kindOf={`default`}>
+              캘린더
+            </SmallButton>
+            <SmallButton width={`150px`} fontSize={`16px`} kindOf={`default`}>
+              +신규예약등록
+            </SmallButton>
+            <SmallButton width={`150px`} fontSize={`16px`} kindOf={`cancle`}>
+              선택삭제
+            </SmallButton>
+          </Wrapper>
         </Wrapper>
-        <Wrapper margin={`10px 0px 30px`}>
-          <TableWrapper>
-            <TableHead>
-              <TableHeadLIST
-                width={`5%`}
-                onClick={(e: React.MouseEvent<HTMLLIElement>) => {
-                  e.stopPropagation();
-                }}
-              >
-                <Checkbox kindOf={`TableCheckBox`}>
-                  <CheckInput
-                    type="checkbox"
-                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    //   onCheckedAll(e.target.checked);
-                    // }}
-                    // checked={
-                    //   checkedList.length === 0
-                    //     ? false
-                    //     : checkedList.length === props.findResult.docs.length
-                    //     ? true
-                    //     : false
-                    // }
-                  />
-                  <CheckMark></CheckMark>
-                </Checkbox>
-              </TableHeadLIST>
-              <TableHeadLIST width={`20%`}>예약접수일자</TableHeadLIST>
-              <TableHeadLIST width={`24%`}>정비희망일자</TableHeadLIST>
-              <TableHeadLIST width={`18%`}>차량번호</TableHeadLIST>
-              <TableHeadLIST width={`25%`}>전화번호</TableHeadLIST>
-              <TableHeadLIST width={`8%`}>예약상태</TableHeadLIST>
-            </TableHead>
-            <TableBody>
-              {/* {props.findResult.totalDocs > 0 ? (
+
+        <TableWrapper margin={`50px 0px 0px`}>
+          <TableHead>
+            <TableHeadLIST
+              width={`5%`}
+              onClick={(e: React.MouseEvent<HTMLLIElement>) => {
+                e.stopPropagation();
+              }}
+            >
+              <Checkbox kindOf={`TableCheckBox`}>
+                <CheckInput
+                  type="checkbox"
+                  // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  //   onCheckedAll(e.target.checked);
+                  // }}
+                  // checked={
+                  //   checkedList.length === 0
+                  //     ? false
+                  //     : checkedList.length === props.findResult.docs.length
+                  //     ? true
+                  //     : false
+                  // }
+                />
+                <CheckMark></CheckMark>
+              </Checkbox>
+            </TableHeadLIST>
+            <TableHeadLIST width={`20%`}>예약접수일자</TableHeadLIST>
+            <TableHeadLIST width={`24%`}>정비희망일자</TableHeadLIST>
+            <TableHeadLIST width={`18%`}>차량번호</TableHeadLIST>
+            <TableHeadLIST width={`25%`}>전화번호</TableHeadLIST>
+            <TableHeadLIST width={`8%`}>예약상태</TableHeadLIST>
+          </TableHead>
+          <TableBody>
+            {/* {props.findResult.totalDocs > 0 ? (
                   props.findResult.docs.map((list: Agency) => (
                     <TableRow
                       key={list._id}
@@ -231,28 +244,27 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
                     <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
                   </Wrapper>
                 )} */}
-            </TableBody>
-          </TableWrapper>
-          <Wrapper dr={`row`}>
-            <CommonButton
-              onClick={() => {
-                setModalOption("add");
-                setModalOpen(true);
-              }}
-            >
-              addModal
-            </CommonButton>
-            <CommonButton
-              onClick={() => {
-                setModalOption("edit");
-                setModalOpen(true);
-              }}
-            >
-              editModal
-            </CommonButton>
-          </Wrapper>
-          {/* <PagenationSection {...props} /> */}
+          </TableBody>
+        </TableWrapper>
+        <Wrapper dr={`row`}>
+          <CommonButton
+            onClick={() => {
+              setModalOption("add");
+              setModalOpen(true);
+            }}
+          >
+            addModal
+          </CommonButton>
+          <CommonButton
+            onClick={() => {
+              setModalOption("edit");
+              setModalOpen(true);
+            }}
+          >
+            editModal
+          </CommonButton>
         </Wrapper>
+        {/* <PagenationSection {...props} /> */}
       </RsWrapper>
       <Modal
         isOpen={modalOpen}

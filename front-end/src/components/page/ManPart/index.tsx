@@ -121,18 +121,18 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
               어떤 부품을 많이 사용했는지 확인할 수 있어요
             </CommonSubTitle>
           </CommonTitleWrapper>
-          <Wrapper>
+          <Wrapper al={`flex-start`}>
             <form onSubmit={onSearchFormHandler}>
               <SearchInputWrapper
                 type="text"
-                width={`678px`}
+                width={`578px`}
                 padding={`0px 5px`}
                 dr={`row`}
                 borderBottom={`1px solid #000`}
               >
                 <Wrapper width={`auto`}>
                   <SearchInput
-                    width={`632px`}
+                    width={`532px`}
                     padding={`0px 5px 0px 5px`}
                     placeholder="부품코드, 부품명 또는 국토부를 입력하세요."
                     type="text"

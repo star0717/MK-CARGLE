@@ -142,18 +142,18 @@ const AdminMolitItemsPage: NextPage<any> = (props) => {
             <CommonTitle>국토부항목관리</CommonTitle>
             <CommonSubTitle></CommonSubTitle>
           </CommonTitleWrapper>
-          <Wrapper>
+          <Wrapper al={`flex-start`}>
             <form onSubmit={onSearchFormHandler}>
               <SearchInputWrapper
                 type="text"
-                width={`678px`}
+                width={`578px`}
                 padding={`0px 5px`}
                 dr={`row`}
                 borderBottom={`1px solid #000`}
               >
                 <Wrapper width={`auto`}>
                   <SearchInput
-                    width={`632px`}
+                    width={`532px`}
                     padding={`0px 5px 0px 5px`}
                     placeholder="코드 또는 작업내용을 입력하세요."
                     type="text"
