@@ -90,7 +90,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   const cusInit: any = {
-    customerName: "",
+    name: "",
     phoneNumber: "",
   };
 
@@ -179,11 +179,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     // if (!carInfo.regDate) {
     //   delete MaintenanceData.car.regDate;
     // }
-    // if (!cusInfo.customerName) {
-    //   delete MaintenanceData.customer.customerName;
+    // if (!cusInfo.name) {
+    //   delete MaintenanceData.customer.name;
     // }
 
-    console.log(MaintenanceData);
+    console.log("메인", MaintenanceData);
 
     // dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
     //   (res: _iMaintenances) => {
@@ -377,8 +377,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                       <TextInput2
                         type="text"
                         width={`100px`}
-                        value={cusInfo.customerName}
-                        {...register("customerName", {
+                        value={cusInfo.name}
+                        {...register("name", {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
