@@ -51,9 +51,16 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   const [findResult, setFindResult] = useState<FindResult<any>>(props.data);
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
-  const [searchFrom, setSearchFrom] = useState<string>("");
-  const [searchTo, setSearchTo] = useState<string>("");
-  const [searchDetails, setSearchDetails] = useState<MainFindOptions>({});
+  // const [searchFrom, setSearchFrom] = useState<string>("");
+  // const [searchTo, setSearchTo] = useState<string>("");
+  // const [searchDetails, setSearchDetails] = useState<MainFindOptions>({});
+  const [searchList, setSearchList] = useState({
+    sFrom: "",
+    sTo: "",
+    regNumber: "",
+    costomerType: "all",
+    status: "all",
+  });
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -73,15 +80,27 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       filterValue: filterValue,
       useRegSearch: true,
     };
-
-    if (searchFrom) {
-      var sFromDate: Date = new Date(searchFrom);
+    // console.log("From", searchFrom, "To", searchTo);
+    if (searchList.sFrom !== "") {
+      var sFromDate: Date = new Date(searchList.sFrom);
       param.sFrom = sFromDate;
     }
-    if (searchTo) {
-      var sToDate: Date = new Date(searchTo);
+    if (searchList.sTo !== "") {
+      var sToDate: Date = new Date(searchList.sTo);
       param.sTo = sToDate;
     }
+    const searchDetails: any = {};
+    if (searchList.regNumber !== "")
+      searchDetails.regNumber = searchList.regNumber;
+    else delete searchDetails.regNumber;
+    //구분
+    if (searchList.costomerType !== "all")
+      searchDetails.costomerType = searchList.costomerType;
+    else delete searchDetails.costomerType;
+    //정비상태
+    if (searchList.status !== "all") searchDetails.status = searchList.status;
+    else delete searchDetails.status;
+
     console.log("param:", param, "searchDetails:", searchDetails);
     dispatch(_aGetMaintenancesList(param, searchDetails)).then((res: any) => {
       setFindResult(res.payload);
@@ -99,10 +118,12 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     setSearchOption,
     filterValue,
     setFilterValue,
-    setSearchFrom,
-    setSearchTo,
-    searchDetails,
-    setSearchDetails,
+    searchList,
+    setSearchList,
+    // setSearchFrom,
+    // setSearchTo,
+    // searchDetails,
+    // setSearchDetails,
   };
   /*********************************************************************
    * 5. Page configuration
