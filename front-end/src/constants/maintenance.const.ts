@@ -6,11 +6,11 @@ import { MainFindOptions } from './../models/maintenance.entity';
 /********** 정비 상태 ******************/
 // 정비 상태
 export enum MainStatus {
-  STORED = 'stored', // 정비시작 전
-  ING = 'ing', // 정비중
-  DONE = 'done', // 정비완료
-  PAID = 'paid', // 결재완료
-  RELEASED = 'released', // 출고완료
+  STORED = 's', // 정비시작 전
+  ING = 'i', // 정비중
+  DONE = 'd', // 정비완료
+  PAID = 'p', // 결재완료
+  RELEASED = 'r', // 출고완료
 }
 
 // 정비 상태 리스트
@@ -41,8 +41,8 @@ export const getStrMainStatus = (status: MainStatus): string => {
 /********** 고객 타입 ******************/
 // 고객 타입
 export enum MainCustomerType {
-  NORMAL = 'normal',
-  INSURANCE = 'insurance',
+  NORMAL = 'n',
+  INSURANCE = 'i',
 }
 
 // 고객 타입 리스트

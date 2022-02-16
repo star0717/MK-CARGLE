@@ -1,3 +1,4 @@
+import { CompaniesModule } from './../companies/companies.module';
 import { Module } from '@nestjs/common';
 import { MaintenancesService } from './maintenances.service';
 import { MaintenancesController } from './maintenances.controller';
@@ -11,6 +12,7 @@ import { CarsModule } from '../cars/cars.module';
     TypegooseModule.forFeature([Maintenance]),
     CommonModule,
     CarsModule,
+    CompaniesModule,
   ],
   controllers: [MaintenancesController],
   providers: [MaintenancesService],
