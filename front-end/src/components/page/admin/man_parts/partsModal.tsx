@@ -34,6 +34,7 @@ import {
 import { BsPlus } from "react-icons/bs";
 import { Part } from "../../../../models/part.entity";
 import { _pAdminManParts } from "../../../../configure/_pProps.entity";
+import { trim } from "src/modules/commonModule";
 
 const PartsModal: NextPage<_pAdminManParts> = (props) => {
   /*********************************************************************
@@ -116,7 +117,7 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPartInfo({
       ...partInfo,
-      name: e.target.value.replace(" ", ""),
+      name: trim(e.target.value),
     });
   };
 

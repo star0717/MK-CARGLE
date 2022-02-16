@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { NextPage } from "next";
 import {
   Checkbox,
@@ -29,26 +30,108 @@ import {
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
-import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
-import { GoCheck } from "react-icons/go";
-import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
-import { BsChevronDoubleUp, BsPencilSquare, BsSearch } from "react-icons/bs";
+import {
+  AiFillAliwangwang,
+  AiFillCar,
+  AiFillCheckCircle,
+  AiFillCloseCircle,
+  AiFillFlag,
+  AiTwotoneSetting,
+} from "react-icons/ai";
+import { BsChevronDoubleUp, BsSearch } from "react-icons/bs";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
-import { faCar } from "@fortawesome/free-solid-svg-icons";
 import { FaCar } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { basicRegEx, formRegEx } from "src/validation/regEx";
+import {
+  _aGetMaintenancesCarInfo,
+  _aPostMaintenancesStore,
+} from "store/action/user.action";
+import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
+import { MainStatus } from "src/constants/maintenance.const";
+import { CarInfo, Maintenance } from "src/models/maintenance.entity";
 
-const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
+const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // react-hook-form 사용을 위한 선언
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [showCar, setShowCar] = useState<boolean>(false);
+  const [searchCarText, setSearchCarText] = useState<string>("");
+  const [carInfo, setCarInfo] = useState<CarInfo>({
+    name: "",
+    regNumber: "",
+    distance: "",
+  }); // 차량정보
+  const [cusInfo, setCusInfo] = useState<any>({
+    customerName: "",
+    phoneNumber: "",
+  });
+  const [showCar, setShowCar] = useState<boolean>(false); // 차량검색 후 정보표시
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 차량정보 input
+   * @param e
+   */
+  const onChangeCarInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCarInfo({ ...carInfo, [e.target.name]: e.target.value });
+  };
+
+  /**
+   * 차량 조회 handler
+   * @param data
+   */
+  const onSearchCarHandler: SubmitHandler<Partial<CarInfo>> = (data) => {
+    dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
+      (res: _iGetMaintenancesCarInfo) => {
+        setCarInfo(res.payload);
+        setShowCar(true);
+      },
+      (err) => {
+        alert("차량번호 조회에 실패했습니다.");
+      }
+    );
+  };
+
+  /**
+   * 차량 정보 리셋 handler
+   */
+  const onResetCar = () => {
+    setCarInfo({ name: "", regNumber: "" });
+    setShowCar(false);
+    setSearchCarText("");
+    setValue("searchCarText", "");
+  };
+
+  const onCarStoredHandler: SubmitHandler<Partial<Maintenance>> = (data) => {
+    const MaintenanceData: Partial<Maintenance> = {
+      car: { ...carInfo, regNumber: searchCarText },
+      customer: cusInfo,
+    };
+    dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
+      (res: _iMaintenances) => {
+        if (!res.payload) return alert("차량 입고에 실패했습니다.");
+        router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
+      },
+      (err) => {
+        alert("차량 입고에 실패했습니다.");
+      }
+    );
+  };
 
   /*********************************************************************
    * 4. Props settings
@@ -64,14 +147,13 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
           {/* <CommonTitle>
             차량선택 후 정비진행 버튼 클릭 시 정비가 진행됩니다.
           </CommonTitle> */}
-          <CommonSubTitle>
-            <ColorSpan color={`#314FA5`}>차량선택</ColorSpan> 후 정비진행 버튼
-            클릭 시 정비가 진행됩니다.
+          <CommonSubTitle color={`#314FA5`} kindOf={`sub`}>
+            차량선택 후 차량입고를 해주세요
           </CommonSubTitle>
           <JoinStepBarWrapper>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`progress`}>
-                <AiOutlineFileText />
+                <AiFillCheckCircle />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량선택
@@ -79,7 +161,18 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>{<AiOutlineUser />}</JoinStepBar>
+              <JoinStepBar kindOf={`before`}>
+                <AiFillCar />
+              </JoinStepBar>
+              <Text height={`0px`} padding={`10px 0px 0px`}>
+                차량입고
+              </Text>
+            </Wrapper>
+            <JoinStepBar kindOf={`line2`}></JoinStepBar>
+            <Wrapper width={`auto`}>
+              <JoinStepBar kindOf={`before`}>
+                <AiTwotoneSetting />
+              </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>
@@ -87,7 +180,7 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
             <JoinStepBar kindOf={"line2"}></JoinStepBar>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`before`}>
-                <MdOutlineBusinessCenter />
+                <AiFillAliwangwang />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비완료
@@ -96,7 +189,7 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`before`}>
-                <MdOutlineUploadFile />
+                <AiFillFlag />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 출고완료
@@ -111,71 +204,272 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
           al={`flex-start`}
         >
           <Wrapper width={`30%`}>
-            <SearchInputWrapper
-              type="text"
-              width={`30%`}
-              padding={`0px 5px`}
-              dr={`row`}
-              borderBottom={`1px solid #000`}
-            >
-              <form
-                onSubmit={() => {
-                  setShowCar(true);
-                }}
-              >
-                <Wrapper>
-                  <SearchInput
-                    width={`332px`}
-                    padding={`0px 5px 0px 5px`}
-                    placeholder="차량번호를 입력하세요."
-                    type="text"
-                    value={props.filterValue}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      props.setFilterValue(e.target.value);
-                    }}
-                  />
-                </Wrapper>
-                <Wrapper width={`36px`} height={`46px`}>
-                  <IconButton type="submit" shadow={`none`}>
-                    <BsSearch />
-                  </IconButton>
-                </Wrapper>
+            {showCar ? (
+              <Wrapper dr={`row`} fontSize={`24px`}>
+                <Text fontSize={`24px`}>{searchCarText}</Text>
+                <IconButton type="button" shadow={`none`} onClick={onResetCar}>
+                  <AiFillCloseCircle />
+                </IconButton>
+              </Wrapper>
+            ) : (
+              <form onSubmit={handleSubmit(onSearchCarHandler)}>
+                <SearchInputWrapper
+                  type="text"
+                  width={`100%`}
+                  padding={`0px 5px`}
+                  dr={`row`}
+                  borderBottom={`1px solid #000`}
+                  al={`space-between`}
+                >
+                  <Wrapper>
+                    <SearchInput
+                      width={`332px`}
+                      padding={`0px 5px 0px 5px`}
+                      placeholder="차량번호를 입력하세요."
+                      type="text"
+                      value={searchCarText}
+                      {...register("searchCarText", {
+                        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                          setSearchCarText(e.target.value);
+                        },
+                        required: {
+                          value: true,
+                          message: "차량번호를 입력하세요.",
+                        },
+                        pattern: {
+                          value: formRegEx.CAR_NUM,
+                          message: "형식에 맞게 입력하세요.",
+                        },
+                      })}
+                    />
+                  </Wrapper>
+                  <Wrapper width={`36px`} height={`46px`}>
+                    <IconButton type="submit" shadow={`none`}>
+                      <BsSearch />
+                    </IconButton>
+                  </Wrapper>
+                </SearchInputWrapper>
+                {(errors.searchCarText?.type === "required" ||
+                  errors.searchCarText?.type === "pattern") && (
+                  <Text
+                    margin={`0px`}
+                    width={`100%`}
+                    color={`#d6263b`}
+                    al={`flex-start`}
+                    fontSize={`14px`}
+                    textAlign={`left`}
+                  >
+                    {errors.searchCarText.message}
+                  </Text>
+                )}
               </form>
-            </SearchInputWrapper>
-            <Wrapper width={`30%`}>
+            )}
+            <Wrapper width={`100%`}>
               {showCar ? (
                 <Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text>주행거리</Text>
-                    <TextInput2 type="text" />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text>고객명</Text>
-                    <TextInput2 type="text" />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text>전화번호</Text>
-                    <TextInput2 type="text" />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text>차량명</Text>
-                    <TextInput2 type="text" />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text>주행거리</Text>
-                    <TextInput2 type="text" />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text>주행거리</Text>
-                    <TextInput2 type="text" />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text>주행거리</Text>
-                    <TextInput2 type="text" />
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <Text>주행거리</Text>
-                    <TextInput2 type="text" />
+                  <form
+                    id="carInfoForm"
+                    onSubmit={handleSubmit(onCarStoredHandler)}
+                  >
+                    <Wrapper dr={`row`} ju={`space-between`}>
+                      <Text fontSize={`14px`}>주행거리</Text>
+                      <TextInput2
+                        type="text"
+                        width={`50%`}
+                        value={carInfo.distance}
+                        {...register("distance", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                          required: {
+                            value: true,
+                            message: "필수 입력사항입니다.",
+                          },
+                          pattern: {
+                            value: basicRegEx.NUM,
+                            message: "형식에 맞게 입력하세요.",
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    {(errors.distance?.type === "required" ||
+                      errors.distance?.type === "pattern") && (
+                      <Text
+                        margin={`0px`}
+                        width={`100%`}
+                        color={`#d6263b`}
+                        al={`flex-start`}
+                        fontSize={`14px`}
+                        textAlign={`left`}
+                      >
+                        {errors.distance.message}
+                      </Text>
+                    )}
+                    <Wrapper dr={`row`} ju={`space-between`}>
+                      <Text fontSize={`14px`}>고객명</Text>
+                      <TextInput2
+                        type="text"
+                        width={`50%`}
+                        value={cusInfo.customerName}
+                        {...register("customerName", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setCusInfo({
+                              ...cusInfo,
+                              customerName: e.target.value,
+                            });
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`} ju={`space-between`}>
+                      <Text fontSize={`14px`}>전화번호</Text>
+                      <TextInput2
+                        type="text"
+                        width={`50%`}
+                        value={cusInfo.phoneNumber}
+                        {...register("phoneNumber", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            setCusInfo({
+                              ...cusInfo,
+                              phoneNumber: e.target.value,
+                            });
+                          },
+                          required: {
+                            value: true,
+                            message: "필수 입력사항입니다.",
+                          },
+                          pattern: {
+                            value: formRegEx.HP_NUM,
+                            message: "형식에 맞게 입력하세요.",
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    {(errors.phoneNumber?.type === "required" ||
+                      errors.phoneNumber?.type === "pattern") && (
+                      <Text
+                        margin={`0px`}
+                        width={`100%`}
+                        color={`#d6263b`}
+                        al={`flex-start`}
+                        fontSize={`14px`}
+                        textAlign={`left`}
+                      >
+                        {errors.phoneNumber.message}
+                      </Text>
+                    )}
+                    <Wrapper dr={`row`} ju={`space-between`}>
+                      <Text fontSize={`14px`}>차량명</Text>
+                      <TextInput2
+                        type="text"
+                        width={`50%`}
+                        value={carInfo.name}
+                        {...register("name", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                          required: {
+                            value: true,
+                            message: "필수 입력사항입니다.",
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    {errors.name?.type === "required" && (
+                      <Text
+                        margin={`0px`}
+                        width={`100%`}
+                        color={`#d6263b`}
+                        al={`flex-start`}
+                        fontSize={`14px`}
+                        textAlign={`left`}
+                      >
+                        {errors.name.message}
+                      </Text>
+                    )}
+                    <Wrapper dr={`row`} ju={`space-between`}>
+                      <Text fontSize={`14px`}>모델명</Text>
+                      <TextInput2
+                        type="text"
+                        width={`50%`}
+                        value={carInfo.model}
+                        {...register("model", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`} ju={`space-between`}>
+                      <Text fontSize={`14px`}>연식</Text>
+                      <TextInput2
+                        type="text"
+                        width={`50%`}
+                        value={carInfo.age}
+                        {...register("age", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`} ju={`space-between`}>
+                      <Text fontSize={`14px`}>차대번호</Text>
+                      <TextInput2
+                        type="text"
+                        width={`50%`}
+                        value={carInfo.idNumber}
+                        {...register("idNumber", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                    <Wrapper dr={`row`} ju={`space-between`}>
+                      <Text fontSize={`14px`}>등록일자</Text>
+                      <TextInput2
+                        type="text"
+                        width={`50%`}
+                        value={carInfo.regDate}
+                        {...register("regDate", {
+                          onChange: (
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeCarInfo(e);
+                          },
+                        })}
+                      />
+                    </Wrapper>
+                  </form>
+                  <Wrapper>
+                    <Wrapper dr={`row`}>
+                      <SmallButton type="button" kindOf={`default`}>
+                        정비요청사항
+                      </SmallButton>
+                      <SmallButton type="button" kindOf={`default`}>
+                        차량정보공유
+                      </SmallButton>
+                    </Wrapper>
+                    <Wrapper dr={`row`}>
+                      <SmallButton type="button" kindOf={`default`}>
+                        정비사진확인
+                      </SmallButton>
+                    </Wrapper>
                   </Wrapper>
                 </Wrapper>
               ) : (
@@ -190,44 +484,41 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
           </Wrapper>
 
           <Wrapper width={`70%`}>
-            <Wrapper dr={`row`}>
+            <Wrapper dr={`row`} ju={`flex-end`}>
               <SmallButton
                 type="button"
                 kindOf={`default`}
                 onClick={() => {
-                  router.back();
+                  router.push(UseLink.MAINTENANCE_BOOK);
                 }}
               >
-                뒤로가기
-              </SmallButton>
-              <SmallButton type="button" kindOf={`default`}>
-                정비진행
+                목록으로
               </SmallButton>
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>정비기간</Text>
-              <TextInput2 type="date" />
+              <TextInput2 type="date" disabled />
               <Text>~</Text>
-              <TextInput2 type="date" />
+              <TextInput2 type="date" disabled />
               <Text>차량출고일</Text>
-              <TextInput2 type="date" />
+              <TextInput2 type="date" disabled />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Text>정비책임자</Text>
-              <TextInput2 type="text" />
+              <TextInput2 type="text" disabled />
             </Wrapper>
             <Wrapper dr={`row`}>
               <Wrapper dr={`row`}>
                 <Text>정비구분</Text>
-                <Combo>
+                <Combo disabled>
                   <option value="1">일반</option>
                 </Combo>
-                <TextInput2 type="text" />
-                <TextInput2 type="text" />
+                <TextInput2 type="text" disabled />
+                <TextInput2 type="text" disabled />
               </Wrapper>
               <Wrapper dr={`row`}>
                 <Text>추가정비동의</Text>
-                <Combo>
+                <Combo disabled>
                   <option value="1">동의</option>
                 </Combo>
               </Wrapper>
@@ -242,8 +533,8 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
                   al={`center`}
                 >
                   <Checkbox>
-                    부품조회
-                    <CheckInput type="checkbox" onChange={() => {}} />
+                    부가세포함
+                    <CheckInput type="checkbox" disabled />
                     <CheckMark></CheckMark>
                   </Checkbox>
                 </Wrapper>
@@ -263,29 +554,48 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
                 </SmallButton>
               </Wrapper>
             </Wrapper>
+            <TableWrapper>
+              <TableHead>
+                <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
+                <TableHeadLIST width={`15%`}>국토부</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
+                <TableHeadLIST width={`15%`}>단가</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>수량</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>계</TableHeadLIST>
+                <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
+              </TableHead>
+              <TableBody>
+                {/* <TableRowLIST>
+                  <TableRow width={`15%`}>1</TableRow>
+                  <TableRow width={`15%`}>2</TableRow>
+                  <TableRow width={`14%`}>3</TableRow>
+                  <TableRow width={`15%`}>4</TableRow>
+                  <TableRow width={`14%`}>5</TableRow>
+                  <TableRow width={`14%`}>6</TableRow>
+                  <TableRow width={`8%`}>7</TableRow>
+                </TableRowLIST> */}
+              </TableBody>
+            </TableWrapper>
+            <Wrapper dr={`row`} ju={`flex-end`} al={`center`}>
+              <Text>부품계 : 0</Text>
+              <Text margin={`0px 5px`}>|</Text>
+              <Text>기술료계 : 0</Text>
+              <Text margin={`0px 5px`}>|</Text>
+              <Text>합계 : 0</Text>
+              <Text margin={`0px 5px`}>|</Text>
+              <Text>부가세 : 0</Text>
+              <Text margin={`0px 5px`}>|</Text>
+              <Text fontSize={`24px`}>총계 0</Text>
+            </Wrapper>
             <Wrapper>
-              <TableWrapper>
-                <TableHead>
-                  <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
-                  <TableHeadLIST width={`15%`}>국토부</TableHeadLIST>
-                  <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
-                  <TableHeadLIST width={`15%`}>단가</TableHeadLIST>
-                  <TableHeadLIST width={`14%`}>수량</TableHeadLIST>
-                  <TableHeadLIST width={`14%`}>계</TableHeadLIST>
-                  <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
-                </TableHead>
-                <TableBody>
-                  <TableRowLIST>
-                    <TableRow width={`15%`}>1</TableRow>
-                    <TableRow width={`15%`}>2</TableRow>
-                    <TableRow width={`14%`}>3</TableRow>
-                    <TableRow width={`15%`}>4</TableRow>
-                    <TableRow width={`14%`}>5</TableRow>
-                    <TableRow width={`14%`}>6</TableRow>
-                    <TableRow width={`8%`}>7</TableRow>
-                  </TableRowLIST>
-                </TableBody>
-              </TableWrapper>
+              <SmallButton
+                form="carInfoForm"
+                type="submit"
+                kindOf={showCar ? `default` : `ghost`}
+                disabled={showCar ? false : true}
+              >
+                차량입고
+              </SmallButton>
             </Wrapper>
           </Wrapper>
         </Wrapper>
@@ -295,4 +605,4 @@ const HeoTest: NextPage<_pMaintenanceProps> = (props) => {
   );
 };
 
-export default HeoTest;
+export default MaintenanceStored;
