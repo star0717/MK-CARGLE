@@ -110,19 +110,6 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   const onDeleteMaintenances = () => {
-    // console.log("list Length = ", checkedList);
-    // if (
-    //   checkedList.length > 1 &&
-    //   window.confirm(`${checkedList.length}건의 정비리스트를 삭제하시겠습니까?`)
-    // ) {
-    //   dispatch(_aPostMaintenancesDeleteMany(checkedList)).then((res: _iDeleteByUser) => {
-    //     alert(`${res.payload}건의 정비리스트가 정상적으로 삭제되었습니다.`)
-    //   });
-    // } else if (checkedList.length === 1 ) {
-
-    // } else {
-    //   alert("삭제할 항목이 없습니다.");
-    // }
     if (checkedList.length > 0) {
       if (
         window.confirm(
@@ -132,14 +119,18 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
         if (checkedList.length > 1) {
           dispatch(_aPostMaintenancesDeleteMany(checkedList)).then(
             (res: _iDeleteByUser) => {
-              alert(`${res.payload} 건 의 정비리스트를 삭제하였습니다.`);
+              alert(
+                `${res.payload.deletedCount} 건 의 정비리스트를 삭제하였습니다.`
+              );
               setReset(reset + 1);
             }
           );
         } else {
           dispatch(_aDeleteMaintenancesDelete(checkedList[0])).then(
             (res: _iDeleteByUser) => {
-              alert(`${res.payload} 건 의 정비리스트를 삭제하였습니다.`);
+              alert(
+                `${res.payload.deletedCount} 건 의 정비리스트를 삭제하였습니다.`
+              );
               setReset(reset + 1);
             }
           );
@@ -163,7 +154,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
 
   useEffect(() => {
     setCheckedList([]);
-    props.findDocHandler;
+    props.findDocHandler(props.findResult.currentPage);
   }, [reset]);
   /*********************************************************************
    * 5. Page configuration
@@ -261,72 +252,68 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
               <Wrapper width={`100px`} al={`flex-end`}>
-                <Text>월별</Text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-                margin={`10px 0px 10px 30px`}
-              >
-                <SmallButton
-                  kindOf={`default`}
-                  width={`80px`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  9월
-                </SmallButton>
-                <SmallButton
-                  kindOf={`default`}
-                  width={`80px`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  10월
-                </SmallButton>
-                <SmallButton
-                  kindOf={`default`}
-                  width={`80px`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  11월
-                </SmallButton>
-                <SmallButton
-                  kindOf={`default`}
-                  width={`80px`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  12월
-                </SmallButton>
-                <SmallButton
-                  kindOf={`default`}
-                  width={`80px`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  1월
-                </SmallButton>
-                <SmallButton
-                  kindOf={`default`}
-                  width={`80px`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  2월
-                </SmallButton>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <Text>차량번호</Text>
+                <Text>정비상태</Text>
               </Wrapper>
               <Wrapper
                 ju={`flex-start`}
                 dr={`row`}
                 padding={`0px 0px 0px 50px`}
               >
-                <TextInput2
-                  placeholder={`예시) 000ㅁ0000`}
-                  width={`300px`}
-                  margin={`10px 0px 10px 30px`}
-                />
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    onChange={() => {
+                      setStatusThree(!statusThree);
+                    }}
+                  />
+                  <CheckMark></CheckMark>
+                  전체
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  입고
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  정비중
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  정비완료
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  결제완료
+                </Checkbox>
+                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
+                  <CheckInput
+                    type="checkbox"
+                    checked={statusThree}
+                    onChange={() => {}}
+                  />
+                  <CheckMark></CheckMark>
+                  출고
+                </Checkbox>
               </Wrapper>
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
