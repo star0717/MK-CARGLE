@@ -72,7 +72,7 @@ export class Customer {
   @prop({ trim: true, required: true })
   phoneNumber: string;
 
-  @ApiProperty({ description: '고객명', required: true })
+  @ApiProperty({ description: '고객명', required: false })
   @IsOptional()
   @IsString()
   @prop({ trim: true })

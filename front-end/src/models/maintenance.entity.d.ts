@@ -1,4 +1,4 @@
-import { MainCustomerType, MainPartsType, MainStatus } from 'src/constants/maintenance.const';
+import { MainCustomerType, MainDocPubType, MainPartsType, MainStatus } from 'src/constants/maintenance.const';
 import { BaseEntity } from './base.entity';
 export declare class CarInfo {
     name: string;
@@ -11,6 +11,7 @@ export declare class CarInfo {
 }
 export declare class Customer {
     phoneNumber: string;
+    name?: string;
     _oID?: string;
 }
 export declare class Work {
@@ -41,6 +42,11 @@ export declare class Dates {
     endMa?: Date;
     released?: Date;
 }
+export declare class Doc {
+    type: MainDocPubType;
+    _oID: string;
+    pubAt: Date;
+}
 export declare class Maintenance extends BaseEntity {
     docNum?: string;
     workerName?: string;
@@ -52,9 +58,15 @@ export declare class Maintenance extends BaseEntity {
     works?: Work[];
     price?: Price;
     customer: Customer;
+    estimate: Doc;
+    statement: Doc;
 }
 export declare class MainFindOptions {
     regNumber?: string;
     status?: MainStatus;
     costomerType?: MainCustomerType;
+}
+export declare class MainPubDocInfo {
+    type: MainDocPubType;
+    phoneNumber?: string;
 }
