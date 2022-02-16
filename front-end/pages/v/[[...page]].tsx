@@ -158,7 +158,7 @@ const MainPage: NextPage<_MainProps> = (props) => {
         <>
           {" "}
           <Header {...mainProps} />
-          {openMenu && width < 1200 && <NavbarMenu {...mainProps} />}
+          {openMenu && width < 1440 && <NavbarMenu {...mainProps} />}
           <MainComponent {...mainProps} />
           <Footer />
         </>

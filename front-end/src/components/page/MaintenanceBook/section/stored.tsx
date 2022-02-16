@@ -238,11 +238,22 @@ const MaintenanceStored: NextPage = () => {
         <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
           <Wrapper width={`25%`}>
             {showCar ? (
-              <Wrapper dr={`row`} fontSize={`24px`}>
-                <Text fontSize={`24px`}>{searchCarText}</Text>
-                <IconButton type="button" shadow={`none`} onClick={onResetCar}>
-                  <AiFillCloseCircle />
-                </IconButton>
+              <Wrapper height={`80px`} ju={`flex-end`}>
+                <Wrapper
+                  dr={`row`}
+                  fontSize={`24px`}
+                  border={`1px solid #ccc`}
+                  padding={`10px 0px`}
+                >
+                  <Text fontSize={`24px`}>{searchCarText}</Text>
+                  <IconButton
+                    type="button"
+                    shadow={`none`}
+                    onClick={onResetCar}
+                  >
+                    <AiFillCloseCircle />
+                  </IconButton>
+                </Wrapper>
               </Wrapper>
             ) : (
               <Wrapper height={`80px`} al={`flex-end`}>
@@ -299,18 +310,31 @@ const MaintenanceStored: NextPage = () => {
                 </form>
               </Wrapper>
             )}
-            <Wrapper border={`1px solid #ccc`}>
+            <Wrapper
+              border={`1px solid #ccc`}
+              margin={`10px 0px 0px 0px`}
+              padding={`10px 20px`}
+            >
               {showCar ? (
                 <form
                   id="carInfoForm"
                   onSubmit={handleSubmit(onCarStoredHandler)}
                 >
                   <Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>주행거리</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        주행거리
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.distance}
                         {...register("distance", {
                           onChange: (
@@ -342,11 +366,20 @@ const MaintenanceStored: NextPage = () => {
                         {errors.distance.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>고객명</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        고객명
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={cusInfo.name}
                         {...register("cusName", {
                           onChange: (
@@ -358,11 +391,20 @@ const MaintenanceStored: NextPage = () => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>전화번호</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        전화번호
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={cusInfo.phoneNumber}
                         {...register("phoneNumber", {
                           onChange: (
@@ -397,11 +439,20 @@ const MaintenanceStored: NextPage = () => {
                         {errors.phoneNumber.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>차량명</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        차량명
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.name}
                         {...register("name", {
                           onChange: (
@@ -428,11 +479,20 @@ const MaintenanceStored: NextPage = () => {
                         {errors.name.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>모델명</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        모델명
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.model}
                         {...register("model", {
                           onChange: (
@@ -443,11 +503,20 @@ const MaintenanceStored: NextPage = () => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>연식</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        연식
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.age}
                         {...register("age", {
                           onChange: (
@@ -458,11 +527,20 @@ const MaintenanceStored: NextPage = () => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>차대번호</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        차대번호
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.idNumber}
                         {...register("idNumber", {
                           onChange: (
@@ -489,11 +567,20 @@ const MaintenanceStored: NextPage = () => {
                         {errors.idNumber.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>등록일자</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        등록일자
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.regDate}
                         {...register("regDate", {
                           onChange: (
@@ -521,7 +608,7 @@ const MaintenanceStored: NextPage = () => {
           </Wrapper>
 
           <Wrapper width={`74%`}>
-            <Wrapper height={`80px`} al={`flex-end`}>
+            <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
               <Wrapper dr={`row`} ju={`flex-end`}>
                 <SmallButton
                   type="button"
@@ -537,7 +624,7 @@ const MaintenanceStored: NextPage = () => {
             <Wrapper
               border={`1px solid #ccc`}
               padding={`20px`}
-              margin={`0px 0px 20px`}
+              margin={`10px 0px 20px`}
             >
               <Wrapper
                 dr={`row`}
