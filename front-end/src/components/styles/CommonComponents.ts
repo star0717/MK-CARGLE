@@ -627,6 +627,8 @@ export const SmallButton = styled.button<any>`
     ${(props) =>
       props.kindOf === `fillDefault` && `color ${props.theme.white_C};`}
     ${(props) => props.kindOf === `fillDefault` && `border : none;`}
+
+    ${(props) => props.kindOf === `ghost` && `box-shadow : none;`}
   }
 `;
 
