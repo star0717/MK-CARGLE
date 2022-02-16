@@ -235,21 +235,17 @@ export class Dates {
 
 // 문서 발급 정보(견적서와 명세서에서 사용)
 export class Doc {
-  @ApiProperty({ description: '발급 타입. 프린터 or 온라인발급' })
-  @prop({
-    enum: MainDocPubType,
-    required: true,
-    default: MainDocPubType.NOT_ISSUED,
-  })
-  type: MainDocPubType;
-
-  @ApiProperty({ description: '문서 오브젝트ID' })
+  @ApiProperty({ description: '문서 오브젝트ID. 가장 최근 문서를 참조' })
   @prop({ trim: true, required: true })
   _oID: string;
 
-  @ApiProperty({ default: '문서 발급일자' })
+  @ApiProperty({ default: '출력 일자' })
   @prop()
-  pubAt: Date;
+  prAt?: Date;
+
+  @ApiProperty({ default: '메시지 전송일자' })
+  @prop()
+  msgAt?: Date;
 }
 
 // 정비내역서

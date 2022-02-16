@@ -113,6 +113,7 @@ export enum MainDocPubType {
   NOT_ISSUED = 'n',
   PRINT = 'p',
   ONLINE = 'o',
+  // 동시
 }
 
 // 문서 발급 타입 리스트

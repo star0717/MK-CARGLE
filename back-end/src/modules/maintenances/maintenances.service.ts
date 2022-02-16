@@ -1,24 +1,26 @@
+import { EstimatesService } from './../estimates/estimates.service';
 import { Estimate } from './../../models/estimate.entity';
 import { AuthTokenInfo } from './../../models/auth.entity';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import {
-  getStartOfDayDateTime as getStartOfDayDateTime,
-  getStrDate,
-} from 'src/lib/toolkit/back-end.toolkit';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { Car } from 'src/models/car.entity';
 import {
   CarInfo,
   Dates,
+  Doc,
   MainPubDocInfo,
   Maintenance,
   Price,
 } from 'src/models/maintenance.entity';
 import { CarsService } from '../cars/cars.service';
-import { MainCustomerType, MainStatus } from 'src/constants/maintenance.const';
+import {
+  MainCustomerType,
+  MainDocPubType,
+  MainStatus,
+} from 'src/constants/maintenance.const';
 import { Company } from 'src/models/company.entity';
 import { CompaniesService } from '../companies/companies.service';
 import { CompanyInfo } from 'src/models/main.doc.entity';
@@ -31,34 +33,10 @@ export class MaintenancesService extends SafeService<Maintenance> {
     readonly commonService: CommonService,
     readonly carsService: CarsService,
     readonly companiesService: CompaniesService,
+    readonly estimatesService: EstimatesService,
   ) {
     super(model, commonService);
-    this.genDocNumber();
-  }
-
-  /**
-   * 오늘 생성된 문서 수 반환
-   * @returns 오늘 생성된 문서의 수
-   */
-  private async numOfDocsToday(): Promise<number> {
-    return await this.model.countDocuments({
-      createdAt: {
-        $gte: getStartOfDayDateTime(),
-      },
-    });
-  }
-
-  /**
-   * 문서번호를 생성하여 반환
-   * @returns 생성된 문서번호
-   */
-  private async genDocNumber(): Promise<string> {
-    const index = await this.numOfDocsToday();
-    const docNum = `${getStrDate()}${(index + 1).toString().padStart(7, '0')}`;
-
-    console.log(docNum);
-
-    return docNum;
+    this._genDocNumber();
   }
 
   async findCarByRegNumber(id: string): Promise<CarInfo> {
@@ -82,7 +60,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     this.carsService.updateOrInsertByCarInfo(doc.car);
 
     let mt: Maintenance = new Maintenance();
-    mt.docNum = await this.genDocNumber();
+    mt.docNum = await this._genDocNumber();
     mt.status = MainStatus.STORED;
     mt.costomerType = MainCustomerType.NORMAL;
     const mtDates: Dates = {
@@ -175,10 +153,11 @@ export class MaintenancesService extends SafeService<Maintenance> {
   }
 
   /*********** 문서 발급 관련 *********************/
-  async previewEstimate(
-    token: AuthTokenInfo,
-    id: string,
-  ): Promise<Partial<Estimate>> {
+  async genEstimate(token: AuthTokenInfo, id: string): Promise<Estimate> {
+    console.log('start');
+    // 문서 번호 생성
+    const docNum = await this.estimatesService._genDocNumber();
+    console.log('hi');
     // 해당 main을 검색
     const main: Maintenance = await this.findById(token, id);
     if (!main) throw new BadRequestException();
@@ -201,9 +180,9 @@ export class MaintenancesService extends SafeService<Maintenance> {
     if (company.busType) cInfo.busType = company.busType;
     if (company.faxNum) cInfo.faxNum = company.faxNum;
 
-    // console.log(companyInfo);
     // 견적서 생성
     const estimate: Partial<Estimate> = {
+      docNum,
       mainNum: main.docNum,
       customer: main.customer,
       company: cInfo,
@@ -213,8 +192,42 @@ export class MaintenancesService extends SafeService<Maintenance> {
     };
 
     // 견적서 저장
+    const result = await this.estimatesService.create(
+      token,
+      estimate as Estimate,
+    );
+
+    const mainEstimate: Doc = {
+      _oID: result._id,
+    };
+    this.findByIdAndUpdate(token, id, { estimate: mainEstimate });
 
     // 견적서 정보를 main에 패치
-    return estimate;
+    return result;
+  }
+
+  async pubEstimate(
+    token: AuthTokenInfo,
+    id: string,
+    doc: MainPubDocInfo,
+  ): Promise<Maintenance> {
+    // 해당 main을 검색
+    const main: Maintenance = await this.findById(token, id);
+    if (!main) throw new BadRequestException();
+
+    console.log(main.estimate);
+
+    switch (doc.type) {
+      case MainDocPubType.PRINT:
+        main.estimate.prAt = new Date(Date.now());
+        break;
+      case MainDocPubType.ONLINE:
+        main.estimate.msgAt = new Date(Date.now());
+        break;
+      default:
+        throw new BadRequestException();
+    }
+
+    return await this.findByIdAndUpdate(token, id, { estimate: main.estimate });
   }
 }

@@ -93,7 +93,6 @@ export const dtFormatForDocNum = 'YYMMDD';
 export const dtFormatForDurationSerarch = 'YYYY-mm-DD';
 
 export function getStartOfDayDateTime(date?: Date): Date {
-  console.log(date);
   return dayjs(date).startOf('day').toDate();
 }
 
