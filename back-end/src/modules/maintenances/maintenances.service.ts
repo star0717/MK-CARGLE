@@ -12,6 +12,7 @@ import { Car } from 'src/models/car.entity';
 import {
   CarInfo,
   Dates,
+  MainPubDocInfo,
   Maintenance,
   Price,
 } from 'src/models/maintenance.entity';
@@ -166,5 +167,22 @@ export class MaintenancesService extends SafeService<Maintenance> {
     if (!src) throw new BadRequestException();
     if (src.docNum != doc.docNum) throw new BadRequestException();
     return src;
+  }
+
+  /*********** 문서 발급 관련 *********************/
+  async pubEstimate(
+    token: AuthTokenInfo,
+    id: string,
+    doc: MainPubDocInfo,
+  ): Promise<Maintenance> {
+    // 해당 main을 검색
+    let main: Maintenance = await this.findById(token, id);
+
+    // 견적서 생성
+
+    // 견적서 저장
+
+    // 견적서 정보를 main에 패치
+    return null;
   }
 }
