@@ -59,7 +59,7 @@ import {
 } from "store/action/user.action";
 import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
 import { MainStatus } from "src/constants/maintenance.const";
-import { CarInfo, Maintenance } from "src/models/maintenance.entity";
+import { CarInfo, Customer, Maintenance } from "src/models/maintenance.entity";
 import { deleteKeyJson, trim } from "src/modules/commonModule";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
@@ -89,7 +89,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     distance: "",
   };
 
-  const cusInit: any = {
+  const cusInit: Customer = {
     name: "",
     phoneNumber: "",
   };
@@ -99,7 +99,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const [searchCarText, setSearchCarText] = useState<string>("");
   const [carInfo, setCarInfo] = useState<CarInfo>(carInit); // 차량정보
-  const [cusInfo, setCusInfo] = useState<any>(cusInit); // 고객정보
+  const [cusInfo, setCusInfo] = useState<Customer>(cusInit); // 고객정보
   const [showCar, setShowCar] = useState<boolean>(false); // 차량검색 후 정보표시
   /*********************************************************************
    * 3. Handlers
@@ -109,11 +109,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param e
    */
   const onChangeCarInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      setCarInfo({ ...carInfo, [e.target?.name]: trim(e.target?.value) });
-    } catch (error) {
-      console.log("eeeeee");
-    }
+    setCarInfo({ ...carInfo, [e.target.name]: trim(e.target.value) });
   };
 
   /**
@@ -167,21 +163,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     };
     deleteKeyJson(MaintenanceData.car);
     deleteKeyJson(MaintenanceData.customer);
-    // if (!carInfo.model) {
-    //   delete MaintenanceData.car.model;
-    // }
-    // if (!carInfo.age) {
-    //   delete MaintenanceData.car.age;
-    // }
-    // if (!carInfo.idNumber) {
-    //   delete MaintenanceData.car.idNumber;
-    // }
-    // if (!carInfo.regDate) {
-    //   delete MaintenanceData.car.regDate;
-    // }
-    // if (!cusInfo.name) {
-    //   delete MaintenanceData.customer.name;
-    // }
 
     console.log("메인", MaintenanceData);
 
@@ -195,6 +176,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     //   }
     // );
   };
+
+  console.log("카", carInfo);
+  console.log("고", cusInfo);
 
   /*********************************************************************
    * 4. Props settings
