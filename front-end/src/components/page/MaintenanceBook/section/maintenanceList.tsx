@@ -581,7 +581,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
         )} */}
         <Wrapper dr={`row`} ju={`space-between`} padding={`50px 0px 0px`}>
           <Wrapper dr={`row`} width={`auto`}>
-            <Wrapper al={`flex-start`}>
+            <Wrapper al={`flex-end`} width={`80px`}>
               <Text>기간</Text>
             </Wrapper>
             <Wrapper ju={`flex-end`} dr={`row`}>
@@ -591,7 +591,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputUserHandler(e);
                 }}
-                width={`240px`}
+                width={`220px`}
               />
               <Wrapper width={`auto`}>
                 <Text> ~ </Text>
@@ -602,16 +602,16 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputUserHandler(e);
                 }}
-                width={`240px`}
+                width={`220px`}
               />
             </Wrapper>
           </Wrapper>
           <Wrapper dr={`row`} width={`auto`}>
-            <Wrapper al={`flex-start`} width={`auto`}>
+            <Wrapper al={`flex-end`} width={`80px`}>
               <Text>구분</Text>
             </Wrapper>
             <Wrapper al={`flex-end`} width={`auto`}>
-              <Combo value="all" width={`240px`}>
+              <Combo value="all" width={`220px`}>
                 <option value="all">전체</option>
                 <option value="normal">일반</option>
                 <option value="insurance">보험</option>
@@ -619,11 +619,11 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
           </Wrapper>
           <Wrapper dr={`row`} width={`auto`}>
-            <Wrapper al={`flex-start`} width={`auto`}>
+            <Wrapper al={`flex-end`} width={`80px`}>
               <Text>정비상태</Text>
             </Wrapper>
             <Wrapper al={`flex-end`} width={`auto`}>
-              <Combo value="all" width={`240px`}>
+              <Combo value="all" width={`220px`}>
                 <option value="all">전체</option>
                 <option value="stored">입고</option>
                 <option value="ing">정비중</option>
