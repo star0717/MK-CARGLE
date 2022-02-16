@@ -11,10 +11,5 @@ import { EstimatesService } from './estimates.service';
 
 @Controller('estimates')
 export class EstimatesController {
-  constructor(private readonly estimatesService: EstimatesService) {}
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.estimatesService.remove(+id);
-  }
+  constructor(private readonly service: EstimatesService) {}
 }
