@@ -118,3 +118,13 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   console.log("API 호출 경로:", apiPath);
   return apiPath;
 };
+
+/**
+ * 공백제거
+ * @param str
+ * @returns
+ */
+export const trim = (str: string) => {
+  const trimStr = str.replace(" ", "");
+  return trimStr;
+};

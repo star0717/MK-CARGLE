@@ -39,7 +39,6 @@ import {
 } from "src/constants/maintenance.const";
 import { useDispatch } from "react-redux";
 import { _aPostMaintenancesDeleteMany } from "store/action/user.action";
-import { DeleteObjectIds } from "src/models/base.entity";
 import { _iDeleteByUser } from "store/interfaces";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
