@@ -139,3 +139,25 @@ export const deleteKeyJson = (obj: any) => {
     }
   });
 };
+
+/**
+ * 중간값 별표 처리
+ */
+export const maskingStr = (str: string) => {
+  if (str.length > 2) {
+    const first = str.substring(0, 1);
+    const center = str.substring(1, str.length - 1);
+    const last = str.substring(str.length - 1, str.length);
+
+    let maskingCenter = "";
+    for (let i = 0; i < center.length; i++) {
+      maskingCenter += "*";
+    }
+
+    const maskingStr = first + maskingCenter + last;
+    return maskingStr;
+  } else {
+    var pattern = /.$/; // 정규식
+    return str.replace(pattern, "*");
+  }
+};

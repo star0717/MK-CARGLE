@@ -7,9 +7,6 @@ import {
   CheckMark,
   ColorSpan,
   Combo,
-  CommonSubTitle,
-  CommonTitle,
-  CommonTitleWrapper,
   IconButton,
   JoinStepBar,
   JoinStepBarWrapper,
@@ -21,8 +18,6 @@ import {
   TableBody,
   TableHead,
   TableHeadLIST,
-  TableRow,
-  TableRowLIST,
   TableWrapper,
   Text,
   TextInput2,
@@ -31,26 +26,15 @@ import {
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
+import { AiFillCloseCircle } from "react-icons/ai";
 import {
-  AiFillCloseCircle,
-  AiOutlineFileText,
-  AiOutlineUser,
-} from "react-icons/ai";
-import { GoCheck } from "react-icons/go";
-import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
-import {
-  BsChevronDoubleUp,
   BsFillFileEarmarkCheckFill,
-  BsPencilSquare,
   BsPlusCircleFill,
   BsSearch,
 } from "react-icons/bs";
-import { _pMaintenanceProps } from "src/configure/_pProps.entity";
-import { faCar } from "@fortawesome/free-solid-svg-icons";
-import { FaCar, FaCarAlt, FaFlagCheckered, FaRegListAlt } from "react-icons/fa";
+import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
 import { RiFileList2Fill } from "react-icons/ri";
-import { Car } from "src/models/car.entity";
 import { useDispatch } from "react-redux";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
 import {
@@ -158,7 +142,9 @@ const MaintenanceStored: NextPage = () => {
     dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
       (res: _iMaintenances) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
-        router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
+        router.push(
+          `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
+        );
       },
       (err) => {
         alert("차량 입고에 실패했습니다.");
@@ -184,7 +170,6 @@ const MaintenanceStored: NextPage = () => {
             padding={`20px`}
             margin={`0px 0px 10px 360px`}
             al={`flex-start`}
-            left={`100px`}
           >
             <SpeechBubbleLeft fontSize={`20px`}>
               "차량선택 후 차량입고를 해주세요"
@@ -336,6 +321,7 @@ const MaintenanceStored: NextPage = () => {
                       <TextInput2
                         type="text"
                         value={carInfo.distance}
+                        placeholder="주행거리를 입력하세요(km)"
                         {...register("distance", {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
@@ -753,17 +739,7 @@ const MaintenanceStored: NextPage = () => {
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
-              <TableBody minHeight={`130px`}>
-                <TableRow>
-                  <TableRowLIST width={`15%`}>1</TableRowLIST>
-                  <TableRowLIST width={`15%`}>2</TableRowLIST>
-                  <TableRowLIST width={`14%`}>3</TableRowLIST>
-                  <TableRowLIST width={`15%`}>4</TableRowLIST>
-                  <TableRowLIST width={`14%`}>5</TableRowLIST>
-                  <TableRowLIST width={`14%`}>6</TableRowLIST>
-                  <TableRowLIST width={`8%`}>7</TableRowLIST>
-                </TableRow>
-              </TableBody>
+              <TableBody minHeight={`130px`}></TableBody>
             </TableWrapper>
             <Wrapper dr={`row`} ju={`flex-end`}>
               <Text>부품계 : 0 </Text>

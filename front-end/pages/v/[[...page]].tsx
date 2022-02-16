@@ -333,7 +333,10 @@ export const getServerSideProps: GetServerSideProps = async (
               }),
               authConfig
             )
-            .then((res: AxiosResponse<FindResult<any>, any>) => res.data);
+            .then(
+              (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
+                res.data
+            );
           return successResult;
         } else {
           console.log("id 없을때@");
@@ -345,7 +348,10 @@ export const getServerSideProps: GetServerSideProps = async (
               }),
               authConfig
             )
-            .then((res: AxiosResponse<FindResult<any>, any>) => res.data);
+            .then(
+              (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
+                res.data
+            );
           console.log(successResult);
           return successResult;
         }
