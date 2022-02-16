@@ -38,7 +38,10 @@ import {
   MainStatus,
 } from "src/constants/maintenance.const";
 import { useDispatch } from "react-redux";
-import { _aPostMaintenancesDeleteMany } from "store/action/user.action";
+import {
+  _aDeleteMaintenancesDelete,
+  _aPostMaintenancesDeleteMany,
+} from "store/action/user.action";
 import { _iDeleteByUser } from "store/interfaces";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
@@ -127,9 +130,19 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
         )
       ) {
         if (checkedList.length > 1) {
-          // dispatch(_aPostMaintenancesDeleteMany(checkedList)).then((
-          // ))
+          dispatch(_aPostMaintenancesDeleteMany(checkedList)).then(
+            (res: _iDeleteByUser) => {
+              alert(`${res.payload} 건 의 정비리스트를 삭제하였습니다.`);
+              setReset(reset + 1);
+            }
+          );
         } else {
+          dispatch(_aDeleteMaintenancesDelete(checkedList[0])).then(
+            (res: _iDeleteByUser) => {
+              alert(`${res.payload} 건 의 정비리스트를 삭제하였습니다.`);
+              setReset(reset + 1);
+            }
+          );
         }
       } else {
         alert("삭제를 취소했습니다.");
@@ -148,6 +161,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     setMaintenanceList(props.findResult.docs);
   }, [props.findResult.docs]);
 
+  useEffect(() => {
+    setCheckedList([]);
+    props.findDocHandler;
+  }, [reset]);
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
