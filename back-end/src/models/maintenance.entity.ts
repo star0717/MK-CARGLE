@@ -72,6 +72,12 @@ export class Customer {
   @prop({ trim: true, required: true })
   phoneNumber: string;
 
+  @ApiProperty({ description: '고객명', required: true })
+  @IsOptional()
+  @IsString()
+  @prop({ trim: true })
+  name?: string;
+
   @ApiProperty({ description: '고객 오브젝트ID', required: false })
   @IsOptional()
   @IsMongoId()
