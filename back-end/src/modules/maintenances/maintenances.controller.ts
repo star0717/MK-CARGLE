@@ -30,6 +30,7 @@ import {
   FindParameters,
   FindResult,
 } from 'src/models/base.entity';
+import { Estimate } from 'src/models/estimate.entity';
 
 @Controller('maintenances')
 @ApiTags('정비내역 API')
@@ -254,22 +255,31 @@ export class MaintenancesController {
   }
 
   /*********** 문서 발급 관련 *********************/
-  @Post('pub/estimate')
-  @ApiOperation({ summary: '[WORKER] 견적서 발급' })
+  @Get('preview/estimate/:id')
+  @ApiOperation({ summary: '[WORKER] 견적서 미리보기' })
   @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
-  @ApiBody({
-    description: `발급에 필요한 정보`,
-    type: MainPubDocInfo,
-  })
   @ApiCreatedResponse({
     description: `패치 된 Maintenance 데이터`,
-    type: Maintenance,
+    type: Estimate,
+  })
+  async previewEstimate(
+    @Param('id') id: string,
+    @AuthToken() token: AuthTokenInfo,
+  ): Promise<Partial<Estimate>> {
+    return await this.service.previewEstimate(token, id);
+  }
+
+  @Get('publish/estimate/:id')
+  @ApiOperation({ summary: '[WORKER] 견적서 발급' })
+  @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
+  @ApiCreatedResponse({
+    description: `패치 된 Maintenance 데이터`,
+    type: Estimate,
   })
   async pubEstimate(
     @Param('id') id: string,
-    @Body() doc: MainPubDocInfo,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<Maintenance> {
-    return await this.service.pubEstimate(token, id, doc);
+  ): Promise<Partial<Estimate>> {
+    return await this.service.previewEstimate(token, id);
   }
 }

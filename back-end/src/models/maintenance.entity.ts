@@ -257,7 +257,7 @@ export class Maintenance extends BaseEntity {
   @ApiProperty({ description: '문서번호(자동생성)', required: false })
   @IsOptional()
   @IsString()
-  @prop({ trim: true, required: true }) // 자동생성
+  @prop({ trim: true, required: true, unique: true }) // 자동생성
   docNum?: string;
 
   @ApiProperty({ description: '작업자명. 작업을 시작한 사람', required: false })

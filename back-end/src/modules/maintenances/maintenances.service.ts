@@ -1,3 +1,4 @@
+import { Estimate } from './../../models/estimate.entity';
 import { AuthTokenInfo } from './../../models/auth.entity';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
@@ -18,6 +19,9 @@ import {
 } from 'src/models/maintenance.entity';
 import { CarsService } from '../cars/cars.service';
 import { MainCustomerType, MainStatus } from 'src/constants/maintenance.const';
+import { Company } from 'src/models/company.entity';
+import { CompaniesService } from '../companies/companies.service';
+import { CompanyInfo } from 'src/models/main.doc.entity';
 
 @Injectable()
 export class MaintenancesService extends SafeService<Maintenance> {
@@ -26,6 +30,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     readonly model: ReturnModelType<typeof Maintenance>,
     readonly commonService: CommonService,
     readonly carsService: CarsService,
+    readonly companiesService: CompaniesService,
   ) {
     super(model, commonService);
     this.genDocNumber();
@@ -170,19 +175,46 @@ export class MaintenancesService extends SafeService<Maintenance> {
   }
 
   /*********** 문서 발급 관련 *********************/
-  async pubEstimate(
+  async previewEstimate(
     token: AuthTokenInfo,
     id: string,
-    doc: MainPubDocInfo,
-  ): Promise<Maintenance> {
+  ): Promise<Partial<Estimate>> {
     // 해당 main을 검색
-    let main: Maintenance = await this.findById(token, id);
+    const main: Maintenance = await this.findById(token, id);
+    if (!main) throw new BadRequestException();
 
+    // 업체 정보 조회
+    const company: Company = await this.companiesService.findById(
+      token,
+      token.cID,
+    );
+    if (!company) throw new BadRequestException();
+
+    const cInfo: CompanyInfo = {
+      name: company.name,
+      comRegNum: company.comRegNum,
+      ownerName: company.ownerName,
+      phoneNum: company.phoneNum,
+      address: company.address1 + ' ' + company.address2,
+    };
+    if (company.busItem) cInfo.busItem = company.busItem;
+    if (company.busType) cInfo.busType = company.busType;
+    if (company.faxNum) cInfo.faxNum = company.faxNum;
+
+    // console.log(companyInfo);
     // 견적서 생성
+    const estimate: Partial<Estimate> = {
+      mainNum: main.docNum,
+      customer: main.customer,
+      company: cInfo,
+      car: main.car,
+      works: main.works,
+      price: main.price,
+    };
 
     // 견적서 저장
 
     // 견적서 정보를 main에 패치
-    return null;
+    return estimate;
   }
 }
