@@ -309,4 +309,28 @@ export class SafeService<T extends BaseEntity> {
       throw new HttpException(err.response, HttpStatus.NOT_ACCEPTABLE);
     }
   }
+
+  /**
+   * 오늘 생성된 문서 수 반환
+   * @returns 오늘 생성된 문서의 수
+   */
+  private async numOfDocsToday(): Promise<number> {
+    return await this.model.countDocuments({
+      createdAt: {
+        $gt: getStartOfDayDateTime(),
+        $lt: getEndOfDayDateTime(),
+      },
+    });
+  }
+
+  /**
+   * 문서번호를 생성하여 반환
+   * @returns 생성된 문서번호
+   */
+  async _genDocNumber(): Promise<string> {
+    const index = await this.numOfDocsToday();
+    const docNum = `${getStrDate()}${(index + 1).toString().padStart(7, '0')}`;
+    console.log('docNum: ', docNum);
+    return docNum;
+  }
 }

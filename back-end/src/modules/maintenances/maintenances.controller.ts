@@ -255,31 +255,33 @@ export class MaintenancesController {
   }
 
   /*********** 문서 발급 관련 *********************/
-  @Get('preview/estimate/:id')
-  @ApiOperation({ summary: '[WORKER] 견적서 미리보기' })
+  @Get('gen/estimate/:id')
+  @ApiOperation({ summary: '[WORKER] 견적서 생성' })
   @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
   @ApiCreatedResponse({
     description: `패치 된 Maintenance 데이터`,
     type: Estimate,
   })
-  async previewEstimate(
+  async genEstimate(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<Partial<Estimate>> {
-    return await this.service.previewEstimate(token, id);
+  ): Promise<Estimate> {
+    return await this.service.genEstimate(token, id);
   }
 
-  @Get('publish/estimate/:id')
-  @ApiOperation({ summary: '[WORKER] 견적서 발급' })
+  @Patch('pub/estimate/:id')
+  @ApiOperation({ summary: '[WORKER] 견적서 발급(프린트 or 온라인)' })
   @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
+  @ApiBody({ description: 'd', type: MainPubDocInfo })
   @ApiCreatedResponse({
     description: `패치 된 Maintenance 데이터`,
     type: Estimate,
   })
   async pubEstimate(
     @Param('id') id: string,
+    @Body() doc: MainPubDocInfo,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<Partial<Estimate>> {
-    return await this.service.previewEstimate(token, id);
+  ): Promise<Maintenance> {
+    return await this.service.pubEstimate(token, id, doc);
   }
 }

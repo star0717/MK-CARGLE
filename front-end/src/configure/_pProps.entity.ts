@@ -190,8 +190,10 @@ export interface _pMaintenanceProps extends _pFindDocs<any> {
   setSearchOption: React.Dispatch<React.SetStateAction<string>>;
   filterValue: string;
   setFilterValue: React.Dispatch<React.SetStateAction<string>>;
-  setSearchFrom: React.Dispatch<React.SetStateAction<string>>;
-  setSearchTo: React.Dispatch<React.SetStateAction<string>>;
-  searchDetails: any;
-  setSearchDetails: React.Dispatch<React.SetStateAction<MainFindOptions>>;
+  searchList: any;
+  setSearchList: any;
+  // setSearchFrom: React.Dispatch<React.SetStateAction<string>>;
+  // setSearchTo: React.Dispatch<React.SetStateAction<string>>;
+  // searchDetails: any;
+  // setSearchDetails: React.Dispatch<React.SetStateAction<MainFindOptions>>;
 }

@@ -1,3 +1,4 @@
+import { EstimatesModule } from './../estimates/estimates.module';
 import { CompaniesModule } from './../companies/companies.module';
 import { Module } from '@nestjs/common';
 import { MaintenancesService } from './maintenances.service';
@@ -13,6 +14,7 @@ import { CarsModule } from '../cars/cars.module';
     CommonModule,
     CarsModule,
     CompaniesModule,
+    EstimatesModule,
   ],
   controllers: [MaintenancesController],
   providers: [MaintenancesService],
