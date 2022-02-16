@@ -1110,3 +1110,44 @@ export async function _aPostMaintenancesStore(data: Partial<Maintenance>) {
   };
   return result;
 }
+
+/**
+ * Maintenances 데이터 삭제
+ * @param id _id
+ * @returns
+ */
+export async function _aDeleteMaintenancesDelete(id: string) {
+  const req: DeleteResult = await axios
+    .delete(genApiPath(MaintenancesApiPath.maintenances, { id: id }))
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Maintenances 데이터 삭제
+ * @param ids DeleteObjectIds
+ * @returns
+ */
+export async function _aPostMaintenancesDeleteMany(ids: string[]) {
+  const oids: DeleteObjectIds = {
+    ids,
+  };
+  const req: DeleteResult = await axios
+    .post(genApiPath(MaintenancesApiPath.deleteMany), oids)
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
