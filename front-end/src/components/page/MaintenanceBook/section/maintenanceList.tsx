@@ -54,18 +54,8 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
-  const [searchMenu, setSearchMenu] = useState<boolean>(false);
   const [checkedList, setCheckedList] = useState([]);
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
-  const [carNumber, setCarNumber] = useState<string>("");
-  const [searchList, setSearchList] = useState({
-    sFrom: "",
-    sTo: "",
-    costomerType: "",
-    status: "",
-  });
-
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
 
   /*********************************************************************
@@ -103,14 +93,6 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     [checkedList]
   );
 
-  const onInputUserHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "sFrom") {
-      props.setSearchFrom(e.target.value);
-    } else {
-      props.setSearchTo(e.target.value);
-    }
-  };
-
   const onDeleteMaintenances = () => {
     if (checkedList.length > 0) {
       if (
@@ -145,31 +127,29 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     }
   };
 
-  const onSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === "all") {
-      // props.setSearchDetails
-      delete props.searchDetails[e.target.name];
-    } else {
-      props.searchDetails[e.target.name] = e.target.value;
-    }
+  //리셋 기능
+  const onResetHandler = () => {
+    props.setSearchList({
+      sFrom: "",
+      sTo: "",
+      regNumber: "",
+      costomerType: "all",
+      status: "all",
+    });
   };
 
+  //검색 핸들러
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (carNumber !== "") {
-      props.searchDetails.regNumber = carNumber;
-    } else {
-      delete props.searchDetails.regNumber;
-    }
     props.findDocHandler(1);
   };
 
-  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCarNumber(e.target.value);
-  };
-
-  const onResetHandler = () => {
-    setSearchList({ sFrom: "", sTo: "", costomerType: "", status: "" });
+  //검색 조건 설정 핸들러
+  const onSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    props.setSearchList({
+      ...props.searchList,
+      [e.target.name]: e.target.value,
+    });
   };
   /*********************************************************************
    * 4. Props settings
@@ -179,10 +159,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   useEffect(() => {
     setMaintenanceList(props.findResult.docs);
   }, [props.findResult.docs]);
-
+  //리스트 삭제시 화면 리셋용
   useEffect(() => {
     setCheckedList([]);
-    props.findDocHandler(props.findResult.currentPage);
+    props.findDocHandler(1);
   }, [reset]);
   /*********************************************************************
    * 5. Page configuration
@@ -212,9 +192,11 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   <SearchInput
                     width={`532px`}
                     type="text"
+                    name="regNumber"
+                    value={props.searchList.regNumber}
                     placeholder="차량번호를 입력하세요."
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputHandler(e);
+                      onSearchHandler(e);
                     }}
                   />
                 </Wrapper>
@@ -267,348 +249,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
           </Wrapper>
         </Wrapper>
-        {/* {searchMenu === true && (
-          <Wrapper
-            border={`1px solid #8DAFCE`}
-            padding={`30px`}
-            margin={`40px 0px`}
-            radius={`8px`}
-            shadow={`0px 5px 10px rgba(220,220,220,1)`}
-          >
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <Text>기간</Text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-              >
-                <TextInput2
-                  type="date"
-                  name="sFrom"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputUserHandler(e);
-                  }}
-                  width={`300px`}
-                  margin={`10px 0px 10px 30px`}
-                />
-                <Wrapper width={`auto`} margin={`10px 0px 10px 30px`}>
-                  <Text> ~ </Text>
-                </Wrapper>
-                <TextInput2
-                  type="date"
-                  name="sTo"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputUserHandler(e);
-                  }}
-                  width={`300px`}
-                  margin={`10px 0px 10px 30px`}
-                />
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <Text>정비상태</Text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-              >
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    onChange={() => {
-                      setStatusThree(!statusThree);
-                    }}
-                  />
-                  <CheckMark></CheckMark>
-                  전체
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  입고
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  정비중
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  정비완료
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  결제완료
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  출고
-                </Checkbox>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <Text>구분</Text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-              >
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    onChange={() => {
-                      setStatusThree(!statusThree);
-                    }}
-                  />
-                  <CheckMark></CheckMark>
-                  전체
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  일반
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  보험
-                </Checkbox>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`flex-end`}>
-              <SmallButton type="button" kindOf={`default`} width={`150px`}>
-                검색
-              </SmallButton>
-            </Wrapper>
-          </Wrapper>
-        )} */}
-        {/* {searchMenu === true && (
-          <Wrapper
-            border={`1px solid #8DAFCE`}
-            padding={`30px`}
-            margin={`40px 0px`}
-            radius={`8px`}
-            shadow={`0px 5px 10px rgba(220,220,220,1)`}
-          >
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <text>기간</text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-              >
-                <TextInput2
-                  type="date"
-                  name="sFrom"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputUserHandler(e);
-                  }}
-                  width={`300px`}
-                  margin={`10px 0px 10px 30px`}
-                />
-                <Wrapper width={`auto`} margin={`10px 0px 10px 30px`}>
-                  <text> ~ </text>
-                </Wrapper>
-                <TextInput2
-                  type="date"
-                  name="sTo"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onInputUserHandler(e);
-                  }}
-                  width={`300px`}
-                  margin={`10px 0px 10px 30px`}
-                />
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <text>차량번호</text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-              >
-                <TextInput2
-                  placeholder={`예시) 000ㅁ0000`}
-                  width={`300px`}
-                  margin={`10px 0px 10px 30px`}
-                />
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <text>구분</text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-              >
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    onChange={() => {
-                      setStatusThree(!statusThree);
-                    }}
-                  />
-                  <CheckMark></CheckMark>
-                  전체
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  일반
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusThree}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  보험
-                </Checkbox>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <text>문서발급</text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-              >
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    onChange={() => {
-                      setStatusOne(!statusOne);
-                    }}
-                  />
-                  <CheckMark></CheckMark>
-                  전체
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusOne}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  발급
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusOne}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  미발급
-                </Checkbox>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              <Wrapper width={`100px`} al={`flex-end`}>
-                <text>국토부</text>
-              </Wrapper>
-              <Wrapper
-                ju={`flex-start`}
-                dr={`row`}
-                padding={`0px 0px 0px 50px`}
-              >
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    onChange={() => {
-                      setStatusTwo(!statusTwo);
-                    }}
-                  />
-                  <CheckMark></CheckMark>
-                  전체
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusTwo}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  해당없음
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusTwo}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  전송오류
-                </Checkbox>
-                <Checkbox margin={`10px 0px 10px 30px`} width={`100px`}>
-                  <CheckInput
-                    type="checkbox"
-                    checked={statusTwo}
-                    onChange={() => {}}
-                  />
-                  <CheckMark></CheckMark>
-                  전송완료
-                </Checkbox>
-              </Wrapper>
-            </Wrapper>
 
-            <Wrapper dr={`row`} ju={`flex-end`}>
-              <SmallButton type="button" kindOf={`default`} width={`150px`}>
-                검색
-              </SmallButton>
-            </Wrapper>
-          </Wrapper>
-        )} */}
         <Wrapper dr={`row`} ju={`space-between`} padding={`50px 0px 0px`}>
           <Wrapper dr={`row`} width={`auto`}>
             <Wrapper al={`flex-end`} width={`80px`}>
@@ -618,10 +259,13 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TextInput2
                 type="date"
                 name="sFrom"
-                value={searchList.sFrom}
+                value={props.searchList.sFrom}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setSearchList({ ...searchList, sFrom: e.target.value });
-                  onInputUserHandler(e);
+                  props.setSearchList({
+                    ...props.searchList,
+                    sFrom: e.target.value,
+                  });
+                  onSearchHandler(e);
                 }}
                 width={`220px`}
               />
@@ -631,10 +275,13 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TextInput2
                 type="date"
                 name="sTo"
-                value={searchList.sTo}
+                value={props.searchList.sTo}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setSearchList({ ...searchList, sTo: e.target.value });
-                  onInputUserHandler(e);
+                  props.setSearchList({
+                    ...props.searchList,
+                    sTo: e.target.value,
+                  });
+                  onSearchHandler(e);
                 }}
                 width={`220px`}
               />
@@ -648,20 +295,18 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <Combo
                 width={`220px`}
                 name="costomerType"
-                value={searchList.costomerType}
+                value={props.searchList.costomerType}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setSearchList({
-                    ...searchList,
+                  props.setSearchList({
+                    ...props.searchList,
                     costomerType: e.target.value,
                   });
-                  onSelectHandler(e);
+                  onSearchHandler(e);
                 }}
               >
-                <option value="all" selected>
-                  전체
-                </option>
-                <option value="normal">일반</option>
-                <option value="insurance">보험</option>
+                <option value="all">전체</option>
+                <option value="n">일반</option>
+                <option value="i">보험</option>
               </Combo>
             </Wrapper>
           </Wrapper>
@@ -673,20 +318,21 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <Combo
                 width={`220px`}
                 name="status"
-                value={searchList.status}
+                value={props.searchList.status}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setSearchList({ ...searchList, status: e.target.value });
-                  onSelectHandler(e);
+                  props.setSearchList({
+                    ...props.searchList,
+                    status: e.target.value,
+                  });
+                  onSearchHandler(e);
                 }}
               >
-                <option value="all" selected>
-                  전체
-                </option>
-                <option value="stored">입고</option>
-                <option value="ing">정비중</option>
-                <option value="done">정비완료</option>
-                <option value="paid">결제완료</option>
-                <option value="released">출고</option>
+                <option value="all">전체</option>
+                <option value="s">입고</option>
+                <option value="i">정비중</option>
+                <option value="d">정비완료</option>
+                <option value="p">결제완료</option>
+                <option value="r">출고</option>
               </Combo>
             </Wrapper>
           </Wrapper>
