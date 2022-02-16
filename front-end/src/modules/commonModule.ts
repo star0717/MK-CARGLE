@@ -128,3 +128,14 @@ export const trim = (str: string) => {
   const trimStr = str.replace(" ", "");
   return trimStr;
 };
+
+/**
+ * 빈 값을 가진 json key 제거
+ */
+export const deleteKeyJson = (obj: any) => {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] === "" || obj[key] === undefined) {
+      delete obj[key];
+    }
+  });
+};

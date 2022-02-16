@@ -23,6 +23,7 @@ import {
   TextInput2,
   TableRow,
   TableRowLIST,
+  Combo,
 } from "src/components/styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
 import { BsEmojiFrownFill, BsSearch, BsWindowSidebar } from "react-icons/bs";
@@ -57,12 +58,13 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   const [searchMenu, setSearchMenu] = useState<boolean>(false);
   const [checkedList, setCheckedList] = useState([]);
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
-
-  /** 상세검색 checkBox state 관리 */
-  const [statusOne, setStatusOne] = useState<boolean>(false);
-  const [statusTwo, setStatusTwo] = useState<boolean>(false);
-  const [statusThree, setStatusThree] = useState<boolean>(false);
-  const [searchList, setSearchList] = useState([]);
+  const [carNumber, setCarNumber] = useState<string>("");
+  const [searchList, setSearchList] = useState({
+    sFrom: "",
+    sTo: "",
+    costomerType: "",
+    status: "",
+  });
 
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
 
@@ -143,6 +145,32 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     }
   };
 
+  const onSelectHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "all") {
+      // props.setSearchDetails
+      delete props.searchDetails[e.target.name];
+    } else {
+      props.searchDetails[e.target.name] = e.target.value;
+    }
+  };
+
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (carNumber !== "") {
+      props.searchDetails.regNumber = carNumber;
+    } else {
+      delete props.searchDetails.regNumber;
+    }
+    props.findDocHandler(1);
+  };
+
+  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCarNumber(e.target.value);
+  };
+
+  const onResetHandler = () => {
+    setSearchList({ sFrom: "", sTo: "", costomerType: "", status: "" });
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -168,23 +196,26 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
           <CommonTitle>정비장부</CommonTitle>
           <CommonSubTitle>정비내역을 관리할 수 있어요.</CommonSubTitle>
         </CommonTitleWrapper>
-        <Wrapper>
-          <form>
+        <Wrapper al={`flex-end`} dr={`row`} ju={`space-between`}>
+          <form onSubmit={onSubmitHandler}>
             <Wrapper dr={`row`} al={`flex-end`}>
               <SearchInputWrapper
                 type="text"
                 placeholder="차량번호를 입력하세요."
                 dr={`row`}
-                width={`678px`}
+                width={`578px`}
                 padding={`0px 5px`}
                 margin={`10px 0px 0px`}
                 borderBottom={`1px solid #000`}
               >
                 <Wrapper width={`auto`}>
                   <SearchInput
-                    width={`632px`}
+                    width={`532px`}
                     type="text"
                     placeholder="차량번호를 입력하세요."
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      onInputHandler(e);
+                    }}
                   />
                 </Wrapper>
                 <Wrapper>
@@ -195,22 +226,48 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   </Text>
                 </Wrapper>
               </SearchInputWrapper>
-              <Text
+              <SmallButton
                 type="button"
                 width={`150px`}
                 fontSize={`16px`}
                 kindOf={`default`}
                 margin={`0px 10px`}
                 onClick={() => {
-                  setSearchMenu(!searchMenu);
+                  onResetHandler();
                 }}
               >
-                api 준비중(상세검색)
-              </Text>
+                검색 조건 초기화
+              </SmallButton>
             </Wrapper>
           </form>
+          <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
+            <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
+              <SmallButton
+                type="button"
+                kindOf={`cancle`}
+                width={`150px`}
+                fontSize={`16px`}
+                onClick={onDeleteMaintenances}
+              >
+                선택삭제
+              </SmallButton>
+              <SmallButton
+                type="button"
+                width={`150px`}
+                fontSize={`16px`}
+                kindOf={`fillDefault`}
+                onClick={() => {
+                  router.push(
+                    `${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.STORED}`
+                  );
+                }}
+              >
+                +신규정비등록
+              </SmallButton>
+            </Wrapper>
+          </Wrapper>
         </Wrapper>
-        {searchMenu === true && (
+        {/* {searchMenu === true && (
           <Wrapper
             border={`1px solid #8DAFCE`}
             padding={`30px`}
@@ -361,7 +418,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               </SmallButton>
             </Wrapper>
           </Wrapper>
-        )}
+        )} */}
         {/* {searchMenu === true && (
           <Wrapper
             border={`1px solid #8DAFCE`}
@@ -552,35 +609,90 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
           </Wrapper>
         )} */}
-        <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
-          <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
-            <SmallButton
-              type="button"
-              kindOf={`cancle`}
-              width={`150px`}
-              fontSize={`16px`}
-              onClick={onDeleteMaintenances}
-            >
-              선택삭제
-            </SmallButton>
-            <SmallButton
-              type="button"
-              width={`150px`}
-              fontSize={`16px`}
-              kindOf={`fillDefault`}
-              onClick={() => {
-                router.push(
-                  `${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.STORED}`
-                );
-              }}
-            >
-              +신규정비등록
-            </SmallButton>
+        <Wrapper dr={`row`} ju={`space-between`} padding={`50px 0px 0px`}>
+          <Wrapper dr={`row`} width={`auto`}>
+            <Wrapper al={`flex-end`} width={`80px`}>
+              <Text>기간</Text>
+            </Wrapper>
+            <Wrapper ju={`flex-end`} dr={`row`}>
+              <TextInput2
+                type="date"
+                name="sFrom"
+                value={searchList.sFrom}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchList({ ...searchList, sFrom: e.target.value });
+                  onInputUserHandler(e);
+                }}
+                width={`220px`}
+              />
+              <Wrapper width={`auto`}>
+                <Text> ~ </Text>
+              </Wrapper>
+              <TextInput2
+                type="date"
+                name="sTo"
+                value={searchList.sTo}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchList({ ...searchList, sTo: e.target.value });
+                  onInputUserHandler(e);
+                }}
+                width={`220px`}
+              />
+            </Wrapper>
+          </Wrapper>
+          <Wrapper dr={`row`} width={`auto`}>
+            <Wrapper al={`flex-end`} width={`80px`}>
+              <Text>구분</Text>
+            </Wrapper>
+            <Wrapper al={`flex-end`} width={`auto`}>
+              <Combo
+                width={`220px`}
+                name="costomerType"
+                value={searchList.costomerType}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchList({
+                    ...searchList,
+                    costomerType: e.target.value,
+                  });
+                  onSelectHandler(e);
+                }}
+              >
+                <option value="all" selected>
+                  전체
+                </option>
+                <option value="normal">일반</option>
+                <option value="insurance">보험</option>
+              </Combo>
+            </Wrapper>
+          </Wrapper>
+          <Wrapper dr={`row`} width={`auto`}>
+            <Wrapper al={`flex-end`} width={`80px`}>
+              <Text>정비상태</Text>
+            </Wrapper>
+            <Wrapper al={`flex-end`} width={`auto`}>
+              <Combo
+                width={`220px`}
+                name="status"
+                value={searchList.status}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchList({ ...searchList, status: e.target.value });
+                  onSelectHandler(e);
+                }}
+              >
+                <option value="all" selected>
+                  전체
+                </option>
+                <option value="stored">입고</option>
+                <option value="ing">정비중</option>
+                <option value="done">정비완료</option>
+                <option value="paid">결제완료</option>
+                <option value="released">출고</option>
+              </Combo>
+            </Wrapper>
           </Wrapper>
         </Wrapper>
-
-        <Wrapper margin={`10px 0px 30px`}>
-          <TableWrapper>
+        <Wrapper margin={`0px 0px 30px`}>
+          <TableWrapper margin={`20px 0px 0px`}>
             <TableHead>
               <TableHeadLIST
                 width={`5%`}
@@ -745,11 +857,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   <Text fontSize={`48px`} color={`#c4c4c4`}>
                     <BsEmojiFrownFill />
                   </Text>
-                  <Text color={`#c4c4c4`}>
-                    {" "}
-                    <GoPrimitiveDot />
-                    검색 결과가 없습니다.
-                  </Text>
+                  <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
                 </Wrapper>
               )}
             </TableBody>

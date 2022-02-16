@@ -59,10 +59,10 @@ import {
 } from "store/action/user.action";
 import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
 import { MainStatus } from "src/constants/maintenance.const";
-import { CarInfo, Maintenance } from "src/models/maintenance.entity";
-import { trim } from "src/modules/commonModule";
+import { CarInfo, Customer, Maintenance } from "src/models/maintenance.entity";
+import { deleteKeyJson, trim } from "src/modules/commonModule";
 
-const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
+const MaintenanceStored: NextPage = () => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -73,7 +73,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
@@ -89,8 +88,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     distance: "",
   };
 
-  const cusInit: any = {
-    customerName: "",
+  const cusInit: Customer = {
+    name: "",
     phoneNumber: "",
   };
 
@@ -99,7 +98,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const [searchCarText, setSearchCarText] = useState<string>("");
   const [carInfo, setCarInfo] = useState<CarInfo>(carInit); // 차량정보
-  const [cusInfo, setCusInfo] = useState<any>(cusInit); // 고객정보
+  const [cusInfo, setCusInfo] = useState<Customer>(cusInit); // 고객정보
   const [showCar, setShowCar] = useState<boolean>(false); // 차량검색 후 정보표시
   /*********************************************************************
    * 3. Handlers
@@ -109,19 +108,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param e
    */
   const onChangeCarInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      setCarInfo({ ...carInfo, [e.target?.name]: trim(e.target?.value) });
-    } catch (error) {
-      console.log("eeeeee");
-    }
-  };
-
-  /**
-   * 고객정보 input
-   * @param e
-   */
-  const onChangeCusInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCusInfo({ ...cusInfo, [e.target.name]: trim(e.target.value) });
+    setCarInfo({ ...carInfo, [e.target.name]: trim(e.target.value) });
   };
 
   /**
@@ -143,9 +130,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
-          // setCarInfo(carInit);
-          let carInfo: CarInfo = carInit;
-
           setCarInfo(Object.assign(carInit, res.payload));
         } else {
           setCarInfo(carInit);
@@ -166,23 +150,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const onCarStoredHandler: SubmitHandler<Partial<Maintenance>> = (data) => {
     const MaintenanceData: Partial<Maintenance> = {
       car: { ...carInfo, regNumber: searchCarText },
-      customer: cusInfo,
+      customer: { ...cusInfo },
     };
-    if (!carInfo.model) {
-      delete MaintenanceData.car.model;
-    }
-    if (!carInfo.age) {
-      delete MaintenanceData.car.age;
-    }
-    if (!carInfo.idNumber) {
-      delete MaintenanceData.car.idNumber;
-    }
-    if (!carInfo.regDate) {
-      delete MaintenanceData.car.regDate;
-    }
-    // if (!cusInfo.customerName) {
-    //   delete MaintenanceData.customer.customerName;
-    // }
+    deleteKeyJson(MaintenanceData.car);
+    deleteKeyJson(MaintenanceData.customer);
+
     dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
       (res: _iMaintenances) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
@@ -266,11 +238,22 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
           <Wrapper width={`25%`}>
             {showCar ? (
-              <Wrapper dr={`row`} fontSize={`24px`}>
-                <Text fontSize={`24px`}>{searchCarText}</Text>
-                <IconButton type="button" shadow={`none`} onClick={onResetCar}>
-                  <AiFillCloseCircle />
-                </IconButton>
+              <Wrapper height={`80px`} ju={`flex-end`}>
+                <Wrapper
+                  dr={`row`}
+                  fontSize={`24px`}
+                  border={`1px solid #ccc`}
+                  padding={`10px 0px`}
+                >
+                  <Text fontSize={`24px`}>{searchCarText}</Text>
+                  <IconButton
+                    type="button"
+                    shadow={`none`}
+                    onClick={onResetCar}
+                  >
+                    <AiFillCloseCircle />
+                  </IconButton>
+                </Wrapper>
               </Wrapper>
             ) : (
               <Wrapper height={`80px`} al={`flex-end`}>
@@ -327,18 +310,31 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 </form>
               </Wrapper>
             )}
-            <Wrapper border={`1px solid #ccc`}>
+            <Wrapper
+              border={`1px solid #ccc`}
+              margin={`10px 0px 0px 0px`}
+              padding={`10px 20px`}
+            >
               {showCar ? (
                 <form
                   id="carInfoForm"
                   onSubmit={handleSubmit(onCarStoredHandler)}
                 >
                   <Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>주행거리</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        주행거리
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.distance}
                         {...register("distance", {
                           onChange: (
@@ -370,32 +366,54 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         {errors.distance.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>고객명</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        고객명
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
-                        value={cusInfo.customerName}
-                        {...register("customerName", {
+                        value={cusInfo.name}
+                        {...register("cusName", {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            onChangeCusInfo(e);
+                            // onChangeCusInfo(e);
+                            setCusInfo({ ...cusInfo, name: e.target.value });
                           },
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>전화번호</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        전화번호
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={cusInfo.phoneNumber}
                         {...register("phoneNumber", {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            onChangeCusInfo(e);
+                            setCusInfo({
+                              ...cusInfo,
+                              phoneNumber: e.target.value,
+                            });
                           },
                           required: {
                             value: true,
@@ -421,11 +439,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         {errors.phoneNumber.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>차량명</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        차량명
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.name}
                         {...register("name", {
                           onChange: (
@@ -452,11 +479,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         {errors.name.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>모델명</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        모델명
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.model}
                         {...register("model", {
                           onChange: (
@@ -467,11 +503,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>연식</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        연식
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.age}
                         {...register("age", {
                           onChange: (
@@ -482,11 +527,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>차대번호</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        차대번호
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.idNumber}
                         {...register("idNumber", {
                           onChange: (
@@ -513,11 +567,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         {errors.idNumber.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>등록일자</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        등록일자
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.regDate}
                         {...register("regDate", {
                           onChange: (
@@ -545,7 +608,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           </Wrapper>
 
           <Wrapper width={`74%`}>
-            <Wrapper height={`80px`} al={`flex-end`}>
+            <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
               <Wrapper dr={`row`} ju={`flex-end`}>
                 <SmallButton
                   type="button"
@@ -561,7 +624,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <Wrapper
               border={`1px solid #ccc`}
               padding={`20px`}
-              margin={`0px 0px 20px`}
+              margin={`10px 0px 20px`}
             >
               <Wrapper
                 dr={`row`}
