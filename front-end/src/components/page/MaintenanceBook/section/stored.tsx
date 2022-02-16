@@ -151,8 +151,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     );
   };
 
-  console.log(carInfo);
-  console.log(carInfo.distance);
+  console.log("car", carInfo);
+  console.log("@@", carInfo.distance);
 
   /*********************************************************************
    * 4. Props settings
