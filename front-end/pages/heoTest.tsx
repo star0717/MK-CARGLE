@@ -167,7 +167,7 @@ const MaintenanceStored: NextPage = () => {
   };
 
   const onFocusHandler = (e: KeyboardEvent) => {
-    if (e.key === ("Enter" || "Tap" || "ArrowRight")) {
+    if (e.key === "Enter" || e.key === "Tab" || e.key === "ArrowRight") {
       console.log("hi");
     }
   };
