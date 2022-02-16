@@ -24,16 +24,16 @@ const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
       return <MaintenanceStored {...props} />;
 
     case MainStatus.ING:
-      return <MaintenanceIng />;
+      return <MaintenanceIng {...props} />;
 
     case MainStatus.DONE:
-      return <MaintenanceDone />;
+      return <MaintenanceDone {...props} />;
 
     case MainStatus.PAID:
-      return <MaintenancePaid />;
+      return <MaintenancePaid {...props} />;
 
     case MainStatus.RELEASED:
-      return <MaintenanceReleased />;
+      return <MaintenanceReleased {...props} />;
 
     default:
       return <MaintenenanceList {...props} />;
