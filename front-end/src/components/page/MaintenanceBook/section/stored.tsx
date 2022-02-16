@@ -138,7 +138,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const onSearchCarHandler: SubmitHandler<Partial<CarInfo>> = (data) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
-        if (res.payload) setCarInfo(res.payload);
+        if (res.payload) {
+          setCarInfo(res.payload);
+        } else {
+          setCarInfo(carInit);
+        }
         setShowCar(true);
       },
       (err) => {
