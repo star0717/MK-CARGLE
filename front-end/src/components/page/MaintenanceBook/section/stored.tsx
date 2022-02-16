@@ -60,6 +60,7 @@ import {
 import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
 import { MainStatus } from "src/constants/maintenance.const";
 import { CarInfo, Maintenance } from "src/models/maintenance.entity";
+import { trim } from "src/modules/commonModule";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -73,22 +74,32 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
+
+  // 차량 조회 초기값
+  const carInit: CarInfo = {
+    name: "",
+    model: "",
+    age: "",
+    regDate: "",
+    idNumber: "",
+    regNumber: "",
+    distance: "",
+  };
+
+  const cusInit: any = {
+    customerName: "",
+    phoneNumber: "",
+  };
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [searchCarText, setSearchCarText] = useState<string>("");
-  const [carInfo, setCarInfo] = useState<CarInfo>({
-    name: "",
-    regNumber: "",
-    distance: "",
-  }); // 차량정보
-  const [cusInfo, setCusInfo] = useState<any>({
-    customerName: "",
-    phoneNumber: "",
-  });
+  const [carInfo, setCarInfo] = useState<CarInfo>(carInit); // 차량정보
+  const [cusInfo, setCusInfo] = useState<any>(cusInit); // 고객정보
   const [showCar, setShowCar] = useState<boolean>(false); // 차량검색 후 정보표시
   /*********************************************************************
    * 3. Handlers
@@ -98,7 +109,26 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param e
    */
   const onChangeCarInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCarInfo({ ...carInfo, [e.target.name]: e.target.value });
+    setCarInfo({ ...carInfo, [e.target.name]: trim(e.target.value) });
+  };
+
+  /**
+   * 고객정보 input
+   * @param e
+   */
+  const onChangeCusInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCusInfo({ ...cusInfo, [e.target.name]: trim(e.target.value) });
+  };
+
+  /**
+   * 차량 정보 리셋 handler
+   */
+  const onResetCar = () => {
+    setCarInfo(carInit);
+    setCusInfo(cusInit);
+    setShowCar(false);
+    setSearchCarText("");
+    reset();
   };
 
   /**
@@ -108,23 +138,18 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const onSearchCarHandler: SubmitHandler<Partial<CarInfo>> = (data) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
-        setCarInfo(res.payload);
+        if (res.payload) {
+          setCarInfo(res.payload);
+        } else {
+          setCarInfo(carInit);
+        }
         setShowCar(true);
       },
       (err) => {
         alert("차량번호 조회에 실패했습니다.");
+        onResetCar();
       }
     );
-  };
-
-  /**
-   * 차량 정보 리셋 handler
-   */
-  const onResetCar = () => {
-    setCarInfo({ name: "", regNumber: "" });
-    setShowCar(false);
-    setSearchCarText("");
-    setValue("searchCarText", "");
   };
 
   /**
@@ -136,6 +161,21 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       car: { ...carInfo, regNumber: searchCarText },
       customer: cusInfo,
     };
+    if (!carInfo.model) {
+      delete MaintenanceData.car.model;
+    }
+    if (!carInfo.age) {
+      delete MaintenanceData.car.age;
+    }
+    if (!carInfo.idNumber) {
+      delete MaintenanceData.car.idNumber;
+    }
+    if (!carInfo.regDate) {
+      delete MaintenanceData.car.regDate;
+    }
+    // if (!cusInfo.customerName) {
+    //   delete MaintenanceData.customer.customerName;
+    // }
     dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
       (res: _iMaintenances) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
@@ -333,10 +373,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            setCusInfo({
-                              ...cusInfo,
-                              customerName: e.target.value,
-                            });
+                            onChangeCusInfo(e);
                           },
                         })}
                       />
@@ -351,10 +388,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            setCusInfo({
-                              ...cusInfo,
-                              phoneNumber: e.target.value,
-                            });
+                            onChangeCusInfo(e);
                           },
                           required: {
                             value: true,
@@ -453,9 +487,25 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           ) => {
                             onChangeCarInfo(e);
                           },
+                          pattern: {
+                            value: basicRegEx.NUM,
+                            message: "형식에 맞게 입력하세요.",
+                          },
                         })}
                       />
                     </Wrapper>
+                    {errors.idNumber?.type === "pattern" && (
+                      <Text
+                        margin={`0px`}
+                        width={`100%`}
+                        color={`#d6263b`}
+                        al={`flex-start`}
+                        fontSize={`14px`}
+                        textAlign={`left`}
+                      >
+                        {errors.idNumber.message}
+                      </Text>
+                    )}
                     <Wrapper dr={`row`}>
                       <Text fontSize={`14px`}>등록일자</Text>
                       <TextInput2
@@ -614,18 +664,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   </Checkbox>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
-                  <SmallButton
-                    type="button"
-                    kindOf={`default`}
-                    onClick={() => {}}
-                  >
+                  <SmallButton type="button" kindOf={`ghost`} disabled>
                     부품조회
                   </SmallButton>
-                  <SmallButton
-                    type="button"
-                    kindOf={`default`}
-                    onClick={() => {}}
-                  >
+                  <SmallButton type="button" kindOf={`ghost`} disabled>
                     세트부품
                   </SmallButton>
                 </Wrapper>
