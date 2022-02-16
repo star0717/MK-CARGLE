@@ -82,7 +82,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       var sToDate: Date = new Date(searchTo);
       param.sTo = sToDate;
     }
-
+    console.log("param:", param, "searchDetails:", searchDetails);
     dispatch(_aGetMaintenancesList(param, searchDetails)).then((res: any) => {
       setFindResult(res.payload);
     });
@@ -101,6 +101,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     setFilterValue,
     setSearchFrom,
     setSearchTo,
+    searchDetails,
     setSearchDetails,
   };
   /*********************************************************************
