@@ -1,1 +1,4 @@
-export class Estimate {}
+import { Company } from './company.entity';
+export class Estimate {
+  company: Company;
+}
