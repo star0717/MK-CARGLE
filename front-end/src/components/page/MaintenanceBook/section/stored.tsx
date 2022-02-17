@@ -156,13 +156,25 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param e
    */
   const onFocusHandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "Enter" || e.key === "Tab" || e.key === "ArrowRight") {
+    if (e.key === "Enter" || e.key === "ArrowRight") {
       if (idx === cellCount - 1) {
         setWorkList(workList.concat(workInit));
       } else {
         inputRef.current[idx + 1].focus();
       }
-      console.log(idx);
+    }
+    if (e.key === "ArrowLeft") {
+      if (idx !== 0) inputRef.current[idx - 1].focus();
+    }
+    if (e.key === "ArrowUp") {
+      if (idx >= 7) inputRef.current[idx - 7].focus();
+    }
+    if (e.key === "ArrowDown") {
+      if (idx < cellCount - 7) {
+        inputRef.current[idx + 7].focus();
+      } else {
+        setWorkList(workList.concat(workInit));
+      }
     }
   };
 
@@ -633,9 +645,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 1] = elem)
                           }
                           width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
-                            onFocusHandler(e, (idx + 1) * 7 - 1)
-                          }
+                          onKeyDown={(e: KeyboardEvent) => {
+                            if (
+                              idx + 1 === workList.length &&
+                              (e.key === "Enter" || e.key === "ArrowRight")
+                            ) {
+                              onFocusHandler(e, (idx + 1) * 7 - 1);
+                            }
+                          }}
                           onKeyUp={(e: KeyboardEvent) =>
                             onFocusHandler(e, (idx + 1) * 7 - 1)
                           }
