@@ -159,12 +159,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "Enter" || e.key === "Tab" || e.key === "ArrowRight") {
       if (idx === cellCount - 1) {
         setWorkList(workList.concat(workInit));
+      } else {
+        inputRef.current[idx + 1].focus();
       }
-      // if (cellCount - 1 > idx) {
-      //   inputRef.current[idx + 1].focus();
-      // }
       console.log(idx);
-      inputRef.current[idx + 1].focus();
     }
   };
 
@@ -568,7 +566,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 7] = elem)
                           }
                           width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
+                          onKeyUp={(e: KeyboardEvent) =>
                             onFocusHandler(e, (idx + 1) * 7 - 7)
                           }
                         />
@@ -580,7 +578,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 6] = elem)
                           }
                           width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
+                          onKeyUp={(e: KeyboardEvent) =>
                             onFocusHandler(e, (idx + 1) * 7 - 6)
                           }
                         />
@@ -592,7 +590,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 5] = elem)
                           }
                           width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
+                          onKeyUp={(e: KeyboardEvent) =>
                             onFocusHandler(e, (idx + 1) * 7 - 5)
                           }
                         />
@@ -604,7 +602,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 4] = elem)
                           }
                           width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
+                          onKeyUp={(e: KeyboardEvent) =>
                             onFocusHandler(e, (idx + 1) * 7 - 4)
                           }
                         />
@@ -616,7 +614,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 3] = elem)
                           }
                           width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
+                          onKeyUp={(e: KeyboardEvent) =>
                             onFocusHandler(e, (idx + 1) * 7 - 3)
                           }
                         />
@@ -628,7 +626,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 2] = elem)
                           }
                           width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
+                          onKeyUp={(e: KeyboardEvent) =>
                             onFocusHandler(e, (idx + 1) * 7 - 2)
                           }
                         />
@@ -641,6 +639,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           }
                           width={`100%`}
                           onKeyDown={(e: KeyboardEvent) =>
+                            onFocusHandler(e, (idx + 1) * 7 - 1)
+                          }
+                          onKeyUp={(e: KeyboardEvent) =>
                             onFocusHandler(e, (idx + 1) * 7 - 1)
                           }
                         />
