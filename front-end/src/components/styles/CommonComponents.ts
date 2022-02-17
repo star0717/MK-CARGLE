@@ -332,7 +332,7 @@ export const CommonSubTitle = styled.h2<any>`
 export const CommonSmallTitle = styled.h2<any>`
   width: ${(props) => props.width};
   position: relative;
-  margin: 30px 0px;
+  margin: ${(props) => props.margin || `30px 0px`};
   font-size: 20px;
   font-weight: 500;
   color: ${(props) => props.color};
@@ -485,8 +485,8 @@ export const CommonButton = styled.button<any>`
 
   
     ${(props) =>
-    props.kindOf === `grey` && `background : ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `grey` && `color : ${props.theme.grey_C};`}
+    props.kindOf === `grey` && `background : ${props.theme.grey_C};`}
+  ${(props) => props.kindOf === `grey` && `color : ${props.theme.white_C};`}
       ${(props) =>
     props.kindOf === `grey` && `border : 1px solid ${props.theme.grey_C};`}
   
@@ -524,7 +524,7 @@ ${(props) => props.kindOf === `black` && `background : ${props.theme.white_C};`}
       
       ${(props) => props.kindOf === `grey` && `color ${props.theme.white_C};`}
           ${(props) =>
-      props.kindOf === `grey` && `background ${props.theme.grey_C};`}
+      props.kindOf === `grey` && `background ${props.theme.darkGrey_C};`}
 
 
 ${(props) => props.kindOf === `naver` && `background : #1CC020;`}
@@ -567,14 +567,13 @@ export const SmallButton = styled.button<any>`
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
-  border-radius: ${(props) => props.radius};
-  font-size: ${(props) => props.fontSize};
+  border-radius: ${(props) => props.radius || `5px`};
+  font-size: ${(props) => props.fontSize || `16px`};
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
   background-color: ${(props) => props.bgColor};
-  border-radius: 5px;
   color: #fff;
   cursor: pointer;
 
@@ -606,6 +605,7 @@ export const SmallButton = styled.button<any>`
   
 
   & svg {
+    margin: 0px 0px 0px 8px;
   }
 
   &:hover {
@@ -629,6 +629,9 @@ export const SmallButton = styled.button<any>`
     ${(props) => props.kindOf === `fillDefault` && `border : none;`}
 
     ${(props) => props.kindOf === `ghost` && `box-shadow : none;`}
+  }
+
+  &:hover svg {
   }
 `;
 
@@ -1311,7 +1314,7 @@ export const TableHead = styled.ul<any>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: ${(props) => props.ju || `space-between`};
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
   border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
@@ -1331,7 +1334,7 @@ export const TableHeadLIST = styled.li<any>`
   flex-direction: row;
   align-items: center;
   justify-content: ${(props) => props.ju || `flex-start`};
-  text-align: start;
+  text-align: ${(props) => props.textAlign || `start`};
   font-size: ${(props) => props.fontSize || `16px`};
   color: ${(props) => props.color || ``};
 `;
@@ -1833,6 +1836,7 @@ export const Checkbox = styled.label<any>`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  justify-content: ${(props) => props.ju || `center`};
 
   ${(props) => props.kindOf === `TableCheckBox` && `margin : 0px 0px 26px 0px;`}
 

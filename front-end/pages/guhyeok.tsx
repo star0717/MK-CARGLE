@@ -101,7 +101,7 @@ const TestPage: NextPage<any> = (props) => {
           content: {
             background: "white",
             width: "1200px",
-            height: "1000px",
+            height: "800px",
             maxWidth: "calc(100vw - 2rem)",
             maxHeight: "calc(100vh - 2rem)",
             overflowY: "auto",
