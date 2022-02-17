@@ -155,13 +155,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * 키 이벤트 handler
    * @param e
    */
-  const onFocusHandler = (e: KeyboardEvent, idx: number) => {
+  const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
+    console.log("idx :", idx, "cellcount :", cellCount);
     if (e.key === "Enter" || e.key === "ArrowRight") {
-      if (idx === cellCount - 1) {
-        setWorkList(workList.concat(workInit));
-      } else {
-        inputRef.current[idx + 1].focus();
-      }
+      inputRef.current[idx + 1].focus();
     }
     if (e.key === "ArrowLeft") {
       if (idx !== 0) inputRef.current[idx - 1].focus();
@@ -170,9 +167,23 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       if (idx >= 7) inputRef.current[idx - 7].focus();
     }
     if (e.key === "ArrowDown") {
-      if (idx < cellCount - 7) {
-        inputRef.current[idx + 7].focus();
-      } else {
+      inputRef.current[idx + 7].focus();
+    }
+
+    if (e.key === "Enter" || e.key === "ArrowRight") {
+    }
+  };
+
+  const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
+    console.log("idx :", idx, "cellcount :", cellCount);
+
+    if (e.key === "Enter" || e.key === "ArrowRight") {
+      if (idx === cellCount - 1) {
+        setWorkList(workList.concat(workInit));
+      }
+    }
+    if (e.key === "ArrowDown") {
+      if (idx >= cellCount - 7) {
         setWorkList(workList.concat(workInit));
       }
     }
@@ -573,8 +584,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 7] = elem)
                           }
                           width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 7)
+                          }
                           onKeyUp={(e: KeyboardEvent) =>
-                            onFocusHandler(e, (idx + 1) * 7 - 7)
+                            onKeyUpHandler(e, (idx + 1) * 7 - 7)
                           }
                         />
                       </TableRowLIST>
@@ -585,8 +599,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 6] = elem)
                           }
                           width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 6)
+                          }
                           onKeyUp={(e: KeyboardEvent) =>
-                            onFocusHandler(e, (idx + 1) * 7 - 6)
+                            onKeyUpHandler(e, (idx + 1) * 7 - 6)
                           }
                         />
                       </TableRowLIST>
@@ -597,8 +614,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 5] = elem)
                           }
                           width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 5)
+                          }
                           onKeyUp={(e: KeyboardEvent) =>
-                            onFocusHandler(e, (idx + 1) * 7 - 5)
+                            onKeyUpHandler(e, (idx + 1) * 7 - 5)
                           }
                         />
                       </TableRowLIST>
@@ -609,8 +629,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 4] = elem)
                           }
                           width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 4)
+                          }
                           onKeyUp={(e: KeyboardEvent) =>
-                            onFocusHandler(e, (idx + 1) * 7 - 4)
+                            onKeyUpHandler(e, (idx + 1) * 7 - 4)
                           }
                         />
                       </TableRowLIST>
@@ -621,8 +644,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 3] = elem)
                           }
                           width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 3)
+                          }
                           onKeyUp={(e: KeyboardEvent) =>
-                            onFocusHandler(e, (idx + 1) * 7 - 3)
+                            onKeyUpHandler(e, (idx + 1) * 7 - 3)
                           }
                         />
                       </TableRowLIST>
@@ -633,8 +659,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 2] = elem)
                           }
                           width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 2)
+                          }
                           onKeyUp={(e: KeyboardEvent) =>
-                            onFocusHandler(e, (idx + 1) * 7 - 2)
+                            onKeyUpHandler(e, (idx + 1) * 7 - 2)
                           }
                         />
                       </TableRowLIST>
@@ -645,16 +674,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             (inputRef.current[(idx + 1) * 7 - 1] = elem)
                           }
                           width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) => {
-                            if (
-                              idx + 1 === workList.length &&
-                              (e.key === "Enter" || e.key === "ArrowRight")
-                            ) {
-                              onFocusHandler(e, (idx + 1) * 7 - 1);
-                            }
-                          }}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 1)
+                          }
                           onKeyUp={(e: KeyboardEvent) =>
-                            onFocusHandler(e, (idx + 1) * 7 - 1)
+                            onKeyUpHandler(e, (idx + 1) * 7 - 1)
                           }
                         />
                       </TableRowLIST>
