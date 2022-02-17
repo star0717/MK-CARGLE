@@ -1,3 +1,4 @@
+import { StatementsModule } from './../statements/statements.module';
 import { EstimatesModule } from './../estimates/estimates.module';
 import { CompaniesModule } from './../companies/companies.module';
 import { Module } from '@nestjs/common';
@@ -15,6 +16,7 @@ import { CarsModule } from '../cars/cars.module';
     CarsModule,
     CompaniesModule,
     EstimatesModule,
+    StatementsModule,
   ],
   controllers: [MaintenancesController],
   providers: [MaintenancesService],
