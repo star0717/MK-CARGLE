@@ -45,6 +45,7 @@ import {
   _iPartssets,
   _iGetMaintenancesCarInfo,
   _iMaintenances,
+  _iMaintenancesOne,
 } from "../interfaces";
 
 import {
@@ -60,8 +61,7 @@ import { Part } from "../../src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Car } from "src/models/car.entity";
-import { Maintenance } from "../../../back-end/src/models/maintenance.entity";
-import { MainFindOptions } from "src/models/maintenance.entity";
+import { MainFindOptions, Maintenance } from "src/models/maintenance.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1038,14 +1038,18 @@ export async function _aGetMaintenancesList(
   findParams: FindParameters,
   options: MainFindOptions
 ) {
-  const req: Maintenance = await axios
+  const req: FindResult<Maintenance> = await axios
     .get(
       genApiPath(MaintenancesApiPath.maintenances, { findParams: findParams }) +
         genMainOptionQuery(options)
     )
-    .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
-      return res.data;
-    });
+    .then(
+      (
+        res: AxiosResponse<FindResult<Maintenance>, Maintenance>
+      ): FindResult<Maintenance> => {
+        return res.data;
+      }
+    );
 
   const result: _iMaintenances = {
     type: ActionAPIs.USER_API,
@@ -1068,7 +1072,7 @@ export async function _aPostMaintenancesStore(data: Partial<Maintenance>) {
       }
     );
 
-  const result: _iMaintenances = {
+  const result: _iMaintenancesOne = {
     type: ActionAPIs.USER_API,
     payload: req,
   };
