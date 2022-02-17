@@ -436,6 +436,11 @@ export class _iGetMaintenancesCarInfo implements baseActionInterface {
 
 export class _iMaintenances implements baseActionInterface {
   type: ActionAPIs.USER_API;
+  payload: FindResult<Maintenance>;
+}
+
+export class _iMaintenancesOne implements baseActionInterface {
+  type: ActionAPIs.USER_API;
   payload: Maintenance;
 }
 
@@ -458,4 +463,6 @@ export type ActionInterfaces =
   | _iDeleteByAdmin
   | _iDeleteByUser
   | _iPartssetsOne
-  | _iAgencies;
+  | _iAgencies
+  | _iMaintenances
+  | _iMaintenancesOne;

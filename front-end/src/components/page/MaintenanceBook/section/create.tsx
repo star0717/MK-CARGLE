@@ -7,9 +7,6 @@ import {
   CheckMark,
   ColorSpan,
   Combo,
-  CommonSubTitle,
-  CommonTitle,
-  CommonTitleWrapper,
   IconButton,
   JoinStepBar,
   JoinStepBarWrapper,
@@ -21,8 +18,6 @@ import {
   TableBody,
   TableHead,
   TableHeadLIST,
-  TableRow,
-  TableRowLIST,
   TableWrapper,
   Text,
   TextInput2,
@@ -31,26 +26,15 @@ import {
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
+import { AiFillCloseCircle } from "react-icons/ai";
 import {
-  AiFillCloseCircle,
-  AiOutlineFileText,
-  AiOutlineUser,
-} from "react-icons/ai";
-import { GoCheck } from "react-icons/go";
-import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
-import {
-  BsChevronDoubleUp,
   BsFillFileEarmarkCheckFill,
-  BsPencilSquare,
   BsPlusCircleFill,
   BsSearch,
 } from "react-icons/bs";
-import { _pMaintenanceProps } from "src/configure/_pProps.entity";
-import { faCar } from "@fortawesome/free-solid-svg-icons";
-import { FaCar, FaCarAlt, FaFlagCheckered, FaRegListAlt } from "react-icons/fa";
+import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
 import { RiFileList2Fill } from "react-icons/ri";
-import { Car } from "src/models/car.entity";
 import { useDispatch } from "react-redux";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
 import {
@@ -66,7 +50,7 @@ import { MainStatus } from "src/constants/maintenance.const";
 import { CarInfo, Customer, Maintenance } from "src/models/maintenance.entity";
 import { deleteKeyJson, trim } from "src/modules/commonModule";
 
-const MaintenanceStored: NextPage = () => {
+const MaintenanceCreate: NextPage = () => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -162,18 +146,14 @@ const MaintenanceStored: NextPage = () => {
     dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
       (res: _iMaintenancesOne) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
-        router.push(`${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.ING}`);
+        router.push(
+          `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
+        );
       },
       (err) => {
         alert("차량 입고에 실패했습니다.");
       }
     );
-  };
-
-  const onFocusHandler = (e: KeyboardEvent) => {
-    if (e.key === "Enter" || e.key === "Tab" || e.key === "ArrowRight") {
-      console.log("hi");
-    }
   };
 
   /*********************************************************************
@@ -194,7 +174,6 @@ const MaintenanceStored: NextPage = () => {
             padding={`20px`}
             margin={`0px 0px 10px 360px`}
             al={`flex-start`}
-            left={`100px`}
           >
             <SpeechBubbleLeft fontSize={`20px`}>
               "차량선택 후 차량입고를 해주세요"
@@ -248,11 +227,22 @@ const MaintenanceStored: NextPage = () => {
         <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
           <Wrapper width={`25%`}>
             {showCar ? (
-              <Wrapper dr={`row`} fontSize={`24px`}>
-                <Text fontSize={`24px`}>{searchCarText}</Text>
-                <IconButton type="button" shadow={`none`} onClick={onResetCar}>
-                  <AiFillCloseCircle />
-                </IconButton>
+              <Wrapper height={`80px`} ju={`flex-end`}>
+                <Wrapper
+                  dr={`row`}
+                  fontSize={`24px`}
+                  border={`1px solid #ccc`}
+                  padding={`10px 0px`}
+                >
+                  <Text fontSize={`24px`}>{searchCarText}</Text>
+                  <IconButton
+                    type="button"
+                    shadow={`none`}
+                    onClick={onResetCar}
+                  >
+                    <AiFillCloseCircle />
+                  </IconButton>
+                </Wrapper>
               </Wrapper>
             ) : (
               <Wrapper height={`80px`} al={`flex-end`}>
@@ -309,19 +299,33 @@ const MaintenanceStored: NextPage = () => {
                 </form>
               </Wrapper>
             )}
-            <Wrapper border={`1px solid #ccc`}>
+            <Wrapper
+              border={`1px solid #ccc`}
+              margin={`10px 0px 0px 0px`}
+              padding={`10px 20px`}
+            >
               {showCar ? (
                 <form
                   id="carInfoForm"
                   onSubmit={handleSubmit(onCarStoredHandler)}
                 >
                   <Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>주행거리</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        주행거리
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.distance}
+                        placeholder="주행거리를 입력하세요(km)"
                         {...register("distance", {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
@@ -352,11 +356,20 @@ const MaintenanceStored: NextPage = () => {
                         {errors.distance.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>고객명</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        고객명
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={cusInfo.name}
                         {...register("cusName", {
                           onChange: (
@@ -368,11 +381,20 @@ const MaintenanceStored: NextPage = () => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>전화번호</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        전화번호
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={cusInfo.phoneNumber}
                         {...register("phoneNumber", {
                           onChange: (
@@ -407,11 +429,20 @@ const MaintenanceStored: NextPage = () => {
                         {errors.phoneNumber.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>차량명</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        차량명
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.name}
                         {...register("name", {
                           onChange: (
@@ -438,11 +469,20 @@ const MaintenanceStored: NextPage = () => {
                         {errors.name.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>모델명</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        모델명
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.model}
                         {...register("model", {
                           onChange: (
@@ -453,11 +493,20 @@ const MaintenanceStored: NextPage = () => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>연식</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        연식
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.age}
                         {...register("age", {
                           onChange: (
@@ -468,11 +517,20 @@ const MaintenanceStored: NextPage = () => {
                         })}
                       />
                     </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>차대번호</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        차대번호
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.idNumber}
                         {...register("idNumber", {
                           onChange: (
@@ -499,11 +557,20 @@ const MaintenanceStored: NextPage = () => {
                         {errors.idNumber.message}
                       </Text>
                     )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>등록일자</Text>
+                    <Wrapper
+                      dr={`row`}
+                      padding={`10px 0px`}
+                      ju={`space-between`}
+                    >
+                      <Text
+                        width={`80px`}
+                        textAlign={`right`}
+                        margin={`0px 10px 0px 0px`}
+                      >
+                        등록일자
+                      </Text>
                       <TextInput2
                         type="text"
-                        width={`100px`}
                         value={carInfo.regDate}
                         {...register("regDate", {
                           onChange: (
@@ -531,7 +598,7 @@ const MaintenanceStored: NextPage = () => {
           </Wrapper>
 
           <Wrapper width={`74%`}>
-            <Wrapper height={`80px`} al={`flex-end`}>
+            <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
               <Wrapper dr={`row`} ju={`flex-end`}>
                 <SmallButton
                   type="button"
@@ -547,7 +614,7 @@ const MaintenanceStored: NextPage = () => {
             <Wrapper
               border={`1px solid #ccc`}
               padding={`20px`}
-              margin={`0px 0px 20px`}
+              margin={`10px 0px 20px`}
             >
               <Wrapper
                 dr={`row`}
@@ -676,35 +743,7 @@ const MaintenanceStored: NextPage = () => {
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
-              <TableBody minHeight={`130px`}>
-                <TableRow kindOf={`noHover`}>
-                  <TableRowLIST width={`15%`}>
-                    <TextInput2
-                      type="text"
-                      width={`100%`}
-                      onKeyDown={onFocusHandler}
-                    />
-                  </TableRowLIST>
-                  <TableRowLIST width={`15%`}>
-                    <TextInput2 type="text" width={`100%`} />
-                  </TableRowLIST>
-                  <TableRowLIST width={`14%`}>
-                    <TextInput2 type="text" width={`100%`} />
-                  </TableRowLIST>
-                  <TableRowLIST width={`15%`}>
-                    <TextInput2 type="text" width={`100%`} />
-                  </TableRowLIST>
-                  <TableRowLIST width={`14%`}>
-                    <TextInput2 type="text" width={`100%`} />
-                  </TableRowLIST>
-                  <TableRowLIST width={`14%`}>
-                    <TextInput2 type="text" width={`100%`} />
-                  </TableRowLIST>
-                  <TableRowLIST width={`8%`}>
-                    <TextInput2 type="text" width={`100%`} />
-                  </TableRowLIST>
-                </TableRow>
-              </TableBody>
+              <TableBody minHeight={`130px`}></TableBody>
             </TableWrapper>
             <Wrapper dr={`row`} ju={`flex-end`}>
               <Text>부품계 : 0 </Text>
@@ -746,4 +785,4 @@ const MaintenanceStored: NextPage = () => {
   );
 };
 
-export default MaintenanceStored;
+export default MaintenanceCreate;

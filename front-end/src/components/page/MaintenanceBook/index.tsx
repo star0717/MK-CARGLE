@@ -8,18 +8,21 @@ import { FindResult, FindParameters } from "src/models/base.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { useRouter } from "next/router";
 import { MainStatus } from "src/constants/maintenance.const";
+import { _aGetMaintenancesList } from "store/action/user.action";
+import MaintenanceCreate from "./section/create";
 import MaintenanceStored from "./section/stored";
 import MaintenanceIng from "./section/ing";
 import MaintenanceDone from "./section/done";
 import MaintenancePaid from "./section/paid";
 import MaintenanceReleased from "./section/released";
-import { _aGetMaintenancesList } from "store/action/user.action";
-import { MainFindOptions } from "../../../../../back-end/src/models/maintenance.entity";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
 
   switch (router.query.step) {
+    case "c":
+      return <MaintenanceCreate />;
+
     case MainStatus.STORED:
       return <MaintenanceStored {...props} />;
 

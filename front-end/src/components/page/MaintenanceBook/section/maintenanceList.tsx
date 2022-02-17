@@ -239,9 +239,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 fontSize={`16px`}
                 kindOf={`fillDefault`}
                 onClick={() => {
-                  router.push(
-                    `${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.STORED}`
-                  );
+                  router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
                 }}
               >
                 +신규정비등록
