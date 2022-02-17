@@ -31,6 +31,7 @@ import {
   FindResult,
 } from 'src/models/base.entity';
 import { Estimate } from 'src/models/estimate.entity';
+import { Statement } from 'src/models/statement.entity';
 
 @Controller('maintenances')
 @ApiTags('정비내역 API')
@@ -255,11 +256,18 @@ export class MaintenancesController {
   }
 
   /*********** 문서 발급 관련 *********************/
+  // 견적서 관련
   @Get('gen/estimate/:id')
-  @ApiOperation({ summary: '[WORKER] 견적서 생성' })
+  @ApiOperation({
+    summary: '[WORKER] 견적서 생성',
+    description:
+      '동일 정비이력에 대해서 견적서 생성은 여러번 발생될 수 있음.' +
+      ' 기존 생성된 견적서의 발급 사실이 없을 경우에는 갱신되고' +
+      ' 그 외의 경우에는 새롭게 생성됨',
+  })
   @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
   @ApiCreatedResponse({
-    description: `패치 된 Maintenance 데이터`,
+    description: `생성된 Estimate 데이터`,
     type: Estimate,
   })
   async genEstimate(
@@ -283,5 +291,42 @@ export class MaintenancesController {
     @AuthToken() token: AuthTokenInfo,
   ): Promise<Maintenance> {
     return await this.service.pubEstimate(token, id, doc);
+  }
+
+  // 명세서 관련
+  @Get('gen/statement/:id')
+  @ApiOperation({
+    summary: '[WORKER] 명세서 생성',
+    description:
+      '동일 정비이력에 대해서 명세서 생성은 여러번 발생될 수 있음.' +
+      ' 기존 생성된 명세서의 발급 사실이 없을 경우에는 갱신되고' +
+      ' 그 외의 경우에는 새롭게 생성됨',
+  })
+  @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
+  @ApiCreatedResponse({
+    description: `생성된 Statement 데이터`,
+    type: Statement,
+  })
+  async genStatement(
+    @Param('id') id: string,
+    @AuthToken() token: AuthTokenInfo,
+  ): Promise<Statement> {
+    return await this.service.genStatement(token, id);
+  }
+
+  @Patch('pub/statement/:id')
+  @ApiOperation({ summary: '[WORKER] 명세서 발급(프린트 or 온라인)' })
+  @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
+  @ApiBody({ description: 'd', type: MainPubDocInfo })
+  @ApiCreatedResponse({
+    description: `패치 된 Maintenance 데이터`,
+    type: Statement,
+  })
+  async pubStatement(
+    @Param('id') id: string,
+    @Body() doc: MainPubDocInfo,
+    @AuthToken() token: AuthTokenInfo,
+  ): Promise<Maintenance> {
+    return await this.service.pubStatement(token, id, doc);
   }
 }

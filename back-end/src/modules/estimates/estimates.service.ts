@@ -13,6 +13,6 @@ export class EstimatesService extends SafeService<Estimate> {
     readonly commonService: CommonService,
   ) {
     super(model, commonService);
-    this._genDocNumber();
+    this._genDocNumber('견적서');
   }
 }

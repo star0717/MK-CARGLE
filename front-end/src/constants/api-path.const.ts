@@ -83,6 +83,10 @@ export class MaintenancesApiPath {
   static pay = MaintenancesApiPath.BASE + 'pay';
   static release = MaintenancesApiPath.BASE + 'release';
   static deleteMany = MaintenancesApiPath.BASE + 'deletemany';
+  static gen_estimate = MaintenancesApiPath.BASE + 'gen/estimate';
+  static pub_estimate = MaintenancesApiPath.BASE + 'pub/estimate';
+  static gen_statement = MaintenancesApiPath.BASE + 'gen/statement';
+  static pub_statement = MaintenancesApiPath.BASE + 'pub/statement';
 }
 
 // 거래처 관리 API
