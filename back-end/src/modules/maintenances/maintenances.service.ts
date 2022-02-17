@@ -155,9 +155,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
   /*********** 문서 발급 관련 *********************/
   async genEstimate(token: AuthTokenInfo, id: string): Promise<Estimate> {
     console.log('start');
-    // 문서 번호 생성
-    const docNum = await this.estimatesService._genDocNumber();
-    console.log('hi');
+
     // 해당 main을 검색
     const main: Maintenance = await this.findById(token, id);
     if (!main) throw new BadRequestException();
@@ -169,6 +167,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     );
     if (!company) throw new BadRequestException();
 
+    // 견적서에 주입할 업체 정보 준비
     const cInfo: CompanyInfo = {
       name: company.name,
       comRegNum: company.comRegNum,
@@ -182,7 +181,6 @@ export class MaintenancesService extends SafeService<Maintenance> {
 
     // 견적서 생성
     const estimate: Partial<Estimate> = {
-      docNum,
       mainNum: main.docNum,
       customer: main.customer,
       company: cInfo,
@@ -191,16 +189,31 @@ export class MaintenancesService extends SafeService<Maintenance> {
       price: main.price,
     };
 
-    // 견적서 저장
-    const result = await this.estimatesService.create(
-      token,
-      estimate as Estimate,
-    );
+    let result: Estimate;
+    // 이미 견적서가 생성되었으나 발급 사실이 없으면 기존 견적서 수정
+    if (main.estimate?._oID && !main.estimate?.msgAt && !main.estimate?.prAt) {
+      console.log('갱신');
+      result = await this.estimatesService.findByIdAndUpdate(
+        token,
+        estimate._id,
+        estimate,
+      );
+    }
+    // 생성된 견적서가 없거나 발급 사실이 있으면 새롭게 견적서 생성
+    else {
+      console.log('생성');
+      // 문서 번호 생성
+      estimate.docNum = await this.estimatesService._genDocNumber();
 
-    const mainEstimate: Doc = {
-      _oID: result._id,
-    };
-    this.findByIdAndUpdate(token, id, { estimate: mainEstimate });
+      // 견적서 생성
+      result = await this.estimatesService.create(token, estimate as Estimate);
+
+      // 정비이력에 견적서 참조 정보 갱신
+      const mainEstimate: Doc = {
+        _oID: result._id,
+      };
+      this.findByIdAndUpdate(token, id, { estimate: mainEstimate });
+    }
 
     // 견적서 정보를 main에 패치
     return result;
@@ -215,14 +228,16 @@ export class MaintenancesService extends SafeService<Maintenance> {
     const main: Maintenance = await this.findById(token, id);
     if (!main) throw new BadRequestException();
 
-    console.log(main.estimate);
-
     switch (doc.type) {
       case MainDocPubType.PRINT:
         main.estimate.prAt = new Date(Date.now());
         break;
       case MainDocPubType.ONLINE:
         main.estimate.msgAt = new Date(Date.now());
+        break;
+      case MainDocPubType.BOTH:
+        main.estimate.prAt = new Date(Date.now());
+        main.estimate.msgAt = main.estimate.prAt;
         break;
       default:
         throw new BadRequestException();

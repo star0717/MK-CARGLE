@@ -256,7 +256,13 @@ export class MaintenancesController {
 
   /*********** 문서 발급 관련 *********************/
   @Get('gen/estimate/:id')
-  @ApiOperation({ summary: '[WORKER] 견적서 생성' })
+  @ApiOperation({
+    summary: '[WORKER] 견적서 생성',
+    description:
+      '동일 정비이력에 대해서 견적서 생성은 여러번 발생될 수 있음.' +
+      ' 기존 생성된 견적서의 발급 사실이 없을 경우에는 갱신되고' +
+      ' 그 외의 경우에는 새롭게 생성됨',
+  })
   @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
   @ApiCreatedResponse({
     description: `패치 된 Maintenance 데이터`,

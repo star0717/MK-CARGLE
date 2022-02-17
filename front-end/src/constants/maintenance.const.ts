@@ -110,21 +110,11 @@ export const genMainOptionQuery = (data: MainFindOptions) => {
 /********** 문서 발급 형태 ******************/
 // 문서 발급 타입
 export enum MainDocPubType {
-  NOT_ISSUED = 'n',
-  PRINT = 'p',
-  ONLINE = 'o',
+  NOT_ISSUED = 'n', // 미발급 상태(DB default값. 사용은 안함)
+  PRINT = 'p', // 출력 요청
+  ONLINE = 'o', // 온라인 알림톡 요청
+  BOTH = 'b', // 둘 다 요청
 }
 
 // 문서 발급 타입 리스트
 export const mainDocPubTypeList = Object.values(MainDocPubType).map((e) => e);
-
-export const getStrMainDocPubType = (type: MainDocPubType): string => {
-  switch (type) {
-    case MainDocPubType.NOT_ISSUED:
-      return '미발급';
-    case MainDocPubType.PRINT:
-      return '출력';
-    case MainDocPubType.ONLINE:
-      return '온라인';
-  }
-};

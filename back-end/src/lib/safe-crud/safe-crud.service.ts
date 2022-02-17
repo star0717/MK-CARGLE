@@ -183,7 +183,7 @@ export class SafeService<T extends BaseEntity> {
       .find(fQuery as FilterQuery<T>, fParams.projection)
       .skip(skipOption)
       .limit(limitOption)
-      .sort({ createAt: -1 });
+      .sort({ createdAt: -1 });
 
     return result;
   }
@@ -328,9 +328,24 @@ export class SafeService<T extends BaseEntity> {
    * @returns 생성된 문서번호
    */
   async _genDocNumber(): Promise<string> {
-    const index = await this.numOfDocsToday();
-    const docNum = `${getStrDate()}${(index + 1).toString().padStart(7, '0')}`;
+    let index = 1;
+    const currentDoc = await this.model
+      .findOne({
+        createdAt: {
+          $gt: getStartOfDayDateTime(),
+          $lt: getEndOfDayDateTime(),
+        },
+      })
+      .sort({ createdAt: -1 });
+
+    if (currentDoc) {
+      const cDocNum: string = currentDoc['docNum'];
+      index = parseInt(cDocNum.substring(6)) + 1;
+    }
+
+    const docNum = `${getStrDate()}${index.toString().padStart(7, '0')}`;
     console.log('docNum: ', docNum);
+
     return docNum;
   }
 }
