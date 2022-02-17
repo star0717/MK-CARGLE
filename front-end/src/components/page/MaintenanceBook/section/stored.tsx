@@ -557,7 +557,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     부품조회
                   </SmallButton>
-                  <SmallButton type="button" kindOf={`default`}>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModalOption("set");
+                      setModalOpen(true);
+                    }}
+                  >
                     세트부품
                   </SmallButton>
                 </Wrapper>
