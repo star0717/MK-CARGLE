@@ -11,6 +11,7 @@ import { _MainProps } from "./_props.entity";
 import { Part } from "../models/part.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { MainFindOptions } from "../../../back-end/src/models/maintenance.entity";
+import { Work } from "src/models/maintenance.entity";
 
 /***********************************************************************
  * 기본
@@ -135,6 +136,8 @@ export interface _pPartsSetProps extends _MainProps {
   setPartSetData?: React.Dispatch<React.SetStateAction<Partial<PartsSet>>>;
   partSetClass?: Partial<PartsSet>[];
   setPartSetClass?: React.Dispatch<React.SetStateAction<Partial<PartsSet>[]>>;
+  workList?: Work[];
+  setWorkList?: React.Dispatch<React.SetStateAction<Work[]>>;
 }
 
 /***********************************************************************

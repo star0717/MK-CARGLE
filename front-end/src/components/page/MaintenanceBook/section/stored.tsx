@@ -5,6 +5,7 @@ import {
   Checkbox,
   CheckInput,
   CheckMark,
+  CloseButton,
   ColorSpan,
   Combo,
   IconButton,
@@ -34,7 +35,10 @@ import {
   BsPlusCircleFill,
   BsSearch,
 } from "react-icons/bs";
-import { _pMaintenanceProps } from "src/configure/_pProps.entity";
+import {
+  _pMaintenanceProps,
+  _pPartsSetProps,
+} from "src/configure/_pProps.entity";
 import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
 import { RiFileList2Fill } from "react-icons/ri";
@@ -45,10 +49,19 @@ import {
   _aPostMaintenancesStore,
 } from "store/action/user.action";
 import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
-import { MainStatus } from "src/constants/maintenance.const";
-import { CarInfo, Customer, Maintenance } from "src/models/maintenance.entity";
+import { MainPartsType, MainStatus } from "src/constants/maintenance.const";
+import {
+  CarInfo,
+  Customer,
+  Maintenance,
+  Work,
+} from "src/models/maintenance.entity";
 import { deleteKeyJson, maskingStr, trim } from "src/modules/commonModule";
 import { PartsSet } from "src/models/partsset.entity";
+import Modal from "react-modal";
+import { IoIosCloseCircle } from "react-icons/io";
+import MtPartsModal from "./partsModal";
+import { Part } from "src/models/part.entity";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -81,17 +94,30 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   //   phoneNumber: "",
   // };
 
+  const workInit: Work[] = [
+    {
+      name: "",
+      code: "",
+      tsCode: "",
+      type: MainPartsType.A,
+      price: 0,
+      quantity: 0,
+      wage: 0,
+    },
+  ];
+
   let inputRef = useRef<HTMLInputElement[]>([]);
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [mtInfo, setMtInfo] = useState<Maintenance>(props.data); // 해당 정비내역 정보
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
+  const [modalOption, setModalOption] = useState<string>(""); // modal 창 옵션
+  const [mtInfo, setMtInfo] = useState<Maintenance>(props.data.mtData); // 해당 정비내역 정보
   const [taxCheck, setTaxCheck] = useState<boolean>(false); // 부가세 체크여부
   const [rowCount, setRowCount] = useState<number>(1); // 열 갯수
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
-  const [renderRow, setRenderRow] = useState<any>();
-  const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
+  const [workList, setWorkList] = useState<Work[]>(workInit); // 부품 리스트
   const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
     props.data.setList.docs
   ); // 전체 세트 항목
@@ -103,12 +129,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * 3. Handlers
    *********************************************************************/
   useEffect(() => {
-    setMtInfo(props.data);
+    setMtInfo(props.data.mtData);
+    setPartSetClass(props.data.setList.docs);
   }, [props]);
-
-  useEffect(() => {
-    rowRendering();
-  }, [rowCount]);
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
@@ -116,6 +139,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
+
+  useEffect(() => {
+    setCellCount(workList.length * 7);
+  }, [workList]);
 
   /**
    * modal 창 닫기 기능
@@ -131,103 +158,32 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const onFocusHandler = (e: KeyboardEvent, idx: number) => {
     if (e.key === "Enter" || e.key === "Tab" || e.key === "ArrowRight") {
       if (idx === cellCount - 1) {
-        setRowCount(rowCount + 1);
-        setCellCount(cellCount + 7);
+        setWorkList(workList.concat(workInit));
       }
-      if (cellCount - 1 > idx) {
-        inputRef.current[idx + 1].focus();
-      }
+      // if (cellCount - 1 > idx) {
+      //   inputRef.current[idx + 1].focus();
+      // }
+      console.log(idx);
+      inputRef.current[idx + 1].focus();
     }
   };
 
-  /**
-   * 정비내역 렌더링 함수
-   * @returns
-   */
-  const rowRendering = () => {
-    const result = [];
-    for (let i = 1; i < rowCount + 1; i++) {
-      result.push(
-        <TableRow key={i} kindOf={`noHover`}>
-          <TableRowLIST width={`15%`}>
-            <TextInput2
-              type="text"
-              ref={(elem: HTMLInputElement) =>
-                (inputRef.current[i * 7 - 7] = elem)
-              }
-              width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 7)}
-            />
-          </TableRowLIST>
-          <TableRowLIST width={`15%`}>
-            <TextInput2
-              type="text"
-              ref={(elem: HTMLInputElement) =>
-                (inputRef.current[i * 7 - 6] = elem)
-              }
-              width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 6)}
-            />
-          </TableRowLIST>
-          <TableRowLIST width={`14%`}>
-            <TextInput2
-              type="text"
-              ref={(elem: HTMLInputElement) =>
-                (inputRef.current[i * 7 - 5] = elem)
-              }
-              width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 5)}
-            />
-          </TableRowLIST>
-          <TableRowLIST width={`15%`}>
-            <TextInput2
-              type="text"
-              ref={(elem: HTMLInputElement) =>
-                (inputRef.current[i * 7 - 4] = elem)
-              }
-              width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 4)}
-            />
-          </TableRowLIST>
-          <TableRowLIST width={`14%`}>
-            <TextInput2
-              type="text"
-              ref={(elem: HTMLInputElement) =>
-                (inputRef.current[i * 7 - 3] = elem)
-              }
-              width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 3)}
-            />
-          </TableRowLIST>
-          <TableRowLIST width={`14%`}>
-            <TextInput2
-              type="text"
-              ref={(elem: HTMLInputElement) =>
-                (inputRef.current[i * 7 - 2] = elem)
-              }
-              width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 2)}
-            />
-          </TableRowLIST>
-          <TableRowLIST width={`8%`}>
-            <TextInput2
-              type="text"
-              ref={(elem: HTMLInputElement) =>
-                (inputRef.current[i * 7 - 1] = elem)
-              }
-              width={`100%`}
-              onKeyDown={(e: KeyboardEvent) => onFocusHandler(e, i * 7 - 1)}
-            />
-          </TableRowLIST>
-        </TableRow>
-      );
-    }
-    return setRenderRow(result);
-  };
+  console.log(workList);
+  console.log(workList.length);
 
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
+  const partsSetProps: _pPartsSetProps = {
+    ...props,
+    setModalOpen,
+    partSetData,
+    setPartSetData,
+    partSetClass,
+    setPartSetClass,
+    workList,
+    setWorkList,
+  };
 
   /*********************************************************************
    * 5. Page configuration
@@ -575,7 +531,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   </Checkbox>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
-                  <SmallButton type="button" kindOf={`default`}>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModalOption("part");
+                      setModalOpen(true);
+                    }}
+                  >
                     부품조회
                   </SmallButton>
                   <SmallButton type="button" kindOf={`default`}>
@@ -594,7 +557,98 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
-              <TableBody minHeight={`130px`}>{renderRow}</TableBody>
+              <TableBody minHeight={`130px`}>
+                {workList.map((data, idx) => {
+                  return (
+                    <TableRow key={idx} kindOf={`noHover`}>
+                      <TableRowLIST width={`15%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 7] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onFocusHandler(e, (idx + 1) * 7 - 7)
+                          }
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`15%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 6] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onFocusHandler(e, (idx + 1) * 7 - 6)
+                          }
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`14%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 5] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onFocusHandler(e, (idx + 1) * 7 - 5)
+                          }
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`15%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 4] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onFocusHandler(e, (idx + 1) * 7 - 4)
+                          }
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`14%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 3] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onFocusHandler(e, (idx + 1) * 7 - 3)
+                          }
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`14%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 2] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onFocusHandler(e, (idx + 1) * 7 - 2)
+                          }
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`8%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 1] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onFocusHandler(e, (idx + 1) * 7 - 1)
+                          }
+                        />
+                      </TableRowLIST>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
             </TableWrapper>
             <Wrapper dr={`row`} ju={`flex-end`}>
               <Text>부품계 : 0 </Text>
@@ -646,8 +700,44 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
           </Wrapper>
         </Wrapper>
-        <Wrapper></Wrapper>
       </RsWrapper>
+      <Modal
+        isOpen={modalOpen}
+        style={{
+          overlay: {
+            position: "fixed",
+            zIndex: 9999,
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(71, 71, 71, 0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            background: "white",
+            width: "1200px",
+            height: "800px",
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "calc(100vh - 2rem)",
+            overflowY: "auto",
+            position: "relative",
+            border: "1px solid #ccc",
+            borderRadius: "0.3rem",
+            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
+            inset: 0,
+          },
+        }}
+      >
+        <Wrapper fontSize={`28px`} al={`flex-end`}>
+          <CloseButton onClick={closeModal}>
+            <IoIosCloseCircle />
+          </CloseButton>
+        </Wrapper>
+        {modalOption === "part" ? <MtPartsModal {...partsSetProps} /> : "hi"}
+      </Modal>
     </WholeWrapper>
   );
 };

@@ -325,7 +325,17 @@ export const getServerSideProps: GetServerSideProps = async (
       case UseLink.MAINTENANCE_BOOK: {
         if (id) {
           console.log("id 있을때");
-          successResult.props.data = await axios
+          const setList: FindResult<PartsSet> = await axios
+            .get(
+              genApiPath(PartsSetsApiPath.partsSets, {
+                isServerSide: true,
+              }),
+              authConfig
+            )
+            .then(
+              (res: AxiosResponse<FindResult<PartsSet>, PartsSet>) => res.data
+            );
+          const mtData: FindResult<Maintenance> = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
                 id: id,
@@ -337,6 +347,19 @@ export const getServerSideProps: GetServerSideProps = async (
               (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
                 res.data
             );
+          const allParts: FindResult<Part> = await axios
+            .get(
+              genApiPath(PartsApiPath.parts, {
+                isServerSide: true,
+              }),
+              authConfig
+            )
+            .then((res: AxiosResponse<FindResult<Part>, Part>) => res.data);
+          successResult.props.data = {
+            setList: setList,
+            mtData: mtData,
+            allParts: allParts,
+          };
           return successResult;
         } else {
           console.log("id 없을때@");
