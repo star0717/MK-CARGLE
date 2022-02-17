@@ -1,3 +1,4 @@
+import { StatementsService } from './../statements/statements.service';
 import { EstimatesService } from './../estimates/estimates.service';
 import { Estimate } from './../../models/estimate.entity';
 import { AuthTokenInfo } from './../../models/auth.entity';
@@ -24,6 +25,7 @@ import {
 import { Company } from 'src/models/company.entity';
 import { CompaniesService } from '../companies/companies.service';
 import { CompanyInfo } from 'src/models/main.doc.entity';
+import { Statement } from 'src/models/statement.entity';
 
 @Injectable()
 export class MaintenancesService extends SafeService<Maintenance> {
@@ -34,9 +36,10 @@ export class MaintenancesService extends SafeService<Maintenance> {
     readonly carsService: CarsService,
     readonly companiesService: CompaniesService,
     readonly estimatesService: EstimatesService,
+    readonly statementsService: StatementsService,
   ) {
     super(model, commonService);
-    this._genDocNumber();
+    this._genDocNumber('정비이력');
   }
 
   async findCarByRegNumber(id: string): Promise<CarInfo> {
@@ -153,9 +156,8 @@ export class MaintenancesService extends SafeService<Maintenance> {
   }
 
   /*********** 문서 발급 관련 *********************/
+  // 견적서 생성. 미발급 상태에서는 갱신
   async genEstimate(token: AuthTokenInfo, id: string): Promise<Estimate> {
-    console.log('start');
-
     // 해당 main을 검색
     const main: Maintenance = await this.findById(token, id);
     if (!main) throw new BadRequestException();
@@ -195,7 +197,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
       console.log('갱신');
       result = await this.estimatesService.findByIdAndUpdate(
         token,
-        estimate._id,
+        main.estimate._oID,
         estimate,
       );
     }
@@ -219,6 +221,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     return result;
   }
 
+  // 견적서 발급
   async pubEstimate(
     token: AuthTokenInfo,
     id: string,
@@ -234,6 +237,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
         break;
       case MainDocPubType.ONLINE:
         main.estimate.msgAt = new Date(Date.now());
+        // 향후 알림토 전송 기능 추가
         break;
       case MainDocPubType.BOTH:
         main.estimate.prAt = new Date(Date.now());
@@ -244,5 +248,108 @@ export class MaintenancesService extends SafeService<Maintenance> {
     }
 
     return await this.findByIdAndUpdate(token, id, { estimate: main.estimate });
+  }
+
+  // 견적서 생성. 미발급 상태에서는 갱신
+  async genStatement(token: AuthTokenInfo, id: string): Promise<Statement> {
+    // 해당 main을 검색
+    const main: Maintenance = await this.findById(token, id);
+    if (!main) throw new BadRequestException();
+
+    // 업체 정보 조회
+    const company: Company = await this.companiesService.findById(
+      token,
+      token.cID,
+    );
+    if (!company) throw new BadRequestException();
+
+    // 견적서에 주입할 업체 정보 준비
+    const cInfo: CompanyInfo = {
+      name: company.name,
+      comRegNum: company.comRegNum,
+      ownerName: company.ownerName,
+      phoneNum: company.phoneNum,
+      address: company.address1 + ' ' + company.address2,
+    };
+    if (company.busItem) cInfo.busItem = company.busItem;
+    if (company.busType) cInfo.busType = company.busType;
+    if (company.faxNum) cInfo.faxNum = company.faxNum;
+
+    // 견적서 생성
+    const statement: Partial<Statement> = {
+      mainNum: main.docNum,
+      customer: main.customer,
+      company: cInfo,
+      car: main.car,
+      works: main.works,
+      price: main.price,
+    };
+
+    let result: Statement;
+    // 이미 견적서가 생성되었으나 발급 사실이 없으면 기존 견적서 수정
+    if (
+      main.statement?._oID &&
+      !main.statement?.msgAt &&
+      !main.statement?.prAt
+    ) {
+      console.log('갱신');
+      result = await this.statementsService.findByIdAndUpdate(
+        token,
+        main.statement._oID,
+        statement,
+      );
+    }
+    // 생성된 견적서가 없거나 발급 사실이 있으면 새롭게 견적서 생성
+    else {
+      console.log('생성');
+      // 문서 번호 생성
+      statement.docNum = await this.statementsService._genDocNumber();
+
+      // 견적서 생성
+      result = await this.statementsService.create(
+        token,
+        statement as Statement,
+      );
+
+      // 정비이력에 견적서 참조 정보 갱신
+      const mainStatement: Doc = {
+        _oID: result._id,
+      };
+      this.findByIdAndUpdate(token, id, { statement: mainStatement });
+    }
+
+    // 견적서 정보를 main에 패치
+    return result;
+  }
+
+  // 견적서 발급
+  async pubStatement(
+    token: AuthTokenInfo,
+    id: string,
+    doc: MainPubDocInfo,
+  ): Promise<Maintenance> {
+    // 해당 main을 검색
+    const main: Maintenance = await this.findById(token, id);
+    if (!main) throw new BadRequestException();
+
+    switch (doc.type) {
+      case MainDocPubType.PRINT:
+        main.statement.prAt = new Date(Date.now());
+        break;
+      case MainDocPubType.ONLINE:
+        main.statement.msgAt = new Date(Date.now());
+        // 향후 알림토 전송 기능 추가
+        break;
+      case MainDocPubType.BOTH:
+        main.statement.prAt = new Date(Date.now());
+        main.statement.msgAt = main.statement.prAt;
+        break;
+      default:
+        throw new BadRequestException();
+    }
+
+    return await this.findByIdAndUpdate(token, id, {
+      statement: main.statement,
+    });
   }
 }

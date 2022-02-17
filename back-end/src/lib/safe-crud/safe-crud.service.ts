@@ -327,7 +327,7 @@ export class SafeService<T extends BaseEntity> {
    * 문서번호를 생성하여 반환
    * @returns 생성된 문서번호
    */
-  async _genDocNumber(): Promise<string> {
+  async _genDocNumber(prefix?: string): Promise<string> {
     let index = 1;
     const currentDoc = await this.model
       .findOne({
@@ -344,7 +344,7 @@ export class SafeService<T extends BaseEntity> {
     }
 
     const docNum = `${getStrDate()}${index.toString().padStart(7, '0')}`;
-    console.log('docNum: ', docNum);
+    console.log(prefix ? prefix : 'docNum: ', docNum);
 
     return docNum;
   }
