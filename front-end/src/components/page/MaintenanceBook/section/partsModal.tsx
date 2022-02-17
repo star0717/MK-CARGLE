@@ -19,12 +19,7 @@ import {
 } from "src/components/styles/CommonComponents";
 import { Part } from "src/models/part.entity";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
-import {
-  getPartClass,
-  getTsParts,
-  PartClass,
-  partClassList,
-} from "src/constants/part.const";
+import { getTsParts, PartClass, partClassList } from "src/constants/part.const";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
 import { Work } from "src/models/maintenance.entity";

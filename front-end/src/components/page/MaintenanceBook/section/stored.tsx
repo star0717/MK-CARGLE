@@ -62,6 +62,7 @@ import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
 import MtPartsModal from "./partsModal";
 import { Part } from "src/models/part.entity";
+import MtSetModal from "./setModal";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -121,9 +122,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
     props.data.setList.docs
   ); // 전체 세트 항목
-  const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
-    partSetClass[0]
-  ); // 선택한 세트 데이터
+
+  console.log(partSetClass);
 
   /*********************************************************************
    * 3. Handlers
@@ -168,17 +168,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     }
   };
 
-  console.log(workList);
-  console.log(workList.length);
-
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
   const partsSetProps: _pPartsSetProps = {
     ...props,
     setModalOpen,
-    partSetData,
-    setPartSetData,
     partSetClass,
     setPartSetClass,
     workList,
@@ -736,7 +731,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "part" ? <MtPartsModal {...partsSetProps} /> : "hi"}
+        {modalOption === "part" ? (
+          <MtPartsModal {...partsSetProps} />
+        ) : (
+          <MtSetModal />
+        )}
       </Modal>
     </WholeWrapper>
   );
