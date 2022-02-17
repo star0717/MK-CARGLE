@@ -131,7 +131,7 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper>
-      <CommonSmallTitle>세트부품등록</CommonSmallTitle>
+      <CommonSmallTitle>부품조회</CommonSmallTitle>
       <Wrapper>
         <form onSubmit={onSearchFormHandler}>
           <SearchInputWrapper

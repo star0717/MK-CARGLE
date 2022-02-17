@@ -147,7 +147,7 @@ const MaintenanceCreate: NextPage = () => {
       (res: _iMaintenancesOne) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
         router.push(
-          `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
+          `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.STORED}`
         );
       },
       (err) => {
