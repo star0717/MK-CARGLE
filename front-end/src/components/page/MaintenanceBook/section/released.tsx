@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { NextPage } from "next";
 import {
   Checkbox,
   CheckInput,
   CheckMark,
+  CloseButton,
   ColorSpan,
   Combo,
   IconButton,
@@ -14,82 +16,228 @@ import {
   SearchInputWrapper,
   SmallButton,
   SpeechBubbleLeft,
+  SpeechBubbleRight,
   TableBody,
   TableHead,
   TableHeadLIST,
   TableRow,
   TableRowLIST,
   TableWrapper,
+  Text,
   TextInput2,
   WholeWrapper,
   Wrapper,
-  Text,
-  CommonTitle,
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { AiFillCloseCircle } from "react-icons/ai";
 import {
   BsFillFileEarmarkCheckFill,
-  BsSearch,
   BsPlusCircleFill,
+  BsSearch,
 } from "react-icons/bs";
+import {
+  _pMaintenanceProps,
+  _pPartsSetProps,
+} from "src/configure/_pProps.entity";
 import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
-import { RiFileList2Fill } from "react-icons/ri";
 import { TiSpanner } from "react-icons/ti";
-import { formRegEx, basicRegEx } from "src/validation/regEx";
+import { RiFileList2Fill } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import { basicRegEx, formRegEx } from "src/validation/regEx";
+import {
+  _aGetMaintenancesCarInfo,
+  _aPostMaintenancesStore,
+} from "store/action/user.action";
+import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
+import {
+  getStrMainPartsType,
+  MainPartsType,
+  mainPartsTypeList,
+  MainStatus,
+} from "src/constants/maintenance.const";
+import {
+  CarInfo,
+  Customer,
+  Maintenance,
+  Work,
+} from "src/models/maintenance.entity";
+import { deleteKeyJson, maskingStr, trim } from "src/modules/commonModule";
+import { PartsSet } from "src/models/partsset.entity";
+import Modal from "react-modal";
+import { IoIosCloseCircle } from "react-icons/io";
+import MtPartsModal from "./partsModal";
+import { Part } from "src/models/part.entity";
+import MtSetModal from "./setModal";
+import { GoCheck } from "react-icons/go";
 
-const MaintenanceReleased: NextPage<any> = (props) => {
+const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // react-hook-form 사용을 위한 선언
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
+
+  const workInit: Work[] = [
+    {
+      name: "",
+      code: "",
+      tsCode: "",
+      type: MainPartsType.A,
+      price: 0,
+      quantity: 0,
+      wage: 0,
+    },
+  ];
+
+  let inputRef = useRef<HTMLInputElement[]>([]);
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
+  const [modalOption, setModalOption] = useState<string>(""); // modal 창 옵션
+  const [mtInfo, setMtInfo] = useState<Maintenance>(props.data.mtData); // 해당 정비내역 정보
+  const [taxCheck, setTaxCheck] = useState<boolean>(false); // 부가세 체크여부
+  const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
+  const [inputWork, setInputWork] = useState<Work>(workInit[0]); // 부품 input
+  const [workList, setWorkList] = useState<Work[]>(workInit); // 부품 리스트
+  const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
+    props.data.setList.docs
+  ); // 전체 세트 항목
+  const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
+    partSetClass[0]
+  ); // 선택한 세트 데이터
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  useEffect(() => {
+    setMtInfo(props.data.mtData);
+    setPartSetClass(props.data.setList.docs);
+  }, [props]);
+
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
+
+  useEffect(() => {
+    setCellCount(workList.length * 7);
+  }, [workList]);
+
+  /**
+   * modal 창 닫기 기능
+   */
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  /**
+   * 키 이벤트 handler
+   * @param e
+   * @param idx
+   */
+  const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
+    if (e.key === "Enter" || e.key === "ArrowRight") {
+      inputRef.current[idx + 1].focus();
+    }
+    if (e.key === "ArrowLeft") {
+      if (idx !== 0) inputRef.current[idx - 1].focus();
+    }
+    if (e.key === "ArrowUp") {
+      if (idx >= 7) inputRef.current[idx - 7].focus();
+    }
+    if (e.key === "ArrowDown") {
+      inputRef.current[idx + 7].focus();
+    }
+
+    if (e.key === "Enter" || e.key === "ArrowRight") {
+    }
+  };
+
+  /**
+   * 키 이벤트 handler
+   * @param e
+   * @param idx
+   */
+  const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
+    if (e.key === "Enter" || e.key === "ArrowRight") {
+      if (idx === cellCount - 1) {
+        setWorkList(workList.concat(workInit));
+      }
+    }
+    if (e.key === "ArrowDown") {
+      if (idx >= cellCount - 7) {
+        setWorkList(workList.concat(workInit));
+      }
+    }
+  };
+
+  const onChangeInputArr = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    idx: number
+  ) => {
+    setInputWork({ ...inputWork, [e.target.name]: e.target.value });
+    setWorkList(workList.splice(idx, 1, inputWork));
+  };
+
+  // console.log(inputWork);
+  console.log(workList);
 
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
+  const partsSetProps: _pPartsSetProps = {
+    ...props,
+    setModalOpen,
+    partSetClass,
+    setPartSetClass,
+    partSetData,
+    setPartSetData,
+    workList,
+    setWorkList,
+  };
 
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  console.log(props);
   return (
     <WholeWrapper>
       <RsWrapper>
         <Wrapper>
-          <CommonTitle>
-            차량선택 후 정비진행 버튼 클릭 시 정비가 진행됩니다.
-          </CommonTitle>
           <Wrapper
             padding={`20px`}
-            margin={`0px 0px 10px 360px`}
+            margin={`0px 0px 10px 1400px`}
             al={`flex-start`}
-            left={`100px`}
           >
-            <SpeechBubbleLeft fontSize={`20px`}>
-              "차량선택 후 차량입고를 해주세요"
-            </SpeechBubbleLeft>
+            <SpeechBubbleRight fontSize={`20px`}>
+              "현재 정비 단계는 차량입고입니다."
+            </SpeechBubbleRight>
           </Wrapper>
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`progress`}>
-                <RiFileList2Fill />
+              <JoinStepBar kindOf={`complete`}>
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량선택
               </Text>
             </Wrapper>
-            <JoinStepBar kindOf={`line2`}></JoinStepBar>
+            <JoinStepBar kindOf={`line`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>
-                <FaCarAlt />
+              <JoinStepBar kindOf={`complete`}>
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량입고
@@ -97,15 +245,15 @@ const MaintenanceReleased: NextPage<any> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>{<TiSpanner />}</JoinStepBar>
+              <JoinStepBar kindOf={`complete`}>{<GoCheck />}</JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>
             </Wrapper>
             <JoinStepBar kindOf={"line2"}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>
-                <BsFillFileEarmarkCheckFill />
+              <JoinStepBar kindOf={`complete`}>
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비완료
@@ -113,7 +261,7 @@ const MaintenanceReleased: NextPage<any> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>
+              <JoinStepBar kindOf={`progress`}>
                 <FaFlagCheckered />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
@@ -123,288 +271,146 @@ const MaintenanceReleased: NextPage<any> = (props) => {
           </JoinStepBarWrapper>
         </Wrapper>
         <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
-          {/* <Wrapper width={`25%`}>
-            {showCar ? (
-              <Wrapper dr={`row`} fontSize={`24px`}>
-                <Text fontSize={`24px`}>{searchCarText}</Text>
-                <IconButton type="button" shadow={`none`} onClick={onResetCar}>
+          <Wrapper width={`25%`}>
+            <Wrapper height={`80px`} ju={`flex-end`}>
+              <Wrapper
+                dr={`row`}
+                fontSize={`24px`}
+                border={`1px solid #ccc`}
+                padding={`10px 0px`}
+              >
+                <Text fontSize={`24px`}>{mtInfo.car.regNumber}</Text>
+                <IconButton
+                  type="button"
+                  shadow={`none`}
+                  onClick={() => {
+                    router.push(
+                      `${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.STORED}`
+                    );
+                  }}
+                >
                   <AiFillCloseCircle />
                 </IconButton>
               </Wrapper>
-            ) : (
-              <Wrapper height={`80px`} al={`flex-end`}>
-                <form onSubmit={handleSubmit(onSearchCarHandler)}>
-                  <SearchInputWrapper
-                    type="text"
-                    width={`100%`}
-                    dr={`row`}
-                    borderBottom={`1px solid #000`}
-                    al={`space-between`}
-                  >
-                    <Wrapper>
-                      <SearchInput
-                        width={`264px`}
-                        placeholder="차량번호를 입력하세요."
-                        type="text"
-                        value={searchCarText}
-                        {...register("searchCarText", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            setSearchCarText(e.target.value);
-                          },
-                          required: {
-                            value: true,
-                            message: "차량번호를 입력하세요.",
-                          },
-                          pattern: {
-                            value: formRegEx.CAR_NUM,
-                            message: "형식에 맞게 입력하세요.",
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    <Wrapper width={`36px`} height={`46px`}>
-                      <IconButton type="submit" shadow={`none`}>
-                        <BsSearch />
-                      </IconButton>
-                    </Wrapper>
-                  </SearchInputWrapper>
-                  {(errors.searchCarText?.type === "required" ||
-                    errors.searchCarText?.type === "pattern") && (
-                    <Text
-                      margin={`0px`}
-                      width={`100%`}
-                      color={`#d6263b`}
-                      al={`flex-start`}
-                      fontSize={`14px`}
-                      textAlign={`left`}
-                    >
-                      {errors.searchCarText.message}
-                    </Text>
-                  )}
-                </form>
-              </Wrapper>
-            )}
-            <Wrapper border={`1px solid #ccc`}>
-              {showCar ? (
-                <form
-                  id="carInfoForm"
-                  onSubmit={handleSubmit(onCarStoredHandler)}
-                >
-                  <Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>주행거리</Text>
-                      <TextInput2
-                        type="text"
-                        width={`100px`}
-                        value={carInfo.distance}
-                        {...register("distance", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                          required: {
-                            value: true,
-                            message: "필수 입력사항입니다.",
-                          },
-                          pattern: {
-                            value: basicRegEx.NUM,
-                            message: "형식에 맞게 입력하세요.",
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    {(errors.distance?.type === "required" ||
-                      errors.distance?.type === "pattern") && (
-                      <Text
-                        margin={`0px`}
-                        width={`100%`}
-                        color={`#d6263b`}
-                        al={`flex-start`}
-                        fontSize={`14px`}
-                        textAlign={`left`}
-                      >
-                        {errors.distance.message}
-                      </Text>
-                    )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>고객명</Text>
-                      <TextInput2
-                        type="text"
-                        width={`100px`}
-                        value={cusInfo.customerName}
-                        {...register("customerName", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCusInfo(e);
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>전화번호</Text>
-                      <TextInput2
-                        type="text"
-                        width={`100px`}
-                        value={cusInfo.phoneNumber}
-                        {...register("phoneNumber", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCusInfo(e);
-                          },
-                          required: {
-                            value: true,
-                            message: "필수 입력사항입니다.",
-                          },
-                          pattern: {
-                            value: formRegEx.HP_NUM,
-                            message: "형식에 맞게 입력하세요.",
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    {(errors.phoneNumber?.type === "required" ||
-                      errors.phoneNumber?.type === "pattern") && (
-                      <Text
-                        margin={`0px`}
-                        width={`100%`}
-                        color={`#d6263b`}
-                        al={`flex-start`}
-                        fontSize={`14px`}
-                        textAlign={`left`}
-                      >
-                        {errors.phoneNumber.message}
-                      </Text>
-                    )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>차량명</Text>
-                      <TextInput2
-                        type="text"
-                        width={`100px`}
-                        value={carInfo.name}
-                        {...register("name", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                          required: {
-                            value: true,
-                            message: "필수 입력사항입니다.",
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    {errors.name?.type === "required" && (
-                      <Text
-                        margin={`0px`}
-                        width={`100%`}
-                        color={`#d6263b`}
-                        al={`flex-start`}
-                        fontSize={`14px`}
-                        textAlign={`left`}
-                      >
-                        {errors.name.message}
-                      </Text>
-                    )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>모델명</Text>
-                      <TextInput2
-                        type="text"
-                        width={`100px`}
-                        value={carInfo.model}
-                        {...register("model", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>연식</Text>
-                      <TextInput2
-                        type="text"
-                        width={`100px`}
-                        value={carInfo.age}
-                        {...register("age", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>차대번호</Text>
-                      <TextInput2
-                        type="text"
-                        width={`100px`}
-                        value={carInfo.idNumber}
-                        {...register("idNumber", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                          pattern: {
-                            value: basicRegEx.NUM,
-                            message: "형식에 맞게 입력하세요.",
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    {errors.idNumber?.type === "pattern" && (
-                      <Text
-                        margin={`0px`}
-                        width={`100%`}
-                        color={`#d6263b`}
-                        al={`flex-start`}
-                        fontSize={`14px`}
-                        textAlign={`left`}
-                      >
-                        {errors.idNumber.message}
-                      </Text>
-                    )}
-                    <Wrapper dr={`row`}>
-                      <Text fontSize={`14px`}>등록일자</Text>
-                      <TextInput2
-                        type="text"
-                        width={`100px`}
-                        value={carInfo.regDate}
-                        {...register("regDate", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                  </Wrapper>
-                </form>
-              ) : (
-                <Wrapper padding={`50% 20px`}>
-                  <Text fontSize={`36px`} color={`#c4c4c4`}>
-                    <BsPlusCircleFill />
-                  </Text>
-                  <Text>
-                    선택된 차량이 없습니다 <br />
-                    차량 선택 후 정비등록을 진행할 수 있습니다.
-                  </Text>
-                </Wrapper>
-              )}
             </Wrapper>
-          </Wrapper> */}
+            <Wrapper
+              border={`1px solid #ccc`}
+              margin={`10px 0px 0px 0px`}
+              padding={`10px 20px`}
+            >
+              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                <Text
+                  width={`80px`}
+                  textAlign={`right`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  주행거리
+                </Text>
+                <TextInput2 type="text" value={mtInfo.car.distance} readOnly />
+              </Wrapper>
+              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                <Text
+                  width={`80px`}
+                  textAlign={`right`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  고객명
+                </Text>
+                <TextInput2
+                  type="text"
+                  value={
+                    mtInfo.customer.name
+                      ? maskingStr(mtInfo.customer.name)
+                      : "-"
+                  }
+                  readOnly
+                />
+              </Wrapper>
+              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                <Text
+                  width={`80px`}
+                  textAlign={`right`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  전화번호
+                </Text>
+                <TextInput2
+                  type="text"
+                  value={mtInfo.customer.phoneNumber}
+                  readOnly
+                />
+              </Wrapper>
+              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                <Text
+                  width={`80px`}
+                  textAlign={`right`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  차량명
+                </Text>
+                <TextInput2 type="text" value={mtInfo.car.name} readOnly />
+              </Wrapper>
+              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                <Text
+                  width={`80px`}
+                  textAlign={`right`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  모델명
+                </Text>
+                <TextInput2
+                  type="text"
+                  value={mtInfo.car.model || "-"}
+                  readOnly
+                />
+              </Wrapper>
+              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                <Text
+                  width={`80px`}
+                  textAlign={`right`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  연식
+                </Text>
+                <TextInput2
+                  type="text"
+                  value={mtInfo.car.age || "-"}
+                  readOnly
+                />
+              </Wrapper>
+              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                <Text
+                  width={`80px`}
+                  textAlign={`right`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  차대번호
+                </Text>
+                <TextInput2
+                  type="text"
+                  value={mtInfo.car.idNumber || "-"}
+                  readOnly
+                />
+              </Wrapper>
+              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                <Text
+                  width={`80px`}
+                  textAlign={`right`}
+                  margin={`0px 10px 0px 0px`}
+                >
+                  등록일자
+                </Text>
+                <TextInput2
+                  type="text"
+                  value={mtInfo.car.regDate || "-"}
+                  readOnly
+                />
+              </Wrapper>
+            </Wrapper>
+          </Wrapper>
 
           <Wrapper width={`74%`}>
-            <Wrapper height={`80px`} al={`flex-end`}>
+            <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
               <Wrapper dr={`row`} ju={`flex-end`}>
                 <SmallButton
                   type="button"
@@ -415,12 +421,21 @@ const MaintenanceReleased: NextPage<any> = (props) => {
                 >
                   목록으로
                 </SmallButton>
+                <SmallButton
+                  type="button"
+                  kindOf={`default`}
+                  onClick={() => {
+                    console.log("서류");
+                  }}
+                >
+                  서류발급
+                </SmallButton>
               </Wrapper>
             </Wrapper>
             <Wrapper
               border={`1px solid #ccc`}
               padding={`20px`}
-              margin={`0px 0px 20px`}
+              margin={`10px 0px 20px`}
             >
               <Wrapper
                 dr={`row`}
@@ -463,7 +478,12 @@ const MaintenanceReleased: NextPage<any> = (props) => {
                   >
                     정비책임자
                   </Text>
-                  <TextInput2 width={`100px`} type="text" disabled />
+                  <TextInput2
+                    width={`100px`}
+                    type="text"
+                    value={props.tokenValue.uName}
+                    readOnly
+                  />
                 </Wrapper>
               </Wrapper>
 
@@ -525,15 +545,34 @@ const MaintenanceReleased: NextPage<any> = (props) => {
                 >
                   <Checkbox>
                     부가세 포함
-                    <CheckInput type="checkbox" disabled />
+                    <CheckInput
+                      type="checkbox"
+                      onChange={() => {
+                        setTaxCheck(!taxCheck);
+                      }}
+                    />
                     <CheckMark></CheckMark>
                   </Checkbox>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
-                  <SmallButton type="button" kindOf={`ghost`} disabled>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModalOption("part");
+                      setModalOpen(true);
+                    }}
+                  >
                     부품조회
                   </SmallButton>
-                  <SmallButton type="button" kindOf={`ghost`} disabled>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModalOption("set");
+                      setModalOpen(true);
+                    }}
+                  >
                     세트부품
                   </SmallButton>
                 </Wrapper>
@@ -550,15 +589,142 @@ const MaintenanceReleased: NextPage<any> = (props) => {
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
               <TableBody minHeight={`130px`}>
-                <TableRow>
-                  <TableRowLIST width={`15%`}>1</TableRowLIST>
-                  <TableRowLIST width={`15%`}>2</TableRowLIST>
-                  <TableRowLIST width={`14%`}>3</TableRowLIST>
-                  <TableRowLIST width={`15%`}>4</TableRowLIST>
-                  <TableRowLIST width={`14%`}>5</TableRowLIST>
-                  <TableRowLIST width={`14%`}>6</TableRowLIST>
-                  <TableRowLIST width={`8%`}>7</TableRowLIST>
-                </TableRow>
+                {workList.map((data, idx) => {
+                  return (
+                    <TableRow key={idx} kindOf={`noHover`}>
+                      <TableRowLIST width={`15%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 7] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 7)
+                          }
+                          onKeyUp={(e: KeyboardEvent) =>
+                            onKeyUpHandler(e, (idx + 1) * 7 - 7)
+                          }
+                          value={data.name}
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`15%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 6] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 6)
+                          }
+                          onKeyUp={(e: KeyboardEvent) =>
+                            onKeyUpHandler(e, (idx + 1) * 7 - 6)
+                          }
+                          value={data.tsCode}
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`14%`}>
+                        {/* <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 5] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 5)
+                          }
+                          onKeyUp={(e: KeyboardEvent) =>
+                            onKeyUpHandler(e, (idx + 1) * 7 - 5)
+                          }
+                          value={data.type}
+                        /> */}
+                        <Combo
+                          width={`800px`}
+                          value={data.type}
+                          name="type"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
+                        >
+                          {mainPartsTypeList.map((item: MainPartsType) => {
+                            return (
+                              <option key={item} value={item}>
+                                {getStrMainPartsType(item)}
+                              </option>
+                            );
+                          })}
+                        </Combo>
+                      </TableRowLIST>
+                      <TableRowLIST width={`15%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 4] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 4)
+                          }
+                          onKeyUp={(e: KeyboardEvent) =>
+                            onKeyUpHandler(e, (idx + 1) * 7 - 4)
+                          }
+                          value={data.price}
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`14%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 3] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 3)
+                          }
+                          onKeyUp={(e: KeyboardEvent) =>
+                            onKeyUpHandler(e, (idx + 1) * 7 - 3)
+                          }
+                          value={data.quantity}
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`14%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 2] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 2)
+                          }
+                          onKeyUp={(e: KeyboardEvent) =>
+                            onKeyUpHandler(e, (idx + 1) * 7 - 2)
+                          }
+                          value={data.price * data.quantity}
+                        />
+                      </TableRowLIST>
+                      <TableRowLIST width={`8%`}>
+                        <TextInput2
+                          type="text"
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 1] = elem)
+                          }
+                          width={`100%`}
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 1)
+                          }
+                          onKeyUp={(e: KeyboardEvent) =>
+                            onKeyUpHandler(e, (idx + 1) * 7 - 1)
+                          }
+                          value={data.wage}
+                        />
+                      </TableRowLIST>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </TableWrapper>
             <Wrapper dr={`row`} ju={`flex-end`}>
@@ -582,23 +748,79 @@ const MaintenanceReleased: NextPage<any> = (props) => {
                 총계 <ColorSpan color={`#314FA5`}>0</ColorSpan>
               </Text>
             </Wrapper>
-            <Wrapper>
+            <Wrapper dr={`row`} ju={`space-between`}>
               <SmallButton
                 form="carInfoForm"
                 type="submit"
-                // kindOf={showCar ? `default` : `ghost`}
-                // disabled={showCar ? false : true}
+                kindOf={`ghost`}
+                disabled
                 width={`100%`}
               >
-                차량입고
+                이전단계
+              </SmallButton>
+              <SmallButton
+                form="carInfoForm"
+                type="submit"
+                kindOf={`default`}
+                width={`100%`}
+              >
+                저장
+              </SmallButton>
+              <SmallButton
+                form="carInfoForm"
+                type="submit"
+                kindOf={`default`}
+                width={`100%`}
+              >
+                다음단계
               </SmallButton>
             </Wrapper>
           </Wrapper>
         </Wrapper>
-        <Wrapper></Wrapper>
       </RsWrapper>
+      <Modal
+        isOpen={modalOpen}
+        style={{
+          overlay: {
+            position: "fixed",
+            zIndex: 9999,
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(71, 71, 71, 0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            background: "white",
+            width: "1200px",
+            height: "800px",
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "calc(100vh - 2rem)",
+            overflowY: "auto",
+            position: "relative",
+            border: "1px solid #ccc",
+            borderRadius: "0.3rem",
+            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
+            inset: 0,
+          },
+        }}
+      >
+        <Wrapper fontSize={`28px`} al={`flex-end`}>
+          <CloseButton onClick={closeModal}>
+            <IoIosCloseCircle />
+          </CloseButton>
+        </Wrapper>
+        {modalOption === "part" ? (
+          <MtPartsModal {...partsSetProps} />
+        ) : (
+          <MtSetModal {...partsSetProps} />
+        )}
+      </Modal>
     </WholeWrapper>
   );
 };
 
-export default MaintenanceReleased;
+export default MaintenanceStored;
