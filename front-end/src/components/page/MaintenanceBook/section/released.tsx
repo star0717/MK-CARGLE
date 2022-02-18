@@ -218,11 +218,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         <Wrapper>
           <Wrapper
             padding={`20px`}
-            margin={`0px 0px 10px 1400px`}
+            width={`400px`}
+            margin={`0px 0px 10px 580px`}
             al={`flex-start`}
           >
             <SpeechBubbleRight fontSize={`20px`}>
-              "현재 정비 단계는 차량입고입니다."
+              "현재 정비 단계는 출고완료입니다."
             </SpeechBubbleRight>
           </Wrapper>
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
