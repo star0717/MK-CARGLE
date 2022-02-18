@@ -1968,7 +1968,7 @@ export const ColorSpan = styled.span<any>`
 `;
 
 export const SpeechBubbleLeft = styled.div<any>`
-  position: relative;
+  position: absolute;
   background: #343a40;
   border-radius: 0.4em;
   width: auto;
