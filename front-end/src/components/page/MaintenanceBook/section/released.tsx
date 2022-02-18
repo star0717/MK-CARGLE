@@ -70,6 +70,7 @@ import MtPartsModal from "./partsModal";
 import { Part } from "src/models/part.entity";
 import MtSetModal from "./setModal";
 import { GoCheck } from "react-icons/go";
+import dayjs from "dayjs";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -193,8 +194,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   // console.log(inputWork);
-  console.log(workList);
-
+  console.log(props);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -219,7 +219,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           <Wrapper
             padding={`20px`}
             width={`400px`}
-            margin={`0px 0px 10px 580px`}
+            margin={`0px 0px 10px 600px`}
             al={`flex-start`}
           >
             <SpeechBubbleRight fontSize={`20px`}>
@@ -431,6 +431,24 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 >
                   서류발급
                 </SmallButton>
+                <SmallButton
+                  type="button"
+                  kindOf={`default`}
+                  onClick={() => {
+                    console.log("서류");
+                  }}
+                >
+                  국토부
+                </SmallButton>
+                <SmallButton
+                  type="button"
+                  kindOf={`default`}
+                  onClick={() => {
+                    console.log("서류");
+                  }}
+                >
+                  결재정보
+                </SmallButton>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -451,7 +469,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비기간
                   </Text>
-                  <TextInput2 width={`150px`} type="date" disabled />
+                  <TextInput2
+                    width={`150px`}
+                    type="text"
+                    value={
+                      dayjs(mtInfo.dates.startMa).format("YYYY-MM-DD") || "-"
+                    }
+                    disabled
+                  />
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
@@ -459,7 +484,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     ~
                   </Text>
-                  <TextInput2 width={`150px`} type="date" disabled />
+                  <TextInput2
+                    width={`150px`}
+                    type="text"
+                    value={
+                      dayjs(mtInfo.dates.endMa).format("YYYY-MM-DD") || "-"
+                    }
+                    disabled
+                  />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -469,7 +501,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     차량출고일
                   </Text>
-                  <TextInput2 width={`150px`} type="date" disabled />
+                  <TextInput2
+                    width={`150px`}
+                    type="text"
+                    value={
+                      dayjs(mtInfo.dates.released).format("YYYY-MM-DD") || "-"
+                    }
+                    disabled
+                  />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -497,22 +536,38 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비구분
                   </Text>
-                  <Combo width={`150px`} margin={`0px`} disabled>
-                    <option value="1">일반</option>
+                  <Combo
+                    width={`150px`}
+                    margin={`0px`}
+                    value={mtInfo.costomerType}
+                    disabled
+                  >
+                    <option value="n">일반</option>
+                    <option value="i">보험</option>
                   </Combo>
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
                     width={`16px`}
                   ></Text>
-                  <TextInput2 type="text" width={`150px`} disabled />
+                  <TextInput2
+                    type="text"
+                    width={`150px`}
+                    placeholder={`보험사명 입력란`}
+                    disabled
+                  />
                 </Wrapper>
                 <Wrapper
                   dr={`row`}
                   ju={`flex-end`}
                   padding={`0px 0px 0px 10px`}
                 >
-                  <TextInput2 type="text" width={`240px`} disabled />
+                  <TextInput2
+                    type="text"
+                    width={`240px`}
+                    placeholder={`보험번호 입력란`}
+                    disabled
+                  />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -753,27 +808,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               <SmallButton
                 form="carInfoForm"
                 type="submit"
-                kindOf={`ghost`}
-                disabled
-                width={`100%`}
-              >
-                이전단계
-              </SmallButton>
-              <SmallButton
-                form="carInfoForm"
-                type="submit"
                 kindOf={`default`}
                 width={`100%`}
               >
-                저장
-              </SmallButton>
-              <SmallButton
-                form="carInfoForm"
-                type="submit"
-                kindOf={`default`}
-                width={`100%`}
-              >
-                다음단계
+                정비내역 수정
               </SmallButton>
             </Wrapper>
           </Wrapper>
