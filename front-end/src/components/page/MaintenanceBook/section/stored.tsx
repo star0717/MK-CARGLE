@@ -59,6 +59,7 @@ import {
   CarInfo,
   Customer,
   Maintenance,
+  Price,
   Work,
 } from "src/models/maintenance.entity";
 import { deleteKeyJson, maskingStr, trim } from "src/modules/commonModule";
@@ -96,6 +97,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     },
   ];
 
+  const priceInit: Partial<Price> = {
+    partsSum: 0,
+    wageSum: 0,
+    sum: 0,
+    vat: 0,
+    total: 0,
+  };
+
   let inputRef = useRef<HTMLInputElement[]>([]);
 
   /*********************************************************************
@@ -104,16 +113,17 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [modalOption, setModalOption] = useState<string>(""); // modal 창 옵션
   const [mtInfo, setMtInfo] = useState<Maintenance>(props.data.mtData); // 해당 정비내역 정보
-  const [taxCheck, setTaxCheck] = useState<boolean>(false); // 부가세 체크여부
-  const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
-  const [inputWork, setInputWork] = useState<Work>(workInit[0]); // 부품 input
-  const [workList, setWorkList] = useState<Work[]>(workInit); // 부품 리스트
   const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
     props.data.setList.docs
   ); // 전체 세트 항목
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
     partSetClass[0]
   ); // 선택한 세트 데이터
+  const [taxCheck, setTaxCheck] = useState<boolean>(false); // 부가세 체크여부
+  const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
+  const [workList, setWorkList] = useState<Work[]>(workInit); // 부품 리스트
+  const [inputSum, setInputSum] = useState<number[]>([0]); // 부품 input: 계
+  const [price, setPrice] = useState<Partial<Price>>(priceInit); // 가격정보
 
   /*********************************************************************
    * 3. Handlers
@@ -159,9 +169,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "ArrowDown") {
       inputRef.current[idx + 7].focus();
     }
-
-    if (e.key === "Enter" || e.key === "ArrowRight") {
-    }
   };
 
   /**
@@ -173,25 +180,82 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "Enter" || e.key === "ArrowRight") {
       if (idx === cellCount - 1) {
         setWorkList(workList.concat(workInit));
+        setInputSum(inputSum.concat([0]));
       }
     }
     if (e.key === "ArrowDown") {
       if (idx >= cellCount - 7) {
         setWorkList(workList.concat(workInit));
+        setInputSum(inputSum.concat([0]));
       }
     }
   };
 
+  /**
+   * 정비내역 input handler
+   * @param e
+   * @param idx
+   */
   const onChangeInputArr = (
     e: React.ChangeEvent<HTMLInputElement>,
     idx: number
   ) => {
-    setInputWork({ ...inputWork, [e.target.name]: e.target.value });
-    setWorkList(workList.splice(idx, 1, inputWork));
+    switch (e.target.name) {
+      case "price":
+      case "quantity":
+      case "wage":
+        if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
+          return setWorkList(
+            workList.map((item, index) =>
+              index === idx ? { ...item, [e.target.name]: 0 } : item
+            )
+          );
+        } else {
+          return setWorkList(
+            workList.map((item, index) =>
+              index === idx
+                ? { ...item, [e.target.name]: parseInt(e.target.value) }
+                : item
+            )
+          );
+        }
+
+      default:
+        return setWorkList(
+          workList.map((item, index) =>
+            index === idx ? { ...item, [e.target.name]: e.target.value } : item
+          )
+        );
+    }
   };
 
-  // console.log(inputWork);
-  console.log(workList);
+  useEffect(() => {
+    for (let i = 0; i < workList.length; i++) {
+      setInputSum(
+        inputSum.map((num, index) =>
+          index === i ? workList[i].price * workList[i].quantity : num
+        )
+      );
+    }
+    // setPrice({
+    //   partsSum: workList.reduce(
+    //     (pv, cv) => (pv = pv + cv.price * cv.quantity),
+    //     0
+    //   ),
+    //   wageSum: workList.reduce((pv, cv) => (pv = pv + cv.wage), 0),
+    //   sum: workList.reduce(
+    //     (pv, cv) => (pv = pv + cv.price * cv.quantity + cv.wage),
+    //     0
+    //   ),
+    //   vat: 100,
+    // });
+  }, [workList]);
+
+  // useEffect(() => {
+  //   setPrice({
+  //     sum: price.sum + price.vat,
+  //   });
+  // }, [price]);
 
   /*********************************************************************
    * 4. Props settings
@@ -215,8 +279,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       <RsWrapper>
         <Wrapper>
           <Wrapper
-            padding={`20px`}
-            margin={`0px 0px 10px 600px`}
+            padding={`0px 200px 20px 200px`}
+            // padding={`200px`}
+            // margin={`0px 0px 10px 600px`}
             al={`flex-start`}
           >
             <SpeechBubbleLeft fontSize={`20px`}>
@@ -604,6 +669,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             onKeyUpHandler(e, (idx + 1) * 7 - 7)
                           }
                           value={data.name}
+                          name="name"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`15%`}>
@@ -620,26 +691,27 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             onKeyUpHandler(e, (idx + 1) * 7 - 6)
                           }
                           value={data.tsCode}
+                          name="tsCode"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`14%`}>
-                        {/* <TextInput2
-                          type="text"
+                        <Combo
+                          width={`100%`}
+                          value={data.type}
                           ref={(elem: HTMLInputElement) =>
                             (inputRef.current[(idx + 1) * 7 - 5] = elem)
                           }
-                          width={`100%`}
                           onKeyDown={(e: KeyboardEvent) =>
                             onKeyDownhandler(e, (idx + 1) * 7 - 5)
                           }
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 5)
                           }
-                          value={data.type}
-                        /> */}
-                        <Combo
-                          width={`800px`}
-                          value={data.type}
                           name="type"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
@@ -670,6 +742,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             onKeyUpHandler(e, (idx + 1) * 7 - 4)
                           }
                           value={data.price}
+                          name="price"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`14%`}>
@@ -686,6 +764,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             onKeyUpHandler(e, (idx + 1) * 7 - 3)
                           }
                           value={data.quantity}
+                          name="quantity"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`14%`}>
@@ -701,7 +785,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 2)
                           }
-                          value={data.price * data.quantity}
+                          value={inputSum[idx]}
+                          name="inputSum"
+                          readOnly
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`8%`}>
@@ -718,6 +804,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             onKeyUpHandler(e, (idx + 1) * 7 - 1)
                           }
                           value={data.wage}
+                          name="wage"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
                       </TableRowLIST>
                     </TableRow>
@@ -726,24 +818,30 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </TableBody>
             </TableWrapper>
             <Wrapper dr={`row`} ju={`flex-end`}>
-              <Text>부품계 : 0 </Text>
+              <Text>부품계 : {price.partsSum}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>기술료계 : 0 </Text>
+              <Text>기술료계 : {price.wageSum}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>합계 : 0 </Text>
+              <Text>합계 : {price.sum}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>부가세 : 0</Text>
+              <Text>부가세 : {price.vat}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text fontSize={`24px`}>
-                총계 <ColorSpan color={`#314FA5`}>0</ColorSpan>
+              <Text fontSize={`24px`}>총계</Text>
+              <Text
+                fontSize={`24px`}
+                fontWeight={`800`}
+                color={`#314FA5`}
+                margin={`0px 10px`}
+              >
+                {price.total}
               </Text>
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>

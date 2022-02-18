@@ -312,7 +312,7 @@ const MaintenanceCreate: NextPage = () => {
                   <Wrapper>
                     <Wrapper
                       dr={`row`}
-                      padding={`10px 0px`}
+                      padding={`10px 0px 0px 0px`}
                       ju={`space-between`}
                     >
                       <Text
@@ -346,7 +346,7 @@ const MaintenanceCreate: NextPage = () => {
                     {(errors.distance?.type === "required" ||
                       errors.distance?.type === "pattern") && (
                       <Text
-                        margin={`0px`}
+                        margin={`0px 0px 0px 186px`}
                         width={`100%`}
                         color={`#d6263b`}
                         al={`flex-start`}
@@ -358,7 +358,7 @@ const MaintenanceCreate: NextPage = () => {
                     )}
                     <Wrapper
                       dr={`row`}
-                      padding={`10px 0px`}
+                      padding={`10px 0px 0px 0px`}
                       ju={`space-between`}
                     >
                       <Text
@@ -383,7 +383,7 @@ const MaintenanceCreate: NextPage = () => {
                     </Wrapper>
                     <Wrapper
                       dr={`row`}
-                      padding={`10px 0px`}
+                      padding={`10px 0px 0px 0px`}
                       ju={`space-between`}
                     >
                       <Text
@@ -419,7 +419,7 @@ const MaintenanceCreate: NextPage = () => {
                     {(errors.phoneNumber?.type === "required" ||
                       errors.phoneNumber?.type === "pattern") && (
                       <Text
-                        margin={`0px`}
+                        margin={`0px 0px 0px 186px`}
                         width={`100%`}
                         color={`#d6263b`}
                         al={`flex-start`}
@@ -431,7 +431,7 @@ const MaintenanceCreate: NextPage = () => {
                     )}
                     <Wrapper
                       dr={`row`}
-                      padding={`10px 0px`}
+                      padding={`10px 0px 0px 0px`}
                       ju={`space-between`}
                     >
                       <Text
@@ -459,7 +459,7 @@ const MaintenanceCreate: NextPage = () => {
                     </Wrapper>
                     {errors.name?.type === "required" && (
                       <Text
-                        margin={`0px`}
+                        margin={`0px 0px 0px 186px`}
                         width={`100%`}
                         color={`#d6263b`}
                         al={`flex-start`}
@@ -471,7 +471,7 @@ const MaintenanceCreate: NextPage = () => {
                     )}
                     <Wrapper
                       dr={`row`}
-                      padding={`10px 0px`}
+                      padding={`10px 0px 0px 0px`}
                       ju={`space-between`}
                     >
                       <Text
@@ -495,7 +495,7 @@ const MaintenanceCreate: NextPage = () => {
                     </Wrapper>
                     <Wrapper
                       dr={`row`}
-                      padding={`10px 0px`}
+                      padding={`10px 0px 0px 0px`}
                       ju={`space-between`}
                     >
                       <Text
@@ -519,7 +519,7 @@ const MaintenanceCreate: NextPage = () => {
                     </Wrapper>
                     <Wrapper
                       dr={`row`}
-                      padding={`10px 0px`}
+                      padding={`10px 0px 0px 0px`}
                       ju={`space-between`}
                     >
                       <Text
@@ -547,7 +547,7 @@ const MaintenanceCreate: NextPage = () => {
                     </Wrapper>
                     {errors.idNumber?.type === "pattern" && (
                       <Text
-                        margin={`0px`}
+                        margin={`0px 0px 0px 186px`}
                         width={`100%`}
                         color={`#d6263b`}
                         al={`flex-start`}
@@ -559,7 +559,7 @@ const MaintenanceCreate: NextPage = () => {
                     )}
                     <Wrapper
                       dr={`row`}
-                      padding={`10px 0px`}
+                      padding={`10px 0px 0px 0px`}
                       ju={`space-between`}
                     >
                       <Text
@@ -581,6 +581,19 @@ const MaintenanceCreate: NextPage = () => {
                         })}
                       />
                     </Wrapper>
+                  </Wrapper>
+                  <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
+                    <SmallButton width={`48%`} kindOf={`default`}>
+                      정비요청사항
+                    </SmallButton>
+                    <SmallButton width={`48%`} kindOf={`default`}>
+                      차량정보공유
+                    </SmallButton>
+                  </Wrapper>
+                  <Wrapper>
+                    <SmallButton width={`100%`} kindOf={`default`}>
+                      정비사진확인
+                    </SmallButton>
                   </Wrapper>
                 </form>
               ) : (
