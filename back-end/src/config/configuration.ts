@@ -37,6 +37,7 @@ export default () => ({
     mrn_path: process.env.MRN_PATH,
     stamp_path: process.env.STAMP_PATH,
   },
+  crtKey: process.env.CRT_KEY,
 });
 
 export const getCrnPath = (): string => {
@@ -54,4 +55,8 @@ export const getStampPath = (): string => {
 export const isUseAuthDB = (): boolean => {
   if (process.env.DB_USE_AUTH == 'true') return true;
   else return false;
+};
+
+export const getCrtKey = (): string => {
+  return process.env.CRT_KEY;
 };

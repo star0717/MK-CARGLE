@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { prop } from '@typegoose/typegoose';
+import { prop, PropType } from '@typegoose/typegoose';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
@@ -16,7 +16,6 @@ import {
   MainPartsType,
   MainStatus,
 } from 'src/constants/maintenance.const';
-
 import { BaseEntity } from './base.entity';
 
 // 정비내역서에 들어가 차량 정보
@@ -69,8 +68,21 @@ export class Customer {
   @ApiProperty({ description: '전화번호' })
   @IsOptional()
   @IsString()
-  @prop({ trim: true, required: true })
+  @prop({
+    trim: true,
+    required: true,
+  })
   phoneNumber: string;
+
+  @prop(
+    {
+      set: (val: string[]) => val.join(' '),
+      get: (val: string) => val.split(' '),
+      type: String,
+    },
+    PropType.NONE,
+  ) // requires explicit setting of "PropType"
+  public fullName?: string[];
 
   @ApiProperty({ description: '고객명', required: false })
   @IsOptional()

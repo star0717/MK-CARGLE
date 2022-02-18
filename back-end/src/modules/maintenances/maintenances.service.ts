@@ -26,6 +26,10 @@ import { Company } from 'src/models/company.entity';
 import { CompaniesService } from '../companies/companies.service';
 import { CompanyInfo } from 'src/models/main.doc.entity';
 import { Statement } from 'src/models/statement.entity';
+import {
+  decMainCustomer,
+  encMainCustomer,
+} from 'src/lib/toolkit/back-end.toolkit';
 
 @Injectable()
 export class MaintenancesService extends SafeService<Maintenance> {
@@ -41,14 +45,23 @@ export class MaintenancesService extends SafeService<Maintenance> {
     super(model, commonService);
     this._genDocNumber('정비이력');
   }
+  /********** 공통 API ***********************/
+  async findById(token: AuthTokenInfo, id: string): Promise<Maintenance> {
+    let result: Maintenance = await super.findById(token, id);
+    if (result.customer) result.customer = decMainCustomer(result.customer);
+    return result;
+  }
 
+  /********** 전용 API **********************/
   async findCarByRegNumber(id: string): Promise<CarInfo> {
     const car: Car = await this.carsService.findByRegNumber(id);
     if (!car) return null;
+
     const carInfo: CarInfo = {
       name: car.name,
       regNumber: car.regNumber,
     };
+
     if (car.model) carInfo.model = car.model;
     if (car.age) carInfo.age = car.age;
     if (car.regDate) carInfo.regDate = car.regDate;
@@ -71,9 +84,11 @@ export class MaintenancesService extends SafeService<Maintenance> {
     };
     mt.dates = mtDates;
     mt.car = doc.car;
-    mt.customer = doc.customer;
+    mt.customer = encMainCustomer(doc.customer);
 
-    return await this.create(token, mt);
+    let result: Maintenance = await this.create(token, mt);
+    if (result.customer) result.customer = decMainCustomer(result.customer);
+    return result;
   }
 
   async startMain(
@@ -83,17 +98,18 @@ export class MaintenancesService extends SafeService<Maintenance> {
   ): Promise<Maintenance> {
     let src = await this._validateReq(token, id, doc);
 
-    //정비 내역과 작업자명이 존재하는지 확인
-    // if (!doc.works || doc.works.length == 0 || !doc.workerName) {
-    //   throw new BadRequestException();
-    // }
+    // 정비 내역과 작업자명이 존재하는지 확인
+    if (!doc.works || doc.works.length == 0 || !doc.workerName) {
+      throw new BadRequestException();
+    }
 
     src.works = doc.works;
     src.workerName = doc.workerName;
     src.status = MainStatus.ING;
     src.dates.startMa = new Date(Date.now());
-
-    return await this.findByIdAndUpdate(token, id, src);
+    let result: Maintenance = await this.findByIdAndUpdate(token, id, src);
+    if (result.customer) result.customer = decMainCustomer(result.customer);
+    return result;
   }
 
   async endMain(
@@ -108,7 +124,9 @@ export class MaintenancesService extends SafeService<Maintenance> {
     src.dates.endMa = new Date(Date.now());
     src.price = new Price();
 
-    return await this.findByIdAndUpdate(token, id, src);
+    let result: Maintenance = await this.findByIdAndUpdate(token, id, src);
+    if (result.customer) result.customer = decMainCustomer(result.customer);
+    return result;
   }
 
   async payMain(
@@ -122,7 +140,9 @@ export class MaintenancesService extends SafeService<Maintenance> {
     src.price = doc.price;
     src.status = MainStatus.PAID;
 
-    return await this.findByIdAndUpdate(token, id, src);
+    let result: Maintenance = await this.findByIdAndUpdate(token, id, src);
+    if (result.customer) result.customer = decMainCustomer(result.customer);
+    return result;
   }
 
   async releaseMain(
@@ -135,7 +155,9 @@ export class MaintenancesService extends SafeService<Maintenance> {
     src.dates.released = new Date(Date.now());
     src.status = MainStatus.RELEASED;
 
-    return await this.findByIdAndUpdate(token, id, src);
+    let result: Maintenance = await this.findByIdAndUpdate(token, id, src);
+    if (result.customer) result.customer = decMainCustomer(result.customer);
+    return result;
   }
 
   /**

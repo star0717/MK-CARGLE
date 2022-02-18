@@ -11,6 +11,7 @@ export declare class CarInfo {
 }
 export declare class Customer {
     phoneNumber: string;
+    fullName?: string[];
     name?: string;
     _oID?: string;
 }
@@ -43,9 +44,9 @@ export declare class Dates {
     released?: Date;
 }
 export declare class Doc {
-    type: MainDocPubType;
     _oID: string;
-    pubAt: Date;
+    prAt?: Date;
+    msgAt?: Date;
 }
 export declare class Maintenance extends BaseEntity {
     docNum?: string;

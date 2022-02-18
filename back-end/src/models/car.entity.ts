@@ -8,7 +8,18 @@ export class Car extends BaseEntity {
   @ApiProperty({ description: '차명 (카렌스)' })
   @IsOptional()
   @IsString()
-  @prop({ trim: true, required: true })
+  @prop({
+    trim: true,
+    required: true,
+    // set: (val: string) => {
+    //   console.log('집어넣어: ', env.crtKey);
+    //   return AES.encrypt(val, env.crtKey).toString();
+    // },
+    // get: (val: string) => {
+    //   console.log('꺼집어네(차량): ', env.crtKey);
+    //   return AES.decrypt(val, env.crtKey).toString(enc.Utf8);
+    // },
+  })
   name: string;
 
   @ApiProperty({ description: '트림 (프리스티지)', required: false })
