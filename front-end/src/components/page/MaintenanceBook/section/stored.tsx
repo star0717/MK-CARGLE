@@ -279,8 +279,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       <RsWrapper>
         <Wrapper>
           <Wrapper
-            padding={`20px`}
-            margin={`0px 0px 10px 600px`}
+            padding={`0px 200px 20px 200px`}
+            // padding={`200px`}
+            // margin={`0px 0px 10px 600px`}
             al={`flex-start`}
           >
             <SpeechBubbleLeft fontSize={`20px`}>
