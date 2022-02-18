@@ -159,9 +159,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "ArrowDown") {
       inputRef.current[idx + 7].focus();
     }
-
-    if (e.key === "Enter" || e.key === "ArrowRight") {
-    }
   };
 
   /**
@@ -186,8 +183,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     e: React.ChangeEvent<HTMLInputElement>,
     idx: number
   ) => {
-    setInputWork({ ...inputWork, [e.target.name]: e.target.value });
-    setWorkList(workList.splice(idx, 1, inputWork));
+    // setInputWork({ ...inputWork, [e.target.name]: e.target.value });
+    // setWorkList(workList.splice(idx, 1, inputWork));
+
+    // setWorkList(
+    //   workList.splice(idx, 1, {
+    //     ...workList[idx],
+    //     [e.target.name]: e.target.value,
+    //   })
+    // );
+    console.log(workList.splice(idx, 1, { ...workList[idx] }));
   };
 
   // console.log(inputWork);
@@ -604,6 +609,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             onKeyUpHandler(e, (idx + 1) * 7 - 7)
                           }
                           value={data.name}
+                          name="name"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`15%`}>
@@ -638,8 +649,17 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           value={data.type}
                         /> */}
                         <Combo
-                          width={`800px`}
+                          width={`100%`}
                           value={data.type}
+                          ref={(elem: HTMLInputElement) =>
+                            (inputRef.current[(idx + 1) * 7 - 5] = elem)
+                          }
+                          onKeyDown={(e: KeyboardEvent) =>
+                            onKeyDownhandler(e, (idx + 1) * 7 - 5)
+                          }
+                          onKeyUp={(e: KeyboardEvent) =>
+                            onKeyUpHandler(e, (idx + 1) * 7 - 5)
+                          }
                           name="type"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
