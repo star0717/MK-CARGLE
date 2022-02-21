@@ -74,16 +74,6 @@ export class MainCustomer {
   })
   phoneNumber: string;
 
-  @prop(
-    {
-      set: (val: string[]) => val.join(' '),
-      get: (val: string) => val.split(' '),
-      type: String,
-    },
-    PropType.NONE,
-  ) // requires explicit setting of "PropType"
-  public fullName?: string[];
-
   @ApiProperty({ description: '고객명', required: false })
   @IsOptional()
   @IsString()

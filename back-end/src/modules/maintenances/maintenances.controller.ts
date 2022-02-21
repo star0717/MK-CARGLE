@@ -1,3 +1,4 @@
+import { MaintenancesInterceptor } from './maintenances.interceptor';
 import {
   MainFindOptions,
   MainPubDocInfo,
@@ -13,6 +14,7 @@ import {
   Patch,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -35,6 +37,7 @@ import { Statement } from 'src/models/statement.entity';
 
 @Controller('maintenances')
 @ApiTags('정비내역 API')
+@UseInterceptors(MaintenancesInterceptor)
 export class MaintenancesController {
   constructor(private readonly service: MaintenancesService) {}
 
