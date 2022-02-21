@@ -119,7 +119,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
     partSetClass[0]
   ); // 선택한 세트 데이터
-  const [taxCheck, setTaxCheck] = useState<boolean>(false); // 부가세 체크여부
+  const [vatCheck, setVatCheck] = useState<boolean>(false); // 부가세 체크여부
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<Work[]>(workInit); // 부품 리스트
   const [inputSum, setInputSum] = useState<number[]>([0]); // 부품 input: 계
@@ -230,25 +230,29 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   useEffect(() => {
+    let partsSum = 0;
+    let wageSum = 0;
+    let sum = 0;
+
+    setInputSum(
+      inputSum.map((num, index) => {
+        let i = index;
+        return index === i ? workList[i].price * workList[i].quantity : num;
+      })
+    );
     for (let i = 0; i < workList.length; i++) {
-      setInputSum(
-        inputSum.map((num, index) =>
-          index === i ? workList[i].price * workList[i].quantity : num
-        )
-      );
+      partsSum += workList[i].price * workList[i].quantity;
+      wageSum += workList[i].wage;
+      sum += workList[i].price * workList[i].quantity + workList[i].wage;
     }
-    // setPrice({
-    //   partsSum: workList.reduce(
-    //     (pv, cv) => (pv = pv + cv.price * cv.quantity),
-    //     0
-    //   ),
-    //   wageSum: workList.reduce((pv, cv) => (pv = pv + cv.wage), 0),
-    //   sum: workList.reduce(
-    //     (pv, cv) => (pv = pv + cv.price * cv.quantity + cv.wage),
-    //     0
-    //   ),
-    //   vat: 100,
-    // });
+    setPrice({
+      ...price,
+      partsSum: partsSum,
+      wageSum: wageSum,
+      sum: sum,
+      vat: 100,
+      total: sum + price.vat,
+    });
   }, [workList]);
 
   // useEffect(() => {
@@ -347,9 +351,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   shadow={`none`}
                   onClick={() => {
-                    router.push(
-                      `${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.STORED}`
-                    );
+                    router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
                   }}
                 >
                   <AiFillCloseCircle />
@@ -611,7 +613,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                     <CheckInput
                       type="checkbox"
                       onChange={() => {
-                        setTaxCheck(!taxCheck);
+                        setVatCheck(!vatCheck);
                       }}
                     />
                     <CheckMark></CheckMark>
