@@ -57,6 +57,7 @@ import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
 import MtPartsModal from "./partsModal";
 import MtSetModal from "./setModal";
+import { Part } from "src/models/part.entity";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -202,6 +203,22 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         }
 
       default:
+        if (e.target.name === "name") {
+          const partOne: Part[] = props.data.allParts.docs.filter(
+            (item: Part) => e.target.value === item.name
+          );
+          return setWorkList(
+            workList.map((item, index) =>
+              index === idx
+                ? {
+                    ...item,
+                    name: e.target.value,
+                    tsCode: partOne[0]?.tsCode || "",
+                  }
+                : item
+            )
+          );
+        }
         return setWorkList(
           workList.map((item, index) =>
             index === idx ? { ...item, [e.target.name]: e.target.value } : item
@@ -658,12 +675,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           }
                           value={data.name}
                           name="name"
+                          list="workList"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
                             onChangeInputArr(e, idx);
                           }}
                         />
+                        <datalist id="workList">
+                          {props.data.allParts.docs.map(
+                            (item: Part, idx: number) => {
+                              return <option key={idx} value={item.name} />;
+                            }
+                          )}
+                        </datalist>
                       </TableRowLIST>
                       <TableRowLIST width={`15%`}>
                         <TextInput2
@@ -680,11 +705,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           }
                           value={data.tsCode}
                           name="tsCode"
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeInputArr(e, idx);
-                          }}
+                          readOnly
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`14%`}>
