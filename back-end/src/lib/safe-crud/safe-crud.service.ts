@@ -97,7 +97,6 @@ export class SafeService<T extends BaseEntity> {
     if (fParams.useDurationSearch) {
       // 기간이 존재하면
       if (fParams.sFrom && fParams.sTo) {
-        console.log('기간 검색');
         const from = getStartOfDayDateTime(fParams.sFrom);
         const to = getEndOfDayDateTime(fParams.sTo);
         if (getDuration(from, to) > 365) throw new BadRequestException();
@@ -109,14 +108,12 @@ export class SafeService<T extends BaseEntity> {
       }
       // 연도가 존재하면
       else if (fParams.sYear) {
-        console.log('연간 검색');
         const date = new Date(fParams.sYear, 0, 1);
         fQuery.createdAt = {
           $gt: getStartOfYearDateTime(date),
           $lt: getEndOfYearDateTime(date),
         };
       } else {
-        console.log('기본 검색');
         const from = getStartOfMonthDateTime();
         const to = getEndOfMonthDateTime();
         fParams.sFrom = from;
