@@ -152,7 +152,7 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
           </Wrapper>
           <Wrapper width={`50%`}>
             {menuKey &&
-              clickMenu[parseInt(menuKey) - arrNum].map((sub, idx) => {
+              clickMenu[Number(menuKey) - arrNum].map((sub, idx) => {
                 return (
                   <Wrapper
                     key={idx}

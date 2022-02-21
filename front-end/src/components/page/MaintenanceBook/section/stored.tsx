@@ -184,6 +184,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       case "price":
       case "quantity":
       case "wage":
+        e.target.value = e.target.value.replaceAll(",", "");
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setWorkList(
             workList.map((item, index) =>
@@ -194,7 +195,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           return setWorkList(
             workList.map((item, index) =>
               index === idx
-                ? { ...item, [e.target.name]: parseInt(e.target.value) }
+                ? { ...item, [e.target.name]: Number(e.target.value) }
                 : item
             )
           );
@@ -238,9 +239,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       ...price,
       partsSum: partsSum,
       wageSum: wageSum,
-      sum: parseInt(sum2.toString().split(".")[0]),
-      vat: parseInt(vat.toString().split(".")[0]),
-      total: sum2 + vat,
+      sum: Number(sum2.toString().split(".")[0]),
+      vat: Number(vat.toString().split(".")[0]),
+      total: Number((sum2 + vat).toString().split(".")[0]),
     });
   }, [workList, vatCheck]);
 

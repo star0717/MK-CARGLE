@@ -4,7 +4,13 @@ import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { _aGetAuthSignout } from "../../../store/action/user.action";
-import { WholeWrapper, Wrapper, Text, Image } from "../styles/CommonComponents";
+import {
+  WholeWrapper,
+  Wrapper,
+  Text,
+  Image,
+  IconButton,
+} from "../styles/CommonComponents";
 import {
   HeaderWrapper,
   HeaderFixed,
@@ -316,11 +322,20 @@ const Header: NextPage<_MainProps> = (props) => {
             display={props.tokenValue ? `` : `none`}
             width={`20%`}
             al={`flex-start`}
-            onClick={() => {
-              props.setOpenMenu(!props.openMenu);
-            }}
+            // onClick={() => {
+            //   props.setOpenMenu(!props.openMenu);
+            // }}
           >
-            <AiOutlineMenu />
+            <IconButton
+              type="button"
+              onClick={() => {
+                props.setOpenMenu(!props.openMenu);
+              }}
+              shadow={`none`}
+              bgColor={`inherit`}
+            >
+              <AiOutlineMenu />
+            </IconButton>
           </Wrapper>
           <Wrapper width={props.tokenValue ? `60%` : `100%`}>
             <Image src="/images/cargle.png" alt="Cargle Logo" width={`100px`} />
