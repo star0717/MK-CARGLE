@@ -26,10 +26,6 @@ import { Company } from 'src/models/company.entity';
 import { CompaniesService } from '../companies/companies.service';
 import { CompanyInfo } from 'src/models/main.doc.entity';
 import { Statement } from 'src/models/statement.entity';
-import {
-  decMainCustomer,
-  encMainCustomer,
-} from 'src/lib/toolkit/back-end.toolkit';
 
 @Injectable()
 export class MaintenancesService extends SafeService<Maintenance> {
@@ -47,9 +43,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
   }
   /********** 공통 API ***********************/
   async findById(token: AuthTokenInfo, id: string): Promise<Maintenance> {
-    let result: Maintenance = await super.findById(token, id);
-    if (result.customer) result.customer = decMainCustomer(result.customer);
-    return result;
+    return await super.findById(token, id);
   }
 
   /********** 전용 API **********************/
@@ -84,11 +78,8 @@ export class MaintenancesService extends SafeService<Maintenance> {
     };
     mt.dates = mtDates;
     mt.car = doc.car;
-    mt.customer = encMainCustomer(doc.customer);
 
-    let result: Maintenance = await this.create(token, mt);
-    if (result.customer) result.customer = decMainCustomer(result.customer);
-    return result;
+    return await this.create(token, mt);
   }
 
   async startMain(
@@ -107,9 +98,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     src.workerName = doc.workerName;
     src.status = MainStatus.ING;
     src.dates.startMa = new Date(Date.now());
-    let result: Maintenance = await this.findByIdAndUpdate(token, id, src);
-    if (result.customer) result.customer = decMainCustomer(result.customer);
-    return result;
+    return await this.findByIdAndUpdate(token, id, src);
   }
 
   async endMain(
@@ -124,9 +113,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     src.dates.endMa = new Date(Date.now());
     src.price = new MainPrice();
 
-    let result: Maintenance = await this.findByIdAndUpdate(token, id, src);
-    if (result.customer) result.customer = decMainCustomer(result.customer);
-    return result;
+    return await this.findByIdAndUpdate(token, id, src);
   }
 
   async payMain(
@@ -140,9 +127,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     src.price = doc.price;
     src.status = MainStatus.PAID;
 
-    let result: Maintenance = await this.findByIdAndUpdate(token, id, src);
-    if (result.customer) result.customer = decMainCustomer(result.customer);
-    return result;
+    return await this.findByIdAndUpdate(token, id, src);
   }
 
   async releaseMain(
@@ -155,9 +140,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     src.dates.released = new Date(Date.now());
     src.status = MainStatus.RELEASED;
 
-    let result: Maintenance = await this.findByIdAndUpdate(token, id, src);
-    if (result.customer) result.customer = decMainCustomer(result.customer);
-    return result;
+    return await this.findByIdAndUpdate(token, id, src);
   }
 
   /**

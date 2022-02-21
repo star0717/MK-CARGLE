@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { prop, PropType } from '@typegoose/typegoose';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
