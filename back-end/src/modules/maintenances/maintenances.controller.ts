@@ -1,4 +1,3 @@
-import { MaintenancesInterceptor } from './maintenances.interceptor';
 import {
   MainFindOptions,
   MainPubDocInfo,
@@ -37,7 +36,6 @@ import { Statement } from 'src/models/statement.entity';
 
 @Controller('maintenances')
 @ApiTags('정비내역 API')
-@UseInterceptors(MaintenancesInterceptor)
 export class MaintenancesController {
   constructor(private readonly service: MaintenancesService) {}
 
@@ -55,9 +53,6 @@ export class MaintenancesController {
     @Query() fOptions: MainFindOptions,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<FindResult<Maintenance>> {
-    console.log('test');
-    console.log(fOptions);
-
     fParams.useDurationSearch = true;
     if (fOptions) {
       fParams.filter = fOptions;

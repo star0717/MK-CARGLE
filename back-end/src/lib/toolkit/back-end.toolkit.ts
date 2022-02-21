@@ -97,17 +97,17 @@ export function getValidSearchYear(params: TransformFnParams) {
 
 const crtKey = process.env.CRT_KEY;
 
-// 정비이력의 고객정보 암복호
-export function encMainCustomer(doc: MainCustomer): MainCustomer {
-  if (doc.name) doc.name = AES.encrypt(doc.name, crtKey).toString();
-  return doc;
-}
+// // 정비이력의 고객정보 암복호
+// export function encMainCustomer(doc: MainCustomer): MainCustomer {
+//   if (doc.name) doc.name = AES.encrypt(doc.name, crtKey).toString();
+//   return doc;
+// }
 
-export function decMainCustomer(doc: MainCustomer): MainCustomer {
-  if (doc.name) doc.name = AES.decrypt(doc.name, crtKey).toString(enc.Utf8);
-  console.log('name: ' + doc);
-  return doc;
-}
+// export function decMainCustomer(doc: MainCustomer): MainCustomer {
+//   if (doc.name) doc.name = AES.decrypt(doc.name, crtKey).toString(enc.Utf8);
+//   console.log('name: ' + doc);
+//   return doc;
+// }
 
 /***************************************************
  * DayJS 관련
