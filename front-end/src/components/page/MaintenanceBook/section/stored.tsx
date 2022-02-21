@@ -232,7 +232,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   useEffect(() => {
     let partsSum = 0;
     let wageSum = 0;
-    let sum = 0;
+    let sum1 = 0;
+    let sum2 = 0;
+    let vat = 0;
 
     setInputSum(
       inputSum.map((num, index) => {
@@ -243,17 +245,19 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     for (let i = 0; i < workList.length; i++) {
       partsSum += workList[i].price * workList[i].quantity;
       wageSum += workList[i].wage;
-      sum += workList[i].price * workList[i].quantity + workList[i].wage;
+      sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
     }
+    sum2 = vatCheck ? sum1 * 0.9 : sum1;
+    vat = vatCheck ? sum1 - sum2 : sum1 * 0.1;
     setPrice({
       ...price,
       partsSum: partsSum,
       wageSum: wageSum,
-      sum: sum,
-      vat: 100,
-      total: sum + price.vat,
+      sum: parseInt(sum2.toString().split(".")[0]),
+      vat: vat,
+      total: sum2 + vat,
     });
-  }, [workList]);
+  }, [workList, vatCheck]);
 
   // useEffect(() => {
   //   setPrice({
