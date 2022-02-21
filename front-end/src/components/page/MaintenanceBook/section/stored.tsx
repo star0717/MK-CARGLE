@@ -56,11 +56,11 @@ import {
   MainStatus,
 } from "src/constants/maintenance.const";
 import {
-  CarInfo,
-  Customer,
+  MainCar,
+  MainCustomer,
   Maintenance,
-  Price,
-  Work,
+  MainPrice,
+  MainWork,
 } from "src/models/maintenance.entity";
 import { deleteKeyJson, maskingStr, trim } from "src/modules/commonModule";
 import { PartsSet } from "src/models/partsset.entity";
@@ -85,7 +85,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
-  const workInit: Work[] = [
+  const workInit: MainWork[] = [
     {
       name: "",
       code: "",
@@ -97,7 +97,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     },
   ];
 
-  const priceInit: Partial<Price> = {
+  const priceInit: Partial<MainPrice> = {
     partsSum: 0,
     wageSum: 0,
     sum: 0,
@@ -121,9 +121,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   ); // 선택한 세트 데이터
   const [vatCheck, setVatCheck] = useState<boolean>(false); // 부가세 체크여부
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
-  const [workList, setWorkList] = useState<Work[]>(workInit); // 부품 리스트
+  const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
   const [inputSum, setInputSum] = useState<number[]>([0]); // 부품 input: 계
-  const [price, setPrice] = useState<Partial<Price>>(priceInit); // 가격정보
+  const [price, setPrice] = useState<Partial<MainPrice>>(priceInit); // 가격정보
 
   /*********************************************************************
    * 3. Handlers

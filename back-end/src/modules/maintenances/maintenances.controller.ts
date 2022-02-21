@@ -22,7 +22,7 @@ import {
   ApiResponse,
   ApiParam,
 } from '@nestjs/swagger';
-import { CarInfo, Maintenance } from 'src/models/maintenance.entity';
+import { MainCar, Maintenance } from 'src/models/maintenance.entity';
 import { MaintenancesService } from './maintenances.service';
 import {
   DeleteObjectIds,
@@ -148,7 +148,7 @@ export class MaintenancesController {
   async findCarByRegNumber(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<CarInfo> {
+  ): Promise<MainCar> {
     return await this.service.findCarByRegNumber(id);
   }
 

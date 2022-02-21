@@ -1,5 +1,10 @@
 import { BaseEntity } from './base.entity';
-import { CarInfo, Customer, Price, Work } from './maintenance.entity';
+import {
+  MainCar,
+  MainCustomer,
+  MainPrice,
+  MainWork,
+} from './maintenance.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
@@ -133,12 +138,12 @@ export class MainDoc extends BaseEntity {
   @prop({ trim: true, required: true }) // 자동생성
   mainNum: string;
 
-  @ApiProperty({ description: '고객정보', type: Customer })
+  @ApiProperty({ description: '고객정보', type: MainCustomer })
   @IsOptional()
   @ValidateNested()
-  @Type(() => Customer)
-  @prop({ required: true, type: () => Customer, _id: false })
-  customer: Customer;
+  @Type(() => MainCustomer)
+  @prop({ required: true, type: () => MainCustomer, _id: false })
+  customer: MainCustomer;
 
   @ApiProperty({ description: '업체정보', type: CompanyInfo })
   @IsOptional()
@@ -147,12 +152,12 @@ export class MainDoc extends BaseEntity {
   @prop({ required: true, type: () => CompanyInfo, _id: false })
   company: CompanyInfo;
 
-  @ApiProperty({ description: '차량정보', type: CarInfo })
+  @ApiProperty({ description: '차량정보', type: MainCar })
   @IsOptional()
   @ValidateNested()
-  @Type(() => CarInfo)
-  @prop({ required: true, type: () => CarInfo, _id: false })
-  car: CarInfo;
+  @Type(() => MainCar)
+  @prop({ required: true, type: () => MainCar, _id: false })
+  car: MainCar;
 
   @ApiProperty({ description: '작업정보', type: [WorkInfo] })
   @IsOptional()
@@ -161,10 +166,10 @@ export class MainDoc extends BaseEntity {
   @prop({ required: true, type: () => WorkInfo, _id: false })
   works: WorkInfo[];
 
-  @ApiProperty({ description: '결재정보', type: Price, required: false })
+  @ApiProperty({ description: '결재정보', type: MainPrice, required: false })
   @IsOptional()
   @ValidateNested() // 배열일 경우 each 속성 추가
-  @Type(() => Price)
-  @prop({ type: () => Price, _id: false })
-  price?: Price;
+  @Type(() => MainPrice)
+  @prop({ type: () => MainPrice, _id: false })
+  price?: MainPrice;
 }

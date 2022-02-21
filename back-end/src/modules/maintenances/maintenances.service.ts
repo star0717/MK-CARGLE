@@ -9,12 +9,12 @@ import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { Car } from 'src/models/car.entity';
 import {
-  CarInfo,
-  Dates,
-  Doc,
+  MainCar,
+  MainDates,
+  MainDocInfo,
   MainPubDocInfo,
   Maintenance,
-  Price,
+  MainPrice,
 } from 'src/models/maintenance.entity';
 import { CarsService } from '../cars/cars.service';
 import {
@@ -53,11 +53,11 @@ export class MaintenancesService extends SafeService<Maintenance> {
   }
 
   /********** 전용 API **********************/
-  async findCarByRegNumber(id: string): Promise<CarInfo> {
+  async findCarByRegNumber(id: string): Promise<MainCar> {
     const car: Car = await this.carsService.findByRegNumber(id);
     if (!car) return null;
 
-    const carInfo: CarInfo = {
+    const carInfo: MainCar = {
       name: car.name,
       regNumber: car.regNumber,
     };
@@ -79,7 +79,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     mt.docNum = await this._genDocNumber();
     mt.status = MainStatus.STORED;
     mt.costomerType = MainCustomerType.NORMAL;
-    const mtDates: Dates = {
+    const mtDates: MainDates = {
       stored: new Date(Date.now()),
     };
     mt.dates = mtDates;
@@ -122,7 +122,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
 
     src.status = MainStatus.DONE;
     src.dates.endMa = new Date(Date.now());
-    src.price = new Price();
+    src.price = new MainPrice();
 
     let result: Maintenance = await this.findByIdAndUpdate(token, id, src);
     if (result.customer) result.customer = decMainCustomer(result.customer);
@@ -233,7 +233,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
       result = await this.estimatesService.create(token, estimate as Estimate);
 
       // 정비이력에 견적서 참조 정보 갱신
-      const mainEstimate: Doc = {
+      const mainEstimate: MainDocInfo = {
         _oID: result._id,
       };
       this.findByIdAndUpdate(token, id, { estimate: mainEstimate });
@@ -334,7 +334,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
       );
 
       // 정비이력에 견적서 참조 정보 갱신
-      const mainStatement: Doc = {
+      const mainStatement: MainDocInfo = {
         _oID: result._id,
       };
       this.findByIdAndUpdate(token, id, { statement: mainStatement });

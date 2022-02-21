@@ -22,7 +22,7 @@ import { _pPartsSetProps } from "src/configure/_pProps.entity";
 import { getTsParts, PartClass, partClassList } from "src/constants/part.const";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { AiFillMinusSquare, AiFillPlusSquare } from "react-icons/ai";
-import { Work } from "src/models/maintenance.entity";
+import { MainWork } from "src/models/maintenance.entity";
 import { MainPartsType } from "src/constants/maintenance.const";
 
 const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
@@ -102,7 +102,7 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
     if (selectPart.length === 0) {
       return alert("부품을 추가해주세요.");
     }
-    const newList: Work[] = [];
+    const newList: MainWork[] = [];
     for (let i = 0; i < selectPart.length; i++) {
       for (let j = 0; j < props.workList?.length; j++) {
         if (selectPart[i].code === props.workList[j]?.code)

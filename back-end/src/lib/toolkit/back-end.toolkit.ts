@@ -9,7 +9,7 @@ import * as duration from 'dayjs/plugin/duration';
 import { AES, enc } from 'crypto-js';
 import { Car } from 'src/models/car.entity';
 import * as dotenv from 'dotenv';
-import { Customer } from 'src/models/maintenance.entity';
+import { MainCustomer } from 'src/models/maintenance.entity';
 import { doc } from 'prettier';
 dotenv.config();
 
@@ -98,12 +98,12 @@ export function getValidSearchYear(params: TransformFnParams) {
 const crtKey = process.env.CRT_KEY;
 
 // 정비이력의 고객정보 암복호
-export function encMainCustomer(doc: Customer): Customer {
+export function encMainCustomer(doc: MainCustomer): MainCustomer {
   if (doc.name) doc.name = AES.encrypt(doc.name, crtKey).toString();
   return doc;
 }
 
-export function decMainCustomer(doc: Customer): Customer {
+export function decMainCustomer(doc: MainCustomer): MainCustomer {
   if (doc.name) doc.name = AES.decrypt(doc.name, crtKey).toString(enc.Utf8);
   console.log('name: ' + doc);
   return doc;
