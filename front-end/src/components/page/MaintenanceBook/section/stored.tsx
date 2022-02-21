@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import {
   Checkbox,
@@ -182,6 +182,38 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     idx: number
   ) => {
     switch (e.target.name) {
+      case "name":
+        const partOne: Part[] = props.data.allParts.docs.filter(
+          (item: Part) =>
+            e.target.value === item.name ||
+            item.nickName.includes(e.target.value)
+        );
+        // if (e.target.value) {
+        //   setPartList(
+        //     props.data.allParts.docs.filter((item: Part) => {
+        //       for (let i = 0; i < item.nickName.length; i++) {
+        //         if (item.nickName[i].startsWith(e.target.value)) {
+        //           return item;
+        //         }
+        //       }
+        //     })
+        //   );
+        // } else {
+        //   setPartList(props.data.allParts.docs);
+        // }
+        return setWorkList(
+          workList.map((item, index) =>
+            index === idx
+              ? {
+                  ...item,
+                  name: partOne[0]?.nickName.includes(e.target.value)
+                    ? partOne[0].name
+                    : e.target.value,
+                  tsCode: partOne[0]?.tsCode || "",
+                }
+              : item
+          )
+        );
       case "price":
       case "quantity":
       case "wage":
@@ -201,29 +233,23 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             )
           );
         }
-
       default:
-        if (e.target.name === "name") {
-          const partOne: Part[] = props.data.allParts.docs.filter(
-            (item: Part) => e.target.value === item.name
-          );
-          return setWorkList(
-            workList.map((item, index) =>
-              index === idx
-                ? {
-                    ...item,
-                    name: e.target.value,
-                    tsCode: partOne[0]?.tsCode || "",
-                  }
-                : item
-            )
-          );
-        }
         return setWorkList(
           workList.map((item, index) =>
             index === idx ? { ...item, [e.target.name]: e.target.value } : item
           )
         );
+    }
+  };
+
+  /**
+   * 열 삭제 handler
+   * @param idx
+   */
+  const onDeleteRowHandler = (idx: number) => {
+    if (idx !== 0) {
+      setInputSum(inputSum.filter((data, index) => idx !== index));
+      setWorkList(workList.filter((data, index) => idx !== index));
     }
   };
 
@@ -648,10 +674,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <TableWrapper minHeight={`auto`}>
               <TableHead>
-                <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>국토부</TableHeadLIST>
+                <TableHeadLIST width={`3%`}></TableHeadLIST>
+                <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>국토부</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>단가</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>단가</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>수량</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
@@ -660,7 +687,24 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 {workList.map((data, idx) => {
                   return (
                     <TableRow key={idx} kindOf={`noHover`}>
-                      <TableRowLIST width={`15%`}>
+                      {idx === 0 ? (
+                        <TableRowLIST width={`3%`}></TableRowLIST>
+                      ) : (
+                        <TableRowLIST width={`3%`}>
+                          <IconButton
+                            type="button"
+                            shadow={`none`}
+                            bgColor={`inherit`}
+                            margin={`0px`}
+                            onClick={() => {
+                              onDeleteRowHandler(idx);
+                            }}
+                          >
+                            <AiFillCloseCircle />
+                          </IconButton>
+                        </TableRowLIST>
+                      )}
+                      <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
                           ref={(elem: HTMLInputElement) =>
@@ -690,7 +734,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           )}
                         </datalist>
                       </TableRowLIST>
-                      <TableRowLIST width={`15%`}>
+                      <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
                           ref={(elem: HTMLInputElement) =>
@@ -737,7 +781,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           })}
                         </Combo>
                       </TableRowLIST>
-                      <TableRowLIST width={`15%`}>
+                      <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
                           ref={(elem: HTMLInputElement) =>
