@@ -1,19 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { NextPage } from "next";
 import {
   Checkbox,
   CheckInput,
   CheckMark,
   CloseButton,
-  ColorSpan,
   Combo,
   IconButton,
   JoinStepBar,
   JoinStepBarWrapper,
   RsWrapper,
-  SearchInput,
-  SearchInputWrapper,
   SmallButton,
   SpeechBubbleLeft,
   TableBody,
@@ -30,11 +26,7 @@ import {
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { AiFillCloseCircle } from "react-icons/ai";
-import {
-  BsFillFileEarmarkCheckFill,
-  BsPlusCircleFill,
-  BsSearch,
-} from "react-icons/bs";
+import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
 import {
   _pMaintenanceProps,
   _pPartsSetProps,
@@ -53,21 +45,17 @@ import {
   getStrMainPartsType,
   MainPartsType,
   mainPartsTypeList,
-  MainStatus,
 } from "src/constants/maintenance.const";
 import {
-  MainCar,
-  MainCustomer,
   Maintenance,
   MainPrice,
   MainWork,
 } from "src/models/maintenance.entity";
-import { deleteKeyJson, maskingStr, trim } from "src/modules/commonModule";
+import { maskingStr } from "src/modules/commonModule";
 import { PartsSet } from "src/models/partsset.entity";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
 import MtPartsModal from "./partsModal";
-import { Part } from "src/models/part.entity";
 import MtSetModal from "./setModal";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
@@ -76,14 +64,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-
-  // react-hook-form 사용을 위한 선언
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   const workInit: MainWork[] = [
     {
@@ -229,10 +209,15 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     }
   };
 
+  /**
+   * 정비내역 값 계산을 위한 handler
+   */
   useEffect(() => {
     let partsSum = 0;
     let wageSum = 0;
-    let sum = 0;
+    let sum1 = 0;
+    let sum2 = 0;
+    let vat = 0;
 
     setInputSum(
       inputSum.map((num, index) => {
@@ -240,26 +225,24 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         return index === i ? workList[i].price * workList[i].quantity : num;
       })
     );
+
     for (let i = 0; i < workList.length; i++) {
       partsSum += workList[i].price * workList[i].quantity;
       wageSum += workList[i].wage;
-      sum += workList[i].price * workList[i].quantity + workList[i].wage;
+      sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
     }
+    sum2 = vatCheck ? sum1 * 0.9 : sum1;
+    vat = vatCheck ? sum1 - sum2 : sum1 * 0.1;
+
     setPrice({
       ...price,
       partsSum: partsSum,
       wageSum: wageSum,
-      sum: sum,
-      vat: 100,
-      total: sum + price.vat,
+      sum: parseInt(sum2.toString().split(".")[0]),
+      vat: parseInt(vat.toString().split(".")[0]),
+      total: sum2 + vat,
     });
-  }, [workList]);
-
-  // useEffect(() => {
-  //   setPrice({
-  //     sum: price.sum + price.vat,
-  //   });
-  // }, [price]);
+  }, [workList, vatCheck]);
 
   /*********************************************************************
    * 4. Props settings
@@ -743,7 +726,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 4)
                           }
-                          value={data.price}
+                          value={data.price.toLocaleString()}
                           name="price"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
@@ -765,7 +748,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 3)
                           }
-                          value={data.quantity}
+                          value={data.quantity.toLocaleString()}
                           name="quantity"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
@@ -787,7 +770,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 2)
                           }
-                          value={inputSum[idx]}
+                          value={inputSum[idx].toLocaleString()}
                           name="inputSum"
                           readOnly
                         />
@@ -805,7 +788,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 1)
                           }
-                          value={data.wage}
+                          value={data.wage.toLocaleString()}
                           name="wage"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
@@ -820,19 +803,19 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </TableBody>
             </TableWrapper>
             <Wrapper dr={`row`} ju={`flex-end`}>
-              <Text>부품계 : {price.partsSum}</Text>
+              <Text>부품계 : {price.partsSum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>기술료계 : {price.wageSum}</Text>
+              <Text>기술료계 : {price.wageSum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>합계 : {price.sum}</Text>
+              <Text>합계 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>부가세 : {price.vat}</Text>
+              <Text>부가세 : {price.vat.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
@@ -843,7 +826,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 color={`#314FA5`}
                 margin={`0px 10px`}
               >
-                {price.total}
+                {price.total.toLocaleString()}
               </Text>
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
