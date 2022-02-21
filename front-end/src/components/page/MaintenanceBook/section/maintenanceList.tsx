@@ -35,7 +35,6 @@ import { Maintenance } from "src/models/maintenance.entity";
 import {
   getStrMainCustomerType,
   getStrMainStatus,
-  MainStatus,
 } from "src/constants/maintenance.const";
 import { useDispatch } from "react-redux";
 import {
@@ -151,6 +150,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const keyboardHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    console.log(e);
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -164,13 +167,14 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
     setCheckedList([]);
     props.findDocHandler(1);
   }, [reset]);
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
   // console.log(searchFrom, "~", searchTo);
 
   return (
-    <WholeWrapper>
+    <WholeWrapper onkeydown={keyboardHandler}>
       <RsWrapper>
         <CommonTitleWrapper>
           <CommonTitle>정비장부</CommonTitle>
