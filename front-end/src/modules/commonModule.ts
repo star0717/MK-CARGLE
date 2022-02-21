@@ -125,7 +125,7 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
  * @returns
  */
 export const trim = (str: string) => {
-  const trimStr = str.replace(" ", "");
+  const trimStr = str.replaceAll(" ", "");
   return trimStr;
 };
 

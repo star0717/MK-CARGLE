@@ -86,6 +86,7 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
     let codeList: string[] = [];
     let partList: Part[] = [];
     let newList: MainWork[] = [];
+    let inputSumList: number[] = [];
     for (let i = 0; i < checkedList.length; i++) {
       await dispatch(_aGetPartssetsOne(checkedList[i])).then(
         (res: _iPartssetsOne) => {
@@ -98,6 +99,10 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
     }
     for (let j = 0; j < codeList.length; j++) {
       partList.push(getPartByCode(codeList[j], props.data.allParts.docs));
+      for (let h = 0; h < props.workList?.length; h++) {
+        if (partList[j].code === props.workList[h]?.code)
+          return alert(`${partList[j].name}은 이미 추가된 부품입니다.`);
+      }
       newList.push({
         name: partList[j].name,
         code: partList[j].code,
@@ -107,7 +112,10 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
         quantity: 0,
         wage: 0,
       });
+      inputSumList.push(0);
     }
+
+    props.setInputSum(props.inputSum.concat(inputSumList));
     props.setWorkList(props.workList.concat(newList));
     props.setModalOpen(false);
   };

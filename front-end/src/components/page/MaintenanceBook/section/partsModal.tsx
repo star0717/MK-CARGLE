@@ -103,6 +103,7 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
       return alert("부품을 추가해주세요.");
     }
     const newList: MainWork[] = [];
+    let inputSumList: number[] = [];
     for (let i = 0; i < selectPart.length; i++) {
       for (let j = 0; j < props.workList?.length; j++) {
         if (selectPart[i].code === props.workList[j]?.code)
@@ -111,13 +112,16 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
       newList.push({
         name: selectPart[i].name,
         code: selectPart[i].code,
-        tsCode: selectPart[i].tsCode,
+        tsCode: selectPart[i].tsCode || "",
         type: MainPartsType.A,
         price: 0,
         quantity: 0,
         wage: 0,
       });
+      inputSumList.push(0);
     }
+
+    props.setInputSum(props.inputSum.concat(inputSumList));
     props.setWorkList(props.workList.concat(newList));
     props.setModalOpen(false);
   };

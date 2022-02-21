@@ -380,7 +380,10 @@ const MaintenanceCreate: NextPage = () => {
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
                             // onChangeCusInfo(e);
-                            setCusInfo({ ...cusInfo, name: e.target.value });
+                            setCusInfo({
+                              ...cusInfo,
+                              name: trim(e.target.value),
+                            });
                           },
                         })}
                       />
@@ -406,7 +409,7 @@ const MaintenanceCreate: NextPage = () => {
                           ) => {
                             setCusInfo({
                               ...cusInfo,
-                              phoneNumber: e.target.value,
+                              phoneNumber: trim(e.target.value),
                             });
                           },
                           required: {

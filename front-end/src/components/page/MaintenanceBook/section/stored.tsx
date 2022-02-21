@@ -57,6 +57,7 @@ import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
 import MtPartsModal from "./partsModal";
 import MtSetModal from "./setModal";
+import { Part } from "src/models/part.entity";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -184,6 +185,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       case "price":
       case "quantity":
       case "wage":
+        e.target.value = e.target.value.replaceAll(",", "");
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setWorkList(
             workList.map((item, index) =>
@@ -194,13 +196,29 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           return setWorkList(
             workList.map((item, index) =>
               index === idx
-                ? { ...item, [e.target.name]: parseInt(e.target.value) }
+                ? { ...item, [e.target.name]: Number(e.target.value) }
                 : item
             )
           );
         }
 
       default:
+        if (e.target.name === "name") {
+          const partOne: Part[] = props.data.allParts.docs.filter(
+            (item: Part) => e.target.value === item.name
+          );
+          return setWorkList(
+            workList.map((item, index) =>
+              index === idx
+                ? {
+                    ...item,
+                    name: e.target.value,
+                    tsCode: partOne[0]?.tsCode || "",
+                  }
+                : item
+            )
+          );
+        }
         return setWorkList(
           workList.map((item, index) =>
             index === idx ? { ...item, [e.target.name]: e.target.value } : item
@@ -238,9 +256,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       ...price,
       partsSum: partsSum,
       wageSum: wageSum,
-      sum: parseInt(sum2.toString().split(".")[0]),
-      vat: parseInt(vat.toString().split(".")[0]),
-      total: sum2 + vat,
+      sum: Number(sum2.toString().split(".")[0]),
+      vat: Number(vat.toString().split(".")[0]),
+      total: Number((sum2 + vat).toString().split(".")[0]),
     });
   }, [workList, vatCheck]);
 
@@ -256,6 +274,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     setPartSetData,
     workList,
     setWorkList,
+    inputSum,
+    setInputSum,
   };
 
   /*********************************************************************
@@ -266,7 +286,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       <RsWrapper>
         <Wrapper>
           <Wrapper
-            padding={`0px 200px 20px 200px`}
+            padding={`0px 200px 20px 320px`}
             // padding={`200px`}
             // margin={`0px 0px 10px 600px`}
             al={`flex-start`}
@@ -655,12 +675,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           }
                           value={data.name}
                           name="name"
+                          list="workList"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
                             onChangeInputArr(e, idx);
                           }}
                         />
+                        <datalist id="workList">
+                          {props.data.allParts.docs.map(
+                            (item: Part, idx: number) => {
+                              return <option key={idx} value={item.name} />;
+                            }
+                          )}
+                        </datalist>
                       </TableRowLIST>
                       <TableRowLIST width={`15%`}>
                         <TextInput2
@@ -677,11 +705,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           }
                           value={data.tsCode}
                           name="tsCode"
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeInputArr(e, idx);
-                          }}
+                          readOnly
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`14%`}>
