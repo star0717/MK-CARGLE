@@ -218,7 +218,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     let sum1 = 0;
     let sum2 = 0;
     let vat = 0;
-    console.log("$$");
 
     setInputSum(
       inputSum.map((num, index) => {
@@ -244,8 +243,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       total: sum2 + vat,
     });
   }, [workList, vatCheck]);
-
-  console.log("인풋썸", inputSum);
 
   /*********************************************************************
    * 4. Props settings
@@ -775,7 +772,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 2)
                           }
-                          value={inputSum[idx]}
+                          value={inputSum[idx].toLocaleString()}
                           name="inputSum"
                           readOnly
                         />

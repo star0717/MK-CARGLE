@@ -120,14 +120,11 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
       });
       inputSumList.push(0);
     }
-    console.log("@@");
-    props.setWorkList(props.workList.concat(newList));
+
     props.setInputSum(props.inputSum.concat(inputSumList));
-    console.log("##");
+    props.setWorkList(props.workList.concat(newList));
     props.setModalOpen(false);
   };
-
-  console.log("1", props.inputSum);
 
   /*********************************************************************
    * 4. Props settings
