@@ -1,4 +1,4 @@
-import { CarInfo } from 'src/models/maintenance.entity';
+import { MainCar } from 'src/models/maintenance.entity';
 import { Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
@@ -22,7 +22,7 @@ export class CarsService extends SafeService<Car> {
    * @param doc CarInfo
    * @returns Car
    */
-  async updateOrInsertByCarInfo(doc: CarInfo): Promise<Car> {
+  async updateOrInsertByCarInfo(doc: MainCar): Promise<Car> {
     var fQuery: FilterQuery<Car> = { regNumber: doc.regNumber };
     let car: Partial<Car> = {
       ...doc,

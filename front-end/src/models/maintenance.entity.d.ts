@@ -1,6 +1,6 @@
 import { MainCustomerType, MainDocPubType, MainPartsType, MainStatus } from 'src/constants/maintenance.const';
 import { BaseEntity } from './base.entity';
-export declare class CarInfo {
+export declare class MainCar {
     name: string;
     model?: string;
     age?: string;
@@ -9,13 +9,13 @@ export declare class CarInfo {
     regNumber: string;
     distance?: string;
 }
-export declare class Customer {
+export declare class MainCustomer {
     phoneNumber: string;
     fullName?: string[];
     name?: string;
     _oID?: string;
 }
-export declare class Work {
+export declare class MainWork {
     name: string;
     code?: string;
     tsCode?: string;
@@ -24,7 +24,7 @@ export declare class Work {
     quantity: number;
     wage: number;
 }
-export declare class Price {
+export declare class MainPrice {
     isIncluded: boolean;
     partsSum: number;
     wageSum: number;
@@ -37,13 +37,13 @@ export declare class Price {
     insurance: number;
     balance: number;
 }
-export declare class Dates {
+export declare class MainDates {
     stored?: Date;
     startMa?: Date;
     endMa?: Date;
     released?: Date;
 }
-export declare class Doc {
+export declare class MainDocInfo {
     _oID: string;
     prAt?: Date;
     msgAt?: Date;
@@ -54,13 +54,13 @@ export declare class Maintenance extends BaseEntity {
     _tsID?: string;
     status: MainStatus;
     costomerType: MainCustomerType;
-    dates?: Dates;
-    car: CarInfo;
-    works?: Work[];
-    price?: Price;
-    customer: Customer;
-    estimate: Doc;
-    statement: Doc;
+    dates?: MainDates;
+    car: MainCar;
+    works?: MainWork[];
+    price?: MainPrice;
+    customer: MainCustomer;
+    estimate: MainDocInfo;
+    statement: MainDocInfo;
 }
 export declare class MainFindOptions {
     regNumber?: string;

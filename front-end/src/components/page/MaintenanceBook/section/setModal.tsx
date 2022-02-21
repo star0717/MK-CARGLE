@@ -29,7 +29,7 @@ import { useDispatch } from "react-redux";
 import { _aGetPartssetsOne } from "store/action/user.action";
 import { PartsSet } from "src/models/partsset.entity";
 import { _iPartssetsOne } from "store/interfaces";
-import { Work } from "src/models/maintenance.entity";
+import { MainWork } from "src/models/maintenance.entity";
 import { MainPartsType } from "src/constants/maintenance.const";
 
 const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
@@ -85,7 +85,7 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
     }
     let codeList: string[] = [];
     let partList: Part[] = [];
-    let newList: Work[] = [];
+    let newList: MainWork[] = [];
     for (let i = 0; i < checkedList.length; i++) {
       await dispatch(_aGetPartssetsOne(checkedList[i])).then(
         (res: _iPartssetsOne) => {

@@ -19,7 +19,7 @@ import {
 import { BaseEntity } from './base.entity';
 
 // 정비내역서에 들어가 차량 정보
-export class CarInfo {
+export class MainCar {
   @ApiProperty({ description: '차명 (카렌스)' })
   @IsOptional()
   @IsString()
@@ -64,7 +64,7 @@ export class CarInfo {
 }
 
 // 정비내역서에 들어가 고객 정보
-export class Customer {
+export class MainCustomer {
   @ApiProperty({ description: '전화번호' })
   @IsOptional()
   @IsString()
@@ -98,7 +98,7 @@ export class Customer {
 }
 
 // 정비내역 정보
-export class Work {
+export class MainWork {
   @ApiProperty({ description: '작업내용/부품명. Part에서 복사' })
   @IsOptional()
   @IsString()
@@ -150,7 +150,7 @@ export class Work {
 }
 
 // 가격 정보
-export class Price {
+export class MainPrice {
   @ApiProperty({ description: '부가세 포함/별도 여부' })
   @IsOptional()
   @IsBoolean()
@@ -219,7 +219,7 @@ export class Price {
 }
 
 // 시간 정보
-export class Dates {
+export class MainDates {
   @ApiProperty({ description: '입고일', required: false }) // 견적진행 클릭(DB 추가)
   @IsOptional()
   @IsString()
@@ -246,7 +246,7 @@ export class Dates {
 }
 
 // 문서 발급 정보(견적서와 명세서에서 사용)
-export class Doc {
+export class MainDocInfo {
   @ApiProperty({ description: '문서 오브젝트ID. 가장 최근 문서를 참조' })
   @prop({ trim: true, required: true })
   _oID: string;
@@ -313,56 +313,64 @@ export class Maintenance extends BaseEntity {
 
   @ApiProperty({
     description: '각종 시간 정보(자동생성)',
-    type: Dates,
+    type: MainDates,
     required: false,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => Dates)
-  @prop({ required: true, type: () => Dates, _id: false }) // 자동생성
-  dates?: Dates;
+  @Type(() => MainDates)
+  @prop({ required: true, type: () => MainDates, _id: false }) // 자동생성
+  dates?: MainDates;
 
-  @ApiProperty({ description: '차량정보', type: CarInfo })
+  @ApiProperty({ description: '차량정보', type: MainCar })
   @IsOptional()
   @ValidateNested()
-  @Type(() => CarInfo)
-  @prop({ required: true, type: () => CarInfo, _id: false })
-  car: CarInfo;
+  @Type(() => MainCar)
+  @prop({ required: true, type: () => MainCar, _id: false })
+  car: MainCar;
 
-  @ApiProperty({ description: '작업정보', type: [Work], required: false })
+  @ApiProperty({ description: '작업정보', type: [MainWork], required: false })
   @IsOptional()
   @ValidateNested({ each: true }) // 배열일 경우 each 속성 추가
-  @Type(() => Work)
-  @prop({ type: () => Work, _id: false })
-  works?: Work[];
+  @Type(() => MainWork)
+  @prop({ type: () => MainWork, _id: false })
+  works?: MainWork[];
 
-  @ApiProperty({ description: '결재정보', type: Price, required: false })
+  @ApiProperty({ description: '결재정보', type: MainPrice, required: false })
   @IsOptional()
   @ValidateNested() // 배열일 경우 each 속성 추가
-  @Type(() => Price)
-  @prop({ type: () => Price, _id: false })
-  price?: Price;
+  @Type(() => MainPrice)
+  @prop({ type: () => MainPrice, _id: false })
+  price?: MainPrice;
 
-  @ApiProperty({ description: '고객정보', type: Customer })
+  @ApiProperty({ description: '고객정보', type: MainCustomer })
   @IsOptional()
   @ValidateNested()
-  @Type(() => Customer)
-  @prop({ required: true, type: () => Customer, _id: false })
-  customer: Customer;
+  @Type(() => MainCustomer)
+  @prop({ required: true, type: () => MainCustomer, _id: false })
+  customer: MainCustomer;
 
-  @ApiProperty({ description: '견적서 정보', type: Doc, required: false })
+  @ApiProperty({
+    description: '견적서 정보',
+    type: MainDocInfo,
+    required: false,
+  })
   @IsOptional()
   @ValidateNested()
-  @Type(() => Doc)
-  @prop({ type: () => Doc, _id: false })
-  estimate: Doc;
+  @Type(() => MainDocInfo)
+  @prop({ type: () => MainDocInfo, _id: false })
+  estimate: MainDocInfo;
 
-  @ApiProperty({ description: '명세서 정보', type: Doc, required: false })
+  @ApiProperty({
+    description: '명세서 정보',
+    type: MainDocInfo,
+    required: false,
+  })
   @IsOptional()
   @ValidateNested()
-  @Type(() => Doc)
-  @prop({ type: () => Doc, _id: false })
-  statement: Doc;
+  @Type(() => MainDocInfo)
+  @prop({ type: () => MainDocInfo, _id: false })
+  statement: MainDocInfo;
 }
 
 export class MainFindOptions {

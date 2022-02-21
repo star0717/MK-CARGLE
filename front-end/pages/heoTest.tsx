@@ -63,7 +63,11 @@ import {
   _iMaintenancesOne,
 } from "store/interfaces";
 import { MainStatus } from "src/constants/maintenance.const";
-import { CarInfo, Customer, Maintenance } from "src/models/maintenance.entity";
+import {
+  MainCar,
+  MainCustomer,
+  Maintenance,
+} from "src/models/maintenance.entity";
 import { deleteKeyJson, trim } from "src/modules/commonModule";
 
 const MaintenanceStored: NextPage = () => {
@@ -82,7 +86,7 @@ const MaintenanceStored: NextPage = () => {
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   // 차량 조회 초기값
-  const carInit: CarInfo = {
+  const carInit: MainCar = {
     name: "",
     model: "",
     age: "",
@@ -92,7 +96,7 @@ const MaintenanceStored: NextPage = () => {
     distance: "",
   };
 
-  const cusInit: Customer = {
+  const cusInit: MainCustomer = {
     name: "",
     phoneNumber: "",
   };
@@ -101,8 +105,8 @@ const MaintenanceStored: NextPage = () => {
    * 2. State settings
    *********************************************************************/
   const [searchCarText, setSearchCarText] = useState<string>("");
-  const [carInfo, setCarInfo] = useState<CarInfo>(carInit); // 차량정보
-  const [cusInfo, setCusInfo] = useState<Customer>(cusInit); // 고객정보
+  const [carInfo, setCarInfo] = useState<MainCar>(carInit); // 차량정보
+  const [cusInfo, setCusInfo] = useState<MainCustomer>(cusInit); // 고객정보
   const [showCar, setShowCar] = useState<boolean>(false); // 차량검색 후 정보표시
   /*********************************************************************
    * 3. Handlers
@@ -130,7 +134,7 @@ const MaintenanceStored: NextPage = () => {
    * 차량 조회 handler
    * @param data
    */
-  const onSearchCarHandler: SubmitHandler<Partial<CarInfo>> = (data) => {
+  const onSearchCarHandler: SubmitHandler<Partial<MainCar>> = (data) => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
