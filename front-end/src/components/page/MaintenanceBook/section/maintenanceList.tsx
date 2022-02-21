@@ -150,10 +150,12 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
       [e.target.name]: e.target.value,
     });
   };
-
-  const keyboardHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    console.log(e);
+  const onKeyHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter") {
+      props.findDocHandler(1);
+    }
   };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -171,10 +173,14 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  // console.log(searchFrom, "~", searchTo);
 
   return (
-    <WholeWrapper onkeydown={keyboardHandler}>
+    <WholeWrapper
+      tabIndex="0"
+      onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => {
+        onKeyHandler(e);
+      }}
+    >
       <RsWrapper>
         <CommonTitleWrapper>
           <CommonTitle>정비장부</CommonTitle>
