@@ -59,6 +59,7 @@ import {
 import {
   MainCar,
   MainCustomer,
+  MainPrice,
   Maintenance,
   MainWork,
 } from "src/models/maintenance.entity";
@@ -99,6 +100,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     },
   ];
 
+  const priceInit: Partial<MainPrice> = {
+    partsSum: 0,
+    wageSum: 0,
+    sum: 0,
+    vat: 0,
+    total: 0,
+  };
+
   let inputRef = useRef<HTMLInputElement[]>([]);
 
   /*********************************************************************
@@ -107,10 +116,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [modalOption, setModalOption] = useState<string>(""); // modal 창 옵션
   const [mtInfo, setMtInfo] = useState<Maintenance>(props.data.mtData); // 해당 정비내역 정보
-  const [taxCheck, setTaxCheck] = useState<boolean>(false); // 부가세 체크여부
+  const [vatCheck, setVatCheck] = useState<boolean>(false); // 부가세 체크여부
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
-  const [inputWork, setInputWork] = useState<MainWork>(workInit[0]); // 부품 input
   const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
+  const [inputSum, setInputSum] = useState<number[]>([0]); // 부품 input: 계
+  const [price, setPrice] = useState<Partial<MainPrice>>(priceInit); // 가격정보
   const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
     props.data.setList.docs
   ); // 전체 세트 항목
@@ -137,6 +147,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     setCellCount(workList.length * 7);
   }, [workList]);
 
+  console.log(props.data.allParts.docs);
+
   /**
    * modal 창 닫기 기능
    */
@@ -162,9 +174,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "ArrowDown") {
       inputRef.current[idx + 7].focus();
     }
-
-    if (e.key === "Enter" || e.key === "ArrowRight") {
-    }
   };
 
   /**
@@ -176,25 +185,106 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "Enter" || e.key === "ArrowRight") {
       if (idx === cellCount - 1) {
         setWorkList(workList.concat(workInit));
+        setInputSum(inputSum.concat([0]));
       }
     }
     if (e.key === "ArrowDown") {
       if (idx >= cellCount - 7) {
         setWorkList(workList.concat(workInit));
+        setInputSum(inputSum.concat([0]));
       }
     }
   };
-
+  /**
+   * 정비내역 input handler
+   * @param e
+   * @param idx
+   */
   const onChangeInputArr = (
     e: React.ChangeEvent<HTMLInputElement>,
     idx: number
   ) => {
-    setInputWork({ ...inputWork, [e.target.name]: e.target.value });
-    setWorkList(workList.splice(idx, 1, inputWork));
+    switch (e.target.name) {
+      case "price":
+      case "quantity":
+      case "wage":
+        if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
+          return setWorkList(
+            workList.map((item, index) =>
+              index === idx ? { ...item, [e.target.name]: 0 } : item
+            )
+          );
+        } else {
+          return setWorkList(
+            workList.map((item, index) =>
+              index === idx
+                ? { ...item, [e.target.name]: parseInt(e.target.value) }
+                : item
+            )
+          );
+        }
+
+      default:
+        if (e.target.name === "name") {
+          const partOne: Part[] = props.data.allParts.docs.filter(
+            (item: Part) => e.target.value === item.name
+          );
+          return setWorkList(
+            workList.map((item, index) =>
+              index === idx
+                ? {
+                    ...item,
+                    name: e.target.value,
+                    tsCode: partOne[0]?.tsCode || "",
+                  }
+                : item
+            )
+          );
+        }
+        return setWorkList(
+          workList.map((item, index) =>
+            index === idx ? { ...item, [e.target.name]: e.target.value } : item
+          )
+        );
+    }
   };
 
-  // console.log(inputWork);
-  console.log(props);
+  /**
+   * 정비내역 값 계산을 위한 handler
+   */
+  useEffect(() => {
+    let partsSum = 0;
+    let wageSum = 0;
+    let sum1 = 0;
+    let sum2 = 0;
+    let vat = 0;
+
+    setInputSum(
+      inputSum.map((num, index) => {
+        let i = index;
+        return index === i ? workList[i].price * workList[i].quantity : num;
+      })
+    );
+
+    for (let i = 0; i < workList.length; i++) {
+      partsSum += workList[i].price * workList[i].quantity;
+      wageSum += workList[i].wage;
+      sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
+    }
+    sum2 = vatCheck ? sum1 * 0.9 : sum1;
+    vat = vatCheck ? sum1 - sum2 : sum1 * 0.1;
+
+    setPrice({
+      ...price,
+      partsSum: partsSum,
+      wageSum: wageSum,
+      sum: parseInt(sum2.toString().split(".")[0]),
+      vat: parseInt(vat.toString().split(".")[0]),
+      total: sum2 + vat,
+    });
+  }, [workList, vatCheck]);
+
+  // console.log("part", props.data.allParts.docs);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -604,7 +694,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                     <CheckInput
                       type="checkbox"
                       onChange={() => {
-                        setTaxCheck(!taxCheck);
+                        setVatCheck(!vatCheck);
                       }}
                     />
                     <CheckMark></CheckMark>
@@ -662,7 +752,21 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             onKeyUpHandler(e, (idx + 1) * 7 - 7)
                           }
                           value={data.name}
+                          name="name"
+                          list="worklist"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
+                        <datalist id="worklist">
+                          {props.data.allParts.docs.map(
+                            (item: Part, idx: number) => {
+                              return <option key={idx} value={item.name} />;
+                            }
+                          )}
+                        </datalist>
                       </TableRowLIST>
                       <TableRowLIST width={`15%`}>
                         <TextInput2
@@ -678,26 +782,23 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             onKeyUpHandler(e, (idx + 1) * 7 - 6)
                           }
                           value={data.tsCode}
+                          name="tsCode"
+                          readOnly
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`14%`}>
-                        {/* <TextInput2
-                          type="text"
+                        <Combo
+                          width={`100%`}
+                          value={data.type}
                           ref={(elem: HTMLInputElement) =>
                             (inputRef.current[(idx + 1) * 7 - 5] = elem)
                           }
-                          width={`100%`}
                           onKeyDown={(e: KeyboardEvent) =>
                             onKeyDownhandler(e, (idx + 1) * 7 - 5)
                           }
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 5)
                           }
-                          value={data.type}
-                        /> */}
-                        <Combo
-                          width={`800px`}
-                          value={data.type}
                           name="type"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
@@ -727,7 +828,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 4)
                           }
-                          value={data.price}
+                          value={data.price.toLocaleString()}
+                          name="price"
+                          ㅣㄴ
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`14%`}>
@@ -743,7 +851,13 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 3)
                           }
-                          value={data.quantity}
+                          value={data.quantity.toLocaleString()}
+                          name="quantity"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`14%`}>
@@ -759,7 +873,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 2)
                           }
-                          value={data.price * data.quantity}
+                          value={inputSum[idx].toLocaleString()}
+                          name="inputSum"
+                          readOnly
                         />
                       </TableRowLIST>
                       <TableRowLIST width={`8%`}>
@@ -775,7 +891,13 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 1)
                           }
-                          value={data.wage}
+                          value={data.wage.toLocaleString()}
+                          name="wage"
+                          onChange={(
+                            e: React.ChangeEvent<HTMLInputElement>
+                          ) => {
+                            onChangeInputArr(e, idx);
+                          }}
                         />
                       </TableRowLIST>
                     </TableRow>
