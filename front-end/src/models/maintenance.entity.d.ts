@@ -11,7 +11,6 @@ export declare class MainCar {
 }
 export declare class MainCustomer {
     phoneNumber: string;
-    fullName?: string[];
     name?: string;
     _oID?: string;
 }
