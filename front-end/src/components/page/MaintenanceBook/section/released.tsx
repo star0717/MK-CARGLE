@@ -158,6 +158,17 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
+   * 열 삭제 handler
+   * @param idx
+   */
+  const onDeleteRowHandler = (idx: number) => {
+    if (workList.length > 1) {
+      setInputSum(inputSum.filter((data, index) => idx !== index));
+      setWorkList(workList.filter((data, index) => idx !== index));
+    }
+  };
+
+  /**
    * 키 이벤트 handler
    * @param e
    * @param idx
@@ -740,10 +751,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <TableWrapper minHeight={`auto`}>
               <TableHead>
-                <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>국토부</TableHeadLIST>
+                <TableHeadLIST width={`3%`}></TableHeadLIST>
+                <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>국토부</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>단가</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>단가</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>수량</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
@@ -753,7 +765,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   {workList.map((data, idx) => {
                     return (
                       <TableRow key={idx} kindOf={`noHover`}>
-                        <TableRowLIST width={`15%`}>
+                        <TableRowLIST width={`3%`}>
+                          <IconButton
+                            type="button"
+                            shadow={`none`}
+                            bgColor={`inherit`}
+                            margin={`0px`}
+                            onClick={() => {
+                              onDeleteRowHandler(idx);
+                            }}
+                          >
+                            <AiFillCloseCircle />
+                          </IconButton>
+                        </TableRowLIST>
+                        <TableRowLIST width={`14%`}>
                           <TextInput2
                             type="text"
                             ref={(elem: HTMLInputElement) =>
@@ -783,7 +808,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             )}
                           </datalist>
                         </TableRowLIST>
-                        <TableRowLIST width={`15%`}>
+                        <TableRowLIST width={`14%`}>
                           <TextInput2
                             type="text"
                             ref={(elem: HTMLInputElement) =>
@@ -830,7 +855,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             })}
                           </Combo>
                         </TableRowLIST>
-                        <TableRowLIST width={`15%`}>
+                        <TableRowLIST width={`14%`}>
                           <TextInput2
                             type="text"
                             ref={(elem: HTMLInputElement) =>
