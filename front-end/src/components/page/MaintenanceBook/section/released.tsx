@@ -307,19 +307,19 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       <RsWrapper>
         <Wrapper>
           <Wrapper
-            padding={`20px`}
-            width={`400px`}
-            margin={`0px 0px 10px 600px`}
+            padding={`0px 200px 20px 320px`}
+            // padding={`200px`}
+            // margin={`0px 0px 10px 600px`}
             al={`flex-start`}
           >
-            <SpeechBubbleRight fontSize={`20px`}>
-              "현재 정비 단계는 출고완료입니다."
-            </SpeechBubbleRight>
+            <SpeechBubbleLeft fontSize={`20px`}>
+              "현재 정비 단계는 차량입고입니다."
+            </SpeechBubbleLeft>
           </Wrapper>
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`complete`}>
-                <GoCheck />
+                <RiFileList2Fill />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량선택
@@ -327,8 +327,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`complete`}>
-                <GoCheck />
+              <JoinStepBar kindOf={`progress`}>
+                <FaCarAlt />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량입고
@@ -336,15 +336,15 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`complete`}>{<GoCheck />}</JoinStepBar>
+              <JoinStepBar kindOf={`before`}>{<TiSpanner />}</JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>
             </Wrapper>
             <JoinStepBar kindOf={"line2"}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`complete`}>
-                <GoCheck />
+              <JoinStepBar kindOf={`before`}>
+                <BsFillFileEarmarkCheckFill />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비완료
@@ -352,7 +352,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`progress`}>
+              <JoinStepBar kindOf={`before`}>
                 <FaFlagCheckered />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
@@ -375,9 +375,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   shadow={`none`}
                   onClick={() => {
-                    router.push(
-                      `${UseLink.MAINTENANCE_BOOK}?step=${MainStatus.STORED}`
-                    );
+                    router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
                   }}
                 >
                   <AiFillCloseCircle />
@@ -521,24 +519,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 >
                   서류발급
                 </SmallButton>
-                <SmallButton
-                  type="button"
-                  kindOf={`default`}
-                  onClick={() => {
-                    console.log("서류");
-                  }}
-                >
-                  국토부
-                </SmallButton>
-                <SmallButton
-                  type="button"
-                  kindOf={`default`}
-                  onClick={() => {
-                    console.log("서류");
-                  }}
-                >
-                  결재정보
-                </SmallButton>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -559,14 +539,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비기간
                   </Text>
-                  <TextInput2
-                    width={`150px`}
-                    type="text"
-                    value={
-                      dayjs(mtInfo.dates.startMa).format("YYYY-MM-DD") || "-"
-                    }
-                    disabled
-                  />
+                  <TextInput2 width={`150px`} type="date" disabled />
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
@@ -574,14 +547,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     ~
                   </Text>
-                  <TextInput2
-                    width={`150px`}
-                    type="text"
-                    value={
-                      dayjs(mtInfo.dates.endMa).format("YYYY-MM-DD") || "-"
-                    }
-                    disabled
-                  />
+                  <TextInput2 width={`150px`} type="date" disabled />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -591,14 +557,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     차량출고일
                   </Text>
-                  <TextInput2
-                    width={`150px`}
-                    type="text"
-                    value={
-                      dayjs(mtInfo.dates.released).format("YYYY-MM-DD") || "-"
-                    }
-                    disabled
-                  />
+                  <TextInput2 width={`150px`} type="date" disabled />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -626,38 +585,22 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비구분
                   </Text>
-                  <Combo
-                    width={`150px`}
-                    margin={`0px`}
-                    value={mtInfo.costomerType}
-                    disabled
-                  >
-                    <option value="n">일반</option>
-                    <option value="i">보험</option>
+                  <Combo width={`150px`} margin={`0px`} disabled>
+                    <option value="1">일반</option>
                   </Combo>
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
                     width={`16px`}
                   ></Text>
-                  <TextInput2
-                    type="text"
-                    width={`150px`}
-                    placeholder={`보험사명 입력란`}
-                    disabled
-                  />
+                  <TextInput2 type="text" width={`150px`} disabled />
                 </Wrapper>
                 <Wrapper
                   dr={`row`}
                   ju={`flex-end`}
                   padding={`0px 0px 0px 10px`}
                 >
-                  <TextInput2
-                    type="text"
-                    width={`240px`}
-                    placeholder={`보험번호 입력란`}
-                    disabled
-                  />
+                  <TextInput2 type="text" width={`240px`} disabled />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -726,10 +669,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <TableWrapper minHeight={`auto`}>
               <TableHead>
-                <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>국토부</TableHeadLIST>
+                <TableHeadLIST width={`3%`}></TableHeadLIST>
+                <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>국토부</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>단가</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>단가</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>수량</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
@@ -738,7 +682,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 {workList.map((data, idx) => {
                   return (
                     <TableRow key={idx} kindOf={`noHover`}>
-                      <TableRowLIST width={`15%`}>
+                      <TableRowLIST width={`3%`}>
+                        <IconButton
+                          type="button"
+                          shadow={`none`}
+                          bgColor={`inherit`}
+                          margin={`0px`}
+                          onClick={() => {
+                            onDeleteRowHandler(idx);
+                          }}
+                        >
+                          <AiFillCloseCircle />
+                        </IconButton>
+                      </TableRowLIST>
+                      <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
                           ref={(elem: HTMLInputElement) =>
@@ -753,14 +710,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           }
                           value={data.name}
                           name="name"
-                          list="worklist"
+                          list="workList"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
                             onChangeInputArr(e, idx);
                           }}
                         />
-                        <datalist id="worklist">
+                        <datalist id="workList">
                           {props.data.allParts.docs.map(
                             (item: Part, idx: number) => {
                               return <option key={idx} value={item.name} />;
@@ -768,7 +725,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           )}
                         </datalist>
                       </TableRowLIST>
-                      <TableRowLIST width={`15%`}>
+                      <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
                           ref={(elem: HTMLInputElement) =>
@@ -815,7 +772,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           })}
                         </Combo>
                       </TableRowLIST>
-                      <TableRowLIST width={`15%`}>
+                      <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
                           ref={(elem: HTMLInputElement) =>
@@ -830,7 +787,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           }
                           value={data.price.toLocaleString()}
                           name="price"
-                          ㅣㄴ
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
@@ -906,34 +862,57 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </TableBody>
             </TableWrapper>
             <Wrapper dr={`row`} ju={`flex-end`}>
-              <Text>부품계 : 0 </Text>
+              <Text>부품계 : {price.partsSum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>기술료계 : 0 </Text>
+              <Text>기술료계 : {price.wageSum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>합계 : 0 </Text>
+              <Text>합계 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>부가세 : 0</Text>
+              <Text>부가세 : {price.vat.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text fontSize={`24px`}>
-                총계 <ColorSpan color={`#314FA5`}>0</ColorSpan>
+              <Text fontSize={`24px`}>총계</Text>
+              <Text
+                fontSize={`24px`}
+                fontWeight={`800`}
+                color={`#314FA5`}
+                margin={`0px 10px`}
+              >
+                {price.total.toLocaleString()}
               </Text>
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
               <SmallButton
                 form="carInfoForm"
                 type="submit"
+                kindOf={`ghost`}
+                disabled
+                width={`100%`}
+              >
+                이전단계
+              </SmallButton>
+              <SmallButton
+                form="carInfoForm"
+                type="submit"
                 kindOf={`default`}
                 width={`100%`}
               >
-                정비내역 수정
+                저장
+              </SmallButton>
+              <SmallButton
+                form="carInfoForm"
+                type="submit"
+                kindOf={`default`}
+                width={`100%`}
+              >
+                다음단계
               </SmallButton>
             </Wrapper>
           </Wrapper>
