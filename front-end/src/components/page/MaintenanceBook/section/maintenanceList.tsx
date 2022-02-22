@@ -226,6 +226,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 margin={`0px 10px`}
                 onClick={() => {
                   onResetHandler();
+                  setReset(reset + 1);
                 }}
               >
                 검색 조건 초기화
@@ -274,6 +275,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     sFrom: e.target.value,
                   });
                   onSearchHandler(e);
+                  setReset(reset + 1);
                 }}
                 width={`220px`}
               />
@@ -290,6 +292,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     sTo: e.target.value,
                   });
                   onSearchHandler(e);
+                  setReset(reset + 1);
                 }}
                 width={`220px`}
               />
@@ -310,6 +313,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     costomerType: e.target.value,
                   });
                   onSearchHandler(e);
+                  setReset(reset + 1);
                 }}
               >
                 <option value="all">전체</option>
@@ -333,6 +337,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                     status: e.target.value,
                   });
                   onSearchHandler(e);
+                  setReset(reset + 1);
                 }}
               >
                 <option value="all">전체</option>
