@@ -60,6 +60,7 @@ import MtPartsModal from "./partsModal";
 import MtSetModal from "./setModal";
 import { Part } from "src/models/part.entity";
 import dayjs from "dayjs";
+import { GoCheck } from "react-icons/go";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -301,20 +302,18 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     <WholeWrapper>
       <RsWrapper>
         <Wrapper>
-          <Wrapper
+          {/* <Wrapper
             padding={`0px 200px 20px 320px`}
-            // padding={`200px`}
-            // margin={`0px 0px 10px 600px`}
             al={`flex-start`}
           >
             <SpeechBubbleLeft fontSize={`20px`}>
               "현재 정비 단계는 차량입고입니다."
             </SpeechBubbleLeft>
-          </Wrapper>
+          </Wrapper> */}
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`complete`}>
-                <RiFileList2Fill />
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량선택
