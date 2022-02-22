@@ -139,15 +139,18 @@ const MaintenanceCreate: NextPage = () => {
    * 차량 입고 handler
    * @param data
    */
-  const onCarStoredHandler: SubmitHandler<Partial<Maintenance>> = (data) => {
-    const MaintenanceData: Partial<Maintenance> = {
+  const onCarStoredHandler: SubmitHandler<Partial<Maintenance>> = async (
+    data
+  ) => {
+    const maintenanceData: Partial<Maintenance> = {
       car: { ...carInfo, regNumber: searchCarText },
       customer: { ...cusInfo },
     };
-    deleteKeyJson(MaintenanceData.car);
-    deleteKeyJson(MaintenanceData.customer);
+    deleteKeyJson(maintenanceData.car);
+    deleteKeyJson(maintenanceData.customer);
+    console.log(maintenanceData);
 
-    dispatch(_aPostMaintenancesStore(MaintenanceData)).then(
+    await dispatch(_aPostMaintenancesStore(maintenanceData)).then(
       (res: _iMaintenancesOne) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
         router.push(

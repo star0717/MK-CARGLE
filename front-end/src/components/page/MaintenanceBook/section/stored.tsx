@@ -39,13 +39,19 @@ import { basicRegEx, formRegEx } from "src/validation/regEx";
 import {
   getWorkersListAction,
   _aGetMaintenancesCarInfo,
+  _aPatchMaintenancesStart,
   _aPostMaintenancesStore,
 } from "store/action/user.action";
-import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
+import {
+  _iGetMaintenancesCarInfo,
+  _iMaintenances,
+  _iMaintenancesOne,
+} from "store/interfaces";
 import {
   getStrMainPartsType,
   MainPartsType,
   mainPartsTypeList,
+  MainStatus,
 } from "src/constants/maintenance.const";
 import {
   Maintenance,
@@ -273,6 +279,39 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       total: Number((sum2 + vat).toString().split(".")[0]),
     });
   }, [workList, vatCheck]);
+
+  /**
+   * 차량 저장 handler
+   */
+  const onSaveWorkInfo = async (opt: boolean) => {
+    const mainWorkList: MainWork[] = workList.filter(
+      (item) => item.name !== ""
+    );
+    const maintenanceData: Partial<Maintenance> = {
+      ...mtInfo,
+      workerName: props.tokenValue.uName,
+      works: mainWorkList,
+    };
+
+    await dispatch(
+      _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
+    ).then(
+      (res: _iMaintenancesOne) => {
+        if (res.payload) {
+          if (opt) {
+            router.push(
+              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
+            );
+          } else {
+            return alert("정비내역을 저장했습니다.");
+          }
+        }
+      },
+      (err) => {
+        alert("정비내역 저장에 실패했습니다.");
+      }
+    );
+  };
 
   /*********************************************************************
    * 4. Props settings
@@ -979,10 +1018,24 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               >
                 이전단계
               </SmallButton>
-              <SmallButton type="button" kindOf={`default`} width={`288px`}>
+              <SmallButton
+                type="button"
+                kindOf={`default`}
+                width={`288px`}
+                onClick={() => {
+                  onSaveWorkInfo(false);
+                }}
+              >
                 저장
               </SmallButton>
-              <SmallButton type="button" kindOf={`default`} width={`288px`}>
+              <SmallButton
+                type="button"
+                kindOf={`default`}
+                width={`288px`}
+                onClick={() => {
+                  onSaveWorkInfo(true);
+                }}
+              >
                 다음단계
               </SmallButton>
             </Wrapper>
