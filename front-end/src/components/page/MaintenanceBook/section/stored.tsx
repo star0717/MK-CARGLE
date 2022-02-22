@@ -382,23 +382,29 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             >
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   주행거리
                 </Text>
-                <TextInput2 type="text" value={mtInfo.car.distance} readOnly />
+                <TextInput2
+                  type="text"
+                  width={`180px`}
+                  value={mtInfo.car.distance}
+                  readOnly
+                />
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   고객명
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={
                     mtInfo.customer.name
@@ -410,13 +416,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   전화번호
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.customer.phoneNumber}
                   readOnly
@@ -424,23 +431,29 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   차량명
                 </Text>
-                <TextInput2 type="text" value={mtInfo.car.name} readOnly />
+                <TextInput2
+                  type="text"
+                  width={`180px`}
+                  value={mtInfo.car.name}
+                  readOnly
+                />
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   모델명
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.car.model || "-"}
                   readOnly
@@ -448,13 +461,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   연식
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.car.age || "-"}
                   readOnly
@@ -462,13 +476,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   차대번호
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.car.idNumber || "-"}
                   readOnly
@@ -476,17 +491,31 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   등록일자
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.car.regDate || "-"}
                   readOnly
                 />
+              </Wrapper>
+              <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
+                <SmallButton width={`48%`} kindOf={`default`}>
+                  정비요청사항
+                </SmallButton>
+                <SmallButton width={`48%`} kindOf={`default`}>
+                  차량정보공유
+                </SmallButton>
+              </Wrapper>
+              <Wrapper>
+                <SmallButton width={`100%`} kindOf={`default`}>
+                  정비사진확인
+                </SmallButton>
               </Wrapper>
             </Wrapper>
           </Wrapper>
@@ -756,7 +785,29 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                         <datalist id="workList">
                           {props.data.allParts.docs.map(
                             (item: Part, idx: number) => {
-                              return <option key={idx} value={item.name} />;
+                              return (
+                                <Wrapper key={idx}>
+                                  {item.nickName.length >= 1 ? (
+                                    item.nickName.map(
+                                      (nickname: string, iidx: number) => {
+                                        return (
+                                          <option
+                                            key={`${idx}.${iidx}`}
+                                            label={nickname}
+                                            value={item.name}
+                                          />
+                                        );
+                                      }
+                                    )
+                                  ) : (
+                                    <option
+                                      key={idx}
+                                      label={item.nickName[0]}
+                                      value={item.name}
+                                    />
+                                  )}
+                                </Wrapper>
+                              );
                             }
                           )}
                         </datalist>
