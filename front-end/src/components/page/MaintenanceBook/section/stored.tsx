@@ -231,7 +231,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     }
   };
 
-  console.log(workList[0].code);
+  console.log(workList[0].quantity);
 
   /**
    * 열 삭제 handler
