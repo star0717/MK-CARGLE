@@ -37,6 +37,7 @@ import { RiFileList2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
 import {
+  getWorkersListAction,
   _aGetMaintenancesCarInfo,
   _aPostMaintenancesStore,
 } from "store/action/user.action";
@@ -138,8 +139,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "Enter" || e.key === "ArrowRight") {
-      inputRef.current[idx + 1].focus();
+    if (e.key === "ArrowRight") {
+      if (idx !== cellCount - 1) inputRef.current[idx + 1].focus();
     }
     if (e.key === "ArrowLeft") {
       if (idx !== 0) inputRef.current[idx - 1].focus();
@@ -147,7 +148,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "ArrowUp") {
       if (idx >= 7) inputRef.current[idx - 7].focus();
     }
-    if (e.key === "ArrowDown") {
+    if (e.key === "Enter" || e.key === "ArrowDown") {
       inputRef.current[idx + 7].focus();
     }
   };
@@ -158,13 +159,13 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "Enter" || e.key === "ArrowRight") {
-      if (idx === cellCount - 1) {
-        setWorkList(workList.concat(workInit));
-        setInputSum(inputSum.concat([0]));
-      }
-    }
-    if (e.key === "ArrowDown") {
+    // if (e.key === "ArrowRight") {
+    //   if (idx === cellCount - 1) {
+    //     setWorkList(workList.concat(workInit));
+    //     setInputSum(inputSum.concat([0]));
+    //   }
+    // }
+    if (e.key === "Enter" || e.key === "ArrowDown") {
       if (idx >= cellCount - 7) {
         setWorkList(workList.concat(workInit));
         setInputSum(inputSum.concat([0]));
@@ -247,7 +248,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onDeleteRowHandler = (idx: number) => {
-    if (idx !== 0) {
+    if (workList.length > 1) {
       setInputSum(inputSum.filter((data, index) => idx !== index));
       setWorkList(workList.filter((data, index) => idx !== index));
     }
