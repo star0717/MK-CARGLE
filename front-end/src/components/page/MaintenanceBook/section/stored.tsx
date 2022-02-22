@@ -124,10 +124,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
 
-  // useEffect(() => {
-  //   setCellCount(workList.length * 7);
-  // }, [workList]);
-
   /**
    * modal 창 닫기 기능
    */
@@ -136,7 +132,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
-   * 키 이벤트 handler
+   * keyup event handler
    * @param e
    * @param idx
    */
@@ -149,7 +145,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
-   * 키 이벤트 handler
+   * keydown event handler
    * @param e
    * @param idx
    */
@@ -743,209 +739,211 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
-              <TableBody minHeight={`130px`}>
-                {workList.map((data, idx) => {
-                  return (
-                    <TableRow key={idx} kindOf={`noHover`}>
-                      <TableRowLIST width={`3%`}>
-                        <IconButton
-                          type="button"
-                          shadow={`none`}
-                          bgColor={`inherit`}
-                          margin={`0px`}
-                          onClick={() => {
-                            onDeleteRowHandler(idx);
-                          }}
-                        >
-                          <AiFillCloseCircle />
-                        </IconButton>
-                      </TableRowLIST>
-                      <TableRowLIST width={`14%`}>
-                        <TextInput2
-                          type="text"
-                          ref={(elem: HTMLInputElement) =>
-                            (inputRef.current[(idx + 1) * 7 - 7] = elem)
-                          }
-                          width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
-                            onKeyDownhandler(e, (idx + 1) * 7 - 7)
-                          }
-                          onKeyUp={(e: KeyboardEvent) =>
-                            onKeyUpHandler(e, (idx + 1) * 7 - 7)
-                          }
-                          value={data.name}
-                          name="name"
-                          list="workList"
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeInputArr(e, idx);
-                          }}
-                        />
-                        <datalist id="workList">
-                          {props.data.allParts.docs.map(
-                            (item: Part, idx: number) => {
-                              return (
-                                <Wrapper key={idx}>
-                                  {item.nickName.length >= 1 ? (
-                                    item.nickName.map(
-                                      (nickname: string, iidx: number) => {
-                                        return (
-                                          <option
-                                            key={`${idx}.${iidx}`}
-                                            label={nickname}
-                                            value={item.name}
-                                          />
-                                        );
-                                      }
-                                    )
-                                  ) : (
-                                    <option
-                                      key={idx}
-                                      label={item.nickName[0]}
-                                      value={item.name}
-                                    />
-                                  )}
-                                </Wrapper>
-                              );
+              <Wrapper overflow={`auto`} height={`262px`}>
+                <TableBody minHeight={`262px`}>
+                  {workList.map((data, idx) => {
+                    return (
+                      <TableRow key={idx} kindOf={`noHover`}>
+                        <TableRowLIST width={`3%`}>
+                          <IconButton
+                            type="button"
+                            shadow={`none`}
+                            bgColor={`inherit`}
+                            margin={`0px`}
+                            onClick={() => {
+                              onDeleteRowHandler(idx);
+                            }}
+                          >
+                            <AiFillCloseCircle />
+                          </IconButton>
+                        </TableRowLIST>
+                        <TableRowLIST width={`14%`}>
+                          <TextInput2
+                            type="text"
+                            ref={(elem: HTMLInputElement) =>
+                              (inputRef.current[(idx + 1) * 7 - 7] = elem)
                             }
-                          )}
-                        </datalist>
-                      </TableRowLIST>
-                      <TableRowLIST width={`14%`}>
-                        <TextInput2
-                          type="text"
-                          ref={(elem: HTMLInputElement) =>
-                            (inputRef.current[(idx + 1) * 7 - 6] = elem)
-                          }
-                          width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
-                            onKeyDownhandler(e, (idx + 1) * 7 - 6)
-                          }
-                          onKeyUp={(e: KeyboardEvent) =>
-                            onKeyUpHandler(e, (idx + 1) * 7 - 6)
-                          }
-                          value={data.tsCode}
-                          name="tsCode"
-                          readOnly
-                        />
-                      </TableRowLIST>
-                      <TableRowLIST width={`14%`}>
-                        <Combo
-                          width={`100%`}
-                          value={data.type}
-                          ref={(elem: HTMLInputElement) =>
-                            (inputRef.current[(idx + 1) * 7 - 5] = elem)
-                          }
-                          name="type"
-                          onKeyDown={(e: KeyboardEvent) => {
-                            // if (e.key === "ArrowDown") {
-                            //   return "enter";
-                            // }
-                          }}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeInputArr(e, idx, (idx + 1) * 7 - 5);
-                          }}
-                        >
-                          {mainPartsTypeList.map((item: MainPartsType) => {
-                            return (
-                              <option key={item} value={item}>
-                                {getStrMainPartsType(item)}
-                              </option>
-                            );
-                          })}
-                        </Combo>
-                      </TableRowLIST>
-                      <TableRowLIST width={`14%`}>
-                        <TextInput2
-                          type="text"
-                          ref={(elem: HTMLInputElement) =>
-                            (inputRef.current[(idx + 1) * 7 - 4] = elem)
-                          }
-                          width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
-                            onKeyDownhandler(e, (idx + 1) * 7 - 4)
-                          }
-                          onKeyUp={(e: KeyboardEvent) =>
-                            onKeyUpHandler(e, (idx + 1) * 7 - 4)
-                          }
-                          value={data.price.toLocaleString()}
-                          name="price"
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeInputArr(e, idx);
-                          }}
-                        />
-                      </TableRowLIST>
-                      <TableRowLIST width={`14%`}>
-                        <TextInput2
-                          type="text"
-                          ref={(elem: HTMLInputElement) =>
-                            (inputRef.current[(idx + 1) * 7 - 3] = elem)
-                          }
-                          width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
-                            onKeyDownhandler(e, (idx + 1) * 7 - 3)
-                          }
-                          onKeyUp={(e: KeyboardEvent) =>
-                            onKeyUpHandler(e, (idx + 1) * 7 - 3)
-                          }
-                          value={data.quantity.toLocaleString()}
-                          name="quantity"
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeInputArr(e, idx);
-                          }}
-                        />
-                      </TableRowLIST>
-                      <TableRowLIST width={`14%`}>
-                        <TextInput2
-                          type="text"
-                          ref={(elem: HTMLInputElement) =>
-                            (inputRef.current[(idx + 1) * 7 - 2] = elem)
-                          }
-                          width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
-                            onKeyDownhandler(e, (idx + 1) * 7 - 2)
-                          }
-                          onKeyUp={(e: KeyboardEvent) =>
-                            onKeyUpHandler(e, (idx + 1) * 7 - 2)
-                          }
-                          value={data.sum.toLocaleString()}
-                          name="inputSum"
-                          readOnly
-                        />
-                      </TableRowLIST>
-                      <TableRowLIST width={`8%`}>
-                        <TextInput2
-                          type="text"
-                          ref={(elem: HTMLInputElement) =>
-                            (inputRef.current[(idx + 1) * 7 - 1] = elem)
-                          }
-                          width={`100%`}
-                          onKeyDown={(e: KeyboardEvent) =>
-                            onKeyDownhandler(e, (idx + 1) * 7 - 1)
-                          }
-                          onKeyUp={(e: KeyboardEvent) =>
-                            onKeyUpHandler(e, (idx + 1) * 7 - 1)
-                          }
-                          value={data.wage.toLocaleString()}
-                          name="wage"
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeInputArr(e, idx);
-                          }}
-                        />
-                      </TableRowLIST>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
+                            width={`100%`}
+                            onKeyDown={(e: KeyboardEvent) =>
+                              onKeyDownhandler(e, (idx + 1) * 7 - 7)
+                            }
+                            onKeyUp={(e: KeyboardEvent) =>
+                              onKeyUpHandler(e, (idx + 1) * 7 - 7)
+                            }
+                            value={data.name}
+                            name="name"
+                            list="workList"
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeInputArr(e, idx);
+                            }}
+                          />
+                          <datalist id="workList">
+                            {props.data.allParts.docs.map(
+                              (item: Part, idx: number) => {
+                                return (
+                                  <Wrapper key={idx}>
+                                    {item.nickName.length >= 1 ? (
+                                      item.nickName.map(
+                                        (nickname: string, iidx: number) => {
+                                          return (
+                                            <option
+                                              key={`${idx}.${iidx}`}
+                                              label={nickname}
+                                              value={item.name}
+                                            />
+                                          );
+                                        }
+                                      )
+                                    ) : (
+                                      <option
+                                        key={idx}
+                                        label={item.nickName[0]}
+                                        value={item.name}
+                                      />
+                                    )}
+                                  </Wrapper>
+                                );
+                              }
+                            )}
+                          </datalist>
+                        </TableRowLIST>
+                        <TableRowLIST width={`14%`}>
+                          <TextInput2
+                            type="text"
+                            ref={(elem: HTMLInputElement) =>
+                              (inputRef.current[(idx + 1) * 7 - 6] = elem)
+                            }
+                            width={`100%`}
+                            onKeyDown={(e: KeyboardEvent) =>
+                              onKeyDownhandler(e, (idx + 1) * 7 - 6)
+                            }
+                            onKeyUp={(e: KeyboardEvent) =>
+                              onKeyUpHandler(e, (idx + 1) * 7 - 6)
+                            }
+                            value={data.tsCode}
+                            name="tsCode"
+                            readOnly
+                          />
+                        </TableRowLIST>
+                        <TableRowLIST width={`14%`}>
+                          <Combo
+                            width={`100%`}
+                            value={data.type}
+                            ref={(elem: HTMLInputElement) =>
+                              (inputRef.current[(idx + 1) * 7 - 5] = elem)
+                            }
+                            name="type"
+                            onKeyDown={(e: KeyboardEvent) => {
+                              // if (e.key === "ArrowDown") {
+                              //   return "enter";
+                              // }
+                            }}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeInputArr(e, idx, (idx + 1) * 7 - 5);
+                            }}
+                          >
+                            {mainPartsTypeList.map((item: MainPartsType) => {
+                              return (
+                                <option key={item} value={item}>
+                                  {getStrMainPartsType(item)}
+                                </option>
+                              );
+                            })}
+                          </Combo>
+                        </TableRowLIST>
+                        <TableRowLIST width={`14%`}>
+                          <TextInput2
+                            type="text"
+                            ref={(elem: HTMLInputElement) =>
+                              (inputRef.current[(idx + 1) * 7 - 4] = elem)
+                            }
+                            width={`100%`}
+                            onKeyDown={(e: KeyboardEvent) =>
+                              onKeyDownhandler(e, (idx + 1) * 7 - 4)
+                            }
+                            onKeyUp={(e: KeyboardEvent) =>
+                              onKeyUpHandler(e, (idx + 1) * 7 - 4)
+                            }
+                            value={data.price.toLocaleString()}
+                            name="price"
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeInputArr(e, idx);
+                            }}
+                          />
+                        </TableRowLIST>
+                        <TableRowLIST width={`14%`}>
+                          <TextInput2
+                            type="text"
+                            ref={(elem: HTMLInputElement) =>
+                              (inputRef.current[(idx + 1) * 7 - 3] = elem)
+                            }
+                            width={`100%`}
+                            onKeyDown={(e: KeyboardEvent) =>
+                              onKeyDownhandler(e, (idx + 1) * 7 - 3)
+                            }
+                            onKeyUp={(e: KeyboardEvent) =>
+                              onKeyUpHandler(e, (idx + 1) * 7 - 3)
+                            }
+                            value={data.quantity.toLocaleString()}
+                            name="quantity"
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeInputArr(e, idx);
+                            }}
+                          />
+                        </TableRowLIST>
+                        <TableRowLIST width={`14%`}>
+                          <TextInput2
+                            type="text"
+                            ref={(elem: HTMLInputElement) =>
+                              (inputRef.current[(idx + 1) * 7 - 2] = elem)
+                            }
+                            width={`100%`}
+                            onKeyDown={(e: KeyboardEvent) =>
+                              onKeyDownhandler(e, (idx + 1) * 7 - 2)
+                            }
+                            onKeyUp={(e: KeyboardEvent) =>
+                              onKeyUpHandler(e, (idx + 1) * 7 - 2)
+                            }
+                            value={data.sum.toLocaleString()}
+                            name="inputSum"
+                            readOnly
+                          />
+                        </TableRowLIST>
+                        <TableRowLIST width={`8%`}>
+                          <TextInput2
+                            type="text"
+                            ref={(elem: HTMLInputElement) =>
+                              (inputRef.current[(idx + 1) * 7 - 1] = elem)
+                            }
+                            width={`100%`}
+                            onKeyDown={(e: KeyboardEvent) =>
+                              onKeyDownhandler(e, (idx + 1) * 7 - 1)
+                            }
+                            onKeyUp={(e: KeyboardEvent) =>
+                              onKeyUpHandler(e, (idx + 1) * 7 - 1)
+                            }
+                            value={data.wage.toLocaleString()}
+                            name="wage"
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeInputArr(e, idx);
+                            }}
+                          />
+                        </TableRowLIST>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Wrapper>
             </TableWrapper>
             <Wrapper dr={`row`} ju={`flex-end`}>
               <Text>부품계 : {price.partsSum.toLocaleString()}</Text>
