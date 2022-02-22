@@ -891,7 +891,7 @@ export const TextInput2 = styled.input<any>`
   &:focus {
     outline: none;
     border: 1px solid ${(props) => props.theme.basicTheme_C};
-    background-color: red;
+    background-color: #edf2ff;
   }
 
   &:read-only:focus {
