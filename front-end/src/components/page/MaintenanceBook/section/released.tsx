@@ -306,7 +306,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     <WholeWrapper>
       <RsWrapper>
         <Wrapper>
-          <Wrapper
+          {/* <Wrapper
             padding={`20px`}
             width={`400px`}
             margin={`0px 0px 10px 600px`}
@@ -315,7 +315,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <SpeechBubbleRight fontSize={`20px`}>
               "현재 정비 단계는 출고완료입니다."
             </SpeechBubbleRight>
-          </Wrapper>
+          </Wrapper> */}
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`complete`}>
@@ -483,6 +483,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   readOnly
                 />
               </Wrapper>
+
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
                   width={`80px`}
@@ -498,11 +499,26 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 />
               </Wrapper>
             </Wrapper>
+            <Wrapper padding={`10px 0px`}>
+              <Wrapper dr={`row`} ju={`space-between`} padding={`0px 0px 10px`}>
+                <SmallButton kindOf={`default`} width={`145px`}>
+                  정비요펑사항
+                </SmallButton>
+                <SmallButton kindOf={`default`} width={`145px`}>
+                  차량정보공유
+                </SmallButton>
+              </Wrapper>
+              <Wrapper>
+                <SmallButton kindOf={`default`} width={`300px`}>
+                  정비사진확인
+                </SmallButton>
+              </Wrapper>
+            </Wrapper>
           </Wrapper>
 
           <Wrapper width={`74%`}>
             <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
-              <Wrapper dr={`row`} ju={`flex-end`}>
+              <Wrapper dr={`row`} ju={`space-between`} width={`350px`}>
                 <SmallButton
                   type="button"
                   kindOf={`default`}
@@ -541,6 +557,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 </SmallButton>
               </Wrapper>
             </Wrapper>
+
             <Wrapper
               border={`1px solid #ccc`}
               padding={`20px`}
@@ -734,7 +751,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
-              <TableBody minHeight={`130px`}>
+              <TableBody minHeight={`262px`}>
                 {workList.map((data, idx) => {
                   return (
                     <TableRow key={idx} kindOf={`noHover`}>
