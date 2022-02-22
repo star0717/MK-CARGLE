@@ -21,6 +21,7 @@ export declare class MainWork {
     type?: MainPartsType;
     price: number;
     quantity: number;
+    sum: number;
     wage: number;
 }
 export declare class MainPrice {
