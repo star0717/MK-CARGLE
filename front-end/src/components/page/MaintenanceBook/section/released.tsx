@@ -751,10 +751,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <TableWrapper minHeight={`auto`}>
               <TableHead>
-                <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>국토부</TableHeadLIST>
+                <TableHeadLIST width={`3%`}></TableHeadLIST>
+                <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>국토부</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>단가</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>단가</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>수량</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
