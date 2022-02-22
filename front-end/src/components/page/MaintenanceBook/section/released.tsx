@@ -158,6 +158,17 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
+   * 열 삭제 handler
+   * @param idx
+   */
+  const onDeleteRowHandler = (idx: number) => {
+    if (workList.length > 1) {
+      setInputSum(inputSum.filter((data, index) => idx !== index));
+      setWorkList(workList.filter((data, index) => idx !== index));
+    }
+  };
+
+  /**
    * 키 이벤트 handler
    * @param e
    * @param idx
@@ -753,7 +764,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   {workList.map((data, idx) => {
                     return (
                       <TableRow key={idx} kindOf={`noHover`}>
-                        <TableRowLIST width={`15%`}>
+                        <TableRowLIST width={`3%`}>
+                          <IconButton
+                            type="button"
+                            shadow={`none`}
+                            bgColor={`inherit`}
+                            margin={`0px`}
+                            onClick={() => {
+                              onDeleteRowHandler(idx);
+                            }}
+                          >
+                            <AiFillCloseCircle />
+                          </IconButton>
+                        </TableRowLIST>
+                        <TableRowLIST width={`14%`}>
                           <TextInput2
                             type="text"
                             ref={(elem: HTMLInputElement) =>
@@ -783,7 +807,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             )}
                           </datalist>
                         </TableRowLIST>
-                        <TableRowLIST width={`15%`}>
+                        <TableRowLIST width={`14%`}>
                           <TextInput2
                             type="text"
                             ref={(elem: HTMLInputElement) =>
@@ -830,7 +854,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             })}
                           </Combo>
                         </TableRowLIST>
-                        <TableRowLIST width={`15%`}>
+                        <TableRowLIST width={`14%`}>
                           <TextInput2
                             type="text"
                             ref={(elem: HTMLInputElement) =>
