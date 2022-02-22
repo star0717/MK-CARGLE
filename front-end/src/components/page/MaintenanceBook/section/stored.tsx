@@ -124,9 +124,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
 
-  useEffect(() => {
-    setCellCount(workList.length * 7);
-  }, [workList]);
+  // useEffect(() => {
+  //   setCellCount(workList.length * 7);
+  // }, [workList]);
 
   /**
    * modal 창 닫기 기능
@@ -142,7 +142,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    */
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
     if (e.key === "Enter") {
-      inputRef.current[idx + 7].focus();
+      if (idx % 7 === 0) return inputRef.current[idx + 2].focus();
+      if (idx % 7 === 2) return false;
+      if (idx % 7 === 4) return inputRef.current[idx + 2].focus();
+      return inputRef.current[idx + 1].focus();
     }
   };
 
@@ -153,7 +156,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    */
   const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
     if (e.key === "Enter") {
-      if (idx >= cellCount - 7) {
+      if (idx === cellCount - 1) {
         setWorkList(workList.concat(workInit));
       }
     }
@@ -175,19 +178,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             e.target.value === item.name ||
             item.nickName.includes(e.target.value)
         );
-        // if (e.target.value) {
-        //   setPartList(
-        //     props.data.allParts.docs.filter((item: Part) => {
-        //       for (let i = 0; i < item.nickName.length; i++) {
-        //         if (item.nickName[i].startsWith(e.target.value)) {
-        //           return item;
-        //         }
-        //       }
-        //     })
-        //   );
-        // } else {
-        //   setPartList(props.data.allParts.docs);
-        // }
         return setWorkList(
           workList.map((item, index) =>
             index === idx
@@ -243,10 +233,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             index === idx ? { ...item, [e.target.name]: e.target.value } : item
           )
         );
+      // return inputRef.current[idx + 1].focus();
     }
   };
-
-  console.log("워크", workList.length);
 
   /**
    * 열 삭제 handler
@@ -259,9 +248,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
-   * 정비내역 값 계산을 위한 handler
+   * 정비내역 변경 시 일어나는 event handler
+   * cell 증가, 합계 계산
    */
   useEffect(() => {
+    setCellCount(workList.length * 7);
+
     let partsSum = 0;
     let wageSum = 0;
     let sum1 = 0;

@@ -102,61 +102,32 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
     if (selectPart.length === 0) {
       return alert("부품을 추가해주세요.");
     }
-    let editList: MainWork[] = [];
-    let addList: MainWork[] = [];
+    let newList: MainWork[] = [];
     for (let i = 0; i < selectPart.length; i++) {
-      props.workList.forEach((item) => {
+      let newCheck: boolean = true;
+      props.workList.forEach((item, index) => {
         if (selectPart[i].code === item.code) {
-          editList.push({ ...item, quantity: item.quantity + 1 });
-        } else {
-          addList.push({
-            name: selectPart[i].name,
-            code: selectPart[i].code,
-            tsCode: selectPart[i].tsCode || "",
-            type: MainPartsType.A,
-            price: 0,
-            quantity: 0,
-            sum: 0,
-            wage: 0,
+          props.workList.splice(index, 1, {
+            ...item,
+            quantity: item.quantity + 1,
+            sum: item.price * (item.quantity + 1),
           });
+          return (newCheck = false);
         }
       });
-      // for (let j = 0; j < props.workList?.length; j++) {
-      //   if (selectPart[i].code === props.workList[j]?.code) {
-      //     // return alert(`${selectPart[i].name}은 이미 추가된 부품입니다.`);
-      //     newList = props.workList.map((item, index) =>
-      //       index === j
-      //         ? { ...item, quantity: props.workList[j].quantity + 1 }
-      //         : item
-      //     );
-      //   } else {
-      //     newList.push({
-      //       name: selectPart[i].name,
-      //       code: selectPart[i].code,
-      //       tsCode: selectPart[i].tsCode || "",
-      //       type: MainPartsType.A,
-      //       price: 0,
-      //       quantity: 0,
-      //       sum: 0,
-      //       wage: 0,
-      //     });
-      //   }
-      // }
-      // newList.push({
-      //   name: selectPart[i].name,
-      //   code: selectPart[i].code,
-      //   tsCode: selectPart[i].tsCode || "",
-      //   type: MainPartsType.A,
-      //   price: 0,
-      //   quantity: 0,
-      //   sum: 0,
-      //   wage: 0,
-      // });
+      if (newCheck)
+        newList.push({
+          name: selectPart[i].name,
+          code: selectPart[i].code,
+          tsCode: selectPart[i].tsCode || "",
+          type: MainPartsType.A,
+          price: 0,
+          quantity: 0,
+          sum: 0,
+          wage: 0,
+        });
     }
-    console.log(editList);
-    console.log(addList);
-    props.setWorkList(editList.concat(addList));
-    // props.setWorkList(props.workList.concat(newList));
+    props.setWorkList(props.workList.concat(newList));
     props.setModalOpen(false);
   };
 
