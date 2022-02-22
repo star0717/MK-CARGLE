@@ -314,13 +314,15 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       <RsWrapper>
         <Wrapper>
           {/* <Wrapper
-             padding={`0px 200px 20px 320px`}
-             al={`flex-start`}
-           >
-             <SpeechBubbleLeft fontSize={`20px`}>
-               "현재 정비 단계는 차량입고입니다."
-             </SpeechBubbleLeft>
-           </Wrapper> */}
+            padding={`20px`}
+            width={`400px`}
+            margin={`0px 0px 10px 600px`}
+            al={`flex-start`}
+          >
+            <SpeechBubbleRight fontSize={`20px`}>
+              "현재 정비 단계는 출고완료입니다."
+            </SpeechBubbleRight>
+          </Wrapper> */}
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`complete`}>
@@ -332,8 +334,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`progress`}>
-                <FaCarAlt />
+              <JoinStepBar kindOf={`complete`}>
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량입고
@@ -341,15 +343,15 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>{<TiSpanner />}</JoinStepBar>
+              <JoinStepBar kindOf={`complete`}>{<GoCheck />}</JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>
             </Wrapper>
             <JoinStepBar kindOf={"line2"}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>
-                <BsFillFileEarmarkCheckFill />
+              <JoinStepBar kindOf={`complete`}>
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비완료
@@ -357,7 +359,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>
+              <JoinStepBar kindOf={`progress`}>
                 <FaFlagCheckered />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
