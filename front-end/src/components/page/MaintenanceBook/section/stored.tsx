@@ -59,6 +59,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import MtPartsModal from "./partsModal";
 import MtSetModal from "./setModal";
 import { Part } from "src/models/part.entity";
+import dayjs from "dayjs";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -533,7 +534,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비기간
                   </Text>
-                  <TextInput2 width={`150px`} type="date" disabled />
+                  <TextInput2
+                    width={`150px`}
+                    type="text"
+                    value={
+                      mtInfo.dates.startMa
+                        ? dayjs(mtInfo.dates.startMa).format("YYYY-MM-DD")
+                        : "-"
+                    }
+                    disabled
+                  />
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
@@ -541,7 +551,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     ~
                   </Text>
-                  <TextInput2 width={`150px`} type="date" disabled />
+                  <TextInput2
+                    width={`150px`}
+                    type="text"
+                    value={
+                      mtInfo.dates.endMa
+                        ? dayjs(mtInfo.dates.endMa).format("YYYY-MM-DD")
+                        : "-"
+                    }
+                    disabled
+                  />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -551,7 +570,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     차량출고일
                   </Text>
-                  <TextInput2 width={`150px`} type="date" disabled />
+                  <TextInput2
+                    width={`150px`}
+                    type="text"
+                    value={
+                      mtInfo.dates.released
+                        ? dayjs(mtInfo.dates.released).format("YYYY-MM-DD")
+                        : "-"
+                    }
+                    disabled
+                  />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -579,22 +607,38 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비구분
                   </Text>
-                  <Combo width={`150px`} margin={`0px`} disabled>
-                    <option value="1">일반</option>
+                  <Combo
+                    width={`150px`}
+                    margin={`0px`}
+                    value={mtInfo.costomerType}
+                    disabled
+                  >
+                    <option value="n">일반</option>
+                    <option value="i">보험</option>
                   </Combo>
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
                     width={`16px`}
                   ></Text>
-                  <TextInput2 type="text" width={`150px`} disabled />
+                  <TextInput2
+                    type="text"
+                    width={`150px`}
+                    placeholder={`보험사명 입력란`}
+                    readOnly
+                  />
                 </Wrapper>
                 <Wrapper
                   dr={`row`}
                   ju={`flex-end`}
                   padding={`0px 0px 0px 10px`}
                 >
-                  <TextInput2 type="text" width={`240px`} disabled />
+                  <TextInput2
+                    type="text"
+                    width={`240px`}
+                    placeholder={`보험번호 입력란`}
+                    readOnly
+                  />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
