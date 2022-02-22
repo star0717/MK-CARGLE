@@ -403,23 +403,29 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             >
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   주행거리
                 </Text>
-                <TextInput2 type="text" value={mtInfo.car.distance} readOnly />
+                <TextInput2
+                  type="text"
+                  width={`180px`}
+                  value={mtInfo.car.distance}
+                  readOnly
+                />
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   고객명
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={
                     mtInfo.customer.name
@@ -431,13 +437,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   전화번호
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.customer.phoneNumber}
                   readOnly
@@ -445,23 +452,29 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   차량명
                 </Text>
-                <TextInput2 type="text" value={mtInfo.car.name} readOnly />
+                <TextInput2
+                  type="text"
+                  width={`180px`}
+                  value={mtInfo.car.name}
+                  readOnly
+                />
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   모델명
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.car.model || "-"}
                   readOnly
@@ -469,13 +482,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   연식
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.car.age || "-"}
                   readOnly
@@ -483,13 +497,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   차대번호
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.car.idNumber || "-"}
                   readOnly
@@ -497,13 +512,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
-                  width={`80px`}
+                  width={`100px`}
                   textAlign={`right`}
                   margin={`0px 10px 0px 0px`}
                 >
                   등록일자
                 </Text>
                 <TextInput2
+                  width={`180px`}
                   type="text"
                   value={mtInfo.car.regDate || "-"}
                   readOnly
