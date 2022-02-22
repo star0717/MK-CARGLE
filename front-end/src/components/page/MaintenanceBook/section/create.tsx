@@ -783,7 +783,10 @@ const MaintenanceCreate: NextPage = () => {
                 |
               </Text>
               <Text fontSize={`24px`}>
-                총계 <ColorSpan color={`#314FA5`}>0</ColorSpan>
+                총계{" "}
+                <ColorSpan color={`#314FA5`} fontSize={`24px`}>
+                  0
+                </ColorSpan>
               </Text>
             </Wrapper>
             <Wrapper>
