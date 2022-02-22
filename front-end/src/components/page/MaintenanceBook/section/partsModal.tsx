@@ -107,7 +107,14 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
     for (let i = 0; i < selectPart.length; i++) {
       for (let j = 0; j < props.workList?.length; j++) {
         if (selectPart[i].code === props.workList[j]?.code)
-          return alert(`${selectPart[i].name}은 이미 추가된 부품입니다.`);
+          // return alert(`${selectPart[i].name}은 이미 추가된 부품입니다.`);
+          props.setWorkList(
+            props.workList.map((item, index) =>
+              index === j
+                ? { ...item, quantity: props.workList[j].quantity + 1 }
+                : item
+            )
+          );
       }
       newList.push({
         name: selectPart[i].name,
