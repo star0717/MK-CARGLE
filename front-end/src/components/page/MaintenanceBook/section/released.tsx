@@ -938,7 +938,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 |
               </Text>
               <Text fontSize={`24px`}>
-                총계 <ColorSpan color={`#314FA5`}>0</ColorSpan>
+                총계
+                <ColorSpan fontSize={`24px`} color={`#314FA5`}>
+                  0
+                </ColorSpan>
               </Text>
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
