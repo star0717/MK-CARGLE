@@ -139,16 +139,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "ArrowRight") {
-      if (idx !== cellCount - 1) inputRef.current[idx + 1].focus();
-    }
-    if (e.key === "ArrowLeft") {
-      if (idx !== 0) inputRef.current[idx - 1].focus();
-    }
-    if (e.key === "ArrowUp") {
-      if (idx >= 7) inputRef.current[idx - 7].focus();
-    }
-    if (e.key === "Enter" || e.key === "ArrowDown") {
+    if (e.key === "Enter") {
       inputRef.current[idx + 7].focus();
     }
   };
@@ -159,13 +150,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
-    // if (e.key === "ArrowRight") {
-    //   if (idx === cellCount - 1) {
-    //     setWorkList(workList.concat(workInit));
-    //     setInputSum(inputSum.concat([0]));
-    //   }
-    // }
-    if (e.key === "Enter" || e.key === "ArrowDown") {
+    if (e.key === "Enter") {
       if (idx >= cellCount - 7) {
         setWorkList(workList.concat(workInit));
         setInputSum(inputSum.concat([0]));
