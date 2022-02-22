@@ -96,6 +96,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       type: MainPartsType.A,
       price: 0,
       quantity: 0,
+      sum: 0,
       wage: 0,
     },
   ];
@@ -515,7 +516,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
 
           <Wrapper width={`74%`}>
             <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
-              <Wrapper dr={`row`} ju={`flex-end`}>
+              <Wrapper dr={`row`} ju={`space-between`} width={`350px`}>
                 <SmallButton
                   type="button"
                   kindOf={`default`}
