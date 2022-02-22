@@ -25,7 +25,7 @@ import {
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
 import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
 import {
   _pMaintenanceProps,
@@ -179,9 +179,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             index === rowIdx
               ? {
                   ...item,
-                  name: partOne[0]?.nickName.includes(e.target.value)
-                    ? partOne[0].name
-                    : e.target.value,
+                  name: e.target.value,
                   code: partOne[0]?.code,
                   tsCode: partOne[0]?.tsCode || "",
                 }
@@ -518,7 +516,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
 
           <Wrapper width={`74%`}>
             <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
-              <Wrapper dr={`row`} ju={`flex-end`}>
+              <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
                 <SmallButton
                   type="button"
                   kindOf={`default`}
@@ -729,32 +727,37 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
             </Wrapper>
             <TableWrapper minHeight={`auto`}>
-              <TableHead>
+              <TableHead padding={`0px 0px 0px 10px`}>
                 <TableHeadLIST width={`3%`}></TableHeadLIST>
                 <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
-                <TableHeadLIST width={`14%`}>국토부</TableHeadLIST>
+                <TableHeadLIST width={`12%`}>국토부</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>단가</TableHeadLIST>
-                <TableHeadLIST width={`14%`}>수량</TableHeadLIST>
+                <TableHeadLIST width={`10%`}>수량</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
-                <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>기술료</TableHeadLIST>
               </TableHead>
               <Wrapper overflow={`auto`} height={`262px`}>
                 <TableBody minHeight={`262px`}>
                   {workList.map((data, idx) => {
                     return (
-                      <TableRow key={idx} kindOf={`noHover`}>
+                      <TableRow
+                        key={idx}
+                        kindOf={`noHover`}
+                        padding={`0px 0px 0px 10px`}
+                      >
                         <TableRowLIST width={`3%`}>
                           <IconButton
                             type="button"
                             shadow={`none`}
                             bgColor={`inherit`}
-                            margin={`0px`}
+                            color={`#d6263b`}
+                            padding={`0px`}
                             onClick={() => {
                               onDeleteRowHandler(idx);
                             }}
                           >
-                            <AiFillCloseCircle />
+                            <AiFillMinusSquare />
                           </IconButton>
                         </TableRowLIST>
                         <TableRowLIST width={`14%`}>
@@ -809,7 +812,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             )}
                           </datalist>
                         </TableRowLIST>
-                        <TableRowLIST width={`14%`}>
+                        <TableRowLIST width={`12%`}>
                           <TextInput2
                             type="text"
                             ref={(elem: HTMLInputElement) =>
@@ -835,11 +838,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 5] = elem)
                             }
                             name="type"
-                            onKeyDown={(e: KeyboardEvent) => {
-                              // if (e.key === "ArrowDown") {
-                              //   return "enter";
-                              // }
-                            }}
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
@@ -877,7 +875,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             }}
                           />
                         </TableRowLIST>
-                        <TableRowLIST width={`14%`}>
+                        <TableRowLIST width={`10%`}>
                           <TextInput2
                             type="text"
                             ref={(elem: HTMLInputElement) =>
@@ -917,7 +915,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             readOnly
                           />
                         </TableRowLIST>
-                        <TableRowLIST width={`8%`}>
+                        <TableRowLIST width={`14%`}>
                           <TextInput2
                             type="text"
                             ref={(elem: HTMLInputElement) =>
@@ -978,7 +976,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 type="submit"
                 kindOf={`ghost`}
                 disabled
-                width={`100%`}
+                width={`288px`}
               >
                 이전단계
               </SmallButton>
@@ -986,7 +984,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 form="carInfoForm"
                 type="submit"
                 kindOf={`default`}
-                width={`100%`}
+                width={`288px`}
               >
                 저장
               </SmallButton>
@@ -994,7 +992,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 form="carInfoForm"
                 type="submit"
                 kindOf={`default`}
-                width={`100%`}
+                width={`288px`}
               >
                 다음단계
               </SmallButton>

@@ -26,7 +26,7 @@ import {
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
 import {
   _pMaintenanceProps,
   _pPartsSetProps,
@@ -183,9 +183,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             index === rowIdx
               ? {
                   ...item,
-                  name: partOne[0]?.nickName.includes(e.target.value)
-                    ? partOne[0].name
-                    : e.target.value,
+                  name: e.target.value,
                   code: partOne[0]?.code,
                   tsCode: partOne[0]?.tsCode || "",
                 }
@@ -751,7 +749,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
               </Wrapper>
             </Wrapper>
             <TableWrapper minHeight={`auto`}>
-              <TableHead>
+              <TableHead padding={`0px 0px 0px 10px`}>
                 <TableHeadLIST width={`3%`}></TableHeadLIST>
                 <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
                 <TableHeadLIST width={`12%`}>국토부</TableHeadLIST>
@@ -765,18 +763,23 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                 <TableBody minHeight={`262px`}>
                   {workList.map((data, idx) => {
                     return (
-                      <TableRow key={idx} kindOf={`noHover`}>
+                      <TableRow
+                        key={idx}
+                        kindOf={`noHover`}
+                        padding={`0px 0px 0px 10px`}
+                      >
                         <TableRowLIST width={`3%`}>
                           <IconButton
                             type="button"
                             shadow={`none`}
                             bgColor={`inherit`}
-                            margin={`0px`}
+                            color={`#d6263b`}
+                            padding={`0px`}
                             onClick={() => {
                               onDeleteRowHandler(idx);
                             }}
                           >
-                            <AiFillCloseCircle />
+                            <AiFillMinusSquare />
                           </IconButton>
                         </TableRowLIST>
                         <TableRowLIST width={`14%`}>
@@ -857,11 +860,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 5] = elem)
                             }
                             name="type"
-                            onKeyDown={(e: KeyboardEvent) => {
-                              // if (e.key === "ArrowDown") {
-                              //   return "enter";
-                              // }
-                            }}
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
