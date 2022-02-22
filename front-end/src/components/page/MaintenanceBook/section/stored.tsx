@@ -195,7 +195,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   name: partOne[0]?.nickName.includes(e.target.value)
                     ? partOne[0].name
                     : e.target.value,
-                  code: partOne[0].code || "",
+                  code: partOne[0]?.code,
                   tsCode: partOne[0]?.tsCode || "",
                 }
               : item
@@ -228,6 +228,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         );
     }
   };
+
+  console.log(workList[0].code);
 
   /**
    * 열 삭제 handler
