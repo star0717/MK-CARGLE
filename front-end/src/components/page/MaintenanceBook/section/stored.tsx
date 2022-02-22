@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import {
   Checkbox,
@@ -37,6 +37,7 @@ import { RiFileList2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
 import {
+  getWorkersListAction,
   _aGetMaintenancesCarInfo,
   _aPostMaintenancesStore,
 } from "store/action/user.action";
@@ -58,6 +59,8 @@ import { IoIosCloseCircle } from "react-icons/io";
 import MtPartsModal from "./partsModal";
 import MtSetModal from "./setModal";
 import { Part } from "src/models/part.entity";
+import dayjs from "dayjs";
+import { GoCheck } from "react-icons/go";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -138,16 +141,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "Enter" || e.key === "ArrowRight") {
-      inputRef.current[idx + 1].focus();
-    }
-    if (e.key === "ArrowLeft") {
-      if (idx !== 0) inputRef.current[idx - 1].focus();
-    }
-    if (e.key === "ArrowUp") {
-      if (idx >= 7) inputRef.current[idx - 7].focus();
-    }
-    if (e.key === "ArrowDown") {
+    if (e.key === "Enter") {
       inputRef.current[idx + 7].focus();
     }
   };
@@ -158,13 +152,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "Enter" || e.key === "ArrowRight") {
-      if (idx === cellCount - 1) {
-        setWorkList(workList.concat(workInit));
-        setInputSum(inputSum.concat([0]));
-      }
-    }
-    if (e.key === "ArrowDown") {
+    if (e.key === "Enter") {
       if (idx >= cellCount - 7) {
         setWorkList(workList.concat(workInit));
         setInputSum(inputSum.concat([0]));
@@ -182,6 +170,39 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     idx: number
   ) => {
     switch (e.target.name) {
+      case "name":
+        const partOne: Part[] = props.data.allParts.docs.filter(
+          (item: Part) =>
+            e.target.value === item.name ||
+            item.nickName.includes(e.target.value)
+        );
+        // if (e.target.value) {
+        //   setPartList(
+        //     props.data.allParts.docs.filter((item: Part) => {
+        //       for (let i = 0; i < item.nickName.length; i++) {
+        //         if (item.nickName[i].startsWith(e.target.value)) {
+        //           return item;
+        //         }
+        //       }
+        //     })
+        //   );
+        // } else {
+        //   setPartList(props.data.allParts.docs);
+        // }
+        return setWorkList(
+          workList.map((item, index) =>
+            index === idx
+              ? {
+                  ...item,
+                  name: partOne[0]?.nickName.includes(e.target.value)
+                    ? partOne[0].name
+                    : e.target.value,
+                  code: partOne[0]?.code,
+                  tsCode: partOne[0]?.tsCode || "",
+                }
+              : item
+          )
+        );
       case "price":
       case "quantity":
       case "wage":
@@ -201,29 +222,25 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             )
           );
         }
-
       default:
-        if (e.target.name === "name") {
-          const partOne: Part[] = props.data.allParts.docs.filter(
-            (item: Part) => e.target.value === item.name
-          );
-          return setWorkList(
-            workList.map((item, index) =>
-              index === idx
-                ? {
-                    ...item,
-                    name: e.target.value,
-                    tsCode: partOne[0]?.tsCode || "",
-                  }
-                : item
-            )
-          );
-        }
         return setWorkList(
           workList.map((item, index) =>
             index === idx ? { ...item, [e.target.name]: e.target.value } : item
           )
         );
+    }
+  };
+
+  console.log(workList[0].code);
+
+  /**
+   * 열 삭제 handler
+   * @param idx
+   */
+  const onDeleteRowHandler = (idx: number) => {
+    if (workList.length > 1) {
+      setInputSum(inputSum.filter((data, index) => idx !== index));
+      setWorkList(workList.filter((data, index) => idx !== index));
     }
   };
 
@@ -285,20 +302,18 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     <WholeWrapper>
       <RsWrapper>
         <Wrapper>
-          <Wrapper
+          {/* <Wrapper
             padding={`0px 200px 20px 320px`}
-            // padding={`200px`}
-            // margin={`0px 0px 10px 600px`}
             al={`flex-start`}
           >
             <SpeechBubbleLeft fontSize={`20px`}>
               "현재 정비 단계는 차량입고입니다."
             </SpeechBubbleLeft>
-          </Wrapper>
+          </Wrapper> */}
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`complete`}>
-                <RiFileList2Fill />
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량선택
@@ -518,7 +533,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비기간
                   </Text>
-                  <TextInput2 width={`150px`} type="date" disabled />
+                  <TextInput2
+                    width={`150px`}
+                    type="text"
+                    value={
+                      mtInfo.dates.startMa
+                        ? dayjs(mtInfo.dates.startMa).format("YYYY-MM-DD")
+                        : "-"
+                    }
+                    disabled
+                  />
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
@@ -526,7 +550,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     ~
                   </Text>
-                  <TextInput2 width={`150px`} type="date" disabled />
+                  <TextInput2
+                    width={`150px`}
+                    type="text"
+                    value={
+                      mtInfo.dates.endMa
+                        ? dayjs(mtInfo.dates.endMa).format("YYYY-MM-DD")
+                        : "-"
+                    }
+                    disabled
+                  />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -536,7 +569,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     차량출고일
                   </Text>
-                  <TextInput2 width={`150px`} type="date" disabled />
+                  <TextInput2
+                    width={`150px`}
+                    type="text"
+                    value={
+                      mtInfo.dates.released
+                        ? dayjs(mtInfo.dates.released).format("YYYY-MM-DD")
+                        : "-"
+                    }
+                    disabled
+                  />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -564,22 +606,38 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   >
                     정비구분
                   </Text>
-                  <Combo width={`150px`} margin={`0px`} disabled>
-                    <option value="1">일반</option>
+                  <Combo
+                    width={`150px`}
+                    margin={`0px`}
+                    value={mtInfo.costomerType}
+                    disabled
+                  >
+                    <option value="n">일반</option>
+                    <option value="i">보험</option>
                   </Combo>
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
                     width={`16px`}
                   ></Text>
-                  <TextInput2 type="text" width={`150px`} disabled />
+                  <TextInput2
+                    type="text"
+                    width={`150px`}
+                    placeholder={`보험사명 입력란`}
+                    readOnly
+                  />
                 </Wrapper>
                 <Wrapper
                   dr={`row`}
                   ju={`flex-end`}
                   padding={`0px 0px 0px 10px`}
                 >
-                  <TextInput2 type="text" width={`240px`} disabled />
+                  <TextInput2
+                    type="text"
+                    width={`240px`}
+                    placeholder={`보험번호 입력란`}
+                    readOnly
+                  />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
                   <Text
@@ -648,10 +706,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <TableWrapper minHeight={`auto`}>
               <TableHead>
-                <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>국토부</TableHeadLIST>
+                <TableHeadLIST width={`3%`}></TableHeadLIST>
+                <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>국토부</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
-                <TableHeadLIST width={`15%`}>단가</TableHeadLIST>
+                <TableHeadLIST width={`14%`}>단가</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>수량</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
@@ -660,7 +719,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 {workList.map((data, idx) => {
                   return (
                     <TableRow key={idx} kindOf={`noHover`}>
-                      <TableRowLIST width={`15%`}>
+                      <TableRowLIST width={`3%`}>
+                        <IconButton
+                          type="button"
+                          shadow={`none`}
+                          bgColor={`inherit`}
+                          margin={`0px`}
+                          onClick={() => {
+                            onDeleteRowHandler(idx);
+                          }}
+                        >
+                          <AiFillCloseCircle />
+                        </IconButton>
+                      </TableRowLIST>
+                      <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
                           ref={(elem: HTMLInputElement) =>
@@ -690,7 +762,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           )}
                         </datalist>
                       </TableRowLIST>
-                      <TableRowLIST width={`15%`}>
+                      <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
                           ref={(elem: HTMLInputElement) =>
@@ -737,7 +809,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           })}
                         </Combo>
                       </TableRowLIST>
-                      <TableRowLIST width={`15%`}>
+                      <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
                           ref={(elem: HTMLInputElement) =>

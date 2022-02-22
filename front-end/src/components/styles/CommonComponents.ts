@@ -568,7 +568,7 @@ export const SmallButton = styled.button<any>`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
-  font-size: ${(props) => props.fontSize};
+  font-size: ${(props) => props.fontSize || `16px`};
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
@@ -891,6 +891,7 @@ export const TextInput2 = styled.input<any>`
   &:focus {
     outline: none;
     border: 1px solid ${(props) => props.theme.basicTheme_C};
+    background-color: #edf2ff;
   }
 
   &:read-only:focus {

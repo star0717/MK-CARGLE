@@ -31,7 +31,6 @@ const Home: NextPage<_SignInProps> = (props) => {
         <BlackWrapper />
       ) : (
         <>
-          {" "}
           <Header {...nullProps} />
           <SignIn {...props} />
           <Footer />

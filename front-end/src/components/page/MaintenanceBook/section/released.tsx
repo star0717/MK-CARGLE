@@ -306,7 +306,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     <WholeWrapper>
       <RsWrapper>
         <Wrapper>
-          <Wrapper
+          {/* <Wrapper
             padding={`20px`}
             width={`400px`}
             margin={`0px 0px 10px 600px`}
@@ -315,7 +315,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <SpeechBubbleRight fontSize={`20px`}>
               "현재 정비 단계는 출고완료입니다."
             </SpeechBubbleRight>
-          </Wrapper>
+          </Wrapper> */}
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`complete`}>
@@ -496,6 +496,19 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   value={mtInfo.car.regDate || "-"}
                   readOnly
                 />
+              </Wrapper>
+              <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
+                <SmallButton width={`48%`} kindOf={`default`}>
+                  정비요청사항
+                </SmallButton>
+                <SmallButton width={`48%`} kindOf={`default`}>
+                  차량정보공유
+                </SmallButton>
+              </Wrapper>
+              <Wrapper>
+                <SmallButton width={`100%`} kindOf={`default`}>
+                  정비사진확인
+                </SmallButton>
               </Wrapper>
             </Wrapper>
           </Wrapper>
