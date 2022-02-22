@@ -209,14 +209,30 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setWorkList(
             workList.map((item, index) =>
-              index === idx ? { ...item, [e.target.name]: 0 } : item
+              index === idx
+                ? {
+                    ...item,
+                    [e.target.name]: 0,
+                    sum:
+                      e.target.name === "price"
+                        ? Number(e.target.value) * item.quantity
+                        : item.price * Number(e.target.value),
+                  }
+                : item
             )
           );
         } else {
           return setWorkList(
             workList.map((item, index) =>
               index === idx
-                ? { ...item, [e.target.name]: Number(e.target.value) }
+                ? {
+                    ...item,
+                    [e.target.name]: Number(e.target.value),
+                    sum:
+                      e.target.name === "price"
+                        ? Number(e.target.value) * item.quantity
+                        : item.price * Number(e.target.value),
+                  }
                 : item
             )
           );
@@ -251,15 +267,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     let sum1 = 0;
     let sum2 = 0;
     let vat = 0;
-
-    // setWorkList(
-    //   workList.map((item, index) => {
-    //     let i = index;
-    //     return index === i
-    //       ? { ...item, sum: workList[i].price * workList[i].quantity }
-    //       : item;
-    //   })
-    // );
 
     for (let i = 0; i < workList.length; i++) {
       partsSum += workList[i].price * workList[i].quantity;
