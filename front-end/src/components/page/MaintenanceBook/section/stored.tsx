@@ -143,7 +143,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
     if (e.key === "Enter") {
       if (idx % 7 === 0) return inputRef.current[idx + 2].focus();
-      if (idx % 7 === 2) return false;
       if (idx % 7 === 4) return inputRef.current[idx + 2].focus();
       return inputRef.current[idx + 1].focus();
     }
@@ -169,7 +168,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    */
   const onChangeInputArr = (
     e: React.ChangeEvent<HTMLInputElement>,
-    idx: number
+    rowIdx: number,
+    cellIdx?: number
   ) => {
     switch (e.target.name) {
       case "name":
@@ -180,7 +180,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         );
         return setWorkList(
           workList.map((item, index) =>
-            index === idx
+            index === rowIdx
               ? {
                   ...item,
                   name: partOne[0]?.nickName.includes(e.target.value)
@@ -199,7 +199,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setWorkList(
             workList.map((item, index) =>
-              index === idx
+              index === rowIdx
                 ? {
                     ...item,
                     [e.target.name]: 0,
@@ -214,7 +214,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         } else {
           return setWorkList(
             workList.map((item, index) =>
-              index === idx
+              index === rowIdx
                 ? {
                     ...item,
                     [e.target.name]: Number(e.target.value),
@@ -228,12 +228,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           );
         }
       default:
-        return setWorkList(
+        setWorkList(
           workList.map((item, index) =>
-            index === idx ? { ...item, [e.target.name]: e.target.value } : item
+            index === rowIdx
+              ? { ...item, [e.target.name]: e.target.value }
+              : item
           )
         );
-      // return inputRef.current[idx + 1].focus();
+        return inputRef.current[cellIdx + 1].focus();
     }
   };
 
@@ -784,17 +786,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           ref={(elem: HTMLInputElement) =>
                             (inputRef.current[(idx + 1) * 7 - 5] = elem)
                           }
-                          onKeyDown={(e: KeyboardEvent) =>
-                            onKeyDownhandler(e, (idx + 1) * 7 - 5)
-                          }
-                          onKeyUp={(e: KeyboardEvent) =>
-                            onKeyUpHandler(e, (idx + 1) * 7 - 5)
-                          }
                           name="type"
+                          onKeyDown={(e: KeyboardEvent) => {
+                            // if (e.key === "ArrowDown") {
+                            //   return "enter";
+                            // }
+                          }}
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            onChangeInputArr(e, idx);
+                            onChangeInputArr(e, idx, (idx + 1) * 7 - 5);
                           }}
                         >
                           {mainPartsTypeList.map((item: MainPartsType) => {
