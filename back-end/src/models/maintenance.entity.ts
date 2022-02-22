@@ -132,6 +132,12 @@ export class MainWork {
   @prop({ required: true })
   quantity: number = 1;
 
+  @ApiProperty({ description: '계' })
+  @IsOptional()
+  @IsNumber()
+  @prop({ required: true })
+  sum: number = 0;
+
   @ApiProperty({ description: '기술료' })
   @IsOptional()
   @IsNumber()
