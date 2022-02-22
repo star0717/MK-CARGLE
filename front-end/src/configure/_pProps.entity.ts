@@ -138,8 +138,6 @@ export interface _pPartsSetProps extends _MainProps {
   setPartSetClass?: React.Dispatch<React.SetStateAction<Partial<PartsSet>[]>>;
   workList?: MainWork[];
   setWorkList?: React.Dispatch<React.SetStateAction<MainWork[]>>;
-  inputSum?: number[];
-  setInputSum?: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
 /***********************************************************************

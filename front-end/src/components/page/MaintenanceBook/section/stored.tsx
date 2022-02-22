@@ -77,6 +77,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       type: MainPartsType.A,
       price: 0,
       quantity: 0,
+      sum: 0,
       wage: 0,
     },
   ];
@@ -106,7 +107,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [vatCheck, setVatCheck] = useState<boolean>(false); // 부가세 체크여부
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
-  const [inputSum, setInputSum] = useState<number[]>([0]); // 부품 input: 계
   const [price, setPrice] = useState<Partial<MainPrice>>(priceInit); // 가격정보
 
   /*********************************************************************
@@ -155,7 +155,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "Enter") {
       if (idx >= cellCount - 7) {
         setWorkList(workList.concat(workInit));
-        setInputSum(inputSum.concat([0]));
       }
     }
   };
@@ -232,7 +231,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   console.log("워크", workList.length);
-  console.log("인풋", inputSum.length);
 
   /**
    * 열 삭제 handler
@@ -240,7 +238,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    */
   const onDeleteRowHandler = (idx: number) => {
     if (workList.length > 1) {
-      setInputSum(inputSum.filter((data, index) => idx !== index));
       setWorkList(workList.filter((data, index) => idx !== index));
     }
   };
@@ -255,12 +252,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     let sum2 = 0;
     let vat = 0;
 
-    setInputSum(
-      inputSum.map((num, index) => {
-        let i = index;
-        return index === i ? workList[i].price * workList[i].quantity : num;
-      })
-    );
+    // setWorkList(
+    //   workList.map((item, index) => {
+    //     let i = index;
+    //     return index === i
+    //       ? { ...item, sum: workList[i].price * workList[i].quantity }
+    //       : item;
+    //   })
+    // );
 
     for (let i = 0; i < workList.length; i++) {
       partsSum += workList[i].price * workList[i].quantity;
@@ -292,8 +291,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     setPartSetData,
     workList,
     setWorkList,
-    inputSum,
-    setInputSum,
   };
 
   /*********************************************************************
@@ -867,7 +864,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           onKeyUp={(e: KeyboardEvent) =>
                             onKeyUpHandler(e, (idx + 1) * 7 - 2)
                           }
-                          value={inputSum[idx].toLocaleString()}
+                          value={data.sum.toLocaleString()}
                           name="inputSum"
                           readOnly
                         />
