@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { NextPage } from "next";
 import {
   Checkbox,
@@ -12,11 +12,7 @@ import {
   JoinStepBar,
   JoinStepBarWrapper,
   RsWrapper,
-  SearchInput,
-  SearchInputWrapper,
   SmallButton,
-  SpeechBubbleLeft,
-  SpeechBubbleRight,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -32,19 +28,12 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { AiFillCloseCircle } from "react-icons/ai";
 import {
-  BsFillFileEarmarkCheckFill,
-  BsPlusCircleFill,
-  BsSearch,
-} from "react-icons/bs";
-import {
   _pMaintenanceProps,
   _pPartsSetProps,
 } from "src/configure/_pProps.entity";
-import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
-import { TiSpanner } from "react-icons/ti";
-import { RiFileList2Fill } from "react-icons/ri";
+import { FaFlagCheckered } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { basicRegEx, formRegEx } from "src/validation/regEx";
+import { basicRegEx } from "src/validation/regEx";
 import {
   _aGetMaintenancesCarInfo,
   _aPostMaintenancesStore,
@@ -57,13 +46,11 @@ import {
   MainStatus,
 } from "src/constants/maintenance.const";
 import {
-  MainCar,
-  MainCustomer,
   MainPrice,
   Maintenance,
   MainWork,
 } from "src/models/maintenance.entity";
-import { deleteKeyJson, maskingStr, trim } from "src/modules/commonModule";
+import { maskingStr } from "src/modules/commonModule";
 import { PartsSet } from "src/models/partsset.entity";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -845,30 +832,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                                     )}
                                   </>
                                 );
-                                // if (item.nickName.length > 1) {
-                                //   item.nickName.map(
-                                //     (nickname: any, iidx: number) => {
-
-                                //       return (
-                                //         <option
-                                //           key={`${idx}.${iidx}`}
-                                //           label={nickname}
-                                //           value={item.name}
-                                //         />
-                                //       );
-                                //     }
-                                //   );
-                                // } else if (item.nickName.length === 1) {
-                                //   return (
-                                //     <option
-                                //       key={idx}
-                                //       label={item.nickName[0]}
-                                //       value={item.name}
-                                //     />
-                                //   );
-                                // } else {
-                                //   return <option key={idx} value={item.name} />;
-                                // }
                               }
                             )}
                           </datalist>
