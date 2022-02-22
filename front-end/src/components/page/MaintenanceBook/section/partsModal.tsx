@@ -153,6 +153,8 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
       //   wage: 0,
       // });
     }
+    console.log(editList);
+    console.log(addList);
     props.setWorkList(editList.concat(addList));
     // props.setWorkList(props.workList.concat(newList));
     props.setModalOpen(false);
