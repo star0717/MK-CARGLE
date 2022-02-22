@@ -503,15 +503,15 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                 />
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
-                <SmallButton width={`48%`} kindOf={`default`}>
+                <SmallButton type="button" width={`48%`} kindOf={`default`}>
                   정비요청사항
                 </SmallButton>
-                <SmallButton width={`48%`} kindOf={`default`}>
+                <SmallButton type="button" width={`48%`} kindOf={`default`}>
                   차량정보공유
                 </SmallButton>
               </Wrapper>
               <Wrapper>
-                <SmallButton width={`100%`} kindOf={`default`}>
+                <SmallButton type="button" width={`100%`} kindOf={`default`}>
                   정비사진확인
                 </SmallButton>
               </Wrapper>
@@ -993,12 +993,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
               </Text>
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
-              <SmallButton
-                form="carInfoForm"
-                type="submit"
-                kindOf={`default`}
-                width={`100%`}
-              >
+              <SmallButton type="button" kindOf={`default`} width={`100%`}>
                 정비내역 수정
               </SmallButton>
             </Wrapper>

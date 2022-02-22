@@ -499,15 +499,15 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 />
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
-                <SmallButton width={`48%`} kindOf={`default`}>
+                <SmallButton type="button" width={`48%`} kindOf={`default`}>
                   정비요청사항
                 </SmallButton>
-                <SmallButton width={`48%`} kindOf={`default`}>
+                <SmallButton type="button" width={`48%`} kindOf={`default`}>
                   차량정보공유
                 </SmallButton>
               </Wrapper>
               <Wrapper>
-                <SmallButton width={`100%`} kindOf={`default`}>
+                <SmallButton type="button" width={`100%`} kindOf={`default`}>
                   정비사진확인
                 </SmallButton>
               </Wrapper>
@@ -972,28 +972,17 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
               <SmallButton
-                form="carInfoForm"
-                type="submit"
+                type="button"
                 kindOf={`ghost`}
                 disabled
                 width={`288px`}
               >
                 이전단계
               </SmallButton>
-              <SmallButton
-                form="carInfoForm"
-                type="submit"
-                kindOf={`default`}
-                width={`288px`}
-              >
+              <SmallButton type="button" kindOf={`default`} width={`288px`}>
                 저장
               </SmallButton>
-              <SmallButton
-                form="carInfoForm"
-                type="submit"
-                kindOf={`default`}
-                width={`288px`}
-              >
+              <SmallButton type="button" kindOf={`default`} width={`288px`}>
                 다음단계
               </SmallButton>
             </Wrapper>
