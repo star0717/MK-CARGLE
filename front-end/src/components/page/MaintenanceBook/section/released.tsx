@@ -73,20 +73,12 @@ import MtSetModal from "./setModal";
 import { GoCheck } from "react-icons/go";
 import dayjs from "dayjs";
 
-const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
+const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-
-  // react-hook-form 사용을 위한 선언
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   const workInit: MainWork[] = [
     {
@@ -116,17 +108,17 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [modalOption, setModalOption] = useState<string>(""); // modal 창 옵션
   const [mtInfo, setMtInfo] = useState<Maintenance>(props.data.mtData); // 해당 정비내역 정보
-  const [vatCheck, setVatCheck] = useState<boolean>(false); // 부가세 체크여부
-  const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
-  const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
-  const [inputSum, setInputSum] = useState<number[]>([0]); // 부품 input: 계
-  const [price, setPrice] = useState<Partial<MainPrice>>(priceInit); // 가격정보
   const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
     props.data.setList.docs
   ); // 전체 세트 항목
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
     partSetClass[0]
   ); // 선택한 세트 데이터
+  const [vatCheck, setVatCheck] = useState<boolean>(false); // 부가세 체크여부
+  const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
+  const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
+  const [inputSum, setInputSum] = useState<number[]>([0]); // 부품 input: 계
+  const [price, setPrice] = useState<Partial<MainPrice>>(priceInit); // 가격정보
 
   /*********************************************************************
    * 3. Handlers
@@ -147,8 +139,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     setCellCount(workList.length * 7);
   }, [workList]);
 
-  console.log(props.data.allParts.docs);
-
   /**
    * modal 창 닫기 기능
    */
@@ -162,8 +152,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "Enter" || e.key === "ArrowRight") {
-      inputRef.current[idx + 1].focus();
+    if (e.key === "ArrowRight") {
+      if (idx !== cellCount - 1) inputRef.current[idx + 1].focus();
     }
     if (e.key === "ArrowLeft") {
       if (idx !== 0) inputRef.current[idx - 1].focus();
@@ -171,7 +161,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "ArrowUp") {
       if (idx >= 7) inputRef.current[idx - 7].focus();
     }
-    if (e.key === "ArrowDown") {
+    if (e.key === "Enter" || e.key === "ArrowDown") {
       inputRef.current[idx + 7].focus();
     }
   };
@@ -182,19 +172,20 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "Enter" || e.key === "ArrowRight") {
-      if (idx === cellCount - 1) {
-        setWorkList(workList.concat(workInit));
-        setInputSum(inputSum.concat([0]));
-      }
-    }
-    if (e.key === "ArrowDown") {
+    // if (e.key === "ArrowRight") {
+    //   if (idx === cellCount - 1) {
+    //     setWorkList(workList.concat(workInit));
+    //     setInputSum(inputSum.concat([0]));
+    //   }
+    // }
+    if (e.key === "Enter" || e.key === "ArrowDown") {
       if (idx >= cellCount - 7) {
         setWorkList(workList.concat(workInit));
         setInputSum(inputSum.concat([0]));
       }
     }
   };
+
   /**
    * 정비내역 input handler
    * @param e
@@ -205,9 +196,42 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     idx: number
   ) => {
     switch (e.target.name) {
+      case "name":
+        const partOne: Part[] = props.data.allParts.docs.filter(
+          (item: Part) =>
+            e.target.value === item.name ||
+            item.nickName.includes(e.target.value)
+        );
+        // if (e.target.value) {
+        //   setPartList(
+        //     props.data.allParts.docs.filter((item: Part) => {
+        //       for (let i = 0; i < item.nickName.length; i++) {
+        //         if (item.nickName[i].startsWith(e.target.value)) {
+        //           return item;
+        //         }
+        //       }
+        //     })
+        //   );
+        // } else {
+        //   setPartList(props.data.allParts.docs);
+        // }
+        return setWorkList(
+          workList.map((item, index) =>
+            index === idx
+              ? {
+                  ...item,
+                  name: partOne[0]?.nickName.includes(e.target.value)
+                    ? partOne[0].name
+                    : e.target.value,
+                  tsCode: partOne[0]?.tsCode || "",
+                }
+              : item
+          )
+        );
       case "price":
       case "quantity":
       case "wage":
+        e.target.value = e.target.value.replaceAll(",", "");
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setWorkList(
             workList.map((item, index) =>
@@ -218,34 +242,28 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           return setWorkList(
             workList.map((item, index) =>
               index === idx
-                ? { ...item, [e.target.name]: parseInt(e.target.value) }
+                ? { ...item, [e.target.name]: Number(e.target.value) }
                 : item
             )
           );
         }
-
       default:
-        if (e.target.name === "name") {
-          const partOne: Part[] = props.data.allParts.docs.filter(
-            (item: Part) => e.target.value === item.name
-          );
-          return setWorkList(
-            workList.map((item, index) =>
-              index === idx
-                ? {
-                    ...item,
-                    name: e.target.value,
-                    tsCode: partOne[0]?.tsCode || "",
-                  }
-                : item
-            )
-          );
-        }
         return setWorkList(
           workList.map((item, index) =>
             index === idx ? { ...item, [e.target.name]: e.target.value } : item
           )
         );
+    }
+  };
+
+  /**
+   * 열 삭제 handler
+   * @param idx
+   */
+  const onDeleteRowHandler = (idx: number) => {
+    if (workList.length > 1) {
+      setInputSum(inputSum.filter((data, index) => idx !== index));
+      setWorkList(workList.filter((data, index) => idx !== index));
     }
   };
 
@@ -278,13 +296,12 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       ...price,
       partsSum: partsSum,
       wageSum: wageSum,
-      sum: parseInt(sum2.toString().split(".")[0]),
-      vat: parseInt(vat.toString().split(".")[0]),
-      total: sum2 + vat,
+      sum: Number(sum2.toString().split(".")[0]),
+      vat: Number(vat.toString().split(".")[0]),
+      total: Number((sum2 + vat).toString().split(".")[0]),
     });
   }, [workList, vatCheck]);
 
-  // console.log("part", props.data.allParts.docs);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -297,6 +314,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     setPartSetData,
     workList,
     setWorkList,
+    inputSum,
+    setInputSum,
   };
 
   /*********************************************************************
@@ -963,4 +982,4 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   );
 };
 
-export default MaintenanceStored;
+export default MaintenanceReleased;
