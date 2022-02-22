@@ -231,7 +231,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     }
   };
 
-  console.log(workList[0].quantity);
+  console.log("워크", workList.length);
+  console.log("인풋", inputSum.length);
 
   /**
    * 열 삭제 handler
