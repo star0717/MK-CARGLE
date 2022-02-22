@@ -687,23 +687,19 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 {workList.map((data, idx) => {
                   return (
                     <TableRow key={idx} kindOf={`noHover`}>
-                      {idx === 0 ? (
-                        <TableRowLIST width={`3%`}></TableRowLIST>
-                      ) : (
-                        <TableRowLIST width={`3%`}>
-                          <IconButton
-                            type="button"
-                            shadow={`none`}
-                            bgColor={`inherit`}
-                            margin={`0px`}
-                            onClick={() => {
-                              onDeleteRowHandler(idx);
-                            }}
-                          >
-                            <AiFillCloseCircle />
-                          </IconButton>
-                        </TableRowLIST>
-                      )}
+                      <TableRowLIST width={`3%`}>
+                        <IconButton
+                          type="button"
+                          shadow={`none`}
+                          bgColor={`inherit`}
+                          margin={`0px`}
+                          onClick={() => {
+                            onDeleteRowHandler(idx);
+                          }}
+                        >
+                          <AiFillCloseCircle />
+                        </IconButton>
+                      </TableRowLIST>
                       <TableRowLIST width={`14%`}>
                         <TextInput2
                           type="text"
