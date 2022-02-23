@@ -26,13 +26,31 @@ import {
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
+import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
 import {
   _pMaintenanceProps,
   _pPartsSetProps,
 } from "src/configure/_pProps.entity";
-import { FaFlagCheckered } from "react-icons/fa";
+import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
+import { TiSpanner } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { basicRegEx } from "src/validation/regEx";
+import {
+  _aGetMaintenancesCarInfo,
+  _aPatchMaintenancesStart,
+  _aPostMaintenancesStore,
+} from "store/action/user.action";
+import {
+  _iGetMaintenancesCarInfo,
+  _iMaintenances,
+  _iMaintenancesOne,
+} from "store/interfaces";
+import {
+  getStrMainPartsType,
+  MainPartsType,
+  mainPartsTypeList,
+  MainStatus,
+} from "src/constants/maintenance.const";
 import {
   Maintenance,
   MainPrice,
@@ -47,15 +65,6 @@ import MtSetModal from "./setModal";
 import { Part } from "src/models/part.entity";
 import dayjs from "dayjs";
 import { GoCheck } from "react-icons/go";
-import {
-  MainPartsType,
-  MainStatus,
-  mainPartsTypeList,
-  getStrMainCustomerType,
-  mainCustomerTypeList,
-} from "src/constants/maintenance.const";
-import { _aPatchMaintenancesStart } from "store/action/user.action";
-import { _iMaintenancesOne } from "store/interfaces";
 
 const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -394,7 +403,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`10px 0px`}
               >
                 <Text fontSize={`24px`}>{mtInfo.car.regNumber}</Text>
-                {/* <IconButton
+                <IconButton
                   type="button"
                   shadow={`none`}
                   onClick={() => {
@@ -402,7 +411,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   }}
                 >
                   <AiFillCloseCircle />
-                </IconButton> */}
+                </IconButton>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -686,14 +695,10 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     width={`150px`}
                     margin={`0px`}
                     value={mtInfo.costomerType}
+                    disabled
                   >
-                    {mainCustomerTypeList.map((type) => {
-                      return (
-                        <option key={type} value={type}>
-                          {getStrMainCustomerType(type)}
-                        </option>
-                      );
-                    })}
+                    <option value="n">일반</option>
+                    <option value="i">보험</option>
                   </Combo>
                   <Text
                     textAlign={`end`}
@@ -905,7 +910,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                             {mainPartsTypeList.map((item: MainPartsType) => {
                               return (
                                 <option key={item} value={item}>
-                                  {item.toUpperCase()}
+                                  {getStrMainPartsType(item)}
                                 </option>
                               );
                             })}
