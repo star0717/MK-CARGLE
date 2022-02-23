@@ -356,23 +356,25 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`progress`}>
-                <FaCarAlt />
+              <JoinStepBar kindOf={`complete`}>
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량입고
               </Text>
             </Wrapper>
-            <JoinStepBar kindOf={`line2`}></JoinStepBar>
+            <JoinStepBar kindOf={`line`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>{<TiSpanner />}</JoinStepBar>
+              <JoinStepBar kindOf={`complete`}>
+                <GoCheck />
+              </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>
             </Wrapper>
-            <JoinStepBar kindOf={"line2"}></JoinStepBar>
+            <JoinStepBar kindOf={"line"}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>
+              <JoinStepBar kindOf={`progress`}>
                 <BsFillFileEarmarkCheckFill />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>

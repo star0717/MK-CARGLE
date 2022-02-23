@@ -1080,11 +1080,35 @@ export async function _aPostMaintenancesStore(data: Partial<Maintenance>) {
 }
 
 /**
- * Maintenances 데이터 추가(차량입고)
+ * Maintenances 데이터 추가(정비시작)
  * @param data
  * @returns
  */
 export async function _aPatchMaintenancesStart(
+  id: string,
+  data: Partial<Maintenance>
+) {
+  const req: Maintenance = await axios
+    .patch(genApiPath(MaintenancesApiPath.start, { id: id }), data)
+    .then(
+      (res: AxiosResponse<Maintenance, Partial<Maintenance>>): Maintenance => {
+        return res.data;
+      }
+    );
+
+  const result: _iMaintenancesOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Maintenances 데이터 추가(정비완료)
+ * @param data
+ * @returns
+ */
+export async function _aPatchMaintenancesEnd(
   id: string,
   data: Partial<Maintenance>
 ) {

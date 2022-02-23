@@ -31,26 +31,10 @@ import {
   _pMaintenanceProps,
   _pPartsSetProps,
 } from "src/configure/_pProps.entity";
-import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
+import { FaFlagCheckered } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { basicRegEx } from "src/validation/regEx";
-import {
-  _aGetMaintenancesCarInfo,
-  _aPatchMaintenancesStart,
-  _aPostMaintenancesStore,
-} from "store/action/user.action";
-import {
-  _iGetMaintenancesCarInfo,
-  _iMaintenances,
-  _iMaintenancesOne,
-} from "store/interfaces";
-import {
-  getStrMainPartsType,
-  MainPartsType,
-  mainPartsTypeList,
-  MainStatus,
-} from "src/constants/maintenance.const";
 import {
   Maintenance,
   MainPrice,
@@ -65,6 +49,14 @@ import MtSetModal from "./setModal";
 import { Part } from "src/models/part.entity";
 import dayjs from "dayjs";
 import { GoCheck } from "react-icons/go";
+import {
+  MainPartsType,
+  MainStatus,
+  mainPartsTypeList,
+  getStrMainPartsType,
+} from "src/constants/maintenance.const";
+import { _aPatchMaintenancesEnd } from "store/action/user.action";
+import { _iMaintenancesOne } from "store/interfaces";
 
 const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -297,13 +289,13 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
     };
 
     await dispatch(
-      _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
+      _aPatchMaintenancesEnd(maintenanceData._id, maintenanceData)
     ).then(
       (res: _iMaintenancesOne) => {
         if (res.payload) {
           if (opt) {
             router.push(
-              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
+              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.DONE}`
             );
           } else {
             return alert("정비내역을 저장했습니다.");
@@ -363,9 +355,11 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                 차량입고
               </Text>
             </Wrapper>
-            <JoinStepBar kindOf={`line2`}></JoinStepBar>
+            <JoinStepBar kindOf={`line`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`progress`}>{<TiSpanner />}</JoinStepBar>
+              <JoinStepBar kindOf={`progress`}>
+                <TiSpanner />
+              </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>

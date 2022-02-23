@@ -36,22 +36,6 @@ import { TiSpanner } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { basicRegEx } from "src/validation/regEx";
 import {
-  _aGetMaintenancesCarInfo,
-  _aPatchMaintenancesStart,
-  _aPostMaintenancesStore,
-} from "store/action/user.action";
-import {
-  _iGetMaintenancesCarInfo,
-  _iMaintenances,
-  _iMaintenancesOne,
-} from "store/interfaces";
-import {
-  getStrMainPartsType,
-  MainPartsType,
-  mainPartsTypeList,
-  MainStatus,
-} from "src/constants/maintenance.const";
-import {
   Maintenance,
   MainPrice,
   MainWork,
@@ -65,6 +49,14 @@ import MtSetModal from "./setModal";
 import { Part } from "src/models/part.entity";
 import dayjs from "dayjs";
 import { GoCheck } from "react-icons/go";
+import {
+  MainPartsType,
+  MainStatus,
+  mainPartsTypeList,
+  getStrMainPartsType,
+} from "src/constants/maintenance.const";
+import { _aPatchMaintenancesStart } from "store/action/user.action";
+import { _iMaintenancesOne } from "store/interfaces";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -365,7 +357,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>{<TiSpanner />}</JoinStepBar>
+              <JoinStepBar kindOf={`before`}>
+                <TiSpanner />
+              </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>
@@ -400,7 +394,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`10px 0px`}
               >
                 <Text fontSize={`24px`}>{mtInfo.car.regNumber}</Text>
-                <IconButton
+                {/* <IconButton
                   type="button"
                   shadow={`none`}
                   onClick={() => {
@@ -408,7 +402,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   }}
                 >
                   <AiFillCloseCircle />
-                </IconButton>
+                </IconButton> */}
               </Wrapper>
             </Wrapper>
             <Wrapper
