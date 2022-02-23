@@ -110,8 +110,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   ); // 선택한 세트 데이터
   const [vatCheck, setVatCheck] = useState<boolean>(false); // 부가세 체크여부
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
-  const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
+  const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<Partial<MainPrice>>(priceInit); // 가격정보
+  const [modify, setModify] = useState<boolean>(true);
 
   /*********************************************************************
    * 3. Handlers
@@ -816,6 +817,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                             bgColor={`inherit`}
                             color={`#d6263b`}
                             padding={`0px`}
+                            isDisplayNone={modify}
                             onClick={() => {
                               onDeleteRowHandler(idx);
                             }}
@@ -837,6 +839,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               onKeyUpHandler(e, (idx + 1) * 7 - 7)
                             }
                             value={data.name}
+                            readOnly={modify}
                             name="name"
                             list="workList"
                             onChange={(
@@ -897,6 +900,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                           <Combo
                             width={`100%`}
                             value={data.type}
+                            disabled={modify}
                             ref={(elem: HTMLInputElement) =>
                               (inputRef.current[(idx + 1) * 7 - 5] = elem)
                             }
@@ -930,6 +934,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               onKeyUpHandler(e, (idx + 1) * 7 - 4)
                             }
                             value={data.price.toLocaleString()}
+                            readOnly={modify}
                             name="price"
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
@@ -952,6 +957,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               onKeyUpHandler(e, (idx + 1) * 7 - 3)
                             }
                             value={data.quantity.toLocaleString()}
+                            readOnly={modify}
                             name="quantity"
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
@@ -992,6 +998,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               onKeyUpHandler(e, (idx + 1) * 7 - 1)
                             }
                             value={data.wage.toLocaleString()}
+                            readOnly={modify}
                             name="wage"
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
@@ -1034,14 +1041,42 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
               </Text>
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
-              <SmallButton
-                form="carInfoForm"
-                type="submit"
-                kindOf={`default`}
-                width={`100%`}
-              >
-                정비내역 수정
-              </SmallButton>
+              {modify ? (
+                <SmallButton
+                  form="carInfoForm"
+                  type="button"
+                  kindOf={`default`}
+                  width={`100%`}
+                  onClick={() => {
+                    setModify(!modify);
+                  }}
+                >
+                  정비내역 수정
+                </SmallButton>
+              ) : (
+                <Wrapper dr={`row`} ju={`space-between`} width={`888px`}>
+                  <SmallButton
+                    type="button"
+                    width={`439px`}
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModify(!modify);
+                    }}
+                  >
+                    수정 취소
+                  </SmallButton>
+                  <SmallButton
+                    type="button"
+                    width={`439px`}
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModify(!modify);
+                    }}
+                  >
+                    수정 완료
+                  </SmallButton>
+                </Wrapper>
+              )}
             </Wrapper>
           </Wrapper>
         </Wrapper>
