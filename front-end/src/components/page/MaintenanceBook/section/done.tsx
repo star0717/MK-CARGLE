@@ -78,20 +78,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
       wage: 0,
     },
   ];
-  /**가격정보 초기값 */
-  const priceInit: MainPrice = {
-    isIncluded: false,
-    partsSum: 0,
-    wageSum: 0,
-    sum: 0,
-    discount: 0,
-    vat: 0,
-    total: 0,
-    cash: 0,
-    credit: 0,
-    insurance: 0,
-    balance: 0,
-  };
   /**input태그연결 */
   let inputRef = useRef<HTMLInputElement[]>([]);
 
@@ -131,201 +117,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
    */
   const closeModal = () => {
     setModalOpen(false);
-  };
-
-  /**
-   * keyup event handler
-   * @param e
-   * @param idx
-   */
-  const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "Enter") {
-      if (idx % 7 === 0) return inputRef.current[idx + 2].focus();
-      if (idx % 7 === 4) return inputRef.current[idx + 2].focus();
-      return inputRef.current[idx + 1].focus();
-    }
-  };
-
-  /**
-   * keydown event handler
-   * @param e
-   * @param idx
-   */
-  const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
-    if (e.key === "Enter") {
-      if (idx === cellCount - 1) {
-        setWorkList(workList.concat(workInit));
-      }
-    }
-  };
-
-  /**
-   * 정비내용 handler
-   * @param e
-   */
-  const onChangeMaintenance = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMtInfo({ ...mtInfo, [e.target.name]: e.target.value });
-  };
-
-  /**
-   * 정비내역 input handler
-   * @param e
-   * @param idx
-   */
-  const onChangeInputArr = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    rowIdx: number,
-    cellIdx?: number
-  ) => {
-    switch (e.target.name) {
-      case "name":
-        const partOne: Part[] = props.data.allParts.docs.filter(
-          (item: Part) =>
-            e.target.value === item.name ||
-            item.nickName.includes(e.target.value)
-        );
-        return setWorkList(
-          workList.map((item, index) =>
-            index === rowIdx
-              ? {
-                  ...item,
-                  name: e.target.value,
-                  code: partOne[0]?.code,
-                  tsCode: partOne[0]?.tsCode || "",
-                }
-              : item
-          )
-        );
-      case "price":
-      case "quantity":
-      case "wage":
-        e.target.value = e.target.value.replaceAll(",", "");
-        if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
-          return setWorkList(
-            workList.map((item, index) =>
-              index === rowIdx
-                ? {
-                    ...item,
-                    [e.target.name]: 0,
-                    sum:
-                      e.target.name === "price"
-                        ? Number(e.target.value) * item.quantity
-                        : e.target.name === "quantity"
-                        ? item.price * Number(e.target.value)
-                        : item.price * item.quantity,
-                  }
-                : item
-            )
-          );
-        } else {
-          return setWorkList(
-            workList.map((item, index) =>
-              index === rowIdx
-                ? {
-                    ...item,
-                    [e.target.name]: Number(e.target.value),
-                    sum:
-                      e.target.name === "price"
-                        ? Number(e.target.value) * item.quantity
-                        : e.target.name === "quantity"
-                        ? item.price * Number(e.target.value)
-                        : item.price * item.quantity,
-                  }
-                : item
-            )
-          );
-        }
-      default:
-        setWorkList(
-          workList.map((item, index) =>
-            index === rowIdx
-              ? { ...item, [e.target.name]: e.target.value }
-              : item
-          )
-        );
-        return inputRef.current[cellIdx + 1].focus();
-    }
-  };
-
-  /**
-   * 열 삭제 handler
-   * @param idx
-   */
-  const onDeleteRowHandler = (idx: number) => {
-    if (workList.length > 1) {
-      setWorkList(workList.filter((data, index) => idx !== index));
-    }
-  };
-
-  /**
-   * 정비내역 변경 시 일어나는 event handler
-   * cell 증가, 합계 계산
-   */
-  useEffect(() => {
-    setCellCount(workList.length * 7);
-
-    let partsSum = 0;
-    let wageSum = 0;
-    let sum1 = 0;
-    let sum2 = 0;
-    let vat = 0;
-
-    for (let i = 0; i < workList.length; i++) {
-      partsSum += workList[i].price * workList[i].quantity;
-      wageSum += workList[i].wage;
-      sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
-    }
-    sum2 = price.isIncluded ? sum1 * 0.9 : sum1;
-    vat = price.isIncluded ? sum1 - sum2 : sum1 * 0.1;
-
-    setPrice({
-      ...price,
-      partsSum: partsSum,
-      wageSum: wageSum,
-      sum: Number(sum2.toString().split(".")[0]),
-      vat: Number(vat.toString().split(".")[0]),
-      total: Number((sum2 + vat).toString().split(".")[0]),
-    });
-  }, [workList, price.isIncluded]);
-
-  /**
-   * 차량 저장 handler
-   */
-  const onSaveWorkInfo = async (opt: boolean) => {
-    let mainWorkList: MainWork[] = workList.filter((item) => item.name !== "");
-    mainWorkList = mainWorkList.map((item) => {
-      for (let i = 0; i < props.data.allParts.docs.length; i++) {
-        if (props.data.allParts.docs[i].nickName.includes(item.name))
-          return { ...item, name: props.data.allParts.docs[i].name };
-      }
-      return item;
-    });
-    const maintenanceData: Partial<Maintenance> = {
-      ...mtInfo,
-      workerName: props.tokenValue.uName,
-      works: mainWorkList,
-      price: price,
-    };
-    if (maintenanceData.works.length === 0)
-      return alert("정비내역을 추가해주세요.");
-    await dispatch(
-      _aPatchMaintenancesEnd(maintenanceData._id, maintenanceData)
-    ).then(
-      (res: _iMaintenancesOne) => {
-        if (res.payload) {
-          if (opt) {
-            router.push(
-              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.DONE}`
-            );
-          } else {
-            return alert("정비내역을 저장했습니다.");
-          }
-        }
-      },
-      (err) => {
-        alert("정비내역 저장에 실패했습니다.");
-      }
-    );
   };
 
   /*********************************************************************
@@ -689,7 +480,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                     margin={`0px`}
                     value={mtInfo.costomerType}
                     name="costomerType"
-                    onChange={onChangeMaintenance}
+                    disabled
                   >
                     {mainCustomerTypeList.map((type) => {
                       return (
@@ -753,37 +544,22 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                   margin={`0px 10px 0px 0px`}
                   width={`auto`}
                 >
-                  <Checkbox>
+                  <Checkbox cursor={`default`}>
                     부가세 포함
                     <CheckInput
                       type="checkbox"
                       checked={price.isIncluded}
-                      onChange={() => {
-                        setPrice({ ...price, isIncluded: !price.isIncluded });
-                      }}
+                      cursor={`default`}
+                      disabled
                     />
-                    <CheckMark></CheckMark>
+                    <CheckMark cursor={`default`}></CheckMark>
                   </Checkbox>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
-                  <SmallButton
-                    type="button"
-                    kindOf={`default`}
-                    onClick={() => {
-                      setModalOption("part");
-                      setModalOpen(true);
-                    }}
-                  >
+                  <SmallButton type="button" kindOf={`ghost`} disabled>
                     부품조회
                   </SmallButton>
-                  <SmallButton
-                    type="button"
-                    kindOf={`default`}
-                    onClick={() => {
-                      setModalOption("set");
-                      setModalOpen(true);
-                    }}
-                  >
+                  <SmallButton type="button" kindOf={`ghost`} disabled>
                     세트부품
                   </SmallButton>
                 </Wrapper>
@@ -791,7 +567,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <TableWrapper minHeight={`auto`}>
               <TableHead padding={`0px 0px 0px 10px`}>
-                <TableHeadLIST width={`3%`}></TableHeadLIST>
                 <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
                 <TableHeadLIST width={`12%`}>국토부</TableHeadLIST>
                 <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
@@ -809,20 +584,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                         kindOf={`noHover`}
                         padding={`0px 0px 0px 10px`}
                       >
-                        <TableRowLIST width={`3%`}>
-                          <IconButton
-                            type="button"
-                            shadow={`none`}
-                            bgColor={`inherit`}
-                            color={`#d6263b`}
-                            padding={`0px`}
-                            onClick={() => {
-                              onDeleteRowHandler(idx);
-                            }}
-                          >
-                            <AiFillMinusSquare />
-                          </IconButton>
-                        </TableRowLIST>
                         <TableRowLIST width={`14%`}>
                           <TextInput2
                             type="text"
@@ -830,50 +591,11 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 7] = elem)
                             }
                             width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 7)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 7)
-                            }
                             value={data.name}
                             name="name"
                             list="workList"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx);
-                            }}
+                            readOnly
                           />
-                          <datalist id="workList">
-                            {props.data.allParts.docs.map(
-                              (item: Part, idx: number) => {
-                                return (
-                                  <Wrapper key={idx}>
-                                    {item.nickName.length >= 1 ? (
-                                      item.nickName.map(
-                                        (nickname: string, iidx: number) => {
-                                          return (
-                                            <option
-                                              key={`${idx}.${iidx}`}
-                                              label={nickname}
-                                              value={item.name}
-                                            />
-                                          );
-                                        }
-                                      )
-                                    ) : (
-                                      <option
-                                        key={idx}
-                                        label={item.nickName[0]}
-                                        value={item.name}
-                                      />
-                                    )}
-                                  </Wrapper>
-                                );
-                              }
-                            )}
-                          </datalist>
                         </TableRowLIST>
                         <TableRowLIST width={`12%`}>
                           <TextInput2
@@ -882,12 +604,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 6] = elem)
                             }
                             width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 6)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 6)
-                            }
                             value={data.tsCode}
                             name="tsCode"
                             readOnly
@@ -901,11 +617,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 5] = elem)
                             }
                             name="type"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx, (idx + 1) * 7 - 5);
-                            }}
+                            disabled
                           >
                             {mainPartsTypeList.map((item: MainPartsType) => {
                               return (
@@ -923,19 +635,9 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 4] = elem)
                             }
                             width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 4)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 4)
-                            }
                             value={data.price.toLocaleString()}
                             name="price"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx);
-                            }}
+                            readOnly
                           />
                         </TableRowLIST>
                         <TableRowLIST width={`10%`}>
@@ -945,19 +647,9 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 3] = elem)
                             }
                             width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 3)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 3)
-                            }
                             value={data.quantity.toLocaleString()}
                             name="quantity"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx);
-                            }}
+                            readOnly
                           />
                         </TableRowLIST>
                         <TableRowLIST width={`14%`}>
@@ -967,12 +659,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 2] = elem)
                             }
                             width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 2)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 2)
-                            }
                             value={data.sum.toLocaleString()}
                             name="inputSum"
                             readOnly
@@ -985,19 +671,9 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 1] = elem)
                             }
                             width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 1)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 1)
-                            }
                             value={data.wage.toLocaleString()}
                             name="wage"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx);
-                            }}
+                            readOnly
                           />
                         </TableRowLIST>
                       </TableRow>
@@ -1050,9 +726,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                 type="button"
                 kindOf={`default`}
                 width={`288px`}
-                onClick={() => {
-                  onSaveWorkInfo(false);
-                }}
+                onClick={() => {}}
               >
                 저장
               </SmallButton>
@@ -1060,9 +734,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                 type="button"
                 kindOf={`default`}
                 width={`288px`}
-                onClick={() => {
-                  onSaveWorkInfo(true);
-                }}
+                onClick={() => {}}
               >
                 다음단계
               </SmallButton>
