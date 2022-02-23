@@ -333,6 +333,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
+  console.log(props);
   return (
     <WholeWrapper>
       <RsWrapper>
