@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
 import { NextPage } from "next";
 import {
   Checkbox,
   CheckInput,
   CheckMark,
   CloseButton,
-  ColorSpan,
   Combo,
   IconButton,
   JoinStepBar,
@@ -43,7 +41,6 @@ import {
   getStrMainPartsType,
   MainPartsType,
   mainPartsTypeList,
-  MainStatus,
 } from "src/constants/maintenance.const";
 import {
   MainPrice,

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import {
   Checkbox,
@@ -33,11 +33,9 @@ import {
 } from "src/configure/_pProps.entity";
 import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
-import { RiFileList2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { basicRegEx, formRegEx } from "src/validation/regEx";
+import { basicRegEx } from "src/validation/regEx";
 import {
-  getWorkersListAction,
   _aGetMaintenancesCarInfo,
   _aPatchMaintenancesStart,
   _aPostMaintenancesStore,

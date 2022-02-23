@@ -174,10 +174,7 @@ const MaintenanceCreate: NextPage = () => {
     <WholeWrapper>
       <RsWrapper>
         <Wrapper>
-          {/* <CommonTitle>
-            차량선택 후 정비진행 버튼 클릭 시 정비가 진행됩니다.
-          </CommonTitle> */}
-          <Wrapper
+          {/* <Wrapper
             padding={`20px`}
             margin={`0px 0px 10px 360px`}
             al={`flex-start`}
@@ -185,7 +182,7 @@ const MaintenanceCreate: NextPage = () => {
             <SpeechBubbleLeft fontSize={`20px`}>
               "차량선택 후 차량입고를 해주세요"
             </SpeechBubbleLeft>
-          </Wrapper>
+          </Wrapper> */}
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`progress`}>
