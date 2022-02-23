@@ -1136,6 +1136,7 @@ export async function _aPatchMaintenancesRelease(
   id: string,
   data: Partial<Maintenance>
 ) {
+  console.log("데이터", data);
   const req: Maintenance = await axios
     .patch(genApiPath(MaintenancesApiPath.release, { id: id }), data)
     .then(

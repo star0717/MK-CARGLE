@@ -295,7 +295,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * 정비내역 수정
    */
   const onModifyWorkInfo = async () => {
-    console.log("!!2");
     let mainWorkList: MainWork[] = workList.filter((item) => item.name !== "");
     mainWorkList = mainWorkList.map((item) => {
       for (let i = 0; i < props.data.allParts.docs.length; i++) {
@@ -304,13 +303,13 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       }
       return item;
     });
-    console.log(mainWorkList);
+
     const maintenanceData: Partial<Maintenance> = {
       ...mtInfo,
       workerName: props.tokenValue.uName,
       works: mainWorkList,
     };
-    console.log(maintenanceData);
+    console.log("main", maintenanceData);
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
     await dispatch(
