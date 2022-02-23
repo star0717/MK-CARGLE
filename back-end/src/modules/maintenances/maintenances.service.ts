@@ -78,7 +78,9 @@ export class MaintenancesService extends SafeService<Maintenance> {
     };
     mt.dates = mtDates;
     mt.car = doc.car;
+    mt.customer = doc.customer;
 
+    console.log('mt', mt);
     return await this.create(token, mt);
   }
 
