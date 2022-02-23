@@ -1113,7 +1113,7 @@ export async function _aPatchMaintenancesEnd(
   data: Partial<Maintenance>
 ) {
   const req: Maintenance = await axios
-    .patch(genApiPath(MaintenancesApiPath.start, { id: id }), data)
+    .patch(genApiPath(MaintenancesApiPath.end, { id: id }), data)
     .then(
       (res: AxiosResponse<Maintenance, Partial<Maintenance>>): Maintenance => {
         return res.data;

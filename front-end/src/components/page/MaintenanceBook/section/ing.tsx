@@ -53,7 +53,8 @@ import {
   MainPartsType,
   MainStatus,
   mainPartsTypeList,
-  getStrMainPartsType,
+  mainCustomerTypeList,
+  getStrMainCustomerType,
 } from "src/constants/maintenance.const";
 import { _aPatchMaintenancesEnd } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
@@ -668,10 +669,15 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                     width={`150px`}
                     margin={`0px`}
                     value={mtInfo.costomerType}
-                    disabled
+                    // onChange={}
                   >
-                    <option value="n">일반</option>
-                    <option value="i">보험</option>
+                    {mainCustomerTypeList.map((type) => {
+                      return (
+                        <option key={type} value={type}>
+                          {getStrMainCustomerType(type)}
+                        </option>
+                      );
+                    })}
                   </Combo>
                   <Text
                     textAlign={`end`}
@@ -883,7 +889,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                             {mainPartsTypeList.map((item: MainPartsType) => {
                               return (
                                 <option key={item} value={item}>
-                                  {getStrMainPartsType(item)}
+                                  {item.toUpperCase()}
                                 </option>
                               );
                             })}

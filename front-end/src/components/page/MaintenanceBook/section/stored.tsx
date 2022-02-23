@@ -53,7 +53,6 @@ import {
   MainPartsType,
   MainStatus,
   mainPartsTypeList,
-  getStrMainPartsType,
 } from "src/constants/maintenance.const";
 import { _aPatchMaintenancesStart } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
@@ -671,7 +670,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                     disabled
                   >
                     <option value="n">일반</option>
-                    <option value="i">보험</option>
                   </Combo>
                   <Text
                     textAlign={`end`}
@@ -883,7 +881,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             {mainPartsTypeList.map((item: MainPartsType) => {
                               return (
                                 <option key={item} value={item}>
-                                  {getStrMainPartsType(item)}
+                                  {item.toUpperCase()}
                                 </option>
                               );
                             })}

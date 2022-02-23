@@ -379,7 +379,6 @@ const MaintenanceCreate: NextPage = () => {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
-                            // onChangeCusInfo(e);
                             setCusInfo({
                               ...cusInfo,
                               name: trim(e.target.value),
@@ -716,7 +715,6 @@ const MaintenanceCreate: NextPage = () => {
                   </Text>
                   <Combo width={`150px`} margin={`0px`} disabled>
                     <option value="n">일반</option>
-                    <option value="i">보험</option>
                   </Combo>
                   <Text
                     textAlign={`end`}
