@@ -11,6 +11,7 @@ import {
   JoinStepBarWrapper,
   RsWrapper,
   SmallButton,
+  SpeechBubbleLeft,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -25,26 +26,34 @@ import {
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
+import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
 import {
   _pMaintenanceProps,
   _pPartsSetProps,
 } from "src/configure/_pProps.entity";
 import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
+import { TiSpanner } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { basicRegEx } from "src/validation/regEx";
 import {
   _aGetMaintenancesCarInfo,
+  _aPatchMaintenancesStart,
   _aPostMaintenancesStore,
 } from "store/action/user.action";
-import { _iGetMaintenancesCarInfo, _iMaintenances } from "store/interfaces";
+import {
+  _iGetMaintenancesCarInfo,
+  _iMaintenances,
+  _iMaintenancesOne,
+} from "store/interfaces";
 import {
   getStrMainPartsType,
   MainPartsType,
   mainPartsTypeList,
+  MainStatus,
 } from "src/constants/maintenance.const";
 import {
-  MainPrice,
   Maintenance,
+  MainPrice,
   MainWork,
 } from "src/models/maintenance.entity";
 import { maskingStr } from "src/modules/commonModule";
@@ -52,12 +61,10 @@ import { PartsSet } from "src/models/partsset.entity";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
 import MtPartsModal from "./partsModal";
-import { Part } from "src/models/part.entity";
 import MtSetModal from "./setModal";
-import { GoCheck } from "react-icons/go";
+import { Part } from "src/models/part.entity";
 import dayjs from "dayjs";
-import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
-import { TiSpanner } from "react-icons/ti";
+import { GoCheck } from "react-icons/go";
 
 const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -65,7 +72,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-
+  /**작업내용 초기값 */
   const workInit: MainWork[] = [
     {
       name: "",
@@ -78,7 +85,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       wage: 0,
     },
   ];
-
+  /**가격정보 초기값 */
   const priceInit: Partial<MainPrice> = {
     partsSum: 0,
     wageSum: 0,
@@ -86,7 +93,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     vat: 0,
     total: 0,
   };
-
+  /**input태그연결 */
   let inputRef = useRef<HTMLInputElement[]>([]);
 
   /*********************************************************************
@@ -121,10 +128,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
 
-  // useEffect(() => {
-  //   setCellCount(workList.length * 7);
-  // }, [workList]);
-
   /**
    * modal 창 닫기 기능
    */
@@ -133,7 +136,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
-   * 키 이벤트 handler
+   * keyup event handler
    * @param e
    * @param idx
    */
@@ -146,7 +149,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
-   * 키 이벤트 handler
+   * keydown event handler
    * @param e
    * @param idx
    */
@@ -275,6 +278,44 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     });
   }, [workList, vatCheck]);
 
+  /**
+   * 차량 저장 handler
+   */
+  const onSaveWorkInfo = async (opt: boolean) => {
+    let mainWorkList: MainWork[] = workList.filter((item) => item.name !== "");
+    mainWorkList = mainWorkList.map((item) => {
+      for (let i = 0; i < props.data.allParts.docs.length; i++) {
+        if (props.data.allParts.docs[i].nickName.includes(item.name))
+          return { ...item, name: props.data.allParts.docs[i].name };
+      }
+      return item;
+    });
+    const maintenanceData: Partial<Maintenance> = {
+      ...mtInfo,
+      workerName: props.tokenValue.uName,
+      works: mainWorkList,
+    };
+
+    await dispatch(
+      _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
+    ).then(
+      (res: _iMaintenancesOne) => {
+        if (res.payload) {
+          if (opt) {
+            router.push(
+              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
+            );
+          } else {
+            return alert("정비내역을 저장했습니다.");
+          }
+        }
+      },
+      (err) => {
+        alert("정비내역 저장에 실패했습니다.");
+      }
+    );
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -297,13 +338,15 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       <RsWrapper>
         <Wrapper>
           {/* <Wrapper
-             padding={`0px 200px 20px 320px`}
-             al={`flex-start`}
-           >
-             <SpeechBubbleLeft fontSize={`20px`}>
-               "현재 정비 단계는 차량입고입니다."
-             </SpeechBubbleLeft>
-           </Wrapper> */}
+            padding={`20px`}
+            width={`400px`}
+            margin={`0px 0px 10px 600px`}
+            al={`flex-start`}
+          >
+            <SpeechBubbleRight fontSize={`20px`}>
+              "현재 정비 단계는 출고완료입니다."
+            </SpeechBubbleRight>
+          </Wrapper> */}
           <JoinStepBarWrapper padding={`0px 0px 50px`}>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`complete`}>
@@ -315,8 +358,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`progress`}>
-                <FaCarAlt />
+              <JoinStepBar kindOf={`complete`}>
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 차량입고
@@ -324,15 +367,15 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>{<TiSpanner />}</JoinStepBar>
+              <JoinStepBar kindOf={`complete`}>{<GoCheck />}</JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
               </Text>
             </Wrapper>
             <JoinStepBar kindOf={"line2"}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>
-                <BsFillFileEarmarkCheckFill />
+              <JoinStepBar kindOf={`complete`}>
+                <GoCheck />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비완료
@@ -340,7 +383,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <JoinStepBar kindOf={`line2`}></JoinStepBar>
             <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`before`}>
+              <JoinStepBar kindOf={`progress`}>
                 <FaFlagCheckered />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
@@ -990,7 +1033,12 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
               </Text>
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
-              <SmallButton type="button" kindOf={`default`} width={`100%`}>
+              <SmallButton
+                form="carInfoForm"
+                type="submit"
+                kindOf={`default`}
+                width={`100%`}
+              >
                 정비내역 수정
               </SmallButton>
             </Wrapper>
