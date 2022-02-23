@@ -153,6 +153,14 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
+   * 정비내용 handler
+   * @param e
+   */
+  const onChangeMaintenance = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMtInfo({ ...mtInfo, [e.target.name]: e.target.value });
+  };
+
+  /**
    * 정비내역 input handler
    * @param e
    * @param idx
@@ -286,7 +294,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       workerName: props.tokenValue.uName,
       works: mainWorkList,
     };
-
+    if (maintenanceData.works.length === 0)
+      return alert("정비내역을 추가해주세요.");
     await dispatch(
       _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
     ).then(
@@ -686,6 +695,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     width={`150px`}
                     margin={`0px`}
                     value={mtInfo.costomerType}
+                    name="costomerType"
+                    onChange={onChangeMaintenance}
                   >
                     {mainCustomerTypeList.map((type) => {
                       return (
