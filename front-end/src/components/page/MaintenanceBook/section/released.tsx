@@ -26,22 +26,15 @@ import {
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
-import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
 import {
   _pMaintenanceProps,
   _pPartsSetProps,
 } from "src/configure/_pProps.entity";
-import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
-import { TiSpanner } from "react-icons/ti";
+import { FaFlagCheckered } from "react-icons/fa";
+
 import { useDispatch } from "react-redux";
 import { basicRegEx } from "src/validation/regEx";
-import {
-  _aGetMaintenancesCarInfo,
-  _aPatchMaintenancesEnd,
-  _aPatchMaintenancesRelease,
-  _aPatchMaintenancesStart,
-  _aPostMaintenancesStore,
-} from "store/action/user.action";
+import { _aPatchMaintenancesRelease } from "store/action/user.action";
 import {
   _iGetMaintenancesCarInfo,
   _iMaintenances,
@@ -53,7 +46,6 @@ import {
   mainCustomerTypeList,
   MainPartsType,
   mainPartsTypeList,
-  MainStatus,
 } from "src/constants/maintenance.const";
 import {
   Maintenance,
@@ -303,25 +295,21 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       }
       return item;
     });
-
     const maintenanceData: Partial<Maintenance> = {
       ...mtInfo,
       workerName: props.tokenValue.uName,
       works: mainWorkList,
     };
-    console.log("main", maintenanceData);
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
     await dispatch(
       _aPatchMaintenancesRelease(maintenanceData._id, maintenanceData)
     ).then(
       (res: _iMaintenancesOne) => {
-        if (res.payload) {
-          return alert("수정되었습니다");
-        }
+        return alert("정비내역을 저장했습니다.");
       },
       (err) => {
-        alert("수정에 실패했습니다.");
+        alert("정비내역 저장에 실패했습니다.");
       }
     );
   };
