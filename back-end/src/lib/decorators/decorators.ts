@@ -81,7 +81,7 @@ export const FindParam = createParamDecorator(
     // console.log(params);
     // // console.log(params.sFrom);
     // // console.log(params.sTo);
-    // const duration = dayjs.duration(start.diff(end));
+    // const duration = dayjs.duration(start.(end));
     // // console.log(duration);
     // params.useDurationSearch = true;
     return findParams;

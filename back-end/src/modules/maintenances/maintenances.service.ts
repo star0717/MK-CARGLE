@@ -69,19 +69,20 @@ export class MaintenancesService extends SafeService<Maintenance> {
     // 차량 정보 갱신 (신규차량일 경우 등록)
     this.carsService.updateOrInsertByCarInfo(doc.car);
 
-    let mt: Maintenance = new Maintenance();
-    mt.docNum = await this._genDocNumber();
-    mt.status = MainStatus.STORED;
-    mt.costomerType = MainCustomerType.NORMAL;
+    let src: Maintenance = new Maintenance();
+    src.docNum = await this._genDocNumber();
+    src.status = MainStatus.STORED;
+    src.costomerType = MainCustomerType.NORMAL;
     const mtDates: MainDates = {
       stored: new Date(Date.now()),
     };
-    mt.dates = mtDates;
-    mt.car = doc.car;
-    mt.customer = doc.customer;
+    src.dates = mtDates;
+    src.car = doc.car;
+    src.customer = doc.customer;
+    src.price = new MainPrice();
 
-    console.log('mt', mt);
-    return await this.create(token, mt);
+    console.log('mt', src);
+    return await this.create(token, src);
   }
 
   async startMain(
@@ -98,8 +99,10 @@ export class MaintenancesService extends SafeService<Maintenance> {
 
     src.works = doc.works;
     src.workerName = doc.workerName;
+    src.costomerType = doc.costomerType;
     src.status = MainStatus.ING;
     src.dates.startMa = new Date(Date.now());
+    src.price = doc.price;
     return await this.findByIdAndUpdate(token, id, src);
   }
 
@@ -111,9 +114,11 @@ export class MaintenancesService extends SafeService<Maintenance> {
     console.log(doc);
     let src = await this._validateReq(token, id, doc);
 
+    src.works = doc.works;
+    src.costomerType = doc.costomerType;
     src.status = MainStatus.DONE;
     src.dates.endMa = new Date(Date.now());
-    src.price = new MainPrice();
+    src.price = doc.price;
 
     return await this.findByIdAndUpdate(token, id, src);
   }
@@ -139,8 +144,11 @@ export class MaintenancesService extends SafeService<Maintenance> {
   ): Promise<Maintenance> {
     let src = await this._validateReq(token, id, doc);
 
+    src.works = doc.works;
+    src.costomerType = doc.costomerType;
     src.dates.released = new Date(Date.now());
     src.status = MainStatus.RELEASED;
+    src.price = doc.price;
 
     return await this.findByIdAndUpdate(token, id, src);
   }

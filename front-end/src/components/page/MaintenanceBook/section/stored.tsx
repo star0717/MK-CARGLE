@@ -83,12 +83,18 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     },
   ];
   /**가격정보 초기값 */
-  const priceInit: Partial<MainPrice> = {
+  const priceInit: MainPrice = {
+    isIncluded: false,
     partsSum: 0,
     wageSum: 0,
     sum: 0,
+    discount: 0,
     vat: 0,
     total: 0,
+    cash: 0,
+    credit: 0,
+    insurance: 0,
+    balance: 0,
   };
   /**input태그연결 */
   let inputRef = useRef<HTMLInputElement[]>([]);
@@ -105,10 +111,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
     partSetClass[0]
   ); // 선택한 세트 데이터
-  const [vatCheck, setVatCheck] = useState<boolean>(false); // 부가세 체크여부
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
-  const [price, setPrice] = useState<Partial<MainPrice>>(priceInit); // 가격정보
+  const [price, setPrice] = useState<MainPrice>(priceInit); // 가격정보
 
   /*********************************************************************
    * 3. Handlers
@@ -209,7 +214,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                     sum:
                       e.target.name === "price"
                         ? Number(e.target.value) * item.quantity
-                        : item.price * Number(e.target.value),
+                        : e.target.name === "quantity"
+                        ? item.price * Number(e.target.value)
+                        : item.price * item.quantity,
                   }
                 : item
             )
@@ -224,7 +231,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                     sum:
                       e.target.name === "price"
                         ? Number(e.target.value) * item.quantity
-                        : item.price * Number(e.target.value),
+                        : e.target.name === "quantity"
+                        ? item.price * Number(e.target.value)
+                        : item.price * item.quantity,
                   }
                 : item
             )
@@ -270,8 +279,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       wageSum += workList[i].wage;
       sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
     }
-    sum2 = vatCheck ? sum1 * 0.9 : sum1;
-    vat = vatCheck ? sum1 - sum2 : sum1 * 0.1;
+    sum2 = price.isIncluded ? sum1 * 0.9 : sum1;
+    vat = price.isIncluded ? sum1 - sum2 : sum1 * 0.1;
 
     setPrice({
       ...price,
@@ -281,7 +290,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       vat: Number(vat.toString().split(".")[0]),
       total: Number((sum2 + vat).toString().split(".")[0]),
     });
-  }, [workList, vatCheck]);
+  }, [workList, price.isIncluded]);
 
   /**
    * 차량 저장 handler
@@ -299,6 +308,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       ...mtInfo,
       workerName: props.tokenValue.uName,
       works: mainWorkList,
+      price: price,
     };
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
@@ -766,8 +776,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                     부가세 포함
                     <CheckInput
                       type="checkbox"
+                      checked={price.isIncluded}
                       onChange={() => {
-                        setVatCheck(!vatCheck);
+                        setPrice({ ...price, isIncluded: !price.isIncluded });
                       }}
                     />
                     <CheckMark></CheckMark>
