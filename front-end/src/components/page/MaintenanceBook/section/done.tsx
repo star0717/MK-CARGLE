@@ -32,24 +32,9 @@ import {
   _pPartsSetProps,
 } from "src/configure/_pProps.entity";
 import { FaFlagCheckered } from "react-icons/fa";
+import { TiSpanner } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { basicRegEx } from "src/validation/regEx";
-import {
-  _aGetMaintenancesCarInfo,
-  _aPatchMaintenancesStart,
-  _aPostMaintenancesStore,
-} from "store/action/user.action";
-import {
-  _iGetMaintenancesCarInfo,
-  _iMaintenances,
-  _iMaintenancesOne,
-} from "store/interfaces";
-import {
-  getStrMainPartsType,
-  MainPartsType,
-  mainPartsTypeList,
-  MainStatus,
-} from "src/constants/maintenance.const";
 import {
   Maintenance,
   MainPrice,
@@ -64,6 +49,14 @@ import MtSetModal from "./setModal";
 import { Part } from "src/models/part.entity";
 import dayjs from "dayjs";
 import { GoCheck } from "react-icons/go";
+import {
+  MainPartsType,
+  MainStatus,
+  mainPartsTypeList,
+  getStrMainPartsType,
+} from "src/constants/maintenance.const";
+import { _aPatchMaintenancesEnd } from "store/action/user.action";
+import { _iMaintenancesOne } from "store/interfaces";
 
 const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -109,7 +102,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   ); // 선택한 세트 데이터
   const [vatCheck, setVatCheck] = useState<boolean>(false); // 부가세 체크여부
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
-  const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
+  const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<Partial<MainPrice>>(priceInit); // 가격정보
 
   /*********************************************************************
@@ -296,13 +289,13 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
     };
 
     await dispatch(
-      _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
+      _aPatchMaintenancesEnd(maintenanceData._id, maintenanceData)
     ).then(
       (res: _iMaintenancesOne) => {
         if (res.payload) {
           if (opt) {
             router.push(
-              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
+              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.DONE}`
             );
           } else {
             return alert("정비내역을 저장했습니다.");
@@ -365,7 +358,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             <JoinStepBar kindOf={`line`}></JoinStepBar>
             <Wrapper width={`auto`}>
               <JoinStepBar kindOf={`complete`}>
-                <GoCheck />
+                <TiSpanner />
               </JoinStepBar>
               <Text height={`0px`} padding={`10px 0px 0px`}>
                 정비중
