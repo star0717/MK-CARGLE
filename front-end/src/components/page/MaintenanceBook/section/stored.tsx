@@ -284,33 +284,39 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * 차량 저장 handler
    */
   const onSaveWorkInfo = async (opt: boolean) => {
-    const mainWorkList: MainWork[] = workList.filter(
-      (item) => item.name !== ""
-    );
+    let mainWorkList: MainWork[] = workList.filter((item) => item.name !== "");
+    mainWorkList = mainWorkList.map((item) => {
+      for (let i = 0; i < props.data.allParts.docs.length; i++) {
+        if (props.data.allParts.docs[i].nickName.includes(item.name))
+          return { ...item, name: props.data.allParts.docs[i].name };
+      }
+      return item;
+    });
+    console.log(mainWorkList);
     const maintenanceData: Partial<Maintenance> = {
       ...mtInfo,
       workerName: props.tokenValue.uName,
       works: mainWorkList,
     };
 
-    await dispatch(
-      _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
-    ).then(
-      (res: _iMaintenancesOne) => {
-        if (res.payload) {
-          if (opt) {
-            router.push(
-              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
-            );
-          } else {
-            return alert("정비내역을 저장했습니다.");
-          }
-        }
-      },
-      (err) => {
-        alert("정비내역 저장에 실패했습니다.");
-      }
-    );
+    // await dispatch(
+    //   _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
+    // ).then(
+    //   (res: _iMaintenancesOne) => {
+    //     if (res.payload) {
+    //       if (opt) {
+    //         router.push(
+    //           `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
+    //         );
+    //       } else {
+    //         return alert("정비내역을 저장했습니다.");
+    //       }
+    //     }
+    //   },
+    //   (err) => {
+    //     alert("정비내역 저장에 실패했습니다.");
+    //   }
+    // );
   };
 
   /*********************************************************************
