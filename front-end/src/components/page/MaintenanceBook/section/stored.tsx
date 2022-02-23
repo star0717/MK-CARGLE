@@ -72,7 +72,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-
+  /**작업내용 초기값 */
   const workInit: MainWork[] = [
     {
       name: "",
@@ -85,7 +85,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       wage: 0,
     },
   ];
-
+  /**가격정보 초기값 */
   const priceInit: Partial<MainPrice> = {
     partsSum: 0,
     wageSum: 0,
@@ -93,7 +93,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     vat: 0,
     total: 0,
   };
-
+  /**input태그연결 */
   let inputRef = useRef<HTMLInputElement[]>([]);
 
   /*********************************************************************
