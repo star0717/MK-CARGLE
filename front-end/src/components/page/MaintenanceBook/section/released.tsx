@@ -709,6 +709,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     value={mtInfo.costomerType}
                     name="costomerType"
                     onChange={onChangeMaintenance}
+                    disabled={modify}
                   >
                     {mainCustomerTypeList.map((type) => {
                       return (
@@ -783,28 +784,39 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     <CheckMark></CheckMark>
                   </Checkbox>
                 </Wrapper>
-                <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
-                  <SmallButton
-                    type="button"
-                    kindOf={`default`}
-                    onClick={() => {
-                      setModalOption("part");
-                      setModalOpen(true);
-                    }}
-                  >
-                    부품조회
-                  </SmallButton>
-                  <SmallButton
-                    type="button"
-                    kindOf={`default`}
-                    onClick={() => {
-                      setModalOption("set");
-                      setModalOpen(true);
-                    }}
-                  >
-                    세트부품
-                  </SmallButton>
-                </Wrapper>
+                {modify ? (
+                  <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
+                    <SmallButton type="button" kindOf={`ghost`}>
+                      부품조회
+                    </SmallButton>
+                    <SmallButton type="button" kindOf={`ghost`}>
+                      세트부품
+                    </SmallButton>
+                  </Wrapper>
+                ) : (
+                  <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
+                    <SmallButton
+                      type="button"
+                      kindOf={`default`}
+                      onClick={() => {
+                        setModalOption("part");
+                        setModalOpen(true);
+                      }}
+                    >
+                      부품조회
+                    </SmallButton>
+                    <SmallButton
+                      type="button"
+                      kindOf={`default`}
+                      onClick={() => {
+                        setModalOption("set");
+                        setModalOpen(true);
+                      }}
+                    >
+                      세트부품
+                    </SmallButton>
+                  </Wrapper>
+                )}
               </Wrapper>
             </Wrapper>
             <TableWrapper minHeight={`auto`}>
