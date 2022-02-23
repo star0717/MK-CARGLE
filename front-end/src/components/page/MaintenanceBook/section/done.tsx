@@ -31,8 +31,7 @@ import {
   _pMaintenanceProps,
   _pPartsSetProps,
 } from "src/configure/_pProps.entity";
-import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
-import { TiSpanner } from "react-icons/ti";
+import { FaFlagCheckered } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { basicRegEx } from "src/validation/regEx";
 import {
