@@ -394,7 +394,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`10px 0px`}
               >
                 <Text fontSize={`24px`}>{mtInfo.car.regNumber}</Text>
-                <IconButton
+                {/* <IconButton
                   type="button"
                   shadow={`none`}
                   onClick={() => {
@@ -402,7 +402,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                   }}
                 >
                   <AiFillCloseCircle />
-                </IconButton>
+                </IconButton> */}
               </Wrapper>
             </Wrapper>
             <Wrapper
