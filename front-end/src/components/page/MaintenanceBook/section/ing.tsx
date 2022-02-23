@@ -120,6 +120,8 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
     setPartSetClass(props.data.setList.docs);
   }, [props]);
 
+  console.log(props);
+
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
     modalOpen === true
@@ -758,7 +760,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                     부가세 포함
                     <CheckInput
                       type="checkbox"
-                      value={price.isIncluded}
+                      checked={price.isIncluded}
                       onChange={() => {
                         setPrice({ ...price, isIncluded: !price.isIncluded });
                       }}

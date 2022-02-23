@@ -776,7 +776,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                     부가세 포함
                     <CheckInput
                       type="checkbox"
-                      value={price.isIncluded}
+                      checked={price.isIncluded}
                       onChange={() => {
                         setPrice({ ...price, isIncluded: !price.isIncluded });
                       }}

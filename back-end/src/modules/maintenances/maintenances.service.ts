@@ -99,8 +99,10 @@ export class MaintenancesService extends SafeService<Maintenance> {
 
     src.works = doc.works;
     src.workerName = doc.workerName;
+    src.costomerType = doc.costomerType;
     src.status = MainStatus.ING;
     src.dates.startMa = new Date(Date.now());
+    src.price = doc.price;
     return await this.findByIdAndUpdate(token, id, src);
   }
 
@@ -112,8 +114,11 @@ export class MaintenancesService extends SafeService<Maintenance> {
     console.log(doc);
     let src = await this._validateReq(token, id, doc);
 
+    src.works = doc.works;
+    src.costomerType = doc.costomerType;
     src.status = MainStatus.DONE;
     src.dates.endMa = new Date(Date.now());
+    src.price = doc.price;
 
     return await this.findByIdAndUpdate(token, id, src);
   }
@@ -139,8 +144,11 @@ export class MaintenancesService extends SafeService<Maintenance> {
   ): Promise<Maintenance> {
     let src = await this._validateReq(token, id, doc);
 
+    src.works = doc.works;
+    src.costomerType = doc.costomerType;
     src.dates.released = new Date(Date.now());
     src.status = MainStatus.RELEASED;
+    src.price = doc.price;
 
     return await this.findByIdAndUpdate(token, id, src);
   }
