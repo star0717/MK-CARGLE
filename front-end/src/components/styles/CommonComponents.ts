@@ -746,6 +746,7 @@ export const IconButton = styled.button<any>`
   border-radius: ${(props) => props.radius};
   font-size: ${(props) => props.fontSize || `28px`};
   display: flex;
+  display: ${(props) => (props.isDisplayNone ? `none` : ``)};
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `flex-end`};
   justify-content: ${(props) => props.ju || `center`};
