@@ -84,7 +84,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   ];
   /**가격정보 초기값 */
   const priceInit: MainPrice = {
-    isIncluded: false,
+    isIncluded: true,
     partsSum: 0,
     wageSum: 0,
     sum: 0,

@@ -79,20 +79,6 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       wage: 0,
     },
   ];
-  /**가격정보 초기값 */
-  const priceInit: MainPrice = {
-    isIncluded: false,
-    partsSum: 0,
-    wageSum: 0,
-    sum: 0,
-    discount: 0,
-    vat: 0,
-    total: 0,
-    cash: 0,
-    credit: 0,
-    insurance: 0,
-    balance: 0,
-  };
   /**input태그연결 */
   let inputRef = useRef<HTMLInputElement[]>([]);
 
@@ -119,8 +105,6 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
     setMtInfo(props.data.mtData);
     setPartSetClass(props.data.setList.docs);
   }, [props]);
-
-  console.log(props);
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {

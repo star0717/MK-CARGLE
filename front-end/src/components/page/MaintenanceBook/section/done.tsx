@@ -724,9 +724,9 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
               </SmallButton>
               <SmallButton
                 type="button"
-                kindOf={`default`}
+                kindOf={`ghost`}
                 width={`288px`}
-                onClick={() => {}}
+                disabled
               >
                 저장
               </SmallButton>
@@ -734,7 +734,9 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                 type="button"
                 kindOf={`default`}
                 width={`288px`}
-                onClick={() => {}}
+                onClick={() => {
+                  console.log("hi");
+                }}
               >
                 다음단계
               </SmallButton>
