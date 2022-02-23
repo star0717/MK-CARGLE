@@ -205,7 +205,9 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                     sum:
                       e.target.name === "price"
                         ? Number(e.target.value) * item.quantity
-                        : item.price * Number(e.target.value),
+                        : e.target.name === "quantity"
+                        ? item.price * Number(e.target.value)
+                        : item.price * item.quantity,
                   }
                 : item
             )
@@ -220,7 +222,9 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                     sum:
                       e.target.name === "price"
                         ? Number(e.target.value) * item.quantity
-                        : item.price * Number(e.target.value),
+                        : e.target.name === "quantity"
+                        ? item.price * Number(e.target.value)
+                        : item.price * item.quantity,
                   }
                 : item
             )
