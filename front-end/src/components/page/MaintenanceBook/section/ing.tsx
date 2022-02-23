@@ -55,6 +55,7 @@ import {
   mainPartsTypeList,
   mainCustomerTypeList,
   getStrMainCustomerType,
+  MainCustomerType,
 } from "src/constants/maintenance.const";
 import { _aPatchMaintenancesEnd } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
@@ -152,6 +153,14 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
         setWorkList(workList.concat(workInit));
       }
     }
+  };
+
+  /**
+   * 정비내용 handler
+   * @param e
+   */
+  const onChangeMaintenance = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMtInfo({ ...mtInfo, [e.target.name]: e.target.value });
   };
 
   /**
@@ -288,7 +297,8 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       workerName: props.tokenValue.uName,
       works: mainWorkList,
     };
-
+    if (maintenanceData.works.length === 0)
+      return alert("정비내역을 추가해주세요.");
     await dispatch(
       _aPatchMaintenancesEnd(maintenanceData._id, maintenanceData)
     ).then(
@@ -669,9 +679,10 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                     width={`150px`}
                     margin={`0px`}
                     value={mtInfo.costomerType}
-                    // onChange={}
+                    name="costomerType"
+                    onChange={onChangeMaintenance}
                   >
-                    {mainCustomerTypeList.map((type) => {
+                    {mainCustomerTypeList.map((type: MainCustomerType) => {
                       return (
                         <option key={type} value={type}>
                           {getStrMainCustomerType(type)}
@@ -1015,9 +1026,13 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
             <Wrapper dr={`row`} ju={`space-between`}>
               <SmallButton
                 type="button"
-                kindOf={`ghost`}
-                disabled
+                kindOf={`default`}
                 width={`288px`}
+                onClick={() => {
+                  router.push(
+                    `${UseLink.MAINTENANCE_BOOK}?id=${mtInfo._id}&step=${MainStatus.STORED}`
+                  );
+                }}
               >
                 이전단계
               </SmallButton>

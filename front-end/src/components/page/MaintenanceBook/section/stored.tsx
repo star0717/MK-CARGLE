@@ -53,9 +53,15 @@ import {
   MainPartsType,
   MainStatus,
   mainPartsTypeList,
+  mainCustomerTypeList,
+  getStrMainCustomerType,
+  MainCustomerType,
 } from "src/constants/maintenance.const";
-import { _aPatchMaintenancesStart } from "store/action/user.action";
-import { _iMaintenancesOne } from "store/interfaces";
+import {
+  _aDeleteMaintenancesDelete,
+  _aPatchMaintenancesStart,
+} from "store/action/user.action";
+import { _iDeleteByUser, _iMaintenancesOne } from "store/interfaces";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -150,6 +156,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         setWorkList(workList.concat(workInit));
       }
     }
+  };
+
+  /**
+   * 정비내용 handler
+   * @param e
+   */
+  const onChangeMaintenance = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMtInfo({ ...mtInfo, [e.target.name]: e.target.value });
   };
 
   /**
@@ -286,7 +300,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       workerName: props.tokenValue.uName,
       works: mainWorkList,
     };
-
+    if (maintenanceData.works.length === 0)
+      return alert("정비내역을 추가해주세요.");
     await dispatch(
       _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
     ).then(
@@ -303,6 +318,22 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       },
       (err) => {
         alert("정비내역 저장에 실패했습니다.");
+      }
+    );
+  };
+
+  /**
+   * 차량 선택으로 return(정비내역은 삭제)
+   */
+  const onReturnSelectCar = async () => {
+    await dispatch(_aDeleteMaintenancesDelete(mtInfo._id)).then(
+      (res: _iDeleteByUser) => {
+        if (res.payload) {
+          router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
+        }
+      },
+      (err) => {
+        alert("정비내역 삭제에 실패했습니다.");
       }
     );
   };
@@ -393,15 +424,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`10px 0px`}
               >
                 <Text fontSize={`24px`}>{mtInfo.car.regNumber}</Text>
-                {/* <IconButton
+                <IconButton
                   type="button"
                   shadow={`none`}
-                  onClick={() => {
-                    router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
-                  }}
+                  color={`#d6263b`}
+                  onClick={onReturnSelectCar}
                 >
                   <AiFillCloseCircle />
-                </IconButton> */}
+                </IconButton>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -667,9 +697,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                     width={`150px`}
                     margin={`0px`}
                     value={mtInfo.costomerType}
-                    disabled
+                    name="costomerType"
+                    onChange={onChangeMaintenance}
                   >
-                    <option value="n">일반</option>
+                    {mainCustomerTypeList.map((type: MainCustomerType) => {
+                      return (
+                        <option key={type} value={type}>
+                          {getStrMainCustomerType(type)}
+                        </option>
+                      );
+                    })}
                   </Combo>
                   <Text
                     textAlign={`end`}
