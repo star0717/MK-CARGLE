@@ -1128,6 +1128,30 @@ export async function _aPatchMaintenancesEnd(
 }
 
 /**
+ * Maintenances 데이터 추가(출고완료)
+ * @param data
+ * @returns
+ */
+export async function _aPatchMaintenancesRelease(
+  id: string,
+  data: Partial<Maintenance>
+) {
+  const req: Maintenance = await axios
+    .patch(genApiPath(MaintenancesApiPath.release, { id: id }), data)
+    .then(
+      (res: AxiosResponse<Maintenance, Partial<Maintenance>>): Maintenance => {
+        return res.data;
+      }
+    );
+
+  const result: _iMaintenancesOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
  * Maintenances 데이터 삭제(한개)
  * @param id _id
  * @returns

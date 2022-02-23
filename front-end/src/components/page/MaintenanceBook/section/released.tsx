@@ -37,6 +37,8 @@ import { useDispatch } from "react-redux";
 import { basicRegEx } from "src/validation/regEx";
 import {
   _aGetMaintenancesCarInfo,
+  _aPatchMaintenancesEnd,
+  _aPatchMaintenancesRelease,
   _aPatchMaintenancesStart,
   _aPostMaintenancesStore,
 } from "store/action/user.action";
@@ -290,9 +292,10 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   }, [workList, vatCheck]);
 
   /**
-   * 차량 저장 handler
+   * 정비내역 수정
    */
-  const onSaveWorkInfo = async (opt: boolean) => {
+  const onModifyWorkInfo = async () => {
+    console.log("!!2");
     let mainWorkList: MainWork[] = workList.filter((item) => item.name !== "");
     mainWorkList = mainWorkList.map((item) => {
       for (let i = 0; i < props.data.allParts.docs.length; i++) {
@@ -301,29 +304,25 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       }
       return item;
     });
+    console.log(mainWorkList);
     const maintenanceData: Partial<Maintenance> = {
       ...mtInfo,
       workerName: props.tokenValue.uName,
       works: mainWorkList,
     };
+    console.log(maintenanceData);
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
     await dispatch(
-      _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
+      _aPatchMaintenancesRelease(maintenanceData._id, maintenanceData)
     ).then(
       (res: _iMaintenancesOne) => {
         if (res.payload) {
-          if (opt) {
-            router.push(
-              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
-            );
-          } else {
-            return alert("정비내역을 저장했습니다.");
-          }
+          return alert("수정되었습니다");
         }
       },
       (err) => {
-        alert("정비내역 저장에 실패했습니다.");
+        alert("수정에 실패했습니다.");
       }
     );
   };
@@ -1099,6 +1098,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     width={`439px`}
                     kindOf={`default`}
                     onClick={() => {
+                      console.log("!!1");
+                      onModifyWorkInfo();
                       setModify(!modify);
                     }}
                   >
