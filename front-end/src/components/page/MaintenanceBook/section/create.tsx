@@ -775,10 +775,10 @@ const MaintenanceCreate: NextPage = () => {
                   margin={`0px 10px 0px 0px`}
                   width={`auto`}
                 >
-                  <Checkbox>
+                  <Checkbox cursor={`default`}>
                     부가세 포함
-                    <CheckInput type="checkbox" disabled />
-                    <CheckMark></CheckMark>
+                    <CheckInput type="checkbox" cursor={`default`} disabled />
+                    <CheckMark cursor={`default`}></CheckMark>
                   </Checkbox>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>

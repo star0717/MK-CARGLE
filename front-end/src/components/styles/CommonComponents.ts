@@ -1796,6 +1796,7 @@ export const CheckMark = styled.span<any>`
   background-color: #ddd;
   border-radius: 4px;
   transition: 0.2s;
+  cursor: ${(props) => props.cursor || `pointer`};
 
   &:after {
     content: "";
@@ -1816,7 +1817,7 @@ export const CheckMark = styled.span<any>`
 export const CheckInput = styled.input<any>`
   position: absolute;
   opacity: 0;
-  cursor: pointer;
+  cursor: ${(props) => props.cursor || `pointer`};
   height: 0;
   width: 0;
 `;
@@ -1827,7 +1828,7 @@ export const Checkbox = styled.label<any>`
   padding-left: 30px;
   margin: ${(props) => props.margin || `10px 0px`};
   width: ${(props) => props.width};
-  cursor: pointer;
+  cursor: ${(props) => props.cursor || `pointer`};
   font-size: 16px;
   line-height: 1.6;
   -webkit-user-select: none;
