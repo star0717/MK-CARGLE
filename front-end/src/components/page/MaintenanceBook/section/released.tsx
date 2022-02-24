@@ -98,9 +98,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   ); // 선택한 세트 데이터
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
-  const [price, setPrice] = useState<Partial<MainPrice>>(
-    props.data.mtData.price
-  ); // 가격정보
+  const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
   const [modify, setModify] = useState<boolean>(true);
 
   /*********************************************************************
@@ -296,6 +294,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       ...mtInfo,
       workerName: props.tokenValue.uName,
       works: mainWorkList,
+      price: price,
     };
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
