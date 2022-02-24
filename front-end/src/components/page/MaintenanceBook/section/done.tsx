@@ -113,6 +113,37 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   }, [modalOpen]);
 
   /**
+   * 정비내역 변경 시 일어나는 event handler
+   * cell 증가, 합계 계산
+   */
+  useEffect(() => {
+    setCellCount(workList.length * 7);
+
+    let partsSum = 0;
+    let wageSum = 0;
+    let sum1 = 0;
+    let sum2 = 0;
+    let vat = 0;
+
+    for (let i = 0; i < workList.length; i++) {
+      partsSum += workList[i].price * workList[i].quantity;
+      wageSum += workList[i].wage;
+      sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
+    }
+    sum2 = price.isIncluded ? sum1 / 1.1 : sum1;
+    vat = price.isIncluded ? sum2 * 0.1 : sum1 * 0.1;
+
+    setPrice({
+      ...price,
+      partsSum: partsSum,
+      wageSum: wageSum,
+      sum: Number(sum2.toString().split(".")[0]),
+      vat: Number(vat.toString().split(".")[0]),
+      total: Number((sum2 + vat).toString().split(".")[0]),
+    });
+  }, [workList, price.isIncluded]);
+
+  /**
    * modal 창 닫기 기능
    */
   const closeModal = () => {
@@ -691,7 +722,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>합계 : {price.sum.toLocaleString()}</Text>
+              <Text>과세액 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
