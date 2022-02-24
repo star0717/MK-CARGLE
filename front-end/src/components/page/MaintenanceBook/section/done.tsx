@@ -734,7 +734,8 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                 kindOf={`default`}
                 width={`288px`}
                 onClick={() => {
-                  console.log("hi");
+                  setModalOption("molit");
+                  setModalOpen(true);
                 }}
               >
                 다음단계

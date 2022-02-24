@@ -16,19 +16,20 @@ import {
 import { GoPrimitiveDot } from "react-icons/go";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
 import { MainPrice } from "src/models/maintenance.entity";
+import { basicRegEx } from "src/validation/regEx";
 const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   interface PayCheck {
-    cash: Boolean;
-    credit: Boolean;
-    insurance: Boolean;
+    cashCheck: Boolean;
+    creditCheck: Boolean;
+    insuranceCheck: Boolean;
   }
   const payCheckInit: PayCheck = {
-    cash: false,
-    credit: false,
-    insurance: false,
+    cashCheck: false,
+    creditCheck: false,
+    insuranceCheck: false,
   };
   /*********************************************************************
    * 2. State settings
@@ -39,11 +40,24 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 결제 input handler
+   * @param e
+   */
   const onChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPrice({ ...price, [e.target.name]: e.target.value });
+    e.target.value = e.target.value.replaceAll(",", "");
+    if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
+      setPrice({ ...price, [e.target.name]: 0 });
+    } else {
+      setPrice({ ...price, [e.target.name]: Number(e.target.value) });
+    }
   };
+  /**
+   * 결제수단 체크 handler
+   * @param e
+   */
   const onChangeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPayCheck({ ...payCheck, [e.target.name]: e.target.value });
+    setPayCheck({ ...payCheck, [e.target.name]: e.target.checked });
   };
 
   /*********************************************************************
@@ -100,11 +114,11 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
             >
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                 <Text>부품계</Text>
-                <Text>120,000원</Text>
+                <Text>{price.partsSum.toLocaleString()}원</Text>
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                 <Text>기술료계</Text>
-                <Text>70,000원</Text>
+                <Text>{price.wageSum.toLocaleString()}원</Text>
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                 <Text width={`60px`} textAlign={`left`}>
@@ -114,25 +128,29 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
                   <TextInput2
                     width={`300px`}
                     al={`flex-end`}
+                    type="text"
                     placeholder={"금액을 입력하세요."}
-                  ></TextInput2>
+                    name="discount"
+                    value={price.discount.toLocaleString()}
+                    onChange={onChangePrice}
+                  />
                   <Text width={`20px`} textAlign={`right`}>
                     원
                   </Text>
                 </Wrapper>
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
-                <Text>합계</Text>
-                <Text>190,000원</Text>
+                <Text>과세액</Text>
+                <Text>{price.sum.toLocaleString()}원</Text>
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                 <Text>부가세</Text>
-                <Text>19,000원</Text>
+                <Text>{price.vat.toLocaleString()}원</Text>
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                 <Text fontSize={`20px`}>총계</Text>
                 <Text color={`#314af5`} fontSize={`20px`}>
-                  209,000원
+                  {price.total.toLocaleString()}원
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -160,7 +178,12 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
                   <Wrapper al={`flex-start`} height={`30px`}>
                     <Checkbox>
                       현금
-                      <CheckInput type="checkbox" />
+                      <CheckInput
+                        type="checkbox"
+                        name="cashCheck"
+                        checked={payCheck.cashCheck}
+                        onChange={onChangeCheck}
+                      />
                       <CheckMark></CheckMark>
                     </Checkbox>
                   </Wrapper>
@@ -169,6 +192,10 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
                       width={`300px`}
                       al={`flex-end`}
                       placeholder={"금액을 입력하세요."}
+                      name="cash"
+                      value={price.cash.toLocaleString()}
+                      onChange={onChangePrice}
+                      readOnly={!payCheck.cashCheck}
                     />
                     <Text width={`20px`} textAlign={`right`}>
                       원
@@ -179,7 +206,12 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
                   <Wrapper al={`flex-start`}>
                     <Checkbox>
                       카드
-                      <CheckInput type="checkbox" />
+                      <CheckInput
+                        type="checkbox"
+                        name="creditCheck"
+                        checked={payCheck.creditCheck}
+                        onChange={onChangeCheck}
+                      />
                       <CheckMark></CheckMark>
                     </Checkbox>
                   </Wrapper>
@@ -188,6 +220,10 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
                       width={`300px`}
                       al={`flex-end`}
                       placeholder={"금액을 입력하세요."}
+                      name="credit"
+                      value={price.credit.toLocaleString()}
+                      onChange={onChangePrice}
+                      readOnly={!payCheck.creditCheck}
                     />
                     <Text width={`20px`} textAlign={`right`}>
                       원
@@ -198,7 +234,12 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
                   <Wrapper al={`flex-start`}>
                     <Checkbox>
                       보험
-                      <CheckInput type="checkbox" />
+                      <CheckInput
+                        type="checkbox"
+                        name="insuranceCheck"
+                        checked={payCheck.insuranceCheck}
+                        onChange={onChangeCheck}
+                      />
                       <CheckMark></CheckMark>
                     </Checkbox>
                   </Wrapper>
@@ -207,6 +248,10 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
                       width={`300px`}
                       al={`flex-end`}
                       placeholder={"금액을 입력하세요."}
+                      name="insurance"
+                      value={price.insurance.toLocaleString()}
+                      onChange={onChangePrice}
+                      readOnly={!payCheck.insuranceCheck}
                     />
                     <Text width={`20px`} textAlign={`right`}>
                       원

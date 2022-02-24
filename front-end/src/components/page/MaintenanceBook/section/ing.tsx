@@ -269,9 +269,9 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       ...price,
       partsSum: partsSum,
       wageSum: wageSum,
-      sum: Number(sum2.toString().split(".")[0]),
-      vat: Number(vat.toString().split(".")[0]),
-      total: Number((sum2 + vat).toString().split(".")[0]),
+      sum: Math.round(Number(sum2.toString())),
+      vat: Math.round(Number(vat.toString())),
+      total: Number((sum2 + vat).toString()),
     });
   }, [workList, price.isIncluded]);
 
