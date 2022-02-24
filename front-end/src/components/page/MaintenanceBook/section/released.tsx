@@ -296,6 +296,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       works: mainWorkList,
       price: price,
     };
+
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
     await dispatch(

@@ -250,6 +250,7 @@ export class MaintenancesController {
     @Body() doc: Maintenance,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<Maintenance> {
+    console.log(doc);
     return await this.service.releaseMain(token, id, doc);
   }
 
