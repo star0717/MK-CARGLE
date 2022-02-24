@@ -58,9 +58,6 @@ import {
 } from "src/constants/maintenance.const";
 import { _aPatchMaintenancesEnd } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
-import MolitModal from "./molitModal";
-import DocumentsModal from "./documentsModal";
-import PaymentModal from "./paymentModal";
 
 const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -96,6 +93,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
     partSetClass[0]
   ); // 선택한 세트 데이터
+  const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
 
@@ -115,44 +113,12 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   }, [modalOpen]);
 
   /**
-   * 정비내역 변경 시 일어나는 event handler
-   * cell 증가, 합계 계산
-   */
-  useEffect(() => {
-    setCellCount(workList.length * 7);
-
-    let partsSum = 0;
-    let wageSum = 0;
-    let sum1 = 0;
-    let sum2 = 0;
-    let vat = 0;
-
-    for (let i = 0; i < workList.length; i++) {
-      partsSum += workList[i].price * workList[i].quantity;
-      wageSum += workList[i].wage;
-      sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
-    }
-    sum2 = price.isIncluded ? sum1 / 1.1 : sum1;
-    vat = price.isIncluded ? sum2 * 0.1 : sum1 * 0.1;
-
-    setPrice({
-      ...price,
-      partsSum: partsSum,
-      wageSum: wageSum,
-      sum: Number(sum2.toString().split(".")[0]),
-      vat: Number(vat.toString().split(".")[0]),
-      total: Number((sum2 + vat).toString().split(".")[0]),
-    });
-  }, [workList, price.isIncluded]);
-
-  /**
    * modal 창 닫기 기능
    */
   const closeModal = () => {
     setModalOpen(false);
   };
 
-  console.log(workList);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -769,8 +735,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                 kindOf={`default`}
                 width={`288px`}
                 onClick={() => {
-                  setModalOption("molit");
-                  setModalOpen(true);
+                  console.log("hi");
                 }}
               >
                 다음단계
@@ -814,12 +779,10 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "molit" ? (
-          <MolitModal {...partsSetProps} />
-        ) : modalOption === "documents" ? (
-          <DocumentsModal {...partsSetProps} />
+        {modalOption === "part" ? (
+          <MtPartsModal {...partsSetProps} />
         ) : (
-          <PaymentModal {...partsSetProps} />
+          <MtSetModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>
