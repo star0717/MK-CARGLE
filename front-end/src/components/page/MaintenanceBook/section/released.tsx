@@ -102,6 +102,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     props.data.mtData.price
   ); // 가격정보
   const [modify, setModify] = useState<boolean>(true);
+  const [mCancel, setMCancle] = useState<boolean>(false);
 
   /*********************************************************************
    * 3. Handlers
@@ -117,6 +118,10 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
+
+  useEffect(() => {
+    setWorkList(props.data.mtData.works);
+  }, [modify]);
 
   /**
    * modal 창 닫기 기능
