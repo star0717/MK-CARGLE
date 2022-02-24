@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {
   WholeWrapper,
   Wrapper,
@@ -19,27 +20,48 @@ import {
   CommonButton,
   CommonSmallTitle,
   CommonButtonWrapper,
+  CommonForm,
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
 import { IoIosCloseCircle } from "react-icons/io";
-import { AiFillMinusSquare } from "react-icons/ai";
+import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
 import { FaMinusSquare } from "react-icons/fa";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
+import { trim } from "src/modules/commonModule";
+import { formRegEx } from "src/validation/regEx";
 const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-  interface DocCheck {}
+  // react-hook-form 사용을 위한 선언
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [point, setPoint] = useState<number>(0); // 포인트
   //  const [docCheck, setDocCheck] = useState<>()
+  const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
+  const [phoneList, setPhoneList] = useState<string[]>([]); // 번호 리스트
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 전화번호 추가 handler
+   * @param data
+   */
+  const onAddPhoneHandler: SubmitHandler<FieldValues> = (data) => {
+    setPhoneList((phoneList) => [...phoneList, phoneNum]);
+  };
+
+  const onDelPhoneHandler = (index: number) => {
+    setPhoneList(phoneList.filter((num, idx) => idx !== index));
+  };
 
   /*********************************************************************
    * 4. Props settings
@@ -135,10 +157,46 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           dr={`row`}
           width={`60%`}
           ju={`space-between`}
-          padding={`10px 0px`}
+          padding={`10px 0px 0px`}
         >
-          <TextInput2 width={`580px`}></TextInput2>
-          <SmallButton kindOf={`default`}>추가하기</SmallButton>
+          <CommonForm onSubmit={handleSubmit(onAddPhoneHandler)}>
+            <TextInput2
+              width={`580px`}
+              type="text"
+              value={phoneNum}
+              {...register("phoneNum", {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  setPhoneNum(trim(e.target.value));
+                },
+                required: {
+                  value: true,
+                  message: "전화번호를 입력하세요.",
+                },
+                pattern: {
+                  value: formRegEx.HP_NUM,
+                  message: "형식에 맞게 입력하세요.",
+                },
+              })}
+            ></TextInput2>
+            <SmallButton type="submit" kindOf={`default`}>
+              추가하기
+            </SmallButton>
+          </CommonForm>
+        </Wrapper>
+        <Wrapper width={`60%`} ju={`flex-start`} padding={`0px 0px 10px`}>
+          {(errors.phoneNum?.type === "required" ||
+            errors.phoneNum?.type === "pattern") && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.phoneNum.message}
+            </Text>
+          )}
         </Wrapper>
         <Wrapper width={`60%`}>
           <TableWrapper minHeight={`200px`}>
@@ -154,108 +212,32 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                   kindOf={`noHover`}
                   ju={`space-around`}
                 >
-                  <TableRowLIST>
-                    <SmallButton
-                      kindOf={`default`}
-                      width={`160px`}
-                      radius={`100px`}
-                    >
-                      010-111-1111
-                      <FaMinusSquare />
-                    </SmallButton>
-                  </TableRowLIST>
-                  <TableRowLIST>
-                    <SmallButton
-                      kindOf={`default`}
-                      width={`160px`}
-                      radius={`100px`}
-                    >
-                      010-111-1111
-                      <FaMinusSquare />
-                    </SmallButton>
-                  </TableRowLIST>
-                  <TableRowLIST>
-                    <SmallButton
-                      kindOf={`default`}
-                      width={`160px`}
-                      radius={`100px`}
-                    >
-                      010-111-1111
-                      <FaMinusSquare />
-                    </SmallButton>
-                  </TableRowLIST>
-                </TableRow>
-                <TableRow
-                  height={`50px`}
-                  kindOf={`noHover`}
-                  ju={`space-around`}
-                >
-                  <TableRowLIST>
-                    <SmallButton
-                      kindOf={`default`}
-                      width={`160px`}
-                      radius={`100px`}
-                    >
-                      010-111-1111
-                      <FaMinusSquare />
-                    </SmallButton>
-                  </TableRowLIST>
-                  <TableRowLIST>
-                    <SmallButton
-                      kindOf={`default`}
-                      width={`160px`}
-                      radius={`100px`}
-                    >
-                      010-111-1111
-                      <FaMinusSquare />
-                    </SmallButton>
-                  </TableRowLIST>
-                  <TableRowLIST>
-                    <SmallButton
-                      kindOf={`default`}
-                      width={`160px`}
-                      radius={`100px`}
-                    >
-                      010-111-1111
-                      <FaMinusSquare />
-                    </SmallButton>
-                  </TableRowLIST>
-                </TableRow>
-                <TableRow
-                  height={`50px`}
-                  kindOf={`noHover`}
-                  ju={`space-around`}
-                >
-                  <TableRowLIST>
-                    <SmallButton
-                      kindOf={`default`}
-                      width={`160px`}
-                      radius={`100px`}
-                    >
-                      010-111-1111
-                      <FaMinusSquare />
-                    </SmallButton>
-                  </TableRowLIST>
-                  <TableRowLIST>
-                    <SmallButton
-                      kindOf={`default`}
-                      width={`160px`}
-                      radius={`100px`}
-                    >
-                      010-111-1111
-                      <FaMinusSquare />
-                    </SmallButton>
-                  </TableRowLIST>
-                  <TableRowLIST>
-                    <SmallButton
-                      kindOf={`default`}
-                      width={`160px`}
-                      radius={`100px`}
-                    >
-                      010-111-1111
-                      <FaMinusSquare />
-                    </SmallButton>
-                  </TableRowLIST>
+                  {phoneList.length !== 0 ? (
+                    <>
+                      {phoneList.map((num, idx) => {
+                        return (
+                          <TableRowLIST key={idx}>
+                            <SmallButton
+                              type="button"
+                              kindOf={`default`}
+                              width={`160px`}
+                              radius={`100px`}
+                              onClick={() => {
+                                onDelPhoneHandler(idx);
+                              }}
+                            >
+                              {num}
+                              <FaMinusSquare />
+                            </SmallButton>
+                          </TableRowLIST>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <Wrapper>
+                      <Text>전송할 번호가 없습니다.</Text>
+                    </Wrapper>
+                  )}
                 </TableRow>
               </TableBody>
             </Wrapper>
