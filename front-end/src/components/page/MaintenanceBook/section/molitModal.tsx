@@ -148,7 +148,7 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
               width={`300px`}
               height={`50px`}
               onClick={() => {
-                props.setModalOption("documents");
+                props.setModalOption("payment");
               }}
             >
               다음
@@ -195,10 +195,20 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
               kindOf={`white`}
               width={`300px`}
               height={`50px`}
+              onClick={() => {
+                props.setModalOpen(false);
+              }}
             >
               취소
             </CommonButton>
-            <CommonButton type="button" width={`300px`} height={`50px`}>
+            <CommonButton
+              type="button"
+              width={`300px`}
+              height={`50px`}
+              onClick={() => {
+                props.setModalOption("payment");
+              }}
+            >
               다음
             </CommonButton>
           </CommonButtonWrapper>

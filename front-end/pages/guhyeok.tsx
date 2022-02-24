@@ -9,7 +9,7 @@ import {
   CloseButton,
 } from "src/components/styles/CommonComponents";
 import { IoIosCloseCircle, IoMdDocument } from "react-icons/io";
-import DocumentsModal from "src/components/page/MaintenanceBook/section/documentsModal";
+import DocumentModal from "src/components/page/MaintenanceBook/section/documentModal";
 import MolitModal from "src/components/page/MaintenanceBook/section/molitModal";
 import PaymentModal from "src/components/page/MaintenanceBook/section/paymentModal";
 
@@ -118,13 +118,13 @@ const TestPage: NextPage<any> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "molit" ? (
-          <MolitModal {...ModalProps} />
-        ) : modalOption === "documents" ? (
-          <DocumentsModal {...ModalProps} />
+        {/* {modalOption === "molit" ? (
+          <MolitModal {...partsSetProps} />
+        ) : modalOption === "payment" ? (
+          <PaymentModal {...partsSetProps} />
         ) : (
-          <PaymentModal {...ModalProps} />
-        )}
+          <DocumentModal {...partsSetProps} />
+        )} */}
       </Modal>
     </BodyWrapper>
   );

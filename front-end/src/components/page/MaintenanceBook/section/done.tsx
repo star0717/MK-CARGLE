@@ -53,7 +53,7 @@ import {
 } from "src/constants/maintenance.const";
 import { _aPatchMaintenancesEnd } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
-import DocumentsModal from "./documentsModal";
+import DocumentModal from "./documentModal";
 import MolitModal from "./molitModal";
 import PaymentModal from "./paymentModal";
 
@@ -91,7 +91,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
     partSetClass[0]
   ); // 선택한 세트 데이터
-  const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
 
@@ -784,7 +783,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
         ) : modalOption === "payment" ? (
           <PaymentModal {...partsSetProps} />
         ) : (
-          <DocumentsModal {...partsSetProps} />
+          <DocumentModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>
