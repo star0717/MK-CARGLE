@@ -209,7 +209,13 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         </Wrapper>
         <CommonButtonWrapper ju={`space-between`} padding={`30px 30px`}>
-          <CommonButton type="button" kindOf={`grey`}>
+          <CommonButton
+            type="button"
+            kindOf={`grey`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
             취소
           </CommonButton>
           <CommonButton type="button" kindOf={`white`}>

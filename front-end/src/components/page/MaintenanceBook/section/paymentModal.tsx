@@ -252,7 +252,13 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
           </TableWrapper>
         </Wrapper>
         <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
-          <CommonButton type="button" kindOf={`grey`}>
+          <CommonButton
+            type="button"
+            kindOf={`grey`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
             취소
           </CommonButton>
           <CommonButton type="button" kindOf={`white`}>
