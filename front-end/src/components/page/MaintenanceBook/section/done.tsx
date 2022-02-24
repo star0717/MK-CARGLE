@@ -58,6 +58,9 @@ import {
 } from "src/constants/maintenance.const";
 import { _aPatchMaintenancesEnd } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
+import MolitModal from "./molitModal";
+import DocumentsModal from "./documentsModal";
+import PaymentModal from "./paymentModal";
 
 const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -93,7 +96,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
     partSetClass[0]
   ); // 선택한 세트 데이터
-  const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
 
@@ -119,6 +121,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
     setModalOpen(false);
   };
 
+  console.log(workList);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -735,7 +738,8 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                 kindOf={`default`}
                 width={`288px`}
                 onClick={() => {
-                  console.log("hi");
+                  setModalOption("molit");
+                  setModalOpen(true);
                 }}
               >
                 다음단계
@@ -779,10 +783,12 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "part" ? (
-          <MtPartsModal {...partsSetProps} />
+        {modalOption === "molit" ? (
+          <MolitModal {...partsSetProps} />
+        ) : modalOption === "documents" ? (
+          <DocumentsModal {...partsSetProps} />
         ) : (
-          <MtSetModal {...partsSetProps} />
+          <PaymentModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>

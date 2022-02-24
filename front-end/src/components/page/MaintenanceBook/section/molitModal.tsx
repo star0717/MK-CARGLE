@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
@@ -21,7 +21,9 @@ import {
 import { GoPrimitiveDot } from "react-icons/go";
 import { IoMdDocument } from "react-icons/io";
 import { AiOutlineFileExcel } from "react-icons/ai";
-const MolitModal: NextPage<any> = (props) => {
+import { _pPartsSetProps } from "src/configure/_pProps.entity";
+import { MainWork } from "src/models/maintenance.entity";
+const MolitModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -30,14 +32,20 @@ const MolitModal: NextPage<any> = (props) => {
    * 2. State settings
    *********************************************************************/
   //국토부 전송내역 여부
-  const [molit, setMolit] = useState<Boolean>(false);
+  const [molitList, setMolitList] = useState<MainWork[]>();
+  const [molitCheck, setMolitCheck] = useState<Boolean>(false);
 
-  //정비내역수
-  const [asd, setAsd] = useState<number>(1);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  useEffect(() => {
+    const filterWork = props.workList.filter(
+      (item) => item.tsCode.length !== 0
+    );
+    setMolitList(filterWork);
+  }, [props]);
 
+  console.log(molitList);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -48,16 +56,9 @@ const MolitModal: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper>
-      {molit === true ? (
+      {molitCheck === true ? (
         //국토부 내용이 있다면
         <Wrapper>
-          <Text
-            onClick={() => {
-              setMolit(!molit);
-            }}
-          >
-            화면전환
-          </Text>
           <Wrapper dr={`row`}>
             <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
               <Text color={`#314af5`}>1</Text>
@@ -106,13 +107,6 @@ const MolitModal: NextPage<any> = (props) => {
       ) : (
         //국토부 내용이 없다면
         <Wrapper>
-          <Text
-            onClick={() => {
-              setMolit(!molit);
-            }}
-          >
-            화면전환
-          </Text>
           <Wrapper dr={`row`}>
             <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
               <Text>1</Text>
@@ -142,8 +136,7 @@ const MolitModal: NextPage<any> = (props) => {
             <Text fontSize={`20px`}>
               "
               <ColorSpan fontSize={`20px`} color={`#314af5`}>
-                {" "}
-                {`${asd}`}{" "}
+                {molitList.length}
               </ColorSpan>
               건의 정비 내역을 국토부로 전송하시겠습니까?? "
             </Text>
@@ -158,76 +151,6 @@ const MolitModal: NextPage<any> = (props) => {
             </Wrapper>
             <Wrapper overflow={`auto`} height={`300px`} ju={`flex-start`}>
               <TableBody>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
-                <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow>
                 <TableRow>
                   <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
                   <TableRowLIST>국토부정비항목입니다.</TableRowLIST>

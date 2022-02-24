@@ -25,7 +25,8 @@ import { GoPrimitiveDot } from "react-icons/go";
 import { IoIosCloseCircle } from "react-icons/io";
 import { AiFillMinusSquare } from "react-icons/ai";
 import { FaMinusSquare } from "react-icons/fa";
-const PaymentModal: NextPage<any> = (props) => {
+import { _pPartsSetProps } from "src/configure/_pProps.entity";
+const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/

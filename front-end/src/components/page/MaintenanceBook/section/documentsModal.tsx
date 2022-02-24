@@ -15,7 +15,8 @@ import {
   CommonButtonWrapper,
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
-const DocumentsModal: NextPage<any> = (props) => {
+import { _pPartsSetProps } from "src/configure/_pProps.entity";
+const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
