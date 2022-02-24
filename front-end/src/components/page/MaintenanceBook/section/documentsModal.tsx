@@ -20,16 +20,32 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  interface PayCheck {
+    cash: Boolean;
+    credit: Boolean;
+    insurance: Boolean;
+  }
+  const payCheckInit: PayCheck = {
+    cash: false,
+    credit: false,
+    insurance: false,
+  };
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price);
+  const [payCheck, setPayCheck] = useState<PayCheck>(payCheckInit);
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  // const
+  const onChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPrice({ ...price, [e.target.name]: e.target.value });
+  };
+  const onChangeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPayCheck({ ...payCheck, [e.target.name]: e.target.value });
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
