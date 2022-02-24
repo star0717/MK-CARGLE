@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
-import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
   WholeWrapper,
   Wrapper,
@@ -30,10 +29,13 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  interface DocCheck {}
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [point, setPoint] = useState<number>(0); // 포인트
+  //  const [docCheck, setDocCheck] = useState<>()
 
   /*********************************************************************
    * 3. Handlers
@@ -87,8 +89,16 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             height={`50px`}
             ju={`space-between`}
           >
-            <Text>보유포인트 : 10,300 P</Text>
-            <SmallButton kindOf={`default`}>미리보기</SmallButton>
+            <Text>보유포인트 : {point.toLocaleString()} P</Text>
+            <SmallButton
+              type="button"
+              kindOf={`default`}
+              onClick={() => {
+                console.log("hi");
+              }}
+            >
+              미리보기
+            </SmallButton>
           </Wrapper>
           <Wrapper dr={`row`} height={`50px`} ju={`space-between`}>
             <Text>서류를 선택하세요.</Text>
@@ -106,7 +116,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
           </Wrapper>
           <Wrapper dr={`row`} height={`50px`} ju={`space-between`}>
-            <Text>발급방삭을 선택해주세요.</Text>
+            <Text>발급방식을 선택해주세요.</Text>
             <Wrapper dr={`row`} width={`auto`}>
               <Checkbox width={`120px`}>
                 PC인쇄
