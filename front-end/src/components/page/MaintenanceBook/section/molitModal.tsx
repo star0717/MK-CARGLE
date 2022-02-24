@@ -19,11 +19,11 @@ import {
   CommonButtonWrapper,
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
-import { IoMdDocument } from "react-icons/io";
 import { AiOutlineFileExcel } from "react-icons/ai";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
 import { MainWork } from "src/models/maintenance.entity";
 import { getTsItem } from "src/constants/part.const";
+
 const MolitModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
@@ -34,10 +34,11 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
    *********************************************************************/
   //국토부 전송내역 여부
   const [molitList, setMolitList] = useState<MainWork[]>(
-    props.workList.filter((item) => item.tsCode.length !== 0)
+    props.data.mtData.works.filter((item: MainWork) => item.tsCode.length !== 0)
   );
   const [molitCheck, setMolitCheck] = useState<Boolean>(
-    props.workList.filter((item) => item.tsCode.length !== 0).length !== 0
+    props.data.mtData.works.filter((item: MainWork) => item.tsCode.length !== 0)
+      .length !== 0
       ? true
       : false
   );
@@ -54,17 +55,6 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
     );
   }, [props]);
 
-  // console.log(
-  //   "##",
-  //   molitList.map((item) => {
-  //     item.tsCode;
-  //     getTsItem(item.tsCode);
-  //   })
-  // );
-  molitList.map((item) => {
-    console.log(item);
-    console.log(getTsItem(item.tsCode));
-  });
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -126,16 +116,13 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
                   return (
                     <TableRow key={item.code}>
                       <TableRowLIST>{item.name}</TableRowLIST>
-                      <TableRowLIST>{item.name}</TableRowLIST>
+                      <TableRowLIST>
+                        {getTsItem(item.tsCode).class.description}
+                      </TableRowLIST>
                       <TableRowLIST>{item.tsCode}</TableRowLIST>
                     </TableRow>
                   );
                 })}
-                {/* <TableRow>
-                  <TableRowLIST>정비내역명칭입니다.</TableRowLIST>
-                  <TableRowLIST>국토부정비항목입니다.</TableRowLIST>
-                  <TableRowLIST>B01</TableRowLIST>
-                </TableRow> */}
               </TableBody>
             </Wrapper>
           </TableWrapper>
@@ -156,7 +143,14 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
             >
               취소
             </CommonButton>
-            <CommonButton type="button" width={`300px`} height={`50px`}>
+            <CommonButton
+              type="button"
+              width={`300px`}
+              height={`50px`}
+              onClick={() => {
+                props.setModalOption("documents");
+              }}
+            >
               다음
             </CommonButton>
           </CommonButtonWrapper>

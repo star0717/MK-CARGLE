@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
-import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
   WholeWrapper,
   Wrapper,
@@ -16,6 +15,7 @@ import {
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
+import { MainPrice } from "src/models/maintenance.entity";
 const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
@@ -24,11 +24,12 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [price, setPrice] = useState<MainPrice>(props.data.mtData.price);
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  // const
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -211,17 +212,29 @@ const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
         <CommonButtonWrapper ju={`space-between`} padding={`30px 30px`}>
           <CommonButton
             type="button"
-            kindOf={`grey`}
             onClick={() => {
               props.setModalOpen(false);
             }}
           >
             취소
           </CommonButton>
-          <CommonButton type="button" kindOf={`white`}>
+          <CommonButton
+            type="button"
+            kindOf={`white`}
+            onClick={() => {
+              props.setModalOption("molit");
+            }}
+          >
             이전으로
           </CommonButton>
-          <CommonButton type="button">다음</CommonButton>
+          <CommonButton
+            type="button"
+            onClick={() => {
+              props.setModalOption("payment");
+            }}
+          >
+            다음
+          </CommonButton>
         </CommonButtonWrapper>
       </Wrapper>
     </WholeWrapper>

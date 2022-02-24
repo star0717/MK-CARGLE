@@ -132,6 +132,7 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
 // 부품 세트 관리 props
 export interface _pPartsSetProps extends _MainProps {
   setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalOption?: React.Dispatch<React.SetStateAction<string>>;
   partSetData?: Partial<PartsSet>;
   setPartSetData?: React.Dispatch<React.SetStateAction<Partial<PartsSet>>>;
   partSetClass?: Partial<PartsSet>[];

@@ -121,13 +121,13 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
     setModalOpen(false);
   };
 
-  console.log(workList);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
   const partsSetProps: _pPartsSetProps = {
     ...props,
     setModalOpen,
+    setModalOption,
     partSetClass,
     setPartSetClass,
     partSetData,
@@ -785,10 +785,10 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
         </Wrapper>
         {modalOption === "molit" ? (
           <MolitModal {...partsSetProps} />
-        ) : modalOption === "documents" ? (
-          <DocumentsModal {...partsSetProps} />
-        ) : (
+        ) : modalOption === "payment" ? (
           <PaymentModal {...partsSetProps} />
+        ) : (
+          <DocumentsModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>
