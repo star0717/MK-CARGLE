@@ -15,7 +15,8 @@ import {
   CommonButtonWrapper,
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
-const DocumentsModal: NextPage<any> = (props) => {
+import { _pPartsSetProps } from "src/configure/_pProps.entity";
+const DocumentsModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -208,7 +209,13 @@ const DocumentsModal: NextPage<any> = (props) => {
           </Wrapper>
         </Wrapper>
         <CommonButtonWrapper ju={`space-between`} padding={`30px 30px`}>
-          <CommonButton type="button" kindOf={`grey`}>
+          <CommonButton
+            type="button"
+            kindOf={`grey`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
             취소
           </CommonButton>
           <CommonButton type="button" kindOf={`white`}>
