@@ -54,12 +54,17 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
     );
   }, [props]);
 
-  console.log(
-    "##",
-    molitList.map((item) => {
-      getTsItem(item.tsCode);
-    })
-  );
+  // console.log(
+  //   "##",
+  //   molitList.map((item) => {
+  //     item.tsCode;
+  //     getTsItem(item.tsCode);
+  //   })
+  // );
+  molitList.map((item) => {
+    console.log(item);
+    console.log(getTsItem(item.tsCode));
+  });
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
