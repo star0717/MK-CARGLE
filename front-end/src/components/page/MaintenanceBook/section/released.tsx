@@ -98,7 +98,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   ); // 선택한 세트 데이터
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
-  const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
+  const [price, setPrice] = useState<Partial<MainPrice>>(
+    props.data.mtData.price
+  ); // 가격정보
   const [modify, setModify] = useState<boolean>(true);
   const [mCancel, setMCancle] = useState<boolean>(false);
 
@@ -119,7 +121,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
 
   useEffect(() => {
     setWorkList(props.data.mtData.works);
-  }, [modify]);
+  }, [mCancel]);
 
   /**
    * modal 창 닫기 기능
@@ -299,16 +301,15 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       ...mtInfo,
       workerName: props.tokenValue.uName,
       works: mainWorkList,
-      price: price,
     };
-
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
     await dispatch(
       _aPatchMaintenancesRelease(maintenanceData._id, maintenanceData)
     ).then(
       (res: _iMaintenancesOne) => {
-        return alert("정비내역을 저장했습니다.");
+        alert("정비내역을 저장했습니다.");
+        setModify(!modify);
       },
       (err) => {
         alert("정비내역 저장에 실패했습니다.");
@@ -1083,6 +1084,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     kindOf={`default`}
                     onClick={() => {
                       setModify(!modify);
+                      setMCancle(!mCancel);
                     }}
                   >
                     수정 취소
@@ -1092,9 +1094,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     width={`439px`}
                     kindOf={`default`}
                     onClick={() => {
-                      console.log("!!1");
                       onModifyWorkInfo();
-                      setModify(!modify);
                     }}
                   >
                     수정 완료
