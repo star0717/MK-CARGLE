@@ -262,8 +262,8 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       wageSum += workList[i].wage;
       sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
     }
-    sum2 = price.isIncluded ? sum1 * 0.9 : sum1;
-    vat = price.isIncluded ? sum1 - sum2 : sum1 * 0.1;
+    sum2 = price.isIncluded ? sum1 / 1.1 : sum1;
+    vat = price.isIncluded ? sum2 * 0.1 : sum1 * 0.1;
 
     setPrice({
       ...price,
@@ -1002,7 +1002,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>합계 : {price.sum.toLocaleString()}</Text>
+              <Text>과세액 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
