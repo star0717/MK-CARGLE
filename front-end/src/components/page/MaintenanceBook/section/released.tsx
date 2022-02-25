@@ -577,7 +577,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     router.push(UseLink.MAINTENANCE_BOOK);
                   }}
                 >
-                  목록으로❌
+                  목록으로🖕🏿
                 </SmallButton>
                 <SmallButton
                   type="button"
