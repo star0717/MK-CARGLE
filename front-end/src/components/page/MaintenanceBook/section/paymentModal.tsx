@@ -15,12 +15,17 @@ import {
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
-import { MainPrice } from "src/models/maintenance.entity";
+import { MainPrice, Maintenance } from "src/models/maintenance.entity";
 import { basicRegEx } from "src/validation/regEx";
+import { useDispatch } from "react-redux";
+import { _aPatchMaintenancesPay } from "store/action/user.action";
+import { _iMaintenancesOne } from "store/interfaces";
 const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const dispatch = useDispatch();
+
   interface PayCheck {
     cashCheck: Boolean;
     creditCheck: Boolean;
@@ -34,12 +39,13 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [price, setPrice] = useState<MainPrice>(props.data.mtData.price);
+  const [price, setPrice] = useState<MainPrice>(props.mtInfo.price);
   const [payCheck, setPayCheck] = useState<PayCheck>(payCheckInit);
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+
   /**
    * 결제 input handler
    * @param e
@@ -119,6 +125,26 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
         (payCheck.insuranceCheck ? price.insurance : 0),
     });
   }, [payCheck, price.cash, price.credit, price.insurance]);
+
+  const onPaymentHandler = async () => {
+    const maintenanceData: Partial<Maintenance> = {
+      ...props.data.mtData,
+      price: price,
+    };
+    await dispatch(
+      _aPatchMaintenancesPay(maintenanceData._id, maintenanceData)
+    ).then(
+      (res: _iMaintenancesOne) => {
+        if (res.payload) {
+          props.setMtInfo(res.payload);
+          props.setModalOption("document");
+        }
+      },
+      (err) => {
+        return alert("결제내역 저장에 실패했습니다.");
+      }
+    );
+  };
 
   /*********************************************************************
    * 4. Props settings
@@ -348,12 +374,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
           >
             이전으로
           </CommonButton>
-          <CommonButton
-            type="button"
-            onClick={() => {
-              props.setModalOption("document");
-            }}
-          >
+          <CommonButton type="button" onClick={onPaymentHandler}>
             다음
           </CommonButton>
         </CommonButtonWrapper>
