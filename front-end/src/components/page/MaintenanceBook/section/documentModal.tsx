@@ -44,7 +44,6 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [point, setPoint] = useState<number>(0); // 포인트
-  //  const [docCheck, setDocCheck] = useState<>()
   const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
   const [phoneList, setPhoneList] = useState<string[]>([]); // 번호 리스트
 
@@ -78,26 +77,28 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper>
-        <Wrapper dr={`row`}>
-          <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-            <Text color={`#ccc`}>1</Text>
-            <Text fontSize={`20px`} color={`#ccc`}>
-              <GoPrimitiveDot />
-            </Text>
+        {props.modalOption.indexOf("bts") !== -1 && (
+          <Wrapper dr={`row`}>
+            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+              <Text color={`#ccc`}>1</Text>
+              <Text fontSize={`20px`} color={`#ccc`}>
+                <GoPrimitiveDot />
+              </Text>
+            </Wrapper>
+            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+              <Text color={`#ccc`}>2</Text>
+              <Text fontSize={`20px`} color={`#ccc`}>
+                <GoPrimitiveDot />
+              </Text>
+            </Wrapper>
+            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+              <Text color={`#314af5`}>3</Text>
+              <Text fontSize={`20px`} color={`#314af5`}>
+                <GoPrimitiveDot />
+              </Text>
+            </Wrapper>
           </Wrapper>
-          <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-            <Text color={`#ccc`}>2</Text>
-            <Text fontSize={`20px`} color={`#ccc`}>
-              <GoPrimitiveDot />
-            </Text>
-          </Wrapper>
-          <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-            <Text color={`#314af5`}>3</Text>
-            <Text fontSize={`20px`} color={`#314af5`}>
-              <GoPrimitiveDot />
-            </Text>
-          </Wrapper>
-        </Wrapper>
+        )}
         <Wrapper padding={`10px 0px 0px`}>
           <CommonSmallTitle margin={`0px 0px 30px 0px`}>
             서류발급
@@ -248,10 +249,11 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
           </TableWrapper>
         </Wrapper>
+        {props.modalOption.indexOf("bts") !== -1 ? (
         <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
           <CommonButton
             type="button"
-            kindOf={`grey`}
+            kindOf={`white`}
             onClick={() => {
               props.setModalOpen(false);
             }}
@@ -267,8 +269,17 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           >
             이전으로
           </CommonButton>
-          <CommonButton type="button">출고완료</CommonButton>
+          <CommonButton
+            type="button"
+            kindOf={`white`}
+            onClick={() => {
+              console.log("test");
+            }}
+          >
+            출고완료
+          </CommonButton>
         </CommonButtonWrapper>
+        : }
       </Wrapper>
     </WholeWrapper>
   );

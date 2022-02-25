@@ -156,32 +156,33 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper>
-        <Wrapper dr={`row`}>
-          <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-            <Text color={`#ccc`}>1</Text>
-            <Text fontSize={`20px`} color={`#ccc`}>
-              <GoPrimitiveDot />
-            </Text>
+        {props.modalOption.indexOf("bts") !== -1 && (
+          <Wrapper dr={`row`}>
+            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+              <Text color={`#ccc`}>1</Text>
+              <Text fontSize={`20px`} color={`#ccc`}>
+                <GoPrimitiveDot />
+              </Text>
+            </Wrapper>
+            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+              <Text color={`#314af5`}>2</Text>
+              <Text fontSize={`20px`} color={`#314af5`}>
+                <GoPrimitiveDot />
+              </Text>
+            </Wrapper>
+            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+              <Text>3</Text>
+              <Text fontSize={`20px`} color={`#ccc`}>
+                <GoPrimitiveDot />
+              </Text>
+            </Wrapper>
           </Wrapper>
-          <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-            <Text color={`#314af5`}>2</Text>
-            <Text fontSize={`20px`} color={`#314af5`}>
-              <GoPrimitiveDot />
-            </Text>
-          </Wrapper>
-          <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-            <Text>3</Text>
-            <Text fontSize={`20px`} color={`#ccc`}>
-              <GoPrimitiveDot />
-            </Text>
-          </Wrapper>
-        </Wrapper>
+        )}
         <Wrapper padding={`10px 0px 0px`}>
           <CommonSmallTitle margin={`0px 0px 30px 0px`}>
             결제 정보 입력
           </CommonSmallTitle>
         </Wrapper>
-
         <Wrapper dr={`row`} ju={`space-around`}>
           <Wrapper width={`45%`}>
             <Wrapper
