@@ -310,7 +310,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
         }
       },
       (err) => {
-        alert("정비내역 저장에 실패했습니다.");
+        return alert("정비내역 저장에 실패했습니다.");
       }
     );
   };

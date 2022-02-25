@@ -57,8 +57,13 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    */
   const onAddPhoneHandler: SubmitHandler<FieldValues> = (data) => {
     setPhoneList((phoneList) => [...phoneList, phoneNum]);
+    setPhoneNum("");
   };
 
+  /**
+   * 전화번호 삭제 handler
+   * @param index
+   */
   const onDelPhoneHandler = (index: number) => {
     setPhoneList(phoneList.filter((num, idx) => idx !== index));
   };

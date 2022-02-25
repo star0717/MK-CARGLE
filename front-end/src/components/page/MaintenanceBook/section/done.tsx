@@ -122,6 +122,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   const partsSetProps: _pPartsSetProps = {
     ...props,
     setModalOpen,
+    modalOption,
     setModalOption,
     partSetClass,
     setPartSetClass,
@@ -129,6 +130,8 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
     setPartSetData,
     workList,
     setWorkList,
+    mtInfo,
+    setMtInfo,
   };
 
   /*********************************************************************
@@ -375,7 +378,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("document");
                   }}
                 >
                   서류발급
