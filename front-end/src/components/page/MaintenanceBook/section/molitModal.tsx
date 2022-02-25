@@ -68,28 +68,26 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
       {molitCheck ? (
         //국토부 내용이 있다면
         <Wrapper>
-          {props.modalOption.indexOf("bts") !== -1 && (
-            <Wrapper dr={`row`}>
-              <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-                <Text>1</Text>
-                <Text fontSize={`20px`} color={`#314af5`}>
-                  <GoPrimitiveDot />
-                </Text>
-              </Wrapper>
-              <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-                <Text>2</Text>
-                <Text fontSize={`20px`} color={`#ccc`}>
-                  <GoPrimitiveDot />
-                </Text>
-              </Wrapper>
-              <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-                <Text>3</Text>
-                <Text fontSize={`20px`} color={`#ccc`}>
-                  <GoPrimitiveDot />
-                </Text>
-              </Wrapper>
+          <Wrapper dr={`row`}>
+            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+              <Text>1</Text>
+              <Text fontSize={`20px`} color={`#314af5`}>
+                <GoPrimitiveDot />
+              </Text>
             </Wrapper>
-          )}
+            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+              <Text>2</Text>
+              <Text fontSize={`20px`} color={`#ccc`}>
+                <GoPrimitiveDot />
+              </Text>
+            </Wrapper>
+            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+              <Text>3</Text>
+              <Text fontSize={`20px`} color={`#ccc`}>
+                <GoPrimitiveDot />
+              </Text>
+            </Wrapper>
+          </Wrapper>
           <Wrapper padding={`10px 0px 0px`}>
             <CommonSmallTitle margin={`0px 0px 30px 0px`}>
               국토부 전송 여부 확인
@@ -107,21 +105,21 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
           <TableWrapper minHeight={`350px`} padding={`40px 0px 0px`}>
             <Wrapper isSticky={true}>
               <TableHead radius={`8px 8px 0px 0px`}>
-                <TableHeadLIST width={`40%`}>정비내역</TableHeadLIST>
-                <TableHeadLIST width={`40%`}>국토부정비항목</TableHeadLIST>
-                <TableHeadLIST width={`20%`}>코드</TableHeadLIST>
+                <TableHeadLIST>정비내역</TableHeadLIST>
+                <TableHeadLIST>국토부정비항목</TableHeadLIST>
+                <TableHeadLIST>코드</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} height={`auto`} ju={`flex-start`}>
-              <TableBody minHeight={`260px`}>
+            <Wrapper overflow={`auto`} height={`300px`} ju={`flex-start`}>
+              <TableBody>
                 {molitList.map((item) => {
                   return (
                     <TableRow key={item.code}>
-                      <TableRowLIST width={`40%`}>{item.name}</TableRowLIST>
-                      <TableRowLIST width={`40%`}>
+                      <TableRowLIST>{item.name}</TableRowLIST>
+                      <TableRowLIST>
                         {getTsItem(item.tsCode).class.description}
                       </TableRowLIST>
-                      <TableRowLIST width={`20%`}>{item.tsCode}</TableRowLIST>
+                      <TableRowLIST>{item.tsCode}</TableRowLIST>
                     </TableRow>
                   );
                 })}

@@ -577,7 +577,8 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("documentBts");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   서류발급

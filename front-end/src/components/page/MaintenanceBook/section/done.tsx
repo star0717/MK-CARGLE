@@ -378,7 +378,8 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    setModalOption("document");
+                    setModalOption("documentBts");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   서류발급

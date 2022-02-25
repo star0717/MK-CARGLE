@@ -250,36 +250,50 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           </TableWrapper>
         </Wrapper>
         {props.modalOption.indexOf("bts") !== -1 ? (
-        <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
-          <CommonButton
-            type="button"
-            kindOf={`white`}
-            onClick={() => {
-              props.setModalOpen(false);
-            }}
-          >
-            취소
-          </CommonButton>
-          <CommonButton
-            type="button"
-            kindOf={`white`}
-            onClick={() => {
-              props.setModalOption("payment");
-            }}
-          >
-            이전으로
-          </CommonButton>
-          <CommonButton
-            type="button"
-            kindOf={`white`}
-            onClick={() => {
-              console.log("test");
-            }}
-          >
-            출고완료
-          </CommonButton>
-        </CommonButtonWrapper>
-        : }
+          <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
+            <CommonButton
+              type="button"
+              kindOf={`white`}
+              onClick={() => {
+                props.setModalOpen(false);
+              }}
+            >
+              취소
+            </CommonButton>
+            <CommonButton
+              type="button"
+              kindOf={`white`}
+              onClick={() => {
+                props.setModalOption("payment");
+              }}
+            >
+              이전으로
+            </CommonButton>
+            <CommonButton
+              type="button"
+              onClick={() => {
+                console.log("test");
+              }}
+            >
+              출고완료
+            </CommonButton>
+          </CommonButtonWrapper>
+        ) : (
+          <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
+            <CommonButton
+              type="button"
+              kindOf={`white`}
+              onClick={() => {
+                props.setModalOpen(false);
+              }}
+            >
+              취소
+            </CommonButton>
+            <CommonButton type="button" onClick={() => {}}>
+              전송 및 출력
+            </CommonButton>
+          </CommonButtonWrapper>
+        )}
       </Wrapper>
     </WholeWrapper>
   );
