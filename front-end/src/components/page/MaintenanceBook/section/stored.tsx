@@ -354,12 +354,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const partsSetProps: _pPartsSetProps = {
     ...props,
     setModalOpen,
+    modalOption,
+    setModalOption,
     partSetClass,
     setPartSetClass,
     partSetData,
     setPartSetData,
     workList,
     setWorkList,
+    mtInfo,
+    setMtInfo,
   };
 
   /*********************************************************************

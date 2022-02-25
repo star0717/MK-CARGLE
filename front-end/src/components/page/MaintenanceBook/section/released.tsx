@@ -324,18 +324,24 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     );
   };
 
+  console.log("@@", modalOption.indexOf("document"));
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
   const partsSetProps: _pPartsSetProps = {
     ...props,
     setModalOpen,
+    modalOption,
+    setModalOption,
     partSetClass,
     setPartSetClass,
     partSetData,
     setPartSetData,
     workList,
     setWorkList,
+    mtInfo,
+    setMtInfo,
   };
 
   /*********************************************************************
@@ -583,7 +589,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    setModalOption("Btdocument");
+                    setModalOption("documentBts");
                     setModalOpen(!modalOpen);
                   }}
                 >
@@ -593,7 +599,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    setModalOption("Btmolit");
+                    setModalOption("molitBts");
                     setModalOpen(!modalOpen);
                   }}
                 >
@@ -603,7 +609,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    setModalOption("Btpayment");
+                    setModalOption("paymentBts");
                     setModalOpen(!modalOpen);
                   }}
                 >
