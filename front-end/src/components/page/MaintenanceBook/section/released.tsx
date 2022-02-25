@@ -577,7 +577,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     router.push(UseLink.MAINTENANCE_BOOK);
                   }}
                 >
-                  목록으로🖕🏿
+                  목록으로
                 </SmallButton>
                 <SmallButton
                   type="button"
@@ -1150,10 +1150,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {console.log(modalOption)}
-        {modalOption.indexOf("document") ? (
+        {modalOption.indexOf("document") === 0 ? (
           <DocumentModal {...partsSetProps} />
-        ) : modalOption.indexOf("molit") ? (
+        ) : modalOption.indexOf("molit") === 0 ? (
           <MolitModal {...partsSetProps} />
         ) : (
           <PaymentModal {...partsSetProps} />
