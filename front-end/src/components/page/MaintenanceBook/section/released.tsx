@@ -61,6 +61,9 @@ import MtSetModal from "./setModal";
 import { Part } from "src/models/part.entity";
 import dayjs from "dayjs";
 import { GoCheck } from "react-icons/go";
+import DocumentModal from "./documentModal";
+import MolitModal from "./molitModal";
+import PaymentModal from "./paymentModal";
 
 const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -574,13 +577,14 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     router.push(UseLink.MAINTENANCE_BOOK);
                   }}
                 >
-                  목록으로
+                  목록으로❌
                 </SmallButton>
                 <SmallButton
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("Btdocument");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   서류발급
@@ -589,7 +593,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("Btmolit");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   국토부
@@ -598,7 +603,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("Btpayment");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   결재정보
@@ -1144,10 +1150,13 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "part" ? (
-          <MtPartsModal {...partsSetProps} />
+        {console.log(modalOption)}
+        {modalOption.indexOf("document") ? (
+          <DocumentModal {...partsSetProps} />
+        ) : modalOption.indexOf("molit") ? (
+          <MolitModal {...partsSetProps} />
         ) : (
-          <MtSetModal {...partsSetProps} />
+          <PaymentModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>
