@@ -161,3 +161,7 @@ export const maskingStr = (str: string) => {
     return str.replace(pattern, "*");
   }
 };
+
+// export const makeHpNum = (str: string) => {
+//   if(str.)
+// }

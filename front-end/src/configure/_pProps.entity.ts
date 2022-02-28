@@ -11,7 +11,7 @@ import { _MainProps } from "./_props.entity";
 import { Part } from "../models/part.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { MainFindOptions } from "../../../back-end/src/models/maintenance.entity";
-import { MainWork } from "src/models/maintenance.entity";
+import { Maintenance, MainWork } from "src/models/maintenance.entity";
 
 /***********************************************************************
  * 기본
@@ -132,12 +132,16 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
 // 부품 세트 관리 props
 export interface _pPartsSetProps extends _MainProps {
   setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  modalOption?: string;
+  setModalOption?: React.Dispatch<React.SetStateAction<string>>;
   partSetData?: Partial<PartsSet>;
   setPartSetData?: React.Dispatch<React.SetStateAction<Partial<PartsSet>>>;
   partSetClass?: Partial<PartsSet>[];
   setPartSetClass?: React.Dispatch<React.SetStateAction<Partial<PartsSet>[]>>;
   workList?: MainWork[];
   setWorkList?: React.Dispatch<React.SetStateAction<MainWork[]>>;
+  mtInfo?: Maintenance;
+  setMtInfo?: React.Dispatch<React.SetStateAction<Maintenance>>;
 }
 
 /***********************************************************************

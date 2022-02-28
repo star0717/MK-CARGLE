@@ -2036,3 +2036,11 @@ export const SpeechBubbleRight = styled.div<any>`
     margin-bottom: -15px;
   }
 `;
+
+export const CommonForm = styled.form<any>`
+  width: ${(props) => props.width || `100%`};
+  display: ${(props) => props.display || `inherit`};
+  flex-direction: ${(props) => props.dr || `inherit`};
+  align-items: ${(props) => props.al || `inherit`};
+  justify-content: ${(props) => props.ju || `inherit`};
+`;

@@ -279,16 +279,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       wageSum += workList[i].wage;
       sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
     }
-    sum2 = price.isIncluded ? sum1 * 0.9 : sum1;
-    vat = price.isIncluded ? sum1 - sum2 : sum1 * 0.1;
+    sum2 = price.isIncluded ? sum1 / 1.1 : sum1;
+    vat = price.isIncluded ? sum2 * 0.1 : sum1 * 0.1;
 
     setPrice({
       ...price,
       partsSum: partsSum,
       wageSum: wageSum,
-      sum: Number(sum2.toString().split(".")[0]),
-      vat: Number(vat.toString().split(".")[0]),
-      total: Number((sum2 + vat).toString().split(".")[0]),
+      sum: Math.round(Number(sum2.toString())),
+      vat: Math.round(Number(vat.toString())),
+      total: Number((sum2 + vat).toString()),
     });
   }, [workList, price.isIncluded]);
 
@@ -354,12 +354,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const partsSetProps: _pPartsSetProps = {
     ...props,
     setModalOpen,
+    modalOption,
+    setModalOption,
     partSetClass,
     setPartSetClass,
     partSetData,
     setPartSetData,
     workList,
     setWorkList,
+    mtInfo,
+    setMtInfo,
   };
 
   /*********************************************************************
@@ -605,7 +609,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("documentBts");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   서류발급
@@ -1034,7 +1039,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>합계 : {price.sum.toLocaleString()}</Text>
+              <Text>과세액 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>

@@ -25,7 +25,6 @@ import {
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
-import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
 import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
 import {
   _pMaintenanceProps,
@@ -34,7 +33,6 @@ import {
 import { FaFlagCheckered } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
 import { useDispatch } from "react-redux";
-import { basicRegEx } from "src/validation/regEx";
 import {
   Maintenance,
   MainPrice,
@@ -44,9 +42,6 @@ import { maskingStr } from "src/modules/commonModule";
 import { PartsSet } from "src/models/partsset.entity";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
-import MtPartsModal from "./partsModal";
-import MtSetModal from "./setModal";
-import { Part } from "src/models/part.entity";
 import dayjs from "dayjs";
 import { GoCheck } from "react-icons/go";
 import {
@@ -58,6 +53,9 @@ import {
 } from "src/constants/maintenance.const";
 import { _aPatchMaintenancesEnd } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
+import DocumentModal from "./documentModal";
+import MolitModal from "./molitModal";
+import PaymentModal from "./paymentModal";
 
 const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -93,7 +91,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
     partSetClass[0]
   ); // 선택한 세트 데이터
-  const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
 
@@ -125,12 +122,16 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   const partsSetProps: _pPartsSetProps = {
     ...props,
     setModalOpen,
+    modalOption,
+    setModalOption,
     partSetClass,
     setPartSetClass,
     partSetData,
     setPartSetData,
     workList,
     setWorkList,
+    mtInfo,
+    setMtInfo,
   };
 
   /*********************************************************************
@@ -377,7 +378,8 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("documentBts");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   서류발급
@@ -691,7 +693,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>합계 : {price.sum.toLocaleString()}</Text>
+              <Text>과세액 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
@@ -735,7 +737,8 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                 kindOf={`default`}
                 width={`288px`}
                 onClick={() => {
-                  console.log("hi");
+                  setModalOption("molit");
+                  setModalOpen(true);
                 }}
               >
                 다음단계
@@ -779,10 +782,12 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "part" ? (
-          <MtPartsModal {...partsSetProps} />
+        {modalOption === "molit" ? (
+          <MolitModal {...partsSetProps} />
+        ) : modalOption === "payment" ? (
+          <PaymentModal {...partsSetProps} />
         ) : (
-          <MtSetModal {...partsSetProps} />
+          <DocumentModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>

@@ -61,6 +61,9 @@ import MtSetModal from "./setModal";
 import { Part } from "src/models/part.entity";
 import dayjs from "dayjs";
 import { GoCheck } from "react-icons/go";
+import DocumentModal from "./documentModal";
+import MolitModal from "./molitModal";
+import PaymentModal from "./paymentModal";
 
 const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -100,6 +103,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
   const [modify, setModify] = useState<boolean>(true);
+  const [mCancel, setMCancle] = useState<boolean>(false);
 
   /*********************************************************************
    * 3. Handlers
@@ -115,6 +119,46 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
+
+  /**
+   * 수정 취소시 Re Rendering
+   */
+  useEffect(() => {
+    setWorkList(props.data.mtData.works);
+    setPrice(props.data.mtData.price);
+    setMtInfo(props.data.mtData);
+  }, [mCancel]);
+
+  /**
+   * 정비내역 변경 시 일어나는 event handler
+   * cell 증가, 합계 계산
+   */
+  useEffect(() => {
+    setCellCount(workList.length * 7);
+
+    let partsSum = 0;
+    let wageSum = 0;
+    let sum1 = 0;
+    let sum2 = 0;
+    let vat = 0;
+
+    for (let i = 0; i < workList.length; i++) {
+      partsSum += workList[i].price * workList[i].quantity;
+      wageSum += workList[i].wage;
+      sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
+    }
+    sum2 = price.isIncluded ? sum1 / 1.1 : sum1;
+    vat = price.isIncluded ? sum2 * 0.1 : sum1 * 0.1;
+
+    setPrice({
+      ...price,
+      partsSum: partsSum,
+      wageSum: wageSum,
+      sum: Math.round(Number(sum2.toString())),
+      vat: Math.round(Number(vat.toString())),
+      total: Number((sum2 + vat).toString()),
+    });
+  }, [workList, price.isIncluded]);
 
   /**
    * modal 창 닫기 기능
@@ -248,37 +292,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
-   * 정비내역 변경 시 일어나는 event handler
-   * cell 증가, 합계 계산
-   */
-  useEffect(() => {
-    setCellCount(workList.length * 7);
-
-    let partsSum = 0;
-    let wageSum = 0;
-    let sum1 = 0;
-    let sum2 = 0;
-    let vat = 0;
-
-    for (let i = 0; i < workList.length; i++) {
-      partsSum += workList[i].price * workList[i].quantity;
-      wageSum += workList[i].wage;
-      sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
-    }
-    sum2 = price.isIncluded ? sum1 * 0.9 : sum1;
-    vat = price.isIncluded ? sum1 - sum2 : sum1 * 0.1;
-
-    setPrice({
-      ...price,
-      partsSum: partsSum,
-      wageSum: wageSum,
-      sum: Number(sum2.toString().split(".")[0]),
-      vat: Number(vat.toString().split(".")[0]),
-      total: Number((sum2 + vat).toString().split(".")[0]),
-    });
-  }, [workList, price.isIncluded]);
-
-  /**
    * 정비내역 수정
    */
   const onModifyWorkInfo = async () => {
@@ -302,7 +315,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       _aPatchMaintenancesRelease(maintenanceData._id, maintenanceData)
     ).then(
       (res: _iMaintenancesOne) => {
-        return alert("정비내역을 저장했습니다.");
+        alert("정비내역을 저장했습니다.");
+        setModify(!modify);
       },
       (err) => {
         alert("정비내역 저장에 실패했습니다.");
@@ -310,18 +324,24 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     );
   };
 
+  console.log("@@", modalOption.indexOf("document"));
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
   const partsSetProps: _pPartsSetProps = {
     ...props,
     setModalOpen,
+    modalOption,
+    setModalOption,
     partSetClass,
     setPartSetClass,
     partSetData,
     setPartSetData,
     workList,
     setWorkList,
+    mtInfo,
+    setMtInfo,
   };
 
   /*********************************************************************
@@ -569,7 +589,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("documentBts");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   서류발급
@@ -578,7 +599,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("molitBts");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   국토부
@@ -587,7 +609,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   type="button"
                   kindOf={`default`}
                   onClick={() => {
-                    console.log("서류");
+                    setModalOption("paymentBts");
+                    setModalOpen(!modalOpen);
                   }}
                 >
                   결재정보
@@ -1038,7 +1061,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>합계 : {price.sum.toLocaleString()}</Text>
+              <Text>과세액 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
@@ -1077,6 +1100,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     kindOf={`default`}
                     onClick={() => {
                       setModify(!modify);
+                      setMCancle(!mCancel);
                     }}
                   >
                     수정 취소
@@ -1086,9 +1110,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     width={`439px`}
                     kindOf={`default`}
                     onClick={() => {
-                      console.log("!!1");
                       onModifyWorkInfo();
-                      setModify(!modify);
                     }}
                   >
                     수정 완료
@@ -1134,10 +1156,12 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "part" ? (
-          <MtPartsModal {...partsSetProps} />
+        {modalOption.indexOf("document") === 0 ? (
+          <DocumentModal {...partsSetProps} />
+        ) : modalOption.indexOf("molit") === 0 ? (
+          <MolitModal {...partsSetProps} />
         ) : (
-          <MtSetModal {...partsSetProps} />
+          <PaymentModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>
