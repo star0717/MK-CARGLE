@@ -142,6 +142,78 @@ const ByeolTest: NextPage = () => {
   return (
     <WholeWrapper>
       <RsWrapper>윤별이 쓰는 실험실</RsWrapper>
+      <Wrapper dr={`row`}>
+        <Wrapper
+          width={`150px`}
+          al={`flex-start`}
+          ju={`flex-start`}
+          height={`30px`}
+          padding={`5px`}
+          bgColor={`#f5f5f5`}
+          radius={`30px`}
+          dr={`row`}
+          shadow={`0px 4px 4px  rgba(220,220,220,1)`}
+          margin={`10px 0px`}
+        >
+          <Wrapper
+            width={`80%`}
+            height={`100%`}
+            bgColor={`#89e872`}
+            radius={`30px`}
+          ></Wrapper>
+        </Wrapper>
+        <Wrapper width={`auto`} padding={`0px 10px`}>
+          <Text>80%</Text>
+        </Wrapper>
+      </Wrapper>
+      <Wrapper dr={`row`}>
+        <Wrapper
+          width={`150px`}
+          al={`flex-start`}
+          ju={`flex-start`}
+          height={`30px`}
+          padding={`5px`}
+          bgColor={`#f5f5f5`}
+          radius={`30px`}
+          dr={`row`}
+          shadow={`0px 4px 4px  rgba(220,220,220,1)`}
+          margin={`10px 0px`}
+        >
+          <Wrapper
+            width={`50%`}
+            height={`100%`}
+            bgColor={`#ffdc69`}
+            radius={`30px`}
+          ></Wrapper>
+        </Wrapper>
+        <Wrapper width={`auto`} padding={`0px 10px`}>
+          <Text>80%</Text>
+        </Wrapper>
+      </Wrapper>
+      <Wrapper dr={`row`}>
+        <Wrapper
+          width={`150px`}
+          al={`flex-start`}
+          ju={`flex-start`}
+          height={`30px`}
+          padding={`5px`}
+          bgColor={`#f5f5f5`}
+          radius={`30px`}
+          dr={`row`}
+          shadow={`0px 4px 4px  rgba(220,220,220,1)`}
+          margin={`10px 0px`}
+        >
+          <Wrapper
+            width={`10%`}
+            height={`100%`}
+            bgColor={`#ff9591`}
+            radius={`30px`}
+          ></Wrapper>
+        </Wrapper>
+        <Wrapper width={`auto`} padding={`0px 10px`}>
+          <Text>80%</Text>
+        </Wrapper>
+      </Wrapper>
     </WholeWrapper>
   );
 };
