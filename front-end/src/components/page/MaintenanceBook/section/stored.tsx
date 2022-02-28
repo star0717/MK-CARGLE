@@ -62,6 +62,9 @@ import {
   _aPatchMaintenancesStart,
 } from "store/action/user.action";
 import { _iDeleteByUser, _iMaintenancesOne } from "store/interfaces";
+import DocumentModal from "./documentModal";
+import MolitModal from "./molitModal";
+import PaymentModal from "./paymentModal";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -118,10 +121,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  useEffect(() => {
-    setMtInfo(props.data.mtData);
-    setPartSetClass(props.data.setList.docs);
-  }, [props]);
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
@@ -1127,8 +1126,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         </Wrapper>
         {modalOption === "part" ? (
           <MtPartsModal {...partsSetProps} />
-        ) : (
+        ) : modalOption === "set" ? (
           <MtSetModal {...partsSetProps} />
+        ) : modalOption.indexOf("document") === 0 ? (
+          <DocumentModal {...partsSetProps} />
+        ) : modalOption.indexOf("molit") === 0 ? (
+          <MolitModal {...partsSetProps} />
+        ) : (
+          <PaymentModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>

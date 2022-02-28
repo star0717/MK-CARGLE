@@ -12,13 +12,17 @@ import {
   CheckMark,
   CommonButton,
   CommonButtonWrapper,
+  SmallButton,
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
 import { MainPrice, Maintenance } from "src/models/maintenance.entity";
 import { basicRegEx } from "src/validation/regEx";
 import { useDispatch } from "react-redux";
-import { _aPatchMaintenancesPay } from "store/action/user.action";
+import {
+  _aPatchMaintenancesPay,
+  _aPatchMaintenancesRelease,
+} from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
 const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
@@ -41,6 +45,8 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
    *********************************************************************/
   const [price, setPrice] = useState<MainPrice>(props.mtInfo.price);
   const [payCheck, setPayCheck] = useState<PayCheck>(payCheckInit);
+  const [edit, setEdit] = useState<boolean>(false);
+  const [discount, setDiscount] = useState<number>(props.mtInfo.price.discount);
 
   /*********************************************************************
    * 3. Handlers
@@ -55,48 +61,21 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
     switch (e.target.name) {
       case "discount":
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
-          return setPrice({
-            ...price,
-            discount: 0,
-            sum: props.data.mtData.price.sum,
-            vat: props.data.mtData.price.vat,
-            total: props.data.mtData.price.total,
-          });
+          return setDiscount(0);
+        } else if (Number(e.target.value) > price.total) {
+          return setDiscount(price.total);
         } else {
-          return setPrice({
-            ...price,
-            discount: Number(e.target.value),
-            sum: props.data.mtData.price.isIncluded
-              ? Math.round(
-                  (props.data.mtData.price.total - Number(e.target.value)) / 1.1
-                )
-              : Math.round(
-                  props.data.mtData.price.sum - Number(e.target.value)
-                ),
-            vat: props.data.mtData.price.isIncluded
-              ? Math.round(
-                  ((props.data.mtData.price.total - Number(e.target.value)) /
-                    1.1) *
-                    0.1
-                )
-              : Math.round(
-                  (props.data.mtData.price.sum - Number(e.target.value)) * 0.1
-                ),
-            total: props.data.mtData.price.isIncluded
-              ? Math.round(
-                  props.data.mtData.price.total - Number(e.target.value)
-                )
-              : Math.round(
-                  props.data.mtData.price.sum -
-                    Number(e.target.value) +
-                    (props.data.mtData.price.sum - Number(e.target.value)) * 0.1
-                ),
-          });
+          return setDiscount(Number(e.target.value));
         }
 
       default:
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setPrice({ ...price, [e.target.name]: 0 });
+        } else if (Number(e.target.value) > price.total) {
+          return setPrice({
+            ...price,
+            [e.target.name]: price.total,
+          });
         } else {
           return setPrice({
             ...price,
@@ -105,6 +84,11 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
         }
     }
   };
+
+  useEffect(() => {
+    const realTotal: number = price.total + price.discount;
+    const partWage: number = price.partsSum + price.wageSum;
+  }, [discount]);
 
   /**
    * 결제수단 체크 handler
@@ -126,24 +110,41 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
     });
   }, [payCheck, price.cash, price.credit, price.insurance]);
 
-  const onPaymentHandler = async () => {
+  /**결제 handler */
+  const onPaymentHandler = async (edit: boolean) => {
     const maintenanceData: Partial<Maintenance> = {
       ...props.data.mtData,
       price: price,
     };
-    await dispatch(
-      _aPatchMaintenancesPay(maintenanceData._id, maintenanceData)
-    ).then(
-      (res: _iMaintenancesOne) => {
-        if (res.payload) {
-          props.setMtInfo(res.payload);
-          props.setModalOption("document");
+    if (edit) {
+      await dispatch(
+        _aPatchMaintenancesRelease(maintenanceData._id, maintenanceData)
+      ).then(
+        (res: _iMaintenancesOne) => {
+          if (res.payload) {
+            props.setMtInfo(res.payload);
+            setEdit(false);
+          }
+        },
+        (err) => {
+          return alert("결제내역 저장에 실패했습니다.");
         }
-      },
-      (err) => {
-        return alert("결제내역 저장에 실패했습니다.");
-      }
-    );
+      );
+    } else {
+      await dispatch(
+        _aPatchMaintenancesPay(maintenanceData._id, maintenanceData)
+      ).then(
+        (res: _iMaintenancesOne) => {
+          if (res.payload) {
+            props.setMtInfo(res.payload);
+            props.setModalOption("document");
+          }
+        },
+        (err) => {
+          return alert("결제내역 저장에 실패했습니다.");
+        }
+      );
+    }
   };
 
   /*********************************************************************
@@ -179,10 +180,31 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         )}
         <Wrapper padding={`10px 0px 0px`}>
-          <CommonSmallTitle margin={`0px 0px 30px 0px`}>
-            결제 정보 입력
-          </CommonSmallTitle>
+          {props.modalOption.indexOf("bts") !== -1 ? (
+            <CommonSmallTitle margin={`0px 0px 30px 0px`}>
+              결제 정보 입력
+            </CommonSmallTitle>
+          ) : (
+            <CommonSmallTitle margin={`0px 0px 30px 0px`}>
+              결제 정보
+            </CommonSmallTitle>
+          )}
         </Wrapper>
+        {props.modalOption.indexOf("bts") === -1 && (
+          <Wrapper dr={`row`} ju={`flex-end`}>
+            <SmallButton
+              type="button"
+              margin={`0px 30px 0px 0px`}
+              width={`130px`}
+              kindOf={`default`}
+              onClick={() => {
+                setEdit(true);
+              }}
+            >
+              결제정보수정
+            </SmallButton>
+          </Wrapper>
+        )}
         <Wrapper dr={`row`} ju={`space-around`}>
           <Wrapper width={`45%`}>
             <Wrapper
@@ -218,8 +240,13 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                     type="text"
                     placeholder={"금액을 입력하세요."}
                     name="discount"
-                    value={price.discount.toLocaleString()}
+                    value={discount.toLocaleString()}
                     onChange={onChangePrice}
+                    readOnly={
+                      props.modalOption.indexOf("bts") === -1 && edit
+                        ? false
+                        : true
+                    }
                   />
                   <Text width={`20px`} textAlign={`right`}>
                     원
@@ -270,6 +297,11 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                         name="cashCheck"
                         checked={payCheck.cashCheck}
                         onChange={onChangeCheck}
+                        disabled={
+                          props.modalOption.indexOf("bts") === -1 && edit
+                            ? false
+                            : true
+                        }
                       />
                       <CheckMark></CheckMark>
                     </Checkbox>
@@ -280,7 +312,13 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       al={`flex-end`}
                       placeholder={"금액을 입력하세요."}
                       name="cash"
-                      value={price.cash.toLocaleString()}
+                      value={
+                        payCheck.cashCheck &&
+                        !payCheck.creditCheck &&
+                        !payCheck.insuranceCheck
+                          ? price.total
+                          : price.cash.toLocaleString()
+                      }
                       onChange={onChangePrice}
                       readOnly={!payCheck.cashCheck}
                     />
@@ -298,6 +336,11 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                         name="creditCheck"
                         checked={payCheck.creditCheck}
                         onChange={onChangeCheck}
+                        disabled={
+                          props.modalOption.indexOf("bts") === -1 && edit
+                            ? false
+                            : true
+                        }
                       />
                       <CheckMark></CheckMark>
                     </Checkbox>
@@ -308,7 +351,13 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       al={`flex-end`}
                       placeholder={"금액을 입력하세요."}
                       name="credit"
-                      value={price.credit.toLocaleString()}
+                      value={
+                        !payCheck.cashCheck &&
+                        payCheck.creditCheck &&
+                        !payCheck.insuranceCheck
+                          ? price.total
+                          : price.credit.toLocaleString()
+                      }
                       onChange={onChangePrice}
                       readOnly={!payCheck.creditCheck}
                     />
@@ -326,6 +375,11 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                         name="insuranceCheck"
                         checked={payCheck.insuranceCheck}
                         onChange={onChangeCheck}
+                        disabled={
+                          props.modalOption.indexOf("bts") === -1 && edit
+                            ? false
+                            : true
+                        }
                       />
                       <CheckMark></CheckMark>
                     </Checkbox>
@@ -336,7 +390,13 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       al={`flex-end`}
                       placeholder={"금액을 입력하세요."}
                       name="insurance"
-                      value={price.insurance.toLocaleString()}
+                      value={
+                        !payCheck.cashCheck &&
+                        !payCheck.creditCheck &&
+                        payCheck.insuranceCheck
+                          ? price.total
+                          : price.insurance.toLocaleString()
+                      }
                       onChange={onChangePrice}
                       readOnly={!payCheck.insuranceCheck}
                     />
@@ -357,28 +417,66 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
           </Wrapper>
         </Wrapper>
-        <CommonButtonWrapper ju={`space-between`} padding={`30px 30px`}>
-          <CommonButton
-            type="button"
-            onClick={() => {
-              props.setModalOpen(false);
-            }}
-          >
-            취소
-          </CommonButton>
-          <CommonButton
-            type="button"
-            kindOf={`white`}
-            onClick={() => {
-              props.setModalOption("molit");
-            }}
-          >
-            이전으로
-          </CommonButton>
-          <CommonButton type="button" onClick={onPaymentHandler}>
-            다음
-          </CommonButton>
-        </CommonButtonWrapper>
+        {props.modalOption.indexOf("bts") !== -1 ? (
+          <CommonButtonWrapper ju={`space-between`} padding={`30px 30px`}>
+            <CommonButton
+              type="button"
+              onClick={() => {
+                props.setModalOpen(false);
+              }}
+            >
+              취소
+            </CommonButton>
+            <CommonButton
+              type="button"
+              kindOf={`white`}
+              onClick={() => {
+                props.setModalOption("molit");
+              }}
+            >
+              이전으로
+            </CommonButton>
+            <CommonButton
+              type="button"
+              onClick={() => {
+                onPaymentHandler(false);
+              }}
+            >
+              다음
+            </CommonButton>
+          </CommonButtonWrapper>
+        ) : edit ? (
+          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+            <CommonButton
+              type="button"
+              kindOf={`white`}
+              onClick={() => {
+                setEdit(false);
+              }}
+            >
+              취소하기
+            </CommonButton>
+            <CommonButton
+              type="button"
+              onClick={() => {
+                onPaymentHandler(true);
+              }}
+            >
+              저장
+            </CommonButton>
+          </CommonButtonWrapper>
+        ) : (
+          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+            <CommonButton
+              type="button"
+              onClick={() => {
+                props.setModalOpen(false);
+              }}
+            >
+              닫기
+            </CommonButton>
+          </CommonButtonWrapper>
+        )}
       </Wrapper>
     </WholeWrapper>
   );

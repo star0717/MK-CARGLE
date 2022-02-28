@@ -97,10 +97,6 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  useEffect(() => {
-    setMtInfo(props.data.mtData);
-    setPartSetClass(props.data.setList.docs);
-  }, [props]);
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
@@ -782,12 +778,12 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "molit" ? (
-          <MolitModal {...partsSetProps} />
-        ) : modalOption === "payment" ? (
-          <PaymentModal {...partsSetProps} />
-        ) : (
+        {modalOption.indexOf("document") === 0 ? (
           <DocumentModal {...partsSetProps} />
+        ) : modalOption.indexOf("molit") === 0 ? (
+          <MolitModal {...partsSetProps} />
+        ) : (
+          <PaymentModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>

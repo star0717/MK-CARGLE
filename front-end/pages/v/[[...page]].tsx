@@ -324,7 +324,6 @@ export const getServerSideProps: GetServerSideProps = async (
 
       case UseLink.MAINTENANCE_BOOK: {
         if (id) {
-          console.log("id 있을때");
           const setList: FindResult<PartsSet> = await axios
             .get(
               genApiPath(PartsSetsApiPath.partsSets, {
@@ -362,7 +361,6 @@ export const getServerSideProps: GetServerSideProps = async (
           };
           return successResult;
         } else {
-          console.log("id 없을때@");
           successResult.props.data = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
@@ -375,7 +373,6 @@ export const getServerSideProps: GetServerSideProps = async (
               (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
                 res.data
             );
-          console.log(successResult);
           return successResult;
         }
       }

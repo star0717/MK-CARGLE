@@ -108,10 +108,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  useEffect(() => {
-    setMtInfo(props.data.mtData);
-    setPartSetClass(props.data.setList.docs);
-  }, [props]);
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
@@ -316,6 +312,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     ).then(
       (res: _iMaintenancesOne) => {
         alert("정비내역을 저장했습니다.");
+        setMtInfo(res.payload);
         setModify(!modify);
       },
       (err) => {
@@ -323,8 +320,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       }
     );
   };
-
-  console.log("@@", modalOption.indexOf("document"));
 
   /*********************************************************************
    * 4. Props settings
@@ -347,7 +342,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  console.log(props);
   return (
     <WholeWrapper>
       <RsWrapper>
