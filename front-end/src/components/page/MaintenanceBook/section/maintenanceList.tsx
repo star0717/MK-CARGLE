@@ -24,6 +24,7 @@ import {
   TableRow,
   TableRowLIST,
   Combo,
+  ColorSpan,
 } from "src/components/styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
@@ -42,6 +43,7 @@ import {
   _aPostMaintenancesDeleteMany,
 } from "store/action/user.action";
 import { _iDeleteByUser } from "store/interfaces";
+import { GoPrimitiveDot } from "react-icons/go";
 
 const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -129,8 +131,8 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   //리셋 기능
   const onResetHandler = () => {
     props.setSearchList({
-      sFrom: "",
-      sTo: "",
+      sFrom: props.data.sFrom,
+      sTo: props.data.sTo,
       regNumber: "",
       costomerType: "all",
       status: "all",
@@ -173,7 +175,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-
+  console.log("@@@@@@@@", props);
   return (
     <WholeWrapper
       tabIndex="0"
@@ -268,7 +270,8 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TextInput2
                 type="date"
                 name="sFrom"
-                value={props.searchList.sFrom}
+                width={`220px`}
+                value={dayjs(props.searchList.sFrom).format("YYYY-MM-DD")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   props.setSearchList({
                     ...props.searchList,
@@ -277,7 +280,6 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   onSearchHandler(e);
                   setReset(reset + 1);
                 }}
-                width={`220px`}
               />
               <Wrapper width={`auto`}>
                 <Text> ~ </Text>
@@ -285,7 +287,8 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
               <TextInput2
                 type="date"
                 name="sTo"
-                value={props.searchList.sTo}
+                width={`220px`}
+                value={dayjs(props.searchList.sTo).format("YYYY-MM-DD")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   props.setSearchList({
                     ...props.searchList,
@@ -294,7 +297,6 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                   onSearchHandler(e);
                   setReset(reset + 1);
                 }}
-                width={`220px`}
               />
             </Wrapper>
           </Wrapper>
@@ -504,7 +506,23 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                         ? `${list.works[0]?.name} 외 ${list.works.length - 1}건`
                         : list.works[0]?.name}
                     </TableRowLIST>
-                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                    <TableRowLIST width={`13%`}>
+                      {list?.estimate ? (
+                        <Wrapper dr={`row`} width={`auto`}>
+                          <ColorSpan color={`#51b351`} margin={`4px 0px 0px`}>
+                            <GoPrimitiveDot />
+                          </ColorSpan>
+                          발급완료
+                        </Wrapper>
+                      ) : (
+                        <Wrapper dr={`row`} width={`auto`}>
+                          <ColorSpan color={`#d6263b`} margin={`4px 0px 0px`}>
+                            <GoPrimitiveDot />
+                          </ColorSpan>
+                          미발급
+                        </Wrapper>
+                      )}
+                    </TableRowLIST>
                     <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
                     <TableRowLIST width={`13%`}>
                       {getStrMainStatus(list.status)}

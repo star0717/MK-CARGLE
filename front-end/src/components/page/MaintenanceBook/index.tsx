@@ -55,8 +55,8 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   const [searchList, setSearchList] = useState({
-    sFrom: "",
-    sTo: "",
+    sFrom: props.data.sFrom,
+    sTo: props.data.sTo,
     regNumber: "",
     costomerType: "all",
     status: "all",
