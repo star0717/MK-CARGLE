@@ -172,7 +172,7 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
                             e.stopPropagation()
                           }
                         >
-                          <Checkbox kindOf={`TableCheckBox`}>
+                          <Checkbox margin={`0px 0px 26px 0px`}>
                             <CheckInput
                               type="checkbox"
                               onChange={(
