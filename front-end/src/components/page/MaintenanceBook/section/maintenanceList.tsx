@@ -175,7 +175,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  console.log("@@@@@@@@", props);
+
   return (
     <WholeWrapper
       tabIndex="0"
