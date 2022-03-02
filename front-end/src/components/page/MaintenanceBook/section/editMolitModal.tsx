@@ -41,10 +41,14 @@ const EditMolitModal: NextPage<_pPartsSetProps> = (props) => {
       <Wrapper>
         <Wrapper margin={`50px 0px 0px`}>
           {props.modalOption.indexOf("delete") !== -1 && (
-            <Text fontSize={`20px`}>"국토부 삭제 사유를 입력하세요"</Text>
+            <Text fontSize={`20px`} color={`#314FA5`}>
+              "국토부 삭제 사유를 입력하세요"
+            </Text>
           )}
           {props.modalOption.indexOf("edit") !== -1 && (
-            <Text fontSize={`20px`}>"국토부 수정 사유를 입력하세요"</Text>
+            <Text fontSize={`20px`} color={`#314FA5`}>
+              "국토부 수정 사유를 입력하세요"
+            </Text>
           )}
           <TextArea
             fontSize={`24px`}
@@ -93,7 +97,7 @@ const EditMolitModal: NextPage<_pPartsSetProps> = (props) => {
             width={`300px`}
             height={`50px`}
             onClick={() => {
-              props.setModalOption("molit");
+              props.setModalOption("molit2");
             }}
           >
             다음

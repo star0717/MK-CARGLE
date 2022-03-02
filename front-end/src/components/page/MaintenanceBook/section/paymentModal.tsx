@@ -40,6 +40,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
     creditCheck: false,
     insuranceCheck: false,
   };
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -62,9 +63,14 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
       case "discount":
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setDiscount(0);
-        } else if (Number(e.target.value) > price.total) {
-          return setDiscount(price.total);
         } else {
+          if (price.isIncluded) {
+            if (Number(e.target.value) > props.mtInfo.price.total)
+              return setDiscount(props.mtInfo.price.total);
+          } else {
+            if (Number(e.target.value) > props.mtInfo.price.sum)
+              return setDiscount(props.mtInfo.price.sum);
+          }
           return setDiscount(Number(e.target.value));
         }
 
@@ -81,8 +87,28 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   };
 
   useEffect(() => {
-    const realTotal: number = price.total + price.discount;
-    const partWage: number = price.partsSum + price.wageSum;
+    const partWage: number =
+      props.mtInfo.price.partsSum + props.mtInfo.price.wageSum;
+    let sum2: number = 0;
+    let vat2: number = 0;
+    let total2: number = 0;
+
+    if (price.isIncluded) {
+      total2 = partWage - discount;
+      sum2 = Math.round(total2 / 1.1);
+      vat2 = Math.round(total2 - sum2);
+    } else {
+      sum2 = partWage - discount;
+      vat2 = Math.round(sum2 * 0.1);
+      total2 = Math.round(sum2 + vat2);
+    }
+    setPrice({
+      ...price,
+      discount: discount,
+      sum: sum2,
+      vat: vat2,
+      total: total2,
+    });
   }, [discount]);
 
   /**
@@ -264,7 +290,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                 </Wrapper>
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
-                <Text>과세액</Text>
+                <Text>공급가액</Text>
                 <Text>{price.sum.toLocaleString()}원</Text>
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
