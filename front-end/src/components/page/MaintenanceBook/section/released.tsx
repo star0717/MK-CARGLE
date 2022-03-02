@@ -64,6 +64,7 @@ import { GoCheck } from "react-icons/go";
 import DocumentModal from "./documentModal";
 import MolitModal from "./molitModal";
 import PaymentModal from "./paymentModal";
+import EditMolitModal from "./editMolitModal";
 
 const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -1104,7 +1105,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     width={`439px`}
                     kindOf={`default`}
                     onClick={() => {
-                      onModifyWorkInfo();
+                      // onModifyWorkInfo();
+                      setModalOption("editMolit");
+                      setModalOpen(true);
                     }}
                   >
                     수정 완료
@@ -1152,6 +1155,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
         </Wrapper>
         {modalOption === "part" && <MtPartsModal {...partsSetProps} />}
         {modalOption === "set" && <MtSetModal {...partsSetProps} />}
+        {(modalOption === "deleteMolit" || modalOption === "editMolit") && (
+          <EditMolitModal {...partsSetProps} />
+        )}
         {modalOption.indexOf("document") === 0 && (
           <DocumentModal {...partsSetProps} />
         )}

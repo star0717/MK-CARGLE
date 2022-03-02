@@ -65,7 +65,7 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
 
   return (
     <WholeWrapper>
-      {props.modalOption.indexOf("bts") !== -1 && (
+      {props.modalOption.indexOf("Bts") === -1 && (
         <Wrapper dr={`row`}>
           <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
             <Text>1</Text>
@@ -95,7 +95,20 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
       {molitCheck ? (
         //국토부 내용이 있다면
         <Wrapper>
-          {props.modalOption.indexOf("bts") !== -1 ? (
+          {props.modalOption.indexOf("Bts") !== -1 ? (
+            <Wrapper dr={`row`} ju={`flex-end`}>
+              <SmallButton
+                type="button"
+                width={`130px`}
+                kindOf={`default`}
+                onClick={() => {
+                  props.setModalOption("deleteMolit");
+                }}
+              >
+                국토부 삭제
+              </SmallButton>
+            </Wrapper>
+          ) : (
             <Wrapper>
               <Text fontSize={`20px`}>
                 "
@@ -104,17 +117,6 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
                 </ColorSpan>
                 건의 정비 내역을 국토부로 전송하시겠습니까?? "
               </Text>
-            </Wrapper>
-          ) : (
-            <Wrapper dr={`row`} ju={`flex-end`}>
-              <SmallButton
-                type="button"
-                width={`130px`}
-                kindOf={`default`}
-                onClick={() => {}}
-              >
-                국토부 삭제
-              </SmallButton>
             </Wrapper>
           )}
           <TableWrapper minHeight={`350px`} padding={`40px 0px 0px`}>
@@ -158,7 +160,7 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
           </Text>
         </Wrapper>
       )}
-      {props.modalOption.indexOf("bts") !== -1 ? (
+      {props.modalOption.indexOf("Bts") !== -1 ? (
         <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
           <CommonButton
             type="button"

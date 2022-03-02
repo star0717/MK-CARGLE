@@ -911,18 +911,17 @@ export const TextInput2 = styled.input<any>`
 export const TextArea = styled.textarea<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
-  border: ${(props) => props.theme.border};
+  border: ${(props) => props.border || props.theme.border};
   padding: ${(props) => props.padding || props.theme.inputPadding};
   border-radius: ${(props) => props.theme.radius};
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
-  font-size: 16px;
+  font-size: ${(props) => props.fontSize || `16px`};
   align-items: ${(props) => props.al || ``};
   justify-content: ${(props) => props.ju || ``};
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
-  border: ${(props) => props.theme.border};
   padding: ${(props) => props.padding || props.theme.inputPadding};
   border-radius: ${(props) => props.theme.radius};
   transition: ${(props) => props.transition || props.theme.transition};
@@ -935,7 +934,8 @@ export const TextArea = styled.textarea<any>`
 
   &:focus {
     outline: none;
-    border: 1px solid ${(props) => props.theme.basicTheme_C};
+    border: ${(props) =>
+      props.border || `1px solid ${props.theme.basicTheme_C}`};
   }
 
   &:read-only:focus {

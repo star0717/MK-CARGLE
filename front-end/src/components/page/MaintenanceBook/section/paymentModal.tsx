@@ -167,7 +167,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper>
-        {props.modalOption.indexOf("bts") !== -1 && (
+        {props.modalOption.indexOf("Bts") === -1 && (
           <Wrapper dr={`row`}>
             <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
               <Text color={`#ccc`}>1</Text>
@@ -190,17 +190,17 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         )}
         <Wrapper padding={`10px 0px 0px`}>
-          {props.modalOption.indexOf("bts") !== -1 ? (
-            <CommonSmallTitle margin={`0px 0px 30px 0px`}>
-              결제 정보 입력
-            </CommonSmallTitle>
-          ) : (
+          {props.modalOption.indexOf("Bts") !== -1 ? (
             <CommonSmallTitle margin={`0px 0px 30px 0px`}>
               결제 정보
             </CommonSmallTitle>
+          ) : (
+            <CommonSmallTitle margin={`0px 0px 30px 0px`}>
+              결제 정보 입력
+            </CommonSmallTitle>
           )}
         </Wrapper>
-        {props.modalOption.indexOf("bts") === -1 && (
+        {props.modalOption.indexOf("Bts") !== -1 && (
           <Wrapper dr={`row`} ju={`flex-end`}>
             <SmallButton
               type="button"
@@ -253,7 +253,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                     value={discount.toLocaleString()}
                     onChange={onChangePrice}
                     readOnly={
-                      props.modalOption.indexOf("bts") === -1 && edit
+                      props.modalOption.indexOf("Bts") !== -1 && edit
                         ? false
                         : true
                     }
@@ -400,7 +400,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
           </Wrapper>
         </Wrapper>
-        {props.modalOption.indexOf("bts") !== -1 ? (
+        {props.modalOption.indexOf("Bts") === -1 ? (
           <CommonButtonWrapper ju={`space-between`} padding={`30px 30px`}>
             <CommonButton
               type="button"

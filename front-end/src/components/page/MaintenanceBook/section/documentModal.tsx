@@ -77,7 +77,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper>
-        {props.modalOption.indexOf("bts") !== -1 && (
+        {props.modalOption.indexOf("Bts") === -1 && (
           <Wrapper dr={`row`}>
             <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
               <Text color={`#ccc`}>1</Text>
@@ -249,7 +249,22 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
           </TableWrapper>
         </Wrapper>
-        {props.modalOption.indexOf("bts") !== -1 ? (
+        {props.modalOption.indexOf("Bts") !== -1 ? (
+          <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
+            <CommonButton
+              type="button"
+              kindOf={`white`}
+              onClick={() => {
+                props.setModalOpen(false);
+              }}
+            >
+              취소
+            </CommonButton>
+            <CommonButton type="button" onClick={() => {}}>
+              전송 및 출력
+            </CommonButton>
+          </CommonButtonWrapper>
+        ) : (
           <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
             <CommonButton
               type="button"
@@ -276,21 +291,6 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               }}
             >
               출고완료
-            </CommonButton>
-          </CommonButtonWrapper>
-        ) : (
-          <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
-            <CommonButton
-              type="button"
-              kindOf={`white`}
-              onClick={() => {
-                props.setModalOpen(false);
-              }}
-            >
-              취소
-            </CommonButton>
-            <CommonButton type="button" onClick={() => {}}>
-              전송 및 출력
             </CommonButton>
           </CommonButtonWrapper>
         )}
