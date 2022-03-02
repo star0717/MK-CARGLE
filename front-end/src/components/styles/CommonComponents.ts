@@ -366,11 +366,12 @@ export const Text = styled.p<any>`
   font-style: ${(props) => props.fontStyle};
   cursor: ${(props) => props.cursor};
   z-index: 1;
-  white-space: pre-wrap;
+  white-space: ${(props) => props.whiteSpace || `pre-wrap`};
   margin-bottom: ${(props) => props.marginBottom};
   margin-top: ${(props) => props.marginTop};
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
   text-decoration: ${(props) => props.decoration};
+  text-overflow: ${(props) => props.textOverflow || ``};
 
   & svg {
     color: ${(props) => props.color};
@@ -1402,7 +1403,6 @@ export const TableRowLIST = styled.li<any>`
   line-height: ${(props) => props.lineHeight || `1.2`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
   text-align: start;
-  margin-right: 5px;
 `;
 
 export const Comment = styled.div<any>`
