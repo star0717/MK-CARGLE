@@ -367,6 +367,7 @@ export const getServerSideProps: GetServerSideProps = async (
           let now = new Date();
           let Today = new Date();
           let LastMonth = new Date(now.setMonth(now.getMonth() - 1));
+
           successResult.props.data = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
