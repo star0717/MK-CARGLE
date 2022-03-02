@@ -264,7 +264,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                 </Wrapper>
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
-                <Text>과세액</Text>
+                <Text>공급가액</Text>
                 <Text>{price.sum.toLocaleString()}원</Text>
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
