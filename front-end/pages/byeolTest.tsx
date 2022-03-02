@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
+import Modal from "react-modal";
 import {
   Checkbox,
   CheckInput,
@@ -13,208 +14,136 @@ import {
   Text,
   RsWrapper,
   WholeWrapper,
+  CloseButton,
 } from "../src/components/styles/CommonComponents";
 import styled from "styled-components";
 import router from "next/router";
 import { UseLink } from "../src/configure/router.entity";
 import { BsEmojiDizzyFill } from "react-icons/bs";
 import { AiFillHome, AiOutlineArrowLeft } from "react-icons/ai";
+import { IoIosCloseCircle } from "react-icons/io";
+import { BodyWrapper } from "src/components/styles/LayoutComponents";
+import MolitSettingModal from "src/components/page/MaintenanceBook/section/molitSettingModal";
 
 /**
  * 테스트 페이지
  * @returns
  */
 const ByeolTest: NextPage = () => {
-  // const Switch = styled.label<any>`
-  //   position: relative;
-  //   display: inline-block;
-  //   width: 60px;
-  //   height: 34px;
-  // `;
+  /*********************************************************************
+   * 1. Init Libs
+   *********************************************************************/
 
-  // const SwitchSlider = styled.span<any>`
-  //   position: absolute;
-  //   cursor: pointer;
-  //   top: 0;
-  //   left: 0;
-  //   right: 0;
-  //   bottom: 0;
-  //   background-color: #ccc;
-  //   -webkit-transition: 0.4s;
-  //   transition: 0.4s;
-  //   border-radius: 34px;
+  /*********************************************************************
+   * 2. State settings
+   *********************************************************************/
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
+  const [modalOption, setModalOption] = useState<string>(""); // modal 내용
+  /*********************************************************************
+   * 3. Handlers
+   *********************************************************************/
 
-  //   &:before {
-  //     position: absolute;
-  //     content: "";
-  //     height: 26px;
-  //     width: 26px;
-  //     left: 4px;
-  //     bottom: 4px;
-  //     background-color: white;
-  //     -webkit-transition: 0.4s;
-  //     transition: 0.4s;
-  //     border-radius: 50%;
-  //   }
-  // `;
+  /*********************************************************************
+   * 4. Props settings
+   *********************************************************************/
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
 
-  // const SwitchInput = styled.input<any>`
-  //   opacity: 0;
-  //   width: 0;
-  //   height: 0;
+  // handler(기능) 관리
 
-  //   &:checked + ${SwitchSlider} {
-  //     background-color: #2196f3;
-  //   }
+  /**
+   * modal 창 닫기 기능
+   */
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
-  //   &:focus + ${SwitchSlider} {
-  //     box-shadow: 0 0 1px #2196f3;
-  //   }
-
-  //   &:checked + ${SwitchSlider}:before {
-  //     -webkit-transform: translateX(26px);
-  //     -ms-transform: translateX(26px);
-  //     transform: translateX(26px);
-  //   }
-  // `;
-
-  // //---------------------------------------//
-  // const CheckMark = styled.span<any>`
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   height: 25px;
-  //   width: 25px;
-  //   background-color: #eee;
-  //   transition: 0.2s;
-
-  //   &:after {
-  //     content: "";
-  //     position: absolute;
-  //     display: none;
-  //     left: 9px;
-  //     top: 5px;
-  //     width: 5px;
-  //     height: 10px;
-  //     border: solid white;
-  //     border-width: 0 3px 3px 0;
-  //     -webkit-transform: rotate(45deg);
-  //     -ms-transform: rotate(45deg);
-  //     transform: rotate(45deg);
-  //   }
-  // `;
-
-  // const CheckInput = styled.input<any>`
-  //   position: absolute;
-  //   opacity: 0;
-  //   cursor: pointer;
-  //   height: 0;
-  //   width: 0;
-  // `;
-
-  // const Checkbox = styled.label<any>`
-  //   display: block;
-  //   position: relative;
-  //   padding-left: 35px;
-  //   margin-bottom: 12px;
-  //   cursor: pointer;
-  //   font-size: 22px;
-  //   -webkit-user-select: none;
-  //   -moz-user-select: none;
-  //   -ms-user-select: none;
-  //   user-select: none;
-
-  //   &:hover ${CheckInput} ~ ${CheckMark} {
-  //     background-color: #ccc;
-  //   }
-
-  //   ${CheckInput}:checked ~ ${CheckMark} {
-  //     background-color: #2196f3;
-  //   }
-
-  //   ${CheckInput}:checked ~ ${CheckMark}:after {
-  //     display: block;
-  //   }
-  // `;
-
-  /* Style the checkmark/indicator */
+  // 도장 modal props
+  const ModalProps = {
+    setModalOpen,
+    style: { height: "1200px" },
+  };
+  /*********************************************************************
+   * 5. Page configuration
+   *********************************************************************/
 
   return (
-    <WholeWrapper>
-      <RsWrapper>윤별이 쓰는 실험실</RsWrapper>
-      <Wrapper dr={`row`}>
-        <Wrapper
-          width={`150px`}
-          al={`flex-start`}
-          ju={`flex-start`}
-          height={`30px`}
-          padding={`5px`}
-          bgColor={`#f5f5f5`}
-          radius={`30px`}
-          dr={`row`}
-          shadow={`0px 4px 4px  rgba(220,220,220,1)`}
-          margin={`10px 0px`}
+    <BodyWrapper>
+      <WholeWrapper>
+        <CommonButton
+          onClick={() => {
+            setModalOption("molit");
+            setModalOpen(!modalOpen);
+          }}
         >
-          <Wrapper
-            width={`80%`}
-            height={`100%`}
-            bgColor={`#89e872`}
-            radius={`30px`}
-          ></Wrapper>
-        </Wrapper>
-        <Wrapper width={`auto`} padding={`0px 10px`}>
-          <Text>80%</Text>
-        </Wrapper>
-      </Wrapper>
-      <Wrapper dr={`row`}>
-        <Wrapper
-          width={`150px`}
-          al={`flex-start`}
-          ju={`flex-start`}
-          height={`30px`}
-          padding={`5px`}
-          bgColor={`#f5f5f5`}
-          radius={`30px`}
-          dr={`row`}
-          shadow={`0px 4px 4px  rgba(220,220,220,1)`}
-          margin={`10px 0px`}
+          국토부 모달
+        </CommonButton>
+        <CommonButton
+          onClick={() => {
+            setModalOption("documents");
+            setModalOpen(!modalOpen);
+          }}
         >
-          <Wrapper
-            width={`50%`}
-            height={`100%`}
-            bgColor={`#ffdc69`}
-            radius={`30px`}
-          ></Wrapper>
-        </Wrapper>
-        <Wrapper width={`auto`} padding={`0px 10px`}>
-          <Text>80%</Text>
-        </Wrapper>
-      </Wrapper>
-      <Wrapper dr={`row`}>
-        <Wrapper
-          width={`150px`}
-          al={`flex-start`}
-          ju={`flex-start`}
-          height={`30px`}
-          padding={`5px`}
-          bgColor={`#f5f5f5`}
-          radius={`30px`}
-          dr={`row`}
-          shadow={`0px 4px 4px  rgba(220,220,220,1)`}
-          margin={`10px 0px`}
+          서류발송 모달
+        </CommonButton>
+        <CommonButton
+          onClick={() => {
+            setModalOption("payment");
+            setModalOpen(!modalOpen);
+          }}
         >
-          <Wrapper
-            width={`10%`}
-            height={`100%`}
-            bgColor={`#ff9591`}
-            radius={`30px`}
-          ></Wrapper>
+          결제 모달
+        </CommonButton>
+      </WholeWrapper>
+      <Modal
+        isOpen={modalOpen}
+        style={{
+          overlay: {
+            position: "fixed",
+            zIndex: 9999,
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(71, 71, 71, 0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            background: "white",
+            width: "1200px",
+            height: "800px",
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "calc(100vh - 2rem)",
+            overflowY: "auto",
+            position: "relative",
+            border: "1px solid #ccc",
+            borderRadius: "0.3rem",
+            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
+            inset: 0,
+          },
+        }}
+      >
+        <Wrapper fontSize={`28px`} al={`flex-end`}>
+          <CloseButton onClick={closeModal}>
+            <IoIosCloseCircle />
+          </CloseButton>
         </Wrapper>
-        <Wrapper width={`auto`} padding={`0px 10px`}>
-          <Text>80%</Text>
-        </Wrapper>
-      </Wrapper>
-    </WholeWrapper>
+        {/* {modalOption === "molit" ? (
+           <MolitModal {...partsSetProps} />
+         ) : modalOption === "payment" ? (
+           <PaymentModal {...partsSetProps} />
+         ) : (
+           <DocumentModal {...partsSetProps} />
+         )} */}
+        <MolitSettingModal />
+      </Modal>
+    </BodyWrapper>
   );
 };
 
