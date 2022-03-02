@@ -364,12 +364,10 @@ export const getServerSideProps: GetServerSideProps = async (
           /**
            * 현재 날짜로 부터 한날전 계산
            */
-          let now = new Date("2022-03-29");
-          console.log("now", now);
+          let now = new Date();
           let Today = new Date();
           let LastMonth = new Date(now.setMonth(now.getMonth() - 1));
 
-          console.log("Today", Today, "LastMonth", LastMonth);
           successResult.props.data = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
