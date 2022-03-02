@@ -15,6 +15,7 @@ import MaintenanceIng from "./section/ing";
 import MaintenanceDone from "./section/done";
 import MaintenancePaid from "./section/paid";
 import MaintenanceReleased from "./section/released";
+import { Maintenance } from "src/models/maintenance.entity";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
@@ -51,7 +52,9 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [findResult, setFindResult] = useState<FindResult<any>>(props.data);
+  const [findResult, setFindResult] = useState<FindResult<Maintenance>>(
+    props.data
+  );
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   const [searchList, setSearchList] = useState({

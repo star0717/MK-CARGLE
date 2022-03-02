@@ -689,7 +689,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>과세액 : {price.sum.toLocaleString()}</Text>
+              <Text>공급가액 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
@@ -778,11 +778,13 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption.indexOf("document") === 0 ? (
+        {modalOption.indexOf("document") === 0 && (
           <DocumentModal {...partsSetProps} />
-        ) : modalOption.indexOf("molit") === 0 ? (
+        )}
+        {modalOption.indexOf("molit") === 0 && (
           <MolitModal {...partsSetProps} />
-        ) : (
+        )}
+        {modalOption.indexOf("payment") === 0 && (
           <PaymentModal {...partsSetProps} />
         )}
       </Modal>

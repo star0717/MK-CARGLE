@@ -64,6 +64,7 @@ import { GoCheck } from "react-icons/go";
 import DocumentModal from "./documentModal";
 import MolitModal from "./molitModal";
 import PaymentModal from "./paymentModal";
+import EditMolitModal from "./editMolitModal";
 
 const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -143,16 +144,16 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       wageSum += workList[i].wage;
       sum1 += workList[i].price * workList[i].quantity + workList[i].wage;
     }
-    sum2 = price.isIncluded ? sum1 / 1.1 : sum1;
-    vat = price.isIncluded ? sum2 * 0.1 : sum1 * 0.1;
+    sum2 = price.isIncluded ? Math.round(sum1 / 1.1) : Math.round(sum1);
+    vat = price.isIncluded ? Math.round(sum2 * 0.1) : Math.round(sum1 * 0.1);
 
     setPrice({
       ...price,
       partsSum: partsSum,
       wageSum: wageSum,
-      sum: Math.round(Number(sum2.toString())),
-      vat: Math.round(Number(vat.toString())),
-      total: Number((sum2 + vat).toString()),
+      sum: sum2,
+      vat: vat,
+      total: sum2 + vat,
     });
   }, [workList, price.isIncluded]);
 
@@ -1055,7 +1056,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>과세액 : {price.sum.toLocaleString()}</Text>
+              <Text>공급가액 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
@@ -1104,7 +1105,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     width={`439px`}
                     kindOf={`default`}
                     onClick={() => {
-                      onModifyWorkInfo();
+                      // onModifyWorkInfo();
+                      setModalOption("editMolit");
+                      setModalOpen(true);
                     }}
                   >
                     수정 완료
@@ -1150,11 +1153,18 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption.indexOf("document") === 0 ? (
+        {modalOption === "part" && <MtPartsModal {...partsSetProps} />}
+        {modalOption === "set" && <MtSetModal {...partsSetProps} />}
+        {(modalOption === "deleteMolit" || modalOption === "editMolit") && (
+          <EditMolitModal {...partsSetProps} />
+        )}
+        {modalOption.indexOf("document") === 0 && (
           <DocumentModal {...partsSetProps} />
-        ) : modalOption.indexOf("molit") === 0 ? (
+        )}
+        {modalOption.indexOf("molit") === 0 && (
           <MolitModal {...partsSetProps} />
-        ) : (
+        )}
+        {modalOption.indexOf("payment") === 0 && (
           <PaymentModal {...partsSetProps} />
         )}
       </Modal>
