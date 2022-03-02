@@ -778,11 +778,13 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption.indexOf("document") === 0 ? (
+        {modalOption.indexOf("document") === 0 && (
           <DocumentModal {...partsSetProps} />
-        ) : modalOption.indexOf("molit") === 0 ? (
+        )}
+        {modalOption.indexOf("molit") === 0 && (
           <MolitModal {...partsSetProps} />
-        ) : (
+        )}
+        {modalOption.indexOf("payment") === 0 && (
           <PaymentModal {...partsSetProps} />
         )}
       </Modal>
