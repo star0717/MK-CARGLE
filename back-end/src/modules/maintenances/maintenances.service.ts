@@ -24,8 +24,11 @@ import {
 } from 'src/constants/maintenance.const';
 import { Company } from 'src/models/company.entity';
 import { CompaniesService } from '../companies/companies.service';
-import { CompanyInfo } from 'src/models/main.doc.entity';
+import { CompanyInfo, MainDoc } from 'src/models/main.doc.entity';
 import { Statement } from 'src/models/statement.entity';
+import { DeleteObjectIds, DeleteResult } from 'src/models/base.entity';
+import { FilterQuery } from 'mongoose';
+import { UserAuthority } from 'src/constants/model.const';
 
 @Injectable()
 export class MaintenancesService extends SafeService<Maintenance> {
@@ -44,6 +47,57 @@ export class MaintenancesService extends SafeService<Maintenance> {
   /********** 공통 API ***********************/
   async findById(token: AuthTokenInfo, id: string): Promise<Maintenance> {
     return await super.findById(token, id);
+  }
+
+  async findByIdAndRemove(
+    token: AuthTokenInfo,
+    id: string,
+  ): Promise<DeleteResult> {
+    const main: Maintenance = await this.findById(token, id);
+    if (!main) throw new BadRequestException();
+
+    if (main.estimate)
+      this.estimatesService.findByIdAndRemove(token, main.estimate._oID);
+    if (main.statement)
+      this.statementsService.findByIdAndRemove(token, main.statement._oID);
+
+    return await super.findByIdAndRemove(token, id);
+  }
+
+  async deleteManyByIds(
+    token: AuthTokenInfo,
+    objectIds: DeleteObjectIds,
+  ): Promise<DeleteResult> {
+    // 삭제할 정비이력을 먼저 조회
+    let fQuery: FilterQuery<MainDoc> = {
+      _id: {
+        $in: objectIds.ids,
+      },
+    };
+    if (token.uAuth != UserAuthority.ADMIN) {
+      fQuery._cID = token.cID;
+    }
+    const mains: Maintenance[] = await this.model.find(fQuery);
+
+    // 삭제할 견적서와 명세서의 ObjectID를 정리
+    let eIds: DeleteObjectIds = { ids: [] }; //삭제할 견적서 ID들
+    let sIds: DeleteObjectIds = { ids: [] }; // 삭제할 명세서 ID들
+    mains.map((main: Maintenance) => {
+      if (main.estimate) eIds.ids.push(main.estimate._oID);
+      if (main.statement) sIds.ids.push(main.statement._oID);
+    });
+    // 명세서 삭제
+    if (eIds.ids.length > 0) {
+      console.log('eIds.length: ' + eIds.ids.length);
+      this.estimatesService.deleteManyByIds(token, eIds);
+    }
+    // 견적서 삭제
+    if (sIds.ids.length > 0) {
+      console.log('sIds.length: ' + sIds.ids.length);
+      this.estimatesService.deleteManyByIds(token, sIds);
+    }
+
+    return await super.deleteManyByIds(token, objectIds);
   }
 
   /********** 전용 API **********************/
@@ -177,38 +231,19 @@ export class MaintenancesService extends SafeService<Maintenance> {
     const main: Maintenance = await this.findById(token, id);
     if (!main) throw new BadRequestException();
 
-    // 업체 정보 조회
-    const company: Company = await this.companiesService.findById(
-      token,
-      token.cID,
-    );
-    if (!company) throw new BadRequestException();
-
-    // 견적서에 주입할 업체 정보 준비
-    const cInfo: CompanyInfo = {
-      name: company.name,
-      comRegNum: company.comRegNum,
-      ownerName: company.ownerName,
-      phoneNum: company.phoneNum,
-      address: company.address1 + ' ' + company.address2,
-    };
-    if (company.busItem) cInfo.busItem = company.busItem;
-    if (company.busType) cInfo.busType = company.busType;
-    if (company.faxNum) cInfo.faxNum = company.faxNum;
-
     // 견적서 생성
     const estimate: Partial<Estimate> = {
       mainNum: main.docNum,
       customer: main.customer,
-      company: cInfo,
       car: main.car,
       works: main.works,
       price: main.price,
     };
 
     let result: Estimate;
+
     // 이미 견적서가 생성되었으나 발급 사실이 없으면 기존 견적서 수정
-    if (main.estimate?._oID && !main.estimate?.msgAt && !main.estimate?.prAt) {
+    if (main.estimate?._oID) {
       console.log('갱신');
       result = await this.estimatesService.findByIdAndUpdate(
         token,
@@ -219,18 +254,36 @@ export class MaintenancesService extends SafeService<Maintenance> {
     // 생성된 견적서가 없거나 발급 사실이 있으면 새롭게 견적서 생성
     else {
       console.log('생성');
+      // 업체 정보 조회
+      const company: Company = await this.companiesService.findById(
+        token,
+        token.cID,
+      );
+      if (!company) throw new BadRequestException();
+
+      // 견적서에 주입할 업체 정보 준비
+      let cInfo: CompanyInfo = {
+        name: company.name,
+        comRegNum: company.comRegNum,
+        ownerName: company.ownerName,
+        phoneNum: company.phoneNum,
+        address: company.address1 + ' ' + company.address2,
+      };
+      if (company.busItem) cInfo.busItem = company.busItem;
+      if (company.busType) cInfo.busType = company.busType;
+      if (company.faxNum) cInfo.faxNum = company.faxNum;
+      estimate.company = cInfo;
       // 문서 번호 생성
       estimate.docNum = await this.estimatesService._genDocNumber();
 
       // 견적서 생성
       result = await this.estimatesService.create(token, estimate as Estimate);
-
-      // 정비이력에 견적서 참조 정보 갱신
-      const mainEstimate: MainDocInfo = {
-        _oID: result._id,
-      };
-      this.findByIdAndUpdate(token, id, { estimate: mainEstimate });
     }
+    // 정비이력에 견적서 참조 정보 갱신
+    const mainEstimate: MainDocInfo = {
+      _oID: result._id,
+    };
+    this.findByIdAndUpdate(token, id, { estimate: mainEstimate });
 
     // 견적서 정보를 main에 패치
     return result;
@@ -271,42 +324,20 @@ export class MaintenancesService extends SafeService<Maintenance> {
     const main: Maintenance = await this.findById(token, id);
     if (!main) throw new BadRequestException();
 
-    // 업체 정보 조회
-    const company: Company = await this.companiesService.findById(
-      token,
-      token.cID,
-    );
-    if (!company) throw new BadRequestException();
-
-    // 견적서에 주입할 업체 정보 준비
-    const cInfo: CompanyInfo = {
-      name: company.name,
-      comRegNum: company.comRegNum,
-      ownerName: company.ownerName,
-      phoneNum: company.phoneNum,
-      address: company.address1 + ' ' + company.address2,
-    };
-    if (company.busItem) cInfo.busItem = company.busItem;
-    if (company.busType) cInfo.busType = company.busType;
-    if (company.faxNum) cInfo.faxNum = company.faxNum;
-
     // 견적서 생성
     const statement: Partial<Statement> = {
       mainNum: main.docNum,
       customer: main.customer,
-      company: cInfo,
+      // company: cInfo,
       car: main.car,
       works: main.works,
       price: main.price,
     };
 
     let result: Statement;
+
     // 이미 견적서가 생성되었으나 발급 사실이 없으면 기존 견적서 수정
-    if (
-      main.statement?._oID &&
-      !main.statement?.msgAt &&
-      !main.statement?.prAt
-    ) {
+    if (main.statement?._oID) {
       console.log('갱신');
       result = await this.statementsService.findByIdAndUpdate(
         token,
@@ -317,6 +348,25 @@ export class MaintenancesService extends SafeService<Maintenance> {
     // 생성된 견적서가 없거나 발급 사실이 있으면 새롭게 견적서 생성
     else {
       console.log('생성');
+      // 업체 정보 조회
+      const company: Company = await this.companiesService.findById(
+        token,
+        token.cID,
+      );
+      if (!company) throw new BadRequestException();
+
+      // 견적서에 주입할 업체 정보 준비
+      let cInfo: CompanyInfo = {
+        name: company.name,
+        comRegNum: company.comRegNum,
+        ownerName: company.ownerName,
+        phoneNum: company.phoneNum,
+        address: company.address1 + ' ' + company.address2,
+      };
+      if (company.busItem) cInfo.busItem = company.busItem;
+      if (company.busType) cInfo.busType = company.busType;
+      if (company.faxNum) cInfo.faxNum = company.faxNum;
+      statement.company = cInfo;
       // 문서 번호 생성
       statement.docNum = await this.statementsService._genDocNumber();
 
@@ -325,13 +375,13 @@ export class MaintenancesService extends SafeService<Maintenance> {
         token,
         statement as Statement,
       );
-
-      // 정비이력에 견적서 참조 정보 갱신
-      const mainStatement: MainDocInfo = {
-        _oID: result._id,
-      };
-      this.findByIdAndUpdate(token, id, { statement: mainStatement });
     }
+
+    // 정비이력에 견적서 참조 정보 갱신
+    const mainStatement: MainDocInfo = {
+      _oID: result._id,
+    };
+    this.findByIdAndUpdate(token, id, { statement: mainStatement });
 
     // 견적서 정보를 main에 패치
     return result;
