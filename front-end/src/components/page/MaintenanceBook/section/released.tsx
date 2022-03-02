@@ -104,7 +104,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
   const [modify, setModify] = useState<boolean>(true);
-  const [mCancel, setMCancle] = useState<boolean>(false);
 
   /*********************************************************************
    * 3. Handlers
@@ -124,7 +123,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     setWorkList(props.data.mtData.works);
     setPrice(props.data.mtData.price);
     setMtInfo(props.data.mtData);
-  }, [mCancel]);
+  }, [modify]);
 
   /**
    * 정비내역 변경 시 일어나는 event handler
@@ -300,7 +299,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       }
       return item;
     });
-    const maintenanceData: Partial<Maintenance> = {
+    const maintenanceData: Maintenance = {
       ...mtInfo,
       workerName: props.tokenValue.uName,
       works: mainWorkList,
@@ -308,18 +307,21 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     };
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
-    await dispatch(
-      _aPatchMaintenancesRelease(maintenanceData._id, maintenanceData)
-    ).then(
-      (res: _iMaintenancesOne) => {
-        alert("정비내역을 저장했습니다.");
-        setMtInfo(res.payload);
-        setModify(!modify);
-      },
-      (err) => {
-        alert("정비내역 저장에 실패했습니다.");
-      }
-    );
+    setMtInfo(maintenanceData);
+    setModalOption("editMolit");
+    setModalOpen(true);
+    // await dispatch(
+    //   _aPatchMaintenancesRelease(maintenanceData._id, maintenanceData)
+    // ).then(
+    //   (res: _iMaintenancesOne) => {
+    //     alert("정비내역을 저장했습니다.");
+    //     setMtInfo(res.payload);
+    //     setModify(!modify);
+    //   },
+    //   (err) => {
+    //     alert("정비내역 저장에 실패했습니다.");
+    //   }
+    // );
   };
 
   /*********************************************************************
@@ -1095,7 +1097,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     kindOf={`default`}
                     onClick={() => {
                       setModify(!modify);
-                      setMCancle(!mCancel);
                     }}
                   >
                     수정 취소
@@ -1104,11 +1105,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     type="button"
                     width={`439px`}
                     kindOf={`default`}
-                    onClick={() => {
-                      // onModifyWorkInfo();
-                      setModalOption("editMolit");
-                      setModalOpen(true);
-                    }}
+                    onClick={onModifyWorkInfo}
                   >
                     수정 완료
                   </SmallButton>
