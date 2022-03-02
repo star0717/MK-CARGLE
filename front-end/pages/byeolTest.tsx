@@ -80,23 +80,7 @@ const ByeolTest: NextPage = () => {
             setModalOpen(!modalOpen);
           }}
         >
-          국토부 모달
-        </CommonButton>
-        <CommonButton
-          onClick={() => {
-            setModalOption("documents");
-            setModalOpen(!modalOpen);
-          }}
-        >
-          서류발송 모달
-        </CommonButton>
-        <CommonButton
-          onClick={() => {
-            setModalOption("payment");
-            setModalOpen(!modalOpen);
-          }}
-        >
-          결제 모달
+          국토부 전송 모달
         </CommonButton>
       </WholeWrapper>
       <Modal
