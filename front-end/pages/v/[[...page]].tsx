@@ -361,10 +361,16 @@ export const getServerSideProps: GetServerSideProps = async (
           };
           return successResult;
         } else {
+          /**
+           * 현재 날짜로 부터 한날전 계산
+           */
+          let now = new Date();
+          let Today = new Date();
+          let LastMonth = new Date(now.setMonth(now.getMonth() - 1));
           successResult.props.data = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
-                findParams: params,
+                findParams: { ...params, sFrom: LastMonth, sTo: Today },
                 isServerSide: true,
               }),
               authConfig
