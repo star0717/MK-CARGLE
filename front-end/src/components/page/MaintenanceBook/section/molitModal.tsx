@@ -65,43 +65,58 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
 
   return (
     <WholeWrapper>
+      {props.modalOption.indexOf("bts") !== -1 && (
+        <Wrapper dr={`row`}>
+          <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+            <Text>1</Text>
+            <Text fontSize={`20px`} color={`#314af5`}>
+              <GoPrimitiveDot />
+            </Text>
+          </Wrapper>
+          <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+            <Text>2</Text>
+            <Text fontSize={`20px`} color={`#ccc`}>
+              <GoPrimitiveDot />
+            </Text>
+          </Wrapper>
+          <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
+            <Text>3</Text>
+            <Text fontSize={`20px`} color={`#ccc`}>
+              <GoPrimitiveDot />
+            </Text>
+          </Wrapper>
+        </Wrapper>
+      )}
+      <Wrapper padding={`10px 0px 0px`}>
+        <CommonSmallTitle margin={`0px 0px 30px 0px`}>
+          국토부 전송 여부 확인
+        </CommonSmallTitle>
+      </Wrapper>
       {molitCheck ? (
         //국토부 내용이 있다면
         <Wrapper>
-          <Wrapper dr={`row`}>
-            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-              <Text>1</Text>
-              <Text fontSize={`20px`} color={`#314af5`}>
-                <GoPrimitiveDot />
+          {props.modalOption.indexOf("bts") !== -1 ? (
+            <Wrapper>
+              <Text fontSize={`20px`}>
+                "
+                <ColorSpan fontSize={`20px`} color={`#314af5`}>
+                  {molitList.length}
+                </ColorSpan>
+                건의 정비 내역을 국토부로 전송하시겠습니까?? "
               </Text>
             </Wrapper>
-            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-              <Text>2</Text>
-              <Text fontSize={`20px`} color={`#ccc`}>
-                <GoPrimitiveDot />
-              </Text>
+          ) : (
+            <Wrapper dr={`row`} ju={`flex-end`}>
+              <SmallButton
+                type="button"
+                width={`130px`}
+                kindOf={`default`}
+                onClick={() => {}}
+              >
+                국토부 삭제
+              </SmallButton>
             </Wrapper>
-            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-              <Text>3</Text>
-              <Text fontSize={`20px`} color={`#ccc`}>
-                <GoPrimitiveDot />
-              </Text>
-            </Wrapper>
-          </Wrapper>
-          <Wrapper padding={`10px 0px 0px`}>
-            <CommonSmallTitle margin={`0px 0px 30px 0px`}>
-              국토부 전송 여부 확인
-            </CommonSmallTitle>
-          </Wrapper>
-          <Wrapper>
-            <Text fontSize={`20px`}>
-              "
-              <ColorSpan fontSize={`20px`} color={`#314af5`}>
-                {molitList.length}
-              </ColorSpan>
-              건의 정비 내역을 국토부로 전송하시겠습니까?? "
-            </Text>
-          </Wrapper>
+          )}
           <TableWrapper minHeight={`350px`} padding={`40px 0px 0px`}>
             <Wrapper isSticky={true}>
               <TableHead radius={`8px 8px 0px 0px`}>
@@ -131,88 +146,56 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
               *국토부 정비 항목 취소는 정비 내역 수정에서 가능합니다.
             </Text>
           </Wrapper>
-          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
-            <CommonButton
-              type="button"
-              kindOf={`white`}
-              width={`300px`}
-              height={`50px`}
-              onClick={() => {
-                props.setModalOpen(false);
-              }}
-            >
-              취소
-            </CommonButton>
-            <CommonButton
-              type="button"
-              width={`300px`}
-              height={`50px`}
-              onClick={() => {
-                props.setModalOption("payment");
-              }}
-            >
-              다음
-            </CommonButton>
-          </CommonButtonWrapper>
         </Wrapper>
       ) : (
         //국토부 내용이 없다면
         <Wrapper>
-          <Wrapper dr={`row`}>
-            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-              <Text color={`#314af5`}>1</Text>
-              <Text fontSize={`20px`} color={`#314af5`}>
-                <GoPrimitiveDot />
-              </Text>
-            </Wrapper>
-            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-              <Text color={`#ccc`}>2</Text>
-              <Text fontSize={`20px`} color={`#ccc`}>
-                <GoPrimitiveDot />
-              </Text>
-            </Wrapper>
-            <Wrapper width={`auto`} padding={`0px 20px`} ju={`space-between`}>
-              <Text color={`#ccc`}>3</Text>
-              <Text fontSize={`20px`} color={`#ccc`}>
-                <GoPrimitiveDot />
-              </Text>
-            </Wrapper>
-          </Wrapper>
-          <Wrapper padding={`10px 0px 0px`}>
-            <CommonSmallTitle margin={`0px 0px 30px 0px`}>
-              국토부 전송 여부 확인
-            </CommonSmallTitle>
-          </Wrapper>
           <Wrapper>
-            <Text fontSize={`20px`}>{`"국토부 전송 항목이 없습니다."`}</Text>
+            <Text fontSize={`20px`}>"국토부 전송 항목이 없습니다."</Text>
           </Wrapper>
           <Text fontSize={`200px`} color={`#ccc`}>
             <AiOutlineFileExcel />
           </Text>
-          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
-            <CommonButton
-              type="button"
-              kindOf={`white`}
-              width={`300px`}
-              height={`50px`}
-              onClick={() => {
-                props.setModalOpen(false);
-              }}
-            >
-              취소
-            </CommonButton>
-            <CommonButton
-              type="button"
-              width={`300px`}
-              height={`50px`}
-              onClick={() => {
-                props.setModalOption("payment");
-              }}
-            >
-              다음
-            </CommonButton>
-          </CommonButtonWrapper>
         </Wrapper>
+      )}
+      {props.modalOption.indexOf("bts") !== -1 ? (
+        <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+          <CommonButton
+            type="button"
+            kindOf={`white`}
+            width={`300px`}
+            height={`50px`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
+            취소
+          </CommonButton>
+          <CommonButton
+            type="button"
+            width={`300px`}
+            height={`50px`}
+            onClick={() => {
+              props.setModalOption("payment");
+            }}
+          >
+            다음
+          </CommonButton>
+        </CommonButtonWrapper>
+      ) : (
+        <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+          <CommonButton
+            type="button"
+            kindOf={`white`}
+            width={`300px`}
+            height={`50px`}
+            onClick={() => {
+              props.setModalOpen(false);
+            }}
+          >
+            닫기
+          </CommonButton>
+        </CommonButtonWrapper>
       )}
     </WholeWrapper>
   );

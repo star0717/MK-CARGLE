@@ -373,6 +373,7 @@ export const getServerSideProps: GetServerSideProps = async (
               (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
                 res.data
             );
+          console.log("ddddd", successResult);
           return successResult;
         }
       }

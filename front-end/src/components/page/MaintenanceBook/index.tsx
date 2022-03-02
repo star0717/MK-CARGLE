@@ -71,8 +71,6 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     setFindResult(props.data);
   }, [props]);
 
-  console.log("@@@@@@@@", props);
-
   /**
    * 작업자의 정보를 조회함
    * @param page 조회할 페이지
