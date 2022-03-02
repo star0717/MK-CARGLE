@@ -83,6 +83,14 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   useEffect(() => {
     const realTotal: number = price.total + price.discount;
     const partWage: number = price.partsSum + price.wageSum;
+
+    if (price.isIncluded) {
+      setPrice({
+        ...price,
+        total: realTotal - discount,
+      });
+    } else {
+    }
   }, [discount]);
 
   /**
