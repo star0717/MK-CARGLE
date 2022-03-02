@@ -279,7 +279,9 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                     value={discount.toLocaleString()}
                     onChange={onChangePrice}
                     readOnly={
-                      props.modalOption.indexOf("Bts") !== -1 && edit
+                      props.modalOption.indexOf("Bts") === -1
+                        ? false
+                        : edit
                         ? false
                         : true
                     }
@@ -347,7 +349,13 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       name="cash"
                       value={price.cash.toLocaleString()}
                       onChange={onChangePrice}
-                      readOnly={!edit}
+                      readOnly={
+                        props.modalOption.indexOf("Bts") === -1
+                          ? false
+                          : edit
+                          ? false
+                          : true
+                      }
                     />
                     <Text width={`20px`} textAlign={`right`}>
                       원
@@ -377,7 +385,13 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       name="credit"
                       value={price.credit.toLocaleString()}
                       onChange={onChangePrice}
-                      readOnly={!edit}
+                      readOnly={
+                        props.modalOption.indexOf("Bts") === -1
+                          ? false
+                          : edit
+                          ? false
+                          : true
+                      }
                     />
                     <Text width={`20px`} textAlign={`right`}>
                       원
@@ -407,7 +421,13 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       name="insurance"
                       value={price.insurance.toLocaleString()}
                       onChange={onChangePrice}
-                      readOnly={!edit}
+                      readOnly={
+                        props.modalOption.indexOf("Bts") === -1
+                          ? false
+                          : edit
+                          ? false
+                          : true
+                      }
                     />
                     <Text width={`20px`} textAlign={`right`}>
                       원

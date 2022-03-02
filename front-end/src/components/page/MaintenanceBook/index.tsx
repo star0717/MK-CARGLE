@@ -34,7 +34,7 @@ const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
       return <MaintenanceDone {...props} />;
 
     case MainStatus.PAID:
-      return <MaintenancePaid {...props} />;
+      return <MaintenanceReleased {...props} />;
 
     case MainStatus.RELEASED:
       return <MaintenanceReleased {...props} />;
