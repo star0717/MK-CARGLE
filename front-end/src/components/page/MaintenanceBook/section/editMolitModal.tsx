@@ -4,12 +4,14 @@ import {
   CommonButton,
   CommonButtonWrapper,
   CommonSmallTitle,
+  Text,
+  TextArea,
   WholeWrapper,
   Wrapper,
 } from "src/components/styles/CommonComponents";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
 
-const CustomerPage: NextPage<_pPartsSetProps> = (props) => {
+const EditMolitModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -36,7 +38,28 @@ const CustomerPage: NextPage<_pPartsSetProps> = (props) => {
           국토부 전송 여부 확인
         </CommonSmallTitle>
       </Wrapper>
-      <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+      <Wrapper>
+        <Wrapper margin={`50px 0px 0px`}>
+          {props.modalOption.indexOf("delete") !== -1 && (
+            <Text fontSize={`20px`}>"국토부 삭제 사유를 입력하세요"</Text>
+          )}
+          {props.modalOption.indexOf("edit") !== -1 && (
+            <Text fontSize={`20px`}>"국토부 수정 사유를 입력하세요"</Text>
+          )}
+          <TextArea
+            fontSize={`24px`}
+            width={`600px`}
+            height={`250px`}
+            margin={`30px 0px 0px`}
+            border={`5px solid #314FA5`}
+          />
+        </Wrapper>
+      </Wrapper>
+      <CommonButtonWrapper
+        ju={`center`}
+        margin={`50px 0px 0px`}
+        padding={`30px 30px`}
+      >
         <CommonButton
           type="button"
           kindOf={`white`}
@@ -48,19 +71,37 @@ const CustomerPage: NextPage<_pPartsSetProps> = (props) => {
         >
           취소
         </CommonButton>
-        <CommonButton
-          type="button"
-          width={`300px`}
-          height={`50px`}
-          onClick={() => {
-            props.setModalOption("payment");
-          }}
-        >
-          다음
-        </CommonButton>
+        {props.modalOption.indexOf("delete") !== -1 && (
+          <CommonButton
+            type="button"
+            width={`300px`}
+            height={`50px`}
+            onClick={() => {
+              if (window.confirm("삭제하시겠습니까?")) {
+                props.setModalOpen(false);
+              } else {
+                return false;
+              }
+            }}
+          >
+            확인
+          </CommonButton>
+        )}
+        {props.modalOption.indexOf("edit") !== -1 && (
+          <CommonButton
+            type="button"
+            width={`300px`}
+            height={`50px`}
+            onClick={() => {
+              props.setModalOption("molit");
+            }}
+          >
+            다음
+          </CommonButton>
+        )}
       </CommonButtonWrapper>
     </WholeWrapper>
   );
 };
 
-export default CustomerPage;
+export default EditMolitModal;
