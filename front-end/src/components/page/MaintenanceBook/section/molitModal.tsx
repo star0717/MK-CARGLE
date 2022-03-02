@@ -171,17 +171,7 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
               props.setModalOpen(false);
             }}
           >
-            취소
-          </CommonButton>
-          <CommonButton
-            type="button"
-            width={`300px`}
-            height={`50px`}
-            onClick={() => {
-              props.setModalOption("payment");
-            }}
-          >
-            다음
+            닫기
           </CommonButton>
         </CommonButtonWrapper>
       ) : (
@@ -195,7 +185,30 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
               props.setModalOpen(false);
             }}
           >
-            닫기
+            취소
+          </CommonButton>
+          {props.modalOption === "molit2" && (
+            <CommonButton
+              type="button"
+              kindOf={`white`}
+              width={`300px`}
+              height={`50px`}
+              onClick={() => {
+                props.setModalOption("editMolit");
+              }}
+            >
+              이전으로
+            </CommonButton>
+          )}
+          <CommonButton
+            type="button"
+            width={`300px`}
+            height={`50px`}
+            onClick={() => {
+              props.setModalOption("payment");
+            }}
+          >
+            다음
           </CommonButton>
         </CommonButtonWrapper>
       )}

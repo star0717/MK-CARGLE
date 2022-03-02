@@ -689,7 +689,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
-              <Text>과세액 : {price.sum.toLocaleString()}</Text>
+              <Text>공급가액 : {price.sum.toLocaleString()}</Text>
               <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
                 |
               </Text>
