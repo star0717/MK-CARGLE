@@ -1150,7 +1150,11 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption.indexOf("document") === 0 ? (
+        {modalOption === "part" ? (
+          <MtPartsModal {...partsSetProps} />
+        ) : modalOption === "set" ? (
+          <MtSetModal {...partsSetProps} />
+        ) : modalOption.indexOf("document") === 0 ? (
           <DocumentModal {...partsSetProps} />
         ) : modalOption.indexOf("molit") === 0 ? (
           <MolitModal {...partsSetProps} />

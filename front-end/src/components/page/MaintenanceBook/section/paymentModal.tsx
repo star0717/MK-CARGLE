@@ -71,11 +71,6 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
       default:
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setPrice({ ...price, [e.target.name]: 0 });
-        } else if (Number(e.target.value) > price.total) {
-          return setPrice({
-            ...price,
-            [e.target.name]: price.total,
-          });
         } else {
           return setPrice({
             ...price,
@@ -100,6 +95,21 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
 
   /**결제 금액 계산 handler */
   useEffect(() => {
+    if (price.cash !== 0) {
+      payCheck.cashCheck = true;
+    } else {
+      payCheck.cashCheck = false;
+    }
+    if (price.credit !== 0) {
+      payCheck.creditCheck = true;
+    } else {
+      payCheck.creditCheck = false;
+    }
+    if (price.insurance) {
+      payCheck.insuranceCheck = true;
+    } else {
+      payCheck.insuranceCheck = false;
+    }
     setPrice({
       ...price,
       balance:
@@ -290,20 +300,17 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
               <Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                   <Wrapper al={`flex-start`} height={`30px`}>
-                    <Checkbox>
+                    <Checkbox cursor={`default`}>
                       현금
                       <CheckInput
                         type="checkbox"
                         name="cashCheck"
                         checked={payCheck.cashCheck}
                         onChange={onChangeCheck}
-                        disabled={
-                          props.modalOption.indexOf("bts") === -1 && edit
-                            ? false
-                            : true
-                        }
+                        disabled
+                        cursor={`default`}
                       />
-                      <CheckMark></CheckMark>
+                      <CheckMark cursor={`default`}></CheckMark>
                     </Checkbox>
                   </Wrapper>
                   <Wrapper dr={`row`}>
@@ -312,15 +319,9 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       al={`flex-end`}
                       placeholder={"금액을 입력하세요."}
                       name="cash"
-                      value={
-                        payCheck.cashCheck &&
-                        !payCheck.creditCheck &&
-                        !payCheck.insuranceCheck
-                          ? price.total
-                          : price.cash.toLocaleString()
-                      }
+                      value={price.cash.toLocaleString()}
                       onChange={onChangePrice}
-                      readOnly={!payCheck.cashCheck}
+                      readOnly={!edit}
                     />
                     <Text width={`20px`} textAlign={`right`}>
                       원
@@ -329,20 +330,17 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                   <Wrapper al={`flex-start`}>
-                    <Checkbox>
+                    <Checkbox cursor={`default`}>
                       카드
                       <CheckInput
                         type="checkbox"
                         name="creditCheck"
                         checked={payCheck.creditCheck}
                         onChange={onChangeCheck}
-                        disabled={
-                          props.modalOption.indexOf("bts") === -1 && edit
-                            ? false
-                            : true
-                        }
+                        disabled
+                        cursor={`default`}
                       />
-                      <CheckMark></CheckMark>
+                      <CheckMark cursor={`default`}></CheckMark>
                     </Checkbox>
                   </Wrapper>
                   <Wrapper dr={`row`}>
@@ -351,15 +349,9 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       al={`flex-end`}
                       placeholder={"금액을 입력하세요."}
                       name="credit"
-                      value={
-                        !payCheck.cashCheck &&
-                        payCheck.creditCheck &&
-                        !payCheck.insuranceCheck
-                          ? price.total
-                          : price.credit.toLocaleString()
-                      }
+                      value={price.credit.toLocaleString()}
                       onChange={onChangePrice}
-                      readOnly={!payCheck.creditCheck}
+                      readOnly={!edit}
                     />
                     <Text width={`20px`} textAlign={`right`}>
                       원
@@ -368,20 +360,17 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                   <Wrapper al={`flex-start`}>
-                    <Checkbox>
+                    <Checkbox cursor={`default`}>
                       보험
                       <CheckInput
                         type="checkbox"
                         name="insuranceCheck"
                         checked={payCheck.insuranceCheck}
                         onChange={onChangeCheck}
-                        disabled={
-                          props.modalOption.indexOf("bts") === -1 && edit
-                            ? false
-                            : true
-                        }
+                        disabled
+                        cursor={`default`}
                       />
-                      <CheckMark></CheckMark>
+                      <CheckMark cursor={`default`}></CheckMark>
                     </Checkbox>
                   </Wrapper>
                   <Wrapper dr={`row`}>
@@ -390,15 +379,9 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       al={`flex-end`}
                       placeholder={"금액을 입력하세요."}
                       name="insurance"
-                      value={
-                        !payCheck.cashCheck &&
-                        !payCheck.creditCheck &&
-                        payCheck.insuranceCheck
-                          ? price.total
-                          : price.insurance.toLocaleString()
-                      }
+                      value={price.insurance.toLocaleString()}
                       onChange={onChangePrice}
-                      readOnly={!payCheck.insuranceCheck}
+                      readOnly={!edit}
                     />
                     <Text width={`20px`} textAlign={`right`}>
                       원
