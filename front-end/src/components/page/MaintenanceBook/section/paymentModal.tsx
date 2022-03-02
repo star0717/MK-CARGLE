@@ -86,6 +86,15 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
     }
   };
 
+  /**
+   * 결제수단 체크 handler
+   * @param e
+   */
+  const onChangeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPayCheck({ ...payCheck, [e.target.name]: e.target.checked });
+  };
+
+  /**결제 금액 계산 handler */
   useEffect(() => {
     const partWage: number =
       props.mtInfo.price.partsSum + props.mtInfo.price.wageSum;
@@ -102,25 +111,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
       vat2 = Math.round(sum2 * 0.1);
       total2 = Math.round(sum2 + vat2);
     }
-    setPrice({
-      ...price,
-      discount: discount,
-      sum: sum2,
-      vat: vat2,
-      total: total2,
-    });
-  }, [discount]);
 
-  /**
-   * 결제수단 체크 handler
-   * @param e
-   */
-  const onChangeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPayCheck({ ...payCheck, [e.target.name]: e.target.checked });
-  };
-
-  /**결제 금액 계산 handler */
-  useEffect(() => {
     if (price.cash !== 0) {
       payCheck.cashCheck = true;
     } else {
@@ -138,13 +129,17 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
     }
     setPrice({
       ...price,
+      discount: discount,
+      sum: sum2,
+      vat: vat2,
+      total: total2,
       balance:
-        price.total -
+        total2 -
         (payCheck.cashCheck ? price.cash : 0) -
         (payCheck.creditCheck ? price.credit : 0) -
         (payCheck.insuranceCheck ? price.insurance : 0),
     });
-  }, [payCheck, price.cash, price.credit, price.insurance]);
+  }, [discount, payCheck, price.cash, price.credit, price.insurance]);
 
   /**결제 handler */
   const onPaymentHandler = async (edit: boolean) => {
@@ -171,10 +166,11 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
         _aPatchMaintenancesPay(maintenanceData._id, maintenanceData)
       ).then(
         (res: _iMaintenancesOne) => {
-          if (res.payload) {
-            props.setMtInfo(res.payload);
-            props.setModalOption("document");
+          if (!res.payload) {
+            return alert("결제내역 저장에 실패했습니다.");
           }
+          props.setMtInfo(res.payload);
+          props.setModalOption("document");
         },
         (err) => {
           return alert("결제내역 저장에 실패했습니다.");

@@ -29,10 +29,14 @@ import { FaMinusSquare } from "react-icons/fa";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
 import { trim } from "src/modules/commonModule";
 import { formRegEx } from "src/validation/regEx";
+import { useDispatch } from "react-redux";
+import { _aPatchMaintenancesRelease } from "store/action/user.action";
+import { _iMaintenancesOne } from "store/interfaces";
 const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const dispatch = useDispatch();
   // react-hook-form 사용을 위한 선언
   const {
     register,
@@ -65,6 +69,29 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    */
   const onDelPhoneHandler = (index: number) => {
     setPhoneList(phoneList.filter((num, idx) => idx !== index));
+  };
+
+  console.log(props.mtInfo);
+
+  /**
+   * 출고완료
+   */
+  const onReleasedHandler = async () => {
+    await dispatch(
+      _aPatchMaintenancesRelease(props.mtInfo._id, props.mtInfo)
+    ).then(
+      (res: _iMaintenancesOne) => {
+        if (!res.payload) {
+          return alert("출고에 실패했습니다.");
+        }
+        props.setMtInfo(res.payload);
+        props.setModalOpen(false);
+        alert("정비내역을 저장했습니다.");
+      },
+      (err) => {
+        return alert("출고에 실패했습니다.");
+      }
+    );
   };
 
   /*********************************************************************
@@ -284,12 +311,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             >
               이전으로
             </CommonButton>
-            <CommonButton
-              type="button"
-              onClick={() => {
-                console.log("test");
-              }}
-            >
+            <CommonButton type="button" onClick={onReleasedHandler}>
               출고완료
             </CommonButton>
           </CommonButtonWrapper>
