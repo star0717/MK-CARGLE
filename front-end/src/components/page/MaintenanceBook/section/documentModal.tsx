@@ -133,6 +133,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
       !fileCheck.sCheck
     )
       return alert("발급서류를 선택하세요");
+
     if (opt) {
       await dispatch(
         _aPatchMaintenancesRelease(props.mtInfo._id, props.mtInfo)
@@ -144,9 +145,6 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           props.setMtInfo(res.payload);
           props.setModalOpen(false);
           alert("정비내역을 저장했습니다.");
-          router.push(
-            `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.RELEASED}`
-          );
         },
         (err) => {
           return alert("출고에 실패했습니다.");
@@ -158,8 +156,6 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
       onPrintHandler(opt);
     }
   };
-
-  console.log(props.mtInfo);
 
   // /**
   //  * 전송 및 출력 handler
@@ -191,9 +187,15 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
         if (fileCheck.sCheck) PrintElem.appendChild(statementRef.current);
         return PrintElem;
       },
-      onAfterPrint: () => {
-        return props.setModalOpen(false);
-      },
+      // onAfterPrint: () => {
+      //   if (opt) {
+      //     return router.push(
+      //       `${UseLink.MAINTENANCE_BOOK}?id=${props.mtInfo._id}&step=${MainStatus.RELEASED}`
+      //     );
+      //   } else {
+      //     return props.setModalOpen(false);
+      //   }
+      // },
     });
 
   /*********************************************************************
