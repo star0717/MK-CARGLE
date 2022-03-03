@@ -1268,7 +1268,7 @@ export async function _aGetMaintenancesGenEstimate(id: string) {
  * @param id
  * @returns
  */
-export async function _aGetMAintenancesGenStatement(id: string) {
+export async function _aGetMaintenancesGenStatement(id: string) {
   const req: Maintenance = await axios
     .get(genApiPath(MaintenancesApiPath.gen_statement, { id: id }))
     .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
