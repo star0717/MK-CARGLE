@@ -19,7 +19,6 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { Agency } from "src/models/agency.entity";
 
 const AdminManPartsPage: NextPage<any> = (props) => {
-  console.log(props);
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/

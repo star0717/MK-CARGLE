@@ -148,7 +148,6 @@ const MaintenanceCreate: NextPage = () => {
     };
     deleteKeyJson(maintenanceData.car);
     deleteKeyJson(maintenanceData.customer);
-    console.log(maintenanceData);
 
     await dispatch(_aPostMaintenancesStore(maintenanceData)).then(
       (res: _iMaintenancesOne) => {
