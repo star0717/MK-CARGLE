@@ -1,7 +1,7 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { NextPage } from "next";
 
-const EstimateFile: NextPage<any> = (props) => {
+const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -23,6 +23,7 @@ const EstimateFile: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <div
+      ref={ref}
       className="stl_02"
       style={{
         height: "70.08334em",
@@ -906,10 +907,7 @@ const EstimateFile: NextPage<any> = (props) => {
                 lineHeight: "1.011647em",
               }}
             >
-              부품내
-              <span className="stl_13" style={{ letterSpacing: "0em" }}>
-                역 &nbsp;
-              </span>
+              부품내역
             </span>
           </div>
           <div
@@ -1934,6 +1932,6 @@ const EstimateFile: NextPage<any> = (props) => {
       </div>
     </div>
   );
-};
+});
 
 export default EstimateFile;
