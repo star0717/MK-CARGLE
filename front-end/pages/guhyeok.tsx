@@ -309,10 +309,10 @@ const TestPage: NextPage<any> = (props) => {
                   padding={`4px 6px`}
                   dr={`row`}
                 >
-                  <Text fontSize={`0.75em`} fontWeight={`400`}>
+                  <Text fontSize={`0.75em`} fontWeight={`400`} width={`100px`}>
                     (전화번호:&nbsp;
                   </Text>
-                  <Text fontSize={`0.75em`} fontWeight={`400`} width={`100px`}>
+                  <Text fontSize={`0.75em`} fontWeight={`400`} width={`120px`}>
                     1644-3486
                   </Text>
                   <Text fontSize={`0.75em`} fontWeight={`400`}>
