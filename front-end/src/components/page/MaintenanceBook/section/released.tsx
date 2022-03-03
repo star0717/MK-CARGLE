@@ -290,6 +290,11 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       setWorkList(workList.filter((data, index) => idx !== index));
     }
   };
+  console.log(
+    JSON.stringify(props.data.mtData.works) === JSON.stringify(workList) &&
+      JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
+      JSON.stringify(props.data.mtData.price) === JSON.stringify(price)
+  );
 
   /**
    * 정비내역 수정
