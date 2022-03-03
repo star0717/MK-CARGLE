@@ -93,12 +93,12 @@ const ByeolTest: NextPage = () => {
             >
               <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 등록번호 입력하세용 */}12가1234
+                  {/* 등록번호 입력하세용 */}
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 등록년월일 입력하세용 */}2018년 08월 15일
+                  {/* 등록년월일 입력하세용 */}
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -127,7 +127,7 @@ const ByeolTest: NextPage = () => {
                   ju={`space-between`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 차종입력칸이용 */} 그렌저 TG Q270
+                    {/* 차종입력칸이용 */}
                   </Text>
                   <Text>()</Text>
                 </Wrapper>
@@ -147,7 +147,7 @@ const ByeolTest: NextPage = () => {
                   padding={`0px 10px`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 주행거리 입력~~ */} 185,550
+                    {/* 주행거리 입력~~ */}
                   </Text>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
                     km
@@ -167,7 +167,7 @@ const ByeolTest: NextPage = () => {
                 </Wrapper>
                 <Wrapper width={`80%`}>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 차대번호 입력하세용~ */} 2022.03.02
+                    {/* 의뢰일자 입력하세용~ */}
                   </Text>
                 </Wrapper>
               </Wrapper>
@@ -209,7 +209,7 @@ const ByeolTest: NextPage = () => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 사업자등록번호 입력 */}33-888-00960
+                    {/* 사업자등록번호 입력 */}
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -231,7 +231,7 @@ const ByeolTest: NextPage = () => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 정비업 등록번호 입력이용 */} GSDGSDGSDGSDGS
+                    {/* 정비업 등록번호 입력이용 */}
                   </Text>
                 </Wrapper>
               </Wrapper>
@@ -258,7 +258,7 @@ const ByeolTest: NextPage = () => {
                 >
                   <Wrapper>
                     <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {/* 업체명 입력 */}주식회사 엠케이
+                      {/* 업체명 입력 */}
                     </Text>
                   </Wrapper>
                   <Wrapper
@@ -284,8 +284,7 @@ const ByeolTest: NextPage = () => {
                 <Wrapper width={`45%`} height={`100%`}>
                   <Wrapper>
                     <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {/* 주소 입력하셔유*/}주소 알면 어쩔건데요 집에도 못가는데
-                      니가 알아서 뭐하게
+                      {/* 주소 입력하셔유*/}
                     </Text>
                   </Wrapper>
                   <Wrapper
@@ -320,7 +319,7 @@ const ByeolTest: NextPage = () => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 사업자등록번호 입력 */}33-888-00960
+                    {/* 사업자등록번호 입력 */}
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -340,7 +339,7 @@ const ByeolTest: NextPage = () => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 정비업 등록번호 입력이용 */} 2022.02.02
+                    {/* 출고일자 입력이용 */}
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -361,7 +360,7 @@ const ByeolTest: NextPage = () => {
                 >
                   <Wrapper>
                     <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {/* 주소 입력하셔유*/}윤초코
+                      {/* 책임자 입력하셔유*/}
                     </Text>
                   </Wrapper>
                   <Wrapper
@@ -384,7 +383,7 @@ const ByeolTest: NextPage = () => {
           </Wrapper>
           {/* 정비사업자 정보 끝 */}
 
-          {/* 견적내용 시작 */}
+          {/* 작업내용 시작 */}
           <Wrapper
             border={`1px solid #000`}
             height={`auto`}
@@ -406,7 +405,7 @@ const ByeolTest: NextPage = () => {
                 height={`100%`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  타이어교체
+                  {/* 정비내역 입력 */}
                 </Text>
               </Wrapper>
               <Wrapper
@@ -560,6 +559,7 @@ const ByeolTest: NextPage = () => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
+          {/* 총계 입력란 시작 */}
           <Wrapper
             border={`1px solid #000`}
             borderTop={`none`}
@@ -658,13 +658,14 @@ const ByeolTest: NextPage = () => {
             </Wrapper>
           </Wrapper>
 
-          {/* 보험/일반 구분 끝 */}
           <Wrapper al={`flex-start`} padding={`2px`}>
             <Text fontSize={`0.92em`} fontWeight={`400`}>
               「자동차관리법」 제58조제4항 및 같은 법 시행규칙 제134조제2항에
               따라 위와 같이 발급합니다.
             </Text>
           </Wrapper>
+
+          {/* 서명란 시작 */}
           <Wrapper ju={`flex-end`} padding={`14px 0px`} dr={`row`}>
             <Text
               fontSize={`0.75em`}
@@ -740,7 +741,6 @@ const ByeolTest: NextPage = () => {
                   padding={`0px 16px`}
                 >
                   {/* 작성자 입력하세용 */}
-                  윤별
                 </Text>
               </Wrapper>
               <Wrapper width={`50%`} al={`flex-end`}>
@@ -778,7 +778,6 @@ const ByeolTest: NextPage = () => {
                   padding={`0px 16px`}
                 >
                   {/* 대표이사 입력하세용 */}
-                  변무영
                 </Text>
               </Wrapper>
               <Wrapper width={`50%`} al={`flex-end`}>
@@ -793,6 +792,8 @@ const ByeolTest: NextPage = () => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
+
+          {/* 안내사항 시작 */}
           <Wrapper
             bgColor={`#c4c4c4`}
             padding={`2px`}
@@ -844,6 +845,7 @@ const ByeolTest: NextPage = () => {
               원동기재생정비사실확인서를 첨부하여야 합니다.
             </Text>
           </Wrapper>
+          {/* 안내사항 끝 */}
           <Wrapper al={`flex-end`} padding={`2px`}>
             <Text fontSize={`0.67em`} fontWeight={`400`}>
               210mm×297mm[백상지 80g/㎡]
