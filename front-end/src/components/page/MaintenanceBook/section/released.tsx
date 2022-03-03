@@ -307,6 +307,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
         if (props.data.allParts.docs[i].nickName.includes(item.name))
           return { ...item, name: props.data.allParts.docs[i].name };
       }
+      console.log("@@", item);
       return item;
     });
     const maintenanceData: Maintenance = {
