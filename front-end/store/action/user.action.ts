@@ -61,7 +61,11 @@ import { Part } from "../../src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Car } from "src/models/car.entity";
-import { MainFindOptions, Maintenance } from "src/models/maintenance.entity";
+import {
+  MainFindOptions,
+  MainPubDocInfo,
+  Maintenance,
+} from "src/models/maintenance.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1234,6 +1238,90 @@ export async function _aPostMaintenancesDeleteMany(ids: string[]) {
     });
 
   const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Maintenances 견적서 생성
+ * @param id
+ * @returns
+ */
+export async function _aGetMaintenancesGenEstimate(id: string) {
+  const req: Maintenance = await axios
+    .get(genApiPath(MaintenancesApiPath.gen_estimate, { id: id }))
+    .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
+      return res.data;
+    });
+
+  const result: _iMaintenancesOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Maintenances 명세서 생성
+ * @param id
+ * @returns
+ */
+export async function _aGetMAintenancesGenStatement(id: string) {
+  const req: Maintenance = await axios
+    .get(genApiPath(MaintenancesApiPath.gen_statement, { id: id }))
+    .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
+      return res.data;
+    });
+
+  const result: _iMaintenancesOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Maintenances 견적서 발급(프린트 or 온라인)
+ * @param id
+ * @param data
+ * @returns
+ */
+export async function _aPatchMaintenancesPubEsitmate(
+  id: string,
+  data: MainPubDocInfo
+) {
+  const req: Maintenance = await axios
+    .patch(genApiPath(MaintenancesApiPath.gen_estimate, { id: id }), data)
+    .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
+      return res.data;
+    });
+
+  const result: _iMaintenancesOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * Maintenances 명세서 발급(프린트 or 온라인)
+ * @param id
+ * @param data
+ * @returns
+ */
+export async function _aPatchMaintenancesPubStatement(
+  id: string,
+  data: MainPubDocInfo
+) {
+  const req: Maintenance = await axios
+    .patch(genApiPath(MaintenancesApiPath.gen_estimate, { id: id }), data)
+    .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
+      return res.data;
+    });
+
+  const result: _iMaintenancesOne = {
     type: ActionAPIs.USER_API,
     payload: req,
   };
