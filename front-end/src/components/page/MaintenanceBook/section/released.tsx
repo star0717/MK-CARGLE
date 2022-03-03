@@ -122,9 +122,11 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * 수정 취소시 Re Rendering
    */
   useEffect(() => {
-    setWorkList(props.data.mtData.works);
-    setPrice(props.data.mtData.price);
-    setMtInfo(props.data.mtData);
+    if (!modify) {
+      setWorkList(props.data.mtData.works);
+      setPrice(props.data.mtData.price);
+      setMtInfo(props.data.mtData);
+    }
   }, [modify]);
 
   /**
@@ -321,6 +323,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     setMtInfo(maintenanceData);
     setModalOption("editMolit");
     setModalOpen(true);
+    setModify(!modify);
   };
 
   /*********************************************************************
