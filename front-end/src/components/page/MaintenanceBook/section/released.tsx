@@ -288,11 +288,11 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       setWorkList(workList.filter((data, index) => idx !== index));
     }
   };
+
   /**
    * 정비내역 수정
    */
   const onModifyWorkInfo = async () => {
-    //변경사항이 있는지 확인
     if (
       JSON.stringify(props.data.mtData.works) === JSON.stringify(workList) &&
       JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
@@ -307,7 +307,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
         if (props.data.allParts.docs[i].nickName.includes(item.name))
           return { ...item, name: props.data.allParts.docs[i].name };
       }
-      console.log("@@", item);
       return item;
     });
     const maintenanceData: Maintenance = {
