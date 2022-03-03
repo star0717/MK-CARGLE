@@ -932,6 +932,7 @@ export const TextArea = styled.textarea<any>`
   text-align: ${(props) => props.textAlign};
   vertical-align: ${(props) => props.vertical};
   resize: none;
+  box-shadow: ${(props) => props.shadow};
 
   &:focus {
     outline: none;
@@ -1306,6 +1307,7 @@ export const TableWrapper = styled.div<any>`
   min-height: ${(props) => props.minHeight || `445px`};
   overflow: ${(props) => props.overflow || ``};
   overflow-y: ${(props) => props.overflowY || ``};
+  border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
 `;
 
 export const TableHead = styled.ul<any>`

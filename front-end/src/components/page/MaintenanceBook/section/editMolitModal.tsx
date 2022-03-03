@@ -51,11 +51,12 @@ const EditMolitModal: NextPage<_pPartsSetProps> = (props) => {
             </Text>
           )}
           <TextArea
-            fontSize={`24px`}
-            width={`600px`}
+            width={`616px`}
             height={`250px`}
             margin={`30px 0px 0px`}
-            border={`5px solid #314FA5`}
+            border={`1px solid #c4c4c4`}
+            shadow={`0px 10px 15px rgba(220,220,220,1)`}
+            padding={`10px`}
           />
         </Wrapper>
       </Wrapper>
