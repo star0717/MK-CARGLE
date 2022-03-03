@@ -28,13 +28,12 @@ const TestPage: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <>
-      <Wrapper padding={`100px`}>
+      <Wrapper padding={`0px`}>
         <Wrapper
           width={`49.58333em`}
           height={`70.08334em`}
           margin={`0 auto`}
-          padding={`60px`}
-          border={`1px solid #c4c4c4`}
+          padding={`0px`}
           ju={`flex-start`}
           al={`flex-start`}
         >
@@ -307,11 +306,13 @@ const TestPage: NextPage<any> = (props) => {
                   dr={`row`}
                 >
                   <Text fontSize={`0.75em`} fontWeight={`400`}>
-                    (전화번호&nbsp;
+                    (전화번호:&nbsp;
                   </Text>
-                  <Text fontSize={`0.75em`} fontWeight={`400`}>
-                    010-1111-1111
-                  </Text>
+                  <Text
+                    fontSize={`0.75em`}
+                    fontWeight={`400`}
+                    width={`100px`}
+                  ></Text>
                   <Text fontSize={`0.75em`} fontWeight={`400`}>
                     )
                   </Text>
