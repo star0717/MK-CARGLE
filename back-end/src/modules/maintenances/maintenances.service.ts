@@ -207,6 +207,18 @@ export class MaintenancesService extends SafeService<Maintenance> {
     return await this.findByIdAndUpdate(token, id, src);
   }
 
+  async patchWorks(
+    token: AuthTokenInfo,
+    id: string,
+    doc: Maintenance,
+  ): Promise<Maintenance> {
+    let src = await this._validateReq(token, id, doc);
+
+    src.works = doc.works;
+
+    return await this.findByIdAndUpdate(token, id, src);
+  }
+
   /**
    * 요청 유효성 검사. 요청한 클라이언트가 유효한지 확인
    * @param token

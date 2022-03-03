@@ -577,7 +577,7 @@ export const SmallButton = styled.button<any>`
   background-color: ${(props) => props.bgColor};
   border-radius: 5px;
   color: #fff;
-  cursor: pointer;
+  cursor: ${(props) => props.cursor || `pointer`};
   vertical-align: unset;
 
   ${(props) =>
