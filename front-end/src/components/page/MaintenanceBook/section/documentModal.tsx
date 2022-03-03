@@ -33,6 +33,9 @@ import { _iMaintenancesOne } from "store/interfaces";
 import { useReactToPrint } from "react-to-print";
 import EstimateFile from "src/components/page/FileHTML/estimateFile";
 import StatementFile from "src/components/page/FileHTML/statementFile";
+import { UseLink } from "src/configure/router.entity";
+import { MainStatus } from "src/constants/maintenance.const";
+import { useRouter } from "next/router";
 
 const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
@@ -49,6 +52,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   }
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const estimateRef = useRef<HTMLDivElement>(null);
   const statementRef = useRef<HTMLDivElement>(null);
@@ -127,6 +131,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
         props.setMtInfo(res.payload);
         props.setModalOpen(false);
         alert("정비내역을 저장했습니다.");
+        router.push(
+          `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.RELEASED}`
+        );
       },
       (err) => {
         return alert("출고에 실패했습니다.");
@@ -156,8 +163,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     // content: () => estimateRef.current,
     content: () => {
       const PrintElem = document.createElement("div");
-      PrintElem.appendChild(estimateRef.current);
-      PrintElem.appendChild(statementRef.current);
+      if (fileCheck.eCheck) PrintElem.appendChild(estimateRef.current);
+      if (fileCheck.sCheck) PrintElem.appendChild(statementRef.current);
       return PrintElem;
     },
     // onAfterPrint: () =>{
