@@ -27,7 +27,7 @@ const Home: NextPage<_SignInProps> = (props) => {
 
   return (
     <PageWrapper ref={ref}>
-      {width < 860 ? (
+      {width < 1200 ? (
         <BlackWrapper />
       ) : (
         <>

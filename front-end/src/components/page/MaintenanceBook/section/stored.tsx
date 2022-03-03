@@ -65,6 +65,7 @@ import { _iDeleteByUser, _iMaintenancesOne } from "store/interfaces";
 import DocumentModal from "./documentModal";
 import MolitModal from "./molitModal";
 import PaymentModal from "./paymentModal";
+import MolitSettingModal from "./molitSettingModal";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -899,21 +900,19 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           </datalist>
                         </TableRowLIST>
                         <TableRowLIST width={`12%`}>
-                          <TextInput2
-                            type="text"
+                          <SmallButton
+                            kindOf={`input`}
+                            type="button"
                             ref={(elem: HTMLInputElement) =>
                               (inputRef.current[(idx + 1) * 7 - 6] = elem)
                             }
                             width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 6)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 6)
-                            }
                             value={data.tsCode}
+                            onClick={() => {
+                              setModalOption("Setting");
+                              setModalOpen(!modalOpen);
+                            }}
                             name="tsCode"
-                            readOnly
                           />
                         </TableRowLIST>
                         <TableRowLIST width={`14%`}>
@@ -1134,6 +1133,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         )}
         {modalOption.indexOf("payment") === 0 && (
           <PaymentModal {...partsSetProps} />
+        )}
+        {modalOption.indexOf("Setting") === 0 && (
+          <MolitSettingModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>
