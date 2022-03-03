@@ -157,6 +157,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
       props.findDocHandler(1);
     }
   };
+  //기간 input typing 막는 이벤트
+  const PreventDefault = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
 
   /*********************************************************************
    * 4. Props settings
@@ -271,6 +275,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 type="date"
                 name="sFrom"
                 width={`220px`}
+                onKeyPress={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  PreventDefault(e);
+                }}
                 value={dayjs(props.searchList.sFrom).format("YYYY-MM-DD")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   props.setSearchList({
@@ -288,6 +295,9 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
                 type="date"
                 name="sTo"
                 width={`220px`}
+                onKeyPress={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  PreventDefault(e);
+                }}
                 value={dayjs(props.searchList.sTo).format("YYYY-MM-DD")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   props.setSearchList({
