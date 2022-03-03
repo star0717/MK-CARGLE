@@ -29,7 +29,7 @@ const MaintenancePaid: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  console.log(props);
+
   return (
     <WholeWrapper>
       <RsWrapper>

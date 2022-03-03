@@ -307,21 +307,10 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     };
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
+
     setMtInfo(maintenanceData);
     setModalOption("editMolit");
     setModalOpen(true);
-    // await dispatch(
-    //   _aPatchMaintenancesRelease(maintenanceData._id, maintenanceData)
-    // ).then(
-    //   (res: _iMaintenancesOne) => {
-    //     alert("정비내역을 저장했습니다.");
-    //     setMtInfo(res.payload);
-    //     setModify(!modify);
-    //   },
-    //   (err) => {
-    //     alert("정비내역 저장에 실패했습니다.");
-    //   }
-    // );
   };
 
   /*********************************************************************

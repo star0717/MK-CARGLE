@@ -149,7 +149,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               type="button"
               kindOf={`default`}
               onClick={() => {
-                console.log("hi");
+                console.log("미리보기");
               }}
             >
               미리보기
