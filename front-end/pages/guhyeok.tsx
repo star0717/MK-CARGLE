@@ -364,8 +364,8 @@ const TestPage: NextPage<any> = (props) => {
           </Wrapper>
 
           {/* 견적내용 시작 */}
-          <Wrapper border={`2px solid #000`} height={`180px`}>
-            <Wrapper dr={`row`} height={`20%`} borderBottom={`1px solid #ccc`}>
+          <Wrapper border={`2px solid #000`} height={`auto`}>
+            <Wrapper dr={`row`} height={`36px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -406,7 +406,7 @@ const TestPage: NextPage<any> = (props) => {
               </Wrapper>
               <Wrapper
                 width={`15%`}
-                height={`100%`}
+                height={`36px`}
                 borderRight={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -419,7 +419,7 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -484,7 +484,7 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -535,7 +535,7 @@ const TestPage: NextPage<any> = (props) => {
                 <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -586,7 +586,7 @@ const TestPage: NextPage<any> = (props) => {
                 <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -637,7 +637,7 @@ const TestPage: NextPage<any> = (props) => {
                 <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}

@@ -122,9 +122,11 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * 수정 취소시 Re Rendering
    */
   useEffect(() => {
-    setWorkList(props.data.mtData.works);
-    setPrice(props.data.mtData.price);
-    setMtInfo(props.data.mtData);
+    if (!modify) {
+      setWorkList(props.data.mtData.works);
+      setPrice(props.data.mtData.price);
+      setMtInfo(props.data.mtData);
+    }
   }, [modify]);
 
   /**
@@ -288,11 +290,16 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       setWorkList(workList.filter((data, index) => idx !== index));
     }
   };
+  console.log(
+    JSON.stringify(props.data.mtData.works) === JSON.stringify(workList) &&
+      JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
+      JSON.stringify(props.data.mtData.price) === JSON.stringify(price)
+  );
+
   /**
    * 정비내역 수정
    */
   const onModifyWorkInfo = async () => {
-    //변경사항이 있는지 확인
     if (
       JSON.stringify(props.data.mtData.works) === JSON.stringify(workList) &&
       JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
