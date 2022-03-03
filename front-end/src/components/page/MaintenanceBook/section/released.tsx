@@ -313,6 +313,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     setMtInfo(maintenanceData);
     setModalOption("editMolit");
     setModalOpen(true);
+    setModify(!modify);
   };
 
   /*********************************************************************
@@ -924,6 +925,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                             }}
                             name="tsCode"
                             disabled={modify}
+                            cursor={modify ? `default` : `pointer`}
                           >
                             {data.tsCode}
                           </SmallButton>

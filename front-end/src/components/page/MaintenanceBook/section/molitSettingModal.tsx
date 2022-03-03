@@ -355,7 +355,7 @@ const MolitSettingModal: NextPage<_pPartsSetProps> = (props) => {
                 overflow={`hidden`}
                 whiteSpace={`nowrap`}
               >
-                {clickDoc.name
+                {clickDoc?.name
                   ? `${genTsContent(clickDoc.name, {
                       nickName: clickDoc.nickName,
                       options: clickDoc.options,

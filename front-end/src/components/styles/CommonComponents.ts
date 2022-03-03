@@ -577,7 +577,7 @@ export const SmallButton = styled.button<any>`
   background-color: ${(props) => props.bgColor};
   border-radius: 5px;
   color: #fff;
-  cursor: pointer;
+  cursor: ${(props) => props.cursor || `pointer`};
   vertical-align: unset;
 
   ${(props) =>
@@ -1971,6 +1971,7 @@ export const ColorSpan = styled.span<any>`
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
+  font-weight: ${(props) => props.fontWeight || ``};
 `;
 
 export const SpeechBubbleLeft = styled.div<any>`
