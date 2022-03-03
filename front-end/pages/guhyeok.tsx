@@ -59,6 +59,8 @@ const TestPage: NextPage<any> = (props) => {
               1234567890
             </Text>
           </Wrapper>
+
+          {/* 차량소유자 정보 시작 */}
           <Wrapper dr={`row`} border={`2px solid #000`} height={`120px`}>
             <Wrapper
               width={`10%`}
@@ -74,7 +76,7 @@ const TestPage: NextPage<any> = (props) => {
             <Wrapper
               borderRight={` 1px solid #ccc`}
               height={`100%`}
-              width={`16%`}
+              width={`12%`}
             >
               <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -90,7 +92,7 @@ const TestPage: NextPage<any> = (props) => {
             <Wrapper
               borderRight={` 1px solid #ccc`}
               height={`100%`}
-              width={`24%`}
+              width={`28%`}
             >
               <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -103,7 +105,7 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper height={`120px`} width={`100%`}>
+            <Wrapper height={`120px`} width={`60%`}>
               <Wrapper
                 dr={`row`}
                 height={`50%`}
@@ -170,6 +172,191 @@ const TestPage: NextPage<any> = (props) => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
+          {/* 차량소유자 정보 끝 */}
+
+          {/* 정비사업자 정보 시작 */}
+          <Wrapper
+            dr={`row`}
+            border={`2px solid #000`}
+            borderTop={`none`}
+            height={`180px`}
+          >
+            <Wrapper
+              width={`10%`}
+              borderRight={` 1px solid #ccc`}
+              height={`100%`}
+            >
+              <Text fontSize={`0.83em`} fontWeight={`400`}>
+                정비
+                <br />
+                사업자
+              </Text>
+            </Wrapper>
+            <Wrapper height={`100%`}>
+              <Wrapper height={`25%`} dr={`row`}>
+                <Wrapper
+                  width={`12%`}
+                  height={`100%`}
+                  borderRight={`1px solid #ccc`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    사업자
+                    <br />
+                    등록번호
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`28%`}
+                  height={`100%`}
+                  borderRight={`1px solid #ccc`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    111-11-1111
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`20%`}
+                  height={`100%`}
+                  borderRight={`1px solid #ccc`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    정비업 등록번호
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`40%`}
+                  height={`100%`}
+                  borderRight={`1px solid #ccc`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    111-111-11111-1111
+                  </Text>
+                </Wrapper>
+              </Wrapper>
+              <Wrapper height={`25%`} dr={`row`}>
+                <Wrapper
+                  width={`12%`}
+                  height={`100%`}
+                  borderRight={`1px solid #ccc`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    업체명 및
+                    <br />
+                    대표자
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`63%`}
+                  height={`100%`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    댕댕나라 윤초코
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`25%`}
+                  height={`100%`}
+                  borderBottom={`1px solid #ccc`}
+                  al={`flex-start`}
+                >
+                  <Text
+                    fontSize={`0.67em`}
+                    fontWeight={`400`}
+                    color={`#9d9d9d`}
+                  >
+                    서명 또는 (인)
+                  </Text>
+                </Wrapper>
+              </Wrapper>
+              <Wrapper height={`25%`} dr={`row`}>
+                <Wrapper
+                  width={`12%`}
+                  height={`100%`}
+                  borderRight={`1px solid #ccc`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    주소
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`63%`}
+                  height={`100%`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    댕댕나라 멍멍구 왈왈동
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`25%`}
+                  height={`100%`}
+                  borderBottom={`1px solid #ccc`}
+                  al={`flex-end`}
+                  ju={`flex-end`}
+                  padding={`4px 6px`}
+                  dr={`row`}
+                >
+                  <Text fontSize={`0.75em`} fontWeight={`400`}>
+                    (전화번호&nbsp;
+                  </Text>
+                  <Text fontSize={`0.75em`} fontWeight={`400`}>
+                    010-1111-1111
+                  </Text>
+                  <Text fontSize={`0.75em`} fontWeight={`400`}>
+                    )
+                  </Text>
+                </Wrapper>
+              </Wrapper>
+              <Wrapper height={`25%`} dr={`row`}>
+                <Wrapper
+                  width={`12%`}
+                  height={`100%`}
+                  borderRight={`1px solid #ccc`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    견적구분
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`63%`}
+                  height={`100%`}
+                  borderBottom={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    댕댕나라 멍멍구 왈왈동
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`25%`}
+                  height={`100%`}
+                  borderBottom={`1px solid #ccc`}
+                  al={`flex-end`}
+                  ju={`flex-end`}
+                  padding={`4px 6px`}
+                  dr={`row`}
+                >
+                  <Text fontSize={`0.75em`} fontWeight={`400`}>
+                    (전화번호&nbsp;
+                  </Text>
+                  <Text fontSize={`0.75em`} fontWeight={`400`}>
+                    010-1111-1111
+                  </Text>
+                  <Text fontSize={`0.75em`} fontWeight={`400`}>
+                    )
+                  </Text>
+                </Wrapper>
+              </Wrapper>
+            </Wrapper>
+          </Wrapper>
+          {/* 정비사업자 정보 끝 */}
         </Wrapper>
       </Wrapper>
     </>
