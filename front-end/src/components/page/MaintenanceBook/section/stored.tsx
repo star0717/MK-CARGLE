@@ -65,6 +65,7 @@ import { _iDeleteByUser, _iMaintenancesOne } from "store/interfaces";
 import DocumentModal from "./documentModal";
 import MolitModal from "./molitModal";
 import PaymentModal from "./paymentModal";
+import MolitSettingModal from "./molitSettingModal";
 
 const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -908,7 +909,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             width={`100%`}
                             value={data.tsCode}
                             onClick={() => {
-                              console.log("click!!");
+                              setModalOption("Setting");
+                              setModalOpen(!modalOpen);
                             }}
                             name="tsCode"
                           />
@@ -1131,6 +1133,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         )}
         {modalOption.indexOf("payment") === 0 && (
           <PaymentModal {...partsSetProps} />
+        )}
+        {modalOption.indexOf("Setting") === 0 && (
+          <MolitSettingModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>
