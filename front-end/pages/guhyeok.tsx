@@ -1,6 +1,5 @@
 import React from "react";
 import { NextPage } from "next";
-import FileTest from "src/components/page/FileHTML/test";
 
 const CustomerPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -22,7 +21,7 @@ const CustomerPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return <FileTest />;
+  return <div>hi!</div>;
 };
 
 export default CustomerPage;

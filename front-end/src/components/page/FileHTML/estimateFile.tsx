@@ -23,4592 +23,1915 @@ const EstimateFile: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <div
-      className="calibre"
-      id="calibre_link-0"
+      className="stl_02"
       style={{
-        display: "block",
-        fontFamily: '"돋움체", monospace',
+        height: "70.08334em",
         fontSize: "1em",
-        width: "850px",
-        margin: "0px auto",
-        paddingLeft: 0,
-        paddingRight: 0,
+        margin: "0 auto",
+        lineHeight: "0.0em",
+        display: "block",
+        borderStyle: "none",
+        width: "49.58333em",
       }}
     >
+      <div className="stl_03" style={{ position: "relative" }}>
+        <img
+          src="data:image/png;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJfhscf+L3CiFpaAWplSAAAAAElFTkSuQmCC"
+          alt=""
+          className="stl_04"
+          style={{
+            width: "100%",
+            clip: "rect(4.912918em,45.02246em,55.9855em,4.650792em)",
+            position: "absolute",
+            pointerEvents: "none",
+          }}
+        />
+      </div>
       <div
-        className="calibre1"
+        className="stl_view"
         style={{
-          display: "table",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: "19.5pt",
-          paddingRight: 0,
-          paddingTop: 0,
+          fontSize: "10em",
+          transform: "scale(0.1)",
+          MozTransition: "scale(0.1)",
+          WebkitTransform: "scale(0.1)",
+          MozTransformOrigin: "top left",
+          WebkitTransformOrigin: "top left",
         }}
       >
         <div
-          className="block_"
+          className="stl_05 stl_06"
           style={{
-            display: "table-row",
-            fontSize: "0.75em",
-            lineHeight: "1.2",
-            marginBottom: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginTop: "3.15pt",
-            paddingBottom: 0,
-            paddingLeft: 0,
-            paddingRight: 0,
-            paddingTop: 0,
-            textAlign: "left",
+            position: "relative",
+            width: "49.58333em",
+            height: "7.008333em",
           }}
         >
-          <span
-            className="bullet_"
+          <div
+            className="stl_01 stl_07"
             style={{
-              display: "table-cell",
-              fontSize: "1em",
-              fontWeight: "bold",
-              lineHeight: "1.2",
+              top: "4.9392em",
+              left: "4.9573em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8035645)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
             }}
           >
-            ■&nbsp;
-          </span>
-          <span
-            className="calibre2"
-            style={{ display: "table-cell", lineHeight: "1.2" }}
-          >
-            자동차관리법 시행규칙 [별지 제89호의3 서식]
             <span
-              className="text_"
-              style={{ color: "#00F", lineHeight: "1.2" }}
-            >
-              &lt;개정
-            </span>
-            <span
-              className="text_1"
+              className="stl_08 stl_09"
               style={{
-                color: "#00F",
-                letterSpacing: "-0.55pt",
-                lineHeight: "1.2",
+                fontSize: "0.67em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.014602em",
+                letterSpacing: "-0.01em",
               }}
-            />
-            <span
-              className="text_"
-              style={{ color: "#00F", lineHeight: "1.2" }}
             >
-              2014.10.6.&gt;
+              ■
             </span>
-          </span>
+          </div>
+          <div
+            className="stl_01 stl_07"
+            style={{
+              top: "4.9392em",
+              left: "5.9568em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8035645)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_08 stl_09"
+              style={{
+                wordSpacing: "-0.03em",
+                fontSize: "0.67em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.014602em",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              자동차관리법 시행규칙 [별지 제89호의3 서식]{" "}
+            </span>
+            <span
+              className="stl_10 stl_09"
+              style={{
+                wordSpacing: "-0.02em",
+                letterSpacing: "-0.01em",
+                fontSize: "0.67em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#0000FF",
+                lineHeight: "1.014602em",
+              }}
+            >
+              &lt;개정 2014.10.6.&gt; &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "7.7887em",
+              left: "35.9405em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              일련번호
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                : &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_14"
+            style={{
+              top: "10.1561em",
+              left: "34.8811em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-2.8)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              주행거
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                리 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "9.6167em",
+              left: "24.1269em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              차명 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "10.1561em",
+              left: "8.8052em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              등록번
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                호 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "10.1561em",
+              left: "43.6064em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              km &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "10.7055em",
+              left: "23.7072em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              (
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "10.7055em",
+              left: "24.1269em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              차종) &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "11.0152em",
+              left: "5.7069em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              차량 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "12.9331em",
+              left: "5.2871em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              소유자 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "13.7821em",
+              left: "8.3855em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_13"
+              style={{
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+                letterSpacing: "0em",
+              }}
+            >
+              등록년월
+              <span className="stl_09" style={{ letterSpacing: "-0.01em" }}>
+                일 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "13.7821em",
+              left: "23.2974em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              차대번
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                호 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "16.4193em",
+              left: "9.225em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              사업자 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "16.9587em",
+              left: "23.4273em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                wordSpacing: "-0.06em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              정비업 등록번호 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "17.4981em",
+              left: "8.8052em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              등록번
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                호 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "18.9665em",
+              left: "8.5953em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                wordSpacing: "-0.02em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              업체명 및 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_15"
+            style={{
+              top: "20.0453em",
+              left: "9.225em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.2)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              대표자 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "19.5858em",
+              left: "5.7069em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              정비 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_07"
+            style={{
+              top: "19.6431em",
+              left: "31.5629em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8035645)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_16 stl_09"
+              style={{
+                wordSpacing: "-0.02em",
+                letterSpacing: "-0.01em",
+                fontSize: "0.67em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#7F7F7F",
+                lineHeight: "1.014602em",
+              }}
+            >
+              (서명 또는 인) &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "21.5037em",
+              left: "5.2871em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              사업자 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "21.9432em",
+              left: "9.6348em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              주소 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "22.5213em",
+              left: "34.6312em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              (전화번
+              <span className="stl_19" style={{ letterSpacing: "-0.02em" }}>
+                호 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "22.5213em",
+              left: "44.346em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              )
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "24.2607em",
+              left: "8.8052em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                wordSpacing: "0.8em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              견적구분 [
+            </span>
+            <span
+              className="stl_12"
+              style={{
+                wordSpacing: "0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              &nbsp;]
+            </span>
+            <span
+              className="stl_12"
+              style={{
+                wordSpacing: "-0.02em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              &nbsp;보험 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "24.2607em",
+              left: "18.2301em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                wordSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              [ ] 일반 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_20"
+            style={{
+              top: "26.0514em",
+              left: "5.2472em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.103402)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_21 stl_09"
+              style={{
+                wordSpacing: "-0.02em",
+                letterSpacing: "-0.01em",
+                fontSize: "0.92em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.010441em",
+              }}
+            >
+              아래와 같이 견적합니다 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_22"
+            style={{
+              top: "27.8568em",
+              left: "10.1745em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-2)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              견적내
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                용 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "27.3174em",
+              left: "25.0664em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              부품내
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                역 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "27.8568em",
+              left: "36.1904em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              공임 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "27.8568em",
+              left: "41.3076em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              합계 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "28.3862em",
+              left: "20.0791em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              코드 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "28.3862em",
+              left: "24.077em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              수량 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "28.3862em",
+              left: "27.9549em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              단가 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "28.3862em",
+              left: "32.2525em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              계
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "37.2665em",
+              left: "5.4371em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              구분(보험ㆍ
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                일반) &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "37.2665em",
+              left: "14.9819em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              부품 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "37.2665em",
+              left: "21.0886em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              공임 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "37.2665em",
+              left: "27.8449em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              계
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "37.2665em",
+              left: "32.8622em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              부가가치세 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "37.2665em",
+              left: "40.7279em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12"
+              style={{
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              총액 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_20"
+            style={{
+              top: "39.7465em",
+              left: "5.4071em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.103402)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_21 stl_23"
+              style={{
+                wordSpacing: "-0.02em",
+                fontSize: "0.92em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.010441em",
+                letterSpacing: "-0.06em",
+              }}
+            >
+              「자동차관리법」 제58조제4항 및 같은 법 시행규칙 제134조제2항에
+              따라 위와
+            </span>
+            <span
+              className="stl_21 stl_23"
+              style={{
+                wordSpacing: "0.48em",
+                fontSize: "0.92em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.010441em",
+                letterSpacing: "-0.06em",
+              }}
+            >
+              &nbsp;같이
+            </span>
+            <span
+              className="stl_21 stl_23"
+              style={{
+                wordSpacing: "-0.02em",
+                fontSize: "0.92em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.010441em",
+                letterSpacing: "-0.06em",
+              }}
+            >
+              &nbsp;발급합니다. &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "41.8602em",
+              left: "38.3692em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              년
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "41.8602em",
+              left: "41.3576em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              월
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "41.8602em",
+              left: "43.9762em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              일
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "44.1789em",
+              left: "25.4862em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              작성자 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_07"
+            style={{
+              top: "44.3162em",
+              left: "40.0583em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8035645)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_16 stl_09"
+              style={{
+                wordSpacing: "-0.02em",
+                letterSpacing: "-0.01em",
+                fontSize: "0.67em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#7F7F7F",
+                lineHeight: "1.014602em",
+              }}
+            >
+              (서명 또는 인) &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_24"
+            style={{
+              top: "45.5648em",
+              left: "40.0583em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.4)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_16 stl_09"
+              style={{
+                wordSpacing: "-0.02em",
+                letterSpacing: "-0.01em",
+                fontSize: "0.67em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#7F7F7F",
+                lineHeight: "1.014602em",
+              }}
+            >
+              (서명 또는 인) &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "45.4276em",
+              left: "24.6466em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              대표이
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                사 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_11"
+            style={{
+              top: "46.5863em",
+              left: "23.1674em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.9954605)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_12 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.83em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.011647em",
+              }}
+            >
+              안내사
+              <span className="stl_13" style={{ letterSpacing: "0em" }}>
+                항 &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_15"
+            style={{
+              top: "47.6838em",
+              left: "5.7064em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.2)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18"
+              style={{
+                wordSpacing: "-0.05em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              . 견적요금은 교통사고 등의 처리를 목적으로 견적서를 발행한 경우에
+              청구가 가능합니다. &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_15"
+            style={{
+              top: "48.7327em",
+              left: "5.7064em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.2)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                wordSpacing: "0em",
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              . 본 견적서는 교부일로부터 1개월간 유효합
+              <span className="stl_19" style={{ letterSpacing: "-0.02em" }}>
+                니다. &nbsp;
+              </span>
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "47.6838em",
+              left: "5.3271em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              1
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_15"
+            style={{
+              top: "48.7327em",
+              left: "5.3271em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.2)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              2
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_15"
+            style={{
+              top: "49.7815em",
+              left: "5.3271em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.2)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              3
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "49.7815em",
+              left: "5.7064em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18"
+              style={{
+                wordSpacing: "-0.07em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              . 본 견적서에 포함되지 아니한 부품을 추가 시에는 소비자의 동의를
+              받아야 하며, 정비의뢰자는 동의한 부품 및 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "50.8304em",
+              left: "6.5065em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                wordSpacing: "-0.01em",
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              작업부분만 금액을 지불합니다. &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "51.8792em",
+              left: "5.3271em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              4
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_15"
+            style={{
+              top: "52.9281em",
+              left: "5.3271em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.2)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              5
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_15"
+            style={{
+              top: "53.9769em",
+              left: "5.3271em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.2)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              6
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "51.8792em",
+              left: "5.7064em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18"
+              style={{
+                wordSpacing: "-0.05em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              . 공급자의 직인이 없는 것은 무효로 합니다. &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "52.9281em",
+              left: "5.7064em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18"
+              style={{
+                wordSpacing: "-0.07em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              . 부품가는 견적일자 기준입니다. &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_17"
+            style={{
+              top: "53.9769em",
+              left: "5.7064em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8995125)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18 stl_09"
+              style={{
+                wordSpacing: "-0.11em",
+                letterSpacing: "-0.01em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              . 본 견적서는 2부를 작성, 정비의뢰자에게 1부를 교부하고,
+              정비업자는 1부를 1년간 문서 또는 전산자료로 보관하 &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_15"
+            style={{
+              top: "55.0258em",
+              left: "6.4765em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-1.2)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_18"
+              style={{
+                wordSpacing: "-0.06em",
+                fontSize: "0.75em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.012964em",
+              }}
+            >
+              여야 합니다. &nbsp;
+            </span>
+          </div>
+          <div
+            className="stl_01 stl_07"
+            style={{
+              top: "56.5029em",
+              left: "35.7306em",
+              position: "absolute",
+              whiteSpace: "nowrap",
+              msTransform: "matrix(1,0,0,0.9994497,0,-0.8035645)",
+              MozTransition: "scale(1,0.9994497)",
+              WebkitTransform: "scale(1,0.9994497)",
+              transform: "scale(1,0.9994497)",
+              OTransform: "scale(1,0.9994497)",
+            }}
+          >
+            <span
+              className="stl_08 stl_09"
+              style={{
+                wordSpacing: "-0.05em",
+                fontSize: "0.67em",
+                fontFamily: '"QNGMIB+DotumChe"',
+                color: "#000000",
+                lineHeight: "1.014602em",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              210mm×297mm[백상지 80g/㎡] &nbsp;
+            </span>
+          </div>
         </div>
       </div>
-      <p
-        className="block_1"
-        style={{
-          display: "block",
-          fontFamily: '"LG Smart UI Light", monospace',
-          fontSize: "1.66667em",
-          lineHeight: "27.1pt",
-          marginBottom: 0,
-          marginLeft: "156pt",
-          marginRight: "156pt",
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "center",
-        }}
-      >
-        자동차점검ㆍ정비견적서
-      </p>
-      <p
-        className="block_2"
-        style={{
-          display: "block",
-          lineHeight: "12.1pt",
-          marginBottom: "0.25pt",
-          marginLeft: 0,
-          marginRight: "67.7pt",
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "right",
-          textIndent: 0,
-        }}
-      >
-        일련번호:
-      </p>
-      <table
-        className="table_"
-        style={{
-          width: "100%",
-          borderBottomColor: "#000",
-          borderBottomStyle: "solid",
-          borderBottomWidth: "1pt",
-          borderCollapse: "collapse",
-          borderLeftColor: "#000",
-          borderLeftStyle: "solid",
-          borderLeftWidth: "1pt",
-          borderRightColor: "#000",
-          borderRightStyle: "solid",
-          borderRightWidth: "1pt",
-          borderSpacing: 2,
-          borderTopColor: "#000",
-          borderTopStyle: "solid",
-          borderTopWidth: "1pt",
-          display: "table",
-          marginBottom: 0,
-          marginLeft: "6.35pt",
-          marginRight: "auto",
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textIndent: 0,
-        }}
-      >
-        <tbody
-          className="calibre3"
-          style={{ display: "table-row-group", verticalAlign: "middle" }}
-        >
-          <tr
-            className="tr_"
-            style={{
-              display: "table-row",
-              minHeight: "42.5pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              rowSpan={2}
-              className="td_"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "double",
-                borderBottomWidth: "3pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "40.9pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_4"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: "0.2pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_5"
-                style={{
-                  display: "block",
-                  lineHeight: "1.79",
-                  marginBottom: 0,
-                  marginLeft: "5.3pt",
-                  marginRight: "4.1pt",
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                  textIndent: "5pt",
-                }}
-              >
-                차량 소유자
-              </p>
-            </td>
-            <td
-              className="td_1"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "53.5pt",
-              }}
-            >
-              <p
-                className="block_6"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: "0.15pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_7"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "0.6pt",
-                  marginRight: "0.4pt",
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                등록번호
-              </p>
-            </td>
-            <td
-              className="td_2"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "124pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_3"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "45.2pt",
-              }}
-            >
-              <p
-                className="block_8"
-                style={{
-                  display: "block",
-                  lineHeight: "1.2",
-                  marginBottom: 0,
-                  marginLeft: "7.45pt",
-                  marginRight: "6.25pt",
-                  marginTop: "8.45pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                  textIndent: "5pt",
-                }}
-              >
-                차명 (차종)
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_4"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "93.1pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_5"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_6"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: "0.15pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_9"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "3.25pt",
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                주행거리
-              </p>
-            </td>
-            <td
-              className="td_6"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "76.1pt",
-              }}
-            >
-              <p
-                className="block_6"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: "0.15pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_10"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: "4.1pt",
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "right",
-                }}
-              >
-                km
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_"
-            style={{
-              display: "table-row",
-              minHeight: "42.5pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              className="td_7"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "double",
-                borderBottomWidth: "3pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "53.5pt",
-              }}
-            >
-              <p
-                className="block_11"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: "0.3pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_7"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "0.6pt",
-                  marginRight: "0.4pt",
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                등록년월일
-              </p>
-            </td>
-            <td
-              className="td_8"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "double",
-                borderBottomWidth: "3pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "124pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_9"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "double",
-                borderBottomWidth: "3pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "45.2pt",
-              }}
-            >
-              <p
-                className="block_11"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: "0.3pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_12"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "2.5pt",
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                차대번호
-              </p>
-            </td>
-            <td
-              colSpan={4}
-              className="td_10"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "double",
-                borderBottomWidth: "3pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "216pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_1"
-            style={{
-              display: "table-row",
-              minHeight: "30pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              rowSpan={4}
-              className="td_11"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "double",
-                borderTopWidth: "3pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "40.9pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_13"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: "0.25pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_14"
-                style={{
-                  display: "block",
-                  lineHeight: "1.79",
-                  marginBottom: 0,
-                  marginLeft: "5.3pt",
-                  marginRight: "4.1pt",
-                  marginTop: "0.05pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                  textIndent: "5pt",
-                }}
-              >
-                정비 사업자
-              </p>
-            </td>
-            <td
-              className="td_12"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "double",
-                borderTopWidth: "3pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "53.5pt",
-              }}
-            >
-              <p
-                className="block_15"
-                style={{
-                  display: "block",
-                  lineHeight: "1.2",
-                  marginBottom: 0,
-                  marginLeft: "6.6pt",
-                  marginRight: "5.4pt",
-                  marginTop: "2.05pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                  textIndent: "5pt",
-                }}
-              >
-                사업자 등록번호
-              </p>
-            </td>
-            <td
-              className="td_13"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "double",
-                borderTopWidth: "3pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "124pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_14"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "double",
-                borderTopWidth: "3pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "83.3pt",
-              }}
-            >
-              <p
-                className="block_16"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "4.1pt",
-                  marginRight: 0,
-                  marginTop: "8.55pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                정비업 등록번호
-              </p>
-            </td>
-            <td
-              colSpan={3}
-              className="td_15"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "double",
-                borderTopWidth: "3pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "178pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_2"
-            style={{
-              display: "table-row",
-              minHeight: "30.1pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              className="td_16"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "53.5pt",
-              }}
-            >
-              <p
-                className="block_17"
-                style={{
-                  display: "block",
-                  lineHeight: "1.2",
-                  marginBottom: 0,
-                  marginLeft: "11.7pt",
-                  marginRight: "2.95pt",
-                  marginTop: "2.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                  textIndent: "-7.6pt",
-                }}
-              >
-                업체명 및 대표자
-              </p>
-            </td>
-            <td
-              colSpan={6}
-              className="td_17"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "385pt",
-              }}
-            >
-              <p
-                className="block_11"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: "0.3pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_18"
-                style={{
-                  color: "#7E7E7E",
-                  display: "block",
-                  fontSize: "0.75em",
-                  marginBottom: 0,
-                  marginLeft: "226pt",
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                (서명 또는 인)
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_3"
-            style={{
-              display: "table-row",
-              minHeight: "27.3pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              className="td_16"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "53.5pt",
-              }}
-            >
-              <p
-                className="block_19"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "0.6pt",
-                  marginRight: "0.4pt",
-                  marginTop: "7.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                주소
-              </p>
-            </td>
-            <td
-              colSpan={6}
-              className="td_17"
-              style={{
-                borderBottomColor: "#AEAEAE",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "385pt",
-              }}
-            >
-              <p
-                className="block_20"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: "0.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-              <p
-                className="block_21"
-                style={{
-                  display: "block",
-                  fontSize: "0.75em",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: "0.65pt",
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "right",
-                }}
-              >
-                (전화번호
-                <span className="tab" style={{ whiteSpace: "pre" }}>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
-                )
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_4"
-            style={{
-              display: "table-row",
-              minHeight: "27.1pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              className="td_18"
-              style={{
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#AEAEAE",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "53.5pt",
-              }}
-            >
-              <p
-                className="block_19"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "0.6pt",
-                  marginRight: "0.4pt",
-                  marginTop: "7.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                견적구분
-              </p>
-            </td>
-            <td
-              colSpan={6}
-              className="td_19"
-              style={{
-                borderLeftColor: "#AEAEAE",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#AEAEAE",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "385pt",
-              }}
-            >
-              <p
-                className="block_22"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "6.25pt",
-                  marginRight: 0,
-                  marginTop: "7.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                [ ]
-                <span className="text_2" style={{ letterSpacing: "-0.1pt" }} />
-                보험
-                <span className="tab" style={{ whiteSpace: "pre" }}>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
-                [ ] 일반
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p
-        className="block_3"
-        style={{
-          display: "block",
-          fontFamily: "serif",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-        }}
-      >
-        &nbsp;
-      </p>
-      <p
-        className="block_3"
-        style={{
-          display: "block",
-          fontFamily: "serif",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-        }}
-      >
-        &nbsp;
-      </p>
-      <p
-        className="block_3"
-        style={{
-          display: "block",
-          fontFamily: "serif",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-        }}
-      >
-        &nbsp;
-      </p>
-      <p
-        className="block_3"
-        style={{
-          display: "block",
-          fontFamily: "serif",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-        }}
-      >
-        &nbsp;
-      </p>
-      <p
-        className="block_23"
-        style={{
-          display: "block",
-          fontSize: "1.125em",
-          lineHeight: "1.2",
-          marginBottom: "1.15pt",
-          marginLeft: "11pt",
-          marginRight: 0,
-          marginTop: "0.9pt",
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-          textIndent: 0,
-        }}
-      >
-        아래와 같이 견적합니다
-      </p>
-      <table
-        className="table_"
-        style={{
-          width: "100%",
-          borderBottomColor: "#000",
-          borderBottomStyle: "solid",
-          borderBottomWidth: "1pt",
-          borderCollapse: "collapse",
-          borderLeftColor: "#000",
-          borderLeftStyle: "solid",
-          borderLeftWidth: "1pt",
-          borderRightColor: "#000",
-          borderRightStyle: "solid",
-          borderRightWidth: "1pt",
-          borderSpacing: 2,
-          borderTopColor: "#000",
-          borderTopStyle: "solid",
-          borderTopWidth: "1pt",
-          display: "table",
-          marginBottom: 0,
-          marginLeft: "6.35pt",
-          marginRight: "auto",
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textIndent: 0,
-        }}
-      >
-        <tbody
-          className="calibre3"
-          style={{ display: "table-row-group", verticalAlign: "middle" }}
-        >
-          <tr
-            className="tr_5"
-            style={{
-              display: "table-row",
-              minHeight: "12.3pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              colSpan={2}
-              rowSpan={2}
-              className="td_20"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "168pt",
-              }}
-            >
-              <p
-                className="block_24"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "62.9pt",
-                  marginRight: "62.7pt",
-                  marginTop: "6.05pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                견적내용
-              </p>
-            </td>
-            <td
-              colSpan={6}
-              className="td_21"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "189pt",
-              }}
-            >
-              <p
-                className="block_25"
-                style={{
-                  display: "block",
-                  lineHeight: "1.2",
-                  marginBottom: 0,
-                  marginLeft: "73.5pt",
-                  marginRight: "72.9pt",
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                부품내역
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_22"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "57.8pt",
-              }}
-            >
-              <p
-                className="block_26"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "19.1pt",
-                  marginRight: 0,
-                  marginTop: "6.05pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                공임
-              </p>
-            </td>
-            <td
-              className="td_23"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "64.8pt",
-              }}
-            >
-              <p
-                className="block_27"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "21.7pt",
-                  marginRight: "20.6pt",
-                  marginTop: "6.05pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                합계
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_6"
-            style={{
-              display: "table-row",
-              minHeight: "12.2pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              className="td_24"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "49.4pt",
-              }}
-            >
-              <p
-                className="block_28"
-                style={{
-                  display: "block",
-                  lineHeight: "1.2",
-                  marginBottom: 0,
-                  marginLeft: "14.7pt",
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                코드
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_29"
-                style={{
-                  display: "block",
-                  lineHeight: "1.2",
-                  marginBottom: 0,
-                  marginLeft: "13.2pt",
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                수량
-              </p>
-            </td>
-            <td
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_30"
-                style={{
-                  display: "block",
-                  lineHeight: "1.2",
-                  marginBottom: 0,
-                  marginLeft: "13.3pt",
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                단가
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_31"
-                style={{
-                  display: "block",
-                  lineHeight: "1.2",
-                  marginBottom: 0,
-                  marginLeft: "0.7pt",
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                계
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_26"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "none",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "57.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_27"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "none",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "64.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_7"
-            style={{
-              display: "table-row",
-              minHeight: "17.9pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              colSpan={2}
-              className="td_28"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "168pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_24"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "49.4pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_29"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "57.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_30"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "64.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_7"
-            style={{
-              display: "table-row",
-              minHeight: "17.9pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              colSpan={2}
-              className="td_28"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "168pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_24"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "49.4pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_29"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "57.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_30"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "64.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_7"
-            style={{
-              display: "table-row",
-              minHeight: "17.9pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              colSpan={2}
-              className="td_28"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "168pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_24"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "49.4pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_29"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "57.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_30"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "64.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_7"
-            style={{
-              display: "table-row",
-              minHeight: "17.9pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              colSpan={2}
-              className="td_28"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "168pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_24"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "49.4pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_25"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_29"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "57.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_30"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "64.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_7"
-            style={{
-              display: "table-row",
-              minHeight: "17.9pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              colSpan={2}
-              className="td_31"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "168pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_32"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "49.4pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_33"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_33"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_33"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "46.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_34"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "57.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_35"
-              style={{
-                borderBottomColor: "#000",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "64.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_8"
-            style={{
-              display: "table-row",
-              minHeight: "15.2pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              className="td_36"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "94.4pt",
-              }}
-            >
-              <p
-                className="block_32"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "7.1pt",
-                  marginRight: 0,
-                  marginTop: "1.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                구분(보험ㆍ일반)
-              </p>
-            </td>
-            <td
-              className="td_37"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "73.8pt",
-              }}
-            >
-              <p
-                className="block_33"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "26.2pt",
-                  marginRight: "25pt",
-                  marginTop: "1.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                부품
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_38"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "72.8pt",
-              }}
-            >
-              <p
-                className="block_34"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "25.8pt",
-                  marginRight: "24.5pt",
-                  marginTop: "1.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                공임
-              </p>
-            </td>
-            <td
-              colSpan={3}
-              className="td_39"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "80.1pt",
-              }}
-            >
-              <p
-                className="block_35"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "0.55pt",
-                  marginRight: 0,
-                  marginTop: "1.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                계
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_40"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "80.2pt",
-              }}
-            >
-              <p
-                className="block_36"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "15.2pt",
-                  marginRight: 0,
-                  marginTop: "1.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                부가가치세
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_41"
-              style={{
-                borderBottomColor: "#BABABA",
-                borderBottomStyle: "solid",
-                borderBottomWidth: "1pt",
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#000",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: "0.5ex",
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "78.5pt",
-              }}
-            >
-              <p
-                className="block_37"
-                style={{
-                  display: "block",
-                  marginBottom: 0,
-                  marginLeft: "28.5pt",
-                  marginRight: "27.5pt",
-                  marginTop: "1.1pt",
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "center",
-                }}
-              >
-                총액
-              </p>
-            </td>
-          </tr>
-          <tr
-            className="tr_9"
-            style={{
-              display: "table-row",
-              minHeight: "15.1pt",
-              verticalAlign: "inherit",
-            }}
-          >
-            <td
-              className="td_42"
-              style={{
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "94.4pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              className="td_43"
-              style={{
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "73.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_44"
-              style={{
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "72.8pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={3}
-              className="td_45"
-              style={{
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "80.1pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_46"
-              style={{
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderRightColor: "#BABABA",
-                borderRightStyle: "solid",
-                borderRightWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "80.2pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-            <td
-              colSpan={2}
-              className="td_47"
-              style={{
-                borderLeftColor: "#BABABA",
-                borderLeftStyle: "solid",
-                borderLeftWidth: "1pt",
-                borderTopColor: "#BABABA",
-                borderTopStyle: "solid",
-                borderTopWidth: "1pt",
-                display: "table-cell",
-                paddingBottom: "0.5ex",
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingTop: 0,
-                textAlign: "inherit",
-                verticalAlign: "top",
-                width: "78.5pt",
-              }}
-            >
-              <p
-                className="block_3"
-                style={{
-                  display: "block",
-                  fontFamily: "serif",
-                  marginBottom: 0,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginTop: 0,
-                  paddingBottom: 0,
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                  paddingTop: 0,
-                  textAlign: "left",
-                }}
-              >
-                &nbsp;
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p
-        className="block_3"
-        style={{
-          display: "block",
-          fontFamily: "serif",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-        }}
-      >
-        &nbsp;
-      </p>
-      <p
-        className="block_38"
-        style={{
-          display: "block",
-          fontSize: "1.125em",
-          lineHeight: "1.2",
-          marginBottom: 0,
-          marginLeft: "12.9pt",
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-          textIndent: 0,
-        }}
-      >
-        <span className="text_3" style={{ letterSpacing: "-0.75pt" }}>
-          「자동차관리법
-        </span>
-        <span className="text_4" style={{ letterSpacing: "-0.5pt" }}>
-          」 제58조제4항
-        </span>
-        및
-        <span className="text_5" style={{ letterSpacing: "-0.4pt" }}>
-          같은
-        </span>
-        법
-        <span className="text_6" style={{ letterSpacing: "-0.6pt" }}>
-          시행규칙
-        </span>
-        <span className="text_4" style={{ letterSpacing: "-0.5pt" }}>
-          제134조제2항에
-        </span>
-        <span className="text_5" style={{ letterSpacing: "-0.4pt" }}>
-          따라 위와
-        </span>
-        <span className="text_7" style={{ letterSpacing: "4.4pt" }} />
-        <span className="text_5" style={{ letterSpacing: "-0.4pt" }}>
-          같이
-        </span>
-        <span className="text_8" style={{ letterSpacing: "-0.65pt" }}>
-          발급합니다.
-        </span>
-      </p>
-      <p
-        className="block_4"
-        style={{
-          display: "block",
-          fontFamily: "serif",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginTop: "0.2pt",
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-        }}
-      >
-        &nbsp;
-      </p>
-      <p
-        className="block_39"
-        style={{
-          display: "block",
-          fontSize: "0.75em",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: "7.15pt",
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "right",
-        }}
-      >
-        년
-        <span className="tab" style={{ whiteSpace: "pre" }}>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-        월
-        <span className="tab" style={{ whiteSpace: "pre" }}>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-        일
-      </p>
-      <p
-        className="block_40"
-        style={{
-          display: "block",
-          fontFamily: "serif",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginTop: "0.05pt",
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-        }}
-      >
-        &nbsp;
-      </p>
-      <p
-        className="block_41"
-        style={{
-          display: "block",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: "7.25pt",
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "right",
-          textIndent: 0,
-        }}
-      >
-        <span className="text_9" style={{ fontSize: "1em" }}>
-          작성자
-          <span className="tab" style={{ whiteSpace: "pre" }}>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-        </span>
-        <span
-          className="text_10"
-          style={{ color: "#7E7E7E", fontSize: "0.75em" }}
-        >
-          (서명 또는
-        </span>
-        <span
-          className="text_11"
-          style={{
-            color: "#7E7E7E",
-            fontSize: "0.75em",
-            letterSpacing: "-0.15pt",
-          }}
-        />
-        <span
-          className="text_10"
-          style={{ color: "#7E7E7E", fontSize: "0.75em" }}
-        >
-          인)
-        </span>
-      </p>
-      <p
-        className="block_42"
-        style={{
-          display: "block",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: "7.25pt",
-          marginTop: "2.15pt",
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "right",
-          textIndent: 0,
-        }}
-      >
-        <span className="text_9" style={{ fontSize: "1em" }}>
-          대표이사
-          <span className="tab" style={{ whiteSpace: "pre" }}>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-        </span>
-        <span
-          className="text_10"
-          style={{ color: "#7E7E7E", fontSize: "0.75em" }}
-        >
-          (서명 또는
-        </span>
-        <span
-          className="text_11"
-          style={{
-            color: "#7E7E7E",
-            fontSize: "0.75em",
-            letterSpacing: "-0.15pt",
-          }}
-        />
-        <span
-          className="text_10"
-          style={{ color: "#7E7E7E", fontSize: "0.75em" }}
-        >
-          인)
-        </span>
-      </p>
-      <p
-        className="block_43"
-        style={{
-          display: "block",
-          marginBottom: 0,
-          marginLeft: "5.1pt",
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-        }}
-      />
-      <p
-        className="block_44"
-        style={{
-          display: "block",
-          lineHeight: "1.2",
-          marginBottom: 0,
-          marginLeft: "220pt",
-          marginRight: "220pt",
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "center",
-          textIndent: 0,
-        }}
-      >
-        안내사항
-      </p>
-      <ol
-        className="list_"
-        style={{
-          display: "block",
-          listStyleType: "decimal",
-          marginBottom: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-        }}
-      >
-        <li
-          className="block_45"
-          style={{
-            display: "list-item",
-            fontSize: "0.75em",
-            lineHeight: "1.2",
-            marginBottom: 0,
-            marginLeft: "25.5pt",
-            marginRight: 0,
-            marginTop: 0,
-            paddingBottom: 0,
-            paddingTop: 0,
-            textAlign: "left",
-          }}
-        >
-          견적요금은 교통사고 등의 처리를 목적으로 견적서를 발행한 경우에 청구가
-          <span
-            className="text_12"
-            style={{ letterSpacing: "-0.4pt", lineHeight: "1.2" }}
-          />
-          가능합니다.
-        </li>
-        <li
-          className="block_46"
-          style={{
-            display: "list-item",
-            fontSize: "0.75em",
-            marginBottom: 0,
-            marginLeft: "25.5pt",
-            marginRight: 0,
-            marginTop: "1pt",
-            paddingBottom: 0,
-            paddingTop: 0,
-            textAlign: "left",
-          }}
-        >
-          본 견적서는 교부일로부터 1개월간
-          <span className="text_2" style={{ letterSpacing: "-0.1pt" }} />
-          유효합니다.
-        </li>
-        <li
-          className="block_47"
-          style={{
-            display: "list-item",
-            fontSize: "0.75em",
-            lineHeight: "1.2",
-            marginBottom: 0,
-            marginLeft: "26.1pt",
-            marginRight: "7.15pt",
-            marginTop: "1.05pt",
-            paddingBottom: 0,
-            paddingTop: 0,
-            textAlign: "left",
-          }}
-        >
-          본
-          <span
-            className="text_13"
-            style={{ letterSpacing: "-0.2pt", lineHeight: "1.2" }}
-          />
-          견적서에
-          <span
-            className="text_14"
-            style={{ letterSpacing: "-0.35pt", lineHeight: "1.2" }}
-          />
-          포함되지
-          <span
-            className="text_15"
-            style={{ letterSpacing: "-0.3pt", lineHeight: "1.2" }}
-          />
-          아니한
-          <span
-            className="text_14"
-            style={{ letterSpacing: "-0.35pt", lineHeight: "1.2" }}
-          />
-          부품을
-          <span
-            className="text_13"
-            style={{ letterSpacing: "-0.2pt", lineHeight: "1.2" }}
-          />
-          추가
-          <span
-            className="text_15"
-            style={{ letterSpacing: "-0.3pt", lineHeight: "1.2" }}
-          />
-          시에는
-          <span
-            className="text_14"
-            style={{ letterSpacing: "-0.35pt", lineHeight: "1.2" }}
-          />
-          소비자의
-          <span
-            className="text_14"
-            style={{ letterSpacing: "-0.35pt", lineHeight: "1.2" }}
-          />
-          동의를
-          <span
-            className="text_16"
-            style={{ letterSpacing: "-0.15pt", lineHeight: "1.2" }}
-          />
-          받아야
-          <span
-            className="text_14"
-            style={{ letterSpacing: "-0.35pt", lineHeight: "1.2" }}
-          />
-          하며,
-          <span
-            className="text_17"
-            style={{ letterSpacing: "-0.25pt", lineHeight: "1.2" }}
-          />
-          정비의뢰자는
-          <span
-            className="text_15"
-            style={{ letterSpacing: "-0.3pt", lineHeight: "1.2" }}
-          />
-          동의한
-          <span
-            className="text_14"
-            style={{ letterSpacing: "-0.35pt", lineHeight: "1.2" }}
-          />
-          부품
-          <span
-            className="text_13"
-            style={{ letterSpacing: "-0.2pt", lineHeight: "1.2" }}
-          />
-          <span
-            className="text_18"
-            style={{ letterSpacing: "-0.7pt", lineHeight: "1.2" }}
-          >
-            및
-          </span>
-          작업부분만 금액을
-          <span
-            className="text_19"
-            style={{ letterSpacing: "-0.05pt", lineHeight: "1.2" }}
-          />
-          지불합니다.
-        </li>
-        <li
-          className="block_48"
-          style={{
-            display: "list-item",
-            fontSize: "0.75em",
-            marginBottom: 0,
-            marginLeft: "25.5pt",
-            marginRight: 0,
-            marginTop: 0,
-            paddingBottom: 0,
-            paddingTop: 0,
-            textAlign: "left",
-          }}
-        >
-          공급자의 직인이 없는 것은 무효로
-          <span className="text_20" style={{ letterSpacing: "-0.35pt" }} />
-          합니다.
-        </li>
-        <li
-          className="block_49"
-          style={{
-            display: "list-item",
-            fontSize: "0.75em",
-            marginBottom: 0,
-            marginLeft: "25.5pt",
-            marginRight: 0,
-            marginTop: "1.05pt",
-            paddingBottom: 0,
-            paddingTop: 0,
-            textAlign: "left",
-          }}
-        >
-          부품가는 견적일자
-          <span className="text_21" style={{ letterSpacing: "-0.2pt" }} />
-          기준입니다.
-        </li>
-        <li
-          className="block_50"
-          style={{
-            display: "list-item",
-            fontSize: "0.75em",
-            lineHeight: "1.2",
-            marginBottom: 0,
-            marginLeft: "25.7pt",
-            marginRight: "6.95pt",
-            marginTop: "1.05pt",
-            paddingBottom: 0,
-            paddingTop: 0,
-            textAlign: "left",
-          }}
-        >
-          본
-          <span
-            className="text_22"
-            style={{ letterSpacing: "-0.95pt", lineHeight: "1.2" }}
-          />
-          견적서는
-          <span
-            className="text_22"
-            style={{ letterSpacing: "-0.95pt", lineHeight: "1.2" }}
-          />
-          2부를
-          <span
-            className="text_22"
-            style={{ letterSpacing: "-0.95pt", lineHeight: "1.2" }}
-          />
-          작성,
-          <span
-            className="text_23"
-            style={{ letterSpacing: "-0.8pt", lineHeight: "1.2" }}
-          />
-          정비의뢰자에게
-          <span
-            className="text_22"
-            style={{ letterSpacing: "-0.95pt", lineHeight: "1.2" }}
-          />
-          1부를
-          <span
-            className="text_22"
-            style={{ letterSpacing: "-0.95pt", lineHeight: "1.2" }}
-          />
-          교부하고,
-          <span
-            className="text_23"
-            style={{ letterSpacing: "-0.8pt", lineHeight: "1.2" }}
-          />
-          정비업자는
-          <span
-            className="text_24"
-            style={{ letterSpacing: "-1.05pt", lineHeight: "1.2" }}
-          />
-          1부를
-          <span
-            className="text_22"
-            style={{ letterSpacing: "-0.95pt", lineHeight: "1.2" }}
-          />
-          1년간
-          <span
-            className="text_24"
-            style={{ letterSpacing: "-1.05pt", lineHeight: "1.2" }}
-          />
-          문서
-          <span
-            className="text_25"
-            style={{ letterSpacing: "-0.9pt", lineHeight: "1.2" }}
-          />
-          또는
-          <span
-            className="text_22"
-            style={{ letterSpacing: "-0.95pt", lineHeight: "1.2" }}
-          />
-          전산자료로
-          <span
-            className="text_22"
-            style={{ letterSpacing: "-0.95pt", lineHeight: "1.2" }}
-          />
-          <span
-            className="text_17"
-            style={{ letterSpacing: "-0.25pt", lineHeight: "1.2" }}
-          >
-            보관하
-          </span>
-          여야
-          <span
-            className="text_26"
-            style={{ letterSpacing: "0.05pt", lineHeight: "1.2" }}
-          />
-          합니다.
-        </li>
-      </ol>
-      <p
-        className="block_51"
-        style={{
-          display: "block",
-          fontSize: "0.41667em",
-          lineHeight: "1.2",
-          marginBottom: 0,
-          marginLeft: "5.7pt",
-          marginRight: 0,
-          marginTop: 0,
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-        }}
-      />
-      <p
-        className="block_52"
-        style={{
-          display: "block",
-          fontSize: "0.75em",
-          marginBottom: 0,
-          marginLeft: "377pt",
-          marginRight: 0,
-          marginTop: "4.3pt",
-          paddingBottom: 0,
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          textAlign: "left",
-          textIndent: 0,
-        }}
-      >
-        210mm×297mm[백상지 80g/㎡]
-      </p>
     </div>
   );
 };
