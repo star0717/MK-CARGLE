@@ -925,6 +925,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                             }}
                             name="tsCode"
                             disabled={modify}
+                            cursor={modify ? `default` : `pointer`}
                           >
                             {data.tsCode}
                           </SmallButton>
