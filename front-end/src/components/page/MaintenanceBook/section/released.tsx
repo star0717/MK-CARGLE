@@ -313,6 +313,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     setMtInfo(maintenanceData);
     setModalOption("editMolit");
     setModalOpen(true);
+    setModify(!modify);
   };
 
   /*********************************************************************
