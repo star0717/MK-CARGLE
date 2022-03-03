@@ -30,10 +30,12 @@ import {
   tsItemListE,
   tsItemListH,
   tsItemListS,
+  getTsItem,
+  tsClassB,
 } from "../../../../constants/part.const";
-import { useResizeDetector } from "react-resize-detector";
+import { _pPartsSetProps } from "src/configure/_pProps.entity";
 
-const MolitSettingModal: NextPage<any> = (props) => {
+const MolitSettingModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -48,6 +50,9 @@ const MolitSettingModal: NextPage<any> = (props) => {
   const [selectClass, setSelectClass] = useState<string>("all"); // 선택한 분류
   const [tsItemList, setTsItemList] = useState<TsItem[]>(tsItemListAll); // 선택한 국토부 리스트
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
+  const [clickDoc, setClickDoc] = useState<TsItem>(
+    getTsItem(props.clickDoc.tsCode)
+  );
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -93,7 +98,6 @@ const MolitSettingModal: NextPage<any> = (props) => {
     const newList: TsItem[] = [];
     tsItemList.forEach((tsItem: TsItem) => {
       if (
-        // tsItem.class.description.includes(searchText) ||
         tsItem.class.label.includes(searchText) ||
         tsItem.index.includes(searchText) ||
         tsItem.name.includes(searchText) ||
@@ -121,6 +125,49 @@ const MolitSettingModal: NextPage<any> = (props) => {
       }
     return tsContent;
   };
+  /**
+   * clickDoc 세팅 핸들러
+   * @param item
+   */
+  const setDocHandler = (item: TsItem) => {
+    setClickDoc({
+      class: item.class,
+      index: item.index,
+      name: item.name,
+      nickName: item.nickName,
+      options: item.options,
+    });
+  };
+
+  /**
+   * clickDoc 초기화 핸들러
+   */
+  const resetDocHandler = () => {
+    setClickDoc({
+      class: tsClassB,
+      index: "",
+      name: "",
+      nickName: "",
+      options: [],
+    });
+  };
+
+  /**
+   * 정비항목등록 핸들러
+   */
+  const saveHandler = () => {
+    props.setWorkList(
+      props.workList.map((item) =>
+        item.name === props.clickDoc.name
+          ? {
+              ...item,
+              tsCode: clickDoc.class.label + clickDoc.index,
+            }
+          : item
+      )
+    );
+    props.setModalOpen(!props.modalOpen);
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -128,9 +175,6 @@ const MolitSettingModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  console.log(props);
-
-  const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper>
@@ -237,7 +281,13 @@ const MolitSettingModal: NextPage<any> = (props) => {
                       {item.index}
                     </TableRowLIST>
                     <TableRowLIST width={`10%`}>
-                      <SmallButton kindOf="default" height={`34px`}>
+                      <SmallButton
+                        kindOf="default"
+                        height={`34px`}
+                        onClick={() => {
+                          setDocHandler(item);
+                        }}
+                      >
                         선택
                       </SmallButton>
                     </TableRowLIST>
@@ -279,8 +329,9 @@ const MolitSettingModal: NextPage<any> = (props) => {
                 textOverflow={`ellipsis`}
                 overflow={`hidden`}
                 whiteSpace={`nowrap`}
+                readOnly
               >
-                정비항목입니다.
+                {props.clickDoc.name || ""}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -304,11 +355,22 @@ const MolitSettingModal: NextPage<any> = (props) => {
                 overflow={`hidden`}
                 whiteSpace={`nowrap`}
               >
-                국토부항목입니다.
+                {clickDoc.name
+                  ? `${genTsContent(clickDoc.name, {
+                      nickName: clickDoc.nickName,
+                      options: clickDoc.options,
+                    })}(${clickDoc.class.label}${clickDoc.index})`
+                  : ""}
               </Text>
-              <Text color={`#d6263b`}>
+              <IconButton
+                shadow="none"
+                color={`#d6263b`}
+                onClick={() => {
+                  resetDocHandler();
+                }}
+              >
                 <AiFillMinusSquare />
-              </Text>
+              </IconButton>
             </Wrapper>
           </Wrapper>
         </Wrapper>
@@ -319,7 +381,9 @@ const MolitSettingModal: NextPage<any> = (props) => {
           kindOf={`white`}
           width={`260px`}
           height={`50px`}
-          onClick={props.setModalOpen(!props.modalOpen)}
+          onClick={() => {
+            props.setModalOpen(!props.modalOpen);
+          }}
         >
           취소
         </CommonButton>
@@ -327,7 +391,7 @@ const MolitSettingModal: NextPage<any> = (props) => {
           type="button"
           width={`260px`}
           height={`50px`}
-          onClick={console.log("save!")}
+          onClick={saveHandler}
         >
           정비항목등록
         </CommonButton>

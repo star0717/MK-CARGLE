@@ -133,6 +133,8 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
 export interface _pPartsSetProps extends _MainProps {
   modalOpen?: boolean;
   setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  clickDoc?: MainWork;
+  setClickDoc?: React.Dispatch<React.SetStateAction<MainWork>>;
   modalOption?: string;
   setModalOption?: React.Dispatch<React.SetStateAction<string>>;
   partSetData?: Partial<PartsSet>;
