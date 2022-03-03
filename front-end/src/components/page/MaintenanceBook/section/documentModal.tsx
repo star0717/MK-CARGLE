@@ -145,30 +145,34 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           }
           alert("정비내역을 저장했습니다.");
           props.setMtInfo(res.payload);
-          props.setModalOpen(false);
+          if (pubCheck.print) return onPrintHandler();
+          if (!pubCheck.print && !pubCheck.online)
+            return props.setModalOpen(false);
         },
         (err) => {
           return alert("출고에 실패했습니다.");
         }
       );
-    }
-
-    if (pubCheck.print) {
-      onPrintHandler();
+    } else {
+      if (!pubCheck.print && !pubCheck.online)
+        return alert("발급방식을 선택해주세요.");
+      if (pubCheck.print) return onPrintHandler();
     }
   };
-  console.log("###", props.mtInfo.works);
 
   /** 프린트 handler */
   const onPrintHandler = useReactToPrint({
     content: () => {
-      let printElem = document.createElement("div");
-      if (fileCheck.eCheck) printElem.append(estimateRef.current);
-      if (fileCheck.sCheck) printElem.append(statementRef.current);
+      const printElem = document.createElement("div");
+      const eNode = estimateRef.current.cloneNode(true);
+      const sNode = estimateRef.current.cloneNode(true);
+      if (fileCheck.eCheck) printElem.appendChild(eNode);
+      if (fileCheck.sCheck) printElem.appendChild(sNode);
       return printElem;
     },
     onAfterPrint: () => {
       if (reOption) {
+        props.setModalOpen(false);
         return router.push(
           `${UseLink.MAINTENANCE_BOOK}?id=${props.mtInfo._id}&step=${MainStatus.RELEASED}`
         );
@@ -442,10 +446,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             </CommonButton>
           </CommonButtonWrapper>
         )}
-        <Wrapper display={`none`}>
-          <EstimateFile ref={estimateRef} />
-          <StatementFile ref={statementRef} />
-        </Wrapper>
+      </Wrapper>
+      <Wrapper display={`none`}>
+        <EstimateFile ref={estimateRef} />
+        <StatementFile ref={statementRef} />
       </Wrapper>
     </WholeWrapper>
   );
