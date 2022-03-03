@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { NextPage } from "next";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -23,8 +23,6 @@ import {
   CommonForm,
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
-import { IoIosCloseCircle } from "react-icons/io";
-import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
 import { FaMinusSquare } from "react-icons/fa";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
 import { trim } from "src/modules/commonModule";
@@ -32,11 +30,17 @@ import { formRegEx } from "src/validation/regEx";
 import { useDispatch } from "react-redux";
 import { _aPatchMaintenancesRelease } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
+import { useReactToPrint } from "react-to-print";
+import EstimateFile from "../../FileHTML/estimateFile";
+
 const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+
+  const componentRef = useRef<HTMLDivElement>(null);
+
   // react-hook-form 사용을 위한 선언
   const {
     register,
@@ -71,8 +75,6 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     setPhoneList(phoneList.filter((num, idx) => idx !== index));
   };
 
-  console.log(props.mtInfo);
-
   /**
    * 출고완료
    */
@@ -93,6 +95,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
       }
     );
   };
+
+  const onPrintHandler = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   /*********************************************************************
    * 4. Props settings
@@ -293,7 +299,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               width={`300px`}
               height={`50px`}
               type="button"
-              onClick={() => {}}
+              onClick={onPrintHandler}
             >
               전송 및 출력
             </CommonButton>
@@ -332,6 +338,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             </CommonButton>
           </CommonButtonWrapper>
         )}
+        <Wrapper display={`none`}>
+          <EstimateFile ref={componentRef} />
+        </Wrapper>
       </Wrapper>
     </WholeWrapper>
   );
