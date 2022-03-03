@@ -932,6 +932,7 @@ export const TextArea = styled.textarea<any>`
   text-align: ${(props) => props.textAlign};
   vertical-align: ${(props) => props.vertical};
   resize: none;
+  box-shadow: ${(props) => props.shadow};
 
   &:focus {
     outline: none;

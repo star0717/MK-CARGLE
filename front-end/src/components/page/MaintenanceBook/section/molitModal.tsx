@@ -94,7 +94,7 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
       </Wrapper>
       {molitCheck ? (
         //국토부 내용이 있다면
-        <Wrapper>
+        <Wrapper padding={`0px 120px`}>
           {props.modalOption.indexOf("Bts") !== -1 ? (
             <Wrapper dr={`row`} ju={`flex-end`}>
               <SmallButton
