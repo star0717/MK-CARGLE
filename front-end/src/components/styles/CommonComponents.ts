@@ -1968,6 +1968,7 @@ export const ColorSpan = styled.span<any>`
   color: ${(props) => props.color};
   margin: ${(props) => props.margin || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
+  font-weight: ${(props) => props.fontWeight || ``};
 `;
 
 export const SpeechBubbleLeft = styled.div<any>`
