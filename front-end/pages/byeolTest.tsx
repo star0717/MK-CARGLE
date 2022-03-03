@@ -383,7 +383,7 @@ const ByeolTest: NextPage = () => {
           </Wrapper>
           {/* 정비사업자 정보 끝 */}
 
-          {/* 견적내용 시작 */}
+          {/* 작업내용 시작 */}
           <Wrapper
             border={`1px solid #000`}
             height={`auto`}
@@ -405,7 +405,7 @@ const ByeolTest: NextPage = () => {
                 height={`100%`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  타이어교체
+                  {/* 정비내역 입력 */}
                 </Text>
               </Wrapper>
               <Wrapper
@@ -559,6 +559,7 @@ const ByeolTest: NextPage = () => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
+          {/* 총계 입력란 시작 */}
           <Wrapper
             border={`1px solid #000`}
             borderTop={`none`}
@@ -657,7 +658,6 @@ const ByeolTest: NextPage = () => {
             </Wrapper>
           </Wrapper>
 
-          {/* 보험/일반 구분 끝 */}
           <Wrapper al={`flex-start`} padding={`2px`}>
             <Text fontSize={`0.92em`} fontWeight={`400`}>
               「자동차관리법」 제58조제4항 및 같은 법 시행규칙 제134조제2항에
