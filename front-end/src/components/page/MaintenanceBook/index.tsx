@@ -68,6 +68,9 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    * 3. Handlers
    *********************************************************************/
   useEffect(() => {
+    console.log(
+      "!!!!!!!!props가 변경됨!!!!!!!!!!!!!!!!!!!props가 변경됨!!!!!!!!!!!!!!!!!!props가 변경됨!!!!!!!!!!!!!!!!!!props가 변경됨!!!!!!!!!!!!!!!!!!props가 변경됨!!!!!!!!!!"
+    );
     setFindResult(props.data);
   }, [props]);
 

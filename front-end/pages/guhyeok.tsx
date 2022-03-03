@@ -28,13 +28,12 @@ const TestPage: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <>
-      <Wrapper padding={`100px`}>
+      <Wrapper padding={`0px`}>
         <Wrapper
           width={`49.58333em`}
           height={`70.08334em`}
           margin={`0 auto`}
-          padding={`60px`}
-          border={`1px solid #c4c4c4`}
+          padding={`0px`}
           ju={`flex-start`}
           al={`flex-start`}
         >
@@ -58,9 +57,12 @@ const TestPage: NextPage<any> = (props) => {
             <Text
               fontSize={`0.83em`}
               fontWeight={`400`}
-              width={`100px`}
+              width={`160px`}
               textAlign={`right`}
-            ></Text>
+            >
+              {/* 일련번호 입력하세요 */}
+              20150128001008
+            </Text>
           </Wrapper>
 
           {/* 차량소유자 정보 시작 */}
@@ -99,12 +101,12 @@ const TestPage: NextPage<any> = (props) => {
             >
               <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 등록번호 입력하세용 */}
+                  {/* 등록번호 입력하세용 */}12가1234
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 등록년월일 입력하세용 */}
+                  {/* 등록년월일 입력하세용 */}2018년 08월 15일
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -131,7 +133,7 @@ const TestPage: NextPage<any> = (props) => {
                   height={`100%`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 차종입력칸이용 */}
+                    {/* 차종입력칸이용 */} 그렌저 TG Q270
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -150,7 +152,7 @@ const TestPage: NextPage<any> = (props) => {
                   padding={`0px 10px`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 주행거리 입력~~ */}
+                    {/* 주행거리 입력~~ */} 185,550
                   </Text>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
                     km
@@ -169,7 +171,7 @@ const TestPage: NextPage<any> = (props) => {
                 </Wrapper>
                 <Wrapper width={`80%`}>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 차대번호 입력하세용~ */}
+                    {/* 차대번호 입력하세용~ */} KGSDGSDGSDGSDG
                   </Text>
                 </Wrapper>
               </Wrapper>
@@ -216,7 +218,7 @@ const TestPage: NextPage<any> = (props) => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 사업자등록번호 입력 */}
+                    {/* 사업자등록번호 입력 */}33-888-00960
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -236,7 +238,7 @@ const TestPage: NextPage<any> = (props) => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 정비업 등록번호 입력이용 */}
+                    {/* 정비업 등록번호 입력이용 */} GSDGSDGSDGSDGS
                   </Text>
                 </Wrapper>
               </Wrapper>
@@ -259,7 +261,7 @@ const TestPage: NextPage<any> = (props) => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 댕댕나라 윤초코 */}
+                    {/* 댕댕나라 윤초코 */} 주식회사 엠케이 변무영
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -294,7 +296,8 @@ const TestPage: NextPage<any> = (props) => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 댕댕나라 멍멍구 왈왈동 */}
+                    {/* 댕댕나라 멍멍구 왈왈동 */} 대전광역시 유성구 은구비로8
+                    보광빌딩 402호(MK)
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -306,11 +309,11 @@ const TestPage: NextPage<any> = (props) => {
                   padding={`4px 6px`}
                   dr={`row`}
                 >
-                  <Text fontSize={`0.75em`} fontWeight={`400`}>
-                    (전화번호&nbsp;
+                  <Text fontSize={`0.75em`} fontWeight={`400`} width={`100px`}>
+                    (전화번호:&nbsp;
                   </Text>
-                  <Text fontSize={`0.75em`} fontWeight={`400`}>
-                    010-1111-1111
+                  <Text fontSize={`0.75em`} fontWeight={`400`} width={`120px`}>
+                    1644-3486
                   </Text>
                   <Text fontSize={`0.75em`} fontWeight={`400`}>
                     )
@@ -361,8 +364,8 @@ const TestPage: NextPage<any> = (props) => {
           </Wrapper>
 
           {/* 견적내용 시작 */}
-          <Wrapper border={`2px solid #000`} height={`180px`}>
-            <Wrapper dr={`row`} height={`20%`} borderBottom={`1px solid #ccc`}>
+          <Wrapper border={`2px solid #000`} height={`auto`}>
+            <Wrapper dr={`row`} height={`36px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -403,7 +406,7 @@ const TestPage: NextPage<any> = (props) => {
               </Wrapper>
               <Wrapper
                 width={`15%`}
-                height={`100%`}
+                height={`36px`}
                 borderRight={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -416,7 +419,72 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
+              <Wrapper
+                width={`30%`}
+                borderRight={`1px solid #ccc`}
+                height={`100%`}
+              >
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/* 견적내용 입력하세요 */} 디젤 분사 펌프 교환
+                </Text>
+              </Wrapper>
+              <Wrapper
+                width={`40%`}
+                borderRight={`1px solid #ccc`}
+                height={`100%`}
+              >
+                <Wrapper dr={`row`} height={`100%`}>
+                  <Wrapper
+                    width={`25%`}
+                    borderRight={`1px solid #ccc`}
+                    height={`100%`}
+                  >
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {/* 코드 입력하세요 */} A
+                    </Text>
+                  </Wrapper>
+                  <Wrapper
+                    width={`25%`}
+                    borderRight={`1px solid #ccc`}
+                    height={`100%`}
+                  >
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {/*수량 입력하세요 */}3
+                    </Text>
+                  </Wrapper>
+                  <Wrapper
+                    width={`25%`}
+                    borderRight={`1px solid #ccc`}
+                    height={`100%`}
+                  >
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {/*단가 입력하세요*/}15,000,000
+                    </Text>
+                  </Wrapper>
+                  <Wrapper width={`25%`} height={`100%`}>
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {/*계 입력하세요*/} 45,000,000
+                    </Text>
+                  </Wrapper>
+                </Wrapper>
+              </Wrapper>
+              <Wrapper
+                width={`15%`}
+                height={`100%`}
+                borderRight={`1px solid #ccc`}
+              >
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*공임 입력하세요*/}14,000,000
+                </Text>
+              </Wrapper>
+              <Wrapper width={`15%`} height={`100%`}>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*합계 입력하세요*/}18,500,000
+                </Text>
+              </Wrapper>
+            </Wrapper>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -467,7 +535,7 @@ const TestPage: NextPage<any> = (props) => {
                 <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -518,7 +586,7 @@ const TestPage: NextPage<any> = (props) => {
                 <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -569,58 +637,7 @@ const TestPage: NextPage<any> = (props) => {
                 <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
-              <Wrapper
-                width={`30%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper
-                width={`40%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Wrapper dr={`row`} height={`100%`}>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`} height={`100%`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper
-                width={`15%`}
-                height={`100%`}
-                borderRight={`1px solid #ccc`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper width={`15%`} height={`100%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`30%`}
                 borderRight={`1px solid #ccc`}
@@ -692,7 +709,9 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*구분 입력하세요*/}일반
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -706,7 +725,9 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*부품 합계 입력하세요*/}800,000,000
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -720,7 +741,9 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*공입 합계 입력하세요*/}450,000,000
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -734,7 +757,9 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*총계 입력하세요*/}999,999,999
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -748,7 +773,9 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*부가 가치세 입력하세요*/}999,999,999
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -762,7 +789,9 @@ const TestPage: NextPage<any> = (props) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*총액 입력하세요!*/} 999,999,999
+                </Text>
               </Wrapper>
             </Wrapper>
           </Wrapper>
@@ -780,7 +809,7 @@ const TestPage: NextPage<any> = (props) => {
               fontWeight={`400`}
               width={`80px`}
             >
-              {/* 연도 */}
+              {/* 연도 */}2022
             </Text>
             <Text
               fontSize={`0.75em`}
@@ -796,7 +825,7 @@ const TestPage: NextPage<any> = (props) => {
               fontWeight={`400`}
               width={`40px`}
             >
-              {/* 월 */}
+              {/* 월 */}03
             </Text>
             <Text
               fontSize={`0.75em`}
@@ -812,7 +841,7 @@ const TestPage: NextPage<any> = (props) => {
               fontWeight={`400`}
               width={`40px`}
             >
-              {/* 일 */}
+              {/* 일 */}03
             </Text>
             <Text
               fontSize={`0.75em`}
@@ -840,7 +869,18 @@ const TestPage: NextPage<any> = (props) => {
                   작성자
                 </Text>
               </Wrapper>
-              <Wrapper width={`80%`} al={`flex-end`}>
+              <Wrapper width={`30%`} al={`flex-start`}>
+                <Text
+                  textAlign={`right`}
+                  fontSize={`0.83em`}
+                  fontWeight={`400`}
+                  padding={`0px 16px`}
+                >
+                  {/* 작성자 입력하세용 */}
+                  윤별
+                </Text>
+              </Wrapper>
+              <Wrapper width={`50%`} al={`flex-end`}>
                 <Text
                   fontSize={`0.67em`}
                   fontWeight={`400`}
@@ -867,7 +907,18 @@ const TestPage: NextPage<any> = (props) => {
                   대표이사
                 </Text>
               </Wrapper>
-              <Wrapper width={`80%`} al={`flex-end`}>
+              <Wrapper width={`30%`} al={`flex-start`}>
+                <Text
+                  textAlign={`right`}
+                  fontSize={`0.83em`}
+                  fontWeight={`400`}
+                  padding={`0px 16px`}
+                >
+                  {/* 대표이사 입력하세용 */}
+                  변무영
+                </Text>
+              </Wrapper>
+              <Wrapper width={`50%`} al={`flex-end`}>
                 <Text
                   fontSize={`0.67em`}
                   fontWeight={`400`}

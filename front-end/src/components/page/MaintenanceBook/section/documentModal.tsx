@@ -71,13 +71,14 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
   const [phoneList, setPhoneList] = useState<string[]>([]); // 번호 리스트
   const [fileCheck, setFileCheck] = useState<FileCheck>({
-    eCheck: false,
-    sCheck: false,
+    eCheck: true,
+    sCheck: true,
   }); // 서류 선택 여부
   const [pubCheck, setPubCheck] = useState<Publish>({
-    print: false,
+    print: true,
     online: false,
   }); // 발급 선택 여부
+  const [reOption, setReOption] = useState<boolean>(null);
 
   /*********************************************************************
    * 3. Handlers
@@ -120,56 +121,61 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /**
    * 출고완료
    */
-  const onReleasedHandler = async () => {
-    await dispatch(
-      _aPatchMaintenancesRelease(props.mtInfo._id, props.mtInfo)
-    ).then(
-      (res: _iMaintenancesOne) => {
-        if (!res.payload) {
+  const onReleasedHandler = async (opt: boolean) => {
+    if (
+      (fileCheck.eCheck || fileCheck.sCheck) &&
+      !pubCheck.print &&
+      !pubCheck.online
+    )
+      return alert("발급방식을 선택하세요.");
+    if (
+      (pubCheck.print || pubCheck.online) &&
+      !fileCheck.eCheck &&
+      !fileCheck.sCheck
+    )
+      return alert("발급서류를 선택하세요");
+
+    if (opt) {
+      await dispatch(
+        _aPatchMaintenancesRelease(props.mtInfo._id, props.mtInfo)
+      ).then(
+        (res: _iMaintenancesOne) => {
+          if (!res.payload) {
+            return alert("출고에 실패했습니다.");
+          }
+          alert("정비내역을 저장했습니다.");
+          props.setMtInfo(res.payload);
+          props.setModalOpen(false);
+        },
+        (err) => {
           return alert("출고에 실패했습니다.");
         }
-        props.setMtInfo(res.payload);
-        props.setModalOpen(false);
-        alert("정비내역을 저장했습니다.");
-        router.push(
-          `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.RELEASED}`
-        );
-      },
-      (err) => {
-        return alert("출고에 실패했습니다.");
-      }
-    );
+      );
+    }
+
+    if (pubCheck.print) {
+      onPrintHandler();
+    }
   };
+  console.log("###", props.mtInfo.works);
 
-  /**
-   * 전송 및 출력 handler
-   */
-  // const onPublishHandler = () => {
-  //   if (!pubCheck.print && !pubCheck.online)
-  //     return alert("발급방식을 선택하세요.");
-  //   if (pubCheck.print) {
-  //     // let file
-  //     // if (fileCheck.eCheck)
-  //     // if (fileCheck.sCheck)
-  //     useReactToPrint({
-  //       content: () => estimateRef.current,
-  //       // onAfterPrint: () =>{
-
-  //       // }
-  //     });
-  //   }
-  // };
-  const onPublishHandler = useReactToPrint({
-    // content: () => estimateRef.current,
+  /** 프린트 handler */
+  const onPrintHandler = useReactToPrint({
     content: () => {
-      const PrintElem = document.createElement("div");
-      if (fileCheck.eCheck) PrintElem.appendChild(estimateRef.current);
-      if (fileCheck.sCheck) PrintElem.appendChild(statementRef.current);
-      return PrintElem;
+      let printElem = document.createElement("div");
+      if (fileCheck.eCheck) printElem.append(estimateRef.current);
+      if (fileCheck.sCheck) printElem.append(statementRef.current);
+      return printElem;
     },
-    // onAfterPrint: () =>{
-
-    // }
+    onAfterPrint: () => {
+      if (reOption) {
+        return router.push(
+          `${UseLink.MAINTENANCE_BOOK}?id=${props.mtInfo._id}&step=${MainStatus.RELEASED}`
+        );
+      } else {
+        return props.setModalOpen(false);
+      }
+    },
   });
 
   /*********************************************************************
@@ -241,6 +247,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <CheckInput
                   type="checkbox"
                   name="eCheck"
+                  checked={fileCheck.eCheck}
                   onChange={onCheckHandler}
                 />
                 <CheckMark></CheckMark>
@@ -250,6 +257,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <CheckInput
                   type="checkbox"
                   name="sCheck"
+                  checked={fileCheck.sCheck}
                   onChange={onCheckHandler}
                 />
                 <CheckMark></CheckMark>
@@ -264,6 +272,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <CheckInput
                   type="checkbox"
                   name="print"
+                  checked={pubCheck.print}
                   onChange={onCheckHandler}
                 />
                 <CheckMark></CheckMark>
@@ -273,6 +282,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <CheckInput
                   type="checkbox"
                   name="online"
+                  checked={pubCheck.online}
                   onChange={onCheckHandler}
                 />
                 <CheckMark></CheckMark>
@@ -387,7 +397,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               width={`300px`}
               height={`50px`}
               type="button"
-              onClick={onPublishHandler}
+              onClick={() => {
+                setReOption(false);
+                onReleasedHandler(false);
+              }}
             >
               전송 및 출력
             </CommonButton>
@@ -420,7 +433,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               width={`300px`}
               height={`50px`}
               type="button"
-              onClick={onReleasedHandler}
+              onClick={() => {
+                setReOption(true);
+                onReleasedHandler(true);
+              }}
             >
               출고완료
             </CommonButton>
