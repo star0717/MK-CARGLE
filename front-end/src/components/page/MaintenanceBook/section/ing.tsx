@@ -62,6 +62,7 @@ import { _iMaintenancesOne } from "store/interfaces";
 import DocumentModal from "./documentModal";
 import MolitModal from "./molitModal";
 import PaymentModal from "./paymentModal";
+import MolitSettingModal from "./molitSettingModal";
 
 const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -100,6 +101,8 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
+
+  const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
 
   /*********************************************************************
    * 3. Handlers
@@ -319,7 +322,10 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const partsSetProps: _pPartsSetProps = {
     ...props,
+    modalOpen,
     setModalOpen,
+    clickDoc,
+    setClickDoc,
     modalOption,
     setModalOption,
     partSetClass,
@@ -867,22 +873,22 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                           </datalist>
                         </TableRowLIST>
                         <TableRowLIST width={`12%`}>
-                          <TextInput2
-                            type="text"
+                          <SmallButton
+                            kindOf={`input`}
+                            type="button"
                             ref={(elem: HTMLInputElement) =>
                               (inputRef.current[(idx + 1) * 7 - 6] = elem)
                             }
                             width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 6)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 6)
-                            }
-                            value={data.tsCode}
+                            onClick={() => {
+                              setClickDoc(data);
+                              setModalOption("Setting");
+                              setModalOpen(!modalOpen);
+                            }}
                             name="tsCode"
-                            readOnly
-                          />
+                          >
+                            {data.tsCode}
+                          </SmallButton>
                         </TableRowLIST>
                         <TableRowLIST width={`14%`}>
                           <Combo
@@ -1106,6 +1112,9 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
         )}
         {modalOption.indexOf("payment") === 0 && (
           <PaymentModal {...partsSetProps} />
+        )}
+        {modalOption.indexOf("Setting") === 0 && (
+          <MolitSettingModal {...partsSetProps} />
         )}
       </Modal>
     </WholeWrapper>
