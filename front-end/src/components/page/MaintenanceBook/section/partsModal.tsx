@@ -170,7 +170,7 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
           </SearchInputWrapper>
         </form>
       </Wrapper>
-      <Wrapper dr={`row`} padding={`40px 0px 0px`} ju={`space-between`}>
+      <Wrapper dr={`row`} padding={`30px 0px 0px`} ju={`space-between`}>
         {/* 부품분류 */}
         <Wrapper width={`20%`}>
           <TableWrapper>
@@ -179,8 +179,8 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
                 <TableHeadLIST width={`100%`}>부품분류</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
-              <TableBody>
+            <Wrapper overflow={`auto`} height={`400px`} ju={`flex-start`}>
+              <TableBody minHeight={`350px`}>
                 <TableRow
                   kindOf={
                     selectClass === "all" ? `selectClass` : `noSelectClass`
@@ -240,8 +240,8 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
                 <TableHeadLIST width={`10%`}>추가</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
-              <TableBody>
+            <Wrapper overflow={`auto`} height={`400px`} ju={`flex-start`}>
+              <TableBody minHeight={`350px`}>
                 {partList?.map((list: Part) => (
                   <TableRow key={list._id} kindOf={`noHover`}>
                     <TableRowLIST width={`45%`}>{list.name}</TableRowLIST>
@@ -278,8 +278,8 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
                 <TableHeadLIST width={`80%`}>부품명</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
-              <TableBody>
+            <Wrapper overflow={`auto`} height={`400px`} ju={`flex-start`}>
+              <TableBody minHeight={`350px`}>
                 {selectPart.length !== 0 ? (
                   selectPart?.map((part: Part) => (
                     <TableRow key={part._id} kindOf={`noHover`}>
@@ -307,7 +307,7 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
                     </TableRow>
                   ))
                 ) : (
-                  <Wrapper minHeight={`445px`}>
+                  <Wrapper minHeight={`350px`}>
                     <Text fontSize={`48px`} color={`#c4c4c4`}>
                       <BsEmojiFrownFill />
                     </Text>

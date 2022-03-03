@@ -239,7 +239,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               </TableHead>
             </Wrapper>
             <Wrapper overflow={`auto`} ju={`flex-start`}>
-              <TableBody minHeight={`200px`} margin={`10px 0px 0px 0px`}>
+              <TableBody minHeight={`200px`}>
                 <TableRow
                   height={`50px`}
                   kindOf={`noHover`}
@@ -279,6 +279,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
         {props.modalOption.indexOf("Bts") !== -1 ? (
           <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
             <CommonButton
+              width={`300px`}
+              height={`50px`}
               type="button"
               kindOf={`white`}
               onClick={() => {
@@ -287,13 +289,20 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             >
               취소
             </CommonButton>
-            <CommonButton type="button" onClick={() => {}}>
+            <CommonButton
+              width={`300px`}
+              height={`50px`}
+              type="button"
+              onClick={() => {}}
+            >
               전송 및 출력
             </CommonButton>
           </CommonButtonWrapper>
         ) : (
           <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
             <CommonButton
+              width={`300px`}
+              height={`50px`}
               type="button"
               kindOf={`white`}
               onClick={() => {
@@ -303,6 +312,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               취소
             </CommonButton>
             <CommonButton
+              width={`300px`}
+              height={`50px`}
               type="button"
               kindOf={`white`}
               onClick={() => {
@@ -311,7 +322,12 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             >
               이전으로
             </CommonButton>
-            <CommonButton type="button" onClick={onReleasedHandler}>
+            <CommonButton
+              width={`300px`}
+              height={`50px`}
+              type="button"
+              onClick={onReleasedHandler}
+            >
               출고완료
             </CommonButton>
           </CommonButtonWrapper>

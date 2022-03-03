@@ -141,7 +141,7 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
         <Wrapper width={`24%`}>
           <TableWrapper>
             <Wrapper isSticky={true}>
-              <TableHead radius={`8px 8px 0px 0px`}>
+              <TableHead>
                 <TableHeadLIST
                   width={`15%`}
                   color={`#51b351`}
@@ -150,8 +150,8 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
                 <TableHeadLIST width={`85%`}>세트항목</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
-              <TableBody>
+            <Wrapper overflow={`auto`} height={`400px`} ju={`flex-start`}>
+              <TableBody minHeight={`350px`}>
                 {props.partSetClass.length !== 0 ? (
                   props.partSetClass.map(
                     (set: Partial<PartsSet>, idx: number) => (
@@ -187,7 +187,7 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
                     )
                   )
                 ) : (
-                  <Wrapper minHeight={`445px`} border={`1px solid #ccc`}>
+                  <Wrapper minHeight={`350px`} border={`1px solid #ccc`}>
                     <Text fontSize={`48px`} color={`#c4c4c4`}>
                       <BsEmojiFrownFill />
                     </Text>
@@ -199,16 +199,16 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
           </TableWrapper>
         </Wrapper>
         {/* 상세정보 */}
-        <Wrapper width={`74%`} border={`1px solid #ccc`}>
+        <Wrapper width={`74%`}>
           <TableWrapper>
             <Wrapper isSticky={true}>
-              <TableHead radius={`0px`}>
+              <TableHead>
                 <TableHeadLIST width={`50%`}>부품명</TableHeadLIST>
                 <TableHeadLIST width={`50%`}>국토부</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
-              <TableBody>
+            <Wrapper overflow={`auto`} height={`400px`} ju={`flex-start`}>
+              <TableBody minHeight={`350px`}>
                 {props.partSetData &&
                 props.partSetData.partsCodes.length !== 0 ? (
                   props.partSetData.partsCodes.map((code: string) => {
@@ -226,7 +226,7 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
                     );
                   })
                 ) : (
-                  <Wrapper minHeight={`445px`}>
+                  <Wrapper minHeight={`350px`}>
                     <Text fontSize={`48px`} color={`#c4c4c4`}>
                       <BsEmojiFrownFill />
                     </Text>
