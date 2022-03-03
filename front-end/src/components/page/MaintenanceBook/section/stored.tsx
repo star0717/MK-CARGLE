@@ -899,21 +899,18 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                           </datalist>
                         </TableRowLIST>
                         <TableRowLIST width={`12%`}>
-                          <TextInput2
-                            type="text"
+                          <SmallButton
+                            kindOf={`input`}
+                            type="button"
                             ref={(elem: HTMLInputElement) =>
                               (inputRef.current[(idx + 1) * 7 - 6] = elem)
                             }
                             width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 6)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 6)
-                            }
                             value={data.tsCode}
+                            onClick={() => {
+                              console.log("click!!");
+                            }}
                             name="tsCode"
-                            readOnly
                           />
                         </TableRowLIST>
                         <TableRowLIST width={`14%`}>

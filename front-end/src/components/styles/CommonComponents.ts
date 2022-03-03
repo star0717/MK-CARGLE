@@ -578,6 +578,7 @@ export const SmallButton = styled.button<any>`
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
+  vertical-align: unset;
 
   ${(props) =>
     props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
@@ -604,6 +605,9 @@ export const SmallButton = styled.button<any>`
   ${(props) =>
     props.kindOf === `fillDefault` && `color ${props.theme.white_C};`}
   ${(props) => props.kindOf === `fillDefault` && `border : none;`}
+
+  ${(props) => props.kindOf === `input` && `background ${props.theme.white_C};`}
+    ${(props) => props.kindOf === `input` && `border ${props.theme.border};`}
   
 
   & svg {
@@ -630,6 +634,12 @@ export const SmallButton = styled.button<any>`
     ${(props) => props.kindOf === `fillDefault` && `border : none;`}
 
     ${(props) => props.kindOf === `ghost` && `box-shadow : none;`}
+
+    ${(props) => props.kindOf === `input` && `box-shadow : none;`}
+  }
+
+  &:focus {
+    ${(props) => props.kindOf === `input` && `out-line : none;`}
   }
 `;
 
@@ -873,17 +883,9 @@ export const TextInput2 = styled.input<any>`
   padding: ${(props) => props.padding || props.theme.inputPadding};
   border-radius: ${(props) => props.theme.radius};
   transition: ${(props) => props.transition || props.theme.transition};
-  margin: ${(props) => props.margin};
-  background-color: ${(props) => props.bgColor};
   font-size: 16px;
   align-items: ${(props) => props.al || ``};
   justify-content: ${(props) => props.ju || ``};
-  width: ${(props) => props.width};
-  height: ${(props) => props.height || `40px`};
-  border: ${(props) => props.theme.border};
-  padding: ${(props) => props.padding || props.theme.inputPadding};
-  border-radius: ${(props) => props.theme.radius};
-  transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   background-color: ${(props) => props.bgColor};
   line-height: ${(props) => props.lineHeight};
