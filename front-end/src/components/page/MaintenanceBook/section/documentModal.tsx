@@ -54,6 +54,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   const [point, setPoint] = useState<number>(0); // 포인트
   const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
   const [phoneList, setPhoneList] = useState<string[]>([]); // 번호 리스트
+  const [fileCheck, setFileCheck] = useState<any>(); // 서류 선택 여부
+  const [issuance, setIssuance] = useState<any>(); // 발급 선택 여부
 
   /*********************************************************************
    * 3. Handlers
