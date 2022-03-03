@@ -57,7 +57,10 @@ import {
   getStrMainCustomerType,
   MainCustomerType,
 } from "src/constants/maintenance.const";
-import { _aPatchMaintenancesEnd } from "store/action/user.action";
+import {
+  _aPatchMaintenancesEnd,
+  _aPatchMaintenancesSaveWorks,
+} from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
 import DocumentModal from "./documentModal";
 import MolitModal from "./molitModal";
@@ -297,24 +300,36 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
     };
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
-    await dispatch(
-      _aPatchMaintenancesEnd(maintenanceData._id, maintenanceData)
-    ).then(
-      (res: _iMaintenancesOne) => {
-        if (res.payload) {
-          if (opt) {
+
+    if (opt) {
+      await dispatch(
+        _aPatchMaintenancesEnd(maintenanceData._id, maintenanceData)
+      ).then(
+        (res: _iMaintenancesOne) => {
+          if (res.payload) {
             router.push(
-              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.DONE}`
+              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
             );
-          } else {
-            return alert("정비내역을 저장했습니다.");
           }
+        },
+        (err) => {
+          alert("정비내역 저장에 실패했습니다.");
         }
-      },
-      (err) => {
-        return alert("정비내역 저장에 실패했습니다.");
-      }
-    );
+      );
+    } else {
+      await dispatch(
+        _aPatchMaintenancesSaveWorks(maintenanceData._id, maintenanceData)
+      ).then(
+        (res: _iMaintenancesOne) => {
+          if (res.payload) {
+            alert("정비내역이 저장되었습니다.");
+          }
+        },
+        (err) => {
+          alert("정비내역 저장에 실패했습니다.");
+        }
+      );
+    }
   };
 
   /*********************************************************************

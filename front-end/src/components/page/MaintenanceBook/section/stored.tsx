@@ -59,6 +59,7 @@ import {
 } from "src/constants/maintenance.const";
 import {
   _aDeleteMaintenancesDelete,
+  _aPatchMaintenancesSaveWorks,
   _aPatchMaintenancesStart,
 } from "store/action/user.action";
 import { _iDeleteByUser, _iMaintenancesOne } from "store/interfaces";
@@ -116,7 +117,9 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     partSetClass[0]
   ); // 선택한 세트 데이터
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
-  const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
+  const [workList, setWorkList] = useState<MainWork[]>(
+    props?.data.mtData.works
+  ); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(priceInit); // 가격정보
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
@@ -314,24 +317,36 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     };
     if (maintenanceData.works.length === 0)
       return alert("정비내역을 추가해주세요.");
-    await dispatch(
-      _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
-    ).then(
-      (res: _iMaintenancesOne) => {
-        if (res.payload) {
-          if (opt) {
+
+    if (opt) {
+      await dispatch(
+        _aPatchMaintenancesStart(maintenanceData._id, maintenanceData)
+      ).then(
+        (res: _iMaintenancesOne) => {
+          if (res.payload) {
             router.push(
               `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
             );
-          } else {
-            return alert("정비내역을 저장했습니다.");
           }
+        },
+        (err) => {
+          alert("정비내역 저장에 실패했습니다.");
         }
-      },
-      (err) => {
-        alert("정비내역 저장에 실패했습니다.");
-      }
-    );
+      );
+    } else {
+      await dispatch(
+        _aPatchMaintenancesSaveWorks(maintenanceData._id, maintenanceData)
+      ).then(
+        (res: _iMaintenancesOne) => {
+          if (res.payload) {
+            alert("정비내역이 저장되었습니다.");
+          }
+        },
+        (err) => {
+          alert("정비내역 저장에 실패했습니다.");
+        }
+      );
+    }
   };
 
   /**
@@ -914,7 +929,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                             width={`100%`}
                             onClick={() => {
                               setClickDoc(data);
-                              //idx까지 보내야 할껏 같다.. 이말이야,..,
                               setModalOption("Setting");
                               setModalOpen(!modalOpen);
                             }}
