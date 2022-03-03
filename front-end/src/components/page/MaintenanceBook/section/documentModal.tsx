@@ -31,7 +31,8 @@ import { useDispatch } from "react-redux";
 import { _aPatchMaintenancesRelease } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
 import { useReactToPrint } from "react-to-print";
-import EstimateFile from "../../FileHTML/estimateFile";
+import EstimateFile from "src/components/page/FileHTML/estimateFile";
+import StatementFile from "src/components/page/FileHTML/statementFile";
 
 const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
@@ -49,7 +50,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
 
   const dispatch = useDispatch();
 
-  const componentRef = useRef<HTMLDivElement>(null);
+  const estimateRef = useRef<HTMLDivElement>(null);
+  const statementRef = useRef<HTMLDivElement>(null);
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -135,12 +137,33 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /**
    * 전송 및 출력 handler
    */
-  const onPublishHandler = () => {
-    if (pubCheck)
-      useReactToPrint({
-        content: () => componentRef.current,
-      });
-  };
+  // const onPublishHandler = () => {
+  //   if (!pubCheck.print && !pubCheck.online)
+  //     return alert("발급방식을 선택하세요.");
+  //   if (pubCheck.print) {
+  //     // let file
+  //     // if (fileCheck.eCheck)
+  //     // if (fileCheck.sCheck)
+  //     useReactToPrint({
+  //       content: () => estimateRef.current,
+  //       // onAfterPrint: () =>{
+
+  //       // }
+  //     });
+  //   }
+  // };
+  const onPublishHandler = useReactToPrint({
+    // content: () => estimateRef.current,
+    content: () => {
+      const PrintElem = document.createElement("div");
+      PrintElem.appendChild(estimateRef.current);
+      PrintElem.appendChild(statementRef.current);
+      return PrintElem;
+    },
+    // onAfterPrint: () =>{
+
+    // }
+  });
 
   /*********************************************************************
    * 4. Props settings
@@ -397,7 +420,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           </CommonButtonWrapper>
         )}
         <Wrapper display={`none`}>
-          <EstimateFile ref={componentRef} />
+          <EstimateFile ref={estimateRef} />
+          <StatementFile ref={statementRef} />
         </Wrapper>
       </Wrapper>
     </WholeWrapper>
