@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import {
   CommonButton,
   CommonButtonWrapper,
   CommonSmallTitle,
   IconButton,
-  RsWrapper,
   SearchInput,
   SearchInputWrapper,
   SmallButton,
@@ -16,31 +15,159 @@ import {
   TableRowLIST,
   TableWrapper,
   Text,
-  TextInput2,
   WholeWrapper,
   Wrapper,
 } from "src/components/styles/CommonComponents";
-import { useRouter } from "next/router";
-import { UseLink } from "src/configure/router.entity";
-import { MainStatus } from "src/constants/maintenance.const";
-import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
-import { AiFillPlusSquare, AiFillMinusSquare } from "react-icons/ai";
-import { partClassList, PartClass } from "src/constants/part.const";
-import { Part } from "src/models/part.entity";
+import { BsSearch } from "react-icons/bs";
+import { AiFillMinusSquare } from "react-icons/ai";
+import {
+  TsItem,
+  TsClass,
+  TsClassList,
+  tsItemListAll,
+  tsItemListB,
+  tsItemListD,
+  tsItemListE,
+  tsItemListH,
+  tsItemListS,
+  getTsItem,
+  tsClassB,
+} from "../../../../constants/part.const";
+import { _pPartsSetProps } from "src/configure/_pProps.entity";
 
-const MolitSettingModal: NextPage<any> = (props) => {
+const MolitSettingModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-  const router = useRouter();
+  class GenTsArgs {
+    nickName?: string;
+    options?: string[];
+  }
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [searchText, setSearchText] = useState<string>(""); // 검색 텍스트
+  const [selectClass, setSelectClass] = useState<string>("all"); // 선택한 분류
+  const [tsItemList, setTsItemList] = useState<TsItem[]>(tsItemListAll); // 선택한 국토부 리스트
+  const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
+  const [clickDoc, setClickDoc] = useState<TsItem>(
+    getTsItem(props.clickDoc.tsCode)
+  );
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 부품 분류 선택 handler -> 리스트 출력
+   */
+  useEffect(() => {
+    if (selectClass === "all") {
+      setTsItemList(tsItemListAll);
+    } else {
+      switch (selectClass) {
+        case "B":
+          return setTsItemList(tsItemListB);
+        case "D":
+          return setTsItemList(tsItemListD);
+        case "E":
+          return setTsItemList(tsItemListE);
+        case "H":
+          return setTsItemList(tsItemListH);
+        case "S":
+          return setTsItemList(tsItemListS);
+      }
+    }
+  }, [selectClass, reset]);
 
+  /**
+   * 검색 input handler
+   * @param e
+   */
+  const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
+
+  /**
+   * 검색 handler
+   * @param e
+   */
+  const onSearchFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!searchText) {
+      setReset(reset + 1);
+    }
+    const newList: TsItem[] = [];
+    tsItemList.forEach((tsItem: TsItem) => {
+      if (
+        tsItem.class.label.includes(searchText) ||
+        tsItem.index.includes(searchText) ||
+        tsItem.name.includes(searchText) ||
+        tsItem.nickName?.includes(searchText) ||
+        tsItem.options?.toString().includes(searchText)
+      ) {
+        newList.push(tsItem);
+      }
+    });
+    setTsItemList(newList);
+  };
+
+  /**
+   * 국토부 작업내용 표출을 위한 생성 함수
+   * @param name
+   * @param nickName
+   * @returns
+   */
+  const genTsContent = (name: string, args?: GenTsArgs) => {
+    let tsContent = name;
+    if (args?.nickName) tsContent += `(${args.nickName})`;
+    if (args?.options)
+      for (let i = 0; i < args.options.length; i++) {
+        tsContent += `(${args.options[i]})`;
+      }
+    return tsContent;
+  };
+  /**
+   * clickDoc 세팅 핸들러
+   * @param item
+   */
+  const setDocHandler = (item: TsItem) => {
+    setClickDoc({
+      class: item.class,
+      index: item.index,
+      name: item.name,
+      nickName: item.nickName,
+      options: item.options,
+    });
+  };
+
+  /**
+   * clickDoc 초기화 핸들러
+   */
+  const resetDocHandler = () => {
+    setClickDoc({
+      class: tsClassB,
+      index: "",
+      name: "",
+      nickName: "",
+      options: [],
+    });
+  };
+
+  /**
+   * 정비항목등록 핸들러
+   */
+  const saveHandler = () => {
+    props.setWorkList(
+      props.workList.map((item) =>
+        item.name === props.clickDoc.name
+          ? {
+              ...item,
+              tsCode: clickDoc.class.label + clickDoc.index,
+            }
+          : item
+      )
+    );
+    props.setModalOpen(!props.modalOpen);
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -48,12 +175,12 @@ const MolitSettingModal: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  console.log(props);
+
   return (
     <WholeWrapper>
       <CommonSmallTitle>국토부 정비 이력 설정</CommonSmallTitle>
       <Wrapper>
-        <form>
+        <form onSubmit={onSearchFormHandler}>
           <SearchInputWrapper
             type="text"
             width={`678px`}
@@ -67,6 +194,8 @@ const MolitSettingModal: NextPage<any> = (props) => {
                 padding={`0px 5px 0px 5px`}
                 placeholder="찾고싶은 정비 항목을 입력하세요."
                 type="text"
+                value={searchText}
+                onChange={onInputSearchHandler}
               />
             </Wrapper>
             <Wrapper width={`36px`} height={`46px`}>
@@ -85,14 +214,44 @@ const MolitSettingModal: NextPage<any> = (props) => {
           <TableWrapper minHeight={`260px`} overflow={`auto`}>
             <Wrapper isSticky={true}>
               <TableHead radius={`8px 8px 0px 0px`}>
-                <TableHeadLIST width={`100%`}>국토부 분류</TableHeadLIST>
+                <TableHeadLIST width={`100%`}>작업 분류</TableHeadLIST>
               </TableHead>
             </Wrapper>
             <Wrapper overflow={`auto`} height={`260px`} ju={`flex-start`}>
               <TableBody minHeight={`260px`}>
-                <TableRow>
-                  <TableRowLIST width={`100%`}>국토부 분류입니다</TableRowLIST>
-                </TableRow>
+                <TableBody>
+                  <TableRow
+                    kindOf={
+                      selectClass === "all" ? `selectClass` : `noSelectClass`
+                    }
+                  >
+                    <TableRowLIST
+                      width={`100%`}
+                      onClick={() => {
+                        setSelectClass("all");
+                      }}
+                    >
+                      전체보기
+                    </TableRowLIST>
+                  </TableRow>
+                  {TsClassList.map((tsClass: TsClass) => (
+                    <TableRow
+                      key={tsClass.label}
+                      kindOf={
+                        selectClass === tsClass.label
+                          ? `selectClass`
+                          : `noSelectClass`
+                      }
+                      onClick={() => {
+                        setSelectClass(tsClass.label);
+                      }}
+                    >
+                      <TableRowLIST width={`100%`}>
+                        {tsClass.description}
+                      </TableRowLIST>
+                    </TableRow>
+                  ))}
+                </TableBody>
               </TableBody>
             </Wrapper>
           </TableWrapper>
@@ -102,18 +261,38 @@ const MolitSettingModal: NextPage<any> = (props) => {
           <TableWrapper minHeight={`260px`} overflow={`auto`}>
             <Wrapper isSticky={true}>
               <TableHead radius={`8px 8px 0px 0px`}>
-                <TableHeadLIST width={`70%`}>정비명</TableHeadLIST>
+                <TableHeadLIST width={`70%`}>작업내용</TableHeadLIST>
                 <TableHeadLIST width={`20%`}>코드</TableHeadLIST>
                 <TableHeadLIST width={`10%`}>선택</TableHeadLIST>
               </TableHead>
             </Wrapper>
             <Wrapper overflow={`auto`} height={`260px`} ju={`flex-start`}>
               <TableBody minHeight={`260px`}>
-                <TableRow>
-                  <TableRowLIST width={`70%`}>정비명</TableRowLIST>
-                  <TableRowLIST width={`20%`}>코드</TableRowLIST>
-                  <TableRowLIST width={`10%`}>선택</TableRowLIST>
-                </TableRow>
+                {tsItemList.map((item: TsItem, idx: number) => (
+                  <TableRow key={idx} kindOf={`noHover`}>
+                    <TableRowLIST width={`70%`}>
+                      {genTsContent(item.name, {
+                        nickName: item.nickName,
+                        options: item.options,
+                      })}
+                    </TableRowLIST>
+                    <TableRowLIST width={`20%`}>
+                      {item.class.label}
+                      {item.index}
+                    </TableRowLIST>
+                    <TableRowLIST width={`10%`}>
+                      <SmallButton
+                        kindOf="default"
+                        height={`34px`}
+                        onClick={() => {
+                          setDocHandler(item);
+                        }}
+                      >
+                        선택
+                      </SmallButton>
+                    </TableRowLIST>
+                  </TableRow>
+                ))}
               </TableBody>
             </Wrapper>
           </TableWrapper>
@@ -150,8 +329,9 @@ const MolitSettingModal: NextPage<any> = (props) => {
                 textOverflow={`ellipsis`}
                 overflow={`hidden`}
                 whiteSpace={`nowrap`}
+                readOnly
               >
-                정비항목입니다.
+                {props.clickDoc.name || ""}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -175,11 +355,22 @@ const MolitSettingModal: NextPage<any> = (props) => {
                 overflow={`hidden`}
                 whiteSpace={`nowrap`}
               >
-                국토부항목입니다.
+                {clickDoc.name
+                  ? `${genTsContent(clickDoc.name, {
+                      nickName: clickDoc.nickName,
+                      options: clickDoc.options,
+                    })}(${clickDoc.class.label}${clickDoc.index})`
+                  : ""}
               </Text>
-              <Text color={`#d6263b`}>
+              <IconButton
+                shadow="none"
+                color={`#d6263b`}
+                onClick={() => {
+                  resetDocHandler();
+                }}
+              >
                 <AiFillMinusSquare />
-              </Text>
+              </IconButton>
             </Wrapper>
           </Wrapper>
         </Wrapper>
@@ -190,10 +381,18 @@ const MolitSettingModal: NextPage<any> = (props) => {
           kindOf={`white`}
           width={`260px`}
           height={`50px`}
+          onClick={() => {
+            props.setModalOpen(!props.modalOpen);
+          }}
         >
           취소
         </CommonButton>
-        <CommonButton type="button" width={`260px`} height={`50px`}>
+        <CommonButton
+          type="button"
+          width={`260px`}
+          height={`50px`}
+          onClick={saveHandler}
+        >
           정비항목등록
         </CommonButton>
       </CommonButtonWrapper>
