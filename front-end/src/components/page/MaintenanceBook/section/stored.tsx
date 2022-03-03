@@ -119,6 +119,8 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(priceInit); // 가격정보
 
+  const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -353,7 +355,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const partsSetProps: _pPartsSetProps = {
     ...props,
+    modalOpen,
     setModalOpen,
+    clickDoc,
+    setClickDoc,
     modalOption,
     setModalOption,
     partSetClass,
@@ -907,13 +912,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 6] = elem)
                             }
                             width={`100%`}
-                            value={data.tsCode}
                             onClick={() => {
+                              setClickDoc(data);
+                              //idx까지 보내야 할껏 같다.. 이말이야,..,
                               setModalOption("Setting");
                               setModalOpen(!modalOpen);
                             }}
                             name="tsCode"
-                          />
+                          >
+                            {data.tsCode}
+                          </SmallButton>
                         </TableRowLIST>
                         <TableRowLIST width={`14%`}>
                           <Combo

@@ -24,6 +24,7 @@ const StatementFile: NextPage<any> = forwardRef<HTMLDivElement>(
      *********************************************************************/
     return (
       <div
+        ref={ref}
         className="stl_02"
         style={{
           height: "70.08334em",
