@@ -78,6 +78,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     print: true,
     online: false,
   }); // 발급 선택 여부
+  const [printCom, setPrintCom] = useState<boolean>(false); // 프린트 여부
 
   /*********************************************************************
    * 3. Handlers
@@ -153,7 +154,16 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     }
 
     if (pubCheck.print) {
-      onPrintHandler(opt);
+      onPrintHandler();
+      if (printCom) {
+        if (opt) {
+          return router.push(
+            `${UseLink.MAINTENANCE_BOOK}?id=${props.mtInfo._id}&step=${MainStatus.RELEASED}`
+          );
+        } else {
+          return props.setModalOpen(false);
+        }
+      }
     }
   };
 
@@ -179,24 +189,17 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   // };
 
   /** 프린트 handler */
-  const onPrintHandler = (opt: boolean) =>
-    useReactToPrint({
-      content: () => {
-        const PrintElem = document.createElement("div");
-        if (fileCheck.eCheck) PrintElem.appendChild(estimateRef.current);
-        if (fileCheck.sCheck) PrintElem.appendChild(statementRef.current);
-        return PrintElem;
-      },
-      // onAfterPrint: () => {
-      //   if (opt) {
-      //     return router.push(
-      //       `${UseLink.MAINTENANCE_BOOK}?id=${props.mtInfo._id}&step=${MainStatus.RELEASED}`
-      //     );
-      //   } else {
-      //     return props.setModalOpen(false);
-      //   }
-      // },
-    });
+  const onPrintHandler = useReactToPrint({
+    content: () => {
+      const PrintElem = document.createElement("div");
+      if (fileCheck.eCheck) PrintElem.appendChild(estimateRef.current);
+      if (fileCheck.sCheck) PrintElem.appendChild(statementRef.current);
+      return PrintElem;
+    },
+    onAfterPrint: () => {
+      setPrintCom(true);
+    },
+  });
 
   /*********************************************************************
    * 4. Props settings
