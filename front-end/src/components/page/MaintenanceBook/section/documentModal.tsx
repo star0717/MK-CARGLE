@@ -71,11 +71,11 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
   const [phoneList, setPhoneList] = useState<string[]>([]); // 번호 리스트
   const [fileCheck, setFileCheck] = useState<FileCheck>({
-    eCheck: false,
-    sCheck: false,
+    eCheck: true,
+    sCheck: true,
   }); // 서류 선택 여부
   const [pubCheck, setPubCheck] = useState<Publish>({
-    print: false,
+    print: true,
     online: false,
   }); // 발급 선택 여부
 
@@ -144,32 +144,27 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /**
    * 전송 및 출력 handler
    */
-  // const onPublishHandler = () => {
-  //   if (!pubCheck.print && !pubCheck.online)
-  //     return alert("발급방식을 선택하세요.");
-  //   if (pubCheck.print) {
-  //     // let file
-  //     // if (fileCheck.eCheck)
-  //     // if (fileCheck.sCheck)
-  //     useReactToPrint({
-  //       content: () => estimateRef.current,
-  //       // onAfterPrint: () =>{
+  const onPublishHandler = () => {
+    if (!pubCheck.print && !pubCheck.online)
+      return alert("발급방식을 선택하세요.");
+    if (!fileCheck.eCheck && !fileCheck.sCheck)
+      return alert("발급서류를 선택하세요");
+    if (pubCheck.print) {
+      onPrintHandler();
+    }
+  };
 
-  //       // }
-  //     });
-  //   }
-  // };
-  const onPublishHandler = useReactToPrint({
-    // content: () => estimateRef.current,
+  /** 프린트 handler */
+  const onPrintHandler = useReactToPrint({
     content: () => {
       const PrintElem = document.createElement("div");
       if (fileCheck.eCheck) PrintElem.appendChild(estimateRef.current);
       if (fileCheck.sCheck) PrintElem.appendChild(statementRef.current);
       return PrintElem;
     },
-    // onAfterPrint: () =>{
-
-    // }
+    onAfterPrint: () => {
+      return props.setModalOpen(false);
+    },
   });
 
   /*********************************************************************
@@ -241,6 +236,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <CheckInput
                   type="checkbox"
                   name="eCheck"
+                  checked={fileCheck.eCheck}
                   onChange={onCheckHandler}
                 />
                 <CheckMark></CheckMark>
@@ -250,6 +246,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <CheckInput
                   type="checkbox"
                   name="sCheck"
+                  checked={fileCheck.sCheck}
                   onChange={onCheckHandler}
                 />
                 <CheckMark></CheckMark>
@@ -264,6 +261,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <CheckInput
                   type="checkbox"
                   name="print"
+                  checked={pubCheck.print}
                   onChange={onCheckHandler}
                 />
                 <CheckMark></CheckMark>
@@ -273,6 +271,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <CheckInput
                   type="checkbox"
                   name="online"
+                  checked={pubCheck.online}
                   onChange={onCheckHandler}
                 />
                 <CheckMark></CheckMark>
