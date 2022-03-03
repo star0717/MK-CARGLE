@@ -288,13 +288,13 @@ export class MaintenancesController {
   })
   @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
   @ApiCreatedResponse({
-    description: `생성된 Estimate 데이터`,
-    type: Estimate,
+    description: `생성된 Maintenance 데이터`,
+    type: Maintenance,
   })
   async genEstimate(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<Estimate> {
+  ): Promise<Maintenance> {
     return await this.service.genEstimate(token, id);
   }
 
@@ -325,13 +325,13 @@ export class MaintenancesController {
   })
   @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
   @ApiCreatedResponse({
-    description: `생성된 Statement 데이터`,
-    type: Statement,
+    description: `갱신된 Maintenance 데이터`,
+    type: Maintenance,
   })
   async genStatement(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<Statement> {
+  ): Promise<Maintenance> {
     return await this.service.genStatement(token, id);
   }
 

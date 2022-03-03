@@ -240,7 +240,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
 
   /*********** 문서 발급 관련 *********************/
   // 견적서 생성. 미발급 상태에서는 갱신
-  async genEstimate(token: AuthTokenInfo, id: string): Promise<Estimate> {
+  async genEstimate(token: AuthTokenInfo, id: string): Promise<Maintenance> {
     // 해당 main을 검색
     const main: Maintenance = await this.findById(token, id);
     if (!main) throw new BadRequestException();
@@ -297,10 +297,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     const mainEstimate: MainDocInfo = {
       _oID: result._id,
     };
-    this.findByIdAndUpdate(token, id, { estimate: mainEstimate });
-
-    // 견적서 정보를 main에 패치
-    return result;
+    return this.findByIdAndUpdate(token, id, { estimate: mainEstimate });
   }
 
   // 견적서 발급
@@ -333,7 +330,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
   }
 
   // 견적서 생성. 미발급 상태에서는 갱신
-  async genStatement(token: AuthTokenInfo, id: string): Promise<Statement> {
+  async genStatement(token: AuthTokenInfo, id: string): Promise<Maintenance> {
     // 해당 main을 검색
     const main: Maintenance = await this.findById(token, id);
     if (!main) throw new BadRequestException();
@@ -395,10 +392,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     const mainStatement: MainDocInfo = {
       _oID: result._id,
     };
-    this.findByIdAndUpdate(token, id, { statement: mainStatement });
-
-    // 견적서 정보를 main에 패치
-    return result;
+    return this.findByIdAndUpdate(token, id, { statement: mainStatement });
   }
 
   // 견적서 발급

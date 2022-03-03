@@ -72,24 +72,6 @@ export class SettingsApiPath {
     SettingsApiPath.BASE + 'management/delete/workers';
 }
 
-// 정비내역 API
-export class MaintenancesApiPath {
-  static BASE = '/maintenances/';
-  static maintenances = MaintenancesApiPath.BASE;
-  static carinfo = MaintenancesApiPath.BASE + 'carinfo';
-  static store = MaintenancesApiPath.BASE + 'store';
-  static start = MaintenancesApiPath.BASE + 'start';
-  static end = MaintenancesApiPath.BASE + 'end';
-  static pay = MaintenancesApiPath.BASE + 'pay';
-  static release = MaintenancesApiPath.BASE + 'release';
-  static works = MaintenancesApiPath.BASE + 'works';
-  static deleteMany = MaintenancesApiPath.BASE + 'deletemany';
-  static gen_estimate = MaintenancesApiPath.BASE + 'gen/estimate';
-  static pub_estimate = MaintenancesApiPath.BASE + 'pub/estimate';
-  static gen_statement = MaintenancesApiPath.BASE + 'gen/statement';
-  static pub_statement = MaintenancesApiPath.BASE + 'pub/statement';
-}
-
 // 거래처 관리 API
 export class AgenciesApiPath {
   static BASE = '/agencies/';
@@ -108,4 +90,34 @@ export class PartsSetsApiPath {
   static BASE = '/partssets/';
   static partsSets = PartsSetsApiPath.BASE;
   static partsSets_deleteMany = PartsSetsApiPath.BASE + 'deletemany';
+}
+
+// 정비내역 API
+export class MaintenancesApiPath {
+  static BASE = '/maintenances/';
+  static maintenances = MaintenancesApiPath.BASE;
+  static carinfo = MaintenancesApiPath.BASE + 'carinfo';
+  static store = MaintenancesApiPath.BASE + 'store';
+  static start = MaintenancesApiPath.BASE + 'start';
+  static end = MaintenancesApiPath.BASE + 'end';
+  static pay = MaintenancesApiPath.BASE + 'pay';
+  static release = MaintenancesApiPath.BASE + 'release';
+  static works = MaintenancesApiPath.BASE + 'works';
+  static deleteMany = MaintenancesApiPath.BASE + 'deletemany';
+  static gen_estimate = MaintenancesApiPath.BASE + 'gen/estimate';
+  static pub_estimate = MaintenancesApiPath.BASE + 'pub/estimate';
+  static gen_statement = MaintenancesApiPath.BASE + 'gen/statement';
+  static pub_statement = MaintenancesApiPath.BASE + 'pub/statement';
+}
+
+// 견적서 API
+export class EstimatesApiPath {
+  static BASE = '/estimates/';
+  static estimates = EstimatesApiPath.BASE;
+}
+
+// 명세서 API
+export class StatementsApiPath {
+  static BASE = '/statements/';
+  static statements = StatementsApiPath.BASE;
 }

@@ -433,7 +433,7 @@ const ByeolTest: NextPage = () => {
                 </Text>
               </Wrapper>
             </Wrapper>
-            <Wrapper dr={`row`} height={`48px`} borderBottom={`1px solid #ccc`}>
+            <Wrapper dr={`row`} height={`60px`} borderBottom={`1px solid #ccc`}>
               <Wrapper
                 width={`48%`}
                 borderRight={` 1px solid #ccc`}
