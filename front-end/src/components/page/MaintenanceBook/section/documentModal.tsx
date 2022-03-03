@@ -31,15 +31,27 @@ import { useDispatch } from "react-redux";
 import { _aPatchMaintenancesRelease } from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
 import { useReactToPrint } from "react-to-print";
-import EstimateFile from "../../FileHTML/estimateFile";
+import EstimateFile from "src/components/page/FileHTML/estimateFile";
+import StatementFile from "src/components/page/FileHTML/statementFile";
 
 const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  interface FileCheck {
+    eCheck: boolean;
+    sCheck: boolean;
+  }
+
+  interface Publish {
+    print: boolean;
+    online: boolean;
+  }
+
   const dispatch = useDispatch();
 
-  const componentRef = useRef<HTMLDivElement>(null);
+  const estimateRef = useRef<HTMLDivElement>(null);
+  const statementRef = useRef<HTMLDivElement>(null);
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -54,6 +66,14 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   const [point, setPoint] = useState<number>(0); // 포인트
   const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
   const [phoneList, setPhoneList] = useState<string[]>([]); // 번호 리스트
+  const [fileCheck, setFileCheck] = useState<FileCheck>({
+    eCheck: false,
+    sCheck: false,
+  }); // 서류 선택 여부
+  const [pubCheck, setPubCheck] = useState<Publish>({
+    print: false,
+    online: false,
+  }); // 발급 선택 여부
 
   /*********************************************************************
    * 3. Handlers
@@ -73,6 +93,24 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    */
   const onDelPhoneHandler = (index: number) => {
     setPhoneList(phoneList.filter((num, idx) => idx !== index));
+  };
+
+  /**
+   * 체크박스 handler
+   * @param e
+   */
+  const onCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.name) {
+      case "eCheck":
+      case "sCheck":
+        return setFileCheck({
+          ...fileCheck,
+          [e.target.name]: e.target.checked,
+        });
+      case "print":
+      case "online":
+        return setPubCheck({ ...pubCheck, [e.target.name]: e.target.checked });
+    }
   };
 
   /**
@@ -96,8 +134,35 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     );
   };
 
-  const onPrintHandler = useReactToPrint({
-    content: () => componentRef.current,
+  /**
+   * 전송 및 출력 handler
+   */
+  // const onPublishHandler = () => {
+  //   if (!pubCheck.print && !pubCheck.online)
+  //     return alert("발급방식을 선택하세요.");
+  //   if (pubCheck.print) {
+  //     // let file
+  //     // if (fileCheck.eCheck)
+  //     // if (fileCheck.sCheck)
+  //     useReactToPrint({
+  //       content: () => estimateRef.current,
+  //       // onAfterPrint: () =>{
+
+  //       // }
+  //     });
+  //   }
+  // };
+  const onPublishHandler = useReactToPrint({
+    // content: () => estimateRef.current,
+    content: () => {
+      const PrintElem = document.createElement("div");
+      PrintElem.appendChild(estimateRef.current);
+      PrintElem.appendChild(statementRef.current);
+      return PrintElem;
+    },
+    // onAfterPrint: () =>{
+
+    // }
   });
 
   /*********************************************************************
@@ -166,12 +231,20 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             <Wrapper dr={`row`} width={`auto`}>
               <Checkbox width={`120px`}>
                 견적서
-                <CheckInput type="checkbox" />
+                <CheckInput
+                  type="checkbox"
+                  name="eCheck"
+                  onChange={onCheckHandler}
+                />
                 <CheckMark></CheckMark>
               </Checkbox>
               <Checkbox width={`120px`}>
                 정비명세서
-                <CheckInput type="checkbox" />
+                <CheckInput
+                  type="checkbox"
+                  name="sCheck"
+                  onChange={onCheckHandler}
+                />
                 <CheckMark></CheckMark>
               </Checkbox>
             </Wrapper>
@@ -181,12 +254,20 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             <Wrapper dr={`row`} width={`auto`}>
               <Checkbox width={`120px`}>
                 PC인쇄
-                <CheckInput type="checkbox" />
+                <CheckInput
+                  type="checkbox"
+                  name="print"
+                  onChange={onCheckHandler}
+                />
                 <CheckMark></CheckMark>
               </Checkbox>
               <Checkbox width={`120px`}>
                 모바일전송
-                <CheckInput type="checkbox" />
+                <CheckInput
+                  type="checkbox"
+                  name="online"
+                  onChange={onCheckHandler}
+                />
                 <CheckMark></CheckMark>
               </Checkbox>
             </Wrapper>
@@ -299,7 +380,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               width={`300px`}
               height={`50px`}
               type="button"
-              onClick={onPrintHandler}
+              onClick={onPublishHandler}
             >
               전송 및 출력
             </CommonButton>
@@ -339,7 +420,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           </CommonButtonWrapper>
         )}
         <Wrapper display={`none`}>
-          <EstimateFile ref={componentRef} />
+          <EstimateFile ref={estimateRef} />
+          <StatementFile ref={statementRef} />
         </Wrapper>
       </Wrapper>
     </WholeWrapper>
