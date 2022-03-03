@@ -288,11 +288,19 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       setWorkList(workList.filter((data, index) => idx !== index));
     }
   };
-
   /**
    * 정비내역 수정
    */
   const onModifyWorkInfo = async () => {
+    //변경사항이 있는지 확인
+    if (
+      JSON.stringify(props.data.mtData.works) === JSON.stringify(workList) &&
+      JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
+      JSON.stringify(props.data.mtData.price) === JSON.stringify(price)
+    ) {
+      return setModify(!modify);
+    }
+
     let mainWorkList: MainWork[] = workList.filter((item) => item.name !== "");
     mainWorkList = mainWorkList.map((item) => {
       for (let i = 0; i < props.data.allParts.docs.length; i++) {
