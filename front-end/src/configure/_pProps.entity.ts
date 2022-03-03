@@ -131,6 +131,7 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
 
 // 부품 세트 관리 props
 export interface _pPartsSetProps extends _MainProps {
+  modalOpen?: boolean;
   setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   modalOption?: string;
   setModalOption?: React.Dispatch<React.SetStateAction<string>>;

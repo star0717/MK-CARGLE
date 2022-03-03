@@ -353,6 +353,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const partsSetProps: _pPartsSetProps = {
     ...props,
+    modalOpen,
     setModalOpen,
     modalOption,
     setModalOption,
@@ -907,13 +908,15 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                               (inputRef.current[(idx + 1) * 7 - 6] = elem)
                             }
                             width={`100%`}
-                            value={data.tsCode}
+                            // value={data.tsCode}
                             onClick={() => {
                               setModalOption("Setting");
                               setModalOpen(!modalOpen);
                             }}
                             name="tsCode"
-                          />
+                          >
+                            {data.tsCode}
+                          </SmallButton>
                         </TableRowLIST>
                         <TableRowLIST width={`14%`}>
                           <Combo
