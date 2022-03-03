@@ -143,9 +143,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           if (!res.payload) {
             return alert("출고에 실패했습니다.");
           }
+          alert("정비내역을 저장했습니다.");
           props.setMtInfo(res.payload);
           props.setModalOpen(false);
-          alert("정비내역을 저장했습니다.");
         },
         (err) => {
           return alert("출고에 실패했습니다.");
@@ -157,35 +157,15 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
       onPrintHandler();
     }
   };
-
-  // /**
-  //  * 전송 및 출력 handler
-  //  */
-  // const onPublishHandler = () => {
-  //   if (
-  //     (fileCheck.eCheck || fileCheck.sCheck) &&
-  //     !pubCheck.print &&
-  //     !pubCheck.online
-  //   )
-  //     return alert("발급방식을 선택하세요.");
-  //   if (
-  //     (pubCheck.print || pubCheck.online) &&
-  //     !fileCheck.eCheck &&
-  //     !fileCheck.sCheck
-  //   )
-  //     return alert("발급서류를 선택하세요");
-  //   if (pubCheck.print) {
-  //     onPrintHandler();
-  //   }
-  // };
+  console.log("###", props.mtInfo.works);
 
   /** 프린트 handler */
   const onPrintHandler = useReactToPrint({
     content: () => {
-      const PrintElem = document.createElement("div");
-      if (fileCheck.eCheck) PrintElem.appendChild(estimateRef.current);
-      if (fileCheck.sCheck) PrintElem.appendChild(statementRef.current);
-      return PrintElem;
+      let printElem = document.createElement("div");
+      if (fileCheck.eCheck) printElem.append(estimateRef.current);
+      if (fileCheck.sCheck) printElem.append(statementRef.current);
+      return printElem;
     },
     onAfterPrint: () => {
       if (reOption) {

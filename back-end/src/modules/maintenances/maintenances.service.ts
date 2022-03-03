@@ -185,6 +185,8 @@ export class MaintenancesService extends SafeService<Maintenance> {
     let src = await this._validateReq(token, id, doc);
 
     if (!doc.price) throw new BadRequestException();
+    src.works = doc.works;
+    src.costomerType = doc.costomerType;
     src.price = doc.price;
     src.status = MainStatus.PAID;
 

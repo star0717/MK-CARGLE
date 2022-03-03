@@ -143,8 +143,8 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
 
   /**결제 handler */
   const onPaymentHandler = async (edit: boolean) => {
-    const maintenanceData: Partial<Maintenance> = {
-      ...props.data.mtData,
+    const maintenanceData: Maintenance = {
+      ...props.mtInfo,
       price: price,
     };
     if (edit) {
@@ -178,6 +178,8 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
       );
     }
   };
+
+  console.log("!!!", props.mtInfo.works);
 
   /*********************************************************************
    * 4. Props settings

@@ -53,9 +53,12 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
             <Text
               fontSize={`0.83em`}
               fontWeight={`400`}
-              width={`100px`}
+              width={`160px`}
               textAlign={`right`}
-            ></Text>
+            >
+              {/* 일련번호 입력하세요 */}
+              20150128001008
+            </Text>
           </Wrapper>
 
           {/* 차량소유자 정보 시작 */}
@@ -94,12 +97,12 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
             >
               <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 등록번호 입력하세용 */}
+                  {/* 등록번호 입력하세용 */}12가1234
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 등록년월일 입력하세용 */}
+                  {/* 등록년월일 입력하세용 */}2018년 08월 15일
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -126,7 +129,7 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                   height={`100%`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 차종입력칸이용 */}
+                    {/* 차종입력칸이용 */} 그렌저 TG Q270
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -145,7 +148,7 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                   padding={`0px 10px`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 주행거리 입력~~ */}
+                    {/* 주행거리 입력~~ */} 185,550
                   </Text>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
                     km
@@ -164,7 +167,7 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                 </Wrapper>
                 <Wrapper width={`80%`}>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 차대번호 입력하세용~ */}
+                    {/* 차대번호 입력하세용~ */} KGSDGSDGSDGSDG
                   </Text>
                 </Wrapper>
               </Wrapper>
@@ -211,7 +214,7 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 사업자등록번호 입력 */}
+                    {/* 사업자등록번호 입력 */}33-888-00960
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -231,7 +234,7 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 정비업 등록번호 입력이용 */}
+                    {/* 정비업 등록번호 입력이용 */} GSDGSDGSDGSDGS
                   </Text>
                 </Wrapper>
               </Wrapper>
@@ -254,7 +257,7 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 댕댕나라 윤초코 */}
+                    {/* 댕댕나라 윤초코 */} 주식회사 엠케이 변무영
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -289,7 +292,8 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                   borderBottom={`1px solid #ccc`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 댕댕나라 멍멍구 왈왈동 */}
+                    {/* 댕댕나라 멍멍구 왈왈동 */} 대전광역시 유성구 은구비로8
+                    보광빌딩 402호(MK)
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -301,14 +305,12 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                   padding={`4px 6px`}
                   dr={`row`}
                 >
-                  <Text fontSize={`0.75em`} fontWeight={`400`}>
+                  <Text fontSize={`0.75em`} fontWeight={`400`} width={`100px`}>
                     (전화번호:&nbsp;
                   </Text>
-                  <Text
-                    fontSize={`0.75em`}
-                    fontWeight={`400`}
-                    width={`100px`}
-                  ></Text>
+                  <Text fontSize={`0.75em`} fontWeight={`400`} width={`120px`}>
+                    1644-3486
+                  </Text>
                   <Text fontSize={`0.75em`} fontWeight={`400`}>
                     )
                   </Text>
@@ -419,7 +421,9 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                 borderRight={`1px solid #ccc`}
                 height={`100%`}
               >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/* 견적내용 입력하세요 */} 디젤 분사 펌프 교환
+                </Text>
               </Wrapper>
               <Wrapper
                 width={`40%`}
@@ -432,24 +436,32 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                     borderRight={`1px solid #ccc`}
                     height={`100%`}
                   >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {/* 코드 입력하세요 */} A
+                    </Text>
                   </Wrapper>
                   <Wrapper
                     width={`25%`}
                     borderRight={`1px solid #ccc`}
                     height={`100%`}
                   >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {/*수량 입력하세요 */}3
+                    </Text>
                   </Wrapper>
                   <Wrapper
                     width={`25%`}
                     borderRight={`1px solid #ccc`}
                     height={`100%`}
                   >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {/*단가 입력하세요*/}15,000,000
+                    </Text>
                   </Wrapper>
                   <Wrapper width={`25%`} height={`100%`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {/*계 입력하세요*/} 45,000,000
+                    </Text>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -458,10 +470,14 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                 height={`100%`}
                 borderRight={`1px solid #ccc`}
               >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*공임 입력하세요*/}14,000,000
+                </Text>
               </Wrapper>
               <Wrapper width={`15%`} height={`100%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*합계 입력하세요*/}18,500,000
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
@@ -689,7 +705,9 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*구분 입력하세요*/}일반
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -703,7 +721,9 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*부품 합계 입력하세요*/}800,000,000
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -717,7 +737,9 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*공입 합계 입력하세요*/}450,000,000
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -731,7 +753,9 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*총계 입력하세요*/}999,999,999
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -745,7 +769,9 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*부가 가치세 입력하세요*/}999,999,999
+                </Text>
               </Wrapper>
             </Wrapper>
             <Wrapper
@@ -759,7 +785,9 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                 </Text>
               </Wrapper>
               <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
+                <Text fontSize={`0.83em`} fontWeight={`400`}>
+                  {/*총액 입력하세요!*/} 999,999,999
+                </Text>
               </Wrapper>
             </Wrapper>
           </Wrapper>
@@ -777,7 +805,7 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
               fontWeight={`400`}
               width={`80px`}
             >
-              {/* 연도 */}
+              {/* 연도 */}2022
             </Text>
             <Text
               fontSize={`0.75em`}
@@ -793,7 +821,7 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
               fontWeight={`400`}
               width={`40px`}
             >
-              {/* 월 */}
+              {/* 월 */}03
             </Text>
             <Text
               fontSize={`0.75em`}
@@ -809,7 +837,7 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
               fontWeight={`400`}
               width={`40px`}
             >
-              {/* 일 */}
+              {/* 일 */}03
             </Text>
             <Text
               fontSize={`0.75em`}
@@ -837,7 +865,18 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                   작성자
                 </Text>
               </Wrapper>
-              <Wrapper width={`80%`} al={`flex-end`}>
+              <Wrapper width={`30%`} al={`flex-start`}>
+                <Text
+                  textAlign={`right`}
+                  fontSize={`0.83em`}
+                  fontWeight={`400`}
+                  padding={`0px 16px`}
+                >
+                  {/* 작성자 입력하세용 */}
+                  윤별
+                </Text>
+              </Wrapper>
+              <Wrapper width={`50%`} al={`flex-end`}>
                 <Text
                   fontSize={`0.67em`}
                   fontWeight={`400`}
@@ -864,7 +903,18 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
                   대표이사
                 </Text>
               </Wrapper>
-              <Wrapper width={`80%`} al={`flex-end`}>
+              <Wrapper width={`30%`} al={`flex-start`}>
+                <Text
+                  textAlign={`right`}
+                  fontSize={`0.83em`}
+                  fontWeight={`400`}
+                  padding={`0px 16px`}
+                >
+                  {/* 대표이사 입력하세용 */}
+                  변무영
+                </Text>
+              </Wrapper>
+              <Wrapper width={`50%`} al={`flex-end`}>
                 <Text
                   fontSize={`0.67em`}
                   fontWeight={`400`}
