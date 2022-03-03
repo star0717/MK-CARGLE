@@ -445,6 +445,8 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
         {props.modalOption.indexOf("Bts") === -1 ? (
           <CommonButtonWrapper ju={`space-between`} padding={`30px 30px`}>
             <CommonButton
+              width={`300px`}
+              height={`50px`}
               type="button"
               onClick={() => {
                 props.setModalOpen(false);
@@ -453,6 +455,8 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
               취소
             </CommonButton>
             <CommonButton
+              width={`300px`}
+              height={`50px`}
               type="button"
               kindOf={`white`}
               onClick={() => {
@@ -462,6 +466,8 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
               이전으로
             </CommonButton>
             <CommonButton
+              width={`300px`}
+              height={`50px`}
               type="button"
               onClick={() => {
                 onPaymentHandler(false);
@@ -473,6 +479,8 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
         ) : edit ? (
           <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
             <CommonButton
+              width={`300px`}
+              height={`50px`}
               type="button"
               kindOf={`white`}
               onClick={() => {
@@ -482,6 +490,8 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
               취소하기
             </CommonButton>
             <CommonButton
+              width={`300px`}
+              height={`50px`}
               type="button"
               onClick={() => {
                 onPaymentHandler(true);
@@ -493,6 +503,8 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
         ) : (
           <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
             <CommonButton
+              width={`300px`}
+              height={`50px`}
               type="button"
               onClick={() => {
                 props.setModalOpen(false);
