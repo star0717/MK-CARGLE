@@ -82,6 +82,7 @@ export class MaintenancesApiPath {
   static end = MaintenancesApiPath.BASE + 'end';
   static pay = MaintenancesApiPath.BASE + 'pay';
   static release = MaintenancesApiPath.BASE + 'release';
+  static works = MaintenancesApiPath.BASE + 'works';
   static deleteMany = MaintenancesApiPath.BASE + 'deletemany';
   static gen_estimate = MaintenancesApiPath.BASE + 'gen/estimate';
   static pub_estimate = MaintenancesApiPath.BASE + 'pub/estimate';

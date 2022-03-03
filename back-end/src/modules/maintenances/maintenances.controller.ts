@@ -254,6 +254,28 @@ export class MaintenancesController {
     return await this.service.releaseMain(token, id, doc);
   }
 
+  @Patch('works/:id')
+  @ApiOperation({
+    summary:
+      '[WORKER] 정비내역 임시저장. 정비 상태 변경 없이 수정중인 정비내역만 저장',
+  })
+  @ApiParam({ name: 'id', description: `해당 Maintenance의 오브젝트 ID` })
+  @ApiBody({
+    description: `갱신할 Maintenance 데이터`,
+    type: Maintenance,
+  })
+  @ApiCreatedResponse({
+    description: `패치 된 Maintenance 데이터`,
+    type: Maintenance,
+  })
+  async patchWorks(
+    @Param('id') id: string,
+    @Body() doc: Maintenance,
+    @AuthToken() token: AuthTokenInfo,
+  ): Promise<Maintenance> {
+    return await this.service.patchWorks(token, id, doc);
+  }
+
   /*********** 문서 발급 관련 *********************/
   // 견적서 관련
   @Get('gen/estimate/:id')
