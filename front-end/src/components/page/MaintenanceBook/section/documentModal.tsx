@@ -126,9 +126,18 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   };
 
   /**
-   * 출고완료
+   * 출고완료 handler
+   * @param opt
+   * @returns
    */
   const onReleasedHandler = async (opt: boolean) => {
+    // 발급 api에 넘길 데이터 초기값
+    let mainDocPubData: MainPubDocInfo = {
+      type: MainDocPubType.NOT_ISSUED,
+      phoneNumber: "test", // <-- 에러임 db에서 배열로 바꿔줘야함
+    };
+    // 저장 및 프린트 실행 여부
+    let apiDone: boolean = false;
     // 서류는 체크하고 발급방식을 선택안한 경우
     if (
       (fileCheck.eCheck || fileCheck.sCheck) &&
@@ -143,12 +152,6 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
       !fileCheck.sCheck
     )
       return alert("발급서류를 선택하세요");
-
-    // 발급 api에 넘길 데이터 초기값
-    let mainDocPubData: MainPubDocInfo = {
-      type: MainDocPubType.NOT_ISSUED,
-      phoneNumber: "test", // <-- 에러임 db에서 배열로 바꿔줘야함
-    };
     // 체크 여부에 따른 문서 발급 타입 설정
     // 둘 다
     if (pubCheck.print && pubCheck.online)
@@ -168,8 +171,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     // 견적서 체크할 경우 api
     if (fileCheck.eCheck) {
       await dispatch(_aGetMaintenancesGenEstimate(props.mtInfo._id)).then(
-        (res: _iMaintenancesOne) => {
-          dispatch(
+        async (res: _iMaintenancesOne) => {
+          await dispatch(
             _aPatchMaintenancesPubEsitmate(res.payload._id, mainDocPubData)
           ).then(
             (res: _iMaintenancesOne) => {
@@ -188,8 +191,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     // 명세서 체크할 경우 api
     if (fileCheck.sCheck) {
       await dispatch(_aGetMaintenancesGenStatement(props.mtInfo._id)).then(
-        (res: _iMaintenancesOne) => {
-          dispatch(
+        async (res: _iMaintenancesOne) => {
+          await dispatch(
             _aPatchMaintenancesPubStatement(res.payload._id, mainDocPubData)
           ).then(
             (res: _iMaintenancesOne) => {

@@ -1293,7 +1293,7 @@ export async function _aPatchMaintenancesPubEsitmate(
   data: MainPubDocInfo
 ) {
   const req: Maintenance = await axios
-    .patch(genApiPath(MaintenancesApiPath.gen_estimate, { id: id }), data)
+    .patch(genApiPath(MaintenancesApiPath.pub_estimate, { id: id }), data)
     .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
       return res.data;
     });
@@ -1316,7 +1316,7 @@ export async function _aPatchMaintenancesPubStatement(
   data: MainPubDocInfo
 ) {
   const req: Maintenance = await axios
-    .patch(genApiPath(MaintenancesApiPath.gen_estimate, { id: id }), data)
+    .patch(genApiPath(MaintenancesApiPath.pub_statement, { id: id }), data)
     .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
       return res.data;
     });
