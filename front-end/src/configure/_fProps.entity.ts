@@ -1,4 +1,4 @@
-// react-hook-form
+// react-hook-form && 단순 사용 props
 
 /**
  * 회원가입: 이용약관 form
@@ -23,4 +23,14 @@ export interface _fChangePw {
 export interface _fWithdrawal {
   withdrawalTerm: boolean;
   password: string;
+}
+
+export interface _fFileCheck {
+  eCheck: boolean;
+  sCheck: boolean;
+}
+
+export interface _fPublish {
+  print: boolean;
+  online: boolean;
 }

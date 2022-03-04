@@ -6,7 +6,7 @@ import { UserAuthority } from "../constants/model.const";
 import { FindResult } from "../models/base.entity";
 import { Company } from "../models/company.entity";
 import { User } from "../models/user.entity";
-import { _fTermData, _fWithdrawal } from "./_fProps.entity";
+import { _fFileCheck, _fTermData, _fWithdrawal } from "./_fProps.entity";
 import { _MainProps } from "./_props.entity";
 import { Part } from "../models/part.entity";
 import { PartsSet } from "src/models/partsset.entity";
@@ -206,4 +206,12 @@ export interface _pMaintenanceProps extends _pFindDocs<any> {
   // setSearchTo: React.Dispatch<React.SetStateAction<string>>;
   // searchDetails: any;
   // setSearchDetails: React.Dispatch<React.SetStateAction<MainFindOptions>>;
+}
+
+// 서류 미리보기 props
+export interface _pPreviewModalProps {
+  modal2Open: boolean;
+  setModal2Open: React.Dispatch<React.SetStateAction<boolean>>;
+  fileCheck: _fFileCheck;
+  propMtInfo: Maintenance;
 }

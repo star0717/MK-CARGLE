@@ -21,10 +21,14 @@ import {
   CommonSmallTitle,
   CommonButtonWrapper,
   CommonForm,
+  CloseButton,
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
 import { FaMinusSquare } from "react-icons/fa";
-import { _pPartsSetProps } from "src/configure/_pProps.entity";
+import {
+  _pPartsSetProps,
+  _pPreviewModalProps,
+} from "src/configure/_pProps.entity";
 import { trim } from "src/modules/commonModule";
 import { formRegEx } from "src/validation/regEx";
 import { useDispatch } from "react-redux";
@@ -43,30 +47,20 @@ import { UseLink } from "src/configure/router.entity";
 import { MainDocPubType, MainStatus } from "src/constants/maintenance.const";
 import { useRouter } from "next/router";
 import { MainPubDocInfo } from "src/models/maintenance.entity";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import Modal from "react-modal";
+import { IoIosCloseCircle } from "react-icons/io";
+import PreviewModal from "./previewModal";
+import { _fFileCheck, _fPublish } from "src/configure/_fProps.entity";
 
 const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-  interface FileCheck {
-    eCheck: boolean;
-    sCheck: boolean;
-  }
-
-  interface Publish {
-    print: boolean;
-    online: boolean;
-  }
-
   const dispatch = useDispatch();
   const router = useRouter();
 
   const estimateRef = useRef<HTMLDivElement>(null);
   const statementRef = useRef<HTMLDivElement>(null);
-  const newWindow = useRef<any>(window);
-  const docPdf = new jsPDF();
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -81,15 +75,16 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   const [point, setPoint] = useState<number>(0); // 포인트
   const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
   const [phoneList, setPhoneList] = useState<string[]>([]); // 번호 리스트
-  const [fileCheck, setFileCheck] = useState<FileCheck>({
+  const [fileCheck, setFileCheck] = useState<_fFileCheck>({
     eCheck: true,
     sCheck: true,
   }); // 서류 선택 여부
-  const [pubCheck, setPubCheck] = useState<Publish>({
+  const [pubCheck, setPubCheck] = useState<_fPublish>({
     print: true,
     online: false,
   }); // 발급 선택 여부
   const [reOption, setReOption] = useState<boolean>(null);
+  const [modal2Open, setModal2Open] = useState<boolean>(false);
 
   /*********************************************************************
    * 3. Handlers
@@ -262,41 +257,16 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     },
   });
 
-  /**pdf저장 */
-  const onSavePdf = async () => {
-    html2canvas(estimateRef.current, {
-      scale: 5,
-      // onclone: (cloneDoc) => {
-      //   cloneDoc.getElementById("noneDiv").style.display = "block";
-      // },
-    }).then((canvas) => {
-      let imgData = canvas.toDataURL("image/png");
-      let margin = 10;
-      let imgWidth = 210 - 10 * 2;
-      let pageHeight = imgWidth * 1.414;
-      let imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let doc = new jsPDF("p", "mm", "a4");
-      let position = margin;
-
-      doc.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 20) {
-        position = heightLeft - imgHeight;
-        doc.addPage();
-        doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      doc.save(`${props.mtInfo.car.regNumber}_견적서.pdf`);
-    });
-  };
-
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-
+  const propMtInfo = props.mtInfo;
+  const previewModalProps: _pPreviewModalProps = {
+    modal2Open,
+    setModal2Open,
+    fileCheck,
+    propMtInfo,
+  };
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -348,17 +318,12 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               type="button"
               kindOf={`default`}
               onClick={() => {
-                newWindow.current = window.open("");
-                const eNode = estimateRef.current.cloneNode(true);
-                const sNode = estimateRef.current.cloneNode(true);
-                return newWindow;
-                // newWindow.current.document.body.appendChild(sNode);
+                if (!fileCheck.eCheck && !fileCheck.sCheck)
+                  return alert("발급서류를 선택하세요");
+                setModal2Open(true);
               }}
             >
               미리보기
-            </SmallButton>
-            <SmallButton type="button" kindOf={`default`} onClick={onSavePdf}>
-              저장하기
             </SmallButton>
           </Wrapper>
           <Wrapper dr={`row`} height={`50px`} ju={`space-between`}>
@@ -565,10 +530,51 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           </CommonButtonWrapper>
         )}
       </Wrapper>
-      {/* <Wrapper id={`noneDiv`} display={`none`}> */}
-      <EstimateFile ref={estimateRef} />
-      <StatementFile ref={statementRef} />
-      {/* </Wrapper> */}
+      <Wrapper display={`none`}>
+        <EstimateFile ref={estimateRef} />
+        <StatementFile ref={statementRef} />
+      </Wrapper>
+      <Modal
+        isOpen={modal2Open}
+        style={{
+          overlay: {
+            position: "fixed",
+            zIndex: 10000,
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(71, 71, 71, 0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            background: "white",
+            width: "1200px",
+            height: "800px",
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "calc(100vh - 2rem)",
+            overflowY: "auto",
+            position: "relative",
+            border: "1px solid #ccc",
+            borderRadius: "0.3rem",
+            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
+            inset: 0,
+          },
+        }}
+      >
+        <Wrapper fontSize={`28px`} al={`flex-end`}>
+          <CloseButton
+            onClick={() => {
+              setModal2Open(false);
+            }}
+          >
+            <IoIosCloseCircle />
+          </CloseButton>
+        </Wrapper>
+        <PreviewModal {...previewModalProps} />
+      </Modal>
     </WholeWrapper>
   );
 };

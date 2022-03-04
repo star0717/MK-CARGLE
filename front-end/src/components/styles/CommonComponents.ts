@@ -768,10 +768,11 @@ export const IconButton = styled.button<any>`
   border: ${(props) => props.border || `none`};
   border-radius: ${(props) => props.radius || props.theme.radius};
   box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
+  z-index: ${(props) => props.zIndex};
 
   & svg {
     color: ${(props) => props.color || props.basicTheme_C};
-    font-size: 28px;
+    font-size: ${(props) => props.fontSize || `28px`};
   }
 
   ${(props) => props.kindOf === `hover` && `background-color : #f5f5f5;`}
