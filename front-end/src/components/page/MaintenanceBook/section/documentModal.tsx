@@ -28,14 +28,21 @@ import { _pPartsSetProps } from "src/configure/_pProps.entity";
 import { trim } from "src/modules/commonModule";
 import { formRegEx } from "src/validation/regEx";
 import { useDispatch } from "react-redux";
-import { _aPatchMaintenancesRelease } from "store/action/user.action";
+import {
+  _aGetMaintenancesGenEstimate,
+  _aGetMaintenancesGenStatement,
+  _aPatchMaintenancesPubEsitmate,
+  _aPatchMaintenancesPubStatement,
+  _aPatchMaintenancesRelease,
+} from "store/action/user.action";
 import { _iMaintenancesOne } from "store/interfaces";
 import { useReactToPrint } from "react-to-print";
 import EstimateFile from "src/components/page/FileHTML/estimateFile";
 import StatementFile from "src/components/page/FileHTML/statementFile";
 import { UseLink } from "src/configure/router.entity";
-import { MainStatus } from "src/constants/maintenance.const";
+import { MainDocPubType, MainStatus } from "src/constants/maintenance.const";
 import { useRouter } from "next/router";
+import { MainPubDocInfo } from "src/models/maintenance.entity";
 
 const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
@@ -119,22 +126,91 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   };
 
   /**
-   * 출고완료
+   * 출고완료 handler
+   * @param opt
+   * @returns
    */
   const onReleasedHandler = async (opt: boolean) => {
+    // 발급 api에 넘길 데이터 초기값
+    let mainDocPubData: MainPubDocInfo = {
+      type: MainDocPubType.NOT_ISSUED,
+      phoneNumber: "test", // <-- 에러임 db에서 배열로 바꿔줘야함
+    };
+    // 저장 및 프린트 실행 여부
+    let apiDone: boolean = false;
+    // 서류는 체크하고 발급방식을 선택안한 경우
     if (
       (fileCheck.eCheck || fileCheck.sCheck) &&
       !pubCheck.print &&
       !pubCheck.online
     )
       return alert("발급방식을 선택하세요.");
+    // 서류를 체크안하고 발급방식만 선택한 경우
     if (
       (pubCheck.print || pubCheck.online) &&
       !fileCheck.eCheck &&
       !fileCheck.sCheck
     )
       return alert("발급서류를 선택하세요");
+    // 체크 여부에 따른 문서 발급 타입 설정
+    // 둘 다
+    if (pubCheck.print && pubCheck.online)
+      mainDocPubData.type = MainDocPubType.BOTH;
+    // 프린트만
+    if (pubCheck.print && !pubCheck.online)
+      mainDocPubData.type = MainDocPubType.PRINT;
+    // sms만
+    if (!pubCheck.print && pubCheck.online)
+      mainDocPubData.type = MainDocPubType.ONLINE;
+    // sms 안함
+    if (!pubCheck.online) delete mainDocPubData.phoneNumber;
+    // sms하는데 번호없음
+    if (pubCheck.online && phoneList.length === 0)
+      return alert("전송할 번호를 추가하세요");
 
+    // 견적서 체크할 경우 api
+    if (fileCheck.eCheck) {
+      await dispatch(_aGetMaintenancesGenEstimate(props.mtInfo._id)).then(
+        async (res: _iMaintenancesOne) => {
+          await dispatch(
+            _aPatchMaintenancesPubEsitmate(res.payload._id, mainDocPubData)
+          ).then(
+            (res: _iMaintenancesOne) => {
+              props.setMtInfo(res.payload);
+            },
+            (err) => {
+              return alert("견적서 발급 DB 에러");
+            }
+          );
+        },
+        (err) => {
+          return alert("견적서 생성 DB 에러");
+        }
+      );
+    }
+    // 명세서 체크할 경우 api
+    if (fileCheck.sCheck) {
+      await dispatch(_aGetMaintenancesGenStatement(props.mtInfo._id)).then(
+        async (res: _iMaintenancesOne) => {
+          await dispatch(
+            _aPatchMaintenancesPubStatement(res.payload._id, mainDocPubData)
+          ).then(
+            (res: _iMaintenancesOne) => {
+              props.setMtInfo(res.payload);
+            },
+            (err) => {
+              return alert("명세서 발급 DB 에러");
+            }
+          );
+        },
+        (err) => {
+          return alert("명세서 생성 DB 에러");
+        }
+      );
+    }
+    // 옵션(출고완료or단순서류발급)에 따른 실제 기능
+    // 출고완료 : 출고완료 api 및 실제 프린트
+    // 단순서류발급 : 실제 프린트
     if (opt) {
       await dispatch(
         _aPatchMaintenancesRelease(props.mtInfo._id, props.mtInfo)
@@ -145,30 +221,34 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           }
           alert("정비내역을 저장했습니다.");
           props.setMtInfo(res.payload);
-          props.setModalOpen(false);
+          if (!pubCheck.print && !pubCheck.online)
+            return props.setModalOpen(false);
+          if (pubCheck.print) return onPrintHandler();
         },
         (err) => {
           return alert("출고에 실패했습니다.");
         }
       );
-    }
-
-    if (pubCheck.print) {
-      onPrintHandler();
+    } else {
+      if (!pubCheck.print && !pubCheck.online)
+        return alert("발급방식을 선택하세요.");
+      if (pubCheck.print) return onPrintHandler();
     }
   };
-  console.log("###", props.mtInfo.works);
 
   /** 프린트 handler */
   const onPrintHandler = useReactToPrint({
     content: () => {
-      let printElem = document.createElement("div");
-      if (fileCheck.eCheck) printElem.append(estimateRef.current);
-      if (fileCheck.sCheck) printElem.append(statementRef.current);
+      const printElem = document.createElement("div");
+      const eNode = estimateRef.current.cloneNode(true);
+      const sNode = estimateRef.current.cloneNode(true);
+      if (fileCheck.eCheck) printElem.appendChild(eNode);
+      if (fileCheck.sCheck) printElem.appendChild(sNode);
       return printElem;
     },
     onAfterPrint: () => {
       if (reOption) {
+        props.setModalOpen(false);
         return router.push(
           `${UseLink.MAINTENANCE_BOOK}?id=${props.mtInfo._id}&step=${MainStatus.RELEASED}`
         );
@@ -442,10 +522,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             </CommonButton>
           </CommonButtonWrapper>
         )}
-        <Wrapper display={`none`}>
-          <EstimateFile ref={estimateRef} />
-          <StatementFile ref={statementRef} />
-        </Wrapper>
+      </Wrapper>
+      <Wrapper display={`none`}>
+        <EstimateFile ref={estimateRef} />
+        <StatementFile ref={statementRef} />
       </Wrapper>
     </WholeWrapper>
   );

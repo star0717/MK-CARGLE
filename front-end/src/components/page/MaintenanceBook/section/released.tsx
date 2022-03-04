@@ -295,6 +295,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
       JSON.stringify(props.data.mtData.price) === JSON.stringify(price)
   );
+  console.log("@@", workList[0].quantity);
+  console.log("##", props.data.mtData.works[0].quantity);
 
   /**
    * 정비내역 수정
@@ -326,6 +328,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       return alert("정비내역을 추가해주세요.");
 
     setMtInfo(maintenanceData);
+    setWorkList(mainWorkList);
     setModalOption("editMolit");
     setModalOpen(true);
     setModify(!modify);

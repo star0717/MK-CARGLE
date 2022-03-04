@@ -179,8 +179,6 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
     }
   };
 
-  console.log("!!!", props.mtInfo.works);
-
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
