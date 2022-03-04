@@ -43,6 +43,8 @@ import { UseLink } from "src/configure/router.entity";
 import { MainDocPubType, MainStatus } from "src/constants/maintenance.const";
 import { useRouter } from "next/router";
 import { MainPubDocInfo } from "src/models/maintenance.entity";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
@@ -63,6 +65,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
 
   const estimateRef = useRef<HTMLDivElement>(null);
   const statementRef = useRef<HTMLDivElement>(null);
+  const newWindow = useRef<any>(window);
+  const docPdf = new jsPDF();
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -258,6 +262,37 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     },
   });
 
+  /**pdf저장 */
+  const onSavePdf = async () => {
+    html2canvas(estimateRef.current, {
+      scale: 5,
+      // onclone: (cloneDoc) => {
+      //   cloneDoc.getElementById("noneDiv").style.display = "block";
+      // },
+    }).then((canvas) => {
+      let imgData = canvas.toDataURL("image/png");
+      let margin = 10;
+      let imgWidth = 210 - 10 * 2;
+      let pageHeight = imgWidth * 1.414;
+      let imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let doc = new jsPDF("p", "mm", "a4");
+      let position = margin;
+
+      doc.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 20) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      doc.save(`${props.mtInfo.car.regNumber}_견적서.pdf`);
+    });
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -313,10 +348,17 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               type="button"
               kindOf={`default`}
               onClick={() => {
-                console.log("미리보기");
+                newWindow.current = window.open("");
+                const eNode = estimateRef.current.cloneNode(true);
+                const sNode = estimateRef.current.cloneNode(true);
+                return newWindow;
+                // newWindow.current.document.body.appendChild(sNode);
               }}
             >
               미리보기
+            </SmallButton>
+            <SmallButton type="button" kindOf={`default`} onClick={onSavePdf}>
+              저장하기
             </SmallButton>
           </Wrapper>
           <Wrapper dr={`row`} height={`50px`} ju={`space-between`}>
@@ -523,10 +565,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           </CommonButtonWrapper>
         )}
       </Wrapper>
-      <Wrapper display={`none`}>
-        <EstimateFile ref={estimateRef} />
-        <StatementFile ref={statementRef} />
-      </Wrapper>
+      {/* <Wrapper id={`noneDiv`} display={`none`}> */}
+      <EstimateFile ref={estimateRef} />
+      <StatementFile ref={statementRef} />
+      {/* </Wrapper> */}
     </WholeWrapper>
   );
 };
