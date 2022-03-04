@@ -34,6 +34,8 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
   const [partList, setPartList] = useState<Part[]>(props.data.allParts.docs);
   const [selectPart, setSelectPart] = useState<Part[]>([]);
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
+  const [backUp, setBackUp] = useState<MainWork[]>(props.workList);
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -103,15 +105,77 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
       return alert("부품을 추가해주세요.");
     }
     let newList: MainWork[] = [];
+    backUp.splice(0, 1, {
+      name: "",
+      code: "",
+      tsCode: "",
+      type: MainPartsType.A,
+      price: 0,
+      quantity: 0,
+      sum: 0,
+      wage: 0,
+    });
+    console.log("@@@@@@@@@@@@@@@", props.workList);
     for (let i = 0; i < selectPart.length; i++) {
       let newCheck: boolean = true;
+
+      // props.workList.forEach((item, index) => {
+      //   if (selectPart[i].code === item.code) {
+      //     console.log("!!!4", props.data.mtData.works[0].quantity);
+      //     console.log("@@@4", props.workList[0]);
+      //     // props.workList.splice(index, 1, {
+      //     //   ...item,
+      //     //   quantity: item.quantity + 1,
+      //     //   sum: item.price * (item.quantity + 1),
+      //     // });
+      //     props.workList.splice
+      //     console.log("!!!3", props.data.mtData.works[0].quantity);
+      //     console.log("@@@3", props.workList[0]);
+      //     return (newCheck = false);
+      //   }
+      // });
+
       props.workList.forEach((item, index) => {
         if (selectPart[i].code === item.code) {
-          props.workList.splice(index, 1, {
-            ...item,
-            quantity: item.quantity + 1,
-            sum: item.price * (item.quantity + 1),
-          });
+          // console.log("수정전 backup", backUp[0].quantity);
+          // console.log("수정전 props", props.workList[0].quantity);
+
+          // console.log("item", item, "index", index);
+          // for(let i = 0; i < props.workList.length; i++){
+          //   if(i === index){
+
+          //   }else{
+          //     props.setWorkList({})
+          //   }
+          // }
+
+          // console.log("수정후 backup", backUp[0].quantity);
+          // console.log("수정후 props", props.workList[0].quantity);
+
+          // console.log("!!!4", props.data.mtData.works[0].quantity);
+          // console.log("@@@4", props.workList[0].quantity);
+          // // console.log("###4", backUp[0].quantity);
+          // console.log("item", item);
+          // console.log("index", index);
+
+          // backUp.splice(index, 1, {
+          //   ...item,
+          //   quantity: item.quantity + 1,
+          //   sum: item.price * (item.quantity + 1),
+          // });
+          // backUp.splice;
+
+          // setBackUp({
+          //   ...item,
+          //   quantity: item.quantity + 1,
+          //   sum: item.price * (item.quantity + 1),
+          // });
+
+          // props.setWorkList([...props.workList, backUp]);
+
+          // console.log("!!!3", props.data.mtData.works[0].quantity);
+          // console.log("@@@3", props.workList[0].quantity);
+          // console.log("###3", backUp.quantity);
           return (newCheck = false);
         }
       });
@@ -127,10 +191,16 @@ const MtPartsModal: NextPage<_pPartsSetProps> = (props) => {
           wage: 0,
         });
     }
+
     props.setWorkList(props.workList.concat(newList));
+    // console.log("!!!1", props.data.mtData.works[0].quantity);
+    // console.log("@@@1", props.workList[0].quantity);
+    // console.log("###1", backUp.quantity);
     props.setModalOpen(false);
   };
-
+  // console.log("!!!2", props.data.mtData.works[0].quantity);
+  // console.log("초기props", props.workList[0].quantity);
+  // console.log("초기backup", backUp[0].quantity);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
