@@ -114,6 +114,7 @@ export const Wrapper = styled.div<any>`
   text-align: ${(props) => props.textAlign};
   animation: ${appearAnimation} 1s forwards;
   opacity: ${(props) => props.opacity};
+  page-break-after: ${(props) => props.pageBreakAfter};
 
   &.active div {
     color: ${(props) => props.theme.black_C};
