@@ -129,7 +129,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       setMtInfo(props.data.mtData);
     }
   }, [modify]);
-
+  console.log("workList", workList);
   /**
    * 정비내역 변경 시 일어나는 event handler
    * cell 증가, 합계 계산
@@ -291,11 +291,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       setWorkList(workList.filter((data, index) => idx !== index));
     }
   };
-  console.log(
-    JSON.stringify(props.data.mtData.works) === JSON.stringify(workList) &&
-      JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
-      JSON.stringify(props.data.mtData.price) === JSON.stringify(price)
-  );
 
   /**
    * 정비내역 수정
