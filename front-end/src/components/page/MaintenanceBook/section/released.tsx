@@ -354,7 +354,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     mtInfo,
     setMtInfo,
   };
-
+  // console.log("dkfsodkfo", workList);
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
