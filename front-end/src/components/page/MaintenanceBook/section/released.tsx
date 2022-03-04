@@ -295,8 +295,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
       JSON.stringify(props.data.mtData.price) === JSON.stringify(price)
   );
-  console.log("@@", workList[0].quantity);
-  console.log("##", props.data.mtData.works[0].quantity);
 
   /**
    * 정비내역 수정

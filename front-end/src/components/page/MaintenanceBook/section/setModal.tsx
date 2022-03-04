@@ -86,6 +86,8 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
     let codeList: string[] = [];
     let partList: Part[] = [];
     let newList: MainWork[] = [];
+    let backUp: MainWork[] = [];
+    let Check: boolean = true;
     for (let i = 0; i < checkedList.length; i++) {
       await dispatch(_aGetPartssetsOne(checkedList[i])).then(
         (res: _iPartssetsOne) => {
@@ -96,33 +98,41 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
         }
       );
     }
-    for (let j = 0; j < codeList.length; j++) {
-      partList.push(getPartByCode(codeList[j], props.data.allParts.docs));
-      let newCheck: boolean = true;
-      props.workList.forEach((item, index) => {
+    for (let i = 0; i < codeList.length; i++) {
+      partList.push(getPartByCode(codeList[i], props.data.allParts.docs));
+    }
+
+    props.workList.forEach((item, index) => {
+      for (let j = 0; j < partList.length; j++) {
         if (partList[j].code === item.code) {
-          props.workList.splice(index, 1, {
+          backUp.push({
             ...item,
             quantity: item.quantity + 1,
             sum: item.price * (item.quantity + 1),
           });
-          return (newCheck = false);
+          partList = partList.slice(0, j).concat(partList.slice(j + 1));
+          Check = false;
         }
+      }
+      if (Check) {
+        backUp.push(props.workList[index]);
+      }
+      Check = true;
+    });
+    for (let k = 0; k < partList.length; k++) {
+      newList.push({
+        name: partList[k].name,
+        code: partList[k].code,
+        tsCode: partList[k].tsCode || "",
+        type: MainPartsType.A,
+        price: 0,
+        quantity: 0,
+        sum: 0,
+        wage: 0,
       });
-      if (newCheck)
-        newList.push({
-          name: partList[j].name,
-          code: partList[j].code,
-          tsCode: partList[j].tsCode || "",
-          type: MainPartsType.A,
-          price: 0,
-          quantity: 0,
-          sum: 0,
-          wage: 0,
-        });
     }
 
-    props.setWorkList(props.workList.concat(newList));
+    props.setWorkList(backUp.concat(newList));
     props.setModalOpen(false);
   };
 

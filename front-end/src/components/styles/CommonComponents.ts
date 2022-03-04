@@ -578,7 +578,7 @@ export const SmallButton = styled.button<any>`
   background-color: ${(props) => props.bgColor};
   border-radius: 5px;
   color: #fff;
-  cursor: ${(props) => props.cursor || `pointer`};
+  cursor: pointer;
   vertical-align: unset;
 
   ${(props) =>
@@ -609,9 +609,6 @@ export const SmallButton = styled.button<any>`
 
   ${(props) => props.kindOf === `input` && `background ${props.theme.white_C};`}
     ${(props) => props.kindOf === `input` && `border ${props.theme.border};`}
-    ${(props) => props.kindOf === `input` && `color ${props.theme.black_C};`}
-    ${(props) => props.kindOf === `input` && `padding:0px 8px;`}
-    ${(props) => props.kindOf === `input` && `justify-content:flex-start;`}
   
 
   & svg {
