@@ -30,11 +30,9 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
    * 3. Handlers
    *********************************************************************/
   /**pdf저장 */
-  const onSavePdf = async () => {
-    html2canvas(estimateRef.current, {
-      scale: 2,
-    }).then((canvas) => {
-      let imgData = canvas.toDataURL("image/png");
+  const onSavePdf = () => {
+    html2canvas(estimateRef.current).then((canvas) => {
+      let imgData = canvas.toDataURL("image/png", 1.0);
 
       let imgWidth = 210;
       let pageHeight = imgWidth * 1.414;
