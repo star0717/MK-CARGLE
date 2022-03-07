@@ -106,6 +106,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
   const [modify, setModify] = useState<boolean>(true);
+  const [reset, setReset] = useState<number>(0);
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
   /*********************************************************************
@@ -123,13 +124,13 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * 수정 취소시 Re Rendering
    */
   useEffect(() => {
-    if (!modify) {
-      setWorkList(props.data.mtData.works);
-      setPrice(props.data.mtData.price);
-      setMtInfo(props.data.mtData);
-    }
-  }, [modify]);
+    console.log("!!!");
+    setWorkList(props.data.mtData.works);
+    setPrice(props.data.mtData.price);
+    setMtInfo(props.data.mtData);
+  }, [reset]);
   console.log("workList", workList);
+  console.log("props", props.data.mtData.works);
   /**
    * 정비내역 변경 시 일어나는 event handler
    * cell 증가, 합계 계산
@@ -296,6 +297,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * 정비내역 수정
    */
   const onModifyWorkInfo = async () => {
+    if (modify === true) {
+      setReset(reset + 1);
+    }
     if (
       JSON.stringify(props.data.mtData.works) === JSON.stringify(workList) &&
       JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
