@@ -1,7 +1,9 @@
 import { Agency } from "src/models/agency.entity";
 import { Car } from "src/models/car.entity";
+import { Estimate } from "src/models/estimate.entity";
 import { Maintenance } from "src/models/maintenance.entity";
 import { PartsSet } from "src/models/partsset.entity";
+import { Statement } from "src/models/statement.entity";
 import { SignUpInfo } from "../../../src/models/auth.entity";
 import { DeleteResult, FindResult } from "../../../src/models/base.entity";
 import { Company } from "../../../src/models/company.entity";
@@ -444,6 +446,16 @@ export class _iMaintenancesOne implements baseActionInterface {
   payload: Maintenance;
 }
 
+export class _iEstimate implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: Estimate;
+}
+
+export class _iStatement implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: Statement;
+}
+
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
@@ -465,4 +477,6 @@ export type ActionInterfaces =
   | _iPartssetsOne
   | _iAgencies
   | _iMaintenances
-  | _iMaintenancesOne;
+  | _iMaintenancesOne
+  | _iEstimate
+  | _iStatement;

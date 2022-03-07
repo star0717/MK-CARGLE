@@ -268,6 +268,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     fileCheck,
     propMtInfo,
   };
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -532,8 +533,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
         )}
       </Wrapper>
       <Wrapper display={`none`}>
-        <EstimateFile ref={estimateRef} />
-        <StatementFile ref={statementRef} />
+        <EstimateFile {...props.mtInfo} ref={estimateRef} />
+        <StatementFile {...props.mtInfo} ref={statementRef} />
       </Wrapper>
       <Modal
         isOpen={modal2Open}

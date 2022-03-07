@@ -32,7 +32,7 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
   /**pdf저장 */
   const onSavePdf = () => {
     html2canvas(estimateRef.current).then((canvas) => {
-      let imgData = canvas.toDataURL("image/png", 1.0);
+      let imgData = canvas.toDataURL("image/png");
 
       let imgWidth = 210;
       let pageHeight = imgWidth * 1.414;
@@ -42,6 +42,7 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
       let doc = new jsPDF("p", "mm", "a4");
       let position = 0;
 
+      doc.internal.scaleFactor = 1.33;
       doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
@@ -88,9 +89,9 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
             </IconButton>
           </Wrapper>
           {docBool ? (
-            <EstimateFile ref={estimateRef} />
+            <EstimateFile {...props.propMtInfo} ref={estimateRef} />
           ) : (
-            <StatementFile ref={statementRef} />
+            <StatementFile {...props.propMtInfo} ref={statementRef} />
           )}
           <Wrapper isFixed top={`370px`} left={`520px`} zIndex={`9999`}>
             <IconButton
@@ -112,12 +113,12 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
       )}
       {props.fileCheck.eCheck && !props.fileCheck.sCheck && (
         <Wrapper>
-          <EstimateFile ref={estimateRef} />
+          <EstimateFile {...props.propMtInfo} ref={estimateRef} />
         </Wrapper>
       )}
       {!props.fileCheck.eCheck && props.fileCheck.sCheck && (
         <Wrapper>
-          <StatementFile ref={statementRef} />
+          <StatementFile {...props.propMtInfo} ref={statementRef} />
         </Wrapper>
       )}
       <Wrapper dr={`row`} ju={`center`}>

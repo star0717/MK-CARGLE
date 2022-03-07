@@ -1,5 +1,8 @@
 import { genMainOptionQuery } from "./../../src/constants/maintenance.const";
-import { MaintenancesApiPath } from "./../../src/constants/api-path.const";
+import {
+  EstimatesApiPath,
+  MaintenancesApiPath,
+} from "./../../src/constants/api-path.const";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
   ConfirmPWD,
@@ -46,6 +49,8 @@ import {
   _iGetMaintenancesCarInfo,
   _iMaintenances,
   _iMaintenancesOne,
+  _iEstimate,
+  _iStatement,
 } from "../interfaces";
 
 import {
@@ -66,6 +71,8 @@ import {
   MainPubDocInfo,
   Maintenance,
 } from "src/models/maintenance.entity";
+import { Estimate } from "src/models/estimate.entity";
+import { Statement } from "src/models/statement.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1322,6 +1329,44 @@ export async function _aPatchMaintenancesPubStatement(
     });
 
   const result: _iMaintenancesOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 견적서 데이터 반환
+ * @param id
+ * @returns
+ */
+export async function _aGetEstimates(id: string) {
+  const req: Estimate = await axios
+    .get(genApiPath(EstimatesApiPath.BASE, { id: id }))
+    .then((res: AxiosResponse<Estimate, string>): Estimate => {
+      return res.data;
+    });
+
+  const result: _iEstimate = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 명세서 데이터 반환
+ * @param id
+ * @returns
+ */
+export async function _aGetStatement(id: string) {
+  const req: Statement = await axios
+    .get(genApiPath(EstimatesApiPath.BASE, { id: id }))
+    .then((res: AxiosResponse<Statement, string>): Statement => {
+      return res.data;
+    });
+
+  const result: _iStatement = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

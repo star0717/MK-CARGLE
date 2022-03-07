@@ -16,6 +16,8 @@ import MaintenanceDone from "./section/done";
 import MaintenancePaid from "./section/paid";
 import MaintenanceReleased from "./section/released";
 import { Maintenance } from "src/models/maintenance.entity";
+import { Statement } from "src/models/statement.entity";
+import { Estimate } from "src/models/estimate.entity";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
@@ -64,6 +66,9 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     costomerType: "all",
     status: "all",
   });
+  const [eInfo, setEInfo] = useState<Estimate>();
+  const [sInfo, setSInfo] = useState<Statement>();
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/

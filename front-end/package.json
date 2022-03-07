@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.0",
+    "@types/jspdf": "^2.0.0",
     "@types/node": "16.11.6",
     "@types/react": "17.0.34",
     "@types/react-datepicker": "^4.3.0",

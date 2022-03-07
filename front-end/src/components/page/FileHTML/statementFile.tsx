@@ -1,6 +1,7 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Wrapper, Text } from "src/components/styles/CommonComponents";
+import { Statement } from "src/models/statement.entity";
 
 const StatementFile: NextPage<any> = forwardRef<HTMLDivElement>(
   (props, ref) => {
@@ -11,6 +12,7 @@ const StatementFile: NextPage<any> = forwardRef<HTMLDivElement>(
     /*********************************************************************
      * 2. State settings
      *********************************************************************/
+    const [sInfo, setSInfo] = useState<Statement>();
 
     /*********************************************************************
      * 3. Handlers

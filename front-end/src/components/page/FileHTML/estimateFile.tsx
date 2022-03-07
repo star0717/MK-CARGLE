@@ -1,19 +1,29 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Text, Wrapper } from "src/components/styles/CommonComponents";
+import { Estimate } from "src/models/estimate.entity";
+import { useDispatch } from "react-redux";
+import { _aGetEstimates } from "store/action/user.action";
 
 const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const dispatch = useDispatch();
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [eInfo, setEInfo] = useState<Estimate>();
+  const [render, setRender] = useState<boolean>(true);
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  console.log(props);
+  useEffect(() => {
+    // if (render) dispatch(_aGetEstimates()).then();
+  }, [render]);
 
   /*********************************************************************
    * 4. Props settings
