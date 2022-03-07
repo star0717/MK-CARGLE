@@ -105,7 +105,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
-  const [modify, setModify] = useState<boolean>(true);
+  const [modify, setModify] = useState<boolean>(false);
+  const [reset, setReset] = useState<number>(0);
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
   /*********************************************************************
@@ -123,13 +124,14 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * 수정 취소시 Re Rendering
    */
   useEffect(() => {
-    if (!modify) {
-      setWorkList(props.data.mtData.works);
-      setPrice(props.data.mtData.price);
-      setMtInfo(props.data.mtData);
-    }
-  }, [modify]);
+    console.log("!!!");
+    setWorkList(props.data.mtData.works);
+    setPrice(props.data.mtData.price);
+    setMtInfo(props.data.mtData);
+    setModify(!modify);
+  }, [reset]);
   console.log("workList", workList);
+  console.log("props", props.data.mtData.works);
   /**
    * 정비내역 변경 시 일어나는 event handler
    * cell 증가, 합계 계산
@@ -301,7 +303,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
       JSON.stringify(props.data.mtData.price) === JSON.stringify(price)
     ) {
-      return setModify(!modify);
+      return setReset(reset + 1);
     }
 
     let mainWorkList: MainWork[] = workList.filter((item) => item.name !== "");
@@ -325,7 +327,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     setWorkList(mainWorkList);
     setModalOption("editMolit");
     setModalOpen(true);
-    setModify(!modify);
   };
 
   /*********************************************************************
@@ -347,6 +348,8 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     setWorkList,
     mtInfo,
     setMtInfo,
+    modify,
+    setModify,
   };
   // console.log("dkfsodkfo", workList);
   /*********************************************************************
@@ -1106,7 +1109,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     width={`439px`}
                     kindOf={`default`}
                     onClick={() => {
-                      setModify(!modify);
+                      setReset(reset + 1);
                     }}
                   >
                     수정 취소
