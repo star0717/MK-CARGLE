@@ -12,11 +12,14 @@ import StatementFile from "../../FileHTML/statementFile";
 import { AiOutlineCaretLeft, AiOutlineCaretRight } from "react-icons/ai";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import dayjs from "dayjs";
 
 const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const estimateRef = useRef<HTMLDivElement>(null);
+  const statementRef = useRef<HTMLDivElement>(null);
 
   /*********************************************************************
    * 2. State settings
@@ -27,19 +30,21 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
    * 3. Handlers
    *********************************************************************/
   /**pdf저장 */
-  const onSavePdf = () => {
-    html2canvas(document.getElementById("estimate")).then((canvas) => {
+  const onSavePdf = async () => {
+    html2canvas(estimateRef.current, {
+      scale: 2,
+    }).then((canvas) => {
       let imgData = canvas.toDataURL("image/png");
-      let margin = 10;
-      let imgWidth = 210 - 10 * 2;
+
+      let imgWidth = 210;
       let pageHeight = imgWidth * 1.414;
       let imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
 
       let doc = new jsPDF("p", "mm", "a4");
-      let position = margin;
+      let position = 0;
 
-      doc.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+      doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
       while (heightLeft >= 20) {
@@ -49,7 +54,11 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
         heightLeft -= pageHeight;
       }
 
-      doc.save(`${props.propMtInfo.car.regNumber}_견적서.pdf`);
+      doc.save(
+        `${props.propMtInfo.car.regNumber}_견적서_${dayjs(Date.now()).format(
+          "YYYY-MM-DD"
+        )}.pdf`
+      );
     });
   };
 
@@ -80,7 +89,11 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
               <AiOutlineCaretLeft />
             </IconButton>
           </Wrapper>
-          {docBool ? <EstimateFile /> : <StatementFile />}
+          {docBool ? (
+            <EstimateFile ref={estimateRef} />
+          ) : (
+            <StatementFile ref={statementRef} />
+          )}
           <Wrapper isFixed top={`370px`} left={`520px`} zIndex={`9999`}>
             <IconButton
               type="button"
@@ -101,12 +114,12 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
       )}
       {props.fileCheck.eCheck && !props.fileCheck.sCheck && (
         <Wrapper>
-          <EstimateFile />
+          <EstimateFile ref={estimateRef} />
         </Wrapper>
       )}
       {!props.fileCheck.eCheck && props.fileCheck.sCheck && (
         <Wrapper>
-          <StatementFile />
+          <StatementFile ref={statementRef} />
         </Wrapper>
       )}
       <Wrapper dr={`row`} ju={`center`}>
