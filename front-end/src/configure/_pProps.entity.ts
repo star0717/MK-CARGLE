@@ -145,6 +145,8 @@ export interface _pPartsSetProps extends _MainProps {
   setWorkList?: React.Dispatch<React.SetStateAction<MainWork[]>>;
   mtInfo?: Maintenance;
   setMtInfo?: React.Dispatch<React.SetStateAction<Maintenance>>;
+  modify?: boolean;
+  setModify?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /***********************************************************************

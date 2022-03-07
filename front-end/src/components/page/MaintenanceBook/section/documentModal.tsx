@@ -219,6 +219,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             return alert("출고에 실패했습니다.");
           }
           alert("정비내역을 저장했습니다.");
+          props.setModify(!props.modify);
           props.setMtInfo(res.payload);
           if (!pubCheck.print && !pubCheck.online)
             return props.setModalOpen(false);
