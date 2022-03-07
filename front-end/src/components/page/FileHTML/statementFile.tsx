@@ -27,6 +27,7 @@ const StatementFile: NextPage<any> = forwardRef<HTMLDivElement>(
       <Wrapper
         id="statement"
         ref={ref}
+        margin={`10px 0 0`}
         padding={`0px`}
         pageBreakAfter={`always`}
       >

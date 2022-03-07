@@ -23,7 +23,13 @@ const EstimateFile: NextPage<any> = forwardRef<HTMLDivElement>((props, ref) => {
    * 5. Page configuration
    *********************************************************************/
   return (
-    <Wrapper id="estimate" ref={ref} padding={`0px`} pageBreakAfter={`always`}>
+    <Wrapper
+      id="estimate"
+      ref={ref}
+      margin={`10px 0 0`}
+      padding={`0px`}
+      pageBreakAfter={`always`}
+    >
       <Wrapper
         width={`49.58333em`}
         height={`70.08334em`}
