@@ -36,6 +36,7 @@ import {
   _aGetEstimates,
   _aGetMaintenancesGenEstimate,
   _aGetMaintenancesGenStatement,
+  _aGetStatement,
   _aPatchMaintenancesPubEsitmate,
   _aPatchMaintenancesPubStatement,
   _aPatchMaintenancesRelease,
@@ -248,9 +249,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           await dispatch(
             _aPatchMaintenancesPubEsitmate(res.payload._id, data)
           ).then(
-            (res: _iMaintenancesOne) => {
+            async (res: _iMaintenancesOne) => {
               props.setMtInfo(res.payload);
-              onEstimateInfo();
+              await onEstimateInfo();
             },
             (err) => {
               return alert("견적서 발급 DB 에러");
@@ -269,9 +270,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           await dispatch(
             _aPatchMaintenancesPubStatement(res.payload._id, data)
           ).then(
-            (res: _iMaintenancesOne) => {
+            async (res: _iMaintenancesOne) => {
               props.setMtInfo(res.payload);
-              onStatementInfo();
+              await onStatementInfo();
             },
             (err) => {
               return alert("명세서 발급 DB 에러");
@@ -301,7 +302,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
 
   /**명세서 생성 handler */
   const onStatementInfo = async () => {
-    await dispatch(_aGetEstimates(props.mtInfo.statement._oID)).then(
+    await dispatch(_aGetStatement(props.mtInfo.statement._oID)).then(
       (res: _iEstimate) => {
         if (res.payload) {
           setSInfo(res.payload);
@@ -317,7 +318,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * 4. Props settings
    *********************************************************************/
   const propMtInfo = props.mtInfo;
+  const propToken = props.tokenValue;
+  /**미리보기 props */
   const previewModalProps: _pPreviewModalProps = {
+    propToken,
     modal2Open,
     setModal2Open,
     fileCheck,
@@ -589,8 +593,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
         )}
       </Wrapper>
       <Wrapper display={`none`}>
-        <EstimateFile {...eInfo} ref={estimateRef} />
-        <StatementFile {...sInfo} ref={statementRef} />
+        {/* <EstimateFile {...previewModalProps} ref={estimateRef} />
+        <StatementFile {...previewModalProps} ref={statementRef} /> */}
       </Wrapper>
       <Modal
         isOpen={modal2Open}

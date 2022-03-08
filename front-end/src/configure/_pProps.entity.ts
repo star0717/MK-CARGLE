@@ -214,10 +214,11 @@ export interface _pMaintenanceProps extends _pFindDocs<any> {
 
 // 서류 미리보기 props
 export interface _pPreviewModalProps {
-  modal2Open: boolean;
-  setModal2Open: React.Dispatch<React.SetStateAction<boolean>>;
-  fileCheck: _fFileCheck;
-  propMtInfo: Maintenance;
+  propToken?: AuthTokenInfo;
+  modal2Open?: boolean;
+  setModal2Open?: React.Dispatch<React.SetStateAction<boolean>>;
+  fileCheck?: _fFileCheck;
+  propMtInfo?: Maintenance;
   eInfo: Estimate;
   sInfo: Statement;
 }

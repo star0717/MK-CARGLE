@@ -64,7 +64,7 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-
+  console.log(props);
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -89,9 +89,9 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
             </IconButton>
           </Wrapper>
           {docBool ? (
-            <EstimateFile {...props.eInfo} ref={estimateRef} />
+            <EstimateFile {...props} ref={estimateRef} />
           ) : (
-            <StatementFile {...props.sInfo} ref={statementRef} />
+            <StatementFile {...props} ref={statementRef} />
           )}
           <Wrapper isFixed top={`370px`} left={`520px`} zIndex={`9999`}>
             <IconButton
@@ -113,12 +113,12 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
       )}
       {props.fileCheck.eCheck && !props.fileCheck.sCheck && (
         <Wrapper>
-          <EstimateFile {...props.eInfo} ref={estimateRef} />
+          <EstimateFile {...props} ref={estimateRef} />
         </Wrapper>
       )}
       {!props.fileCheck.eCheck && props.fileCheck.sCheck && (
         <Wrapper>
-          <StatementFile {...props.sInfo} ref={statementRef} />
+          <StatementFile {...props} ref={statementRef} />
         </Wrapper>
       )}
       <Wrapper dr={`row`} ju={`center`}>
