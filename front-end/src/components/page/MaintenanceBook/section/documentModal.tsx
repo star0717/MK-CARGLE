@@ -220,6 +220,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           }
           alert("정비내역을 저장했습니다.");
           props.setModify(!props.modify);
+          props.setRender(true);
           props.setMtInfo(res.payload);
           if (!pubCheck.print && !pubCheck.online)
             return props.setModalOpen(false);

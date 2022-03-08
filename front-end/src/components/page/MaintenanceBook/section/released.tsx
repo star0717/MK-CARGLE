@@ -34,7 +34,10 @@ import { FaFlagCheckered } from "react-icons/fa";
 
 import { useDispatch } from "react-redux";
 import { basicRegEx } from "src/validation/regEx";
-import { _aPatchMaintenancesRelease } from "store/action/user.action";
+import {
+  _aGetMaintenancesOne,
+  _aPatchMaintenancesRelease,
+} from "store/action/user.action";
 import {
   _iGetMaintenancesCarInfo,
   _iMaintenances,
@@ -109,6 +112,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   const [reset, setReset] = useState<number>(0);
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
+  const [render, setRender] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -124,11 +128,24 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * 수정 취소시 Re Rendering
    */
   useEffect(() => {
-    console.log("!!!");
-    setWorkList(props.data.mtData.works);
-    setPrice(props.data.mtData.price);
-    setMtInfo(props.data.mtData);
-    setModify(!modify);
+    {
+      if (render === true) {
+        dispatch(_aGetMaintenancesOne(props.data.mtData._id)).then(
+          (res: _iMaintenancesOne) => {
+            console.log("dispatch!");
+            setWorkList(res.payload.works);
+            setPrice(res.payload.price);
+            setMtInfo(res.payload);
+          }
+        );
+      } else {
+        console.log("just continue!");
+        setWorkList(props.data.mtData.works);
+        setPrice(props.data.mtData.price);
+        setMtInfo(props.data.mtData);
+      }
+      setModify(!modify);
+    }
   }, [reset]);
   console.log("workList", workList);
   console.log("props", props.data.mtData.works);
@@ -350,6 +367,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     setMtInfo,
     modify,
     setModify,
+    setRender,
   };
   // console.log("dkfsodkfo", workList);
   /*********************************************************************
