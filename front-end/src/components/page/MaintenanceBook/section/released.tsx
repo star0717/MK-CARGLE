@@ -109,10 +109,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   const [workList, setWorkList] = useState<MainWork[]>(props.data.mtData.works); // 부품 리스트
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
   const [modify, setModify] = useState<boolean>(false);
-  const [reset, setReset] = useState<number>(0);
+  const [initMtInfo, setInitMtInfo] = useState<Maintenance>(props.data.mtData);
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
-  const [render, setRender] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -128,27 +127,11 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * 수정 취소시 Re Rendering
    */
   useEffect(() => {
-    {
-      if (render === true) {
-        dispatch(_aGetMaintenancesOne(props.data.mtData._id)).then(
-          (res: _iMaintenancesOne) => {
-            console.log("dispatch!");
-            setWorkList(res.payload.works);
-            setPrice(res.payload.price);
-            setMtInfo(res.payload);
-          }
-        );
-      } else {
-        console.log("just continue!");
-        setWorkList(props.data.mtData.works);
-        setPrice(props.data.mtData.price);
-        setMtInfo(props.data.mtData);
-      }
-      setModify(!modify);
-    }
-  }, [reset]);
-  console.log("workList", workList);
-  console.log("props", props.data.mtData.works);
+    setWorkList(initMtInfo.works);
+    setPrice(initMtInfo.price);
+    setMtInfo(initMtInfo);
+  }, [modify]);
+
   /**
    * 정비내역 변경 시 일어나는 event handler
    * cell 증가, 합계 계산
@@ -320,7 +303,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
       JSON.stringify(props.data.mtData.price) === JSON.stringify(price)
     ) {
-      return setReset(reset + 1);
+      return setModify(!modify);
     }
 
     let mainWorkList: MainWork[] = workList.filter((item) => item.name !== "");
@@ -367,7 +350,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     setMtInfo,
     modify,
     setModify,
-    setRender,
+    setInitMtInfo,
   };
 
   /*********************************************************************
@@ -739,7 +722,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     value={mtInfo.costomerType}
                     name="costomerType"
                     onChange={onChangeMaintenance}
-                    disabled={modify}
+                    disabled={!modify}
                   >
                     {mainCustomerTypeList.map((type) => {
                       return (
@@ -803,23 +786,23 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   margin={`0px 10px 0px 0px`}
                   width={`auto`}
                 >
-                  <Checkbox cursor={modify ? `default` : `pointer`}>
+                  <Checkbox cursor={!modify ? `default` : `pointer`}>
                     부가세 포함
                     <CheckInput
                       type="checkbox"
                       checked={price.isIncluded}
-                      cursor={modify ? `default` : `pointer`}
-                      disabled={modify}
+                      cursor={!modify ? `default` : `pointer`}
+                      disabled={!modify}
                       onChange={() => {
                         setPrice({ ...price, isIncluded: !price.isIncluded });
                       }}
                     />
                     <CheckMark
-                      cursor={modify ? `default` : `pointer`}
+                      cursor={!modify ? `default` : `pointer`}
                     ></CheckMark>
                   </Checkbox>
                 </Wrapper>
-                {modify ? (
+                {!modify ? (
                   <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
                     <SmallButton type="button" kindOf={`ghost`}>
                       부품조회
@@ -881,7 +864,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                             bgColor={`inherit`}
                             color={`#d6263b`}
                             padding={`0px`}
-                            isDisplayNone={modify}
+                            isDisplayNone={!modify}
                             onClick={() => {
                               onDeleteRowHandler(idx);
                             }}
@@ -903,7 +886,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               onKeyUpHandler(e, (idx + 1) * 7 - 7)
                             }
                             value={data.name}
-                            readOnly={modify}
+                            readOnly={!modify}
                             name="name"
                             list="workList"
                             onChange={(
@@ -952,13 +935,12 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                             width={`100%`}
                             onClick={() => {
                               setClickDoc(data);
-
                               setModalOption("Setting");
                               setModalOpen(!modalOpen);
                             }}
                             name="tsCode"
-                            disabled={modify}
-                            cursor={modify ? `default` : `pointer`}
+                            disabled={!modify}
+                            cursor={!modify ? `default` : `pointer`}
                           >
                             {data.tsCode}
                           </SmallButton>
@@ -967,7 +949,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                           <Combo
                             width={`100%`}
                             value={data.type}
-                            disabled={modify}
+                            disabled={!modify}
                             ref={(elem: HTMLInputElement) =>
                               (inputRef.current[(idx + 1) * 7 - 5] = elem)
                             }
@@ -1001,7 +983,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               onKeyUpHandler(e, (idx + 1) * 7 - 4)
                             }
                             value={data.price.toLocaleString()}
-                            readOnly={modify}
+                            readOnly={!modify}
                             name="price"
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
@@ -1024,7 +1006,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               onKeyUpHandler(e, (idx + 1) * 7 - 3)
                             }
                             value={data.quantity.toLocaleString()}
-                            readOnly={modify}
+                            readOnly={!modify}
                             name="quantity"
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
@@ -1065,7 +1047,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               onKeyUpHandler(e, (idx + 1) * 7 - 1)
                             }
                             value={data.wage.toLocaleString()}
-                            readOnly={modify}
+                            readOnly={!modify}
                             name="wage"
                             onChange={(
                               e: React.ChangeEvent<HTMLInputElement>
@@ -1108,7 +1090,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
               </Text>
             </Wrapper>
             <Wrapper dr={`row`} ju={`space-between`}>
-              {modify ? (
+              {!modify ? (
                 <SmallButton
                   form="carInfoForm"
                   type="button"
@@ -1127,7 +1109,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     width={`439px`}
                     kindOf={`default`}
                     onClick={() => {
-                      setReset(reset + 1);
+                      setModify(!modify);
                     }}
                   >
                     수정 취소

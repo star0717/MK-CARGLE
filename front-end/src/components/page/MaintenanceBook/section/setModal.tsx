@@ -126,7 +126,7 @@ const MtSetModal: NextPage<_pPartsSetProps> = (props) => {
         tsCode: partList[k].tsCode || "",
         type: MainPartsType.A,
         price: 0,
-        quantity: 0,
+        quantity: 1,
         sum: 0,
         wage: 0,
       });
