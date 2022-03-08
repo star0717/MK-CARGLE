@@ -252,6 +252,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
       car: main.car,
       works: main.works,
       price: main.price,
+      costomerType: main.costomerType,
     };
 
     let result: Estimate;
@@ -279,6 +280,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
       let cInfo: CompanyInfo = {
         name: company.name,
         comRegNum: company.comRegNum,
+        mbRegNum: company.mbRegNum,
         ownerName: company.ownerName,
         phoneNum: company.phoneNum,
         address: company.address1 + ' ' + company.address2,
@@ -343,6 +345,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
       car: main.car,
       works: main.works,
       price: main.price,
+      costomerType: main.costomerType,
     };
 
     let result: Statement;
@@ -370,6 +373,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
       let cInfo: CompanyInfo = {
         name: company.name,
         comRegNum: company.comRegNum,
+        mbRegNum: company.mbRegNum,
         ownerName: company.ownerName,
         phoneNum: company.phoneNum,
         address: company.address1 + ' ' + company.address2,

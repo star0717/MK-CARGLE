@@ -15,7 +15,10 @@ import {
 } from 'class-validator';
 import { prop } from '@typegoose/typegoose';
 import { Type } from 'class-transformer';
-import { MainPartsType } from 'src/constants/maintenance.const';
+import {
+  MainCustomerType,
+  MainPartsType,
+} from 'src/constants/maintenance.const';
 
 export class CompanyInfo {
   @ApiProperty({ description: '상호명' })
@@ -35,6 +38,16 @@ export class CompanyInfo {
     required: true,
   })
   public comRegNum: string;
+
+  @ApiProperty({ description: '정비업등록번호' })
+  @IsOptional()
+  @IsString()
+  @prop({
+    unique: true,
+    required: [true, '정비업등록번호는 필수 항목입니다.'],
+    trim: true,
+  })
+  public mbRegNum: string;
 
   @ApiProperty({ description: '대표명' })
   @IsOptional()
@@ -144,6 +157,20 @@ export class MainDoc extends BaseEntity {
   @Type(() => MainCustomer)
   @prop({ required: true, type: () => MainCustomer, _id: false })
   customer: MainCustomer;
+
+  @ApiProperty({
+    description: '고객 타입(기본값으로 자동기입)',
+    default: MainCustomerType.NORMAL,
+    required: false,
+  })
+  @IsOptional()
+  @IsEnum(MainCustomerType)
+  @prop({
+    enum: MainCustomerType,
+    required: true,
+    default: MainCustomerType.NORMAL,
+  }) // 자동 기입
+  costomerType: MainCustomerType;
 
   @ApiProperty({ description: '업체정보', type: CompanyInfo })
   @IsOptional()
