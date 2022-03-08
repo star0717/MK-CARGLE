@@ -636,7 +636,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {/* <PreviewModal {...previewModalProps} /> */}
+        <PreviewModal {...previewModalProps} />
       </Modal>
     </WholeWrapper>
   );

@@ -97,12 +97,12 @@ const StatementFile: NextPage<any> = forwardRef<
           >
             <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {/* 등록번호 입력하세용 */}
+                {props.sInfo && props.sInfo.car.regNumber}
               </Text>
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {/* 등록년월일 입력하세용 */}
+                {props.sInfo && props.sInfo.car.regDate}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -124,12 +124,12 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderRight={` 1px solid #ccc`}
                 height={`100%`}
                 dr={`row`}
-                ju={`space-between`}
+                // ju={`space-between`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 차종입력칸이용 */}
+                  {props.sInfo && props.sInfo.car.name}
                 </Text>
-                <Text>()</Text>
+                {/* <Text>({props.sInfo.car.model})</Text> */}
               </Wrapper>
               <Wrapper
                 width={`15%`}
@@ -147,7 +147,7 @@ const StatementFile: NextPage<any> = forwardRef<
                 padding={`0px 10px`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 주행거리 입력~~ */}
+                  {props.sInfo && props.sInfo.car.distance}
                 </Text>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
                   km
@@ -167,7 +167,8 @@ const StatementFile: NextPage<any> = forwardRef<
               </Wrapper>
               <Wrapper width={`80%`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 의뢰일자 입력하세용~ */}
+                  {/* {props.sInfo && props.sInfo.} */}
+                  ###
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -209,7 +210,7 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 사업자등록번호 입력 */}
+                  {props.sInfo && props.sInfo.company.comRegNum}
                 </Text>
               </Wrapper>
               <Wrapper
@@ -231,7 +232,7 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 정비업 등록번호 입력이용 */}
+                  {props.sInfo && props.sInfo.company.mbRegNum}
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -254,17 +255,12 @@ const StatementFile: NextPage<any> = forwardRef<
               >
                 <Wrapper>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 업체명 입력 */}
+                    {props.sInfo && props.sInfo.company.name}
                   </Text>
                 </Wrapper>
-                <Wrapper
-                  al={`flex-end`}
-                  padding={`0px 8px`}
-                  height={`50%`}
-                  ju={`flex-end`}
-                >
+                <Wrapper padding={`0px 8px`} height={`50%`} ju={`flex-end`}>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 대표자 입력 */}(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                    ({props.sInfo && props.sInfo.company.ownerName})
                   </Text>
                 </Wrapper>
               </Wrapper>
@@ -280,7 +276,7 @@ const StatementFile: NextPage<any> = forwardRef<
               <Wrapper width={`45%`} height={`100%`}>
                 <Wrapper>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 주소 입력하셔유*/}
+                    {props.sInfo && props.sInfo.company.address}
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -290,7 +286,7 @@ const StatementFile: NextPage<any> = forwardRef<
                   ju={`flex-end`}
                 >
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    (전화번호:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                    (전화번호 : {props.sInfo && props.sInfo.company.phoneNum})
                   </Text>
                 </Wrapper>
               </Wrapper>
@@ -303,9 +299,9 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  사업자등록
+                  점검ㆍ정비
                   <br />
-                  번호
+                  완료일자
                 </Text>
               </Wrapper>
               <Wrapper
@@ -315,7 +311,7 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 사업자등록번호 입력 */}
+                  ###
                 </Text>
               </Wrapper>
               <Wrapper
@@ -335,7 +331,7 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 출고일자 입력이용 */}
+                  ###
                 </Text>
               </Wrapper>
               <Wrapper
@@ -356,7 +352,7 @@ const StatementFile: NextPage<any> = forwardRef<
               >
                 <Wrapper>
                   <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 책임자 입력하셔유*/}
+                    {props.sInfo && props.propToken.uName}
                   </Text>
                 </Wrapper>
                 <Wrapper
@@ -457,18 +453,34 @@ const StatementFile: NextPage<any> = forwardRef<
                   width={`25%`}
                   borderRight={`1px solid #ccc`}
                   height={`100%`}
-                ></Wrapper>
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    구분
+                  </Text>
+                </Wrapper>
                 <Wrapper
                   width={`25%`}
                   borderRight={`1px solid #ccc`}
                   height={`100%`}
-                ></Wrapper>
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    수량
+                  </Text>
+                </Wrapper>
                 <Wrapper
                   width={`25%`}
                   borderRight={`1px solid #ccc`}
                   height={`100%`}
-                ></Wrapper>
-                <Wrapper width={`25%`} height={`100%`}></Wrapper>
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    단가
+                  </Text>
+                </Wrapper>
+                <Wrapper width={`25%`} height={`100%`}>
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    계
+                  </Text>
+                </Wrapper>
               </Wrapper>
             </Wrapper>
             <Wrapper

@@ -66,8 +66,6 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     costomerType: "all",
     status: "all",
   });
-  const [eInfo, setEInfo] = useState<Estimate>();
-  const [sInfo, setSInfo] = useState<Statement>();
 
   /*********************************************************************
    * 3. Handlers

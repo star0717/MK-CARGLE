@@ -27,7 +27,7 @@ const EstimateFile: NextPage<any> = forwardRef<
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  console.log("####", props);
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -70,7 +70,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             width={`160px`}
             textAlign={`right`}
           >
-            {props.eInfo.mainNum}
+            {props.eInfo && props.eInfo.mainNum}
           </Text>
         </Wrapper>
 
@@ -110,12 +110,12 @@ const EstimateFile: NextPage<any> = forwardRef<
           >
             <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {props.eInfo.car.regNumber}
+                {props.eInfo && props.eInfo.car.regNumber}
               </Text>
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {props.eInfo.car.regDate}
+                {props.eInfo && props.eInfo.car.regDate}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -138,7 +138,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 height={`100%`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.car.model}
+                  {props.eInfo && props.eInfo.car.model}
                 </Text>
               </Wrapper>
               <Wrapper
@@ -157,7 +157,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 padding={`0px 10px`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.car.distance}
+                  {props.eInfo && props.eInfo.car.distance}
                 </Text>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
                   km
@@ -176,7 +176,7 @@ const EstimateFile: NextPage<any> = forwardRef<
               </Wrapper>
               <Wrapper width={`80%`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.car.idNumber}
+                  {props.eInfo && props.eInfo.car.idNumber}
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -223,7 +223,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.company.comRegNum}
+                  {props.eInfo && props.eInfo.company.comRegNum}
                 </Text>
               </Wrapper>
               <Wrapper
@@ -243,7 +243,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.company.mbRegNum}
+                  {props.eInfo && props.eInfo.company.mbRegNum}
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -266,7 +266,8 @@ const EstimateFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.company.name}/{props.eInfo.company.ownerName}
+                  {props.eInfo && props.eInfo.company.name}/
+                  {props.eInfo && props.eInfo.company.ownerName}
                 </Text>
               </Wrapper>
               <Wrapper
@@ -297,7 +298,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.company.address}
+                  {props.eInfo && props.eInfo.company.address}
                 </Text>
               </Wrapper>
               <Wrapper
@@ -313,7 +314,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                   (전화번호:&nbsp;
                 </Text>
                 <Text fontSize={`0.75em`} fontWeight={`400`} width={`120px`}>
-                  {props.eInfo.company.phoneNum}
+                  {props.eInfo && props.eInfo.company.phoneNum}
                 </Text>
                 <Text fontSize={`0.75em`} fontWeight={`400`}>
                   )
@@ -339,7 +340,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 padding={`0px 0px 0px 10px`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.costomerType === "n" ? (
+                  {props.eInfo && props.eInfo.costomerType === "n" ? (
                     <BsSquare />
                   ) : (
                     <BsSquareFill />
@@ -355,7 +356,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 padding={`0px 0px 0px 10px`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.costomerType === "i" ? (
+                  {props.eInfo && props.eInfo.costomerType === "i" ? (
                     <BsSquare />
                   ) : (
                     <BsSquareFill />
@@ -429,80 +430,84 @@ const EstimateFile: NextPage<any> = forwardRef<
               </Text>
             </Wrapper>
           </Wrapper>
-          {props.eInfo.works.map((item, idx) => {
-            return (
-              <Wrapper
-                key={idx}
-                dr={`row`}
-                height={`16%`}
-                borderBottom={`1px solid #ccc`}
-              >
+          {props.eInfo &&
+            props.eInfo.works.map((item, idx) => {
+              return (
                 <Wrapper
-                  width={`30%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
+                  key={idx}
+                  dr={`row`}
+                  height={`16%`}
+                  borderBottom={`1px solid #ccc`}
                 >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {item.name}
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`40%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Wrapper dr={`row`} height={`100%`}>
-                    <Wrapper
-                      width={`25%`}
-                      borderRight={`1px solid #ccc`}
-                      height={`100%`}
-                    >
-                      <Text fontSize={`0.83em`} fontWeight={`400`}>
-                        {item.type}
-                      </Text>
-                    </Wrapper>
-                    <Wrapper
-                      width={`25%`}
-                      borderRight={`1px solid #ccc`}
-                      height={`100%`}
-                    >
-                      <Text fontSize={`0.83em`} fontWeight={`400`}>
-                        {item.quantity.toLocaleString()}
-                      </Text>
-                    </Wrapper>
-                    <Wrapper
-                      width={`25%`}
-                      borderRight={`1px solid #ccc`}
-                      height={`100%`}
-                    >
-                      <Text fontSize={`0.83em`} fontWeight={`400`}>
-                        {item.price.toLocaleString()}
-                      </Text>
-                    </Wrapper>
-                    <Wrapper width={`25%`} height={`100%`}>
-                      <Text fontSize={`0.83em`} fontWeight={`400`}>
-                        {(item.price * item.quantity).toLocaleString()}
-                      </Text>
+                  <Wrapper
+                    width={`30%`}
+                    borderRight={`1px solid #ccc`}
+                    height={`100%`}
+                  >
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {item.name}
+                    </Text>
+                  </Wrapper>
+                  <Wrapper
+                    width={`40%`}
+                    borderRight={`1px solid #ccc`}
+                    height={`100%`}
+                  >
+                    <Wrapper dr={`row`} height={`100%`}>
+                      <Wrapper
+                        width={`25%`}
+                        borderRight={`1px solid #ccc`}
+                        height={`100%`}
+                      >
+                        <Text fontSize={`0.83em`} fontWeight={`400`}>
+                          {item.type}
+                        </Text>
+                      </Wrapper>
+                      <Wrapper
+                        width={`25%`}
+                        borderRight={`1px solid #ccc`}
+                        height={`100%`}
+                      >
+                        <Text fontSize={`0.83em`} fontWeight={`400`}>
+                          {item.quantity.toLocaleString()}
+                        </Text>
+                      </Wrapper>
+                      <Wrapper
+                        width={`25%`}
+                        borderRight={`1px solid #ccc`}
+                        height={`100%`}
+                      >
+                        <Text fontSize={`0.83em`} fontWeight={`400`}>
+                          {item.price.toLocaleString()}
+                        </Text>
+                      </Wrapper>
+                      <Wrapper width={`25%`} height={`100%`}>
+                        <Text fontSize={`0.83em`} fontWeight={`400`}>
+                          {(item.price * item.quantity).toLocaleString()}
+                        </Text>
+                      </Wrapper>
                     </Wrapper>
                   </Wrapper>
+                  <Wrapper
+                    width={`15%`}
+                    height={`100%`}
+                    borderRight={`1px solid #ccc`}
+                  >
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {item.wage.toLocaleString()}
+                    </Text>
+                  </Wrapper>
+                  <Wrapper width={`15%`} height={`100%`}>
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {(
+                        item.price * item.quantity +
+                        item.wage
+                      ).toLocaleString()}
+                    </Text>
+                  </Wrapper>
                 </Wrapper>
-                <Wrapper
-                  width={`15%`}
-                  height={`100%`}
-                  borderRight={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {item.wage.toLocaleString()}
-                  </Text>
-                </Wrapper>
-                <Wrapper width={`15%`} height={`100%`}>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {(item.price * item.quantity + item.wage).toLocaleString()}
-                  </Text>
-                </Wrapper>
-              </Wrapper>
-            );
-          })}
+              );
+            })}
         </Wrapper>
         {/* 견적내용 끝 */}
 
@@ -521,7 +526,9 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {getStrMainCustomerType(props.eInfo.costomerType)}
+                {getStrMainCustomerType(
+                  props.eInfo && props.eInfo.costomerType
+                )}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -533,7 +540,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {props.eInfo.price.partsSum.toLocaleString()}
+                {props.eInfo && props.eInfo.price.partsSum.toLocaleString()}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -545,7 +552,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {props.eInfo.price.wageSum.toLocaleString()}
+                {props.eInfo && props.eInfo.price.wageSum.toLocaleString()}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -557,7 +564,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {props.eInfo.price.sum.toLocaleString()}
+                {props.eInfo && props.eInfo.price.sum.toLocaleString()}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -569,7 +576,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {props.eInfo.price.vat.toLocaleString()}
+                {props.eInfo && props.eInfo.price.vat.toLocaleString()}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -581,7 +588,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {props.eInfo.price.total.toLocaleString()}
+                {props.eInfo && props.eInfo.price.total.toLocaleString()}
               </Text>
             </Wrapper>
           </Wrapper>
@@ -663,7 +670,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 fontWeight={`400`}
                 padding={`0px 16px`}
               >
-                {props.propToken.uName}
+                {props.eInfo && props.propToken.uName}
               </Text>
             </Wrapper>
             <Wrapper width={`50%`} al={`flex-end`}>
@@ -696,7 +703,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 fontWeight={`400`}
                 padding={`0px 16px`}
               >
-                {props.eInfo.company.ownerName}
+                {props.eInfo && props.eInfo.company.ownerName}
               </Text>
             </Wrapper>
             <Wrapper width={`50%`} al={`flex-end`}>
