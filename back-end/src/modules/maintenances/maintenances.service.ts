@@ -253,6 +253,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
       works: main.works,
       price: main.price,
       costomerType: main.costomerType,
+      dates: main.dates,
     };
 
     let result: Estimate;
@@ -341,11 +342,11 @@ export class MaintenancesService extends SafeService<Maintenance> {
     const statement: Partial<Statement> = {
       mainNum: main.docNum,
       customer: main.customer,
-      // company: cInfo,
       car: main.car,
       works: main.works,
       price: main.price,
       costomerType: main.costomerType,
+      dates: main.dates,
     };
 
     let result: Statement;
