@@ -25,7 +25,7 @@ const EstimateFile: NextPage<any> = forwardRef<
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  console.log(props);
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -113,7 +113,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {/* 등록년월일 입력하세용 */}
+                {props.eInfo.car.regDate}
               </Text>
             </Wrapper>
           </Wrapper>
