@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { _pPreviewModalProps } from "src/configure/_pProps.entity";
 import { getStrMainCustomerType } from "src/constants/maintenance.const";
 import { BsSquare, BsSquareFill } from "react-icons/bs";
+import Image from "next/image";
 
 const EstimateFile: NextPage<any> = forwardRef<
   HTMLDivElement,
@@ -152,15 +153,16 @@ const EstimateFile: NextPage<any> = forwardRef<
               </Wrapper>
               <Wrapper
                 width={`30%`}
-                ju={`space-between`}
+                ju={`flex-end`}
                 dr={`row`}
                 padding={`0px 10px`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo && props.eInfo.car.distance}
+                  {props.eInfo &&
+                    Number(props.eInfo.car.distance).toLocaleString()}
                 </Text>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  km
+                  &nbsp;km
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -271,11 +273,20 @@ const EstimateFile: NextPage<any> = forwardRef<
                 </Text>
               </Wrapper>
               <Wrapper
+                isRelative
                 width={`25%`}
                 height={`100%`}
                 borderBottom={`1px solid #ccc`}
                 al={`flex-start`}
               >
+                <Wrapper isAbsolute top={`-5px`} left={`-55px`}>
+                  <Image
+                    alt="도장 사진"
+                    width={50}
+                    height={50}
+                    src="/api/settings/myinfo/stamp"
+                  />
+                </Wrapper>
                 <Text fontSize={`0.67em`} fontWeight={`400`} color={`#9d9d9d`}>
                   (서명 또는 인)
                 </Text>
@@ -652,7 +663,7 @@ const EstimateFile: NextPage<any> = forwardRef<
         </Wrapper>
         <Wrapper al={`flex-end`}>
           <Wrapper
-            width={`60%`}
+            width={`40%`}
             ju={`space-between`}
             padding={`0px 20px`}
             al={`flex-end`}
@@ -663,7 +674,13 @@ const EstimateFile: NextPage<any> = forwardRef<
                 작성자
               </Text>
             </Wrapper>
-            <Wrapper width={`30%`} al={`flex-start`}>
+            <Wrapper
+              isRelative
+              dr={`row`}
+              width={`80%`}
+              ju={`flex-end`}
+              al={`center`}
+            >
               <Text
                 textAlign={`right`}
                 fontSize={`0.83em`}
@@ -672,8 +689,6 @@ const EstimateFile: NextPage<any> = forwardRef<
               >
                 {props.eInfo && props.propToken.uName}
               </Text>
-            </Wrapper>
-            <Wrapper width={`50%`} al={`flex-end`}>
               <Text
                 fontSize={`0.67em`}
                 fontWeight={`400`}
@@ -685,8 +700,9 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
           </Wrapper>
           <Wrapper
-            width={`60%`}
+            width={`40%`}
             ju={`space-between`}
+            margin={`10px 0px 0px`}
             padding={`0px 20px`}
             al={`flex-end`}
             dr={`row`}
@@ -696,7 +712,13 @@ const EstimateFile: NextPage<any> = forwardRef<
                 대표이사
               </Text>
             </Wrapper>
-            <Wrapper width={`30%`} al={`flex-start`}>
+            <Wrapper
+              isRelative
+              dr={`row`}
+              width={`80%`}
+              ju={`flex-end`}
+              al={`center`}
+            >
               <Text
                 textAlign={`right`}
                 fontSize={`0.83em`}
@@ -705,8 +727,14 @@ const EstimateFile: NextPage<any> = forwardRef<
               >
                 {props.eInfo && props.eInfo.company.ownerName}
               </Text>
-            </Wrapper>
-            <Wrapper width={`50%`} al={`flex-end`}>
+              <Wrapper isAbsolute top={`-13px`} left={`82px`}>
+                <Image
+                  alt="도장 사진"
+                  width={50}
+                  height={50}
+                  src="/api/settings/myinfo/stamp"
+                />
+              </Wrapper>
               <Text
                 fontSize={`0.67em`}
                 fontWeight={`400`}

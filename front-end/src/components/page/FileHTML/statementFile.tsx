@@ -2,6 +2,9 @@ import React, { forwardRef, useEffect, useState } from "react";
 import { NextPage } from "next";
 import { Wrapper, Text } from "src/components/styles/CommonComponents";
 import { _pPreviewModalProps } from "src/configure/_pProps.entity";
+import dayjs from "dayjs";
+import { BsSquare } from "react-icons/bs";
+import Image from "next/image";
 
 const StatementFile: NextPage<any> = forwardRef<
   HTMLDivElement,
@@ -142,15 +145,16 @@ const StatementFile: NextPage<any> = forwardRef<
               </Wrapper>
               <Wrapper
                 width={`30%`}
-                ju={`space-between`}
+                ju={`flex-end`}
                 dr={`row`}
                 padding={`0px 10px`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.sInfo && props.sInfo.car.distance}
+                  {props.sInfo &&
+                    Number(props.sInfo.car.distance).toLocaleString()}
                 </Text>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  km
+                  &nbsp;km
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -167,8 +171,8 @@ const StatementFile: NextPage<any> = forwardRef<
               </Wrapper>
               <Wrapper width={`80%`}>
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* {props.sInfo && props.sInfo.} */}
-                  ###
+                  {props.sInfo &&
+                    dayjs(props.sInfo.dates.stored).format("YYYY-MM-DD")}
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -311,7 +315,8 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  ###
+                  {props.sInfo &&
+                    dayjs(props.sInfo.dates.endMa).format("YYYY-MM-DD")}
                 </Text>
               </Wrapper>
               <Wrapper
@@ -331,7 +336,8 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  ###
+                  {props.sInfo &&
+                    dayjs(props.sInfo.dates.released).format("YYYY-MM-DD")}
                 </Text>
               </Wrapper>
               <Wrapper
@@ -356,11 +362,20 @@ const StatementFile: NextPage<any> = forwardRef<
                   </Text>
                 </Wrapper>
                 <Wrapper
+                  isRelative
                   al={`flex-end`}
                   padding={`0px 8px`}
                   height={`50%`}
                   ju={`flex-end`}
                 >
+                  <Wrapper isAbsolute top={`-10px`} left={`14px`}>
+                    <Image
+                      alt="도장 사진"
+                      width={50}
+                      height={50}
+                      src="/api/settings/myinfo/stamp"
+                    />
+                  </Wrapper>
                   <Text
                     fontSize={`0.67em`}
                     fontWeight={`400`}
@@ -383,21 +398,12 @@ const StatementFile: NextPage<any> = forwardRef<
         >
           <Wrapper dr={`row`} height={`30px`} borderBottom={`1px solid #ccc`}>
             <Wrapper
-              width={`22%`}
+              width={`48%`}
               borderRight={` 1px solid #ccc`}
               height={`100%`}
             >
-              <Text fontSize={`0.83em`} fontWeight={`400`}>
+              <Text fontSize={`0.83em`} fontWeight={`600`}>
                 점검ㆍ정비내역
-              </Text>
-            </Wrapper>
-            <Wrapper
-              width={`26%`}
-              borderRight={` 1px solid #ccc`}
-              height={`100%`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {/* 정비내역 입력 */}
               </Text>
             </Wrapper>
             <Wrapper
@@ -417,14 +423,16 @@ const StatementFile: NextPage<any> = forwardRef<
               ju={`space-around`}
             >
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                [&nbsp;&nbsp;]동의
+                <BsSquare />
+                &nbsp;동의
               </Text>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                [&nbsp;&nbsp;]부동의
+                <BsSquare />
+                &nbsp;부동의
               </Text>
             </Wrapper>
           </Wrapper>
-          <Wrapper dr={`row`} height={`60px`} borderBottom={`1px solid #ccc`}>
+          <Wrapper dr={`row`} height={`45px`} borderBottom={`1px solid #ccc`}>
             <Wrapper
               width={`48%`}
               borderRight={` 1px solid #ccc`}
@@ -493,79 +501,88 @@ const StatementFile: NextPage<any> = forwardRef<
               </Text>
             </Wrapper>
           </Wrapper>
-          <Wrapper dr={`row`} height={`30px`} borderBottom={`1px solid #ccc`}>
-            <Wrapper
-              width={`48%`}
-              borderRight={` 1px solid #ccc`}
-              height={`100%`}
-              al={`flex-start`}
-              padding={`0px 4px`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {/* 작업내용입력 */}
-              </Text>
-            </Wrapper>
-            <Wrapper
-              width={`36%`}
-              height={`100%`}
-              borderRight={` 1px solid #ccc`}
-            >
-              <Wrapper height={`100%`} width={`100%`} dr={`row`}>
+          {props.sInfo &&
+            props.sInfo.works.map((item, idx) => {
+              return (
                 <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                  al={`flex-start`}
-                  padding={`0px 4px`}
+                  key={idx}
+                  dr={`row`}
+                  height={`30px`}
+                  borderBottom={`1px solid #ccc`}
                 >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 부품입력 */}
-                  </Text>
+                  <Wrapper
+                    width={`48%`}
+                    borderRight={` 1px solid #ccc`}
+                    height={`100%`}
+                    padding={`0px 4px`}
+                  >
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {item.name}
+                    </Text>
+                  </Wrapper>
+                  <Wrapper
+                    width={`36%`}
+                    height={`100%`}
+                    borderRight={` 1px solid #ccc`}
+                  >
+                    <Wrapper height={`100%`} width={`100%`} dr={`row`}>
+                      <Wrapper
+                        width={`25%`}
+                        borderRight={`1px solid #ccc`}
+                        height={`100%`}
+                        al={`flex-start`}
+                        padding={`0px 4px`}
+                      >
+                        <Text fontSize={`0.83em`} fontWeight={`400`}>
+                          {item.type}
+                        </Text>
+                      </Wrapper>
+                      <Wrapper
+                        width={`25%`}
+                        borderRight={`1px solid #ccc`}
+                        height={`100%`}
+                        al={`flex-start`}
+                        padding={`0px 4px`}
+                      >
+                        <Text fontSize={`0.83em`} fontWeight={`400`}>
+                          {item.quantity.toLocaleString()}
+                        </Text>
+                      </Wrapper>
+                      <Wrapper
+                        width={`25%`}
+                        borderRight={`1px solid #ccc`}
+                        height={`100%`}
+                        al={`flex-start`}
+                        padding={`0px 4px`}
+                      >
+                        <Text fontSize={`0.83em`} fontWeight={`400`}>
+                          {item.price.toLocaleString()}
+                        </Text>
+                      </Wrapper>
+                      <Wrapper
+                        width={`25%`}
+                        height={`100%`}
+                        al={`flex-start`}
+                        padding={`0px 4px`}
+                      >
+                        <Text fontSize={`0.83em`} fontWeight={`400`}>
+                          {(item.quantity * item.price).toLocaleString()}
+                        </Text>
+                      </Wrapper>
+                    </Wrapper>
+                  </Wrapper>
+                  <Wrapper
+                    width={`16%`}
+                    borderRight={` 1px solid #ccc`}
+                    height={`100%`}
+                  >
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {item.wage}
+                    </Text>
+                  </Wrapper>
                 </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                  al={`flex-start`}
-                  padding={`0px 4px`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 부품입력 */}
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                  al={`flex-start`}
-                  padding={`0px 4px`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 부품입력 */}
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  height={`100%`}
-                  al={`flex-start`}
-                  padding={`0px 4px`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 부품입력 */}
-                  </Text>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`16%`}
-              borderRight={` 1px solid #ccc`}
-              height={`100%`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}>
-                {/* 공임입력 */}
-              </Text>
-            </Wrapper>
-          </Wrapper>
+              );
+            })}
         </Wrapper>
         {/* 총계 입력란 시작 */}
         <Wrapper
@@ -580,7 +597,7 @@ const StatementFile: NextPage<any> = forwardRef<
             height={`100%`}
           >
             <Text fontSize={`0.83em`} fontWeight={`400`}>
-              부품
+              부품계
             </Text>
           </Wrapper>
           <Wrapper
@@ -589,7 +606,7 @@ const StatementFile: NextPage<any> = forwardRef<
             height={`100%`}
           >
             <Text fontSize={`0.83em`} fontWeight={`400`}>
-              {/* 부품 */}
+              {props.sInfo && props.sInfo.price.partsSum.toLocaleString()}
             </Text>
           </Wrapper>
           <Wrapper
@@ -598,7 +615,7 @@ const StatementFile: NextPage<any> = forwardRef<
             height={`100%`}
           >
             <Text fontSize={`0.83em`} fontWeight={`400`}>
-              공임
+              공임계
             </Text>
           </Wrapper>
           <Wrapper
@@ -607,7 +624,7 @@ const StatementFile: NextPage<any> = forwardRef<
             height={`100%`}
           >
             <Text fontSize={`0.83em`} fontWeight={`400`}>
-              {/* 공임 */}
+              {props.sInfo && props.sInfo.price.wageSum.toLocaleString()}
             </Text>
           </Wrapper>
           <Wrapper
@@ -625,7 +642,7 @@ const StatementFile: NextPage<any> = forwardRef<
             height={`100%`}
           >
             <Text fontSize={`0.83em`} fontWeight={`400`}>
-              {/* 소계 */}
+              {props.sInfo && props.sInfo.price.sum.toLocaleString()}
             </Text>
           </Wrapper>
           <Wrapper
@@ -643,7 +660,7 @@ const StatementFile: NextPage<any> = forwardRef<
             height={`100%`}
           >
             <Text fontSize={`0.83em`} fontWeight={`400`}>
-              {/* 부가가치세 */}
+              {props.sInfo && props.sInfo.price.vat.toLocaleString()}
             </Text>
           </Wrapper>
           <Wrapper
@@ -661,7 +678,7 @@ const StatementFile: NextPage<any> = forwardRef<
             height={`100%`}
           >
             <Text fontSize={`0.83em`} fontWeight={`400`}>
-              {/* 총계 */}
+              {props.sInfo && props.sInfo.price.total.toLocaleString()}
             </Text>
           </Wrapper>
         </Wrapper>
@@ -681,7 +698,7 @@ const StatementFile: NextPage<any> = forwardRef<
             fontWeight={`400`}
             width={`80px`}
           >
-            {/* 연도 */}2022
+            {dayjs(new Date()).format("YYYY")}
           </Text>
           <Text
             fontSize={`0.75em`}
@@ -697,7 +714,7 @@ const StatementFile: NextPage<any> = forwardRef<
             fontWeight={`400`}
             width={`40px`}
           >
-            {/* 월 */}03
+            {dayjs(new Date()).format("MM")}
           </Text>
           <Text
             fontSize={`0.75em`}
@@ -713,7 +730,7 @@ const StatementFile: NextPage<any> = forwardRef<
             fontWeight={`400`}
             width={`40px`}
           >
-            {/* 일 */}03
+            {dayjs(new Date()).format("DD")}
           </Text>
           <Text
             fontSize={`0.75em`}
@@ -726,7 +743,7 @@ const StatementFile: NextPage<any> = forwardRef<
         </Wrapper>
         <Wrapper al={`flex-end`}>
           <Wrapper
-            width={`60%`}
+            width={`40%`}
             ju={`space-between`}
             padding={`0px 20px`}
             al={`flex-end`}
@@ -737,17 +754,21 @@ const StatementFile: NextPage<any> = forwardRef<
                 작성자
               </Text>
             </Wrapper>
-            <Wrapper width={`30%`} al={`flex-start`}>
+            <Wrapper
+              isRelative
+              dr={`row`}
+              width={`80%`}
+              ju={`flex-end`}
+              al={`center`}
+            >
               <Text
                 textAlign={`right`}
                 fontSize={`0.83em`}
                 fontWeight={`400`}
                 padding={`0px 16px`}
               >
-                {/* 작성자 입력하세용 */}
+                {props.eInfo && props.propToken.uName}
               </Text>
-            </Wrapper>
-            <Wrapper width={`50%`} al={`flex-end`}>
               <Text
                 fontSize={`0.67em`}
                 fontWeight={`400`}
@@ -759,8 +780,9 @@ const StatementFile: NextPage<any> = forwardRef<
             </Wrapper>
           </Wrapper>
           <Wrapper
-            width={`60%`}
+            width={`40%`}
             ju={`space-between`}
+            margin={`10px 0px 0px`}
             padding={`0px 20px`}
             al={`flex-end`}
             dr={`row`}
@@ -770,17 +792,29 @@ const StatementFile: NextPage<any> = forwardRef<
                 대표이사
               </Text>
             </Wrapper>
-            <Wrapper width={`30%`} al={`flex-start`}>
+            <Wrapper
+              isRelative
+              dr={`row`}
+              width={`80%`}
+              ju={`flex-end`}
+              al={`center`}
+            >
               <Text
                 textAlign={`right`}
                 fontSize={`0.83em`}
                 fontWeight={`400`}
                 padding={`0px 16px`}
               >
-                {/* 대표이사 입력하세용 */}
+                {props.eInfo && props.eInfo.company.ownerName}
               </Text>
-            </Wrapper>
-            <Wrapper width={`50%`} al={`flex-end`}>
+              <Wrapper isAbsolute top={`-13px`} left={`82px`}>
+                <Image
+                  alt="도장 사진"
+                  width={50}
+                  height={50}
+                  src="/api/settings/myinfo/stamp"
+                />
+              </Wrapper>
               <Text
                 fontSize={`0.67em`}
                 fontWeight={`400`}
