@@ -169,6 +169,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           }
           alert("정비내역을 저장했습니다.");
           props.setModify(!props.modify);
+          props.setRender(true);
           props.setMtInfo(res.payload);
           if (!pubCheck.print && !pubCheck.online)
             return props.setModalOpen(false);
@@ -593,8 +594,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
         )}
       </Wrapper>
       <Wrapper display={`none`}>
-        {/* <EstimateFile {...previewModalProps} ref={estimateRef} />
-        <StatementFile {...previewModalProps} ref={statementRef} /> */}
+        <EstimateFile {...previewModalProps} ref={estimateRef} />
+        <StatementFile {...previewModalProps} ref={statementRef} />
       </Wrapper>
       <Modal
         isOpen={modal2Open}
@@ -635,7 +636,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        <PreviewModal {...previewModalProps} />
+        {/* <PreviewModal {...previewModalProps} /> */}
       </Modal>
     </WholeWrapper>
   );

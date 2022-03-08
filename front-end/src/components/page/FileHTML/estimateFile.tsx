@@ -5,6 +5,8 @@ import { _aGetEstimates } from "store/action/user.action";
 import { _iEstimate } from "store/interfaces";
 import dayjs from "dayjs";
 import { _pPreviewModalProps } from "src/configure/_pProps.entity";
+import { getStrMainCustomerType } from "src/constants/maintenance.const";
+import { BsSquare, BsSquareFill } from "react-icons/bs";
 
 const EstimateFile: NextPage<any> = forwardRef<
   HTMLDivElement,
@@ -25,7 +27,7 @@ const EstimateFile: NextPage<any> = forwardRef<
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-
+  console.log("####", props);
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -337,7 +339,12 @@ const EstimateFile: NextPage<any> = forwardRef<
                 padding={`0px 0px 0px 10px`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  [&nbsp;&nbsp;]보험
+                  {props.eInfo.costomerType === "n" ? (
+                    <BsSquare />
+                  ) : (
+                    <BsSquareFill />
+                  )}
+                  &nbsp;보험
                 </Text>
               </Wrapper>
               <Wrapper
@@ -348,7 +355,12 @@ const EstimateFile: NextPage<any> = forwardRef<
                 padding={`0px 0px 0px 10px`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  [&nbsp;&nbsp;]일반
+                  {props.eInfo.costomerType === "i" ? (
+                    <BsSquare />
+                  ) : (
+                    <BsSquareFill />
+                  )}
+                  &nbsp;일반
                 </Text>
               </Wrapper>
             </Wrapper>
@@ -418,281 +430,79 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
           </Wrapper>
           {props.eInfo.works.map((item, idx) => {
-            <Wrapper
-              key={idx}
-              dr={`row`}
-              height={`16%`}
-              borderBottom={`1px solid #ccc`}
-            >
+            return (
               <Wrapper
-                width={`30%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
+                key={idx}
+                dr={`row`}
+                height={`16%`}
+                borderBottom={`1px solid #ccc`}
               >
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {item.name}
-                </Text>
-              </Wrapper>
-              <Wrapper
-                width={`40%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Wrapper dr={`row`} height={`100%`}>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {item.type}
-                    </Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {item.quantity.toLocaleString()}
-                    </Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {item.price.toLocaleString()}
-                    </Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`} height={`100%`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {(item.price * item.quantity).toLocaleString()}
-                    </Text>
+                <Wrapper
+                  width={`30%`}
+                  borderRight={`1px solid #ccc`}
+                  height={`100%`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    {item.name}
+                  </Text>
+                </Wrapper>
+                <Wrapper
+                  width={`40%`}
+                  borderRight={`1px solid #ccc`}
+                  height={`100%`}
+                >
+                  <Wrapper dr={`row`} height={`100%`}>
+                    <Wrapper
+                      width={`25%`}
+                      borderRight={`1px solid #ccc`}
+                      height={`100%`}
+                    >
+                      <Text fontSize={`0.83em`} fontWeight={`400`}>
+                        {item.type}
+                      </Text>
+                    </Wrapper>
+                    <Wrapper
+                      width={`25%`}
+                      borderRight={`1px solid #ccc`}
+                      height={`100%`}
+                    >
+                      <Text fontSize={`0.83em`} fontWeight={`400`}>
+                        {item.quantity.toLocaleString()}
+                      </Text>
+                    </Wrapper>
+                    <Wrapper
+                      width={`25%`}
+                      borderRight={`1px solid #ccc`}
+                      height={`100%`}
+                    >
+                      <Text fontSize={`0.83em`} fontWeight={`400`}>
+                        {item.price.toLocaleString()}
+                      </Text>
+                    </Wrapper>
+                    <Wrapper width={`25%`} height={`100%`}>
+                      <Text fontSize={`0.83em`} fontWeight={`400`}>
+                        {(item.price * item.quantity).toLocaleString()}
+                      </Text>
+                    </Wrapper>
                   </Wrapper>
                 </Wrapper>
+                <Wrapper
+                  width={`15%`}
+                  height={`100%`}
+                  borderRight={`1px solid #ccc`}
+                >
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    {item.wage.toLocaleString()}
+                  </Text>
+                </Wrapper>
+                <Wrapper width={`15%`} height={`100%`}>
+                  <Text fontSize={`0.83em`} fontWeight={`400`}>
+                    {(item.price * item.quantity + item.wage).toLocaleString()}
+                  </Text>
+                </Wrapper>
               </Wrapper>
-              <Wrapper
-                width={`15%`}
-                height={`100%`}
-                borderRight={`1px solid #ccc`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {item.wage.toLocaleString()}
-                </Text>
-              </Wrapper>
-              <Wrapper width={`15%`} height={`100%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {(item.price * item.quantity + item.wage).toLocaleString()}
-                </Text>
-              </Wrapper>
-            </Wrapper>;
+            );
           })}
-          <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
-            <Wrapper
-              width={`30%`}
-              borderRight={`1px solid #ccc`}
-              height={`100%`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-            <Wrapper
-              width={`40%`}
-              borderRight={`1px solid #ccc`}
-              height={`100%`}
-            >
-              <Wrapper dr={`row`} height={`100%`}>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper width={`25%`} height={`100%`}>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`15%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-            <Wrapper width={`15%`} height={`100%`}>
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-          </Wrapper>
-          <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
-            <Wrapper
-              width={`30%`}
-              borderRight={`1px solid #ccc`}
-              height={`100%`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-            <Wrapper
-              width={`40%`}
-              borderRight={`1px solid #ccc`}
-              height={`100%`}
-            >
-              <Wrapper dr={`row`} height={`100%`}>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper width={`25%`} height={`100%`}>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`15%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-            <Wrapper width={`15%`} height={`100%`}>
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-          </Wrapper>
-          <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
-            <Wrapper
-              width={`30%`}
-              borderRight={`1px solid #ccc`}
-              height={`100%`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-            <Wrapper
-              width={`40%`}
-              borderRight={`1px solid #ccc`}
-              height={`100%`}
-            >
-              <Wrapper dr={`row`} height={`100%`}>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper width={`25%`} height={`100%`}>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`15%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-            <Wrapper width={`15%`} height={`100%`}>
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-          </Wrapper>
-          <Wrapper dr={`row`} height={`16%`} borderBottom={`1px solid #ccc`}>
-            <Wrapper
-              width={`30%`}
-              borderRight={`1px solid #ccc`}
-              height={`100%`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-            <Wrapper
-              width={`40%`}
-              borderRight={`1px solid #ccc`}
-              height={`100%`}
-            >
-              <Wrapper dr={`row`} height={`100%`}>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  borderRight={`1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-                <Wrapper width={`25%`} height={`100%`}>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`15%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-            <Wrapper width={`15%`} height={`100%`}>
-              <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-            </Wrapper>
-          </Wrapper>
         </Wrapper>
         {/* 견적내용 끝 */}
 
@@ -711,7 +521,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper height={`50%`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
-                ###
+                {getStrMainCustomerType(props.eInfo.costomerType)}
               </Text>
             </Wrapper>
           </Wrapper>

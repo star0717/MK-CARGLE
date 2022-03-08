@@ -369,7 +369,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     setModify,
     setRender,
   };
-  // console.log("dkfsodkfo", workList);
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
