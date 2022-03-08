@@ -42,7 +42,8 @@ const EstimateFile: NextPage<any> = forwardRef<
     >
       <Wrapper
         width={`49.58333em`}
-        height={`70.08334em`}
+        height={`auto`}
+        minHeight={`70.08334em`}
         margin={`0 auto`}
         padding={`0px`}
         ju={`flex-start`}
@@ -386,7 +387,7 @@ const EstimateFile: NextPage<any> = forwardRef<
         </Wrapper>
 
         {/* 견적내용 시작 */}
-        <Wrapper border={`2px solid #000`} height={`180px`}>
+        <Wrapper border={`2px solid #000`} height={`auto`}>
           <Wrapper dr={`row`} height={`20%`} borderBottom={`1px solid #ccc`}>
             <Wrapper
               width={`30%`}

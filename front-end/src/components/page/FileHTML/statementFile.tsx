@@ -39,7 +39,8 @@ const StatementFile: NextPage<any> = forwardRef<
     >
       <Wrapper
         width={`49.58333em`}
-        height={`70.08334em`}
+        height={`auto`}
+        minHeight={`70.08334em`}
         margin={`0 auto`}
         padding={`0px`}
         ju={`flex-start`}
