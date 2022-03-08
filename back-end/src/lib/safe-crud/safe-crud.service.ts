@@ -1,4 +1,3 @@
-import { dtFormatForDurationSerarch } from './../toolkit/back-end.toolkit';
 /**
  * Safe CRUD Service
  * 공통으로 사용가능한 안전한 CRUD 서비스
@@ -12,7 +11,7 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import { Model, FilterQuery } from 'mongoose';
+import { FilterQuery } from 'mongoose';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   BaseEntity,
@@ -36,6 +35,7 @@ import {
   getStartOfYearDateTime,
   getStrDate,
 } from '../toolkit/back-end.toolkit';
+import { ReturnModelType } from '@typegoose/typegoose';
 
 /* 확장 서비스 클래스용 패키지 - 아래의 내용을 확장 클래스에 주입
 import { InjectModel } from 'nestjs-typegoose';
@@ -51,7 +51,10 @@ export class SafeService<T extends BaseEntity> {
     */
   private modelKeys: string[];
 
-  constructor(readonly model: Model<T>, readonly commonService: CommonService) {
+  constructor(
+    readonly model: ReturnModelType<any>,
+    readonly commonService: CommonService,
+  ) {
     const schema = model.prototype.schema.paths;
     this.modelKeys = Object.keys(schema);
   }
