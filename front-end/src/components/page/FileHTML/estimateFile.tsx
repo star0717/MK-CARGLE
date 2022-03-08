@@ -241,7 +241,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
               >
                 <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {props.eInfo.company.mbRegNum || ""}
+                  {props.eInfo.company.mbRegNum}
                 </Text>
               </Wrapper>
             </Wrapper>
