@@ -1,5 +1,5 @@
 import { BaseEntity } from './base.entity';
-import { MainCar, MainCustomer, MainPrice } from './maintenance.entity';
+import { MainCar, MainCustomer, MainDates, MainPrice } from './maintenance.entity';
 import { MainCustomerType, MainPartsType } from 'src/constants/maintenance.const';
 export declare class CompanyInfo {
     name: string;
@@ -24,6 +24,7 @@ export declare class MainDoc extends BaseEntity {
     mainNum: string;
     customer: MainCustomer;
     costomerType: MainCustomerType;
+    dates: MainDates;
     company: CompanyInfo;
     car: MainCar;
     works: WorkInfo[];

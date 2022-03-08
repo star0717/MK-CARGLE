@@ -2,6 +2,7 @@ import { BaseEntity } from './base.entity';
 import {
   MainCar,
   MainCustomer,
+  MainDates,
   MainPrice,
   MainWork,
 } from './maintenance.entity';
@@ -171,6 +172,17 @@ export class MainDoc extends BaseEntity {
     default: MainCustomerType.NORMAL,
   }) // 자동 기입
   costomerType: MainCustomerType;
+
+  @ApiProperty({
+    description: '각종 시간 정보(자동생성)',
+    type: MainDates,
+    required: false,
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => MainDates)
+  @prop({ required: true, type: () => MainDates, _id: false }) // 자동생성
+  dates: MainDates;
 
   @ApiProperty({ description: '업체정보', type: CompanyInfo })
   @IsOptional()
