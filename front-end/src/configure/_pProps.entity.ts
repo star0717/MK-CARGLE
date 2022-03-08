@@ -12,6 +12,8 @@ import { Part } from "../models/part.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { MainFindOptions } from "../../../back-end/src/models/maintenance.entity";
 import { Maintenance, MainWork } from "src/models/maintenance.entity";
+import { Estimate } from "src/models/estimate.entity";
+import { Statement } from "src/models/statement.entity";
 
 /***********************************************************************
  * 기본
@@ -217,4 +219,6 @@ export interface _pPreviewModalProps {
   setModal2Open: React.Dispatch<React.SetStateAction<boolean>>;
   fileCheck: _fFileCheck;
   propMtInfo: Maintenance;
+  eInfo: Estimate;
+  sInfo: Statement;
 }
