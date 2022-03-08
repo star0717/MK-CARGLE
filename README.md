@@ -48,3 +48,22 @@ models 모듈은 front-end에 구현된 데이터 모델 클래스를 참조하�
 - ssh 포트 추가: sshd_config 파일에 포트 추가
 - front-end 포트 추가: .env 파일에 DESTINATION_PORT에 back-end용 포트 설정. package.json 파일에 script 항목에 새로운 포트 추가
 - back-end 포트 추가: .env 파일의 SV_PORT에 back-end용 포트 설정
+
+## ssh key 생성 및 등록 법
+
+### Github
+
+SSH 키 생성
+
+```bash
+cd ~/.ssh
+ssh-keygen -t rsa -b 4096 -C "mk@mklc.co.kr"
+```
+
+생성된 키를 Github의 settings/SSH keys 항목에 추가함
+
+정상등록 여부 확인
+
+```bash
+ssh -T git@github.com
+```
