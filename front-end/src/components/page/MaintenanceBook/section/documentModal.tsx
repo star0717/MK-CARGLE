@@ -78,7 +78,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    *********************************************************************/
   const [point, setPoint] = useState<number>(0); // 포인트
   const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
-  const [phoneList, setPhoneList] = useState<string[]>([]); // 번호 리스트
+  const [phoneListRow, setPhoneListRow] = useState<string[]>([]); // 번호 리스트 row
+  const [phoneListAll, setPhoneListAll] = useState<string[][]>([[]]); // 번호 리스트 all
   const [fileCheck, setFileCheck] = useState<_fFileCheck>({
     eCheck: true,
     sCheck: true,
@@ -100,16 +101,66 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * @param data
    */
   const onAddPhoneHandler: SubmitHandler<FieldValues> = (data) => {
-    setPhoneList((phoneList) => [...phoneList, phoneNum]);
+    for (let i = 0; i < phoneListAll.length; i++) {
+      for (let j = 0; j < phoneListAll[i].length; j++) {
+        if (phoneNum === phoneListAll[i][j])
+          return alert("이미 추가된 전화번호입니다");
+      }
+    }
+
+    if (phoneListAll.length === 1) {
+      if (phoneListAll[0].length < 3) {
+        setPhoneListAll((phoneListAll) => [[...phoneListAll[0], phoneNum]]);
+      } else {
+        setPhoneListAll((phoneListAll) => [...phoneListAll, [phoneNum]]);
+      }
+    } else {
+      if (phoneListAll[phoneListAll.length - 1].length < 3) {
+        setPhoneListAll((phoneListAll) => [
+          ...phoneListAll.filter(
+            (item, idx) => idx !== phoneListAll.length - 1
+          ),
+          [...phoneListAll[phoneListAll.length - 1], phoneNum],
+        ]);
+      } else {
+        setPhoneListAll((phoneListAll) => [...phoneListAll, [phoneNum]]);
+      }
+    }
+
     setPhoneNum("");
   };
 
   /**
    * 전화번호 삭제 handler
-   * @param index
+   * @param rowIdx
+   * @param cellIdx
    */
-  const onDelPhoneHandler = (index: number) => {
-    setPhoneList(phoneList.filter((num, idx) => idx !== index));
+  const onDelPhoneHandler = (rowIdx: number, cellIdx: number) => {
+    let odArr: string[] = [];
+    for (let i = 0; i < phoneListAll.length; i++) {
+      for (let j = 0; j < phoneListAll[i].length; j++) {
+        if (i !== rowIdx || j !== cellIdx) odArr.push(phoneListAll[i][j]);
+      }
+    }
+
+    console.log(odArr);
+
+    let z = 0;
+    let rowArr: string[] = [];
+    let tdArr: string[][] = [];
+
+    // for (let h = 0; h < odArr.length; h++) {
+    //   if (Math.floor(h / 3) === z) {
+    //     rowArr.push(odArr[h]);
+    //   }
+    //   tdArr.push(rowArr);
+    //   rowArr = [];
+    //   z + 1;
+    // }
+
+    // console.log(tdArr);
+
+    // return setPhoneListAll(tdArr);
   };
 
   /**
@@ -151,7 +202,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     )
       return alert("발급서류를 선택하세요");
     // sms하는데 번호없음
-    if (pubCheck.online && phoneList.length === 0)
+    if (pubCheck.online && phoneListAll.length === 0)
       return alert("전송할 번호를 추가하세요");
 
     await onFileApiHandler(mainPubDataHandler());
@@ -494,38 +545,49 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
             <Wrapper overflow={`auto`} ju={`flex-start`}>
               <TableBody minHeight={`200px`}>
-                <TableRow
-                  height={`50px`}
-                  kindOf={`noHover`}
-                  ju={`space-around`}
-                >
-                  {phoneList.length !== 0 ? (
-                    <>
-                      {phoneList.map((num, idx) => {
-                        return (
-                          <TableRowLIST key={idx}>
-                            <SmallButton
-                              type="button"
-                              kindOf={`default`}
-                              width={`160px`}
-                              radius={`100px`}
-                              onClick={() => {
-                                onDelPhoneHandler(idx);
-                              }}
-                            >
-                              {num}
-                              <FaMinusSquare />
-                            </SmallButton>
-                          </TableRowLIST>
-                        );
-                      })}
-                    </>
-                  ) : (
+                {phoneListAll.length !== 0 ? (
+                  <>
+                    {phoneListAll.map((row, rowIdx) => {
+                      return (
+                        <TableRow
+                          key={rowIdx}
+                          height={`50px`}
+                          kindOf={`noHover`}
+                          ju={`space-around`}
+                        >
+                          {phoneListAll[rowIdx].map((num, cellIdx) => {
+                            return (
+                              <TableRowLIST key={cellIdx}>
+                                <SmallButton
+                                  type="button"
+                                  kindOf={`default`}
+                                  width={`160px`}
+                                  radius={`100px`}
+                                  onClick={() => {
+                                    onDelPhoneHandler(rowIdx, cellIdx);
+                                  }}
+                                >
+                                  {num}
+                                  <FaMinusSquare />
+                                </SmallButton>
+                              </TableRowLIST>
+                            );
+                          })}
+                        </TableRow>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <TableRow
+                    height={`50px`}
+                    kindOf={`noHover`}
+                    ju={`space-around`}
+                  >
                     <Wrapper>
                       <Text>전송할 번호가 없습니다.</Text>
                     </Wrapper>
-                  )}
-                </TableRow>
+                  </TableRow>
+                )}
               </TableBody>
             </Wrapper>
           </TableWrapper>
