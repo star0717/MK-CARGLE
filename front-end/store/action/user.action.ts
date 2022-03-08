@@ -1071,6 +1071,25 @@ export async function _aGetMaintenancesList(
 }
 
 /**
+ * id에 해당하는 Maintenances 조회
+ * @param id _id
+ * @returns
+ */
+export async function _aGetMaintenancesOne(id: string) {
+  const req: Maintenance = await axios
+    .get(genApiPath(MaintenancesApiPath.maintenances, { id: id }))
+    .then((res: AxiosResponse<Maintenance, string>): Maintenance => {
+      return res.data;
+    });
+
+  const result: _iMaintenancesOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
  * Maintenances 데이터 추가(차량입고)
  * @param data
  * @returns

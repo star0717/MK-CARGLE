@@ -149,6 +149,7 @@ export interface _pPartsSetProps extends _MainProps {
   setMtInfo?: React.Dispatch<React.SetStateAction<Maintenance>>;
   modify?: boolean;
   setModify?: React.Dispatch<React.SetStateAction<boolean>>;
+  setRender?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /***********************************************************************

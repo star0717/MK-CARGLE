@@ -36,6 +36,7 @@ import {
   _aGetEstimates,
   _aGetMaintenancesGenEstimate,
   _aGetMaintenancesGenStatement,
+  _aGetStatement,
   _aPatchMaintenancesPubEsitmate,
   _aPatchMaintenancesPubStatement,
   _aPatchMaintenancesRelease,
@@ -47,7 +48,7 @@ import StatementFile from "src/components/page/FileHTML/statementFile";
 import { UseLink } from "src/configure/router.entity";
 import { MainDocPubType, MainStatus } from "src/constants/maintenance.const";
 import { useRouter } from "next/router";
-import { MainPubDocInfo } from "src/models/maintenance.entity";
+import { MainPubDocInfo, Maintenance } from "src/models/maintenance.entity";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
 import PreviewModal from "./previewModal";
@@ -248,9 +249,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           await dispatch(
             _aPatchMaintenancesPubEsitmate(res.payload._id, data)
           ).then(
-            (res: _iMaintenancesOne) => {
+            async (res: _iMaintenancesOne) => {
               props.setMtInfo(res.payload);
-              onEstimateInfo();
+              await onEstimateInfo(res.payload);
             },
             (err) => {
               return alert("견적서 발급 DB 에러");
@@ -269,9 +270,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           await dispatch(
             _aPatchMaintenancesPubStatement(res.payload._id, data)
           ).then(
-            (res: _iMaintenancesOne) => {
+            async (res: _iMaintenancesOne) => {
               props.setMtInfo(res.payload);
-              onStatementInfo();
+              await onStatementInfo(res.payload);
             },
             (err) => {
               return alert("명세서 발급 DB 에러");
@@ -285,9 +286,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     }
   };
 
-  /**견적서 생성 handler */
-  const onEstimateInfo = async () => {
-    await dispatch(_aGetEstimates(props.mtInfo.estimate._oID)).then(
+  /**견적서 정보 불러오기 handler */
+  const onEstimateInfo = async (data: Maintenance) => {
+    await dispatch(_aGetEstimates(data.estimate._oID)).then(
       (res: _iEstimate) => {
         if (res.payload) {
           setEInfo(res.payload);
@@ -299,9 +300,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     );
   };
 
-  /**명세서 생성 handler */
-  const onStatementInfo = async () => {
-    await dispatch(_aGetEstimates(props.mtInfo.statement._oID)).then(
+  /**명세서 정보 불러오기 handler */
+  const onStatementInfo = async (data: Maintenance) => {
+    await dispatch(_aGetStatement(data.statement._oID)).then(
       (res: _iEstimate) => {
         if (res.payload) {
           setSInfo(res.payload);
@@ -317,7 +318,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * 4. Props settings
    *********************************************************************/
   const propMtInfo = props.mtInfo;
+  const propToken = props.tokenValue;
+  /**미리보기 props */
   const previewModalProps: _pPreviewModalProps = {
+    propToken,
     modal2Open,
     setModal2Open,
     fileCheck,
@@ -589,8 +593,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
         )}
       </Wrapper>
       <Wrapper display={`none`}>
-        <EstimateFile {...eInfo} ref={estimateRef} />
-        <StatementFile {...sInfo} ref={statementRef} />
+        {/* <EstimateFile {...previewModalProps} ref={estimateRef} />
+        <StatementFile {...previewModalProps} ref={statementRef} /> */}
       </Wrapper>
       <Modal
         isOpen={modal2Open}
