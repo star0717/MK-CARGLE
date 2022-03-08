@@ -2,6 +2,7 @@ import { genMainOptionQuery } from "./../../src/constants/maintenance.const";
 import {
   EstimatesApiPath,
   MaintenancesApiPath,
+  StatementsApiPath,
 } from "./../../src/constants/api-path.const";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
@@ -1361,7 +1362,7 @@ export async function _aGetEstimates(id: string) {
  */
 export async function _aGetStatement(id: string) {
   const req: Statement = await axios
-    .get(genApiPath(EstimatesApiPath.BASE, { id: id }))
+    .get(genApiPath(StatementsApiPath.BASE, { id: id }))
     .then((res: AxiosResponse<Statement, string>): Statement => {
       return res.data;
     });
