@@ -141,12 +141,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     }
 
     const resultArr = create2dArray(Math.ceil(odArr.length / 3), 3, odArr);
-    console.log("@@@", resultArr);
-
     setPhoneList(resultArr);
   };
 
-  console.log("###", phoneList);
   /**
    * 체크박스 handler
    * @param e
