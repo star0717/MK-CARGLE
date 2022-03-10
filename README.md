@@ -90,4 +90,5 @@ next.js 기반인 front-end의 경우 백그라운드 실행을 해도 포트가
 
 ```
 lsof -i TCP:3000
+kill -9 pid번호
 ```
