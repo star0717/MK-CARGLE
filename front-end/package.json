@@ -10,7 +10,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "forever":"forever start -a --uid front-end -c 'npm run start' ./",
+    "forever:start":"forever start -a --uid front-end -c 'npm run start' ./",
+    "forever:stop":"forever stop front-end"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
