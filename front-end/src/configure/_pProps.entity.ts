@@ -10,7 +10,6 @@ import { _fFileCheck, _fTermData, _fWithdrawal } from "./_fProps.entity";
 import { _MainProps } from "./_props.entity";
 import { Part } from "../models/part.entity";
 import { PartsSet } from "src/models/partsset.entity";
-import { MainFindOptions } from "../../../back-end/src/models/maintenance.entity";
 import { Maintenance, MainWork } from "src/models/maintenance.entity";
 import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";

@@ -49,7 +49,7 @@ models 모듈은 front-end에 구현된 데이터 모델 클래스를 참조하�
 - front-end 포트 추가: .env 파일에 DESTINATION_PORT에 back-end용 포트 설정. package.json 파일에 script 항목에 새로운 포트 추가
 - back-end 포트 추가: .env 파일의 SV_PORT에 back-end용 포트 설정
 
-## ssh key 생성 및 등록 법
+## ssh key 생성 및 등록법
 
 ### Github
 
@@ -66,4 +66,29 @@ ssh-keygen -t rsa -b 4096 -C "mk@mklc.co.kr"
 
 ```bash
 ssh -T git@github.com
+```
+
+## 배포 관련
+
+### forever를 통한 백그라운드 실행
+
+forever를 이용하면 front-end와 back-end를 백그라운드로 실행할 수 있다. 각 서버의 package.json 파일에 정의를 참고하여 백그라운드 실행과 종료가 가능하다.
+
+백그라운드 실행
+
+```
+npm run forever:start
+```
+
+백그라운드 실행 종료
+
+```
+npm run forever:stop
+```
+
+next.js 기반인 front-end의 경우 백그라운드 실행을 해도 포트가 반환되지 않아 재시작시 사용중인 포트라는 에러와함께 서버가 중지되는 문제가 있다. 포트를 물고있는 node 프로세스를 직접 찾아 종료해야한다.
+
+```
+lsof -i TCP:3000
+kill -9 pid번호
 ```
