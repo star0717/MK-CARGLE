@@ -4,8 +4,6 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/dist/client/router";
 import { useResizeDetector } from "react-resize-detector";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { actionTypesUser, UserState } from "../../../../store/interfaces";
 import { RootStateInterface } from "../../../../store/interfaces/RootState";
@@ -26,6 +24,7 @@ import {
   CheckMark,
 } from "../../styles/CommonComponents";
 import { BodyWrapper } from "../../styles/LayoutComponents";
+import { AiFillQuestionCircle } from "react-icons/ai";
 
 /**
  * 로그인 컴포넌트(기능)
@@ -217,10 +216,9 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   fontSize={width < 500 ? `12px` : `16px`}
                   ju={`flex-end`}
                 >
-                  <FontAwesomeIcon
-                    icon={faQuestionCircle}
-                    style={{ width: "18px", margin: "0px 3px 4px 0px" }}
-                  />
+                  <Text fontSize={`20px`} marginTop={`4px`}>
+                    <AiFillQuestionCircle />
+                  </Text>
                   <Text
                     margin={`0px 3px 0px`}
                     fontSize={`16px`}
@@ -240,10 +238,9 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                   </Text>
                 </Wrapper>
                 <Wrapper dr={`row`} fontSize={`16px`} ju={`flex-end`}>
-                  <FontAwesomeIcon
-                    icon={faQuestionCircle}
-                    style={{ width: "18px", margin: "0px 3px 4px 0px" }}
-                  />
+                  <Text fontSize={`20px`} marginTop={`4px`}>
+                    <AiFillQuestionCircle />
+                  </Text>
                   <Text
                     margin={`0px 3px 0px`}
                     fontSize={`16px`}
