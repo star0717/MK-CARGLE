@@ -11,16 +11,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "forever":"forever start -a --uid front-end -c 'npm run start' ./",
-    "forever:start":"forever start -a --uid front-end -c 'npm run start' ./",
-    "forever:stop":"forever stop front-end"
+    "forever": "forever start -a --uid front-end -c 'npm run start' ./",
+    "forever:start": "forever start -a --uid front-end -c 'npm run start' ./",
+    "forever:stop": "forever stop front-end"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-brands-svg-icons": "^5.15.4",
-    "@fortawesome/free-regular-svg-icons": "^5.15.4",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@fortawesome/react-fontawesome": "^0.1.16",
     "@nestjs/swagger": "^5.1.4",
     "@types/redux-logger": "^3.0.9",
     "@types/redux-promise": "^0.5.29",
