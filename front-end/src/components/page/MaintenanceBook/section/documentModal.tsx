@@ -29,7 +29,7 @@ import {
   _pPartsSetProps,
   _pPreviewModalProps,
 } from "src/configure/_pProps.entity";
-import { trim } from "src/modules/commonModule";
+import { create2dArray, test, trim } from "src/modules/commonModule";
 import { formRegEx } from "src/validation/regEx";
 import { useDispatch } from "react-redux";
 import {
@@ -145,22 +145,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
 
     console.log(odArr);
 
-    let z = 0;
-    let rowArr: string[] = [];
-    let tdArr: string[][] = [];
-
-    // for (let h = 0; h < odArr.length; h++) {
-    //   if (Math.floor(h / 3) === z) {
-    //     rowArr.push(odArr[h]);
-    //   }
-    //   tdArr.push(rowArr);
-    //   rowArr = [];
-    //   z + 1;
-    // }
-
-    // console.log(tdArr);
-
-    // return setPhoneListAll(tdArr);
+    const tt = create2dArray(3, Math.floor(odArr.length / 3));
+    const aa = test(3, Math.floor(odArr.length / 3), odArr);
+    console.log(aa);
   };
 
   /**

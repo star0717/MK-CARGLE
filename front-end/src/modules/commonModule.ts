@@ -157,11 +157,35 @@ export const maskingStr = (str: string) => {
     const maskingStr = first + maskingCenter + last;
     return maskingStr;
   } else {
-    var pattern = /.$/; // 정규식
+    let pattern = /.$/; // 정규식
     return str.replace(pattern, "*");
   }
 };
 
-// export const makeHpNum = (str: string) => {
-//   if(str.)
-// }
+/**
+ * 2차원 배열 생성
+ * @param rows
+ * @param columns
+ */
+export const create2dArray = (rows: number, columns: number) => {
+  let arr: string[][] = new Array(rows);
+  for (let i = 0; i < rows; i++) {
+    arr[i] = new Array(columns);
+  }
+  return arr;
+};
+
+export const test = (m: number, n: number, initial: object) => {
+  let a,
+    i,
+    j,
+    addA = [];
+  for (i = 0; i < m; i += 1) {
+    a = [];
+    for (j = 0; j < n; j += 1) {
+      a[j] = initial;
+    }
+    addA[i] = a;
+  }
+  return addA;
+};
