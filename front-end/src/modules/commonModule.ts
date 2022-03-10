@@ -174,16 +174,20 @@ export const create2dArray = (rows: number, columns: number, initArr?: any) => {
 
   for (let i = 0; i < rows; i++) {
     if (initArr) {
+      let add: string[] = [];
       for (let j = a - 3; j < a; j++) {
-        // arr[i] = initArr[j];
-        // console.log(initArr[0]);
-        console.log("!!", initArr[0]);
+        if (initArr[j]) {
+          add.push(initArr[j]);
+          arr[i] = add;
+        }
       }
-      a + 3;
     } else {
       arr[i] = new Array(columns);
     }
+    a = a + 3;
   }
+
+  if (arr.length === 0) arr = [[]];
   return arr;
 };
 

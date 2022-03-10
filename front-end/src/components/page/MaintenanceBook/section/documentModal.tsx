@@ -78,8 +78,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    *********************************************************************/
   const [point, setPoint] = useState<number>(0); // 포인트
   const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
-  const [phoneListRow, setPhoneListRow] = useState<string[]>([]); // 번호 리스트 row
-  const [phoneListAll, setPhoneListAll] = useState<string[][]>([[]]); // 번호 리스트 all
+  const [phoneList, setPhoneList] = useState<string[][]>([[]]); // 번호 리스트 all
   const [fileCheck, setFileCheck] = useState<_fFileCheck>({
     eCheck: true,
     sCheck: true,
@@ -101,29 +100,27 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * @param data
    */
   const onAddPhoneHandler: SubmitHandler<FieldValues> = (data) => {
-    for (let i = 0; i < phoneListAll.length; i++) {
-      for (let j = 0; j < phoneListAll[i].length; j++) {
-        if (phoneNum === phoneListAll[i][j])
+    for (let i = 0; i < phoneList.length; i++) {
+      for (let j = 0; j < phoneList[i].length; j++) {
+        if (phoneNum === phoneList[i][j])
           return alert("이미 추가된 전화번호입니다");
       }
     }
 
-    if (phoneListAll.length === 1) {
-      if (phoneListAll[0].length < 3) {
-        setPhoneListAll((phoneListAll) => [[...phoneListAll[0], phoneNum]]);
+    if (phoneList.length === 1) {
+      if (phoneList[0].length < 3) {
+        setPhoneList((phoneList) => [[...phoneList[0], phoneNum]]);
       } else {
-        setPhoneListAll((phoneListAll) => [...phoneListAll, [phoneNum]]);
+        setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
       }
     } else {
-      if (phoneListAll[phoneListAll.length - 1].length < 3) {
-        setPhoneListAll((phoneListAll) => [
-          ...phoneListAll.filter(
-            (item, idx) => idx !== phoneListAll.length - 1
-          ),
-          [...phoneListAll[phoneListAll.length - 1], phoneNum],
+      if (phoneList[phoneList.length - 1].length < 3) {
+        setPhoneList((phoneList) => [
+          ...phoneList.filter((item, idx) => idx !== phoneList.length - 1),
+          [...phoneList[phoneList.length - 1], phoneNum],
         ]);
       } else {
-        setPhoneListAll((phoneListAll) => [...phoneListAll, [phoneNum]]);
+        setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
       }
     }
 
@@ -137,18 +134,19 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    */
   const onDelPhoneHandler = (rowIdx: number, cellIdx: number) => {
     let odArr: string[] = [];
-    for (let i = 0; i < phoneListAll.length; i++) {
-      for (let j = 0; j < phoneListAll[i].length; j++) {
-        if (i !== rowIdx || j !== cellIdx) odArr.push(phoneListAll[i][j]);
+    for (let i = 0; i < phoneList.length; i++) {
+      for (let j = 0; j < phoneList[i].length; j++) {
+        if (i !== rowIdx || j !== cellIdx) odArr.push(phoneList[i][j]);
       }
     }
 
-    // console.log("@@", odArr);
+    const resultArr = create2dArray(Math.ceil(odArr.length / 3), 3, odArr);
+    console.log("@@@", resultArr);
 
-    const tt = create2dArray(Math.floor(odArr.length / 3), 3, odArr);
-    console.log("##", tt);
+    setPhoneList(resultArr);
   };
 
+  console.log("###", phoneList);
   /**
    * 체크박스 handler
    * @param e
@@ -188,7 +186,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     )
       return alert("발급서류를 선택하세요");
     // sms하는데 번호없음
-    if (pubCheck.online && phoneListAll.length === 0)
+    if (pubCheck.online && phoneList.length === 0)
       return alert("전송할 번호를 추가하세요");
 
     await onFileApiHandler(mainPubDataHandler());
@@ -531,9 +529,9 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             </Wrapper>
             <Wrapper overflow={`auto`} ju={`flex-start`}>
               <TableBody minHeight={`200px`}>
-                {phoneListAll.length !== 0 ? (
+                {phoneList.length !== 0 ? (
                   <>
-                    {phoneListAll.map((row, rowIdx) => {
+                    {phoneList.map((row, rowIdx) => {
                       return (
                         <TableRow
                           key={rowIdx}
@@ -541,7 +539,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                           kindOf={`noHover`}
                           ju={`space-around`}
                         >
-                          {phoneListAll[rowIdx].map((num, cellIdx) => {
+                          {phoneList[rowIdx].map((num, cellIdx) => {
                             return (
                               <TableRowLIST key={cellIdx}>
                                 <SmallButton
