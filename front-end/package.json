@@ -9,7 +9,7 @@
     "9000": "next dev -p 9000",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 80",
+    "start": "next start",
     "lint": "next lint",
     "forever": "forever start -a --uid front-end -c 'npm run start' ./",
     "forever:start": "forever start -a --uid front-end -c 'npm run start' ./",
