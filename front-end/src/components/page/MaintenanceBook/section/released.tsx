@@ -299,9 +299,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    */
   const onModifyWorkInfo = async () => {
     if (
-      JSON.stringify(props.data.mtData.works) === JSON.stringify(workList) &&
-      JSON.stringify(props.data.mtData) === JSON.stringify(mtInfo) &&
-      JSON.stringify(props.data.mtData.price) === JSON.stringify(price)
+      JSON.stringify(initMtInfo.works) === JSON.stringify(workList) &&
+      JSON.stringify(initMtInfo) === JSON.stringify(mtInfo) &&
+      JSON.stringify(initMtInfo.price) === JSON.stringify(price)
     ) {
       return setModify(!modify);
     }
