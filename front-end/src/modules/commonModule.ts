@@ -104,10 +104,9 @@ class GenPathArgs {
  */
 export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   let apiPath = "/api" + path;
+  console.log(apiPath);
   if (args?.isServerSide)
-    apiPath = `${process.env.DESTINATION_API}:${process.env.DESTINATION_PORT}${path}`;
-
-  console.log("apiPath: ", apiPath);
+    apiPath = `${process.env.DESTINATION_API}:${process.env.PORT}/api/${path}`;
   if (args?.id) {
     if (!apiPath.endsWith("/")) apiPath += "/" + args.id;
     else apiPath += args.id;
@@ -115,6 +114,8 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   if (args?.findParams) {
     apiPath += genFindParamQuery(args.findParams);
   }
+  console.log(process.env.DESTINATION_API);
+  console.log(process.env.DESTINATION_PORT);
   console.log("API 호출 경로:", apiPath);
   return apiPath;
 };
@@ -157,11 +158,51 @@ export const maskingStr = (str: string) => {
     const maskingStr = first + maskingCenter + last;
     return maskingStr;
   } else {
-    var pattern = /.$/; // 정규식
+    let pattern = /.$/; // 정규식
     return str.replace(pattern, "*");
   }
 };
 
-// export const makeHpNum = (str: string) => {
-//   if(str.)
-// }
+/**
+ * 2차원 배열 생성
+ * @param rows
+ * @param columns
+ */
+export const create2dArray = (rows: number, columns: number, initArr?: any) => {
+  let arr: string[][] = new Array(rows);
+  let a: number = 3;
+  if (rows === 0) rows = 1;
+
+  for (let i = 0; i < rows; i++) {
+    if (initArr) {
+      let add: string[] = [];
+      for (let j = a - 3; j < a; j++) {
+        if (initArr[j]) {
+          add.push(initArr[j]);
+          arr[i] = add;
+        }
+      }
+    } else {
+      arr[i] = new Array(columns);
+    }
+    a = a + 3;
+  }
+
+  if (arr.length === 0) arr = [[]];
+  return arr;
+};
+
+export const test = (m: number, n: number, initial: string[]) => {
+  let a,
+    i,
+    j,
+    addA = [];
+  for (i = 0; i < m; i += 1) {
+    a = [];
+    for (j = 0; j < n; j += 1) {
+      a[j] = initial[i];
+    }
+    addA[i] = a;
+  }
+  return addA;
+};

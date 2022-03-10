@@ -10,12 +10,6 @@ import { _pPreviewModalProps } from "src/configure/_pProps.entity";
 import EstimateFile from "../../FileHTML/estimateFile";
 import StatementFile from "../../FileHTML/statementFile";
 import { AiOutlineCaretLeft, AiOutlineCaretRight } from "react-icons/ai";
-import html2canvas from "html2canvas";
-import domtoimage from "dom-to-image";
-import { saveAs } from "file-saver";
-
-import jsPDF from "jspdf";
-import dayjs from "dayjs";
 
 const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
   /*********************************************************************
@@ -28,87 +22,52 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [docBool, setDocBool] = useState<boolean>(true);
-  const [imgData, setImgData] = useState<string>("");
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
   /**pdf저장 */
-  const onSavePdf = () => {
-    // html2canvas(estimateRef.current, { backgroundColor: null }).then(
-    //   (canvas) => {
-    //     let imgData = canvas.toDataURL("image/png");
-    //     let imgWidth = 210;
-    //     let pageHeight = imgWidth * 1.414;
-    //     let imgHeight = (canvas.height * imgWidth) / canvas.width;
-    //     let heightLeft = imgHeight;
-    //     let doc = new jsPDF("p", "mm", "a4");
-    //     let position = 0;
-    //     doc.internal.scaleFactor = 1.33;
-    //     doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    //     heightLeft -= pageHeight;
-    //     while (heightLeft >= 20) {
-    //       position = heightLeft - imgHeight;
-    //       doc.addPage();
-    //       doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    //       heightLeft -= pageHeight;
-    //     }
-    //     doc.save(
-    //       `${props.propMtInfo.car.regNumber}_견적서_${dayjs(Date.now()).format(
-    //         "YYYY-MM-DD"
-    //       )}.pdf`
-    //     );
-    //   }
-    // );
-    const asd = estimateRef.current;
-
-    domtoimage.toBlob(asd).then((blob) => {
-      saveAs(blob, "test.png");
-    });
-
-    // html2canvas(estimateRef.current, {
-    //   backgroundColor: null,
-    //   imageTimeout: 1000,
-    // }).then((canvas) => {
-    //   let imgData = canvas.toDataURL("image/png");
-
-    //   document.getElementById("test").appendChild(canvas);
-    // });
-
-    // html2canvas(estimateRef.current).then((canvas) => {
-    //   let imgData = canvas.toDataURL("image/png");
-    //   window.open(canvas.toDataURL());
-    //   console.log(canvas);
-    //   console.log(imgData);
-    //   document.getElementById("test").appendChild(estimateRef.current);
-    //   let imgWidth = 210;
-    //   let pageHeight = imgWidth * 1.414;
-    //   let imgHeight = (canvas.height * imgWidth) / canvas.width;
-    //   let heightLeft = imgHeight;
-    //   let doc = new jsPDF("p", "mm", "a4");
-    //   let position = 0;
-    //   doc.internal.scaleFactor = 1.33;
-    //   doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    //   heightLeft -= pageHeight;
-    //   while (heightLeft >= 20) {
-    //     position = heightLeft - imgHeight;
-    //     doc.addPage();
-    //     doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    //     heightLeft -= pageHeight;
-    //   }
-    //   doc.save(
-    //     `${props.propMtInfo.car.regNumber}_견적서_${dayjs(Date.now()).format(
-    //       "YYYY-MM-DD"
-    //     )}.pdf`
-    //   );
-    // });
-  };
+  // const onSavePdf = async () => {
+  // domtoimage
+  //   .toPng(estimateRef.current)
+  //   .then(function (dataUrl) {
+  //     console.log(dataUrl);
+  //     // var img = new Image();
+  //     // img.src = dataUrl;
+  //     // document.body.appendChild(img);
+  //   })
+  //   .catch(function (error) {
+  //     console.error("oops, something went wrong!", error);
+  //   });
+  // html2canvas(document.getElementById("estimate")).then((canvas) => {
+  //   document.getElementById("test").appendChild(canvas);
+  //   // let imgData = canvas.toDataURL("image/jpeg", 1.0);
+  //   // let imgWidth = 210;
+  //   // let pageHeight = imgWidth * 1.414;
+  //   // let imgHeight = (canvas.height * imgWidth) / canvas.width;
+  //   // let heightLeft = imgHeight;
+  //   // let doc = new jsPDF("p", "mm", "a4");
+  //   // let position = 0;
+  //   // doc.addImage(imgData, "jpeg", 0, position, imgWidth, imgHeight);
+  //   // heightLeft -= pageHeight;
+  //   // while (heightLeft >= 20) {
+  //   //   position = heightLeft - imgHeight;
+  //   //   doc.addPage();
+  //   //   doc.addImage(imgData, "jpeg", 0, position, imgWidth, imgHeight);
+  //   //   heightLeft -= pageHeight;
+  //   // }
+  //   // doc.save(
+  //   //   `${props.propMtInfo.car.regNumber}_견적서_${dayjs(Date.now()).format(
+  //   //     "YYYY-MM-DD"
+  //   //   )}.pdf`
+  //   // );
+  // });
+  // };
 
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  console.log(props);
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -156,20 +115,24 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
         </Wrapper>
       )}
       {props.fileCheck.eCheck && !props.fileCheck.sCheck && (
-        <EstimateFile {...props} ref={estimateRef} />
+        <Wrapper>
+          <EstimateFile {...props} ref={estimateRef} />
+        </Wrapper>
       )}
       {!props.fileCheck.eCheck && props.fileCheck.sCheck && (
-        <StatementFile {...props} ref={statementRef} />
+        <Wrapper>
+          <StatementFile {...props} ref={statementRef} />
+        </Wrapper>
       )}
       <Wrapper dr={`row`} ju={`center`}>
-        <SmallButton
+        {/* <SmallButton
           type="button"
           kindOf={`default`}
           margin={`0px 20px`}
           onClick={onSavePdf}
         >
           PDF저장
-        </SmallButton>
+        </SmallButton> */}
         <SmallButton
           type="button"
           kindOf={`default`}
@@ -181,7 +144,6 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
           닫기
         </SmallButton>
       </Wrapper>
-      <Wrapper id="test"></Wrapper>
     </WholeWrapper>
   );
 };

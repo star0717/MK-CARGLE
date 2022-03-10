@@ -22,7 +22,10 @@
     "axios": "^0.24.0",
     "dayjs": "^1.10.7",
     "dom-to-image": "^2.6.0",
+<<<<<<< HEAD
     "file-saver": "^2.0.5",
+=======
+>>>>>>> 71a024bc0af1f20c15787d9b844ca35e7e544e94
     "html2canvas": "^1.4.1",
     "jotai": "^1.5.0",
     "js-cookie": "^3.0.1",
@@ -54,7 +57,10 @@
   },
   "devDependencies": {
     "@types/dom-to-image": "^2.6.4",
+<<<<<<< HEAD
     "@types/file-saver": "^2.0.5",
+=======
+>>>>>>> 71a024bc0af1f20c15787d9b844ca35e7e544e94
     "@types/js-cookie": "^3.0.0",
     "@types/jspdf": "^2.0.0",
     "@types/node": "16.11.6",
