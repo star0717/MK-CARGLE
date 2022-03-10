@@ -167,15 +167,27 @@ export const maskingStr = (str: string) => {
  * @param rows
  * @param columns
  */
-export const create2dArray = (rows: number, columns: number) => {
+export const create2dArray = (rows: number, columns: number, initArr?: any) => {
   let arr: string[][] = new Array(rows);
+  let a: number = 3;
+  if (rows === 0) rows = 1;
+
   for (let i = 0; i < rows; i++) {
-    arr[i] = new Array(columns);
+    if (initArr) {
+      for (let j = a - 3; j < a; j++) {
+        // arr[i] = initArr[j];
+        // console.log(initArr[0]);
+        console.log("!!", initArr[0]);
+      }
+      a + 3;
+    } else {
+      arr[i] = new Array(columns);
+    }
   }
   return arr;
 };
 
-export const test = (m: number, n: number, initial: object) => {
+export const test = (m: number, n: number, initial: string[]) => {
   let a,
     i,
     j,
@@ -183,7 +195,7 @@ export const test = (m: number, n: number, initial: object) => {
   for (i = 0; i < m; i += 1) {
     a = [];
     for (j = 0; j < n; j += 1) {
-      a[j] = initial;
+      a[j] = initial[i];
     }
     addA[i] = a;
   }

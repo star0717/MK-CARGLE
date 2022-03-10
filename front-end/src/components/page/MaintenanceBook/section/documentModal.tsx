@@ -143,11 +143,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
       }
     }
 
-    console.log(odArr);
+    // console.log("@@", odArr);
 
-    const tt = create2dArray(3, Math.floor(odArr.length / 3));
-    const aa = test(3, Math.floor(odArr.length / 3), odArr);
-    console.log(aa);
+    const tt = create2dArray(Math.floor(odArr.length / 3), 3, odArr);
+    console.log("##", tt);
   };
 
   /**
