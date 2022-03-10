@@ -104,10 +104,9 @@ class GenPathArgs {
  */
 export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   let apiPath = "/api" + path;
+  console.log(apiPath);
   if (args?.isServerSide)
-    apiPath = `${process.env.DESTINATION_API}:${process.env.DESTINATION_PORT}${path}`;
-
-  console.log("apiPath: ", apiPath);
+    apiPath = `${process.env.DESTINATION_API}:${process.env.PORT}/api/${path}`;
   if (args?.id) {
     if (!apiPath.endsWith("/")) apiPath += "/" + args.id;
     else apiPath += args.id;
@@ -115,6 +114,8 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   if (args?.findParams) {
     apiPath += genFindParamQuery(args.findParams);
   }
+  console.log(process.env.DESTINATION_API);
+  console.log(process.env.DESTINATION_PORT);
   console.log("API 호출 경로:", apiPath);
   return apiPath;
 };
