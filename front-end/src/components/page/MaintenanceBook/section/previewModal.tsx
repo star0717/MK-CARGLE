@@ -10,9 +10,6 @@ import { _pPreviewModalProps } from "src/configure/_pProps.entity";
 import EstimateFile from "../../FileHTML/estimateFile";
 import StatementFile from "../../FileHTML/statementFile";
 import { AiOutlineCaretLeft, AiOutlineCaretRight } from "react-icons/ai";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import dayjs from "dayjs";
 
 const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
   /*********************************************************************
@@ -30,41 +27,47 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
    * 3. Handlers
    *********************************************************************/
   /**pdf저장 */
-  const onSavePdf = () => {
-    html2canvas(estimateRef.current).then((canvas) => {
-      let imgData = canvas.toDataURL("image/png");
-
-      let imgWidth = 210;
-      let pageHeight = imgWidth * 1.414;
-      let imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-
-      let doc = new jsPDF("p", "mm", "a4");
-      let position = 0;
-
-      doc.internal.scaleFactor = 1.33;
-      doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 20) {
-        position = heightLeft - imgHeight;
-        doc.addPage();
-        doc.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      doc.save(
-        `${props.propMtInfo.car.regNumber}_견적서_${dayjs(Date.now()).format(
-          "YYYY-MM-DD"
-        )}.pdf`
-      );
-    });
-  };
+  // const onSavePdf = async () => {
+  // domtoimage
+  //   .toPng(estimateRef.current)
+  //   .then(function (dataUrl) {
+  //     console.log(dataUrl);
+  //     // var img = new Image();
+  //     // img.src = dataUrl;
+  //     // document.body.appendChild(img);
+  //   })
+  //   .catch(function (error) {
+  //     console.error("oops, something went wrong!", error);
+  //   });
+  // html2canvas(document.getElementById("estimate")).then((canvas) => {
+  //   document.getElementById("test").appendChild(canvas);
+  //   // let imgData = canvas.toDataURL("image/jpeg", 1.0);
+  //   // let imgWidth = 210;
+  //   // let pageHeight = imgWidth * 1.414;
+  //   // let imgHeight = (canvas.height * imgWidth) / canvas.width;
+  //   // let heightLeft = imgHeight;
+  //   // let doc = new jsPDF("p", "mm", "a4");
+  //   // let position = 0;
+  //   // doc.addImage(imgData, "jpeg", 0, position, imgWidth, imgHeight);
+  //   // heightLeft -= pageHeight;
+  //   // while (heightLeft >= 20) {
+  //   //   position = heightLeft - imgHeight;
+  //   //   doc.addPage();
+  //   //   doc.addImage(imgData, "jpeg", 0, position, imgWidth, imgHeight);
+  //   //   heightLeft -= pageHeight;
+  //   // }
+  //   // doc.save(
+  //   //   `${props.propMtInfo.car.regNumber}_견적서_${dayjs(Date.now()).format(
+  //   //     "YYYY-MM-DD"
+  //   //   )}.pdf`
+  //   // );
+  // });
+  // };
 
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  console.log(props);
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -122,14 +125,14 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
         </Wrapper>
       )}
       <Wrapper dr={`row`} ju={`center`}>
-        <SmallButton
+        {/* <SmallButton
           type="button"
           kindOf={`default`}
           margin={`0px 20px`}
           onClick={onSavePdf}
         >
           PDF저장
-        </SmallButton>
+        </SmallButton> */}
         <SmallButton
           type="button"
           kindOf={`default`}
