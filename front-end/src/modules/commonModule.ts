@@ -96,6 +96,8 @@ class GenPathArgs {
   isServerSide?: boolean;
 }
 
+// 서버사이드 랜더링시 사용되는 Back-End 주소
+const _externalApiPath = `${process.env.DESTINATION_API}:${process.env.PORT}/api/`;
 /**
  * API 호출을 위해 경로 정보 생성
  * @param path 호출할 API의 경로
@@ -105,8 +107,11 @@ class GenPathArgs {
 export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   let apiPath = "/api" + path;
   console.log(apiPath);
-  if (args?.isServerSide)
-    apiPath = `${process.env.DESTINATION_API}:${process.env.PORT}/api/${path}`;
+  if (args?.isServerSide) {
+    // apiPath = `${process.env.DESTINATION_API}:${process.env.PORT}/api/${path}`;
+    apiPath = `${_externalApiPath}${path}`;
+  }
+
   if (args?.id) {
     if (!apiPath.endsWith("/")) apiPath += "/" + args.id;
     else apiPath += args.id;
@@ -114,9 +119,7 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   if (args?.findParams) {
     apiPath += genFindParamQuery(args.findParams);
   }
-  console.log(process.env.DESTINATION_API);
-  console.log(process.env.DESTINATION_PORT);
-  console.log("API 호출 경로:", apiPath);
+  // console.log("API 호출 경로:", apiPath);
   return apiPath;
 };
 
