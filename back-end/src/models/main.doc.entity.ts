@@ -44,7 +44,6 @@ export class CompanyInfo {
   @IsOptional()
   @IsString()
   @prop({
-    unique: true,
     required: [true, '정비업등록번호는 필수 항목입니다.'],
     trim: true,
   })

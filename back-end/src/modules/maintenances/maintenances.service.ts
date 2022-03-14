@@ -217,6 +217,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     let src = await this._validateReq(token, id, doc);
 
     src.works = doc.works;
+    if (doc.dates) src.dates = doc.dates;
 
     return await this.findByIdAndUpdate(token, id, src);
   }

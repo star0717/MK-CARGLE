@@ -276,6 +276,7 @@ export class SafeService<T extends BaseEntity> {
 
   handelError(err: any) {
     console.error('[에러발생]', err.name);
+    console.error(err);
 
     let info: DbErrorInfo = {
       name: err.name,
