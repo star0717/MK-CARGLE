@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -87,8 +87,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     print: true,
     online: false,
   }); // 발급 선택 여부
-  const [reOption, setReOption] = useState<boolean>(null);
-  const [modal2Open, setModal2Open] = useState<boolean>(false);
+  const [reOption, setReOption] = useState<boolean>(null); // 모달창 옵션(서류발급: false, 출고완료: true)
+  const [printDone, setPrintDone] = useState<boolean>(false); // 프린트 완료여부
+  const [onlineDone, setOnlineDone] = useState<boolean>(false); // SMS 완료여부
+  const [modal2Open, setModal2Open] = useState<boolean>(false); // 미리보기 modal open
   const [eInfo, setEInfo] = useState<Estimate>(); // 견적서 정보
   const [sInfo, setSInfo] = useState<Statement>(); // 명세서 정보
 
@@ -200,22 +202,26 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             return alert("출고에 실패했습니다.");
           }
           alert("정비내역을 저장했습니다.");
-          props.setInitMtInfo(res.payload);
+          props.setInitMtInfo && props.setInitMtInfo(res.payload);
           props.setMtInfo(res.payload);
-          props.setModify(!props.modify);
-          if (!pubCheck.print && !pubCheck.online)
-            return props.setModalOpen(false);
-          if (pubCheck.print) return onPrintHandler();
+          props.setModify && props.setModify(!props.modify);
+          onPubHandler();
         },
         (err) => {
           return alert("출고에 실패했습니다.");
         }
       );
     } else {
-      if (!pubCheck.print && !pubCheck.online)
-        return alert("발급방식을 선택하세요.");
-      if (pubCheck.print) return onPrintHandler();
+      onPubHandler();
     }
+  };
+
+  /**서류 발급 handler */
+  const onPubHandler = () => {
+    if (!pubCheck.print && !pubCheck.online)
+      return alert("발급방식을 선택하세요.");
+    if (pubCheck.print) onPrintHandler();
+    if (pubCheck.online) setOnlineDone(true);
   };
 
   /** 프린트 handler */
@@ -229,16 +235,23 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
       return printElem;
     },
     onAfterPrint: () => {
+      setPrintDone(true);
+    },
+  });
+
+  /**프린트 및 SMS 완료 이후 handler */
+  useEffect(() => {
+    if (pubCheck.print === printDone && pubCheck.online === onlineDone) {
       if (reOption) {
         props.setModalOpen(false);
-        return router.push(
+        router.push(
           `${UseLink.MAINTENANCE_BOOK}?id=${props.mtInfo._id}&step=${MainStatus.RELEASED}`
         );
       } else {
-        return props.setModalOpen(false);
+        props.setModalOpen(false);
       }
-    },
-  });
+    }
+  }, [printDone, onlineDone]);
 
   /**서류 api에 넘길 데이터 생성 */
   const mainPubDataHandler = () => {
@@ -275,6 +288,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * @param data
    */
   const onFileApiHandler = async (data: MainPubDocInfo) => {
+    console.log(data);
+    console.log(props.mtInfo._id);
     // 견적서 체크할 경우 api
     if (fileCheck.eCheck) {
       await dispatch(_aGetMaintenancesGenEstimate(props.mtInfo._id)).then(

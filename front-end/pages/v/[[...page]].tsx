@@ -56,6 +56,7 @@ import { useResizeDetector } from "react-resize-detector";
 import NavbarMenu from "src/components/layout/NavbarMenu";
 import BlackWrapper from "src/components/layout/BlackWrapper";
 import { Maintenance } from "src/models/maintenance.entity";
+import dayjs from "dayjs";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -362,16 +363,19 @@ export const getServerSideProps: GetServerSideProps = async (
           return successResult;
         } else {
           /**
-           * 현재 날짜로 부터 한날전 계산
+           * 현재 날짜로 부터 한달전 계산
            */
-          let now = new Date();
-          let Today = new Date();
-          let LastMonth = new Date(now.setMonth(now.getMonth() - 1));
+          let Today = dayjs().format("YYYY-MM-DD");
+          let LastMonth = dayjs().subtract(1, "month").format("YYYY-MM-DD");
 
           successResult.props.data = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
-                findParams: { ...params, sFrom: LastMonth, sTo: Today },
+                findParams: {
+                  ...params,
+                  sFrom: new Date(LastMonth),
+                  sTo: new Date(Today),
+                },
                 isServerSide: true,
               }),
               authConfig
@@ -380,7 +384,6 @@ export const getServerSideProps: GetServerSideProps = async (
               (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
                 res.data
             );
-          console.log("ddddd", successResult);
           return successResult;
         }
       }

@@ -308,7 +308,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
         (res: _iMaintenancesOne) => {
           if (res.payload) {
             router.push(
-              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.ING}`
+              `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.DONE}`
             );
           }
         },
