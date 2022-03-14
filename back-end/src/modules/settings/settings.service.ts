@@ -170,7 +170,6 @@ export class SettingsService {
 
     console.log(info.user);
     const user = await this.updateMyUserInfo(token, token.uID, info.user);
-    // if (!user) throw new UnauthorizedException('에러');
 
     var company: Company;
     if (token.uAuth == UserAuthority.WORKER) {
