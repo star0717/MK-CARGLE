@@ -40,6 +40,7 @@ import {
   _aPatchMaintenancesPubEsitmate,
   _aPatchMaintenancesPubStatement,
   _aPatchMaintenancesRelease,
+  _aPatchMaintenancesSaveWorks,
 } from "store/action/user.action";
 import { _iEstimate, _iMaintenancesOne } from "store/interfaces";
 import { useReactToPrint } from "react-to-print";
@@ -195,7 +196,11 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     // 단순서류발급 : 실제 프린트
     if (opt) {
       await dispatch(
-        _aPatchMaintenancesRelease(props.mtInfo._id, props.mtInfo)
+        props.modalOption === "document2"
+          ? // 수정일 경우
+            _aPatchMaintenancesSaveWorks(props.mtInfo._id, props.mtInfo)
+          : // 정상 단계 진행일 경우
+            _aPatchMaintenancesRelease(props.mtInfo._id, props.mtInfo)
       ).then(
         (res: _iMaintenancesOne) => {
           if (!res.payload) {

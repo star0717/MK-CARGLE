@@ -189,6 +189,7 @@ export class MaintenancesService extends SafeService<Maintenance> {
     src.costomerType = doc.costomerType;
     src.price = doc.price;
     src.status = MainStatus.PAID;
+    src.dates = doc.dates;
 
     return await this.findByIdAndUpdate(token, id, src);
   }
