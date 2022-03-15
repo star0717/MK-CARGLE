@@ -544,8 +544,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <TableHeadLIST fontSize={`18px`}>등록된 전화번호</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} ju={`flex-start`}>
-              <TableBody minHeight={`200px`}>
+            <Wrapper overflow={`auto`} ju={`center`}>
+              <TableBody minHeight={`200px`} ju={`center`}>
                 {phoneList.length !== 0 ? (
                   <>
                     {phoneList.map((row, rowIdx) => {
@@ -554,7 +554,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                           key={rowIdx}
                           height={`50px`}
                           kindOf={`noHover`}
-                          ju={`space-around`}
+                          ju={`flex-start`}
                         >
                           {phoneList[rowIdx].map((num, cellIdx) => {
                             return (
@@ -562,13 +562,15 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                                 <SmallButton
                                   type="button"
                                   kindOf={`default`}
-                                  width={`160px`}
+                                  width={`208px`}
                                   radius={`100px`}
+                                  margin={`0px 5px`}
                                   onClick={() => {
                                     onDelPhoneHandler(rowIdx, cellIdx);
                                   }}
                                 >
                                   {num}
+
                                   <FaMinusSquare />
                                 </SmallButton>
                               </TableRowLIST>

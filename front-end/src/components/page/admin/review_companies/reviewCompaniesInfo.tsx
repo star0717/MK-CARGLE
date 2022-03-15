@@ -106,7 +106,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
                   onChangeInfoHandler(e);
                 }}
               >
-                수정
+                저장
               </SmallButton>
               <SmallButton
                 type="button"

@@ -333,7 +333,7 @@ export const CommonSubTitle = styled.h2<any>`
 export const CommonSmallTitle = styled.h2<any>`
   width: ${(props) => props.width};
   position: relative;
-  margin: 30px 0px;
+  margin: ${(props) => props.margin || `30px 0px`};
   font-size: 20px;
   font-weight: 500;
   color: ${(props) => props.color};
@@ -1310,7 +1310,7 @@ export const TableWrapper = styled.div<any>`
   align-items: center;
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
-  min-height: ${(props) => props.minHeight || `445px`};
+  min-height: ${(props) => props.minHeight || `400px`};
   overflow: ${(props) => props.overflow || ``};
   overflow-y: ${(props) => props.overflowY || ``};
   border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
@@ -1353,7 +1353,7 @@ export const TableBody = styled.div<any>`
   margin: ${(props) => props.margin || `0px`};
   overflow: ${(props) => props.overflow || ``};
   font-size: ${(props) => props.fontSize || `16px`};
-  min-height: ${(props) => props.minHeight || `450px`};
+  min-height: ${(props) => props.minHeight || ``};
 `;
 export const TableRow = styled.ul<any>`
   width: 100%;

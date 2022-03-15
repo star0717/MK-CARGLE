@@ -87,8 +87,8 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         </Wrapper>
       )}
-      <Wrapper padding={`10px 0px 0px`}>
-        <CommonSmallTitle margin={`0px 0px 30px 0px`}>
+      <Wrapper>
+        <CommonSmallTitle margin={`20px 0px`}>
           국토부 전송 여부 확인
         </CommonSmallTitle>
       </Wrapper>
@@ -119,12 +119,12 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
               </Text>
             </Wrapper>
           )}
-          <TableWrapper minHeight={`350px`} padding={`40px 0px 0px`}>
+          <TableWrapper padding={`40px 0px 0px`} height={`380px`}>
             <Wrapper isSticky={true}>
               <TableHead radius={`8px 8px 0px 0px`}>
-                <TableHeadLIST>정비내역</TableHeadLIST>
-                <TableHeadLIST>국토부정비항목</TableHeadLIST>
-                <TableHeadLIST>코드</TableHeadLIST>
+                <TableHeadLIST width={`55%`}>정비내역</TableHeadLIST>
+                <TableHeadLIST width={`30%`}>국토부정비항목</TableHeadLIST>
+                <TableHeadLIST width={`15%`}>코드</TableHeadLIST>
               </TableHead>
             </Wrapper>
             <Wrapper overflow={`auto`} height={`300px`} ju={`flex-start`}>
@@ -132,11 +132,11 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
                 {molitList.map((item) => {
                   return (
                     <TableRow key={item.code}>
-                      <TableRowLIST>{item.name}</TableRowLIST>
-                      <TableRowLIST>
+                      <TableRowLIST width={`55%`}>{item.name}</TableRowLIST>
+                      <TableRowLIST width={`30%`}>
                         {getTsItem(item.tsCode).class.description}
                       </TableRowLIST>
-                      <TableRowLIST>{item.tsCode}</TableRowLIST>
+                      <TableRowLIST width={`15%`}>{item.tsCode}</TableRowLIST>
                     </TableRow>
                   );
                 })}

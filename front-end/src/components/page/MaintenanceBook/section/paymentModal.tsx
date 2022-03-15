@@ -443,11 +443,12 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         </Wrapper>
         {props.modalOption.indexOf("Bts") === -1 ? (
-          <CommonButtonWrapper ju={`space-between`} padding={`30px 30px`}>
+          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
             <CommonButton
               width={`300px`}
               height={`50px`}
               type="button"
+              kindOf={`white`}
               onClick={() => {
                 props.setModalOpen(false);
               }}
@@ -477,7 +478,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
             </CommonButton>
           </CommonButtonWrapper>
         ) : edit ? (
-          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+          <CommonButtonWrapper ju={`center`} padding={`60px 30px`}>
             <CommonButton
               width={`300px`}
               height={`50px`}
@@ -487,7 +488,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                 setEdit(false);
               }}
             >
-              취소하기
+              취소
             </CommonButton>
             <CommonButton
               width={`300px`}
@@ -501,7 +502,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
             </CommonButton>
           </CommonButtonWrapper>
         ) : (
-          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+          <CommonButtonWrapper ju={`center`} padding={`60px 30px`}>
             <CommonButton
               width={`300px`}
               height={`50px`}

@@ -531,7 +531,7 @@ const StatementFile: NextPage<any> = forwardRef<
                         width={`25%`}
                         borderRight={`1px solid #ccc`}
                         height={`100%`}
-                        al={`flex-start`}
+                        al={`center`}
                         padding={`0px 4px`}
                       >
                         <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -542,7 +542,7 @@ const StatementFile: NextPage<any> = forwardRef<
                         width={`25%`}
                         borderRight={`1px solid #ccc`}
                         height={`100%`}
-                        al={`flex-start`}
+                        al={`center`}
                         padding={`0px 4px`}
                       >
                         <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -553,7 +553,7 @@ const StatementFile: NextPage<any> = forwardRef<
                         width={`25%`}
                         borderRight={`1px solid #ccc`}
                         height={`100%`}
-                        al={`flex-start`}
+                        al={`center`}
                         padding={`0px 4px`}
                       >
                         <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -563,7 +563,7 @@ const StatementFile: NextPage<any> = forwardRef<
                       <Wrapper
                         width={`25%`}
                         height={`100%`}
-                        al={`flex-start`}
+                        al={`center`}
                         padding={`0px 4px`}
                       >
                         <Text fontSize={`0.83em`} fontWeight={`400`}>

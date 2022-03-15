@@ -11,6 +11,7 @@ import {
   Text,
   SmallButton,
   CloseButton,
+  ColorSpan,
 } from "src/components/styles/CommonComponents";
 import { useDispatch } from "react-redux";
 import { Agency } from "src/models/agency.entity";
@@ -115,7 +116,10 @@ const AddBusinessModal: NextPage<any> = (props) => {
       <form onSubmit={handleSubmit(saveData)}>
         <Wrapper>
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-            <Text color={`#314FA5`}>*상호명</Text>
+            <Text>
+              <ColorSpan color={`#d6263b`}>*</ColorSpan>
+              상호명
+            </Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
               <TextInput2
                 width={`400px`}

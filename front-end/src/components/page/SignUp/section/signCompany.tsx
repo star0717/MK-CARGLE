@@ -28,6 +28,7 @@ import {
   CommonTitleWrapper,
   JoinStepBar,
   JoinStepBarWrapper,
+  ColorSpan,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
 import { CHAR_DEL, formRegEx } from "../../../../validation/regEx";
@@ -308,7 +309,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
             {/* 상호명 */}
             <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
               <Text margin={`0px 0px 10px`}>
-                *상호명{" "}
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>상호명{" "}
                 <small>(사업자등록증에 등록한 상호명을 입력해주세요.)</small>
               </Text>
               <TextInput2
@@ -345,7 +346,9 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
               margin={`0px 0px 10px`}
               width={`auto`}
             >
-              <Text margin={`0px 0px 10px`}>*사업자 등록번호</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>사업자 등록번호
+              </Text>
               <Wrapper
                 dr={`row`}
                 ju={`flex-start`}
@@ -413,7 +416,9 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
             </Wrapper>
             {/* 정비업등록번호 */}
             <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
-              <Text margin={`0px 0px 10px`}>*정비업 등록번호</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>정비업 등록번호
+              </Text>
               <TextInput2
                 width={`400px`}
                 type="text"
@@ -449,7 +454,9 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
             </Wrapper>
             {/* 정비업종 */}
             <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
-              <Text margin={`0px 0px 10px`}>*정비업종</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>정비업종
+              </Text>
               <Combo
                 width={`400px`}
                 margin={`0px`}
@@ -485,7 +492,9 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
             </Wrapper>
             {/* 대표자명 */}
             <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
-              <Text margin={`0px 0px 10px`}>*대표자명</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>대표자명
+              </Text>
               <TextInput2
                 width={`400px`}
                 type="text"
@@ -516,7 +525,9 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
             </Wrapper>
             {/* 사업자 전화번호 */}
             <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
-              <Text margin={`0px 0px 10px`}>*업체 전화번호</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>업체 전화번호
+              </Text>
               <TextInput2
                 width={`400px`}
                 type="text"
@@ -583,7 +594,9 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
             </Wrapper>
             {/* 업체 주소 */}
             <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`auto`}>
-              <Text margin={`0px 0px 10px`}>*사업자 주소</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>사업자 주소
+              </Text>
               <Wrapper dr={`row`}>
                 <TextInput2
                   width={`300px`}
