@@ -107,9 +107,9 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
       sum2 = Math.round(total2 / 1.1);
       vat2 = Math.round(total2 - sum2);
     } else {
-      sum2 = partWage - discount;
+      sum2 = partWage;
       vat2 = Math.round(sum2 * 0.1);
-      total2 = Math.round(sum2 + vat2);
+      total2 = Math.round(sum2 + vat2) - discount;
     }
 
     if (price.cash !== 0) {
