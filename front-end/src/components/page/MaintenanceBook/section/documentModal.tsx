@@ -234,7 +234,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     content: () => {
       const printElem = document.createElement("div");
       const eNode = estimateRef.current.cloneNode(true);
-      const sNode = estimateRef.current.cloneNode(true);
+      const sNode = statementRef.current.cloneNode(true);
       if (fileCheck.eCheck) printElem.appendChild(eNode);
       if (fileCheck.sCheck) printElem.appendChild(sNode);
       return printElem;
