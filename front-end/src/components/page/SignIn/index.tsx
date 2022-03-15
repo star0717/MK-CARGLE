@@ -188,6 +188,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                       아이디 저장
                       <CheckInput
                         type="checkbox"
+                        checked={saveCheck}
                         onChange={() => {
                           setSaveCheck(!saveCheck);
                         }}

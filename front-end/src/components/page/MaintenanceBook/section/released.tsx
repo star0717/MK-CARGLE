@@ -159,7 +159,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       wageSum: wageSum,
       sum: sum2,
       vat: vat,
-      total: sum2 + vat,
+      total: sum2 + vat - price.discount,
     });
   }, [workList, price.isIncluded]);
 
