@@ -31,6 +31,7 @@ import {
   CommonTitleWrapper,
   JoinStepBar,
   JoinStepBarWrapper,
+  ColorSpan,
 } from "../../../styles/CommonComponents";
 import { IoIosCloseCircle } from "react-icons/io";
 import { AxiosError } from "axios";
@@ -359,7 +360,9 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
             {props.userAuth === "worker" && (
               <Wrapper margin={`0px 0px 10px`}>
                 <Wrapper al={`flex-start`}>
-                  <Text margin={`0px 0px 10px`}>*소속 업체</Text>
+                  <Text margin={`0px 0px 10px`}>
+                    <ColorSpan color={`#d6263b`}>*</ColorSpan>소속 업체
+                  </Text>
                   <Wrapper dr={`row`} ju={`flex-start`}>
                     <TextInput2
                       width={`300px`}
@@ -405,7 +408,8 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
             <Wrapper>
               <Wrapper al={`flex-start`}>
                 <Text margin={`0px 0px 10px`}>
-                  *아이디(이메일 형식으로 입력해주세요.)
+                  <ColorSpan color={`#d6263b`}>*</ColorSpan>아이디(이메일
+                  형식으로 입력해주세요.)
                 </Text>
                 <Wrapper dr={`row`} ju={`flex-start`} margin={`0px 0px 10px`}>
                   <TextInput2
@@ -509,7 +513,9 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
             </Wrapper>
             {/* 비밀번호 */}
             <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>*비밀번호</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>비밀번호
+              </Text>
               <TextInput2
                 width={`400px`}
                 margin={`0px 0px 10px`}
@@ -543,7 +549,9 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
             </Wrapper>
             {/* 비밀번호확인 */}
             <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>*비밀번호 확인</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>비밀번호 확인
+              </Text>
               <TextInput2
                 width={`400px`}
                 margin={`0px 0px 10px`}
@@ -598,7 +606,9 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
             </Wrapper>
             {/* 이름 */}
             <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>*이름</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>이름
+              </Text>
               <TextInput2
                 width={`400px`}
                 margin={`0px 0px 10px`}
@@ -627,7 +637,9 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
             </Wrapper>
             {/* 휴대폰번호 */}
             <Wrapper al={`flex-start`}>
-              <Text margin={`0px 0px 10px`}>*휴대폰번호</Text>
+              <Text margin={`0px 0px 10px`}>
+                <ColorSpan color={`#d6263b`}>*</ColorSpan>휴대폰번호
+              </Text>
               <TextInput2
                 width={`400px`}
                 margin={`0px 0px 10px`}

@@ -392,7 +392,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             <Wrapper
               width={`30%`}
               borderRight={`1px solid #ccc`}
-              height={`100%`}
+              height={`44px`}
             >
               <Text fontSize={`0.83em`} fontWeight={`400`}>
                 견적내용
@@ -429,14 +429,14 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper
               width={`15%`}
-              height={`100%`}
+              height={`44px`}
               borderRight={`1px solid #ccc`}
             >
               <Text fontSize={`0.83em`} fontWeight={`400`}>
                 공임
               </Text>
             </Wrapper>
-            <Wrapper width={`15%`} height={`100%`}>
+            <Wrapper width={`15%`} height={`44px`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
                 합계
               </Text>

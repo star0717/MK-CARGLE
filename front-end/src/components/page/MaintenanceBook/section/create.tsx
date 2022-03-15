@@ -324,6 +324,7 @@ const MaintenanceCreate: NextPage = () => {
                         textAlign={`right`}
                         margin={`0px 10px 0px 0px`}
                       >
+                        <ColorSpan color={`#d6263b`}>*</ColorSpan>
                         주행거리
                       </Text>
                       <TextInput2
@@ -397,6 +398,7 @@ const MaintenanceCreate: NextPage = () => {
                         textAlign={`right`}
                         margin={`0px 10px 0px 0px`}
                       >
+                        <ColorSpan color={`#d6263b`}>*</ColorSpan>
                         전화번호
                       </Text>
                       <TextInput2
@@ -445,6 +447,7 @@ const MaintenanceCreate: NextPage = () => {
                         textAlign={`right`}
                         margin={`0px 10px 0px 0px`}
                       >
+                        <ColorSpan color={`#d6263b`}>*</ColorSpan>
                         차량명
                       </Text>
                       <TextInput2
@@ -589,19 +592,15 @@ const MaintenanceCreate: NextPage = () => {
                     </Wrapper>
                   </Wrapper>
                   <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
-                    <SmallButton type="button" width={`48%`} kindOf={`default`}>
+                    <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
                       정비요청사항
                     </SmallButton>
-                    <SmallButton type="button" width={`48%`} kindOf={`default`}>
+                    <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
                       차량정보공유
                     </SmallButton>
                   </Wrapper>
                   <Wrapper>
-                    <SmallButton
-                      type="button"
-                      width={`100%`}
-                      kindOf={`default`}
-                    >
+                    <SmallButton type="button" width={`100%`} kindOf={`ghost`}>
                       정비사진확인
                     </SmallButton>
                   </Wrapper>
