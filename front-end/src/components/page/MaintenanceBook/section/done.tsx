@@ -343,15 +343,15 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
                 />
               </Wrapper>
               <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
-                <SmallButton type="button" width={`48%`} kindOf={`default`}>
+                <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
                   정비요청사항
                 </SmallButton>
-                <SmallButton type="button" width={`48%`} kindOf={`default`}>
+                <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
                   차량정보공유
                 </SmallButton>
               </Wrapper>
               <Wrapper>
-                <SmallButton type="button" width={`100%`} kindOf={`default`}>
+                <SmallButton type="button" width={`100%`} kindOf={`ghost`}>
                   정비사진확인
                 </SmallButton>
               </Wrapper>
