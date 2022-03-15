@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  BadRequestException,
+} from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { compareSync } from 'bcrypt';
 import { InjectModel } from 'nestjs-typegoose';
@@ -58,5 +62,14 @@ export class UsersService extends SafeService<User> {
 
   async findByFieldForAuth(doc: Partial<User>): Promise<User> {
     return await this.model.findOne(doc);
+  }
+
+  async regFcmToken(
+    token: AuthTokenInfo,
+    id: string,
+    doc: User,
+  ): Promise<User> {
+    if (!doc.fcmToken) throw new BadRequestException();
+    return this.findByIdAndUpdate(token, id, { fcmToken: doc.fcmToken });
   }
 }

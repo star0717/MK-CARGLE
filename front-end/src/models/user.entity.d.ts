@@ -16,4 +16,5 @@ export declare class User extends BaseEntity {
     joinDate: Date;
     approval: boolean;
     confirm_rcv_mktInfo: boolean;
+    fcmToken?: string;
 }

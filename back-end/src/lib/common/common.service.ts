@@ -2,7 +2,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, Res } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
-import { readdirSync, rmSync, writeFileSync } from 'fs';
+import { readdirSync, readFileSync, rmSync, writeFileSync } from 'fs';
 import { Address } from 'nodemailer/lib/mailer';
 import { AuthTokenInfo, SignUpInfo } from 'src/models/auth.entity';
 import { FindResult, OptionalInfo } from 'src/models/base.entity';
@@ -52,6 +52,11 @@ export class CommonService {
   async storeFile(file: Express.Multer.File, path: string, name: string) {
     writeFileSync(path + name, file.buffer);
     return name;
+  }
+
+  async readJsonFile(path: string) {
+    const data = readFileSync(path, 'utf8');
+    return JSON.parse(data);
   }
 
   /**

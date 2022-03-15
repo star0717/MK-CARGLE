@@ -9,70 +9,60 @@ import {
   Get,
   Query,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AuthToken } from 'src/lib/decorators/decorators';
-import { SafeControllerFactory } from 'src/lib/safe-crud/safe-crud.controller';
-import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
-  DeleteResult,
-  FindParameters,
-  FindResult,
-} from 'src/models/base.entity';
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AuthToken } from 'src/lib/decorators/decorators';
+import { AuthTokenInfo } from 'src/models/auth.entity';
 import { User } from 'src/models/user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
 @ApiTags('사용자 (User) API')
-export class UsersController extends SafeControllerFactory<User>(User) {
-  constructor(private readonly usersService: UsersService) {
-    super(usersService);
-  }
+export class UsersController {
+  constructor(private readonly service: UsersService) {}
 
-  /**
-   * Safe-CRUD 오버라이딩
-   */
-  @Post()
+  @Get(':id')
   @ApiOperation({
-    summary: `[DISABLED]`,
+    summary: `[WORKER] id에 해당하는 User 데이터 반환`,
   })
-  async create(
-    @Body() doc: User,
+  @ApiParam({ name: 'id', description: `해당 User 오브젝트 ID` })
+  @ApiResponse({
+    description: `검색된 User 데이터`,
+    type: User,
+  })
+  async findById(
+    @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<User> {
-    throw new NotAcceptableException();
+    return await this.service.findById(token, id);
   }
 
-  @Get()
+  @Post('fcmtoken/:id')
   @ApiOperation({
-    summary: `[DISABLED]`,
+    summary: `[WORKER] FCM 토큰 등록`,
   })
-  async findByOptions(
-    @Query() fParams: FindParameters,
-    @AuthToken() token: AuthTokenInfo,
-  ): Promise<FindResult<User>> {
-    throw new NotAcceptableException();
-  }
-
-  @Patch(':id')
-  @ApiOperation({
-    summary: `[DISABLED]`,
+  @ApiParam({ name: 'id', description: `해당 User 오브젝트 ID` })
+  @ApiBody({
+    description: `등록/갱신할 FcmToken 데이터.`,
+    type: User,
   })
-  async findByIdAndUpdate(
+  @ApiCreatedResponse({
+    description: `패치 성공여부`,
+    type: Boolean,
+  })
+  async regFcmToken(
     @Param('id') id: string,
     @Body() doc: User,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<User> {
-    throw new NotAcceptableException();
-  }
-
-  @Delete(':id')
-  @ApiOperation({
-    summary: `[DISABLED]`,
-  })
-  async findByIdAndRemove(
-    @Param('id') id: string,
-    @AuthToken() token: AuthTokenInfo,
-  ): Promise<DeleteResult> {
-    throw new NotAcceptableException();
+  ): Promise<boolean> {
+    const user: User = await this.service.regFcmToken(token, id, doc);
+    if (user) return true;
+    return false;
   }
 }

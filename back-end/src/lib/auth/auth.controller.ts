@@ -94,7 +94,6 @@ export class AuthController {
     @Body() userInfo: UserInfo,
     @Res({ passthrough: true }) res: Response,
   ) {
-    console.log(userInfo);
     const newSignInfo: SignUpInfo = await this.authService.signIn(userInfo);
     this.comService.injectToken(newSignInfo, res);
     return;

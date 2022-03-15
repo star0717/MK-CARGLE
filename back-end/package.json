@@ -44,7 +44,7 @@
     "crypto-js": "^4.1.1",
     "dayjs": "^1.10.8",
     "dotenv": "^16.0.0",
-    "firebase": "^9.6.8",
+    "firebase-admin": "^10.0.2",
     "handlebars": "^4.7.7",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",

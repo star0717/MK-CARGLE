@@ -4,7 +4,6 @@ import {
   MainCustomer,
   MainDates,
   MainPrice,
-  MainWork,
 } from './maintenance.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import {

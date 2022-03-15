@@ -23,6 +23,7 @@ export class AuthApiPath {
 export class UserApiPath {
   static BASE = '/users/';
   static users = UserApiPath.BASE;
+  static fcmtoken = UserApiPath.BASE + 'fcmtoken';
 }
 
 export class CompanyApiPath {

@@ -116,11 +116,11 @@ export class AuthService {
    * @returns 성공시: 토큰, 실패시: UnauthorizedException 발생
    */
   async signIn(userInfo: UserInfo): Promise<SignUpInfo> {
-    console.log('validateUser in AuthService');
+    // console.log('validateUser in AuthService');
 
     // 사용자가 DB에 존재하는지 확인
     const user = await this.usersService.findByUserInfoForAuth(userInfo);
-    console.log(user);
+    // console.log(user);
     // 시스템에 등록된 사용자가 아닐경우 exception 발생
     if (!user) {
       throw new UnauthorizedException();

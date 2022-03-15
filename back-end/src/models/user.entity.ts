@@ -145,4 +145,10 @@ export class User extends BaseEntity {
     default: false,
   })
   public confirm_rcv_mktInfo: boolean;
+
+  @ApiProperty({ description: 'FCM 토큰 정보', required: false })
+  @IsOptional()
+  @IsString()
+  @prop()
+  fcmToken?: string;
 }
