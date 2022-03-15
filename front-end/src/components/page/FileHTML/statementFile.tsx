@@ -357,10 +357,20 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderRight={`1px solid #ccc`}
                 borderBottom={`1px solid #ccc`}
               >
-                <Wrapper>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {props.sInfo && props.propToken.uName}
-                  </Text>
+                <Wrapper isRelative>
+                  <Wrapper isAbsolute left={`14px`} top={`-5px`}>
+                    <Image
+                      alt="도장 사진"
+                      width={40}
+                      height={40}
+                      src="/api/settings/myinfo/stamp"
+                    />
+                  </Wrapper>
+                  <Wrapper isAbsolute>
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {props.sInfo && props.propToken.uName}
+                    </Text>
+                  </Wrapper>
                 </Wrapper>
                 <Wrapper
                   isRelative
@@ -369,14 +379,6 @@ const StatementFile: NextPage<any> = forwardRef<
                   height={`50%`}
                   ju={`flex-end`}
                 >
-                  <Wrapper isAbsolute top={`-10px`} left={`14px`}>
-                    <Image
-                      alt="도장 사진"
-                      width={50}
-                      height={50}
-                      src="/api/settings/myinfo/stamp"
-                    />
-                  </Wrapper>
                   <Text
                     fontSize={`0.67em`}
                     fontWeight={`400`}
@@ -808,11 +810,11 @@ const StatementFile: NextPage<any> = forwardRef<
               >
                 {props.eInfo && props.eInfo.company.ownerName}
               </Text>
-              <Wrapper isAbsolute top={`-13px`} left={`82px`}>
+              <Wrapper isAbsolute left={`82px`}>
                 <Image
                   alt="도장 사진"
-                  width={50}
-                  height={50}
+                  width={40}
+                  height={40}
                   src="/api/settings/myinfo/stamp"
                 />
               </Wrapper>

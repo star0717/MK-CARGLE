@@ -102,6 +102,11 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
     }
   };
 
+  //기간 input typing 막는 이벤트
+  const PreventDefault = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
   // resize 변수 선언
   const { width, height, ref } = useResizeDetector();
 
@@ -183,6 +188,9 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
             width={`400px`}
             type="date"
             name="joinDate"
+            onKeyPress={(e: React.ChangeEvent<HTMLInputElement>) => {
+              PreventDefault(e);
+            }}
             value={dayjs(docInfo.joinDate).format("YYYY-MM-DD")}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setDocInfo({

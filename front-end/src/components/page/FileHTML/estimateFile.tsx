@@ -280,11 +280,11 @@ const EstimateFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
                 al={`flex-start`}
               >
-                <Wrapper isAbsolute top={`-5px`} left={`-55px`}>
+                <Wrapper isAbsolute left={`-55px`}>
                   <Image
                     alt="도장 사진"
-                    width={50}
-                    height={50}
+                    width={40}
+                    height={40}
                     src="/api/settings/myinfo/stamp"
                   />
                 </Wrapper>
@@ -728,11 +728,11 @@ const EstimateFile: NextPage<any> = forwardRef<
               >
                 {props.eInfo && props.eInfo.company.ownerName}
               </Text>
-              <Wrapper isAbsolute top={`-13px`} left={`82px`}>
+              <Wrapper isAbsolute left={`82px`}>
                 <Image
                   alt="도장 사진"
-                  width={50}
-                  height={50}
+                  width={40}
+                  height={40}
                   src="/api/settings/myinfo/stamp"
                 />
               </Wrapper>
