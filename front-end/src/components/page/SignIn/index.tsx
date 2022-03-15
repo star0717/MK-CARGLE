@@ -146,9 +146,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                     type="text"
                     name="id"
                     value={inputSignIn.id}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputHandler(e);
-                    }}
+                    onChange={onInputHandler}
                   />
                   <Wrapper>
                     <Text
@@ -175,9 +173,7 @@ const SignIn: NextPage<_SignInProps> = (props) => {
                     placeholder="비밀번호"
                     name="pwd"
                     value={inputSignIn.pwd}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      onInputHandler(e);
-                    }}
+                    onChange={onInputHandler}
                   />
 
                   {/* 체크박스 div */}

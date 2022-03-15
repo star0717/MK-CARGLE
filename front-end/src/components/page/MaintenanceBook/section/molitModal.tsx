@@ -205,7 +205,9 @@ const MolitModal: NextPage<_pPartsSetProps> = (props) => {
             width={`300px`}
             height={`50px`}
             onClick={() => {
-              props.setModalOption("payment");
+              props.setModalOption(
+                props.modalOption === "molit2" ? "payment2" : "payment"
+              );
             }}
           >
             다음

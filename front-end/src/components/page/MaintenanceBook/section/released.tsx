@@ -205,6 +205,17 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
+   * 정비기간 handler
+   * @param e
+   */
+  const onChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMtInfo({
+      ...mtInfo,
+      dates: { ...mtInfo.dates, [e.target.name]: e.target.value },
+    });
+  };
+
+  /**
    * 정비내역 input handler
    * @param e
    * @param idx
@@ -645,13 +656,15 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   </Text>
                   <TextInput2
                     width={`150px`}
-                    type="text"
+                    type={modify ? "date" : "text"}
+                    name="startMa"
                     value={
                       mtInfo.dates.startMa
                         ? dayjs(mtInfo.dates.startMa).format("YYYY-MM-DD")
                         : "-"
                     }
-                    disabled
+                    onChange={onChangeDate}
+                    disabled={!modify}
                   />
                   <Text
                     textAlign={`end`}
@@ -662,13 +675,15 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   </Text>
                   <TextInput2
                     width={`150px`}
-                    type="text"
+                    type={modify ? "date" : "text"}
+                    name="endMa"
                     value={
                       mtInfo.dates.endMa
                         ? dayjs(mtInfo.dates.endMa).format("YYYY-MM-DD")
                         : "-"
                     }
-                    disabled
+                    onChange={onChangeDate}
+                    disabled={!modify}
                   />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>
@@ -681,13 +696,15 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   </Text>
                   <TextInput2
                     width={`150px`}
-                    type="text"
+                    type={modify ? "date" : "text"}
+                    name="released"
                     value={
                       mtInfo.dates.released
                         ? dayjs(mtInfo.dates.released).format("YYYY-MM-DD")
                         : "-"
                     }
-                    disabled
+                    onChange={onChangeDate}
+                    disabled={!modify}
                   />
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`flex-end`}>

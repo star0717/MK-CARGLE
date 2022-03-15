@@ -170,7 +170,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
             return alert("결제내역 저장에 실패했습니다.");
           }
           props.setMtInfo(res.payload);
-          props.setModalOption("document");
+          props.setModalOption("document2");
         },
         (err) => {
           return alert("결제내역 저장에 실패했습니다.");
