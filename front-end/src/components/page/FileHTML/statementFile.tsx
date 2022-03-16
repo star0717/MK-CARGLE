@@ -17,6 +17,10 @@ const StatementFile: NextPage<any> = forwardRef<
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [imgIdx, setImgIdx] = useState<number>(Math.floor(Math.random() * 100));
+  const [stampImgSrc, setStampImgSrc] = useState<string>(
+    `/api/settings/myinfo/stamp?num=${imgIdx}`
+  ); // url src 설정
 
   /*********************************************************************
    * 3. Handlers
@@ -363,7 +367,7 @@ const StatementFile: NextPage<any> = forwardRef<
                       alt="도장 사진"
                       width={40}
                       height={40}
-                      src="/api/settings/myinfo/stamp"
+                      src={stampImgSrc}
                     />
                   </Wrapper>
                   <Wrapper isAbsolute>
@@ -815,7 +819,7 @@ const StatementFile: NextPage<any> = forwardRef<
                   alt="도장 사진"
                   width={40}
                   height={40}
-                  src="/api/settings/myinfo/stamp"
+                  src={stampImgSrc}
                 />
               </Wrapper>
               <Text

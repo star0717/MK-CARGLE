@@ -362,19 +362,16 @@ export const getServerSideProps: GetServerSideProps = async (
           };
           return successResult;
         } else {
-          /**
-           * 현재 날짜로 부터 한달전 계산
-           */
-          let Today = dayjs().format("YYYY-MM-DD");
-          let LastMonth = dayjs().subtract(1, "month").format("YYYY-MM-DD");
+          let Today = dayjs().toDate();
+          let LastMonth = dayjs().subtract(1, "month").toDate();
 
           successResult.props.data = await axios
             .get(
               genApiPath(MaintenancesApiPath.maintenances, {
                 findParams: {
                   ...params,
-                  sFrom: new Date(LastMonth),
-                  sTo: new Date(Today),
+                  sFrom: LastMonth,
+                  sTo: Today,
                 },
                 isServerSide: true,
               }),
