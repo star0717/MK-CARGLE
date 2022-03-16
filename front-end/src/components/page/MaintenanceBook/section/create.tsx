@@ -229,7 +229,7 @@ const MaintenanceCreate: NextPage = () => {
           </JoinStepBarWrapper>
         </Wrapper>
         <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
-          <Wrapper width={`25%`}>
+          <Wrapper width={`27%`}>
             {showCar ? (
               <Wrapper height={`80px`} ju={`flex-end`}>
                 <Wrapper
@@ -260,7 +260,7 @@ const MaintenanceCreate: NextPage = () => {
                   >
                     <Wrapper>
                       <SearchInput
-                        width={`264px`}
+                        width={`290px`}
                         placeholder="차량번호를 입력하세요."
                         type="text"
                         value={searchCarText}
@@ -306,7 +306,7 @@ const MaintenanceCreate: NextPage = () => {
             <Wrapper
               border={`1px solid #ccc`}
               margin={`10px 0px 0px 0px`}
-              padding={`10px 20px`}
+              padding={`10px`}
             >
               {showCar ? (
                 <form
@@ -619,7 +619,7 @@ const MaintenanceCreate: NextPage = () => {
             </Wrapper>
           </Wrapper>
 
-          <Wrapper width={`74%`}>
+          <Wrapper width={`72%`}>
             <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
               <Wrapper dr={`row`} ju={`flex-end`}>
                 <SmallButton
@@ -635,7 +635,7 @@ const MaintenanceCreate: NextPage = () => {
             </Wrapper>
             <Wrapper
               border={`1px solid #ccc`}
-              padding={`20px`}
+              padding={`10px`}
               margin={`10px 0px 20px`}
             >
               <Wrapper

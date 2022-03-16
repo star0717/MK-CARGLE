@@ -447,7 +447,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           </JoinStepBarWrapper>
         </Wrapper>
         <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
-          <Wrapper width={`25%`}>
+          <Wrapper width={`27%`}>
             <Wrapper height={`80px`} ju={`flex-end`}>
               <Wrapper
                 dr={`row`}
@@ -469,7 +469,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             <Wrapper
               border={`1px solid #ccc`}
               margin={`10px 0px 0px 0px`}
-              padding={`10px 20px`}
+              padding={`10px`}
             >
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
@@ -611,7 +611,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
           </Wrapper>
 
-          <Wrapper width={`74%`}>
+          <Wrapper width={`72%`}>
             <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
               <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
                 <SmallButton
@@ -637,7 +637,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <Wrapper
               border={`1px solid #ccc`}
-              padding={`20px`}
+              padding={`10px`}
               margin={`10px 0px 20px`}
             >
               <Wrapper
@@ -1080,14 +1080,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 type="button"
                 kindOf={`ghost`}
                 disabled
-                width={`288px`}
+                width={`278px`}
               >
                 이전단계
               </SmallButton>
               <SmallButton
                 type="button"
                 kindOf={`default`}
-                width={`288px`}
+                width={`278px`}
                 onClick={() => {
                   onSaveWorkInfo(false);
                 }}
@@ -1097,7 +1097,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
               <SmallButton
                 type="button"
                 kindOf={`default`}
-                width={`288px`}
+                width={`278px`}
                 onClick={() => {
                   onSaveWorkInfo(true);
                 }}

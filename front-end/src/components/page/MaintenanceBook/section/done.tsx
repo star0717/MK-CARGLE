@@ -193,7 +193,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
           </JoinStepBarWrapper>
         </Wrapper>
         <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
-          <Wrapper width={`25%`}>
+          <Wrapper width={`27%`}>
             <Wrapper height={`80px`} ju={`flex-end`}>
               <Wrapper
                 dr={`row`}
@@ -216,7 +216,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             <Wrapper
               border={`1px solid #ccc`}
               margin={`10px 0px 0px 0px`}
-              padding={`10px 20px`}
+              padding={`10px`}
             >
               <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                 <Text
@@ -358,7 +358,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
           </Wrapper>
 
-          <Wrapper width={`74%`}>
+          <Wrapper width={`72%`}>
             <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
               <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
                 <SmallButton
@@ -384,7 +384,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
             <Wrapper
               border={`1px solid #ccc`}
-              padding={`20px`}
+              padding={`10px`}
               margin={`10px 0px 20px`}
             >
               <Wrapper
@@ -711,7 +711,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
               <SmallButton
                 type="button"
                 kindOf={`default`}
-                width={`288px`}
+                width={`278px`}
                 onClick={() => {
                   router.push(
                     `${UseLink.MAINTENANCE_BOOK}?id=${mtInfo._id}&step=${MainStatus.ING}`
@@ -723,7 +723,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
               <SmallButton
                 type="button"
                 kindOf={`ghost`}
-                width={`288px`}
+                width={`278px`}
                 disabled
               >
                 저장
@@ -731,7 +731,7 @@ const MaintenanceDone: NextPage<_pMaintenanceProps> = (props) => {
               <SmallButton
                 type="button"
                 kindOf={`default`}
-                width={`288px`}
+                width={`278px`}
                 onClick={() => {
                   setModalOption("molit");
                   setModalOpen(true);
