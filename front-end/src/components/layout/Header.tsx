@@ -117,9 +117,9 @@ const Header: NextPage<_MainProps> = (props) => {
             <Link href={UseLink.MAIN}>
               <a>
                 <Image
-                  src="/images/cargle.png"
+                  src="/images/mainLogo.png"
                   alt="Cargle Logo"
-                  width={width < 1450 ? `80px` : `100px`}
+                  width={width < 1450 ? `100px` : `120px`}
                 />
               </a>
             </Link>
@@ -180,7 +180,7 @@ const Header: NextPage<_MainProps> = (props) => {
                     <Wrapper width={`auto`} al={`center`}>
                       <a>
                         <Image
-                          src="/images/cargle.png"
+                          src="/images/mainLogo.png"
                           alt="Cargle Logo"
                           width={width < 1450 ? `80px` : `100px`}
                           isTransparency={`true`}

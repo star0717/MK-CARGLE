@@ -76,9 +76,9 @@ const Footer: NextPage = () => {
       >
         <Wrapper ju={`center`} dr={width < 1200 ? `column` : `row`}>
           <Image
-            src="/images/footerLogo.png"
+            src="/images/whiteLogo.png"
             alt="Cargle Logo"
-            width={`173px`}
+            width={`140px`}
             padding={`10px`}
           />
 
