@@ -122,7 +122,6 @@ const MaintenanceCreate: NextPage = () => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
-          console.log(res.payload);
           setCarInfo(Object.assign(carInit, res.payload));
         } else {
           setCarInfo(carInit);
