@@ -33,7 +33,7 @@ const StatementFile: NextPage<any> = forwardRef<
     <Wrapper
       id="statement"
       ref={ref}
-      margin={`10px 0 0`}
+      margin={`0px`}
       padding={`0px`}
       pageBreakAfter={`always`}
     >

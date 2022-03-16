@@ -233,10 +233,14 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   const onPrintHandler = useReactToPrint({
     content: () => {
       const printElem = document.createElement("div");
-      const eNode = estimateRef.current.cloneNode(true);
-      const sNode = statementRef.current.cloneNode(true);
-      if (fileCheck.eCheck) printElem.appendChild(eNode);
-      if (fileCheck.sCheck) printElem.appendChild(sNode);
+      if (fileCheck.eCheck) {
+        const eNode = estimateRef.current.cloneNode(true);
+        printElem.appendChild(eNode);
+      }
+      if (fileCheck.sCheck) {
+        const sNode = statementRef.current.cloneNode(true);
+        printElem.appendChild(sNode);
+      }
       return printElem;
     },
     onAfterPrint: () => {
