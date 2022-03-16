@@ -647,7 +647,7 @@ const MaintenanceCreate: NextPage = () => {
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
-                    width={`74px`}
+                    width={`80px`}
                   >
                     정비기간
                   </Text>
@@ -675,7 +675,7 @@ const MaintenanceCreate: NextPage = () => {
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
-                    width={`94px`}
+                    width={`100px`}
                   >
                     차량출고일
                   </Text>
@@ -690,7 +690,7 @@ const MaintenanceCreate: NextPage = () => {
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
-                    width={`94px`}
+                    width={`100px`}
                   >
                     정비책임자
                   </Text>
@@ -708,7 +708,7 @@ const MaintenanceCreate: NextPage = () => {
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
-                    width={`74px`}
+                    width={`80px`}
                   >
                     정비구분
                   </Text>
@@ -743,7 +743,7 @@ const MaintenanceCreate: NextPage = () => {
                   <Text
                     textAlign={`end`}
                     padding={`0px 5px 0px 0px`}
-                    width={`94px`}
+                    width={`100px`}
                   >
                     추가정비동의
                   </Text>
