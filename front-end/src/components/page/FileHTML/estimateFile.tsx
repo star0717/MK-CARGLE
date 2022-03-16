@@ -36,7 +36,7 @@ const EstimateFile: NextPage<any> = forwardRef<
     <Wrapper
       id="estimate"
       ref={ref}
-      margin={`10px 0 0`}
+      margin={`0px`}
       padding={`0px`}
       pageBreakAfter={`always`}
     >
@@ -44,7 +44,7 @@ const EstimateFile: NextPage<any> = forwardRef<
         width={`49.58333em`}
         height={`auto`}
         minHeight={`70.08334em`}
-        margin={`0 auto`}
+        margin={`10px auto 0`}
         padding={`0px`}
         ju={`flex-start`}
         al={`flex-start`}
