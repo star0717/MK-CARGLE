@@ -70,9 +70,6 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  useEffect(() => {
-    setFindResult(props.data);
-  }, [props]);
 
   /**
    * 작업자의 정보를 조회함
@@ -112,6 +109,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       setFindResult(res.payload);
     });
   };
+  console.log("@@@@@", findResult);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
