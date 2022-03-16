@@ -13,11 +13,8 @@ import MaintenanceCreate from "./section/create";
 import MaintenanceStored from "./section/stored";
 import MaintenanceIng from "./section/ing";
 import MaintenanceDone from "./section/done";
-import MaintenancePaid from "./section/paid";
 import MaintenanceReleased from "./section/released";
 import { Maintenance } from "src/models/maintenance.entity";
-import { Statement } from "src/models/statement.entity";
-import { Estimate } from "src/models/estimate.entity";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
@@ -109,7 +106,6 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       setFindResult(res.payload);
     });
   };
-  console.log("@@@@@", findResult);
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/

@@ -31,9 +31,6 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  useEffect(() => {
-    setFindResult(props.data);
-  }, [props]);
 
   /**
    * 작업자의 정보를 조회함
