@@ -195,17 +195,22 @@ export const create2dArray = (rows: number, columns: number, initArr?: any) => {
   return arr;
 };
 
-export const test = (m: number, n: number, initial: string[]) => {
-  let a,
-    i,
-    j,
-    addA = [];
-  for (i = 0; i < m; i += 1) {
-    a = [];
-    for (j = 0; j < n; j += 1) {
-      a[j] = initial[i];
+export const strSort = (data: any, sort: number, opt?: string) => {
+  const sortData: any = data.sort((a: any, b: any) => {
+    let aStr: string = "";
+    let bStr: string = "";
+    if (opt) {
+      aStr = a[opt];
+      bStr = b[opt];
+    } else {
+      aStr = a.toString();
+      bStr = b.toString();
     }
-    addA[i] = a;
-  }
-  return addA;
+    if (sort === 1) {
+      return aStr.localeCompare(bStr);
+    } else {
+      return bStr.localeCompare(aStr);
+    }
+  });
+  return sortData;
 };

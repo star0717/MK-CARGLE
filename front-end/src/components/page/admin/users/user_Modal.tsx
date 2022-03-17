@@ -32,6 +32,7 @@ import {
 } from "../../../styles/CommonComponents";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
+import { UserAuthority } from "src/constants/model.const";
 
 const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
   const dispatch = useDispatch();
@@ -205,13 +206,15 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
           <CommonButton type="submit" kindOf={`circleWhite`}>
             저장
           </CommonButton>
-          <CommonButton
-            type="button"
-            onClick={workerDelete}
-            kindOf={`circleTheme`}
-          >
-            직원삭제
-          </CommonButton>
+          {props.clickDoc.auth === UserAuthority.WORKER && (
+            <CommonButton
+              type="button"
+              onClick={workerDelete}
+              kindOf={`circleTheme`}
+            >
+              직원삭제
+            </CommonButton>
+          )}
         </CommonButtonWrapper>
       </form>
     </WholeWrapper>

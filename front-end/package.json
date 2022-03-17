@@ -60,6 +60,7 @@
   "devDependencies": {
     "@types/dom-to-image": "^2.6.4",
     "@types/file-saver": "^2.0.5",
+    "@types/gm": "^1.18.11",
     "@types/js-cookie": "^3.0.0",
     "@types/jspdf": "^2.0.0",
     "@types/node": "16.11.6",

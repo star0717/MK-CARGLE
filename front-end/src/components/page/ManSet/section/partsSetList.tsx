@@ -59,7 +59,9 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    */
   useEffect(() => {
     if (!selectClass) {
-      return props.setPartSetData(undefined);
+      if (props.partSetClass.length === 0)
+        return props.setPartSetData(undefined);
+      return setSelectClass(props.partSetClass[0]._id);
     }
     dispatch(_aGetPartssetsOne(selectClass)).then((res: _iPartssetsOne) => {
       props.setPartSetData(res.payload);
@@ -109,23 +111,30 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
 
   /**
    * 세트 삭제
+   * @param id
+   * @returns
    */
   const onDeletePartSetClass = (id: string) => {
-    dispatch(_aDeletePartssetsOne(id)).then(
-      (res: _iDeleteByUser) => {
-        props.setPartSetClass(
-          props.partSetClass.filter((partSet) => partSet._id !== id)
-        );
-        setSelectClass(props.partSetClass[0]._id);
-      },
-      (err) => {
-        alert("세트 항목 삭제에 실패했습니다.");
-      }
-    );
+    if (window.confirm("세트를 삭제하시겠습니까?")) {
+      dispatch(_aDeletePartssetsOne(id)).then(
+        (res: _iDeleteByUser) => {
+          props.setPartSetClass(
+            props.partSetClass.filter((partSet) => partSet._id !== id)
+          );
+          setSelectClass(null);
+        },
+        (err) => {
+          alert("세트 항목 삭제에 실패했습니다.");
+        }
+      );
+    } else {
+      return false;
+    }
   };
 
   /** 세트 저장(실제타는 api는 수정) */
   const onSavePartsSet = () => {
+    // if()
     dispatch(
       _aPatchPartssetsOne(props.partSetData._id, props.partSetData)
     ).then(
@@ -417,7 +426,10 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
               </Wrapper>
             ) : (
               <Wrapper height={`500px`}>
-                <Text fontSize={`24px`}>세트를 추가해주세요.</Text>
+                <Text fontSize={`48px`} color={`#c4c4c4`}>
+                  <BsEmojiFrownFill />
+                </Text>
+                <Text color={`#c4c4c4`}>세트가 없습니다.</Text>
               </Wrapper>
             )}
           </Wrapper>

@@ -44,7 +44,7 @@ export const menuList = [
   {
     key: "2",
     menuName: "정비",
-    link: "#",
+    link: UseLink.MAINTENANCE_BOOK,
     auth: UserAuthority.WORKER,
     subMenu: [
       {
@@ -71,19 +71,19 @@ export const menuList = [
     key: "3",
     menuName: "회계",
     link: "#",
-    auth: UserAuthority.WORKER,
+    auth: UserAuthority.OWNER,
     subMenu: [
       {
         key: "3.1",
         subMenuName: "매입/매출 현황",
         subMenuLink: "#",
-        subMenuAuth: UserAuthority.WORKER,
+        subMenuAuth: UserAuthority.OWNER,
       },
       {
         key: "3.2",
         subMenuName: "결산 리포트",
         subMenuLink: "#",
-        subMenuAuth: UserAuthority.WORKER,
+        subMenuAuth: UserAuthority.OWNER,
       },
     ],
   },
