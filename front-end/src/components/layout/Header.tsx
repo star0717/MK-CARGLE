@@ -125,8 +125,7 @@ const Header: NextPage<_MainProps> = (props) => {
             </Link>
           </Wrapper>
           {props.tokenValue &&
-            props.tokenValue.cApproval === CompanyApproval.DONE &&
-            props.tokenValue.uApproval && (
+            props.tokenValue.cApproval === CompanyApproval.DONE && (
               <HeaderFixed
                 width={`auto`}
                 dr={`row`}
@@ -267,10 +266,9 @@ const Header: NextPage<_MainProps> = (props) => {
             wrap={`no-wrap`}
           >
             {props.tokenValue &&
-              props.tokenValue.cApproval === CompanyApproval.DONE &&
-              props.tokenValue.uApproval && (
+              props.tokenValue.cApproval === CompanyApproval.DONE && (
                 <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                  <HeaderIconButton>
+                  <HeaderIconButton opacity={`0`}>
                     <FaBell />
                   </HeaderIconButton>
                   {/* <HeaderIconAlarmWrapper>
@@ -307,7 +305,6 @@ const Header: NextPage<_MainProps> = (props) => {
           </Wrapper>
         </Wrapper>
       </HeaderWrapper>
-
       <MobileHeader
         shadow={`0px 4px 4px rgba(0, 0, 0, 0.25)`}
         isFixed={true}
@@ -322,24 +319,25 @@ const Header: NextPage<_MainProps> = (props) => {
           dr={`row`}
           padding={width < 1450 ? `0px 50px` : `0px 100px`}
         >
-          {props.tokenValue &&
-          props.tokenValue.cApproval === CompanyApproval.DONE &&
-          props.tokenValue.uApproval ? (
-            <Wrapper width={`20%`} al={`flex-start`}>
-              <HeaderIconButton
-                type="button"
-                onClick={() => {
-                  props.setOpenMenu(!props.openMenu);
-                }}
-                bgColor={`inherit`}
-                color={`#8DAFCE`}
-              >
-                <AiOutlineMenu />
-              </HeaderIconButton>
-            </Wrapper>
-          ) : (
-            <Wrapper width={`20%`} al={`flex-start`}></Wrapper>
-          )}
+          <Wrapper
+            display={props.tokenValue ? `` : `none`}
+            width={`20%`}
+            al={`flex-start`}
+            // onClick={() => {
+            //   props.setOpenMenu(!props.openMenu);
+            // }}
+          >
+            <HeaderIconButton
+              type="button"
+              onClick={() => {
+                props.setOpenMenu(!props.openMenu);
+              }}
+              bgColor={`inherit`}
+              color={`#8DAFCE`}
+            >
+              <AiOutlineMenu />
+            </HeaderIconButton>
+          </Wrapper>
           <Wrapper width={props.tokenValue ? `60%` : `100%`}>
             <Image
               src="/images/mainLogo.png"
@@ -355,10 +353,9 @@ const Header: NextPage<_MainProps> = (props) => {
             wrap={`no-wrap`}
           >
             {props.tokenValue &&
-              props.tokenValue.cApproval === CompanyApproval.DONE &&
-              props.tokenValue.uApproval && (
+              props.tokenValue.cApproval === CompanyApproval.DONE && (
                 <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                  <HeaderIconButton>
+                  <HeaderIconButton opacity={`0`}>
                     <FaBell />
                   </HeaderIconButton>
                 </Wrapper>

@@ -141,7 +141,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
             <Wrapper dr={`row`} ju={`space-between`} padding={`0px 0px 30px`}>
               <Wrapper width={`auto`} dr={`row`}>
                 <SmallButton type="submit" kindOf={`default`}>
-                  정보 저장
+                  정보저장
                 </SmallButton>
                 <SmallButton
                   type="button"
@@ -149,7 +149,7 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
                   onClick={onDeleteCompany}
                   margin={`0px 0px 0px 10px`}
                 >
-                  회원 삭제
+                  회원삭제
                 </SmallButton>
               </Wrapper>
               <Wrapper width={`auto`}>

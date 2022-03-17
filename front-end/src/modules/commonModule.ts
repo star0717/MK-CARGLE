@@ -195,22 +195,50 @@ export const create2dArray = (rows: number, columns: number, initArr?: any) => {
   return arr;
 };
 
-export const strSort = (data: any, sort: number, opt?: string) => {
-  const sortData: any = data.sort((a: any, b: any) => {
-    let aStr: string = "";
-    let bStr: string = "";
-    if (opt) {
-      aStr = a[opt];
-      bStr = b[opt];
-    } else {
-      aStr = a.toString();
-      bStr = b.toString();
-    }
-    if (sort === 1) {
-      return aStr.localeCompare(bStr);
-    } else {
-      return bStr.localeCompare(aStr);
-    }
-  });
+export const strSort = (
+  data: any,
+  type: string,
+  sort: number,
+  opt?: string
+) => {
+  let sortData: any;
+  switch (type) {
+    case "string":
+      sortData = data.sort((a: any, b: any) => {
+        let aStr: string = "";
+        let bStr: string = "";
+        if (opt) {
+          aStr = a[opt];
+          bStr = b[opt];
+        } else {
+          aStr = a.toString();
+          bStr = b.toString();
+        }
+        if (sort === 1) {
+          return aStr.localeCompare(bStr);
+        } else {
+          return bStr.localeCompare(aStr);
+        }
+      });
+    case "date":
+      sortData = data.sort((a: any, b: any) => {
+        let aStr: string = "";
+        let bStr: string = "";
+        if (opt) {
+          aStr = a[opt];
+          bStr = b[opt];
+        } else {
+          aStr = a.toDate();
+          bStr = b.toDate();
+        }
+        if (sort === 1) {
+          return aStr.localeCompare(bStr);
+        } else {
+          return bStr.localeCompare(aStr);
+        }
+      });
+    default:
+      break;
+  }
   return sortData;
 };

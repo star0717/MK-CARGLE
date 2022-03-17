@@ -1120,10 +1120,10 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   정비내역 수정
                 </SmallButton>
               ) : (
-                <Wrapper dr={`row`} ju={`space-between`} width={`888px`}>
+                <Wrapper dr={`row`} ju={`space-between`} width={`864px`}>
                   <SmallButton
                     type="button"
-                    width={`439px`}
+                    width={`427px`}
                     kindOf={`default`}
                     onClick={() => {
                       setModify(!modify);
@@ -1133,7 +1133,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   </SmallButton>
                   <SmallButton
                     type="button"
-                    width={`439px`}
+                    width={`427px`}
                     kindOf={`default`}
                     onClick={onModifyWorkInfo}
                   >
