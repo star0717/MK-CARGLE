@@ -632,7 +632,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                     setModalOpen(!modalOpen);
                   }}
                 >
-                  결재정보
+                  결제정보
                 </SmallButton>
               </Wrapper>
             </Wrapper>
