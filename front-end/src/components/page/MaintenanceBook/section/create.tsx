@@ -238,13 +238,13 @@ const MaintenanceCreate: NextPage = () => {
                   padding={`10px 0px`}
                 >
                   <Text fontSize={`24px`}>{searchCarText}</Text>
-                  <IconButton
+                  {/* <IconButton
                     type="button"
                     shadow={`none`}
                     onClick={onResetCar}
                   >
                     <AiFillCloseCircle />
-                  </IconButton>
+                  </IconButton> */}
                 </Wrapper>
               </Wrapper>
             ) : (
