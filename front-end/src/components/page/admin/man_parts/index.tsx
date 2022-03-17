@@ -48,7 +48,7 @@ import {
 import { Part } from "../../../../models/part.entity";
 import { _pAdminManParts } from "../../../../configure/_pProps.entity";
 import PartsInfoModal from "./partsInfoModal";
-import { strSort } from "src/modules/commonModule";
+import { dataSort } from "src/modules/commonModule";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -71,6 +71,12 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+
+  // 재정렬
+  useEffect(() => {
+    setPartList(dataSort(partList, "string", 1, "name"));
+  }, [partList]);
+
   /**
    * 검색 input handler
    * @param e
@@ -349,49 +355,41 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     {partList.length > 0 ? (
-                      strSort(partList, "string", 1, "name").map(
-                        (list: Part) => (
-                          <TableRow
-                            key={list._id}
-                            onClick={() => {
-                              setClickDoc(list);
-                              setModalOption("editPart");
-                              setModalOpen(true);
-                            }}
+                      partList.map((list: Part) => (
+                        <TableRow
+                          key={list._id}
+                          onClick={() => {
+                            setClickDoc(list);
+                            setModalOption("editPart");
+                            setModalOpen(true);
+                          }}
+                        >
+                          <TableRowLIST
+                            width={`10%`}
+                            onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                              e.stopPropagation()
+                            }
                           >
-                            <TableRowLIST
-                              width={`10%`}
-                              onClick={(e: React.MouseEvent<HTMLLIElement>) =>
-                                e.stopPropagation()
-                              }
-                            >
-                              <Checkbox kindOf={`TableCheckBox`}>
-                                <CheckInput
-                                  type="checkbox"
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => onCheckedElement(e.target.checked, list)}
-                                  checked={
-                                    checkedList.includes(list._id)
-                                      ? true
-                                      : false
-                                  }
-                                />
-                                <CheckMark></CheckMark>
-                              </Checkbox>
-                            </TableRowLIST>
-                            <TableRowLIST width={`20%`}>
-                              {list.code}
-                            </TableRowLIST>
-                            <TableRowLIST width={`35%`}>
-                              {list.name}
-                            </TableRowLIST>
-                            <TableRowLIST width={`35%`}>
-                              {list.tsCode}
-                            </TableRowLIST>
-                          </TableRow>
-                        )
-                      )
+                            <Checkbox kindOf={`TableCheckBox`}>
+                              <CheckInput
+                                type="checkbox"
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => onCheckedElement(e.target.checked, list)}
+                                checked={
+                                  checkedList.includes(list._id) ? true : false
+                                }
+                              />
+                              <CheckMark></CheckMark>
+                            </Checkbox>
+                          </TableRowLIST>
+                          <TableRowLIST width={`20%`}>{list.code}</TableRowLIST>
+                          <TableRowLIST width={`35%`}>{list.name}</TableRowLIST>
+                          <TableRowLIST width={`35%`}>
+                            {list.tsCode}
+                          </TableRowLIST>
+                        </TableRow>
+                      ))
                     ) : (
                       <Wrapper minHeight={`445px`}>
                         <Text fontSize={`48px`} color={`#c4c4c4`}>

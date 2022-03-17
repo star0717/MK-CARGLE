@@ -195,13 +195,13 @@ export const create2dArray = (rows: number, columns: number, initArr?: any) => {
   return arr;
 };
 
-export const strSort = (
+export const dataSort = (
   data: any,
   type: string,
   sort: number,
   opt?: string
 ) => {
-  let sortData: any;
+  let sortData: any = [];
   switch (type) {
     case "string":
       sortData = data.sort((a: any, b: any) => {
@@ -220,23 +220,25 @@ export const strSort = (
           return bStr.localeCompare(aStr);
         }
       });
+      break;
     case "date":
       sortData = data.sort((a: any, b: any) => {
-        let aStr: string = "";
-        let bStr: string = "";
+        let aStr: number = 0;
+        let bStr: number = 0;
         if (opt) {
-          aStr = a[opt];
-          bStr = b[opt];
+          aStr = +new Date(a[opt]);
+          bStr = +new Date(b[opt]);
         } else {
-          aStr = a.toDate();
-          bStr = b.toDate();
+          aStr = +new Date(a);
+          bStr = +new Date(b);
         }
         if (sort === 1) {
-          return aStr.localeCompare(bStr);
+          return aStr - bStr;
         } else {
-          return bStr.localeCompare(aStr);
+          return bStr - aStr;
         }
       });
+      break;
     default:
       break;
   }

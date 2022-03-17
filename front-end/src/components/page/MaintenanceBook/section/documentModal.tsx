@@ -29,7 +29,7 @@ import {
   _pPartsSetProps,
   _pPreviewModalProps,
 } from "src/configure/_pProps.entity";
-import { create2dArray, test, trim } from "src/modules/commonModule";
+import { create2dArray, trim } from "src/modules/commonModule";
 import { formRegEx } from "src/validation/regEx";
 import { useDispatch } from "react-redux";
 import {

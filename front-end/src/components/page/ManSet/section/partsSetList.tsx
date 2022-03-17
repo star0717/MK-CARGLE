@@ -51,6 +51,8 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
     props.partSetClass[0]?._id
   ); // 선택한 세트 항목
 
+  console.log(props.partSetClass[0].name);
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -96,11 +98,11 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    */
   const onAddPartSetClass = () => {
     const basePartSet: Partial<PartsSet> = {
-      name: "세트명을 설정하세요.",
+      name: `세트명${props.partSetClass.length + 1}`,
     };
     dispatch(_aPostPartssetsOne(basePartSet)).then(
       (res: _iPartssetsOne) => {
-        props.setPartSetClass(props.partSetClass.concat(res.payload));
+        props.setPartSetClass((partSetClass) => [...partSetClass, res.payload]);
         setSelectClass(res.payload._id);
       },
       (err) => {

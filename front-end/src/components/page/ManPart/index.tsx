@@ -23,7 +23,7 @@ import { _MainProps } from "src/configure/_props.entity";
 import { Part } from "src/models/part.entity";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { partClassList, PartClass, getTsParts } from "src/constants/part.const";
-import { strSort } from "src/modules/commonModule";
+import { dataSort } from "src/modules/commonModule";
 
 const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -41,6 +41,11 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  // 재정렬
+  useEffect(() => {
+    setPartList(dataSort(partList, "string", 1, "name"));
+  }, [partList]);
+
   /**
    * 검색 input handler
    * @param e
@@ -224,7 +229,7 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     {partList.length > 0 ? (
-                      strSort(partList, "string", 1, "name").map(
+                      dataSort(partList, "string", 1, "name").map(
                         (list: Part) => (
                           <TableRow key={list._id} kindOf={`noHover`}>
                             <TableRowLIST width={`33%`}>
