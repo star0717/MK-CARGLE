@@ -177,17 +177,10 @@ const Header: NextPage<_MainProps> = (props) => {
                     bgColor={`#fafafa`}
                   >
                     {/* 서브메뉴 빈 wrapper */}
-                    <Wrapper width={`auto`} al={`center`}>
-                      <a>
-                        <Image
-                          src="/images/mainLogo.png"
-                          alt="Cargle Logo"
-                          width={width < 1450 ? `80px` : `100px`}
-                          isTransparency={`true`}
-                          opacity={`0`}
-                        />
-                      </a>
-                    </Wrapper>
+                    <Wrapper
+                      al={`center`}
+                      width={width < 1450 ? `80px` : `100px`}
+                    ></Wrapper>
                     {/* 서브메뉴 빈 wrapper 끝 */}
 
                     {/* 서브메뉴 시작 */}
@@ -323,9 +316,6 @@ const Header: NextPage<_MainProps> = (props) => {
             display={props.tokenValue ? `` : `none`}
             width={`20%`}
             al={`flex-start`}
-            // onClick={() => {
-            //   props.setOpenMenu(!props.openMenu);
-            // }}
           >
             <HeaderIconButton
               type="button"
@@ -339,11 +329,15 @@ const Header: NextPage<_MainProps> = (props) => {
             </HeaderIconButton>
           </Wrapper>
           <Wrapper width={props.tokenValue ? `60%` : `100%`}>
-            <Image
-              src="/images/mainLogo.png"
-              alt="Cargle Logo"
-              width={`80px`}
-            />
+            <Link href={UseLink.MAIN}>
+              <a>
+                <Image
+                  src="/images/mainLogo.png"
+                  alt="Cargle Logo"
+                  width={`80px`}
+                />
+              </a>
+            </Link>
           </Wrapper>
           <Wrapper
             display={props.tokenValue ? `` : `none`}
