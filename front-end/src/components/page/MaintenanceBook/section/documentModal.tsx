@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -88,7 +88,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     print: true,
     online: false,
   }); // 발급 선택 여부
-  const [reOption, setReOption] = useState<boolean>(null); // 모달창 옵션(서류발급: false, 출고완료: true)
+  const [reOption, setReOption] = useState<boolean>(true); // 모달창 옵션(서류발급: false, 출고완료: true)
   const [printDone, setPrintDone] = useState<boolean>(false); // 프린트 완료여부
   const [onlineDone, setOnlineDone] = useState<boolean>(false); // SMS 완료여부
   const [modal2Open, setModal2Open] = useState<boolean>(false); // 미리보기 modal open
@@ -210,21 +210,27 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           props.setInitMtInfo && props.setInitMtInfo(res.payload);
           props.setMtInfo(res.payload);
           props.setModify && props.setModify(!props.modify);
-          onPubHandler();
+          onPubHandler(opt);
         },
         (err) => {
           return alert("출고에 실패했습니다.");
         }
       );
     } else {
-      onPubHandler();
+      onPubHandler(opt);
     }
   };
 
   /**서류 발급 handler */
-  const onPubHandler = () => {
-    if (!pubCheck.print && !pubCheck.online)
-      return alert("발급방식을 선택하세요.");
+  const onPubHandler = (opt: boolean) => {
+    if (!pubCheck.print && !pubCheck.online) {
+      if (opt) {
+        return props.setModalOpen(false);
+      } else {
+        return alert("발급방식을 선택하세요.");
+      }
+    }
+
     if (pubCheck.print) onPrintHandler();
     if (pubCheck.online) setOnlineDone(true);
   };
@@ -233,10 +239,14 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   const onPrintHandler = useReactToPrint({
     content: () => {
       const printElem = document.createElement("div");
-      const eNode = estimateRef.current.cloneNode(true);
-      const sNode = statementRef.current.cloneNode(true);
-      if (fileCheck.eCheck) printElem.appendChild(eNode);
-      if (fileCheck.sCheck) printElem.appendChild(sNode);
+      if (fileCheck.eCheck) {
+        const eNode = estimateRef.current.cloneNode(true);
+        printElem.appendChild(eNode);
+      }
+      if (fileCheck.sCheck) {
+        const sNode = statementRef.current.cloneNode(true);
+        printElem.appendChild(sNode);
+      }
       return printElem;
     },
     onAfterPrint: () => {
@@ -293,8 +303,6 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * @param data
    */
   const onFileApiHandler = async (data: MainPubDocInfo) => {
-    console.log(data);
-    console.log(props.mtInfo._id);
     // 견적서 체크할 경우 api
     if (fileCheck.eCheck) {
       await dispatch(_aGetMaintenancesGenEstimate(props.mtInfo._id)).then(

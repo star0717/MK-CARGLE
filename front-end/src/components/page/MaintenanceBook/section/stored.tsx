@@ -117,9 +117,10 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     partSetClass[0]
   ); // 선택한 세트 데이터
   const [cellCount, setCellCount] = useState<number>(7); // 행 갯수
-  const [workList, setWorkList] = useState<MainWork[]>(workInit); // 부품 리스트
-  const [price, setPrice] = useState<MainPrice>(priceInit); // 가격정보
-
+  const [workList, setWorkList] = useState<MainWork[]>(
+    props.data.mtData.works.length === 0 ? workInit : props.data.mtData.works
+  ); // 부품 리스트
+  const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
 
   /*********************************************************************

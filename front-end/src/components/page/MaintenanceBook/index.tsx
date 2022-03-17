@@ -15,6 +15,7 @@ import MaintenanceIng from "./section/ing";
 import MaintenanceDone from "./section/done";
 import MaintenanceReleased from "./section/released";
 import { Maintenance } from "src/models/maintenance.entity";
+import dayjs from "dayjs";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
@@ -81,11 +82,11 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       useRegSearch: true,
     };
     if (searchList.sFrom !== "") {
-      var sFromDate: Date = new Date(searchList.sFrom);
+      var sFromDate: Date = dayjs(searchList.sFrom).toDate();
       param.sFrom = sFromDate;
     }
     if (searchList.sTo !== "") {
-      var sToDate: Date = new Date(searchList.sTo);
+      var sToDate: Date = dayjs(searchList.sTo).toDate();
       param.sTo = sToDate;
     }
     //searchDetails 빈 json 생성
