@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { SubmitHandler, useForm } from "react-hook-form";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { _fTermData } from "../../../../configure/_fProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -20,12 +20,13 @@ import {
   JoinStepBarWrapper,
   JoinStepBar,
 } from "../../../styles/CommonComponents";
-import { useDispatch } from "react-redux";
-import { actionTypesUser } from "../../../../../store/interfaces";
+import { useDispatch, useSelector } from "react-redux";
+import { actionTypesUser, UserState } from "../../../../../store/interfaces";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
 import { GoCheck } from "react-icons/go";
 import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
+import { RootStateInterface } from "store/interfaces/RootState";
 
 /**
  * 회원가입: 이용약관 컴포넌트(기능)
@@ -35,17 +36,68 @@ import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 const Term: NextPage<_pSignUpProps> = (props) => {
   const dispatch = useDispatch();
 
+  // redux store에서 formCheck 정보 가져옴
+  const { formCheck } = useSelector(
+    (state: RootStateInterface): UserState => state.userAll
+  );
+
+  // 전체 체크 여부
+  const [allCheck, setAllCheck] = useState<boolean>(false);
+
   // react-hook-form 사용을 위한 선언
   const {
     register,
+    setValue,
+    clearErrors,
     handleSubmit,
     formState: { errors },
-  } = useForm({ criteriaMode: "all" });
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
+
+  useEffect(() => {
+    if (formCheck.mkTerm && formCheck.privacyTerm && formCheck.marketTerm) {
+      setAllCheck(true);
+    } else {
+      setAllCheck(false);
+    }
+  }, [formCheck]);
+
+  const allCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setValue("mkTerm", true);
+      setValue("privacyTerm", true);
+      setValue("marketTerm", true);
+      clearErrors("mkTerm");
+      clearErrors("privacyTerm");
+      dispatch({
+        type: actionTypesUser.FORM_CHECK,
+        payload: {
+          ...props.formCheck,
+          mkTerm: true,
+          privacyTerm: true,
+          marketTerm: true,
+        },
+      });
+    } else {
+      setValue("mkTerm", false);
+      setValue("privacyTerm", false);
+      setValue("marketTerm", false);
+      dispatch({
+        type: actionTypesUser.FORM_CHECK,
+        payload: {
+          ...props.formCheck,
+          mkTerm: false,
+          privacyTerm: false,
+          marketTerm: false,
+        },
+      });
+    }
+  };
+
   /**
    * 이용약관 form submit handler
-   * @param _data
+   * @param data
    */
-  const agreeTermHandler: SubmitHandler<Partial<_fTermData>> = (_data) => {
+  const agreeTermHandler: SubmitHandler<Partial<_fTermData>> = (data) => {
     props.setStepNumber(props.stepNumber + 1);
   };
 
@@ -133,17 +185,8 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     전체동의
                     <CheckInput
                       type="checkbox"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        dispatch({
-                          type: actionTypesUser.FORM_CHECK,
-                          payload: {
-                            ...props.formCheck,
-                            mkTerm: e.target.checked,
-                            privacyTerm: e.target.checked,
-                            marketTerm: e.target.checked,
-                          },
-                        });
-                      }}
+                      checked={allCheck}
+                      onChange={allCheckHandler}
                     />
                     <CheckMark></CheckMark>
                   </Checkbox>
@@ -193,6 +236,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     동의합니다.
                     <CheckInput
                       type="checkbox"
+                      checked={formCheck.mkTerm}
                       {...register("mkTerm", {
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                           dispatch({
@@ -256,6 +300,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     동의합니다.
                     <CheckInput
                       type="checkbox"
+                      checked={formCheck.privacyTerm}
                       {...register("privacyTerm", {
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                           dispatch({
@@ -309,6 +354,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   동의합니다.
                   <CheckInput
                     type="checkbox"
+                    checked={formCheck.marketTerm}
                     {...register("marketTerm", {
                       onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                         dispatch({
