@@ -119,7 +119,7 @@ const Header: NextPage<_MainProps> = (props) => {
                 <Image
                   src="/images/mainLogo.png"
                   alt="Cargle Logo"
-                  width={width < 1450 ? `100px` : `120px`}
+                  width={width < 1450 ? `80px` : `100px`}
                 />
               </a>
             </Link>
@@ -326,19 +326,23 @@ const Header: NextPage<_MainProps> = (props) => {
             //   props.setOpenMenu(!props.openMenu);
             // }}
           >
-            <IconButton
+            <HeaderIconButton
               type="button"
               onClick={() => {
                 props.setOpenMenu(!props.openMenu);
               }}
-              shadow={`none`}
               bgColor={`inherit`}
+              color={`#8DAFCE`}
             >
               <AiOutlineMenu />
-            </IconButton>
+            </HeaderIconButton>
           </Wrapper>
           <Wrapper width={props.tokenValue ? `60%` : `100%`}>
-            <Image src="/images/cargle.png" alt="Cargle Logo" width={`100px`} />
+            <Image
+              src="/images/mainLogo.png"
+              alt="Cargle Logo"
+              width={`80px`}
+            />
           </Wrapper>
           <Wrapper
             display={props.tokenValue ? `` : `none`}

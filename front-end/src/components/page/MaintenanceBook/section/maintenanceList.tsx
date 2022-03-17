@@ -364,7 +364,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
           </Wrapper>
         </Wrapper>
         <Wrapper margin={`0px 0px 30px`}>
-          <TableWrapper margin={`20px 0px 0px`}>
+          <TableWrapper margin={`20px 0px 0px`} kindOf={`list`}>
             <TableHead>
               <TableHeadLIST
                 width={`5%`}

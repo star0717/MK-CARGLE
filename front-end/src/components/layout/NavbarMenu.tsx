@@ -77,7 +77,7 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   return (
     <Wrapper
-      isAbsolute
+      isFixed
       height={`100%`}
       background={`rgba(0, 0, 0, 0.7)`}
       top={`0`}

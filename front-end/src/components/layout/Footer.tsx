@@ -80,6 +80,7 @@ const Footer: NextPage = () => {
             alt="Cargle Logo"
             width={`140px`}
             padding={`10px`}
+            opacity={`0.7`}
           />
 
           <Wrapper
