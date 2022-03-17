@@ -99,6 +99,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
    */
   const agreeTermHandler: SubmitHandler<Partial<_fTermData>> = (data) => {
     props.setStepNumber(props.stepNumber + 1);
+    window.scrollTo(0, 0);
   };
 
   // resize 변수 선언
@@ -375,6 +376,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
               <CommonButton
                 onClick={(_e: React.MouseEvent<HTMLButtonElement>) => {
                   props.setStepNumber(props.stepNumber - 1);
+                  window.scrollTo(0, 0);
                 }}
                 kindOf={`white`}
                 margin={`0px 0px 10px 0px`}

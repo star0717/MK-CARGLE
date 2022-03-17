@@ -191,6 +191,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
       )
         .then((res: any) => {
           props.setStepNumber(props.stepNumber + 1);
+          window.scrollTo(0, 0);
         })
         .catch((err: AxiosError<any, any>) => {
           const errInfo: DbErrorInfo = err.response.data;
@@ -661,6 +662,7 @@ const SignCompany: NextPage<_pSignUpProps> = (props) => {
                   type: actionTypesUser.INPUT_FORM,
                   payload: inputForm,
                 });
+                window.scrollTo(0, 0);
               }}
             >
               이전

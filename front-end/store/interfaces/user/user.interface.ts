@@ -32,6 +32,7 @@ import { Company } from "../../../src/models/company.entity";
 // }
 
 export interface FormInput {
+  companyName: string;
   companyNum: string;
   passwordCheck: string;
 }

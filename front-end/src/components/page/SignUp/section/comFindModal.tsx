@@ -24,6 +24,7 @@ import {
 import { CHAR_DEL } from "../../../../validation/regEx";
 import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { _pComFindModalProps } from "../../../../configure/_pProps.entity";
+import { Company } from "src/models/company.entity";
 
 /**
  * 회원가입: 업체 검색 모달 컴포넌트(기능)
@@ -133,13 +134,14 @@ const ComFindModal: NextPage<_pComFindModalProps> = (props) => {
                   </Wrapper>
                 ) : (
                   <TableBody>
-                    {companyList.map((item: any, index: number) => (
+                    {companyList.map((item: Company, index: number) => (
                       <TableRow
                         id={item.comRegNum}
                         key={index}
                         onClick={(e: React.MouseEvent<HTMLTableRowElement>) => {
                           props.setInputForm({
                             ...props.inputForm,
+                            companyName: item.name,
                             companyNum: item.comRegNum,
                           });
                           props.setInputUser({

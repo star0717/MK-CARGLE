@@ -227,6 +227,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
         dispatch({ type: actionTypesUser.INPUT_FORM, payload: inputForm });
         dispatch({ type: actionTypesUser.INPUT_ACCOUNT, payload: inputUser });
         props.setStepNumber(props.stepNumber + 1);
+        window.scrollTo(0, 0);
       } else {
         dispatch(
           _aPostAuthSignup({
@@ -235,6 +236,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
         )
           .then((res: any) => {
             props.setStepNumber(props.stepNumber + 1);
+            window.scrollTo(0, 0);
           })
           .catch((err: AxiosError<any, any>) => {
             const errInfo: DbErrorInfo = err.response.data;
@@ -286,69 +288,75 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
           <CommonTitle>회원가입</CommonTitle>
           <CommonSubTitle>계정 정보를 입력해주세요.</CommonSubTitle>
         </CommonTitleWrapper>
-        <JoinStepBarWrapper>
-          <Wrapper width={`auto`}>
+        {props.userAuth === UserAuthority.OWNER && (
+          <JoinStepBarWrapper>
+            <Wrapper width={`auto`}>
+              <JoinStepBar
+                kindOf={props.stepNumber === 2 ? `progress` : `complete`}
+              >
+                {props.stepNumber === 2 ? <AiOutlineFileText /> : <GoCheck />}
+              </JoinStepBar>
+              <Text height={`0px`} padding={`10px 0px 0px`}>
+                약관동의
+              </Text>
+            </Wrapper>
             <JoinStepBar
-              kindOf={props.stepNumber === 2 ? `progress` : `complete`}
-            >
-              {props.stepNumber === 2 ? <AiOutlineFileText /> : <GoCheck />}
-            </JoinStepBar>
-            <Text height={`0px`} padding={`10px 0px 0px`}>
-              약관동의
-            </Text>
-          </Wrapper>
-          <JoinStepBar
-            kindOf={props.stepNumber > 2 ? `line` : `line2`}
-          ></JoinStepBar>
-          <Wrapper width={`auto`}>
+              kindOf={props.stepNumber > 2 ? `line` : `line2`}
+            ></JoinStepBar>
+            <Wrapper width={`auto`}>
+              <JoinStepBar
+                kindOf={
+                  props.stepNumber < 3
+                    ? `before`
+                    : props.stepNumber === 3
+                    ? `progress`
+                    : `complete`
+                }
+              >
+                {props.stepNumber > 3 ? <GoCheck /> : <AiOutlineUser />}
+              </JoinStepBar>
+              <Text height={`0px`} padding={`10px 0px 0px`}>
+                계정정보
+              </Text>
+            </Wrapper>
             <JoinStepBar
-              kindOf={
-                props.stepNumber < 3
-                  ? `before`
-                  : props.stepNumber === 3
-                  ? `progress`
-                  : `complete`
-              }
-            >
-              {props.stepNumber > 3 ? <GoCheck /> : <AiOutlineUser />}
-            </JoinStepBar>
-            <Text height={`0px`} padding={`10px 0px 0px`}>
-              계정정보
-            </Text>
-          </Wrapper>
-          <JoinStepBar
-            kindOf={props.stepNumber > 3 ? `line` : `line2`}
-          ></JoinStepBar>
-          <Wrapper width={`auto`}>
+              kindOf={props.stepNumber > 3 ? `line` : `line2`}
+            ></JoinStepBar>
+            <Wrapper width={`auto`}>
+              <JoinStepBar
+                kindOf={
+                  props.stepNumber < 4
+                    ? `before`
+                    : props.stepNumber === 4
+                    ? `progress`
+                    : `complete`
+                }
+              >
+                {props.stepNumber > 4 ? (
+                  <GoCheck />
+                ) : (
+                  <MdOutlineBusinessCenter />
+                )}
+              </JoinStepBar>
+              <Text height={`0px`} padding={`10px 0px 0px`}>
+                사업자정보
+              </Text>
+            </Wrapper>
             <JoinStepBar
-              kindOf={
-                props.stepNumber < 4
-                  ? `before`
-                  : props.stepNumber === 4
-                  ? `progress`
-                  : `complete`
-              }
-            >
-              {props.stepNumber > 4 ? <GoCheck /> : <MdOutlineBusinessCenter />}
-            </JoinStepBar>
-            <Text height={`0px`} padding={`10px 0px 0px`}>
-              사업자정보
-            </Text>
-          </Wrapper>
-          <JoinStepBar
-            kindOf={props.stepNumber > 4 ? `line` : `line2`}
-          ></JoinStepBar>
-          <Wrapper width={`auto`}>
-            <JoinStepBar
-              kindOf={props.stepNumber === 5 ? `progress` : `before`}
-            >
-              <MdOutlineUploadFile />
-            </JoinStepBar>
-            <Text height={`0px`} padding={`10px 0px 0px`}>
-              서류제출
-            </Text>
-          </Wrapper>
-        </JoinStepBarWrapper>
+              kindOf={props.stepNumber > 4 ? `line` : `line2`}
+            ></JoinStepBar>
+            <Wrapper width={`auto`}>
+              <JoinStepBar
+                kindOf={props.stepNumber === 5 ? `progress` : `before`}
+              >
+                <MdOutlineUploadFile />
+              </JoinStepBar>
+              <Text height={`0px`} padding={`10px 0px 0px`}>
+                서류제출
+              </Text>
+            </Wrapper>
+          </JoinStepBarWrapper>
+        )}
         <form onSubmit={handleSubmit(onSignUpUserHandler)}>
           <Wrapper
             width={`auto`}
@@ -367,15 +375,14 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
                     <TextInput2
                       width={`300px`}
                       type="text"
-                      value={inputForm.companyNum}
+                      value={
+                        `${inputForm.companyName}(${inputForm.companyNum})` ===
+                        "()"
+                          ? ""
+                          : `${inputForm.companyName}(${inputForm.companyNum})`
+                      }
                       placeholder="업체명 또는 사업자번호로 검색"
                       readOnly
-                      {...register("companyNum", {
-                        required: {
-                          value: true,
-                          message: "필수 입력사항입니다.",
-                        },
-                      })}
                     />
                     <SmallButton
                       type="button"
@@ -388,6 +395,17 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
                     >
                       검색
                     </SmallButton>
+                    <TextInput2
+                      width={`300px`}
+                      type="hidden"
+                      value={inputForm.companyNum}
+                      {...register("companyNum", {
+                        required: {
+                          value: true,
+                          message: "필수 입력사항입니다.",
+                        },
+                      })}
+                    />
                   </Wrapper>
                 </Wrapper>
                 {errors.companyNum?.type === "required" && (
@@ -739,6 +757,7 @@ const SignAccount: NextPage<_pSignUpProps> = (props) => {
                   type: actionTypesUser.INPUT_FORM,
                   payload: inputForm,
                 });
+                window.scrollTo(0, 0);
               }}
             >
               이전

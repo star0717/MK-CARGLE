@@ -131,6 +131,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
         }
       }
     );
+    window.scrollTo(0, 0);
   };
 
   // resize 변수 선언
