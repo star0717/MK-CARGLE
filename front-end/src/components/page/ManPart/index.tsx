@@ -224,15 +224,21 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
                     {partList.length > 0 ? (
-                      strSort(partList, 1, "name").map((list: Part) => (
-                        <TableRow key={list._id} kindOf={`noHover`}>
-                          <TableRowLIST width={`33%`}>{list.code}</TableRowLIST>
-                          <TableRowLIST width={`33%`}>{list.name}</TableRowLIST>
-                          <TableRowLIST width={`34%`}>
-                            {list.tsCode}
-                          </TableRowLIST>
-                        </TableRow>
-                      ))
+                      strSort(partList, "string", 1, "name").map(
+                        (list: Part) => (
+                          <TableRow key={list._id} kindOf={`noHover`}>
+                            <TableRowLIST width={`33%`}>
+                              {list.code}
+                            </TableRowLIST>
+                            <TableRowLIST width={`33%`}>
+                              {list.name}
+                            </TableRowLIST>
+                            <TableRowLIST width={`34%`}>
+                              {list.tsCode}
+                            </TableRowLIST>
+                          </TableRow>
+                        )
+                      )
                     ) : (
                       <Wrapper minHeight={`445px`}>
                         <Text fontSize={`48px`} color={`#c4c4c4`}>

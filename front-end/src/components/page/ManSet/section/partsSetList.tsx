@@ -70,7 +70,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
 
   /**
    * 세트 클래스 변경
-   * @param set
+   * @param select
    * @returns
    */
   const onSelectPartSet = (select: Partial<PartsSet>) => {
@@ -96,7 +96,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    */
   const onAddPartSetClass = () => {
     const basePartSet: Partial<PartsSet> = {
-      name: "세트명입니다.",
+      name: "세트명을 설정하세요.",
     };
     dispatch(_aPostPartssetsOne(basePartSet)).then(
       (res: _iPartssetsOne) => {
@@ -134,7 +134,10 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
 
   /** 세트 저장(실제타는 api는 수정) */
   const onSavePartsSet = () => {
-    // if()
+    for (let i = 0; i < props.partSetClass.length; i++) {
+      if (props.partSetData.name === props.partSetClass[i].name)
+        return alert("중복된 세트명입니다.");
+    }
     dispatch(
       _aPatchPartssetsOne(props.partSetData._id, props.partSetData)
     ).then(
@@ -157,7 +160,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
 
   /**
    * 부품 삭제
-   * @param id
+   * @param code
    */
   const onDeletePart = (code: string) => {
     props.setPartSetData({
