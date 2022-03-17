@@ -102,7 +102,6 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
           <CloseButton
             type="button"
             onClick={() => {
-              console.log("hi");
               props.setOpenMenu(false);
             }}
             color={`#343a40`}
