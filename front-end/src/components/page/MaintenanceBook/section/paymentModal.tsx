@@ -4,16 +4,11 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  CommonSubTitle,
   CommonSmallTitle,
   TextInput2,
-  Checkbox,
-  CheckInput,
-  CheckMark,
   CommonButton,
   CommonButtonWrapper,
   SmallButton,
-  CommonForm,
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
@@ -31,22 +26,11 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
    *********************************************************************/
   const dispatch = useDispatch();
 
-  interface PayCheck {
-    cashCheck: Boolean;
-    creditCheck: Boolean;
-    insuranceCheck: Boolean;
-  }
-  const payCheckInit: PayCheck = {
-    cashCheck: false,
-    creditCheck: false,
-    insuranceCheck: false,
-  };
-
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [price, setPrice] = useState<MainPrice>(props.mtInfo.price);
-  const [payCheck, setPayCheck] = useState<PayCheck>(payCheckInit);
+
   const [edit, setEdit] = useState<boolean>(false);
   const [discount, setDiscount] = useState<number>(props.mtInfo.price.discount);
   const [totalName, setTotalName] = useState<string>("");
@@ -87,14 +71,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
         }
     }
   };
-
-  // /**
-  //  * 결제수단 체크 handler
-  //  * @param e
-  //  */
-  // const onChangeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPayCheck({ ...payCheck, [e.target.name]: e.target.checked });
-  // };
+  /** 전액 입력 버튼 기능 */
   useEffect(() => {
     switch (totalName) {
       case "cash": {
@@ -133,34 +110,15 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
       total2 = Math.round(sum2 + vat2) - discount;
     }
 
-    if (price.cash !== 0) {
-      payCheck.cashCheck = true;
-    } else {
-      payCheck.cashCheck = false;
-    }
-    if (price.credit !== 0) {
-      payCheck.creditCheck = true;
-    } else {
-      payCheck.creditCheck = false;
-    }
-    if (price.insurance) {
-      payCheck.insuranceCheck = true;
-    } else {
-      payCheck.insuranceCheck = false;
-    }
     setPrice({
       ...price,
       discount: discount,
       sum: sum2,
       vat: vat2,
       total: total2,
-      balance:
-        total2 -
-        (payCheck.cashCheck ? price.cash : 0) -
-        (payCheck.creditCheck ? price.credit : 0) -
-        (payCheck.insuranceCheck ? price.insurance : 0),
+      balance: total2 - price.cash - price.credit - price.insurance,
     });
-  }, [discount, payCheck, price.cash, price.credit, price.insurance]);
+  }, [discount, price.cash, price.credit, price.insurance]);
 
   /**결제 handler */
   const onPaymentHandler = async (edit: boolean) => {

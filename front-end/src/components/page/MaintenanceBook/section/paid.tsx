@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 import {
   RsWrapper,
@@ -14,6 +14,7 @@ const MaintenancePaid: NextPage<any> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
