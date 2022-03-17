@@ -354,10 +354,15 @@ const Header: NextPage<_MainProps> = (props) => {
           >
             {props.tokenValue &&
               props.tokenValue.cApproval === CompanyApproval.DONE && (
-                <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                  {/* <HeaderIconButton>
+                <Wrapper
+                  isRelative={true}
+                  width={`auto`}
+                  al={`flex-end`}
+                  opacity={`1`}
+                >
+                  <HeaderIconButton>
                     <FaBell />
-                  </HeaderIconButton> */}
+                  </HeaderIconButton>
                 </Wrapper>
               )}
             {props.tokenValue &&
