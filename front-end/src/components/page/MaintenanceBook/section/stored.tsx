@@ -348,21 +348,21 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
     }
   };
 
-  /**
-   * 차량 선택으로 return(정비내역은 삭제)
-   */
-  const onReturnSelectCar = async () => {
-    await dispatch(_aDeleteMaintenancesDelete(mtInfo._id)).then(
-      (res: _iDeleteByUser) => {
-        if (res.payload) {
-          router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
-        }
-      },
-      (err) => {
-        alert("정비내역 삭제에 실패했습니다.");
-      }
-    );
-  };
+  // /**
+  //  * 차량 선택으로 return(정비내역은 삭제)
+  //  */
+  // const onReturnSelectCar = async () => {
+  //   await dispatch(_aDeleteMaintenancesDelete(mtInfo._id)).then(
+  //     (res: _iDeleteByUser) => {
+  //       if (res.payload) {
+  //         router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
+  //       }
+  //     },
+  //     (err) => {
+  //       alert("정비내역 삭제에 실패했습니다.");
+  //     }
+  //   );
+  // };
 
   /*********************************************************************
    * 4. Props settings
@@ -457,14 +457,14 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                 padding={`10px 0px`}
               >
                 <Text fontSize={`24px`}>{mtInfo.car.regNumber}</Text>
-                <IconButton
+                {/* <IconButton
                   type="button"
                   shadow={`none`}
                   color={`#d6263b`}
                   onClick={onReturnSelectCar}
                 >
                   <AiFillCloseCircle />
-                </IconButton>
+                </IconButton> */}
               </Wrapper>
             </Wrapper>
             <Wrapper

@@ -78,8 +78,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [point, setPoint] = useState<number>(0); // 포인트
-  const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
-  const [phoneList, setPhoneList] = useState<string[][]>([[]]); // 번호 리스트 all
+  const [phoneNum, setPhoneNum] = useState<string>(
+    props.mtInfo.customer.phoneNumber
+  ); // 번호 input
+  // const [phoneList, setPhoneList] = useState<string[][]>([[]]); // 번호 리스트 all
   const [fileCheck, setFileCheck] = useState<_fFileCheck>({
     eCheck: true,
     sCheck: true,
@@ -98,54 +100,54 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  /**
-   * 전화번호 추가 handler
-   * @param data
-   */
-  const onAddPhoneHandler: SubmitHandler<FieldValues> = (data) => {
-    for (let i = 0; i < phoneList.length; i++) {
-      for (let j = 0; j < phoneList[i].length; j++) {
-        if (phoneNum === phoneList[i][j])
-          return alert("이미 추가된 전화번호입니다");
-      }
-    }
+  // /**
+  //  * 전화번호 추가 handler
+  //  * @param data
+  //  */
+  // const onAddPhoneHandler: SubmitHandler<FieldValues> = (data) => {
+  //   for (let i = 0; i < phoneList.length; i++) {
+  //     for (let j = 0; j < phoneList[i].length; j++) {
+  //       if (phoneNum === phoneList[i][j])
+  //         return alert("이미 추가된 전화번호입니다");
+  //     }
+  //   }
 
-    if (phoneList.length === 1) {
-      if (phoneList[0].length < 3) {
-        setPhoneList((phoneList) => [[...phoneList[0], phoneNum]]);
-      } else {
-        setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
-      }
-    } else {
-      if (phoneList[phoneList.length - 1].length < 3) {
-        setPhoneList((phoneList) => [
-          ...phoneList.filter((item, idx) => idx !== phoneList.length - 1),
-          [...phoneList[phoneList.length - 1], phoneNum],
-        ]);
-      } else {
-        setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
-      }
-    }
+  //   if (phoneList.length === 1) {
+  //     if (phoneList[0].length < 3) {
+  //       setPhoneList((phoneList) => [[...phoneList[0], phoneNum]]);
+  //     } else {
+  //       setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
+  //     }
+  //   } else {
+  //     if (phoneList[phoneList.length - 1].length < 3) {
+  //       setPhoneList((phoneList) => [
+  //         ...phoneList.filter((item, idx) => idx !== phoneList.length - 1),
+  //         [...phoneList[phoneList.length - 1], phoneNum],
+  //       ]);
+  //     } else {
+  //       setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
+  //     }
+  //   }
 
-    setPhoneNum("");
-  };
+  //   setPhoneNum("");
+  // };
 
-  /**
-   * 전화번호 삭제 handler
-   * @param rowIdx
-   * @param cellIdx
-   */
-  const onDelPhoneHandler = (rowIdx: number, cellIdx: number) => {
-    let odArr: string[] = [];
-    for (let i = 0; i < phoneList.length; i++) {
-      for (let j = 0; j < phoneList[i].length; j++) {
-        if (i !== rowIdx || j !== cellIdx) odArr.push(phoneList[i][j]);
-      }
-    }
+  // /**
+  //  * 전화번호 삭제 handler
+  //  * @param rowIdx
+  //  * @param cellIdx
+  //  */
+  // const onDelPhoneHandler = (rowIdx: number, cellIdx: number) => {
+  //   let odArr: string[] = [];
+  //   for (let i = 0; i < phoneList.length; i++) {
+  //     for (let j = 0; j < phoneList[i].length; j++) {
+  //       if (i !== rowIdx || j !== cellIdx) odArr.push(phoneList[i][j]);
+  //     }
+  //   }
 
-    const resultArr = create2dArray(Math.ceil(odArr.length / 3), 3, odArr);
-    setPhoneList(resultArr);
-  };
+  //   const resultArr = create2dArray(Math.ceil(odArr.length / 3), 3, odArr);
+  //   setPhoneList(resultArr);
+  // };
 
   /**
    * 체크박스 handler
@@ -186,8 +188,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     )
       return alert("발급서류를 선택하세요");
     // sms하는데 번호없음
-    if (pubCheck.online && phoneList.length === 0)
-      return alert("전송할 번호를 추가하세요");
+    // if (pubCheck.online && phoneList.length === 0)
+    if (pubCheck.online && errors.phoneNum) return false;
 
     await onFileApiHandler(mainPubDataHandler());
 
@@ -232,7 +234,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     }
 
     if (pubCheck.print) onPrintHandler();
-    if (pubCheck.online) setOnlineDone(true);
+    if (pubCheck.online && !errors.phoneNum) setOnlineDone(true);
   };
 
   /** 프린트 handler */
@@ -273,7 +275,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     // 발급 api에 넘길 데이터 초기값
     let mainDocPubData: MainPubDocInfo = {
       type: MainDocPubType.NOT_ISSUED,
-      phoneNumber: "test", // <-- 에러임 db에서 배열로 바꿔줘야함
+      phoneNumber: phoneNum,
     };
 
     // 체크 여부에 따른 문서 발급 타입 설정
@@ -501,6 +503,49 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         </Wrapper>
         <Wrapper
+          width={`60%`}
+          dr={`row`}
+          ju={`space-between`}
+          padding={`10px 0px 0px`}
+        >
+          <CommonForm>
+            <Text>휴대폰 번호 : </Text>
+            <TextInput2
+              width={`580px`}
+              type="text"
+              value={phoneNum}
+              {...register("phoneNum", {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  setPhoneNum(trim(e.target.value));
+                },
+                required: {
+                  value: true,
+                  message: "전화번호를 입력하세요.",
+                },
+                pattern: {
+                  value: formRegEx.HP_NUM,
+                  message: "형식에 맞게 입력하세요.",
+                },
+              })}
+            />
+          </CommonForm>
+        </Wrapper>
+        <Wrapper width={`60%`} ju={`flex-start`} padding={`0px`}>
+          {(errors.phoneNum?.type === "required" ||
+            errors.phoneNum?.type === "pattern") && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.phoneNum.message}
+            </Text>
+          )}
+        </Wrapper>
+        {/* <Wrapper
           dr={`row`}
           width={`60%`}
           ju={`space-between`}
@@ -602,7 +647,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               </TableBody>
             </Wrapper>
           </TableWrapper>
-        </Wrapper>
+        </Wrapper> */}
         {props.modalOption.indexOf("Bts") !== -1 ? (
           <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
             <CommonButton
