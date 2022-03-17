@@ -268,7 +268,7 @@ const ManBusinessList: NextPage<any> = (props) => {
           </Wrapper>
         </Wrapper>
 
-        <TableWrapper margin={`50px 0px 0px`}>
+        <TableWrapper margin={`50px 0px 0px`} kindOf={`list`}>
           <TableHead>
             <TableHeadLIST
               width={`10%`}

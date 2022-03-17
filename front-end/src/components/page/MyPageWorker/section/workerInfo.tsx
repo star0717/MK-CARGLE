@@ -62,7 +62,7 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
             이곳에서 직원 정보를 확인 및 수정할 수 있습니다.
           </CommonSubTitle>
         </CommonTitleWrapper>
-        <TableWrapper margin={`50px 0px 0px`}>
+        <TableWrapper margin={`50px 0px 0px`} kindOf={`list`}>
           <TableHead>
             <TableHeadLIST width={`25%`}>직원명</TableHeadLIST>
             <TableHeadLIST width={`25%`}>전화번호</TableHeadLIST>
