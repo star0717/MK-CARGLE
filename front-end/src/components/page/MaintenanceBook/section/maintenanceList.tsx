@@ -57,7 +57,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   const [checkedList, setCheckedList] = useState([]);
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
-
+  console.log(props.findResult);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
