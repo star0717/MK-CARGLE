@@ -203,7 +203,7 @@ export class MainDoc extends BaseEntity {
   @prop({ required: true, type: () => WorkInfo, _id: false })
   works: WorkInfo[];
 
-  @ApiProperty({ description: '결재정보', type: MainPrice, required: false })
+  @ApiProperty({ description: '결제정보', type: MainPrice, required: false })
   @IsOptional()
   @ValidateNested() // 배열일 경우 each 속성 추가
   @Type(() => MainPrice)

@@ -323,111 +323,81 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
             >
               <Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
-                  <Wrapper al={`flex-start`} height={`30px`}>
-                    <Checkbox>
-                      현금
-                      <CheckInput
-                        type="checkbox"
-                        name="cashCheck"
-                        // checked={payCheck.cashCheck}
-                        onChange={onChangeCheck}
-                        // disabled
-                        // cursor={`default`}
+                  <Wrapper ju={`space-between`} dr={`row`}>
+                    <Text>현금</Text>
+                    <Wrapper dr={`row`} width={`auto`}>
+                      <TextInput2
+                        width={`300px`}
+                        al={`flex-end`}
+                        placeholder={"금액을 입력하세요."}
+                        name="cash"
+                        value={price.cash.toLocaleString()}
+                        onChange={onChangePrice}
+                        readOnly={
+                          props.modalOption.indexOf("Bts") === -1
+                            ? false
+                            : edit
+                            ? false
+                            : true
+                        }
                       />
-                      <CheckMark></CheckMark>
-                    </Checkbox>
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <TextInput2
-                      width={`300px`}
-                      al={`flex-end`}
-                      placeholder={"금액을 입력하세요."}
-                      name="cash"
-                      value={price.cash.toLocaleString()}
-                      onChange={onChangePrice}
-                      readOnly={
-                        props.modalOption.indexOf("Bts") === -1
-                          ? false
-                          : edit
-                          ? false
-                          : true
-                      }
-                    />
-                    <Text width={`20px`} textAlign={`right`}>
-                      원
-                    </Text>
+                      <Text width={`20px`} textAlign={`right`}>
+                        원
+                      </Text>
+                    </Wrapper>
+                    <SmallButton kindOf={`default`}>전액입력</SmallButton>
                   </Wrapper>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
-                  <Wrapper al={`flex-start`}>
-                    <Checkbox>
-                      카드
-                      <CheckInput
-                        type="checkbox"
-                        name="creditCheck"
-                        // checked={payCheck.creditCheck}
-                        onChange={onChangeCheck}
-                        // disabled
-                        // cursor={`default`}
+                  <Wrapper ju={`space-between`} dr={`row`}>
+                    <Text>카드</Text>
+                    <Wrapper dr={`row`} width={`auto`}>
+                      <TextInput2
+                        width={`300px`}
+                        al={`flex-end`}
+                        placeholder={"금액을 입력하세요."}
+                        name="credit"
+                        value={price.credit.toLocaleString()}
+                        onChange={onChangePrice}
+                        readOnly={
+                          props.modalOption.indexOf("Bts") === -1
+                            ? false
+                            : edit
+                            ? false
+                            : true
+                        }
                       />
-                      <CheckMark></CheckMark>
-                    </Checkbox>
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <TextInput2
-                      width={`300px`}
-                      al={`flex-end`}
-                      placeholder={"금액을 입력하세요."}
-                      name="credit"
-                      value={price.credit.toLocaleString()}
-                      onChange={onChangePrice}
-                      readOnly={
-                        props.modalOption.indexOf("Bts") === -1
-                          ? false
-                          : edit
-                          ? false
-                          : true
-                      }
-                    />
-                    <Text width={`20px`} textAlign={`right`}>
-                      원
-                    </Text>
+                      <Text width={`20px`} textAlign={`right`}>
+                        원
+                      </Text>
+                    </Wrapper>
+                    <SmallButton kindOf={`default`}>전액입력</SmallButton>
                   </Wrapper>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
-                  <Wrapper al={`flex-start`}>
-                    <Checkbox>
-                      보험
-                      <CheckInput
-                        type="checkbox"
-                        name="insuranceCheck"
-                        // checked={payCheck.insuranceCheck}
-                        onChange={onChangeCheck}
-                        // disabled
-                        // cursor={`default`}
+                  <Wrapper ju={`space-between`} dr={`row`}>
+                    <Text>보험</Text>
+                    <Wrapper dr={`row`} width={`auto`}>
+                      <TextInput2
+                        width={`300px`}
+                        al={`flex-end`}
+                        placeholder={"금액을 입력하세요."}
+                        name="insurance"
+                        value={price.insurance.toLocaleString()}
+                        onChange={onChangePrice}
+                        readOnly={
+                          props.modalOption.indexOf("Bts") === -1
+                            ? false
+                            : edit
+                            ? false
+                            : true
+                        }
                       />
-                      <CheckMark></CheckMark>
-                    </Checkbox>
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <TextInput2
-                      width={`300px`}
-                      al={`flex-end`}
-                      placeholder={"금액을 입력하세요."}
-                      name="insurance"
-                      value={price.insurance.toLocaleString()}
-                      onChange={onChangePrice}
-                      readOnly={
-                        props.modalOption.indexOf("Bts") === -1
-                          ? false
-                          : edit
-                          ? false
-                          : true
-                      }
-                    />
-                    <Text width={`20px`} textAlign={`right`}>
-                      원
-                    </Text>
+                      <Text width={`20px`} textAlign={`right`}>
+                        원
+                      </Text>
+                    </Wrapper>
+                    <SmallButton kindOf={`default`}>전액입력</SmallButton>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
