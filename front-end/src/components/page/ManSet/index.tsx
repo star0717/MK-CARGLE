@@ -29,10 +29,10 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
-    dataSort(props.data.setList.docs, "date", 1, "createdAt")
+    props.data.setList.docs
   ); // 전체 세트 항목
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
-    partSetClass[0]
+    dataSort(partSetClass, "date", 1, "createdAt")[0]
   ); // 선택한 세트 데이터
 
   /*********************************************************************

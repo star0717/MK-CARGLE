@@ -38,20 +38,20 @@ import {
 } from "store/action/user.action";
 import { _iDeleteByUser, _iPartssets, _iPartssetsOne } from "store/interfaces";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
+import { dataSort } from "src/modules/commonModule";
 
 const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [selectClass, setSelectClass] = useState<string>(
-    props.partSetClass[0]?._id
+    dataSort(props.partSetClass, "date", 1, "createdAt")[0]?._id
   ); // 선택한 세트 항목
-
-  console.log(props.partSetClass[0].name);
 
   /*********************************************************************
    * 3. Handlers
@@ -97,8 +97,14 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    * 세트 추가
    */
   const onAddPartSetClass = () => {
+    let name: string = `세트명${props.partSetClass.length + 1}`;
+    for (let i = 0; i < props.partSetClass.length; i++) {
+      if (name === props.partSetClass[i].name) {
+        name = `세트명${Number(name.substring(3)) + 1}`;
+      }
+    }
     const basePartSet: Partial<PartsSet> = {
-      name: `세트명${props.partSetClass.length + 1}`,
+      name: name,
     };
     dispatch(_aPostPartssetsOne(basePartSet)).then(
       (res: _iPartssetsOne) => {
@@ -147,6 +153,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
         dispatch(_aGetPartssets()).then(
           (res: _iPartssets) => {
             props.setPartSetClass(res.payload.docs);
+            console.log(res.payload.docs[0].name);
             alert("저장되었습니다.");
           },
           (err) => {
@@ -240,43 +247,52 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
               </Wrapper>
               <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                 <TableBody>
-                  {props.partSetClass.map(
-                    (set: Partial<PartsSet>, idx: number) => (
-                      <TableRow
-                        key={idx}
-                        onClick={() => onSelectPartSet(set)}
-                        kindOf={
-                          selectClass === set._id
-                            ? `selectClass`
-                            : `noSelectClass`
-                        }
-                      >
-                        <TableRowLIST
-                          width={`15%`}
-                          color={`#d6263b`}
-                          fontSize={`26px`}
+                  {props.partSetClass.length > 0 ? (
+                    props.partSetClass.map(
+                      (set: Partial<PartsSet>, idx: number) => (
+                        <TableRow
+                          key={idx}
+                          onClick={() => onSelectPartSet(set)}
+                          kindOf={
+                            selectClass === set._id
+                              ? `selectClass`
+                              : `noSelectClass`
+                          }
                         >
-                          <IconButton
-                            type="button"
-                            color={`inherit`}
-                            bgColor={`inherit`}
-                            shadow={`none`}
-                            padding={`0px`}
-                            ju={`flex-start`}
-                            al={`center`}
-                            onClick={(
-                              e: React.MouseEvent<HTMLButtonElement>
-                            ) => {
-                              e.stopPropagation();
-                              onDeletePartSetClass(set._id);
-                            }}
+                          <TableRowLIST
+                            width={`15%`}
+                            color={`#d6263b`}
+                            fontSize={`26px`}
                           >
-                            <AiFillMinusSquare />
-                          </IconButton>
-                        </TableRowLIST>
-                        <TableRowLIST width={`85%`}>{set.name}</TableRowLIST>
-                      </TableRow>
+                            <IconButton
+                              type="button"
+                              color={`inherit`}
+                              bgColor={`inherit`}
+                              shadow={`none`}
+                              padding={`0px`}
+                              ju={`flex-start`}
+                              al={`center`}
+                              onClick={(
+                                e: React.MouseEvent<HTMLButtonElement>
+                              ) => {
+                                e.stopPropagation();
+                                onDeletePartSetClass(set._id);
+                              }}
+                            >
+                              <AiFillMinusSquare />
+                            </IconButton>
+                          </TableRowLIST>
+                          <TableRowLIST width={`85%`}>{set.name}</TableRowLIST>
+                        </TableRow>
+                      )
                     )
+                  ) : (
+                    <Wrapper minHeight={`445px`}>
+                      <Text fontSize={`48px`} color={`#c4c4c4`}>
+                        <BsEmojiFrownFill />
+                      </Text>
+                      <Text color={`#c4c4c4`}>부품이 없습니다.</Text>
+                    </Wrapper>
                   )}
                 </TableBody>
               </Wrapper>
