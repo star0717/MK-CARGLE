@@ -52,6 +52,7 @@ const EditBusinessModal: NextPage<any> = (props) => {
     memo: props.clickDoc.memo,
   });
   const [addressModal, setAddressModal] = useState<boolean>(false);
+  const [typingCheck, setTypingCheck] = useState<number>(0);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -98,6 +99,10 @@ const EditBusinessModal: NextPage<any> = (props) => {
         }
       });
   };
+
+  // const typingCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   console.log(e.target.value.length);
+  // };
 
   /*********************************************************************
    * 4. Props settings
@@ -270,10 +275,14 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 name="memo"
                 value={editAgency.memo}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputHandler(e);
+                  if (e.target.value.length <= 300) {
+                    onInputHandler(e);
+                    setTypingCheck(e.target.value.length);
+                  }
                 }}
               />
             </Wrapper>
+            <Text>({typingCheck}/300)</Text>
           </Wrapper>
           <CommonButtonWrapper kindOf={`column`}>
             <CommonButton

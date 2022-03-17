@@ -126,6 +126,29 @@ const Term: NextPage<_pSignUpProps> = (props) => {
         <Wrapper>
           <form onSubmit={handleSubmit(agreeTermHandler)}>
             <Wrapper al={`flex-start`} width={`500px`} padding={`0px 0px 30px`}>
+              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
+                <Wrapper width={`auto`}></Wrapper>
+                <Wrapper dr={`row`} width={`auto`}>
+                  <Checkbox>
+                    전체동의
+                    <CheckInput
+                      type="checkbox"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        dispatch({
+                          type: actionTypesUser.FORM_CHECK,
+                          payload: {
+                            ...props.formCheck,
+                            mkTerm: e.target.checked,
+                            privacyTerm: e.target.checked,
+                            marketTerm: e.target.checked,
+                          },
+                        });
+                      }}
+                    />
+                    <CheckMark></CheckMark>
+                  </Checkbox>
+                </Wrapper>
+              </Wrapper>
               <Wrapper>
                 <CommonSmallTitle>
                   CARGLE 서비스 이용약관(필수)
