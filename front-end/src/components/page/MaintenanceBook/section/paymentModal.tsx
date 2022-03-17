@@ -324,17 +324,17 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
               <Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                   <Wrapper al={`flex-start`} height={`30px`}>
-                    <Checkbox cursor={`default`}>
+                    <Checkbox>
                       현금
                       <CheckInput
                         type="checkbox"
                         name="cashCheck"
-                        checked={payCheck.cashCheck}
+                        // checked={payCheck.cashCheck}
                         onChange={onChangeCheck}
-                        disabled
-                        cursor={`default`}
+                        // disabled
+                        // cursor={`default`}
                       />
-                      <CheckMark cursor={`default`}></CheckMark>
+                      <CheckMark></CheckMark>
                     </Checkbox>
                   </Wrapper>
                   <Wrapper dr={`row`}>
@@ -360,17 +360,17 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                   <Wrapper al={`flex-start`}>
-                    <Checkbox cursor={`default`}>
+                    <Checkbox>
                       카드
                       <CheckInput
                         type="checkbox"
                         name="creditCheck"
-                        checked={payCheck.creditCheck}
+                        // checked={payCheck.creditCheck}
                         onChange={onChangeCheck}
-                        disabled
-                        cursor={`default`}
+                        // disabled
+                        // cursor={`default`}
                       />
-                      <CheckMark cursor={`default`}></CheckMark>
+                      <CheckMark></CheckMark>
                     </Checkbox>
                   </Wrapper>
                   <Wrapper dr={`row`}>
@@ -396,17 +396,17 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
                   <Wrapper al={`flex-start`}>
-                    <Checkbox cursor={`default`}>
+                    <Checkbox>
                       보험
                       <CheckInput
                         type="checkbox"
                         name="insuranceCheck"
-                        checked={payCheck.insuranceCheck}
+                        // checked={payCheck.insuranceCheck}
                         onChange={onChangeCheck}
-                        disabled
-                        cursor={`default`}
+                        // disabled
+                        // cursor={`default`}
                       />
-                      <CheckMark cursor={`default`}></CheckMark>
+                      <CheckMark></CheckMark>
                     </Checkbox>
                   </Wrapper>
                   <Wrapper dr={`row`}>
