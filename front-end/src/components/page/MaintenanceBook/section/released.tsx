@@ -980,7 +980,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                             {mainPartsTypeList.map((item: MainPartsType) => {
                               return (
                                 <option key={item} value={item}>
-                                  {getStrMainPartsType(item)}
+                                  {item.toUpperCase()}
                                 </option>
                               );
                             })}

@@ -52,7 +52,9 @@ const EditBusinessModal: NextPage<any> = (props) => {
     memo: props.clickDoc.memo,
   });
   const [addressModal, setAddressModal] = useState<boolean>(false);
-  const [typingCheck, setTypingCheck] = useState<number>(0);
+  const [typingCheck, setTypingCheck] = useState<number>(
+    props.clickDoc.memo.length
+  );
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -282,7 +284,9 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 }}
               />
             </Wrapper>
-            <Text>({typingCheck}/300)</Text>
+            <Wrapper al={`flex-end`}>
+              <Text>({typingCheck}/300)</Text>
+            </Wrapper>
           </Wrapper>
           <CommonButtonWrapper kindOf={`column`}>
             <CommonButton
