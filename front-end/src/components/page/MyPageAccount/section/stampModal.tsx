@@ -17,6 +17,7 @@ import {
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import gm from "gm";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -61,6 +62,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
       (blob: any) => {
         const formData: FormData = new FormData();
         formData.append("file", blob);
+
         dispatch(uploadStampAction(formData)).then((res: any) => {
           if (res.payload.length !== 0) {
             alert("도장이 업로드되었습니다.");

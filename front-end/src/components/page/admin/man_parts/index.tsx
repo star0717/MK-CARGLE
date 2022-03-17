@@ -25,7 +25,7 @@ import {
   CheckMark,
   CommonSubTitle,
 } from "../../../styles/CommonComponents";
-import { BsSearch } from "react-icons/bs";
+import { BsEmojiFrownFill, BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import PartsModal from "./partsModal";
 import Modal from "react-modal";
@@ -48,6 +48,7 @@ import {
 import { Part } from "../../../../models/part.entity";
 import { _pAdminManParts } from "../../../../configure/_pProps.entity";
 import PartsInfoModal from "./partsInfoModal";
+import { strSort } from "src/modules/commonModule";
 
 const AdminManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -347,39 +348,50 @@ const AdminManPartsPage: NextPage<_MainProps> = (props) => {
                 </Wrapper>
                 <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
                   <TableBody>
-                    {partList.map((list: Part) => (
-                      <TableRow
-                        key={list._id}
-                        onClick={() => {
-                          setClickDoc(list);
-                          setModalOption("editPart");
-                          setModalOpen(true);
-                        }}
-                      >
-                        <TableRowLIST
-                          width={`10%`}
-                          onClick={(e: React.MouseEvent<HTMLLIElement>) =>
-                            e.stopPropagation()
-                          }
+                    {partList.length > 0 ? (
+                      strSort(partList, 1, "name").map((list: Part) => (
+                        <TableRow
+                          key={list._id}
+                          onClick={() => {
+                            setClickDoc(list);
+                            setModalOption("editPart");
+                            setModalOpen(true);
+                          }}
                         >
-                          <Checkbox kindOf={`TableCheckBox`}>
-                            <CheckInput
-                              type="checkbox"
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => onCheckedElement(e.target.checked, list)}
-                              checked={
-                                checkedList.includes(list._id) ? true : false
-                              }
-                            />
-                            <CheckMark></CheckMark>
-                          </Checkbox>
-                        </TableRowLIST>
-                        <TableRowLIST width={`20%`}>{list.code}</TableRowLIST>
-                        <TableRowLIST width={`35%`}>{list.name}</TableRowLIST>
-                        <TableRowLIST width={`35%`}>{list.tsCode}</TableRowLIST>
-                      </TableRow>
-                    ))}
+                          <TableRowLIST
+                            width={`10%`}
+                            onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                              e.stopPropagation()
+                            }
+                          >
+                            <Checkbox kindOf={`TableCheckBox`}>
+                              <CheckInput
+                                type="checkbox"
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => onCheckedElement(e.target.checked, list)}
+                                checked={
+                                  checkedList.includes(list._id) ? true : false
+                                }
+                              />
+                              <CheckMark></CheckMark>
+                            </Checkbox>
+                          </TableRowLIST>
+                          <TableRowLIST width={`20%`}>{list.code}</TableRowLIST>
+                          <TableRowLIST width={`35%`}>{list.name}</TableRowLIST>
+                          <TableRowLIST width={`35%`}>
+                            {list.tsCode}
+                          </TableRowLIST>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <Wrapper minHeight={`445px`}>
+                        <Text fontSize={`48px`} color={`#c4c4c4`}>
+                          <BsEmojiFrownFill />
+                        </Text>
+                        <Text color={`#c4c4c4`}>부품이 없습니다.</Text>
+                      </Wrapper>
+                    )}
                   </TableBody>
                 </Wrapper>
               </TableWrapper>

@@ -85,6 +85,8 @@ const SubComponent: NextPage<_MainProps> = (props) => {
   const router: NextRouter = useRouter();
   const pathName: string = getPathName(router.asPath);
 
+  if (!props.tokenValue.uApproval) return <Approval />;
+
   switch (pathName) {
     // 일반 메뉴
     case UseLink.MAIN:
