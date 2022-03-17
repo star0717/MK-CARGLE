@@ -13,6 +13,7 @@ import {
   CommonButton,
   CommonButtonWrapper,
   SmallButton,
+  CommonForm,
 } from "src/components/styles/CommonComponents";
 import { GoPrimitiveDot } from "react-icons/go";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
@@ -48,6 +49,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   const [payCheck, setPayCheck] = useState<PayCheck>(payCheckInit);
   const [edit, setEdit] = useState<boolean>(false);
   const [discount, setDiscount] = useState<number>(props.mtInfo.price.discount);
+  const [totalName, setTotalName] = useState<string>("");
 
   /*********************************************************************
    * 3. Handlers
@@ -86,13 +88,32 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
     }
   };
 
-  /**
-   * 결제수단 체크 handler
-   * @param e
-   */
-  const onChangeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPayCheck({ ...payCheck, [e.target.name]: e.target.checked });
-  };
+  // /**
+  //  * 결제수단 체크 handler
+  //  * @param e
+  //  */
+  // const onChangeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPayCheck({ ...payCheck, [e.target.name]: e.target.checked });
+  // };
+  useEffect(() => {
+    switch (totalName) {
+      case "cash": {
+        setPrice({ ...price, cash: price.cash + price.balance });
+        break;
+      }
+      case "credit": {
+        setPrice({ ...price, credit: price.credit + price.balance });
+        break;
+      }
+      case "insurance": {
+        setPrice({ ...price, insurance: price.insurance + price.balance });
+        break;
+      }
+      default: {
+        return;
+      }
+    }
+  }, [totalName]);
 
   /**결제 금액 계산 handler */
   useEffect(() => {
@@ -303,7 +324,6 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
-
           <Wrapper width={`45%`}>
             <Wrapper
               al={`flex-start`}
@@ -345,7 +365,22 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                         원
                       </Text>
                     </Wrapper>
-                    <SmallButton kindOf={`default`}>전액입력</SmallButton>
+                    <SmallButton
+                      type="button"
+                      kindOf={edit ? `default` : `ghost`}
+                      onClick={() => {
+                        setTotalName("cash");
+                      }}
+                      disabled={
+                        props.modalOption.indexOf("Bts") === -1
+                          ? false
+                          : edit
+                          ? false
+                          : true
+                      }
+                    >
+                      전액입력
+                    </SmallButton>
                   </Wrapper>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
@@ -371,7 +406,22 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                         원
                       </Text>
                     </Wrapper>
-                    <SmallButton kindOf={`default`}>전액입력</SmallButton>
+                    <SmallButton
+                      type="submit"
+                      kindOf={edit ? `default` : `ghost`}
+                      onClick={() => {
+                        setTotalName("credit");
+                      }}
+                      disabled={
+                        props.modalOption.indexOf("Bts") === -1
+                          ? false
+                          : edit
+                          ? false
+                          : true
+                      }
+                    >
+                      전액입력
+                    </SmallButton>
                   </Wrapper>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
@@ -397,7 +447,22 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                         원
                       </Text>
                     </Wrapper>
-                    <SmallButton kindOf={`default`}>전액입력</SmallButton>
+                    <SmallButton
+                      type="submit"
+                      kindOf={edit ? `default` : `ghost`}
+                      onClick={() => {
+                        setTotalName("insurance");
+                      }}
+                      disabled={
+                        props.modalOption.indexOf("Bts") === -1
+                          ? false
+                          : edit
+                          ? false
+                          : true
+                      }
+                    >
+                      전액입력
+                    </SmallButton>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
