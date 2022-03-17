@@ -1115,7 +1115,7 @@ export const Image = styled.img<any>`
 
   filter: ${(props) => (props.isFilter ? `brightness(30%) opacity(0.4)` : ` `)};
 
-  filter: ${(props) => (props.isTransparency ? ` opacity(0)` : ` `)};
+  filter: ${(props) => (props.isTransparency ? ` opacity(0.3)` : ` `)};
 
   &:hover {
     filter: ${(props) => (props.isHover ? `brightness(100%) opacity(1)` : ` `)};
@@ -1314,6 +1314,8 @@ export const TableWrapper = styled.div<any>`
   overflow: ${(props) => props.overflow || ``};
   overflow-y: ${(props) => props.overflowY || ``};
   border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
+
+  ${(props) => props.kindOf === `list` && `min-height : 500px;`}
 `;
 
 export const TableHead = styled.ul<any>`
