@@ -91,6 +91,7 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
               color={`#343a40`}
               onClick={() => {
                 setDocBool(!docBool);
+                document.getElementById("previewModal").scrollTo(0, 0);
               }}
             >
               <IoIosArrowDropleftCircle />
@@ -112,6 +113,7 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
               color={`#343a40`}
               onClick={() => {
                 setDocBool(!docBool);
+                document.getElementById("previewModal").scrollTo(0, 0);
               }}
             >
               <IoIosArrowDroprightCircle fontSize={`100`} />

@@ -221,4 +221,5 @@ export interface _pPreviewModalProps {
   propMtInfo?: Maintenance;
   eInfo: Estimate;
   sInfo: Statement;
+  stampImgSrc: string;
 }
