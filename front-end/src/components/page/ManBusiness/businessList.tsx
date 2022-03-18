@@ -331,7 +331,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                   </TableRowLIST>
                   <TableRowLIST width={`15%`}>{list.name}</TableRowLIST>
                   <TableRowLIST width={`15%`}>
-                    {list.hpNum === "" ? list.hpNum : list.phoneNum}
+                    {list.phoneNum === "" ? list.hpNum : list.phoneNum}
                   </TableRowLIST>
                   <TableRowLIST width={`25%`} padding={`0px 10px`}>
                     <ToolTipWrapper>
