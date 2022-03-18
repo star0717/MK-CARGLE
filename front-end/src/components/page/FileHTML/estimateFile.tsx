@@ -20,10 +20,10 @@ const EstimateFile: NextPage<any> = forwardRef<
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [imgIdx, setImgIdx] = useState<number>(Math.floor(Math.random() * 100));
-  const [stampImgSrc, setStampImgSrc] = useState<string>(
-    `/api/settings/myinfo/stamp?num=${imgIdx}`
-  ); // url src 설정
+  // const [imgIdx, setImgIdx] = useState<number>(Math.floor(Math.random() * 100));
+  // const [stampImgSrc, setStampImgSrc] = useState<string>(
+  //   `/api/settings/myinfo/stamp?num=${imgIdx}`
+  // ); // url src 설정
 
   /*********************************************************************
    * 3. Handlers
@@ -286,6 +286,7 @@ const EstimateFile: NextPage<any> = forwardRef<
               >
                 <Wrapper isAbsolute left={`-55px`}>
                   <Image
+                    className="stamp"
                     alt="도장 사진"
                     width={40}
                     height={40}
@@ -734,6 +735,7 @@ const EstimateFile: NextPage<any> = forwardRef<
               </Text>
               <Wrapper isAbsolute left={`82px`}>
                 <Image
+                  className="stamp"
                   alt="도장 사진"
                   width={40}
                   height={40}

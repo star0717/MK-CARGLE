@@ -97,6 +97,11 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
   const [eInfo, setEInfo] = useState<Estimate>(); // 견적서 정보
   const [sInfo, setSInfo] = useState<Statement>(); // 명세서 정보
 
+  const [imgIdx, setImgIdx] = useState<number>(Math.floor(Math.random() * 100));
+  const [stampImgSrc, setStampImgSrc] = useState<string>(
+    `/api/settings/myinfo/stamp?num=${imgIdx}`
+  ); // stamp img src 설정
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -239,10 +244,6 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
 
   /** 프린트 handler */
   const onPrintHandler = useReactToPrint({
-    onBeforeGetContent: () => {
-      const imgIdx: number = Math.floor(Math.random() * 100);
-      const stampImgSrc: string = `/api/settings/myinfo/stamp?num=${imgIdx}`;
-    },
     content: () => {
       const printElem = document.createElement("div");
       if (fileCheck.eCheck) {
@@ -252,6 +253,12 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
       if (fileCheck.sCheck) {
         const sNode = statementRef.current.cloneNode(true);
         printElem.appendChild(sNode);
+      }
+      let imgElem = printElem.getElementsByClassName(
+        "stamp"
+      ) as HTMLCollectionOf<HTMLImageElement>;
+      for (let i = 0; i < imgElem.length; i++) {
+        imgElem[i].src = stampImgSrc;
       }
       return printElem;
     },
@@ -395,6 +402,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     propMtInfo,
     eInfo,
     sInfo,
+    stampImgSrc,
   };
 
   /*********************************************************************
@@ -721,11 +729,12 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
         <StatementFile {...previewModalProps} ref={statementRef} />
       </Wrapper>
       <Modal
+        id="previewModal"
         isOpen={modal2Open}
         style={{
           overlay: {
             position: "fixed",
-            zIndex: 10000,
+            zIndex: 10005,
             top: 0,
             left: 0,
             width: "100vw",
