@@ -49,6 +49,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -64,11 +65,13 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     costomerType: "all",
     status: "all",
   });
-  console.log("@@", props.data);
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  useEffect(() => {
+    setFindResult(props.data);
+  }, [props.data]);
   /**
    * 작업자의 정보를 조회함
    * @param page 조회할 페이지
