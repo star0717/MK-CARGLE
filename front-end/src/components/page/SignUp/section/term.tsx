@@ -180,15 +180,16 @@ const Term: NextPage<_pSignUpProps> = (props) => {
           <form onSubmit={handleSubmit(agreeTermHandler)}>
             <Wrapper al={`flex-start`} width={`500px`} padding={`0px 0px 30px`}>
               <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
-                <Wrapper width={`auto`}></Wrapper>
+                <Text></Text>
                 <Wrapper dr={`row`} width={`auto`}>
                   <Checkbox>
-                    전체동의
                     <CheckInput
                       type="checkbox"
                       checked={allCheck}
                       onChange={allCheckHandler}
                     />
+                    CARGLE 서비스 이용약관, 개인정보 수집 및 이용, 마케팅 정보
+                    수신(선택)에 모두 동의합니다.
                     <CheckMark></CheckMark>
                   </Checkbox>
                 </Wrapper>
