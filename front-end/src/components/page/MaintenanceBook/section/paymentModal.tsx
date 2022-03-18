@@ -76,19 +76,16 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   useEffect(() => {
     switch (totalName) {
       case "cash": {
-        setPrice({ ...price, cash: price.cash + price.balance });
-        break;
+        return setPrice({ ...price, cash: price.cash + price.balance });
       }
       case "credit": {
-        setPrice({ ...price, credit: price.credit + price.balance });
-        break;
+        return setPrice({ ...price, credit: price.credit + price.balance });
       }
       case "insurance": {
-        setPrice({ ...price, insurance: price.insurance + price.balance });
-        break;
-      }
-      default: {
-        return;
+        return setPrice({
+          ...price,
+          insurance: price.insurance + price.balance,
+        });
       }
     }
   }, [totalName]);
