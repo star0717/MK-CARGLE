@@ -239,6 +239,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
 
   /** 프린트 handler */
   const onPrintHandler = useReactToPrint({
+    onBeforeGetContent: () => {
+      const imgIdx: number = Math.floor(Math.random() * 100);
+      const stampImgSrc: string = `/api/settings/myinfo/stamp?num=${imgIdx}`;
+    },
     content: () => {
       const printElem = document.createElement("div");
       if (fileCheck.eCheck) {

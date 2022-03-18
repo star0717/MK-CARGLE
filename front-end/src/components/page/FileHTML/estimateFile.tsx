@@ -289,7 +289,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                     alt="도장 사진"
                     width={40}
                     height={40}
-                    src={stampImgSrc}
+                    src={props.stampImgSrc}
                   />
                 </Wrapper>
                 <Text fontSize={`0.67em`} fontWeight={`400`} color={`#9d9d9d`}>
@@ -737,7 +737,7 @@ const EstimateFile: NextPage<any> = forwardRef<
                   alt="도장 사진"
                   width={40}
                   height={40}
-                  src={stampImgSrc}
+                  src={props.stampImgSrc}
                 />
               </Wrapper>
               <Text
