@@ -53,6 +53,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
     memo: "",
   });
   const [addressModal, setAddressModal] = useState<boolean>(false);
+  const [typingCheck, setTypingCheck] = useState<number>(0);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -125,6 +126,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="name"
+                value={addAgency.name}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -139,6 +141,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="phoneNum"
+                value={addAgency.phoneNum}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -153,6 +156,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="hpNum"
+                value={addAgency.hpNum}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -167,8 +171,11 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="manager"
+                value={addAgency.manager}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputHandler(e);
+                  if (e.target.value.length <= 8) {
+                    onInputHandler(e);
+                  }
                 }}
               />
             </Wrapper>
@@ -181,6 +188,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="comRegNum"
+                value={addAgency.comRegNum}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -195,6 +203,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="faxNum"
+                value={addAgency.faxNum}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -209,6 +218,7 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 width={`400px`}
                 type="text"
                 name="email"
+                value={addAgency.email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputHandler(e);
                 }}
@@ -265,9 +275,15 @@ const AddBusinessModal: NextPage<any> = (props) => {
                 type="text"
                 name="memo"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputHandler(e);
+                  if (e.target.value.length <= 300) {
+                    onInputHandler(e);
+                    setTypingCheck(e.target.value.length);
+                  }
                 }}
               />
+            </Wrapper>
+            <Wrapper al={`flex-end`}>
+              <Text>({typingCheck}/300)</Text>
             </Wrapper>
           </Wrapper>
           <CommonButtonWrapper kindOf={`column`}>

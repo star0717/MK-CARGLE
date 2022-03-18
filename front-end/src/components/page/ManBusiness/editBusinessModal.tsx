@@ -175,7 +175,9 @@ const EditBusinessModal: NextPage<any> = (props) => {
                 name="manager"
                 value={editAgency.manager}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputHandler(e);
+                  if (e.target.value.length <= 8) {
+                    onInputHandler(e);
+                  }
                 }}
               />
             </Wrapper>
