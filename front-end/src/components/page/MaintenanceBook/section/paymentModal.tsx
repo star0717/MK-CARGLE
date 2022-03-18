@@ -47,6 +47,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
     e.target.value = e.target.value.replaceAll(",", "");
     switch (e.target.name) {
       case "discount":
+        setPrice({ ...price, cash: 0, credit: 0, insurance: 0 });
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setDiscount(0);
         } else {
