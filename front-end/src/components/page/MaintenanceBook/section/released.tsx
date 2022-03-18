@@ -757,7 +757,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   <TextInput2
                     type="text"
                     width={`150px`}
-                    placeholder={`보험사명 입력란`}
+                    placeholder={`보험사명`}
                     readOnly
                   />
                 </Wrapper>
@@ -769,7 +769,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                   <TextInput2
                     type="text"
                     width={`240px`}
-                    placeholder={`보험번호 입력란`}
+                    placeholder={`보험번호`}
                     readOnly
                   />
                 </Wrapper>

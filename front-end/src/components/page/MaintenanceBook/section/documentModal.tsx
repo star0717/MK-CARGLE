@@ -513,6 +513,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
             <TextInput2
               width={`580px`}
               type="text"
+              placeholder="전송할 휴대폰번호를 입력하세요."
               value={phoneNum}
               {...register("phoneNum", {
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
