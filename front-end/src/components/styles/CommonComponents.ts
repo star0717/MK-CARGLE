@@ -1347,7 +1347,7 @@ export const TableHeadLIST = styled.li<any>`
   text-align: start;
   font-size: ${(props) => props.fontSize || `16px`};
   color: ${(props) => props.color || ``};
-  padding: ${(props) => props.padding || `0px 10px`};
+  padding: ${(props) => props.padding || ``};
 `;
 
 export const TableBody = styled.div<any>`
@@ -1410,7 +1410,7 @@ export const TableRowLIST = styled.li<any>`
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
-  padding: ${(props) => props.padding || `0px 10px`};
+  padding: ${(props) => props.padding || ``};
   line-height: ${(props) => props.lineHeight || `1.2`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
   text-align: start;
