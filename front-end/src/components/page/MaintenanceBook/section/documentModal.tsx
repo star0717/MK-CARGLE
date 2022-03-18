@@ -434,13 +434,11 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         )}
         <Wrapper padding={`10px 0px 0px`}>
-          <CommonSmallTitle margin={`0px 0px 30px 0px`}>
-            서류발급
-          </CommonSmallTitle>
+          <CommonSmallTitle margin={`40px 0px`}>서류발급</CommonSmallTitle>
         </Wrapper>
         <Wrapper
           width={`60%`}
-          padding={`10px 80px`}
+          padding={`60px 80px`}
           border={`1px solid #ccc`}
           radius={`8px`}
           shadow={`0px 5px 10px rgba(220,220,220,0.6)`}
@@ -518,7 +516,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           width={`60%`}
           dr={`row`}
           ju={`space-between`}
-          padding={`10px 0px 0px`}
+          padding={`70px 0px 40px `}
         >
           <CommonForm>
             <Text>휴대폰 번호 : </Text>
