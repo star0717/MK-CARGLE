@@ -857,40 +857,36 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                               onChangeInputArr(e, idx);
                             }}
                           />
-                          {data.name.length > 2 && (
-                            <datalist
-                              id="workList"
-                              dispaly={data.name.length > 2 ? `` : `none`}
-                            >
-                              {props.data.allParts.docs.map(
-                                (item: Part, idx: number) => {
-                                  return (
-                                    <Wrapper key={idx}>
-                                      {item.nickName.length >= 1 ? (
-                                        item.nickName.map(
-                                          (nickname: string, iidx: number) => {
-                                            return (
-                                              <option
-                                                key={`${idx}.${iidx}`}
-                                                label={nickname}
-                                                value={item.name}
-                                              />
-                                            );
-                                          }
-                                        )
-                                      ) : (
-                                        <option
-                                          key={idx}
-                                          label={item.nickName[0]}
-                                          value={item.name}
-                                        />
-                                      )}
-                                    </Wrapper>
-                                  );
-                                }
-                              )}
-                            </datalist>
-                          )}
+
+                          <datalist id="workList">
+                            {props.data.allParts.docs.map(
+                              (item: Part, idx: number) => {
+                                return (
+                                  <Wrapper key={idx}>
+                                    {item.nickName.length >= 1 ? (
+                                      item.nickName.map(
+                                        (nickname: string, iidx: number) => {
+                                          return (
+                                            <option
+                                              key={`${idx}.${iidx}`}
+                                              label={nickname}
+                                              value={item.name}
+                                            />
+                                          );
+                                        }
+                                      )
+                                    ) : (
+                                      <option
+                                        key={idx}
+                                        label={item.nickName[0]}
+                                        value={item.name}
+                                      />
+                                    )}
+                                  </Wrapper>
+                                );
+                              }
+                            )}
+                          </datalist>
                         </TableRowLIST>
                         <TableRowLIST width={`12%`}>
                           <SmallButton
