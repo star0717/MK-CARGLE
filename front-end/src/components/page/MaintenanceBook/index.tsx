@@ -64,7 +64,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
     costomerType: "all",
     status: "all",
   });
-
+  console.log("@@", props.data);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
