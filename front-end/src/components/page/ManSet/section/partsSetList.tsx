@@ -38,17 +38,19 @@ import {
 } from "store/action/user.action";
 import { _iDeleteByUser, _iPartssets, _iPartssetsOne } from "store/interfaces";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
+import { dataSort } from "src/modules/commonModule";
 
 const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [selectClass, setSelectClass] = useState<string>(
-    props.partSetClass[0]?._id
+    dataSort(props.partSetClass, "date", 1, "createdAt")[0]?._id
   ); // 선택한 세트 항목
 
   /*********************************************************************
@@ -59,7 +61,9 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    */
   useEffect(() => {
     if (!selectClass) {
-      return props.setPartSetData(undefined);
+      if (props.partSetClass.length === 0)
+        return props.setPartSetData(undefined);
+      return setSelectClass(props.partSetClass[0]._id);
     }
     dispatch(_aGetPartssetsOne(selectClass)).then((res: _iPartssetsOne) => {
       props.setPartSetData(res.payload);
@@ -68,7 +72,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
 
   /**
    * 세트 클래스 변경
-   * @param set
+   * @param select
    * @returns
    */
   const onSelectPartSet = (select: Partial<PartsSet>) => {
@@ -93,12 +97,18 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
    * 세트 추가
    */
   const onAddPartSetClass = () => {
+    let name: string = `세트명${props.partSetClass.length + 1}`;
+    for (let i = 0; i < props.partSetClass.length; i++) {
+      if (name === props.partSetClass[i].name) {
+        name = `세트명${Number(name.substring(3)) + 1}`;
+      }
+    }
     const basePartSet: Partial<PartsSet> = {
-      name: "세트명입니다.",
+      name: name,
     };
     dispatch(_aPostPartssetsOne(basePartSet)).then(
       (res: _iPartssetsOne) => {
-        props.setPartSetClass(props.partSetClass.concat(res.payload));
+        props.setPartSetClass((partSetClass) => [...partSetClass, res.payload]);
         setSelectClass(res.payload._id);
       },
       (err) => {
@@ -109,23 +119,33 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
 
   /**
    * 세트 삭제
+   * @param id
+   * @returns
    */
   const onDeletePartSetClass = (id: string) => {
-    dispatch(_aDeletePartssetsOne(id)).then(
-      (res: _iDeleteByUser) => {
-        props.setPartSetClass(
-          props.partSetClass.filter((partSet) => partSet._id !== id)
-        );
-        setSelectClass(props.partSetClass[0]._id);
-      },
-      (err) => {
-        alert("세트 항목 삭제에 실패했습니다.");
-      }
-    );
+    if (window.confirm("세트를 삭제하시겠습니까?")) {
+      dispatch(_aDeletePartssetsOne(id)).then(
+        (res: _iDeleteByUser) => {
+          props.setPartSetClass(
+            props.partSetClass.filter((partSet) => partSet._id !== id)
+          );
+          setSelectClass(null);
+        },
+        (err) => {
+          alert("세트 항목 삭제에 실패했습니다.");
+        }
+      );
+    } else {
+      return false;
+    }
   };
 
   /** 세트 저장(실제타는 api는 수정) */
   const onSavePartsSet = () => {
+    for (let i = 0; i < props.partSetClass.length; i++) {
+      if (props.partSetData.name === props.partSetClass[i].name)
+        return alert("중복된 세트명입니다.");
+    }
     dispatch(
       _aPatchPartssetsOne(props.partSetData._id, props.partSetData)
     ).then(
@@ -133,6 +153,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
         dispatch(_aGetPartssets()).then(
           (res: _iPartssets) => {
             props.setPartSetClass(res.payload.docs);
+            console.log(res.payload.docs[0].name);
             alert("저장되었습니다.");
           },
           (err) => {
@@ -148,7 +169,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
 
   /**
    * 부품 삭제
-   * @param id
+   * @param code
    */
   const onDeletePart = (code: string) => {
     props.setPartSetData({
@@ -203,7 +224,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
             <TableWrapper>
               <Wrapper isSticky={true}>
                 <TableHead radius={`8px 8px 0px 0px`}>
-                  <TableHeadLIST
+                  {/* <TableHeadLIST
                     width={`15%`}
                     color={`#51b351`}
                     fontSize={`26px`}
@@ -220,50 +241,68 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                     >
                       <AiFillPlusSquare />
                     </IconButton>
-                  </TableHeadLIST>
-                  <TableHeadLIST width={`85%`}>세트항목</TableHeadLIST>
+                  </TableHeadLIST> */}
+                  <TableHeadLIST width={`100%`}>세트항목</TableHeadLIST>
                 </TableHead>
               </Wrapper>
-              <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+              <Wrapper overflow={`auto`} height={`500px`} ju={`flex-start`}>
                 <TableBody>
-                  {props.partSetClass.map(
-                    (set: Partial<PartsSet>, idx: number) => (
-                      <TableRow
-                        key={idx}
-                        onClick={() => onSelectPartSet(set)}
-                        kindOf={
-                          selectClass === set._id
-                            ? `selectClass`
-                            : `noSelectClass`
-                        }
-                      >
-                        <TableRowLIST
-                          width={`15%`}
-                          color={`#d6263b`}
-                          fontSize={`26px`}
+                  {props.partSetClass.length > 0 ? (
+                    props.partSetClass.map(
+                      (set: Partial<PartsSet>, idx: number) => (
+                        <TableRow
+                          key={idx}
+                          onClick={() => onSelectPartSet(set)}
+                          kindOf={
+                            selectClass === set._id
+                              ? `selectClass`
+                              : `noSelectClass`
+                          }
                         >
-                          <IconButton
-                            type="button"
-                            color={`inherit`}
-                            bgColor={`inherit`}
-                            shadow={`none`}
-                            padding={`0px`}
-                            ju={`flex-start`}
-                            al={`center`}
-                            onClick={(
-                              e: React.MouseEvent<HTMLButtonElement>
-                            ) => {
-                              e.stopPropagation();
-                              onDeletePartSetClass(set._id);
-                            }}
+                          <TableRowLIST
+                            width={`15%`}
+                            color={`#d6263b`}
+                            fontSize={`26px`}
                           >
-                            <AiFillMinusSquare />
-                          </IconButton>
-                        </TableRowLIST>
-                        <TableRowLIST width={`85%`}>{set.name}</TableRowLIST>
-                      </TableRow>
+                            <IconButton
+                              type="button"
+                              color={`inherit`}
+                              bgColor={`inherit`}
+                              shadow={`none`}
+                              padding={`0px`}
+                              ju={`flex-start`}
+                              al={`center`}
+                              onClick={(
+                                e: React.MouseEvent<HTMLButtonElement>
+                              ) => {
+                                e.stopPropagation();
+                                onDeletePartSetClass(set._id);
+                              }}
+                            >
+                              <AiFillMinusSquare />
+                            </IconButton>
+                          </TableRowLIST>
+                          <TableRowLIST width={`85%`}>{set.name}</TableRowLIST>
+                        </TableRow>
+                      )
                     )
+                  ) : (
+                    <Wrapper minHeight={`450px`}>
+                      <Text fontSize={`48px`} color={`#c4c4c4`}>
+                        <BsEmojiFrownFill />
+                      </Text>
+                      <Text color={`#c4c4c4`}>부품이 없습니다.</Text>
+                    </Wrapper>
                   )}
+                  <Wrapper padding={`10px 0px 0px`}>
+                    <SmallButton
+                      width={`100%`}
+                      kindOf={`default`}
+                      onClick={onAddPartSetClass}
+                    >
+                      세트항목추가
+                    </SmallButton>
+                  </Wrapper>
                 </TableBody>
               </Wrapper>
             </TableWrapper>
@@ -274,6 +313,8 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
               bgColor={`#343a40`}
               height={`50px`}
               radius={`8px 8px 0px 0px`}
+              al={`flex-start`}
+              padding={`0px 20px`}
             >
               <Text color={`#fff`}>상세정보</Text>
             </Wrapper>
@@ -417,7 +458,10 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
               </Wrapper>
             ) : (
               <Wrapper height={`500px`}>
-                <Text fontSize={`24px`}>세트를 추가해주세요.</Text>
+                <Text fontSize={`48px`} color={`#c4c4c4`}>
+                  <BsEmojiFrownFill />
+                </Text>
+                <Text color={`#c4c4c4`}>세트가 없습니다.</Text>
               </Wrapper>
             )}
           </Wrapper>

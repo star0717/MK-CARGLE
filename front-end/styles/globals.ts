@@ -22,7 +22,15 @@ ${reset}
 
   * {
     box-sizing: border-box;
-  } 
+  }
+
+  input {
+    font-family: "Noto Sans KR", sans-serif;
+  }
+
+  select {
+    font-family: "Noto Sans KR", sans-serif;
+  }
 `;
 
 export default GlobalStyle;

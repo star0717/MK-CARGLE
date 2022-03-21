@@ -20,6 +20,10 @@ const EstimateFile: NextPage<any> = forwardRef<
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  // const [imgIdx, setImgIdx] = useState<number>(Math.floor(Math.random() * 100));
+  // const [stampImgSrc, setStampImgSrc] = useState<string>(
+  //   `/api/settings/myinfo/stamp?num=${imgIdx}`
+  // ); // url src 설정
 
   /*********************************************************************
    * 3. Handlers
@@ -36,7 +40,7 @@ const EstimateFile: NextPage<any> = forwardRef<
     <Wrapper
       id="estimate"
       ref={ref}
-      margin={`10px 0 0`}
+      margin={`0px`}
       padding={`0px`}
       pageBreakAfter={`always`}
     >
@@ -44,7 +48,7 @@ const EstimateFile: NextPage<any> = forwardRef<
         width={`49.58333em`}
         height={`auto`}
         minHeight={`70.08334em`}
-        margin={`0 auto`}
+        margin={`10px auto 0`}
         padding={`0px`}
         ju={`flex-start`}
         al={`flex-start`}
@@ -280,12 +284,13 @@ const EstimateFile: NextPage<any> = forwardRef<
                 borderBottom={`1px solid #ccc`}
                 al={`flex-start`}
               >
-                <Wrapper isAbsolute top={`-5px`} left={`-55px`}>
+                <Wrapper isAbsolute left={`-55px`}>
                   <Image
+                    className="stamp"
                     alt="도장 사진"
-                    width={50}
-                    height={50}
-                    src="/api/settings/myinfo/stamp"
+                    width={40}
+                    height={40}
+                    src={props.stampImgSrc}
                   />
                 </Wrapper>
                 <Text fontSize={`0.67em`} fontWeight={`400`} color={`#9d9d9d`}>
@@ -392,7 +397,7 @@ const EstimateFile: NextPage<any> = forwardRef<
             <Wrapper
               width={`30%`}
               borderRight={`1px solid #ccc`}
-              height={`100%`}
+              height={`44px`}
             >
               <Text fontSize={`0.83em`} fontWeight={`400`}>
                 견적내용
@@ -429,14 +434,14 @@ const EstimateFile: NextPage<any> = forwardRef<
             </Wrapper>
             <Wrapper
               width={`15%`}
-              height={`100%`}
+              height={`44px`}
               borderRight={`1px solid #ccc`}
             >
               <Text fontSize={`0.83em`} fontWeight={`400`}>
                 공임
               </Text>
             </Wrapper>
-            <Wrapper width={`15%`} height={`100%`}>
+            <Wrapper width={`15%`} height={`44px`}>
               <Text fontSize={`0.83em`} fontWeight={`400`}>
                 합계
               </Text>
@@ -728,12 +733,13 @@ const EstimateFile: NextPage<any> = forwardRef<
               >
                 {props.eInfo && props.eInfo.company.ownerName}
               </Text>
-              <Wrapper isAbsolute top={`-13px`} left={`82px`}>
+              <Wrapper isAbsolute left={`82px`}>
                 <Image
+                  className="stamp"
                   alt="도장 사진"
-                  width={50}
-                  height={50}
-                  src="/api/settings/myinfo/stamp"
+                  width={40}
+                  height={40}
+                  src={props.stampImgSrc}
                 />
               </Wrapper>
               <Text

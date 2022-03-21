@@ -6,6 +6,7 @@ import {
   CheckMark,
   CloseButton,
   Combo,
+  CommonForm,
   IconButton,
   JoinStepBar,
   JoinStepBarWrapper,
@@ -159,7 +160,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       wageSum: wageSum,
       sum: sum2,
       vat: vat,
-      total: sum2 + vat,
+      total: sum2 + vat - price.discount,
     });
   }, [workList, price.isIncluded]);
 
@@ -370,8 +371,9 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   return (
     <WholeWrapper>
       <RsWrapper>
-        <Wrapper>
-          {/* <Wrapper
+        <CommonForm autoComplete="off">
+          <Wrapper>
+            {/* <Wrapper
             padding={`20px`}
             width={`400px`}
             margin={`0px 0px 10px 600px`}
@@ -381,62 +383,62 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
               "현재 정비 단계는 출고완료입니다."
             </SpeechBubbleRight>
           </Wrapper> */}
-          <JoinStepBarWrapper padding={`0px 0px 50px`}>
-            <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`complete`}>
-                <GoCheck />
-              </JoinStepBar>
-              <Text height={`0px`} padding={`10px 0px 0px`}>
-                차량선택
-              </Text>
-            </Wrapper>
-            <JoinStepBar kindOf={`line`}></JoinStepBar>
-            <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`complete`}>
-                <GoCheck />
-              </JoinStepBar>
-              <Text height={`0px`} padding={`10px 0px 0px`}>
-                차량입고
-              </Text>
-            </Wrapper>
-            <JoinStepBar kindOf={`line2`}></JoinStepBar>
-            <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`complete`}>{<GoCheck />}</JoinStepBar>
-              <Text height={`0px`} padding={`10px 0px 0px`}>
-                정비중
-              </Text>
-            </Wrapper>
-            <JoinStepBar kindOf={"line2"}></JoinStepBar>
-            <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`complete`}>
-                <GoCheck />
-              </JoinStepBar>
-              <Text height={`0px`} padding={`10px 0px 0px`}>
-                정비완료
-              </Text>
-            </Wrapper>
-            <JoinStepBar kindOf={`line2`}></JoinStepBar>
-            <Wrapper width={`auto`}>
-              <JoinStepBar kindOf={`progress`}>
-                <FaFlagCheckered />
-              </JoinStepBar>
-              <Text height={`0px`} padding={`10px 0px 0px`}>
-                출고완료
-              </Text>
-            </Wrapper>
-          </JoinStepBarWrapper>
-        </Wrapper>
-        <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
-          <Wrapper width={`25%`}>
-            <Wrapper height={`80px`} ju={`flex-end`}>
-              <Wrapper
-                dr={`row`}
-                fontSize={`24px`}
-                border={`1px solid #ccc`}
-                padding={`10px 0px`}
-              >
-                <Text fontSize={`24px`}>{mtInfo.car.regNumber}</Text>
-                {/* <IconButton
+            <JoinStepBarWrapper padding={`0px 0px 50px`}>
+              <Wrapper width={`auto`}>
+                <JoinStepBar kindOf={`complete`}>
+                  <GoCheck />
+                </JoinStepBar>
+                <Text height={`0px`} padding={`10px 0px 0px`}>
+                  차량선택
+                </Text>
+              </Wrapper>
+              <JoinStepBar kindOf={`line`}></JoinStepBar>
+              <Wrapper width={`auto`}>
+                <JoinStepBar kindOf={`complete`}>
+                  <GoCheck />
+                </JoinStepBar>
+                <Text height={`0px`} padding={`10px 0px 0px`}>
+                  차량입고
+                </Text>
+              </Wrapper>
+              <JoinStepBar kindOf={`line2`}></JoinStepBar>
+              <Wrapper width={`auto`}>
+                <JoinStepBar kindOf={`complete`}>{<GoCheck />}</JoinStepBar>
+                <Text height={`0px`} padding={`10px 0px 0px`}>
+                  정비중
+                </Text>
+              </Wrapper>
+              <JoinStepBar kindOf={"line2"}></JoinStepBar>
+              <Wrapper width={`auto`}>
+                <JoinStepBar kindOf={`complete`}>
+                  <GoCheck />
+                </JoinStepBar>
+                <Text height={`0px`} padding={`10px 0px 0px`}>
+                  정비완료
+                </Text>
+              </Wrapper>
+              <JoinStepBar kindOf={`line2`}></JoinStepBar>
+              <Wrapper width={`auto`}>
+                <JoinStepBar kindOf={`progress`}>
+                  <FaFlagCheckered />
+                </JoinStepBar>
+                <Text height={`0px`} padding={`10px 0px 0px`}>
+                  출고완료
+                </Text>
+              </Wrapper>
+            </JoinStepBarWrapper>
+          </Wrapper>
+          <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
+            <Wrapper width={`27%`}>
+              <Wrapper height={`80px`} ju={`flex-end`}>
+                <Wrapper
+                  dr={`row`}
+                  fontSize={`24px`}
+                  border={`1px solid #ccc`}
+                  padding={`10px 0px`}
+                >
+                  <Text fontSize={`24px`}>{mtInfo.car.regNumber}</Text>
+                  {/* <IconButton
                   type="button"
                   shadow={`none`}
                   onClick={() => {
@@ -445,705 +447,706 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                 >
                   <AiFillCloseCircle />
                 </IconButton> */}
+                </Wrapper>
               </Wrapper>
-            </Wrapper>
-            <Wrapper
-              border={`1px solid #ccc`}
-              margin={`10px 0px 0px 0px`}
-              padding={`10px 20px`}
-            >
-              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
-                <Text
-                  width={`100px`}
-                  textAlign={`right`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  주행거리
-                </Text>
-                <TextInput2
-                  type="text"
-                  width={`180px`}
-                  value={mtInfo.car.distance}
-                  readOnly
-                />
-              </Wrapper>
-              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
-                <Text
-                  width={`100px`}
-                  textAlign={`right`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  고객명
-                </Text>
-                <TextInput2
-                  width={`180px`}
-                  type="text"
-                  value={
-                    mtInfo.customer.name
-                      ? maskingStr(mtInfo.customer.name)
-                      : "-"
-                  }
-                  readOnly
-                />
-              </Wrapper>
-              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
-                <Text
-                  width={`100px`}
-                  textAlign={`right`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  전화번호
-                </Text>
-                <TextInput2
-                  width={`180px`}
-                  type="text"
-                  value={mtInfo.customer.phoneNumber}
-                  readOnly
-                />
-              </Wrapper>
-              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
-                <Text
-                  width={`100px`}
-                  textAlign={`right`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  차량명
-                </Text>
-                <TextInput2
-                  type="text"
-                  width={`180px`}
-                  value={mtInfo.car.name}
-                  readOnly
-                />
-              </Wrapper>
-              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
-                <Text
-                  width={`100px`}
-                  textAlign={`right`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  모델명
-                </Text>
-                <TextInput2
-                  width={`180px`}
-                  type="text"
-                  value={mtInfo.car.model || "-"}
-                  readOnly
-                />
-              </Wrapper>
-              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
-                <Text
-                  width={`100px`}
-                  textAlign={`right`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  연식
-                </Text>
-                <TextInput2
-                  width={`180px`}
-                  type="text"
-                  value={mtInfo.car.age || "-"}
-                  readOnly
-                />
-              </Wrapper>
-              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
-                <Text
-                  width={`100px`}
-                  textAlign={`right`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  차대번호
-                </Text>
-                <TextInput2
-                  width={`180px`}
-                  type="text"
-                  value={mtInfo.car.idNumber || "-"}
-                  readOnly
-                />
-              </Wrapper>
-              <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
-                <Text
-                  width={`100px`}
-                  textAlign={`right`}
-                  margin={`0px 10px 0px 0px`}
-                >
-                  등록일자
-                </Text>
-                <TextInput2
-                  width={`180px`}
-                  type="text"
-                  value={mtInfo.car.regDate || "-"}
-                  readOnly
-                />
-              </Wrapper>
-              <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
-                <SmallButton type="button" width={`48%`} kindOf={`default`}>
-                  정비요청사항
-                </SmallButton>
-                <SmallButton type="button" width={`48%`} kindOf={`default`}>
-                  차량정보공유
-                </SmallButton>
-              </Wrapper>
-              <Wrapper>
-                <SmallButton type="button" width={`100%`} kindOf={`default`}>
-                  정비사진확인
-                </SmallButton>
-              </Wrapper>
-            </Wrapper>
-          </Wrapper>
-
-          <Wrapper width={`74%`}>
-            <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
-              <Wrapper dr={`row`} ju={`space-between`} width={`350px`}>
-                <SmallButton
-                  type="button"
-                  kindOf={`default`}
-                  onClick={() => {
-                    router.push(UseLink.MAINTENANCE_BOOK);
-                  }}
-                >
-                  목록으로
-                </SmallButton>
-                <SmallButton
-                  type="button"
-                  kindOf={`default`}
-                  onClick={() => {
-                    setModalOption("documentBts");
-                    setModalOpen(!modalOpen);
-                  }}
-                >
-                  서류발급
-                </SmallButton>
-                <SmallButton
-                  type="button"
-                  kindOf={`default`}
-                  onClick={() => {
-                    setModalOption("molitBts");
-                    setModalOpen(!modalOpen);
-                  }}
-                >
-                  국토부
-                </SmallButton>
-                <SmallButton
-                  type="button"
-                  kindOf={`default`}
-                  onClick={() => {
-                    setModalOption("paymentBts");
-                    setModalOpen(!modalOpen);
-                  }}
-                >
-                  결재정보
-                </SmallButton>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              border={`1px solid #ccc`}
-              padding={`20px`}
-              margin={`10px 0px 20px`}
-            >
               <Wrapper
-                dr={`row`}
-                ju={`space-between`}
-                padding={`0px 0px 10px 0px`}
+                border={`1px solid #ccc`}
+                margin={`10px 0px 0px 0px`}
+                padding={`10px`}
               >
-                <Wrapper dr={`row`} ju={`flex-end`}>
+                <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
                   <Text
-                    textAlign={`end`}
-                    padding={`0px 5px 0px 0px`}
-                    width={`80px`}
-                  >
-                    정비기간
-                  </Text>
-                  <TextInput2
-                    width={`150px`}
-                    type={modify ? "date" : "text"}
-                    name="startMa"
-                    value={
-                      mtInfo.dates.startMa
-                        ? dayjs(mtInfo.dates.startMa).format("YYYY-MM-DD")
-                        : "-"
-                    }
-                    onChange={onChangeDate}
-                    disabled={!modify}
-                  />
-                  <Text
-                    textAlign={`end`}
-                    padding={`0px 5px 0px 0px`}
-                    width={`16px`}
-                  >
-                    ~
-                  </Text>
-                  <TextInput2
-                    width={`150px`}
-                    type={modify ? "date" : "text"}
-                    name="endMa"
-                    value={
-                      mtInfo.dates.endMa
-                        ? dayjs(mtInfo.dates.endMa).format("YYYY-MM-DD")
-                        : "-"
-                    }
-                    onChange={onChangeDate}
-                    disabled={!modify}
-                  />
-                </Wrapper>
-                <Wrapper dr={`row`} ju={`flex-end`}>
-                  <Text
-                    textAlign={`end`}
-                    padding={`0px 5px 0px 0px`}
                     width={`100px`}
+                    textAlign={`right`}
+                    margin={`0px 10px 0px 0px`}
                   >
-                    차량출고일
+                    주행거리
                   </Text>
                   <TextInput2
-                    width={`150px`}
-                    type={modify ? "date" : "text"}
-                    name="released"
-                    value={
-                      mtInfo.dates.released
-                        ? dayjs(mtInfo.dates.released).format("YYYY-MM-DD")
-                        : "-"
-                    }
-                    onChange={onChangeDate}
-                    disabled={!modify}
-                  />
-                </Wrapper>
-                <Wrapper dr={`row`} ju={`flex-end`}>
-                  <Text
-                    textAlign={`end`}
-                    padding={`0px 5px 0px 0px`}
-                    width={`100px`}
-                  >
-                    정비책임자
-                  </Text>
-                  <TextInput2
-                    width={`100px`}
                     type="text"
-                    value={props.tokenValue.uName}
+                    width={`180px`}
+                    value={mtInfo.car.distance}
                     readOnly
                   />
                 </Wrapper>
+                <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                  <Text
+                    width={`100px`}
+                    textAlign={`right`}
+                    margin={`0px 10px 0px 0px`}
+                  >
+                    고객명
+                  </Text>
+                  <TextInput2
+                    width={`180px`}
+                    type="text"
+                    value={
+                      mtInfo.customer.name
+                        ? maskingStr(mtInfo.customer.name)
+                        : "-"
+                    }
+                    readOnly
+                  />
+                </Wrapper>
+                <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                  <Text
+                    width={`100px`}
+                    textAlign={`right`}
+                    margin={`0px 10px 0px 0px`}
+                  >
+                    전화번호
+                  </Text>
+                  <TextInput2
+                    width={`180px`}
+                    type="text"
+                    value={mtInfo.customer.phoneNumber}
+                    readOnly
+                  />
+                </Wrapper>
+                <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                  <Text
+                    width={`100px`}
+                    textAlign={`right`}
+                    margin={`0px 10px 0px 0px`}
+                  >
+                    차량명
+                  </Text>
+                  <TextInput2
+                    type="text"
+                    width={`180px`}
+                    value={mtInfo.car.name}
+                    readOnly
+                  />
+                </Wrapper>
+                <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                  <Text
+                    width={`100px`}
+                    textAlign={`right`}
+                    margin={`0px 10px 0px 0px`}
+                  >
+                    모델명
+                  </Text>
+                  <TextInput2
+                    width={`180px`}
+                    type="text"
+                    value={mtInfo.car.model || "-"}
+                    readOnly
+                  />
+                </Wrapper>
+                <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                  <Text
+                    width={`100px`}
+                    textAlign={`right`}
+                    margin={`0px 10px 0px 0px`}
+                  >
+                    연식
+                  </Text>
+                  <TextInput2
+                    width={`180px`}
+                    type="text"
+                    value={mtInfo.car.age || "-"}
+                    readOnly
+                  />
+                </Wrapper>
+                <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                  <Text
+                    width={`100px`}
+                    textAlign={`right`}
+                    margin={`0px 10px 0px 0px`}
+                  >
+                    차대번호
+                  </Text>
+                  <TextInput2
+                    width={`180px`}
+                    type="text"
+                    value={mtInfo.car.idNumber || "-"}
+                    readOnly
+                  />
+                </Wrapper>
+                <Wrapper dr={`row`} padding={`10px 0px`} ju={`space-between`}>
+                  <Text
+                    width={`100px`}
+                    textAlign={`right`}
+                    margin={`0px 10px 0px 0px`}
+                  >
+                    등록일자
+                  </Text>
+                  <TextInput2
+                    width={`180px`}
+                    type="text"
+                    value={mtInfo.car.regDate || "-"}
+                    readOnly
+                  />
+                </Wrapper>
+                <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
+                  <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
+                    정비요청사항
+                  </SmallButton>
+                  <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
+                    차량정보공유
+                  </SmallButton>
+                </Wrapper>
+                <Wrapper>
+                  <SmallButton type="button" width={`100%`} kindOf={`ghost`}>
+                    정비사진확인
+                  </SmallButton>
+                </Wrapper>
+              </Wrapper>
+            </Wrapper>
+
+            <Wrapper width={`72%`}>
+              <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
+                <Wrapper dr={`row`} ju={`space-between`} width={`350px`}>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      router.push(UseLink.MAINTENANCE_BOOK);
+                    }}
+                  >
+                    목록으로
+                  </SmallButton>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModalOption("documentBts");
+                      setModalOpen(!modalOpen);
+                    }}
+                  >
+                    서류발급
+                  </SmallButton>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModalOption("molitBts");
+                      setModalOpen(!modalOpen);
+                    }}
+                  >
+                    국토부
+                  </SmallButton>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModalOption("paymentBts");
+                      setModalOpen(!modalOpen);
+                    }}
+                  >
+                    결제정보
+                  </SmallButton>
+                </Wrapper>
+              </Wrapper>
+              <Wrapper
+                border={`1px solid #ccc`}
+                padding={`10px`}
+                margin={`10px 0px 20px`}
+              >
+                <Wrapper
+                  dr={`row`}
+                  ju={`space-between`}
+                  padding={`0px 0px 10px 0px`}
+                >
+                  <Wrapper dr={`row`} ju={`flex-end`}>
+                    <Text
+                      textAlign={`end`}
+                      padding={`0px 5px 0px 0px`}
+                      width={`80px`}
+                    >
+                      정비기간
+                    </Text>
+                    <TextInput2
+                      width={`150px`}
+                      type={modify ? "date" : "text"}
+                      name="startMa"
+                      value={
+                        mtInfo.dates.startMa
+                          ? dayjs(mtInfo.dates.startMa).format("YYYY-MM-DD")
+                          : "-"
+                      }
+                      onChange={onChangeDate}
+                      disabled={!modify}
+                    />
+                    <Text
+                      textAlign={`end`}
+                      padding={`0px 5px 0px 0px`}
+                      width={`16px`}
+                    >
+                      ~
+                    </Text>
+                    <TextInput2
+                      width={`150px`}
+                      type={modify ? "date" : "text"}
+                      name="endMa"
+                      value={
+                        mtInfo.dates.endMa
+                          ? dayjs(mtInfo.dates.endMa).format("YYYY-MM-DD")
+                          : "-"
+                      }
+                      onChange={onChangeDate}
+                      disabled={!modify}
+                    />
+                  </Wrapper>
+                  <Wrapper dr={`row`} ju={`flex-end`}>
+                    <Text
+                      textAlign={`end`}
+                      padding={`0px 5px 0px 0px`}
+                      width={`100px`}
+                    >
+                      차량출고일
+                    </Text>
+                    <TextInput2
+                      width={`150px`}
+                      type={modify ? "date" : "text"}
+                      name="released"
+                      value={
+                        mtInfo.dates.released
+                          ? dayjs(mtInfo.dates.released).format("YYYY-MM-DD")
+                          : "-"
+                      }
+                      onChange={onChangeDate}
+                      disabled={!modify}
+                    />
+                  </Wrapper>
+                  <Wrapper dr={`row`} ju={`flex-end`}>
+                    <Text
+                      textAlign={`end`}
+                      padding={`0px 5px 0px 0px`}
+                      width={`100px`}
+                    >
+                      정비책임자
+                    </Text>
+                    <TextInput2
+                      width={`100px`}
+                      type="text"
+                      value={props.tokenValue.uName}
+                      readOnly
+                    />
+                  </Wrapper>
+                </Wrapper>
+
+                <Wrapper dr={`row`} ju={`space-between`}>
+                  <Wrapper dr={`row`} ju={`flex-end`}>
+                    <Text
+                      textAlign={`end`}
+                      padding={`0px 5px 0px 0px`}
+                      width={`80px`}
+                    >
+                      정비구분
+                    </Text>
+                    <Combo
+                      width={`150px`}
+                      margin={`0px`}
+                      value={mtInfo.costomerType}
+                      name="costomerType"
+                      onChange={onChangeMaintenance}
+                      disabled={!modify}
+                    >
+                      {mainCustomerTypeList.map((type) => {
+                        return (
+                          <option key={type} value={type}>
+                            {getStrMainCustomerType(type)}
+                          </option>
+                        );
+                      })}
+                    </Combo>
+                    <Text
+                      textAlign={`end`}
+                      padding={`0px 5px 0px 0px`}
+                      width={`16px`}
+                    ></Text>
+                    <TextInput2
+                      type="text"
+                      width={`150px`}
+                      placeholder={`보험사명`}
+                      readOnly
+                    />
+                  </Wrapper>
+                  <Wrapper
+                    dr={`row`}
+                    ju={`flex-end`}
+                    padding={`0px 0px 0px 10px`}
+                  >
+                    <TextInput2
+                      type="text"
+                      width={`240px`}
+                      placeholder={`보험번호`}
+                      readOnly
+                    />
+                  </Wrapper>
+                  <Wrapper dr={`row`} ju={`flex-end`}>
+                    <Text
+                      textAlign={`end`}
+                      padding={`0px 5px 0px 0px`}
+                      width={`100px`}
+                    >
+                      추가정비동의
+                    </Text>
+                    <Combo width={`100px`} margin={`0`} disabled>
+                      <option value="1">동의</option>
+                    </Combo>
+                  </Wrapper>
+                </Wrapper>
               </Wrapper>
 
-              <Wrapper dr={`row`} ju={`space-between`}>
-                <Wrapper dr={`row`} ju={`flex-end`}>
-                  <Text
-                    textAlign={`end`}
-                    padding={`0px 5px 0px 0px`}
-                    width={`80px`}
-                  >
-                    정비구분
+              <Wrapper dr={`row`} ju={`space-between`} margin={`10px 0px`}>
+                <Wrapper width={`auto`}>
+                  <Text fontSize={`20px`} color={`#314FA5`}>
+                    정비내역
                   </Text>
-                  <Combo
-                    width={`150px`}
-                    margin={`0px`}
-                    value={mtInfo.costomerType}
-                    name="costomerType"
-                    onChange={onChangeMaintenance}
-                    disabled={!modify}
+                </Wrapper>
+                <Wrapper dr={`row`} width={`auto`}>
+                  <Wrapper
+                    dr={`row`}
+                    ju={`flex-end`}
+                    height={`40px`}
+                    al={`center`}
+                    margin={`0px 10px 0px 0px`}
+                    width={`auto`}
                   >
-                    {mainCustomerTypeList.map((type) => {
+                    <Checkbox cursor={!modify ? `default` : `pointer`}>
+                      부가세 포함
+                      <CheckInput
+                        type="checkbox"
+                        checked={price.isIncluded}
+                        cursor={!modify ? `default` : `pointer`}
+                        disabled={!modify}
+                        onChange={() => {
+                          setPrice({ ...price, isIncluded: !price.isIncluded });
+                        }}
+                      />
+                      <CheckMark
+                        cursor={!modify ? `default` : `pointer`}
+                      ></CheckMark>
+                    </Checkbox>
+                  </Wrapper>
+                  {!modify ? (
+                    <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
+                      <SmallButton type="button" kindOf={`ghost`}>
+                        부품조회
+                      </SmallButton>
+                      <SmallButton type="button" kindOf={`ghost`}>
+                        세트부품
+                      </SmallButton>
+                    </Wrapper>
+                  ) : (
+                    <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
+                      <SmallButton
+                        type="button"
+                        kindOf={`default`}
+                        onClick={() => {
+                          setModalOption("part");
+                          setModalOpen(true);
+                        }}
+                      >
+                        부품조회
+                      </SmallButton>
+                      <SmallButton
+                        type="button"
+                        kindOf={`default`}
+                        onClick={() => {
+                          setModalOption("set");
+                          setModalOpen(true);
+                        }}
+                      >
+                        세트부품
+                      </SmallButton>
+                    </Wrapper>
+                  )}
+                </Wrapper>
+              </Wrapper>
+              <TableWrapper minHeight={`auto`}>
+                <TableHead padding={`0px 0px 0px 10px`}>
+                  <TableHeadLIST width={`3%`}></TableHeadLIST>
+                  <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
+                  <TableHeadLIST width={`12%`}>국토부</TableHeadLIST>
+                  <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
+                  <TableHeadLIST width={`14%`}>단가</TableHeadLIST>
+                  <TableHeadLIST width={`10%`}>수량</TableHeadLIST>
+                  <TableHeadLIST width={`14%`}>계</TableHeadLIST>
+                  <TableHeadLIST width={`14%`}>기술료</TableHeadLIST>
+                </TableHead>
+                <Wrapper overflow={`auto`} height={`262px`}>
+                  <TableBody minHeight={`262px`}>
+                    {workList.map((data, idx) => {
                       return (
-                        <option key={type} value={type}>
-                          {getStrMainCustomerType(type)}
-                        </option>
+                        <TableRow
+                          key={idx}
+                          kindOf={`noHover`}
+                          padding={`0px 0px 0px 10px`}
+                        >
+                          <TableRowLIST width={`3%`}>
+                            <IconButton
+                              type="button"
+                              shadow={`none`}
+                              bgColor={`inherit`}
+                              color={`#d6263b`}
+                              padding={`0px`}
+                              isDisplayNone={!modify}
+                              onClick={() => {
+                                onDeleteRowHandler(idx);
+                              }}
+                            >
+                              <AiFillMinusSquare />
+                            </IconButton>
+                          </TableRowLIST>
+                          <TableRowLIST width={`14%`}>
+                            <TextInput2
+                              type="text"
+                              ref={(elem: HTMLInputElement) =>
+                                (inputRef.current[(idx + 1) * 7 - 7] = elem)
+                              }
+                              width={`100%`}
+                              onKeyDown={(e: KeyboardEvent) =>
+                                onKeyDownhandler(e, (idx + 1) * 7 - 7)
+                              }
+                              onKeyUp={(e: KeyboardEvent) =>
+                                onKeyUpHandler(e, (idx + 1) * 7 - 7)
+                              }
+                              value={data.name}
+                              readOnly={!modify}
+                              name="name"
+                              list={data.name.length < 2 || `workList`}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                onChangeInputArr(e, idx);
+                              }}
+                            />
+                            <datalist id="workList">
+                              {props.data.allParts.docs.map(
+                                (item: Part, idx: number) => {
+                                  return (
+                                    <Wrapper key={idx}>
+                                      {item.nickName.length > 1 ? (
+                                        item.nickName.map(
+                                          (nickname: string, iidx: number) => {
+                                            return (
+                                              <option
+                                                key={`${idx}.${iidx}`}
+                                                label={nickname}
+                                                value={item.name}
+                                              />
+                                            );
+                                          }
+                                        )
+                                      ) : (
+                                        <option
+                                          key={idx}
+                                          label={item.nickName[0]}
+                                          value={item.name}
+                                        />
+                                      )}
+                                    </Wrapper>
+                                  );
+                                }
+                              )}
+                            </datalist>
+                          </TableRowLIST>
+                          <TableRowLIST width={`12%`}>
+                            <SmallButton
+                              kindOf={`input`}
+                              type="button"
+                              ref={(elem: HTMLInputElement) =>
+                                (inputRef.current[(idx + 1) * 7 - 6] = elem)
+                              }
+                              width={`100%`}
+                              onClick={() => {
+                                setClickDoc(data);
+                                setModalOption("Setting");
+                                setModalOpen(!modalOpen);
+                              }}
+                              name="tsCode"
+                              disabled={!modify}
+                              cursor={!modify ? `default` : `pointer`}
+                            >
+                              {data.tsCode}
+                            </SmallButton>
+                          </TableRowLIST>
+                          <TableRowLIST width={`14%`}>
+                            <Combo
+                              width={`100%`}
+                              value={data.type}
+                              disabled={!modify}
+                              ref={(elem: HTMLInputElement) =>
+                                (inputRef.current[(idx + 1) * 7 - 5] = elem)
+                              }
+                              name="type"
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                onChangeInputArr(e, idx, (idx + 1) * 7 - 5);
+                              }}
+                            >
+                              {mainPartsTypeList.map((item: MainPartsType) => {
+                                return (
+                                  <option key={item} value={item}>
+                                    {item.toUpperCase()}
+                                  </option>
+                                );
+                              })}
+                            </Combo>
+                          </TableRowLIST>
+                          <TableRowLIST width={`14%`}>
+                            <TextInput2
+                              type="text"
+                              ref={(elem: HTMLInputElement) =>
+                                (inputRef.current[(idx + 1) * 7 - 4] = elem)
+                              }
+                              width={`100%`}
+                              onKeyDown={(e: KeyboardEvent) =>
+                                onKeyDownhandler(e, (idx + 1) * 7 - 4)
+                              }
+                              onKeyUp={(e: KeyboardEvent) =>
+                                onKeyUpHandler(e, (idx + 1) * 7 - 4)
+                              }
+                              value={data.price.toLocaleString()}
+                              readOnly={!modify}
+                              name="price"
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                onChangeInputArr(e, idx);
+                              }}
+                            />
+                          </TableRowLIST>
+                          <TableRowLIST width={`10%`}>
+                            <TextInput2
+                              type="text"
+                              ref={(elem: HTMLInputElement) =>
+                                (inputRef.current[(idx + 1) * 7 - 3] = elem)
+                              }
+                              width={`100%`}
+                              onKeyDown={(e: KeyboardEvent) =>
+                                onKeyDownhandler(e, (idx + 1) * 7 - 3)
+                              }
+                              onKeyUp={(e: KeyboardEvent) =>
+                                onKeyUpHandler(e, (idx + 1) * 7 - 3)
+                              }
+                              value={data.quantity.toLocaleString()}
+                              readOnly={!modify}
+                              name="quantity"
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                onChangeInputArr(e, idx);
+                              }}
+                            />
+                          </TableRowLIST>
+                          <TableRowLIST width={`14%`}>
+                            <TextInput2
+                              type="text"
+                              ref={(elem: HTMLInputElement) =>
+                                (inputRef.current[(idx + 1) * 7 - 2] = elem)
+                              }
+                              width={`100%`}
+                              onKeyDown={(e: KeyboardEvent) =>
+                                onKeyDownhandler(e, (idx + 1) * 7 - 2)
+                              }
+                              onKeyUp={(e: KeyboardEvent) =>
+                                onKeyUpHandler(e, (idx + 1) * 7 - 2)
+                              }
+                              value={data.sum.toLocaleString()}
+                              name="inputSum"
+                              readOnly
+                            />
+                          </TableRowLIST>
+                          <TableRowLIST width={`14%`}>
+                            <TextInput2
+                              type="text"
+                              ref={(elem: HTMLInputElement) =>
+                                (inputRef.current[(idx + 1) * 7 - 1] = elem)
+                              }
+                              width={`100%`}
+                              onKeyDown={(e: KeyboardEvent) =>
+                                onKeyDownhandler(e, (idx + 1) * 7 - 1)
+                              }
+                              onKeyUp={(e: KeyboardEvent) =>
+                                onKeyUpHandler(e, (idx + 1) * 7 - 1)
+                              }
+                              value={data.wage.toLocaleString()}
+                              readOnly={!modify}
+                              name="wage"
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                onChangeInputArr(e, idx);
+                              }}
+                            />
+                          </TableRowLIST>
+                        </TableRow>
                       );
                     })}
-                  </Combo>
-                  <Text
-                    textAlign={`end`}
-                    padding={`0px 5px 0px 0px`}
-                    width={`16px`}
-                  ></Text>
-                  <TextInput2
-                    type="text"
-                    width={`150px`}
-                    placeholder={`보험사명 입력란`}
-                    readOnly
-                  />
+                  </TableBody>
                 </Wrapper>
-                <Wrapper
-                  dr={`row`}
-                  ju={`flex-end`}
-                  padding={`0px 0px 0px 10px`}
+              </TableWrapper>
+              <Wrapper dr={`row`} ju={`flex-end`}>
+                <Text>부품계 : {price.partsSum.toLocaleString()}</Text>
+                <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
+                  |
+                </Text>
+                <Text>기술료계 : {price.wageSum.toLocaleString()}</Text>
+                <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
+                  |
+                </Text>
+                <Text>공급가액 : {price.sum.toLocaleString()}</Text>
+                <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
+                  |
+                </Text>
+                <Text>부가세 : {price.vat.toLocaleString()}</Text>
+                <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
+                  |
+                </Text>
+                <Text fontSize={`24px`}>총계</Text>
+                <Text
+                  fontSize={`24px`}
+                  fontWeight={`800`}
+                  color={`#314FA5`}
+                  margin={`0px 10px`}
                 >
-                  <TextInput2
-                    type="text"
-                    width={`240px`}
-                    placeholder={`보험번호 입력란`}
-                    readOnly
-                  />
-                </Wrapper>
-                <Wrapper dr={`row`} ju={`flex-end`}>
-                  <Text
-                    textAlign={`end`}
-                    padding={`0px 5px 0px 0px`}
-                    width={`100px`}
-                  >
-                    추가정비동의
-                  </Text>
-                  <Combo width={`100px`} margin={`0`} disabled>
-                    <option value="1">동의</option>
-                  </Combo>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
-
-            <Wrapper dr={`row`} ju={`space-between`} margin={`10px 0px`}>
-              <Wrapper width={`auto`}>
-                <Text fontSize={`20px`} color={`#314FA5`}>
-                  정비내역
+                  {price.total.toLocaleString()}
                 </Text>
               </Wrapper>
-              <Wrapper dr={`row`} width={`auto`}>
-                <Wrapper
-                  dr={`row`}
-                  ju={`flex-end`}
-                  height={`40px`}
-                  al={`center`}
-                  margin={`0px 10px 0px 0px`}
-                  width={`auto`}
-                >
-                  <Checkbox cursor={!modify ? `default` : `pointer`}>
-                    부가세 포함
-                    <CheckInput
-                      type="checkbox"
-                      checked={price.isIncluded}
-                      cursor={!modify ? `default` : `pointer`}
-                      disabled={!modify}
-                      onChange={() => {
-                        setPrice({ ...price, isIncluded: !price.isIncluded });
-                      }}
-                    />
-                    <CheckMark
-                      cursor={!modify ? `default` : `pointer`}
-                    ></CheckMark>
-                  </Checkbox>
-                </Wrapper>
+              <Wrapper dr={`row`} ju={`space-between`}>
                 {!modify ? (
-                  <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
-                    <SmallButton type="button" kindOf={`ghost`}>
-                      부품조회
-                    </SmallButton>
-                    <SmallButton type="button" kindOf={`ghost`}>
-                      세트부품
-                    </SmallButton>
-                  </Wrapper>
+                  <SmallButton
+                    form="carInfoForm"
+                    type="button"
+                    kindOf={`default`}
+                    width={`100%`}
+                    onClick={() => {
+                      setModify(!modify);
+                    }}
+                  >
+                    정비내역 수정
+                  </SmallButton>
                 ) : (
-                  <Wrapper dr={`row`} ju={`space-between`} width={`170px`}>
+                  <Wrapper dr={`row`} ju={`space-between`} width={`864px`}>
                     <SmallButton
                       type="button"
+                      width={`427px`}
                       kindOf={`default`}
                       onClick={() => {
-                        setModalOption("part");
-                        setModalOpen(true);
+                        setModify(!modify);
                       }}
                     >
-                      부품조회
+                      수정 취소
                     </SmallButton>
                     <SmallButton
                       type="button"
+                      width={`427px`}
                       kindOf={`default`}
-                      onClick={() => {
-                        setModalOption("set");
-                        setModalOpen(true);
-                      }}
+                      onClick={onModifyWorkInfo}
                     >
-                      세트부품
+                      수정 완료
                     </SmallButton>
                   </Wrapper>
                 )}
               </Wrapper>
             </Wrapper>
-            <TableWrapper minHeight={`auto`}>
-              <TableHead padding={`0px 0px 0px 10px`}>
-                <TableHeadLIST width={`3%`}></TableHeadLIST>
-                <TableHeadLIST width={`14%`}>작업내용</TableHeadLIST>
-                <TableHeadLIST width={`12%`}>국토부</TableHeadLIST>
-                <TableHeadLIST width={`14%`}>구분</TableHeadLIST>
-                <TableHeadLIST width={`14%`}>단가</TableHeadLIST>
-                <TableHeadLIST width={`10%`}>수량</TableHeadLIST>
-                <TableHeadLIST width={`14%`}>계</TableHeadLIST>
-                <TableHeadLIST width={`14%`}>기술료</TableHeadLIST>
-              </TableHead>
-              <Wrapper overflow={`auto`} height={`262px`}>
-                <TableBody minHeight={`262px`}>
-                  {workList.map((data, idx) => {
-                    return (
-                      <TableRow
-                        key={idx}
-                        kindOf={`noHover`}
-                        padding={`0px 0px 0px 10px`}
-                      >
-                        <TableRowLIST width={`3%`}>
-                          <IconButton
-                            type="button"
-                            shadow={`none`}
-                            bgColor={`inherit`}
-                            color={`#d6263b`}
-                            padding={`0px`}
-                            isDisplayNone={!modify}
-                            onClick={() => {
-                              onDeleteRowHandler(idx);
-                            }}
-                          >
-                            <AiFillMinusSquare />
-                          </IconButton>
-                        </TableRowLIST>
-                        <TableRowLIST width={`14%`}>
-                          <TextInput2
-                            type="text"
-                            ref={(elem: HTMLInputElement) =>
-                              (inputRef.current[(idx + 1) * 7 - 7] = elem)
-                            }
-                            width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 7)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 7)
-                            }
-                            value={data.name}
-                            readOnly={!modify}
-                            name="name"
-                            list="workList"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx);
-                            }}
-                          />
-                          <datalist id="workList">
-                            {props.data.allParts.docs.map(
-                              (item: Part, idx: number) => {
-                                return (
-                                  <Wrapper key={idx}>
-                                    {item.nickName.length >= 1 ? (
-                                      item.nickName.map(
-                                        (nickname: string, iidx: number) => {
-                                          return (
-                                            <option
-                                              key={`${idx}.${iidx}`}
-                                              label={nickname}
-                                              value={item.name}
-                                            />
-                                          );
-                                        }
-                                      )
-                                    ) : (
-                                      <option
-                                        key={idx}
-                                        label={item.nickName[0]}
-                                        value={item.name}
-                                      />
-                                    )}
-                                  </Wrapper>
-                                );
-                              }
-                            )}
-                          </datalist>
-                        </TableRowLIST>
-                        <TableRowLIST width={`12%`}>
-                          <SmallButton
-                            kindOf={`input`}
-                            type="button"
-                            ref={(elem: HTMLInputElement) =>
-                              (inputRef.current[(idx + 1) * 7 - 6] = elem)
-                            }
-                            width={`100%`}
-                            onClick={() => {
-                              setClickDoc(data);
-                              setModalOption("Setting");
-                              setModalOpen(!modalOpen);
-                            }}
-                            name="tsCode"
-                            disabled={!modify}
-                            cursor={!modify ? `default` : `pointer`}
-                          >
-                            {data.tsCode}
-                          </SmallButton>
-                        </TableRowLIST>
-                        <TableRowLIST width={`14%`}>
-                          <Combo
-                            width={`100%`}
-                            value={data.type}
-                            disabled={!modify}
-                            ref={(elem: HTMLInputElement) =>
-                              (inputRef.current[(idx + 1) * 7 - 5] = elem)
-                            }
-                            name="type"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx, (idx + 1) * 7 - 5);
-                            }}
-                          >
-                            {mainPartsTypeList.map((item: MainPartsType) => {
-                              return (
-                                <option key={item} value={item}>
-                                  {getStrMainPartsType(item)}
-                                </option>
-                              );
-                            })}
-                          </Combo>
-                        </TableRowLIST>
-                        <TableRowLIST width={`14%`}>
-                          <TextInput2
-                            type="text"
-                            ref={(elem: HTMLInputElement) =>
-                              (inputRef.current[(idx + 1) * 7 - 4] = elem)
-                            }
-                            width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 4)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 4)
-                            }
-                            value={data.price.toLocaleString()}
-                            readOnly={!modify}
-                            name="price"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx);
-                            }}
-                          />
-                        </TableRowLIST>
-                        <TableRowLIST width={`10%`}>
-                          <TextInput2
-                            type="text"
-                            ref={(elem: HTMLInputElement) =>
-                              (inputRef.current[(idx + 1) * 7 - 3] = elem)
-                            }
-                            width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 3)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 3)
-                            }
-                            value={data.quantity.toLocaleString()}
-                            readOnly={!modify}
-                            name="quantity"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx);
-                            }}
-                          />
-                        </TableRowLIST>
-                        <TableRowLIST width={`14%`}>
-                          <TextInput2
-                            type="text"
-                            ref={(elem: HTMLInputElement) =>
-                              (inputRef.current[(idx + 1) * 7 - 2] = elem)
-                            }
-                            width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 2)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 2)
-                            }
-                            value={data.sum.toLocaleString()}
-                            name="inputSum"
-                            readOnly
-                          />
-                        </TableRowLIST>
-                        <TableRowLIST width={`14%`}>
-                          <TextInput2
-                            type="text"
-                            ref={(elem: HTMLInputElement) =>
-                              (inputRef.current[(idx + 1) * 7 - 1] = elem)
-                            }
-                            width={`100%`}
-                            onKeyDown={(e: KeyboardEvent) =>
-                              onKeyDownhandler(e, (idx + 1) * 7 - 1)
-                            }
-                            onKeyUp={(e: KeyboardEvent) =>
-                              onKeyUpHandler(e, (idx + 1) * 7 - 1)
-                            }
-                            value={data.wage.toLocaleString()}
-                            readOnly={!modify}
-                            name="wage"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                              onChangeInputArr(e, idx);
-                            }}
-                          />
-                        </TableRowLIST>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Wrapper>
-            </TableWrapper>
-            <Wrapper dr={`row`} ju={`flex-end`}>
-              <Text>부품계 : {price.partsSum.toLocaleString()}</Text>
-              <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
-                |
-              </Text>
-              <Text>기술료계 : {price.wageSum.toLocaleString()}</Text>
-              <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
-                |
-              </Text>
-              <Text>공급가액 : {price.sum.toLocaleString()}</Text>
-              <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
-                |
-              </Text>
-              <Text>부가세 : {price.vat.toLocaleString()}</Text>
-              <Text fontSize={`12px`} fontWeight={`800`} margin={`0px 10px`}>
-                |
-              </Text>
-              <Text fontSize={`24px`}>총계</Text>
-              <Text
-                fontSize={`24px`}
-                fontWeight={`800`}
-                color={`#314FA5`}
-                margin={`0px 10px`}
-              >
-                {price.total.toLocaleString()}
-              </Text>
-            </Wrapper>
-            <Wrapper dr={`row`} ju={`space-between`}>
-              {!modify ? (
-                <SmallButton
-                  form="carInfoForm"
-                  type="button"
-                  kindOf={`default`}
-                  width={`100%`}
-                  onClick={() => {
-                    setModify(!modify);
-                  }}
-                >
-                  정비내역 수정
-                </SmallButton>
-              ) : (
-                <Wrapper dr={`row`} ju={`space-between`} width={`888px`}>
-                  <SmallButton
-                    type="button"
-                    width={`439px`}
-                    kindOf={`default`}
-                    onClick={() => {
-                      setModify(!modify);
-                    }}
-                  >
-                    수정 취소
-                  </SmallButton>
-                  <SmallButton
-                    type="button"
-                    width={`439px`}
-                    kindOf={`default`}
-                    onClick={onModifyWorkInfo}
-                  >
-                    수정 완료
-                  </SmallButton>
-                </Wrapper>
-              )}
-            </Wrapper>
           </Wrapper>
-        </Wrapper>
+        </CommonForm>
       </RsWrapper>
       <Modal
         isOpen={modalOpen}

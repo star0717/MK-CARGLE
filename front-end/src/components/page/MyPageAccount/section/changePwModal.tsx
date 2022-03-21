@@ -126,7 +126,7 @@ const ChangePwModal: NextPage<_pMyPageAccountProps> = (props) => {
                 value: formRegEx.PASSWORD,
                 message: "8~16자 영문, 숫자, 특수문자를 사용하세요.",
               },
-              validate: (value: string) => value !== watch("newpassword"),
+              validate: (value: string) => value !== watch("password"),
             })}
           />
           {(errors.newPassword?.type === "required" ||

@@ -1,10 +1,6 @@
 import React from "react";
 import { NextPage } from "next";
-import {
-  Wrapper,
-  Text,
-  ColorSpan,
-} from "src/components/styles/CommonComponents";
+import { Wrapper, Text } from "src/components/styles/CommonComponents";
 
 const TestPage: NextPage<any> = (props) => {
   /*********************************************************************

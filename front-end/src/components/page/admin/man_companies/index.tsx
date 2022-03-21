@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { _aGetAdminDoneCompanies } from "../../../../../store/action/user.action";
 import { _iGetAdminDoneCompanies } from "../../../../../store/interfaces";
@@ -31,9 +31,6 @@ const AdminManCompaniesPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  useEffect(() => {
-    setFindResult(props.data);
-  }, [props]);
 
   /**
    * 작업자의 정보를 조회함

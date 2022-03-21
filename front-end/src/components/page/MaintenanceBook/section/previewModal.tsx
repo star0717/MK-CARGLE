@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { NextPage } from "next";
 import {
+  CommonButton,
   IconButton,
   SmallButton,
   WholeWrapper,
@@ -10,6 +11,10 @@ import { _pPreviewModalProps } from "src/configure/_pProps.entity";
 import EstimateFile from "../../FileHTML/estimateFile";
 import StatementFile from "../../FileHTML/statementFile";
 import { AiOutlineCaretLeft, AiOutlineCaretRight } from "react-icons/ai";
+import {
+  IoIosArrowDropleftCircle,
+  IoIosArrowDroprightCircle,
+} from "react-icons/io";
 
 const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
   /*********************************************************************
@@ -75,20 +80,21 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
     <WholeWrapper>
       {props.fileCheck.eCheck && props.fileCheck.sCheck && (
         <Wrapper>
-          <Wrapper isFixed top={`370px`} left={`-520px`} zIndex={`9999`}>
+          <Wrapper isFixed top={`450px`} left={`-520px`} zIndex={`9999`}>
             <IconButton
               type="button"
               shadow={`none`}
               width={`100px`}
               height={`100px`}
-              fontSize={`100px`}
+              fontSize={`48px`}
               padding={`0px`}
-              color={`#314FA5`}
+              color={`#343a40`}
               onClick={() => {
                 setDocBool(!docBool);
+                document.getElementById("previewModal").scrollTo(0, 0);
               }}
             >
-              <AiOutlineCaretLeft />
+              <IoIosArrowDropleftCircle />
             </IconButton>
           </Wrapper>
           {docBool ? (
@@ -96,20 +102,21 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
           ) : (
             <StatementFile {...props} ref={statementRef} />
           )}
-          <Wrapper isFixed top={`370px`} left={`520px`} zIndex={`9999`}>
+          <Wrapper isFixed top={`450px`} left={`520px`} zIndex={`9999`}>
             <IconButton
               type="button"
               shadow={`none`}
               width={`100px`}
               height={`100px`}
-              fontSize={`100px`}
+              fontSize={`48px`}
               padding={`0px`}
-              color={`#314FA5`}
+              color={`#343a40`}
               onClick={() => {
                 setDocBool(!docBool);
+                document.getElementById("previewModal").scrollTo(0, 0);
               }}
             >
-              <AiOutlineCaretRight fontSize={`100`} />
+              <IoIosArrowDroprightCircle fontSize={`100`} />
             </IconButton>
           </Wrapper>
         </Wrapper>
@@ -133,16 +140,17 @@ const PreviewModal: NextPage<_pPreviewModalProps> = (props) => {
         >
           PDF저장
         </SmallButton> */}
-        <SmallButton
+        <CommonButton
           type="button"
-          kindOf={`default`}
-          margin={`0px 20px`}
+          kindOf={`white`}
+          width={`300px`}
+          height={`50px`}
           onClick={() => {
             props.setModal2Open(false);
           }}
         >
           닫기
-        </SmallButton>
+        </CommonButton>
       </Wrapper>
     </WholeWrapper>
   );

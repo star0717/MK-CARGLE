@@ -51,6 +51,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -170,6 +171,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   useEffect(() => {
     setMaintenanceList(props.findResult.docs);
   }, [props.findResult.docs]);
+
   //리스트 삭제시 화면 리셋용
   useEffect(() => {
     setCheckedList([]);
@@ -363,7 +365,7 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
           </Wrapper>
         </Wrapper>
         <Wrapper margin={`0px 0px 30px`}>
-          <TableWrapper margin={`20px 0px 0px`}>
+          <TableWrapper margin={`20px 0px 0px`} kindOf={`list`}>
             <TableHead>
               <TableHeadLIST
                 width={`5%`}

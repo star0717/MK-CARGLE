@@ -17,6 +17,10 @@ const StatementFile: NextPage<any> = forwardRef<
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  // const [imgIdx, setImgIdx] = useState<number>(Math.floor(Math.random() * 100));
+  // const [stampImgSrc, setStampImgSrc] = useState<string>(
+  //   `/api/settings/myinfo/stamp?num=${imgIdx}`
+  // ); // url src 설정
 
   /*********************************************************************
    * 3. Handlers
@@ -33,7 +37,7 @@ const StatementFile: NextPage<any> = forwardRef<
     <Wrapper
       id="statement"
       ref={ref}
-      margin={`10px 0 0`}
+      margin={`0px`}
       padding={`0px`}
       pageBreakAfter={`always`}
     >
@@ -357,10 +361,21 @@ const StatementFile: NextPage<any> = forwardRef<
                 borderRight={`1px solid #ccc`}
                 borderBottom={`1px solid #ccc`}
               >
-                <Wrapper>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {props.sInfo && props.propToken.uName}
-                  </Text>
+                <Wrapper isRelative>
+                  <Wrapper isAbsolute left={`14px`} top={`-5px`}>
+                    <Image
+                      className="stamp"
+                      alt="도장 사진"
+                      width={40}
+                      height={40}
+                      src={props.stampImgSrc}
+                    />
+                  </Wrapper>
+                  <Wrapper isAbsolute>
+                    <Text fontSize={`0.83em`} fontWeight={`400`}>
+                      {props.sInfo && props.propToken.uName}
+                    </Text>
+                  </Wrapper>
                 </Wrapper>
                 <Wrapper
                   isRelative
@@ -369,14 +384,6 @@ const StatementFile: NextPage<any> = forwardRef<
                   height={`50%`}
                   ju={`flex-end`}
                 >
-                  <Wrapper isAbsolute top={`-10px`} left={`14px`}>
-                    <Image
-                      alt="도장 사진"
-                      width={50}
-                      height={50}
-                      src="/api/settings/myinfo/stamp"
-                    />
-                  </Wrapper>
                   <Text
                     fontSize={`0.67em`}
                     fontWeight={`400`}
@@ -531,7 +538,7 @@ const StatementFile: NextPage<any> = forwardRef<
                         width={`25%`}
                         borderRight={`1px solid #ccc`}
                         height={`100%`}
-                        al={`flex-start`}
+                        al={`center`}
                         padding={`0px 4px`}
                       >
                         <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -542,7 +549,7 @@ const StatementFile: NextPage<any> = forwardRef<
                         width={`25%`}
                         borderRight={`1px solid #ccc`}
                         height={`100%`}
-                        al={`flex-start`}
+                        al={`center`}
                         padding={`0px 4px`}
                       >
                         <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -553,7 +560,7 @@ const StatementFile: NextPage<any> = forwardRef<
                         width={`25%`}
                         borderRight={`1px solid #ccc`}
                         height={`100%`}
-                        al={`flex-start`}
+                        al={`center`}
                         padding={`0px 4px`}
                       >
                         <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -563,7 +570,7 @@ const StatementFile: NextPage<any> = forwardRef<
                       <Wrapper
                         width={`25%`}
                         height={`100%`}
-                        al={`flex-start`}
+                        al={`center`}
                         padding={`0px 4px`}
                       >
                         <Text fontSize={`0.83em`} fontWeight={`400`}>
@@ -808,12 +815,13 @@ const StatementFile: NextPage<any> = forwardRef<
               >
                 {props.eInfo && props.eInfo.company.ownerName}
               </Text>
-              <Wrapper isAbsolute top={`-13px`} left={`82px`}>
+              <Wrapper isAbsolute left={`82px`}>
                 <Image
+                  className="stamp"
                   alt="도장 사진"
-                  width={50}
-                  height={50}
-                  src="/api/settings/myinfo/stamp"
+                  width={40}
+                  height={40}
+                  src={props.stampImgSrc}
                 />
               </Wrapper>
               <Text

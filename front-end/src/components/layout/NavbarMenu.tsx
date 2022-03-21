@@ -7,6 +7,8 @@ import { menuList } from "src/configure/list.entity";
 import { UserAuthority } from "src/constants/model.const";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { UseLink } from "src/configure/router.entity";
 
 const NavbarMenu: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -77,7 +79,7 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   return (
     <Wrapper
-      isAbsolute
+      isFixed
       height={`100%`}
       background={`rgba(0, 0, 0, 0.7)`}
       top={`0`}
@@ -97,7 +99,19 @@ const NavbarMenu: NextPage<_MainProps> = (props) => {
       >
         <Wrapper fontSize={`28px`} ju={`space-between`} dr={`row`}>
           <Wrapper width={`auto`} padding={`0px 30px`}>
-            <Image src="/images/cargle.png" alt="Cargle Logo" width={`100px`} />
+            <Link href={UseLink.MAIN}>
+              <a
+                onClick={() => {
+                  props.setOpenMenu(false);
+                }}
+              >
+                <Image
+                  src="/images/mainLogo.png"
+                  alt="Cargle Logo"
+                  width={`100px`}
+                />
+              </a>
+            </Link>
           </Wrapper>
           <CloseButton
             type="button"

@@ -122,7 +122,6 @@ const MaintenanceCreate: NextPage = () => {
     dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
-          console.log(res.payload);
           setCarInfo(Object.assign(carInit, res.payload));
         } else {
           setCarInfo(carInit);
@@ -229,7 +228,7 @@ const MaintenanceCreate: NextPage = () => {
           </JoinStepBarWrapper>
         </Wrapper>
         <Wrapper dr={`row`} ju={`space-between`} al={`flex-start`}>
-          <Wrapper width={`25%`}>
+          <Wrapper width={`27%`}>
             {showCar ? (
               <Wrapper height={`80px`} ju={`flex-end`}>
                 <Wrapper
@@ -239,13 +238,13 @@ const MaintenanceCreate: NextPage = () => {
                   padding={`10px 0px`}
                 >
                   <Text fontSize={`24px`}>{searchCarText}</Text>
-                  <IconButton
+                  {/* <IconButton
                     type="button"
                     shadow={`none`}
                     onClick={onResetCar}
                   >
                     <AiFillCloseCircle />
-                  </IconButton>
+                  </IconButton> */}
                 </Wrapper>
               </Wrapper>
             ) : (
@@ -260,7 +259,7 @@ const MaintenanceCreate: NextPage = () => {
                   >
                     <Wrapper>
                       <SearchInput
-                        width={`264px`}
+                        width={`290px`}
                         placeholder="차량번호를 입력하세요."
                         type="text"
                         value={searchCarText}
@@ -306,7 +305,7 @@ const MaintenanceCreate: NextPage = () => {
             <Wrapper
               border={`1px solid #ccc`}
               margin={`10px 0px 0px 0px`}
-              padding={`10px 20px`}
+              padding={`10px`}
             >
               {showCar ? (
                 <form
@@ -324,6 +323,7 @@ const MaintenanceCreate: NextPage = () => {
                         textAlign={`right`}
                         margin={`0px 10px 0px 0px`}
                       >
+                        <ColorSpan color={`#d6263b`}>*</ColorSpan>
                         주행거리
                       </Text>
                       <TextInput2
@@ -397,6 +397,7 @@ const MaintenanceCreate: NextPage = () => {
                         textAlign={`right`}
                         margin={`0px 10px 0px 0px`}
                       >
+                        <ColorSpan color={`#d6263b`}>*</ColorSpan>
                         전화번호
                       </Text>
                       <TextInput2
@@ -445,6 +446,7 @@ const MaintenanceCreate: NextPage = () => {
                         textAlign={`right`}
                         margin={`0px 10px 0px 0px`}
                       >
+                        <ColorSpan color={`#d6263b`}>*</ColorSpan>
                         차량명
                       </Text>
                       <TextInput2
@@ -589,19 +591,15 @@ const MaintenanceCreate: NextPage = () => {
                     </Wrapper>
                   </Wrapper>
                   <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
-                    <SmallButton type="button" width={`48%`} kindOf={`default`}>
+                    <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
                       정비요청사항
                     </SmallButton>
-                    <SmallButton type="button" width={`48%`} kindOf={`default`}>
+                    <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
                       차량정보공유
                     </SmallButton>
                   </Wrapper>
                   <Wrapper>
-                    <SmallButton
-                      type="button"
-                      width={`100%`}
-                      kindOf={`default`}
-                    >
+                    <SmallButton type="button" width={`100%`} kindOf={`ghost`}>
                       정비사진확인
                     </SmallButton>
                   </Wrapper>
@@ -620,7 +618,7 @@ const MaintenanceCreate: NextPage = () => {
             </Wrapper>
           </Wrapper>
 
-          <Wrapper width={`74%`}>
+          <Wrapper width={`72%`}>
             <Wrapper height={`80px`} al={`flex-end`} ju={`flex-end`}>
               <Wrapper dr={`row`} ju={`flex-end`}>
                 <SmallButton
@@ -636,7 +634,7 @@ const MaintenanceCreate: NextPage = () => {
             </Wrapper>
             <Wrapper
               border={`1px solid #ccc`}
-              padding={`20px`}
+              padding={`10px`}
               margin={`10px 0px 20px`}
             >
               <Wrapper
@@ -724,7 +722,7 @@ const MaintenanceCreate: NextPage = () => {
                   <TextInput2
                     type="text"
                     width={`150px`}
-                    placeholder={`보험사명 입력란`}
+                    placeholder={`보험사명`}
                     readOnly
                   />
                 </Wrapper>
@@ -736,7 +734,7 @@ const MaintenanceCreate: NextPage = () => {
                   <TextInput2
                     type="text"
                     width={`240px`}
-                    placeholder={`보험번호 입력란`}
+                    placeholder={`보험번호`}
                     readOnly
                   />
                 </Wrapper>

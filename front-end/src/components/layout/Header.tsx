@@ -117,7 +117,7 @@ const Header: NextPage<_MainProps> = (props) => {
             <Link href={UseLink.MAIN}>
               <a>
                 <Image
-                  src="/images/cargle.png"
+                  src="/images/mainLogo.png"
                   alt="Cargle Logo"
                   width={width < 1450 ? `80px` : `100px`}
                 />
@@ -177,16 +177,10 @@ const Header: NextPage<_MainProps> = (props) => {
                     bgColor={`#fafafa`}
                   >
                     {/* 서브메뉴 빈 wrapper */}
-                    <Wrapper width={`auto`} al={`center`}>
-                      <a>
-                        <Image
-                          src="/images/cargle.png"
-                          alt="Cargle Logo"
-                          width={width < 1450 ? `80px` : `100px`}
-                          isTransparency={`true`}
-                        />
-                      </a>
-                    </Wrapper>
+                    <Wrapper
+                      al={`center`}
+                      width={width < 1450 ? `80px` : `100px`}
+                    ></Wrapper>
                     {/* 서브메뉴 빈 wrapper 끝 */}
 
                     {/* 서브메뉴 시작 */}
@@ -267,7 +261,7 @@ const Header: NextPage<_MainProps> = (props) => {
             {props.tokenValue &&
               props.tokenValue.cApproval === CompanyApproval.DONE && (
                 <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                  <HeaderIconButton>
+                  <HeaderIconButton opacity={`0`}>
                     <FaBell />
                   </HeaderIconButton>
                   {/* <HeaderIconAlarmWrapper>
@@ -322,23 +316,28 @@ const Header: NextPage<_MainProps> = (props) => {
             display={props.tokenValue ? `` : `none`}
             width={`20%`}
             al={`flex-start`}
-            // onClick={() => {
-            //   props.setOpenMenu(!props.openMenu);
-            // }}
           >
-            <IconButton
+            <HeaderIconButton
               type="button"
               onClick={() => {
                 props.setOpenMenu(!props.openMenu);
               }}
-              shadow={`none`}
               bgColor={`inherit`}
+              color={`#8DAFCE`}
             >
               <AiOutlineMenu />
-            </IconButton>
+            </HeaderIconButton>
           </Wrapper>
           <Wrapper width={props.tokenValue ? `60%` : `100%`}>
-            <Image src="/images/cargle.png" alt="Cargle Logo" width={`100px`} />
+            <Link href={UseLink.MAIN}>
+              <a>
+                <Image
+                  src="/images/mainLogo.png"
+                  alt="Cargle Logo"
+                  width={`80px`}
+                />
+              </a>
+            </Link>
           </Wrapper>
           <Wrapper
             display={props.tokenValue ? `` : `none`}
@@ -350,7 +349,7 @@ const Header: NextPage<_MainProps> = (props) => {
             {props.tokenValue &&
               props.tokenValue.cApproval === CompanyApproval.DONE && (
                 <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
-                  <HeaderIconButton>
+                  <HeaderIconButton opacity={`0`}>
                     <FaBell />
                   </HeaderIconButton>
                 </Wrapper>

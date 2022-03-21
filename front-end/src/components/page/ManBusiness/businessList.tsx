@@ -198,7 +198,11 @@ const ManBusinessList: NextPage<any> = (props) => {
                 <SearchInput
                   width={`532px`}
                   padding={`0px 5px 0px 5px`}
-                  placeholder="검색할 업체의 상호명 또는, 담당자명을 입력하세요"
+                  placeholder={
+                    props.searchOption === "name"
+                      ? `상호명을 입력 해주세요.`
+                      : `담당자명을 입력 해주세요.`
+                  }
                   type="text"
                   value={props.filterValue}
                   onChange={onInputSearchHandler}
@@ -268,7 +272,7 @@ const ManBusinessList: NextPage<any> = (props) => {
           </Wrapper>
         </Wrapper>
 
-        <TableWrapper margin={`50px 0px 0px`}>
+        <TableWrapper margin={`50px 0px 0px`} kindOf={`list`}>
           <TableHead>
             <TableHeadLIST
               width={`10%`}
@@ -295,8 +299,10 @@ const ManBusinessList: NextPage<any> = (props) => {
             </TableHeadLIST>
             <TableHeadLIST width={`15%`}>상호명</TableHeadLIST>
             <TableHeadLIST width={`15%`}>전화번호</TableHeadLIST>
-            <TableHeadLIST width={`22%`}>주소</TableHeadLIST>
-            <TableHeadLIST width={`15%`}>담당자명</TableHeadLIST>
+            <TableHeadLIST width={`25%`} padding={`0px 10px`}>
+              주소
+            </TableHeadLIST>
+            <TableHeadLIST width={`12%`}>담당자명</TableHeadLIST>
             <TableHeadLIST width={`23%`}>메모</TableHeadLIST>
           </TableHead>
           <TableBody>
@@ -328,13 +334,15 @@ const ManBusinessList: NextPage<any> = (props) => {
                     </Checkbox>
                   </TableRowLIST>
                   <TableRowLIST width={`15%`}>{list.name}</TableRowLIST>
-                  <TableRowLIST width={`15%`}>{list.hpNum}</TableRowLIST>
-                  <TableRowLIST width={`22%`}>
+                  <TableRowLIST width={`15%`}>
+                    {list.phoneNum === "" ? list.hpNum : list.phoneNum}
+                  </TableRowLIST>
+                  <TableRowLIST width={`25%`} padding={`0px 10px`}>
                     <ToolTipWrapper>
                       <ToolTip>{list.address1}</ToolTip>
                     </ToolTipWrapper>
                   </TableRowLIST>
-                  <TableRowLIST width={`15%`}>{list.manager}</TableRowLIST>
+                  <TableRowLIST width={`12%`}>{list.manager}</TableRowLIST>
                   <TableRowLIST width={`23%`}>
                     <ToolTipWrapper>
                       <ToolTip>

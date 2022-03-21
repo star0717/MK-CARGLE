@@ -113,6 +113,11 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
     setComData({ ...comData, [e.target.name]: e.target.value });
   };
 
+  //기간 input typing 막는 이벤트
+  const PreventDefault = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
   /**
    * 주소검색 api handler
    * @param data
@@ -415,6 +420,9 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                     </Text>
                     <TextInput2
                       type="date"
+                      onKeyPress={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        PreventDefault(e);
+                      }}
                       value={dayjs(userData.joinDate).format("YYYY-MM-DD")}
                       {...register("joinDate", {
                         onChange: (e: React.ChangeEvent<HTMLInputElement>) => {

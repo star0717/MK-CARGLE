@@ -13,11 +13,9 @@ import MaintenanceCreate from "./section/create";
 import MaintenanceStored from "./section/stored";
 import MaintenanceIng from "./section/ing";
 import MaintenanceDone from "./section/done";
-import MaintenancePaid from "./section/paid";
 import MaintenanceReleased from "./section/released";
 import { Maintenance } from "src/models/maintenance.entity";
-import { Statement } from "src/models/statement.entity";
-import { Estimate } from "src/models/estimate.entity";
+import dayjs from "dayjs";
 
 const StepMaintenance: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
@@ -51,6 +49,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -72,8 +71,7 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   useEffect(() => {
     setFindResult(props.data);
-  }, [props]);
-
+  }, [props.data]);
   /**
    * 작업자의 정보를 조회함
    * @param page 조회할 페이지
@@ -87,11 +85,11 @@ const MaintenanceBookPage: NextPage<_MainProps> = (props) => {
       useRegSearch: true,
     };
     if (searchList.sFrom !== "") {
-      var sFromDate: Date = new Date(searchList.sFrom);
+      var sFromDate: Date = dayjs(searchList.sFrom).toDate();
       param.sFrom = sFromDate;
     }
     if (searchList.sTo !== "") {
-      var sToDate: Date = new Date(searchList.sTo);
+      var sToDate: Date = dayjs(searchList.sTo).toDate();
       param.sTo = sToDate;
     }
     //searchDetails 빈 json 생성

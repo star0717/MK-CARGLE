@@ -52,6 +52,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
                   type: actionTypesUser.USER_SELECT,
                   payload: UserAuthority.OWNER,
                 });
+                window.scrollTo(0, 0);
               }}
             >
               <Image
@@ -82,6 +83,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
                   type: actionTypesUser.USER_SELECT,
                   payload: UserAuthority.WORKER,
                 });
+                window.scrollTo(0, 0);
               }}
             >
               <Image

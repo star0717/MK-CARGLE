@@ -4,12 +4,8 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  CommonSubTitle,
   CommonSmallTitle,
   TextInput2,
-  Checkbox,
-  CheckInput,
-  CheckMark,
   CommonButton,
   CommonButtonWrapper,
   SmallButton,
@@ -30,24 +26,15 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
    *********************************************************************/
   const dispatch = useDispatch();
 
-  interface PayCheck {
-    cashCheck: Boolean;
-    creditCheck: Boolean;
-    insuranceCheck: Boolean;
-  }
-  const payCheckInit: PayCheck = {
-    cashCheck: false,
-    creditCheck: false,
-    insuranceCheck: false,
-  };
-
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [price, setPrice] = useState<MainPrice>(props.mtInfo.price);
-  const [payCheck, setPayCheck] = useState<PayCheck>(payCheckInit);
+
   const [edit, setEdit] = useState<boolean>(false);
   const [discount, setDiscount] = useState<number>(props.mtInfo.price.discount);
+  const [totalName, setTotalName] = useState<string>("");
+  const realTotal = props.mtInfo.price.total + props.mtInfo.price.discount;
 
   /*********************************************************************
    * 3. Handlers
@@ -61,38 +48,94 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
     e.target.value = e.target.value.replaceAll(",", "");
     switch (e.target.name) {
       case "discount":
+        setPrice({ ...price, cash: 0, credit: 0, insurance: 0 });
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setDiscount(0);
         } else {
-          if (price.isIncluded) {
-            if (Number(e.target.value) > props.mtInfo.price.total)
-              return setDiscount(props.mtInfo.price.total);
-          } else {
-            if (Number(e.target.value) > props.mtInfo.price.sum)
-              return setDiscount(props.mtInfo.price.sum);
-          }
+          if (Number(e.target.value) > realTotal)
+            return setDiscount(
+              props.mtInfo.price.total + props.mtInfo.price.discount
+            );
           return setDiscount(Number(e.target.value));
         }
-
-      default:
-        if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
-          return setPrice({ ...price, [e.target.name]: 0 });
-        } else {
+      case "cash":
+        if (
+          Number(e.target.value) + price.credit + price.insurance >
+          price.total
+        ) {
           return setPrice({
             ...price,
-            [e.target.name]: Number(e.target.value),
+            [e.target.name]: price.total - (price.credit + price.insurance),
           });
+        } else {
+          if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
+            return setPrice({ ...price, [e.target.name]: 0 });
+          } else {
+            return setPrice({
+              ...price,
+              [e.target.name]: Number(e.target.value),
+            });
+          }
         }
+      case "credit":
+        if (
+          Number(e.target.value) + price.cash + price.insurance >
+          price.total
+        ) {
+          return setPrice({
+            ...price,
+            [e.target.name]: price.total - (price.cash + price.insurance),
+          });
+        } else {
+          if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
+            return setPrice({ ...price, [e.target.name]: 0 });
+          } else {
+            return setPrice({
+              ...price,
+              [e.target.name]: Number(e.target.value),
+            });
+          }
+        }
+      case "insurance":
+        if (Number(e.target.value) + price.credit + price.cash > price.total) {
+          return setPrice({
+            ...price,
+            [e.target.name]: price.total - (price.credit + price.cash),
+          });
+        } else {
+          if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
+            return setPrice({ ...price, [e.target.name]: 0 });
+          } else {
+            return setPrice({
+              ...price,
+              [e.target.name]: Number(e.target.value),
+            });
+          }
+        }
+      default:
+        return;
     }
   };
-
-  /**
-   * 결제수단 체크 handler
-   * @param e
-   */
-  const onChangeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPayCheck({ ...payCheck, [e.target.name]: e.target.checked });
-  };
+  /** 전액 입력 버튼 기능 */
+  useEffect(() => {
+    switch (totalName) {
+      case "cash": {
+        setTotalName("");
+        return setPrice({ ...price, cash: price.cash + price.balance });
+      }
+      case "credit": {
+        setTotalName("");
+        return setPrice({ ...price, credit: price.credit + price.balance });
+      }
+      case "insurance": {
+        setTotalName("");
+        return setPrice({
+          ...price,
+          insurance: price.insurance + price.balance,
+        });
+      }
+    }
+  }, [totalName]);
 
   /**결제 금액 계산 handler */
   useEffect(() => {
@@ -107,39 +150,20 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
       sum2 = Math.round(total2 / 1.1);
       vat2 = Math.round(total2 - sum2);
     } else {
-      sum2 = partWage - discount;
+      sum2 = partWage;
       vat2 = Math.round(sum2 * 0.1);
-      total2 = Math.round(sum2 + vat2);
+      total2 = Math.round(sum2 + vat2) - discount;
     }
 
-    if (price.cash !== 0) {
-      payCheck.cashCheck = true;
-    } else {
-      payCheck.cashCheck = false;
-    }
-    if (price.credit !== 0) {
-      payCheck.creditCheck = true;
-    } else {
-      payCheck.creditCheck = false;
-    }
-    if (price.insurance) {
-      payCheck.insuranceCheck = true;
-    } else {
-      payCheck.insuranceCheck = false;
-    }
     setPrice({
       ...price,
       discount: discount,
       sum: sum2,
       vat: vat2,
       total: total2,
-      balance:
-        total2 -
-        (payCheck.cashCheck ? price.cash : 0) -
-        (payCheck.creditCheck ? price.credit : 0) -
-        (payCheck.insuranceCheck ? price.insurance : 0),
+      balance: total2 - price.cash - price.credit - price.insurance,
     });
-  }, [discount, payCheck, price.cash, price.credit, price.insurance]);
+  }, [discount, price.cash, price.credit, price.insurance]);
 
   /**결제 handler */
   const onPaymentHandler = async (edit: boolean) => {
@@ -303,7 +327,6 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
-
           <Wrapper width={`45%`}>
             <Wrapper
               al={`flex-start`}
@@ -323,111 +346,129 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
             >
               <Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
-                  <Wrapper al={`flex-start`} height={`30px`}>
-                    <Checkbox cursor={`default`}>
-                      현금
-                      <CheckInput
-                        type="checkbox"
-                        name="cashCheck"
-                        checked={payCheck.cashCheck}
-                        onChange={onChangeCheck}
-                        disabled
-                        cursor={`default`}
+                  <Wrapper ju={`space-between`} dr={`row`}>
+                    <Text>현금</Text>
+                    <Wrapper dr={`row`} width={`auto`}>
+                      <TextInput2
+                        width={`300px`}
+                        al={`flex-end`}
+                        placeholder={"금액을 입력하세요."}
+                        name="cash"
+                        value={price.cash.toLocaleString()}
+                        onChange={onChangePrice}
+                        readOnly={
+                          props.modalOption.indexOf("Bts") === -1
+                            ? false
+                            : edit
+                            ? false
+                            : true
+                        }
                       />
-                      <CheckMark cursor={`default`}></CheckMark>
-                    </Checkbox>
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <TextInput2
-                      width={`300px`}
-                      al={`flex-end`}
-                      placeholder={"금액을 입력하세요."}
-                      name="cash"
-                      value={price.cash.toLocaleString()}
-                      onChange={onChangePrice}
-                      readOnly={
+                      <Text width={`20px`} textAlign={`right`}>
+                        원
+                      </Text>
+                    </Wrapper>
+                    <SmallButton
+                      type="button"
+                      kindOf={edit ? `default` : `ghost`}
+                      onClick={() => {
+                        console.log("cash!");
+                        setTotalName("cash");
+                      }}
+                      disabled={
                         props.modalOption.indexOf("Bts") === -1
                           ? false
                           : edit
                           ? false
                           : true
                       }
-                    />
-                    <Text width={`20px`} textAlign={`right`}>
-                      원
-                    </Text>
+                    >
+                      전액입력
+                    </SmallButton>
                   </Wrapper>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
-                  <Wrapper al={`flex-start`}>
-                    <Checkbox cursor={`default`}>
-                      카드
-                      <CheckInput
-                        type="checkbox"
-                        name="creditCheck"
-                        checked={payCheck.creditCheck}
-                        onChange={onChangeCheck}
-                        disabled
-                        cursor={`default`}
+                  <Wrapper ju={`space-between`} dr={`row`}>
+                    <Text>카드</Text>
+                    <Wrapper dr={`row`} width={`auto`}>
+                      <TextInput2
+                        width={`300px`}
+                        al={`flex-end`}
+                        placeholder={"금액을 입력하세요."}
+                        name="credit"
+                        value={price.credit.toLocaleString()}
+                        onChange={onChangePrice}
+                        readOnly={
+                          props.modalOption.indexOf("Bts") === -1
+                            ? false
+                            : edit
+                            ? false
+                            : true
+                        }
                       />
-                      <CheckMark cursor={`default`}></CheckMark>
-                    </Checkbox>
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <TextInput2
-                      width={`300px`}
-                      al={`flex-end`}
-                      placeholder={"금액을 입력하세요."}
-                      name="credit"
-                      value={price.credit.toLocaleString()}
-                      onChange={onChangePrice}
-                      readOnly={
+                      <Text width={`20px`} textAlign={`right`}>
+                        원
+                      </Text>
+                    </Wrapper>
+                    <SmallButton
+                      type="button"
+                      kindOf={edit ? `default` : `ghost`}
+                      onClick={() => {
+                        console.log("credit!!");
+                        setTotalName("credit");
+                      }}
+                      disabled={
                         props.modalOption.indexOf("Bts") === -1
                           ? false
                           : edit
                           ? false
                           : true
                       }
-                    />
-                    <Text width={`20px`} textAlign={`right`}>
-                      원
-                    </Text>
+                    >
+                      전액입력
+                    </SmallButton>
                   </Wrapper>
                 </Wrapper>
                 <Wrapper dr={`row`} ju={`space-between`} height={`50px`}>
-                  <Wrapper al={`flex-start`}>
-                    <Checkbox cursor={`default`}>
-                      보험
-                      <CheckInput
-                        type="checkbox"
-                        name="insuranceCheck"
-                        checked={payCheck.insuranceCheck}
-                        onChange={onChangeCheck}
-                        disabled
-                        cursor={`default`}
+                  <Wrapper ju={`space-between`} dr={`row`}>
+                    <Text>보험</Text>
+                    <Wrapper dr={`row`} width={`auto`}>
+                      <TextInput2
+                        width={`300px`}
+                        al={`flex-end`}
+                        placeholder={"금액을 입력하세요."}
+                        name="insurance"
+                        value={price.insurance.toLocaleString()}
+                        onChange={onChangePrice}
+                        readOnly={
+                          props.modalOption.indexOf("Bts") === -1
+                            ? false
+                            : edit
+                            ? false
+                            : true
+                        }
                       />
-                      <CheckMark cursor={`default`}></CheckMark>
-                    </Checkbox>
-                  </Wrapper>
-                  <Wrapper dr={`row`}>
-                    <TextInput2
-                      width={`300px`}
-                      al={`flex-end`}
-                      placeholder={"금액을 입력하세요."}
-                      name="insurance"
-                      value={price.insurance.toLocaleString()}
-                      onChange={onChangePrice}
-                      readOnly={
+                      <Text width={`20px`} textAlign={`right`}>
+                        원
+                      </Text>
+                    </Wrapper>
+                    <SmallButton
+                      type="button"
+                      kindOf={edit ? `default` : `ghost`}
+                      onClick={() => {
+                        console.log("insurance!!");
+                        setTotalName("insurance");
+                      }}
+                      disabled={
                         props.modalOption.indexOf("Bts") === -1
                           ? false
                           : edit
                           ? false
                           : true
                       }
-                    />
-                    <Text width={`20px`} textAlign={`right`}>
-                      원
-                    </Text>
+                    >
+                      전액입력
+                    </SmallButton>
                   </Wrapper>
                 </Wrapper>
               </Wrapper>
@@ -443,11 +484,12 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         </Wrapper>
         {props.modalOption.indexOf("Bts") === -1 ? (
-          <CommonButtonWrapper ju={`space-between`} padding={`30px 30px`}>
+          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
             <CommonButton
               width={`300px`}
               height={`50px`}
               type="button"
+              kindOf={`white`}
               onClick={() => {
                 props.setModalOpen(false);
               }}
@@ -477,7 +519,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
             </CommonButton>
           </CommonButtonWrapper>
         ) : edit ? (
-          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+          <CommonButtonWrapper ju={`center`} padding={`60px 30px`}>
             <CommonButton
               width={`300px`}
               height={`50px`}
@@ -487,7 +529,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                 setEdit(false);
               }}
             >
-              취소하기
+              취소
             </CommonButton>
             <CommonButton
               width={`300px`}
@@ -501,7 +543,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
             </CommonButton>
           </CommonButtonWrapper>
         ) : (
-          <CommonButtonWrapper ju={`center`} padding={`30px 30px`}>
+          <CommonButtonWrapper ju={`center`} padding={`60px 30px`}>
             <CommonButton
               width={`300px`}
               height={`50px`}

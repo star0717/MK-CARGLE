@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { NextPage } from "next";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -29,7 +29,7 @@ import {
   _pPartsSetProps,
   _pPreviewModalProps,
 } from "src/configure/_pProps.entity";
-import { create2dArray, test, trim } from "src/modules/commonModule";
+import { create2dArray, trim } from "src/modules/commonModule";
 import { formRegEx } from "src/validation/regEx";
 import { useDispatch } from "react-redux";
 import {
@@ -78,8 +78,10 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [point, setPoint] = useState<number>(0); // 포인트
-  const [phoneNum, setPhoneNum] = useState<string>(""); // 번호 input
-  const [phoneList, setPhoneList] = useState<string[][]>([[]]); // 번호 리스트 all
+  const [phoneNum, setPhoneNum] = useState<string>(
+    props.mtInfo.customer.phoneNumber
+  ); // 번호 input
+  // const [phoneList, setPhoneList] = useState<string[][]>([[]]); // 번호 리스트 all
   const [fileCheck, setFileCheck] = useState<_fFileCheck>({
     eCheck: true,
     sCheck: true,
@@ -88,64 +90,69 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     print: true,
     online: false,
   }); // 발급 선택 여부
-  const [reOption, setReOption] = useState<boolean>(null); // 모달창 옵션(서류발급: false, 출고완료: true)
+  const [reOption, setReOption] = useState<boolean>(true); // 모달창 옵션(서류발급: false, 출고완료: true)
   const [printDone, setPrintDone] = useState<boolean>(false); // 프린트 완료여부
   const [onlineDone, setOnlineDone] = useState<boolean>(false); // SMS 완료여부
   const [modal2Open, setModal2Open] = useState<boolean>(false); // 미리보기 modal open
   const [eInfo, setEInfo] = useState<Estimate>(); // 견적서 정보
   const [sInfo, setSInfo] = useState<Statement>(); // 명세서 정보
 
+  const [imgIdx, setImgIdx] = useState<number>(Math.floor(Math.random() * 100));
+  const [stampImgSrc, setStampImgSrc] = useState<string>(
+    `/api/settings/myinfo/stamp?num=${imgIdx}`
+  ); // stamp img src 설정
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-  /**
-   * 전화번호 추가 handler
-   * @param data
-   */
-  const onAddPhoneHandler: SubmitHandler<FieldValues> = (data) => {
-    for (let i = 0; i < phoneList.length; i++) {
-      for (let j = 0; j < phoneList[i].length; j++) {
-        if (phoneNum === phoneList[i][j])
-          return alert("이미 추가된 전화번호입니다");
-      }
-    }
+  // /**
+  //  * 전화번호 추가 handler
+  //  * @param data
+  //  */
+  // const onAddPhoneHandler: SubmitHandler<FieldValues> = (data) => {
+  //   for (let i = 0; i < phoneList.length; i++) {
+  //     for (let j = 0; j < phoneList[i].length; j++) {
+  //       if (phoneNum === phoneList[i][j])
+  //         return alert("이미 추가된 전화번호입니다");
+  //     }
+  //   }
 
-    if (phoneList.length === 1) {
-      if (phoneList[0].length < 3) {
-        setPhoneList((phoneList) => [[...phoneList[0], phoneNum]]);
-      } else {
-        setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
-      }
-    } else {
-      if (phoneList[phoneList.length - 1].length < 3) {
-        setPhoneList((phoneList) => [
-          ...phoneList.filter((item, idx) => idx !== phoneList.length - 1),
-          [...phoneList[phoneList.length - 1], phoneNum],
-        ]);
-      } else {
-        setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
-      }
-    }
+  //   if (phoneList.length === 1) {
+  //     if (phoneList[0].length < 3) {
+  //       setPhoneList((phoneList) => [[...phoneList[0], phoneNum]]);
+  //     } else {
+  //       setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
+  //     }
+  //   } else {
+  //     if (phoneList[phoneList.length - 1].length < 3) {
+  //       setPhoneList((phoneList) => [
+  //         ...phoneList.filter((item, idx) => idx !== phoneList.length - 1),
+  //         [...phoneList[phoneList.length - 1], phoneNum],
+  //       ]);
+  //     } else {
+  //       setPhoneList((phoneList) => [...phoneList, [phoneNum]]);
+  //     }
+  //   }
 
-    setPhoneNum("");
-  };
+  //   setPhoneNum("");
+  // };
 
-  /**
-   * 전화번호 삭제 handler
-   * @param rowIdx
-   * @param cellIdx
-   */
-  const onDelPhoneHandler = (rowIdx: number, cellIdx: number) => {
-    let odArr: string[] = [];
-    for (let i = 0; i < phoneList.length; i++) {
-      for (let j = 0; j < phoneList[i].length; j++) {
-        if (i !== rowIdx || j !== cellIdx) odArr.push(phoneList[i][j]);
-      }
-    }
+  // /**
+  //  * 전화번호 삭제 handler
+  //  * @param rowIdx
+  //  * @param cellIdx
+  //  */
+  // const onDelPhoneHandler = (rowIdx: number, cellIdx: number) => {
+  //   let odArr: string[] = [];
+  //   for (let i = 0; i < phoneList.length; i++) {
+  //     for (let j = 0; j < phoneList[i].length; j++) {
+  //       if (i !== rowIdx || j !== cellIdx) odArr.push(phoneList[i][j]);
+  //     }
+  //   }
 
-    const resultArr = create2dArray(Math.ceil(odArr.length / 3), 3, odArr);
-    setPhoneList(resultArr);
-  };
+  //   const resultArr = create2dArray(Math.ceil(odArr.length / 3), 3, odArr);
+  //   setPhoneList(resultArr);
+  // };
 
   /**
    * 체크박스 handler
@@ -186,8 +193,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     )
       return alert("발급서류를 선택하세요");
     // sms하는데 번호없음
-    if (pubCheck.online && phoneList.length === 0)
-      return alert("전송할 번호를 추가하세요");
+    // if (pubCheck.online && phoneList.length === 0)
+    if (pubCheck.online && errors.phoneNum) return false;
 
     await onFileApiHandler(mainPubDataHandler());
 
@@ -210,33 +217,49 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           props.setInitMtInfo && props.setInitMtInfo(res.payload);
           props.setMtInfo(res.payload);
           props.setModify && props.setModify(!props.modify);
-          onPubHandler();
+          onPubHandler(opt);
         },
         (err) => {
           return alert("출고에 실패했습니다.");
         }
       );
     } else {
-      onPubHandler();
+      onPubHandler(opt);
     }
   };
 
   /**서류 발급 handler */
-  const onPubHandler = () => {
-    if (!pubCheck.print && !pubCheck.online)
-      return alert("발급방식을 선택하세요.");
+  const onPubHandler = (opt: boolean) => {
+    if (!pubCheck.print && !pubCheck.online) {
+      if (opt) {
+        return props.setModalOpen(false);
+      } else {
+        return alert("발급방식을 선택하세요.");
+      }
+    }
+
     if (pubCheck.print) onPrintHandler();
-    if (pubCheck.online) setOnlineDone(true);
+    if (pubCheck.online && !errors.phoneNum) setOnlineDone(true);
   };
 
   /** 프린트 handler */
   const onPrintHandler = useReactToPrint({
     content: () => {
       const printElem = document.createElement("div");
-      const eNode = estimateRef.current.cloneNode(true);
-      const sNode = estimateRef.current.cloneNode(true);
-      if (fileCheck.eCheck) printElem.appendChild(eNode);
-      if (fileCheck.sCheck) printElem.appendChild(sNode);
+      if (fileCheck.eCheck) {
+        const eNode = estimateRef.current.cloneNode(true);
+        printElem.appendChild(eNode);
+      }
+      if (fileCheck.sCheck) {
+        const sNode = statementRef.current.cloneNode(true);
+        printElem.appendChild(sNode);
+      }
+      let imgElem = printElem.getElementsByClassName(
+        "stamp"
+      ) as HTMLCollectionOf<HTMLImageElement>;
+      for (let i = 0; i < imgElem.length; i++) {
+        imgElem[i].src = stampImgSrc;
+      }
       return printElem;
     },
     onAfterPrint: () => {
@@ -263,7 +286,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     // 발급 api에 넘길 데이터 초기값
     let mainDocPubData: MainPubDocInfo = {
       type: MainDocPubType.NOT_ISSUED,
-      phoneNumber: "test", // <-- 에러임 db에서 배열로 바꿔줘야함
+      phoneNumber: phoneNum,
     };
 
     // 체크 여부에 따른 문서 발급 타입 설정
@@ -293,8 +316,6 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
    * @param data
    */
   const onFileApiHandler = async (data: MainPubDocInfo) => {
-    console.log(data);
-    console.log(props.mtInfo._id);
     // 견적서 체크할 경우 api
     if (fileCheck.eCheck) {
       await dispatch(_aGetMaintenancesGenEstimate(props.mtInfo._id)).then(
@@ -381,6 +402,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
     propMtInfo,
     eInfo,
     sInfo,
+    stampImgSrc,
   };
 
   /*********************************************************************
@@ -412,13 +434,11 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         )}
         <Wrapper padding={`10px 0px 0px`}>
-          <CommonSmallTitle margin={`0px 0px 30px 0px`}>
-            서류발급
-          </CommonSmallTitle>
+          <CommonSmallTitle margin={`40px 0px`}>서류발급</CommonSmallTitle>
         </Wrapper>
         <Wrapper
           width={`60%`}
-          padding={`10px 80px`}
+          padding={`60px 80px`}
           border={`1px solid #ccc`}
           radius={`8px`}
           shadow={`0px 5px 10px rgba(220,220,220,0.6)`}
@@ -493,6 +513,50 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
           </Wrapper>
         </Wrapper>
         <Wrapper
+          width={`60%`}
+          dr={`row`}
+          ju={`space-between`}
+          padding={`70px 0px 40px `}
+        >
+          <CommonForm>
+            <Text>휴대폰 번호 : </Text>
+            <TextInput2
+              width={`580px`}
+              type="text"
+              placeholder="전송할 휴대폰번호를 입력하세요."
+              value={phoneNum}
+              {...register("phoneNum", {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  setPhoneNum(trim(e.target.value));
+                },
+                required: {
+                  value: true,
+                  message: "전화번호를 입력하세요.",
+                },
+                pattern: {
+                  value: formRegEx.HP_NUM,
+                  message: "형식에 맞게 입력하세요.",
+                },
+              })}
+            />
+          </CommonForm>
+        </Wrapper>
+        <Wrapper width={`60%`} ju={`flex-start`} padding={`0px`}>
+          {(errors.phoneNum?.type === "required" ||
+            errors.phoneNum?.type === "pattern") && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.phoneNum.message}
+            </Text>
+          )}
+        </Wrapper>
+        {/* <Wrapper
           dr={`row`}
           width={`60%`}
           ju={`space-between`}
@@ -544,8 +608,8 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                 <TableHeadLIST fontSize={`18px`}>등록된 전화번호</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} ju={`flex-start`}>
-              <TableBody minHeight={`200px`}>
+            <Wrapper overflow={`auto`} ju={`center`}>
+              <TableBody minHeight={`200px`} ju={`center`}>
                 {phoneList.length !== 0 ? (
                   <>
                     {phoneList.map((row, rowIdx) => {
@@ -554,7 +618,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                           key={rowIdx}
                           height={`50px`}
                           kindOf={`noHover`}
-                          ju={`space-around`}
+                          ju={`flex-start`}
                         >
                           {phoneList[rowIdx].map((num, cellIdx) => {
                             return (
@@ -562,13 +626,15 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
                                 <SmallButton
                                   type="button"
                                   kindOf={`default`}
-                                  width={`160px`}
+                                  width={`208px`}
                                   radius={`100px`}
+                                  margin={`0px 5px`}
                                   onClick={() => {
                                     onDelPhoneHandler(rowIdx, cellIdx);
                                   }}
                                 >
                                   {num}
+
                                   <FaMinusSquare />
                                 </SmallButton>
                               </TableRowLIST>
@@ -592,7 +658,7 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
               </TableBody>
             </Wrapper>
           </TableWrapper>
-        </Wrapper>
+        </Wrapper> */}
         {props.modalOption.indexOf("Bts") !== -1 ? (
           <CommonButtonWrapper ju={`center`} padding={`20px 30px 30px`}>
             <CommonButton
@@ -661,11 +727,12 @@ const DocumentModal: NextPage<_pPartsSetProps> = (props) => {
         <StatementFile {...previewModalProps} ref={statementRef} />
       </Wrapper>
       <Modal
+        id="previewModal"
         isOpen={modal2Open}
         style={{
           overlay: {
             position: "fixed",
-            zIndex: 10000,
+            zIndex: 10005,
             top: 0,
             left: 0,
             width: "100vw",

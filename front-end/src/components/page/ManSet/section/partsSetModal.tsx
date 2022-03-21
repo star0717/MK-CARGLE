@@ -168,7 +168,7 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
                 <TableHeadLIST width={`100%`}>부품분류</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+            <Wrapper overflow={`auto`} height={`380px`} ju={`flex-start`}>
               <TableBody>
                 <TableRow
                   kindOf={
@@ -229,7 +229,7 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
                 <TableHeadLIST width={`10%`}>추가</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+            <Wrapper overflow={`auto`} height={`380px`} ju={`flex-start`}>
               <TableBody>
                 {partList?.map((list: Part) => (
                   <TableRow key={list._id} kindOf={`noHover`}>
@@ -267,7 +267,7 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
                 <TableHeadLIST width={`80%`}>부품명</TableHeadLIST>
               </TableHead>
             </Wrapper>
-            <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+            <Wrapper overflow={`auto`} height={`380px`} ju={`flex-start`}>
               <TableBody>
                 {selectPart.length !== 0 ? (
                   selectPart?.map((part: Part) => (

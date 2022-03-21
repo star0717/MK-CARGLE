@@ -195,17 +195,52 @@ export const create2dArray = (rows: number, columns: number, initArr?: any) => {
   return arr;
 };
 
-export const test = (m: number, n: number, initial: string[]) => {
-  let a,
-    i,
-    j,
-    addA = [];
-  for (i = 0; i < m; i += 1) {
-    a = [];
-    for (j = 0; j < n; j += 1) {
-      a[j] = initial[i];
-    }
-    addA[i] = a;
+export const dataSort = (
+  data: any,
+  type: string,
+  sort: number,
+  opt?: string
+) => {
+  let sortData: any = [];
+  switch (type) {
+    case "string":
+      sortData = data.sort((a: any, b: any) => {
+        let aStr: string = "";
+        let bStr: string = "";
+        if (opt) {
+          aStr = a[opt];
+          bStr = b[opt];
+        } else {
+          aStr = a.toString();
+          bStr = b.toString();
+        }
+        if (sort === 1) {
+          return aStr.localeCompare(bStr);
+        } else {
+          return bStr.localeCompare(aStr);
+        }
+      });
+      break;
+    case "date":
+      sortData = data.sort((a: any, b: any) => {
+        let aStr: number = 0;
+        let bStr: number = 0;
+        if (opt) {
+          aStr = +new Date(a[opt]);
+          bStr = +new Date(b[opt]);
+        } else {
+          aStr = +new Date(a);
+          bStr = +new Date(b);
+        }
+        if (sort === 1) {
+          return aStr - bStr;
+        } else {
+          return bStr - aStr;
+        }
+      });
+      break;
+    default:
+      break;
   }
-  return addA;
+  return sortData;
 };

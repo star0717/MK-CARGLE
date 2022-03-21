@@ -137,6 +137,7 @@ export const HeaderIconButton = styled.button<any>`
   cursor: pointer;
   border: ${(props) => props.border || `1px solid #8DAFCE`};
   border-radius: ${(props) => props.radius || `100px`};
+  opacity: ${(props) => props.opacity || ``};
   box-shadow: ${(props) => props.shadow || props.theme.boxShadow};
 
   &:hover {

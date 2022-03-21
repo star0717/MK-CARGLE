@@ -49,6 +49,7 @@ export const initialState: UserState = {
     approval: CompanyApproval.BEFORE,
   },
   formInput: <FormInput>{
+    companyName: "",
     companyNum: "",
     passwordCheck: "",
   },

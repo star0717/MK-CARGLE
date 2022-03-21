@@ -12,6 +12,7 @@ import {
   CommonSmallTitle,
   SmallButton,
   IconButton,
+  ColorSpan,
 } from "../../../styles/CommonComponents";
 import React, { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -140,7 +141,10 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
       <CommonSmallTitle>부품등록</CommonSmallTitle>
       <form id="savePartForm" onSubmit={handleSubmit(onSaveFormHandler)}>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
-          <Text>분류</Text>
+          <Text>
+            <ColorSpan color={`#d6263b`}>*</ColorSpan>
+            분류
+          </Text>
           <Combo
             width={`400px`}
             margin={`0px`}
@@ -187,7 +191,9 @@ const PartsModal: NextPage<_pAdminManParts> = (props) => {
           )}
         </Wrapper>
         <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
-          <Text>부품명</Text>
+          <Text>
+            <ColorSpan color={`#d6263b`}>*</ColorSpan>부품명
+          </Text>
           <TextInput2
             placeholder="부품명을 입력해주세요."
             width={`400px`}

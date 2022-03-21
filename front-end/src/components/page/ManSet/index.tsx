@@ -16,6 +16,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { PartsSet } from "src/models/partsset.entity";
 import PartsSetModal from "./section/partsSetModal";
 import { _pPartsSetProps } from "src/configure/_pProps.entity";
+import { dataSort } from "src/modules/commonModule";
 
 const ManPartsPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -27,12 +28,11 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
-  // const [allParts, setAllParts] = useState<Part[]>(props.data.allParts.docs); // 전체 부품리스트
   const [partSetClass, setPartSetClass] = useState<Partial<PartsSet>[]>(
     props.data.setList.docs
   ); // 전체 세트 항목
   const [partSetData, setPartSetData] = useState<Partial<PartsSet>>(
-    partSetClass[0]
+    dataSort(partSetClass, "date", 1, "createdAt")[0]
   ); // 선택한 세트 데이터
 
   /*********************************************************************
@@ -45,6 +45,11 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
+
+  // 재정렬
+  useEffect(() => {
+    setPartSetClass(dataSort(partSetClass, "date", 1, "createdAt"));
+  }, [partSetClass, partSetData]);
 
   /**
    * modal 창 닫기 기능

@@ -32,6 +32,7 @@ import {
 } from "../../../styles/CommonComponents";
 import { makeFullAddress } from "../../../../modules/commonModule";
 import { _pWorkerDataProps } from "../../../../configure/_pProps.entity";
+import { UserAuthority } from "src/constants/model.const";
 
 const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
   const dispatch = useDispatch();
@@ -100,6 +101,11 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
     } else {
       return false;
     }
+  };
+
+  //기간 input typing 막는 이벤트
+  const PreventDefault = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
   };
 
   // resize 변수 선언
@@ -183,6 +189,9 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
             width={`400px`}
             type="date"
             name="joinDate"
+            onKeyPress={(e: React.ChangeEvent<HTMLInputElement>) => {
+              PreventDefault(e);
+            }}
             value={dayjs(docInfo.joinDate).format("YYYY-MM-DD")}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setDocInfo({
@@ -197,13 +206,15 @@ const UsersModal: NextPage<_pWorkerDataProps> = (props) => {
           <CommonButton type="submit" kindOf={`circleWhite`}>
             저장
           </CommonButton>
-          <CommonButton
-            type="button"
-            onClick={workerDelete}
-            kindOf={`circleTheme`}
-          >
-            직원삭제
-          </CommonButton>
+          {props.clickDoc.auth === UserAuthority.WORKER && (
+            <CommonButton
+              type="button"
+              onClick={workerDelete}
+              kindOf={`circleTheme`}
+            >
+              직원삭제
+            </CommonButton>
+          )}
         </CommonButtonWrapper>
       </form>
     </WholeWrapper>

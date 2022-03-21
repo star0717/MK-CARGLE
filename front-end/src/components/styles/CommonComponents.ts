@@ -333,7 +333,7 @@ export const CommonSubTitle = styled.h2<any>`
 export const CommonSmallTitle = styled.h2<any>`
   width: ${(props) => props.width};
   position: relative;
-  margin: 30px 0px;
+  margin: ${(props) => props.margin || `30px 0px`};
   font-size: 20px;
   font-weight: 500;
   color: ${(props) => props.color};
@@ -1115,7 +1115,7 @@ export const Image = styled.img<any>`
 
   filter: ${(props) => (props.isFilter ? `brightness(30%) opacity(0.4)` : ` `)};
 
-  filter: ${(props) => (props.isTransparency ? ` opacity(0)` : ` `)};
+  filter: ${(props) => (props.isTransparency ? ` opacity(0.3)` : ` `)};
 
   &:hover {
     filter: ${(props) => (props.isHover ? `brightness(100%) opacity(1)` : ` `)};
@@ -1310,10 +1310,12 @@ export const TableWrapper = styled.div<any>`
   align-items: center;
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
-  min-height: ${(props) => props.minHeight || `445px`};
+  min-height: ${(props) => props.minHeight || `400px`};
   overflow: ${(props) => props.overflow || ``};
   overflow-y: ${(props) => props.overflowY || ``};
   border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
+
+  ${(props) => props.kindOf === `list` && `min-height : 500px;`}
 `;
 
 export const TableHead = styled.ul<any>`
@@ -1345,6 +1347,7 @@ export const TableHeadLIST = styled.li<any>`
   text-align: start;
   font-size: ${(props) => props.fontSize || `16px`};
   color: ${(props) => props.color || ``};
+  padding: ${(props) => props.padding || ``};
 `;
 
 export const TableBody = styled.div<any>`
@@ -1353,7 +1356,7 @@ export const TableBody = styled.div<any>`
   margin: ${(props) => props.margin || `0px`};
   overflow: ${(props) => props.overflow || ``};
   font-size: ${(props) => props.fontSize || `16px`};
-  min-height: ${(props) => props.minHeight || `450px`};
+  min-height: ${(props) => props.minHeight || ``};
 `;
 export const TableRow = styled.ul<any>`
   width: 100%;
@@ -1407,10 +1410,14 @@ export const TableRowLIST = styled.li<any>`
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `flex-start`};
-  padding: ${(props) => props.padding};
+  padding: ${(props) => props.padding || ``};
   line-height: ${(props) => props.lineHeight || `1.2`};
   border: ${(props) => props.border || `0px 1px 0px 0px solid #ddd`};
   text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  letter-spacing: 0px;
 `;
 
 export const Comment = styled.div<any>`
