@@ -179,25 +179,30 @@ const Term: NextPage<_pSignUpProps> = (props) => {
         <Wrapper>
           <form onSubmit={handleSubmit(agreeTermHandler)}>
             <Wrapper al={`flex-start`} width={`500px`} padding={`0px 0px 30px`}>
-              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
+              <Wrapper ju={`flex-start`} dr={`row`} padding={`10px 0px`}>
                 <Text></Text>
-                <Wrapper dr={`row`} width={`auto`}>
+                <Wrapper
+                  dr={`row`}
+                  width={`500px`}
+                  ju={`flex-start`}
+                  padding={`10px`}
+                  borderBottom={`1px solid #ccc`}
+                  radius={`5px`}
+                  margin={`0px 0px 30px`}
+                >
                   <Checkbox>
                     <CheckInput
                       type="checkbox"
                       checked={allCheck}
                       onChange={allCheckHandler}
                     />
-                    CARGLE 서비스 이용약관, 개인정보 수집 및 이용, 마케팅 정보
-                    수신(선택)에 모두 동의합니다.
+                    CARGLE 약관에 전체 동의합니다.
                     <CheckMark></CheckMark>
                   </Checkbox>
                 </Wrapper>
               </Wrapper>
-              <Wrapper>
-                <CommonSmallTitle>
-                  CARGLE 서비스 이용약관(필수)
-                </CommonSmallTitle>
+              <Wrapper al={`flex-start`} padding={`10px 0px`}>
+                <Text>CARGLE 서비스 이용약관(필수)</Text>
               </Wrapper>
               <Wrapper
                 height={`200px`}
@@ -225,7 +230,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   repellat
                 </Text>
               </Wrapper>
-              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
+              <Wrapper ju={`flex-start`} dr={`row`} padding={`10px 0px`}>
                 <Wrapper width={`auto`}>
                   {errors.mkTerm && (
                     <Text width={`100%`} textAlign={`right`} color={`#d6263b`}>
@@ -258,10 +263,8 @@ const Term: NextPage<_pSignUpProps> = (props) => {
               </Wrapper>
             </Wrapper>
             <Wrapper al={`flex-start`} width={`500px`} padding={`0px 0px 30px`}>
-              <Wrapper>
-                <CommonSmallTitle>
-                  개인정보 수집 및 이용약관(필수)
-                </CommonSmallTitle>
+              <Wrapper al={`flex-start`} padding={`10px 0px`}>
+                <Text>개인정보 수집 및 이용약관(필수)</Text>
               </Wrapper>
               <Wrapper
                 height={`200px`}
@@ -289,7 +292,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   repellat
                 </Text>
               </Wrapper>
-              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
+              <Wrapper ju={`flex-start`} dr={`row`} padding={`10px 0px`}>
                 <Wrapper width={`auto`}>
                   {errors.privacyTerm && (
                     <Text width={`auto`} al={`flex-start`} color={`#d6263b`}>
@@ -322,8 +325,8 @@ const Term: NextPage<_pSignUpProps> = (props) => {
               </Wrapper>
             </Wrapper>
             <Wrapper al={`flex-start`} width={`500px`} padding={`0px 0px 30px`}>
-              <Wrapper>
-                <CommonSmallTitle>마케팅 정보 수신 동의(선택)</CommonSmallTitle>
+              <Wrapper al={`flex-start`} padding={`10px 0px`}>
+                <Text>마케팅 정보 수신 동의(선택)</Text>
               </Wrapper>
               <Wrapper
                 height={`200px`}
@@ -351,7 +354,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   repellat
                 </Text>
               </Wrapper>
-              <Wrapper ju={`flex-end`} dr={`row`} padding={`10px 0px`}>
+              <Wrapper ju={`flex-start`} dr={`row`} padding={`10px 0px`}>
                 <Checkbox>
                   동의합니다.
                   <CheckInput
