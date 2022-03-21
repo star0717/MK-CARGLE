@@ -224,7 +224,7 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
             <TableWrapper>
               <Wrapper isSticky={true}>
                 <TableHead radius={`8px 8px 0px 0px`}>
-                  <TableHeadLIST
+                  {/* <TableHeadLIST
                     width={`15%`}
                     color={`#51b351`}
                     fontSize={`26px`}
@@ -241,11 +241,11 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                     >
                       <AiFillPlusSquare />
                     </IconButton>
-                  </TableHeadLIST>
-                  <TableHeadLIST width={`85%`}>세트항목</TableHeadLIST>
+                  </TableHeadLIST> */}
+                  <TableHeadLIST width={`100%`}>세트항목</TableHeadLIST>
                 </TableHead>
               </Wrapper>
-              <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+              <Wrapper overflow={`auto`} height={`500px`} ju={`flex-start`}>
                 <TableBody>
                   {props.partSetClass.length > 0 ? (
                     props.partSetClass.map(
@@ -287,13 +287,22 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
                       )
                     )
                   ) : (
-                    <Wrapper minHeight={`445px`}>
+                    <Wrapper minHeight={`450px`}>
                       <Text fontSize={`48px`} color={`#c4c4c4`}>
                         <BsEmojiFrownFill />
                       </Text>
                       <Text color={`#c4c4c4`}>부품이 없습니다.</Text>
                     </Wrapper>
                   )}
+                  <Wrapper padding={`10px 0px 0px`}>
+                    <SmallButton
+                      width={`100%`}
+                      kindOf={`default`}
+                      onClick={onAddPartSetClass}
+                    >
+                      세트항목추가
+                    </SmallButton>
+                  </Wrapper>
                 </TableBody>
               </Wrapper>
             </TableWrapper>
@@ -304,6 +313,8 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
               bgColor={`#343a40`}
               height={`50px`}
               radius={`8px 8px 0px 0px`}
+              al={`flex-start`}
+              padding={`0px 20px`}
             >
               <Text color={`#fff`}>상세정보</Text>
             </Wrapper>
