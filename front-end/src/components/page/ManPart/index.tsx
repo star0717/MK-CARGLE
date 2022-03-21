@@ -51,7 +51,8 @@ const ManPartsPage: NextPage<_MainProps> = (props) => {
    * @param e
    */
   const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    var upper = e.target.value.toUpperCase();
+    setSearchText(upper);
   };
 
   /**

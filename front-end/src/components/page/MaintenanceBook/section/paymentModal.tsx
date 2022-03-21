@@ -34,6 +34,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [discount, setDiscount] = useState<number>(props.mtInfo.price.discount);
   const [totalName, setTotalName] = useState<string>("");
+  const realTotal = props.mtInfo.price.total + props.mtInfo.price.discount;
 
   /*********************************************************************
    * 3. Handlers
@@ -51,37 +52,83 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setDiscount(0);
         } else {
-          if (price.isIncluded) {
-            if (Number(e.target.value) > props.mtInfo.price.total)
-              return setDiscount(props.mtInfo.price.total);
-          } else {
-            if (Number(e.target.value) > props.mtInfo.price.sum)
-              return setDiscount(props.mtInfo.price.sum);
-          }
+          if (Number(e.target.value) > realTotal)
+            return setDiscount(
+              props.mtInfo.price.total + props.mtInfo.price.discount
+            );
           return setDiscount(Number(e.target.value));
         }
-
-      default:
-        if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
-          return setPrice({ ...price, [e.target.name]: 0 });
-        } else {
+      case "cash":
+        if (
+          Number(e.target.value) + price.credit + price.insurance >
+          price.total
+        ) {
           return setPrice({
             ...price,
-            [e.target.name]: Number(e.target.value),
+            [e.target.name]: price.total - (price.credit + price.insurance),
           });
+        } else {
+          if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
+            return setPrice({ ...price, [e.target.name]: 0 });
+          } else {
+            return setPrice({
+              ...price,
+              [e.target.name]: Number(e.target.value),
+            });
+          }
         }
+      case "credit":
+        if (
+          Number(e.target.value) + price.cash + price.insurance >
+          price.total
+        ) {
+          return setPrice({
+            ...price,
+            [e.target.name]: price.total - (price.cash + price.insurance),
+          });
+        } else {
+          if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
+            return setPrice({ ...price, [e.target.name]: 0 });
+          } else {
+            return setPrice({
+              ...price,
+              [e.target.name]: Number(e.target.value),
+            });
+          }
+        }
+      case "insurance":
+        if (Number(e.target.value) + price.credit + price.cash > price.total) {
+          return setPrice({
+            ...price,
+            [e.target.name]: price.total - (price.credit + price.cash),
+          });
+        } else {
+          if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
+            return setPrice({ ...price, [e.target.name]: 0 });
+          } else {
+            return setPrice({
+              ...price,
+              [e.target.name]: Number(e.target.value),
+            });
+          }
+        }
+      default:
+        return;
     }
   };
   /** 전액 입력 버튼 기능 */
   useEffect(() => {
     switch (totalName) {
       case "cash": {
+        setTotalName("");
         return setPrice({ ...price, cash: price.cash + price.balance });
       }
       case "credit": {
+        setTotalName("");
         return setPrice({ ...price, credit: price.credit + price.balance });
       }
       case "insurance": {
+        setTotalName("");
         return setPrice({
           ...price,
           insurance: price.insurance + price.balance,
@@ -325,6 +372,7 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       type="button"
                       kindOf={edit ? `default` : `ghost`}
                       onClick={() => {
+                        console.log("cash!");
                         setTotalName("cash");
                       }}
                       disabled={
@@ -363,9 +411,10 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       </Text>
                     </Wrapper>
                     <SmallButton
-                      type="submit"
+                      type="button"
                       kindOf={edit ? `default` : `ghost`}
                       onClick={() => {
+                        console.log("credit!!");
                         setTotalName("credit");
                       }}
                       disabled={
@@ -404,9 +453,10 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       </Text>
                     </Wrapper>
                     <SmallButton
-                      type="submit"
+                      type="button"
                       kindOf={edit ? `default` : `ghost`}
                       onClick={() => {
+                        console.log("insurance!!");
                         setTotalName("insurance");
                       }}
                       disabled={
