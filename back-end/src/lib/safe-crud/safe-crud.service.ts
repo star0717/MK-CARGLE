@@ -10,6 +10,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Type,
 } from '@nestjs/common';
 import { FilterQuery } from 'mongoose';
 import { AuthTokenInfo } from 'src/models/auth.entity';
@@ -52,7 +53,7 @@ export class SafeService<T extends BaseEntity> {
   private modelKeys: string[];
 
   constructor(
-    readonly model: ReturnModelType<any>,
+    readonly model: ReturnModelType<Type<T>>,
     readonly commonService: CommonService,
   ) {
     const schema = model.prototype.schema.paths;
@@ -92,7 +93,7 @@ export class SafeService<T extends BaseEntity> {
     token: AuthTokenInfo,
     fParams: FindParameters,
   ): Promise<FindResult<T>> {
-    console.log('fParams :', fParams);
+    // console.log('fParams :', fParams);
 
     let fQuery: FilterQuery<BaseEntity> = {};
 
@@ -159,8 +160,8 @@ export class SafeService<T extends BaseEntity> {
     const skipOption = (currentPage - 1) * fParams.take;
     const limitOption = fParams.take;
 
-    console.log('*** findByOptions');
-    console.log('fQuery: ', fQuery);
+    // console.log('*** findByOptions');
+    // console.log('fQuery: ', fQuery);
     // console.log('fParams :', fParams);
 
     let result: FindResult<T> = new FindResult<T>();
@@ -179,11 +180,18 @@ export class SafeService<T extends BaseEntity> {
         result.sYear = fParams.sYear;
       }
     }
-    result.docs = await this.model
-      .find(fQuery as FilterQuery<T>, fParams.projection)
-      .skip(skipOption)
-      .limit(limitOption)
-      .sort({ createdAt: -1 });
+
+    console.log('fQuery: ', fQuery);
+
+    try {
+      result.docs = await this.model
+        .find(fQuery as FilterQuery<T>, fParams.projection)
+        .skip(skipOption)
+        .limit(limitOption)
+        .sort({ createdAt: -1 });
+    } catch (err: unknown) {
+      this.handelError(err);
+    }
 
     return result;
   }
@@ -266,12 +274,15 @@ export class SafeService<T extends BaseEntity> {
 
   protected async _deleteAllByComID(
     token: AuthTokenInfo,
-    doc: Partial<T>,
+    cID: string,
   ): Promise<DeleteResult> {
     if (token.uAuth != UserAuthority.ADMIN) {
-      doc._cID = token.cID;
+      if (token.cID != cID) throw new BadRequestException();
     }
-    return await this.model.deleteMany(doc);
+
+    let fQuery: FilterQuery<BaseEntity> = { _cID: cID };
+
+    return await this.model.deleteMany(fQuery);
   }
 
   handelError(err: any) {

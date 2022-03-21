@@ -55,9 +55,9 @@ export class UsersService extends SafeService<User> {
 
   async deleteAllByComID(
     token: AuthTokenInfo,
-    _cID: string,
+    cID: string,
   ): Promise<DeleteResult> {
-    return await this._deleteAllByComID(token, { _cID });
+    return await this._deleteAllByComID(token, cID);
   }
 
   async findByFieldForAuth(doc: Partial<User>): Promise<User> {

@@ -2,16 +2,12 @@ import {
   Injectable,
   BadRequestException,
   UnauthorizedException,
-  Res,
-  Req,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { map, Observable } from 'rxjs';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import config, { getCrnPath, getMrnPath } from 'src/config/configuration';
 import {
   AuthTokenInfo,
-  HelpChangePWD,
   HelpFindEmail,
   HelpFindPWD,
   SignUpInfo,

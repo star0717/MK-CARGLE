@@ -38,6 +38,11 @@ export default () => ({
     stamp_path: process.env.STAMP_PATH,
   },
   crtKey: process.env.CRT_KEY,
+  fcm: {
+    projectID: process.env.FCM_PROJECT_ID,
+    privateKey: process.env.FCM_PRIVATE_KEY,
+    clientEmail: process.env.FCM_CLIENT_EMAIL,
+  },
 });
 
 export const getCrnPath = (): string => {
