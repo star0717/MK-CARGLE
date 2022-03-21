@@ -178,7 +178,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
         </JoinStepBarWrapper>
         <Wrapper>
           <form onSubmit={handleSubmit(agreeTermHandler)}>
-            <Wrapper al={`flex-start`} width={`500px`} padding={`0px 0px 30px`}>
+            <Wrapper width={`1200px`} padding={`0px 0px 30px`}>
               <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
                 <Text></Text>
                 <Wrapper dr={`row`} width={`auto`}>
@@ -200,11 +200,9 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                 </CommonSmallTitle>
               </Wrapper>
               <Wrapper
-                height={`200px`}
-                width={`500px`}
+                height={`160px`}
+                width={`1000px`}
                 border={`1px solid #ccc`}
-                al={`flex-start`}
-                ju={`flex-start`}
                 padding={`10px`}
                 radius={`5px`}
                 overflow={`auto`}
@@ -233,7 +231,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     </Text>
                   )}
                 </Wrapper>
-                <Wrapper dr={`row`} width={`auto`}>
+                <Wrapper dr={`row`} width={`1000px`}>
                   <Checkbox>
                     동의합니다.
                     <CheckInput
