@@ -40,7 +40,7 @@ import {
   MainPrice,
   MainWork,
 } from "src/models/maintenance.entity";
-import { maskingStr } from "src/modules/commonModule";
+import { maskingStr, trim } from "src/modules/commonModule";
 import { PartsSet } from "src/models/partsset.entity";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -66,6 +66,7 @@ import DocumentModal from "./documentModal";
 import MolitModal from "./molitModal";
 import PaymentModal from "./paymentModal";
 import MolitSettingModal from "./molitSettingModal";
+import theme from "styles/theme";
 
 const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -73,6 +74,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
+
   /**작업내용 초기값 */
   const workInit: MainWork[] = [
     {
@@ -86,8 +88,11 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       wage: 0,
     },
   ];
+
   /**input태그연결 */
   let inputRef = useRef<HTMLInputElement[]>([]);
+  let autoWrapRef = useRef<HTMLDivElement>(null);
+  let autoListRef = useRef<HTMLDivElement[]>([]);
 
   /*********************************************************************
    * 2. State settings
@@ -108,13 +113,12 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
   const [nameList, setNameList] = useState<string[][]>(); // 부품명+부품별칭 합친 전체리스트
   const [autoRow, setAutoRow] = useState<number>(null); // 자동완성할 row 위치
-  const [autoCell, setAutoCell] = useState<number[]>([]); // 자동완성할 cell 배열(row별로)
   const [autoList, setAutoList] = useState<string[][]>([]); // 자동완성 리스트
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  /**nameList(부품명/별칭 리스트)에 데이터 넣기 */
   useEffect(() => {
     let nameArr: string[][] = [];
     props.data.allParts.docs.map((item: Part) => {
@@ -127,9 +131,6 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
     });
     setNameList(nameArr);
   }, [props.data.allParts]);
-
-  // console.log(nameList);
-  console.log(autoList);
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
@@ -146,20 +147,26 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
-   * keyup event handler
+   * 정비내역 keyup event handler
    * @param e
    * @param idx
    */
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
     if (e.key === "Enter") {
-      if (idx % 7 === 0) return inputRef.current[idx + 2].focus();
+      if (idx % 7 === 0) {
+        if (autoList.length !== 0) {
+          return false;
+        } else {
+          return inputRef.current[idx + 2].focus();
+        }
+      }
       if (idx % 7 === 4) return inputRef.current[idx + 2].focus();
       return inputRef.current[idx + 1].focus();
     }
   };
 
   /**
-   * keydown event handler
+   * 정비내역 keydown event handler
    * @param e
    * @param idx
    */
@@ -167,6 +174,26 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "Enter") {
       if (idx === cellCount - 1) {
         setWorkList(workList.concat(workInit));
+      }
+      if (autoList.length !== 0 && idx % 7 === 0)
+        if (autoWrapRef.current.style.display === "none") {
+          return (autoWrapRef.current.style.display = "block");
+        } else {
+          return autoListRef.current[0].focus();
+        }
+    }
+    if (e.key === "ArrowDown") {
+      if (autoList.length !== 0 && idx % 7 === 0) {
+        if (autoWrapRef.current.style.display === "none") {
+          return (autoWrapRef.current.style.display = "block");
+        } else {
+          return autoListRef.current[0].focus();
+        }
+      }
+    }
+    if (e.key === "Escape") {
+      if (autoList.length !== 0 && idx % 7 === 0) {
+        return (autoWrapRef.current.style.display = "none");
       }
     }
   };
@@ -191,16 +218,17 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
     rowIdx: number,
     cellIdx?: number
   ) => {
+    e.target.value = trim(e.target.value);
     switch (e.target.name) {
       case "name":
         setAutoList([]);
+        setAutoRow(null);
         if (e.target.value.length >= 2) {
           nameList.map((name) => {
             let update = false;
-            name.map((str, idx) => {
+            name.map((str) => {
               if (str.includes(e.target.value)) {
                 update = true;
-                console.log("######", idx);
               }
             });
             if (update) {
@@ -209,30 +237,14 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
             }
             if (name.includes(e.target.value)) {
               setAutoList([]);
+              setAutoRow(null);
             }
           });
         }
-        const partOne: Part[] = props.data.allParts.docs.filter(
-          (item: Part) =>
-            e.target.value === item.name ||
-            item.nickName.includes(e.target.value)
-        );
-        return setWorkList(
-          workList.map((item, index) =>
-            index === rowIdx
-              ? {
-                  ...item,
-                  name: e.target.value,
-                  code: partOne[0]?.code,
-                  tsCode: partOne[0]?.tsCode || "",
-                }
-              : item
-          )
-        );
+        return onClickAutoList(e.target.value, rowIdx);
       case "price":
       case "quantity":
       case "wage":
-        e.target.value = e.target.value.replaceAll(",", "");
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setWorkList(
             workList.map((item, index) =>
@@ -277,6 +289,64 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
           )
         );
         return inputRef.current[cellIdx + 1].focus();
+    }
+  };
+
+  /**
+   * 자동완성 리스트 클릭 기능(직접 입력 기능과 같음)
+   * @param str
+   * @param rowIdx
+   * @returns
+   */
+  const onClickAutoList = (str: string, rowIdx: number) => {
+    const partOne: Part[] = props.data.allParts.docs.filter(
+      (item: Part) => str === item.name || item.nickName.includes(str)
+    );
+    return setWorkList(
+      workList.map((item, index) =>
+        index === rowIdx
+          ? {
+              ...item,
+              name: str,
+              code: partOne[0]?.code,
+              tsCode: partOne[0]?.tsCode || "",
+            }
+          : item
+      )
+    );
+  };
+
+  /** 리스트 keydown handler */
+  const onKeyDownList = (
+    e: KeyboardEvent,
+    aIdx: number,
+    data: string,
+    rowIdx: number,
+    cellIdx: number
+  ) => {
+    e.preventDefault();
+    if (e.key === "ArrowDown") {
+      if (aIdx !== autoList.length - 1) {
+        return autoListRef.current[aIdx + 1].focus();
+      } else {
+        return autoListRef.current[0].focus();
+      }
+    }
+    if (e.key === "ArrowUp") {
+      if (aIdx !== 0) {
+        return autoListRef.current[aIdx - 1].focus();
+      } else {
+        return autoListRef.current[autoList.length - 1].focus();
+      }
+    }
+    if (e.key === "Enter") {
+      onClickAutoList(data, rowIdx);
+      setAutoList([]);
+      setAutoRow(null);
+    }
+    if (e.key === "Escape") {
+      autoWrapRef.current.style.display = "none";
+      return inputRef.current[cellIdx].focus();
     }
   };
 
@@ -404,14 +474,6 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       <RsWrapper>
         <CommonForm autoComplete="off">
           <Wrapper>
-            {/* <Wrapper
-            padding={`0px 200px 20px 320px`}
-            al={`flex-start`}
-          >
-            <SpeechBubbleLeft fontSize={`20px`}>
-              "현재 정비 단계는 차량입고입니다."
-            </SpeechBubbleLeft>
-          </Wrapper> */}
             <JoinStepBarWrapper padding={`0px 0px 50px`}>
               <Wrapper width={`auto`}>
                 <JoinStepBar kindOf={`complete`}>
@@ -898,59 +960,59 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                               }
                               value={data.name}
                               name="name"
-                              // list={data.name.length >= 2 ? "workList" : ""}
                               onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                               ) => {
                                 onChangeInputArr(e, idx);
                               }}
                             />
-
-                            {/* <datalist id="workList">
-                              {props.data.allParts.docs.map(
-                                (item: Part, idx: number) => {
-                                  let nickStr = "";
-                                  return (
-                                    <Wrapper key={idx}>
-                                      {item.nickName.map(
-                                        (str: string, iidx: number) => {
-                                          iidx !== item.nickName.length - 1
-                                            ? (nickStr += str + " / ")
-                                            : (nickStr += str);
-
-                                          // str.includes(data.name)
-                                          //     ? (nickStr = str)
-                                          //     : (nickStr = "");
-                                        }
-                                      )}
-                                      <option
-                                        label={nickStr}
-                                        value={item.name}
-                                      />
-                                    </Wrapper>
-                                  );
-                                }
-                              )}
-                            </datalist> */}
-                            {idx === autoRow && autoList ? (
+                            {idx === autoRow && autoList && (
                               <Wrapper
+                                ref={autoWrapRef}
                                 isAbsolute
                                 top={`40px`}
                                 let={`0`}
-                                bgColor={`red`}
-                                zIndex={`9999`}
+                                zIndex={`1000`}
+                                padding={`2px 0`}
+                                border={theme.border}
+                                radius={theme.radius}
+                                bgColor={`#c4c4c4`}
+                                color={`#ffffff`}
                               >
-                                {autoList.map((item, idx) => {
-                                  let result: string =
-                                    autoCell[idx] === 0
-                                      ? item[0]
-                                      : `${item[0]}(${item[autoCell[idx]]})`;
-                                  console.log(item[autoCell[idx]]);
-
-                                  return <Text key={idx}>{result}</Text>;
+                                {autoList.map((item, aIdx) => {
+                                  return (
+                                    <Wrapper
+                                      tabIndex={aIdx}
+                                      key={aIdx}
+                                      kindOf={`hoverWrap`}
+                                      borderBottom={
+                                        aIdx !== autoList.length - 1 &&
+                                        `1px solid #ffffff`
+                                      }
+                                      ref={(elem: HTMLDivElement) =>
+                                        (autoListRef.current[aIdx] = elem)
+                                      }
+                                      onKeyDown={(e: KeyboardEvent) => {
+                                        onKeyDownList(
+                                          e,
+                                          aIdx,
+                                          item[0],
+                                          idx,
+                                          (idx + 1) * 7 - 7
+                                        );
+                                      }}
+                                      onClick={() => {
+                                        onClickAutoList(item[0], idx);
+                                        setAutoList([]);
+                                        setAutoRow(null);
+                                      }}
+                                    >
+                                      <Text>{item[0]}</Text>
+                                    </Wrapper>
+                                  );
                                 })}
                               </Wrapper>
-                            ) : null}
+                            )}
                           </TableRowLIST>
                           <TableRowLIST width={`12%`}>
                             <SmallButton

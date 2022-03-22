@@ -93,7 +93,10 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
       (res: any) => {
         dispatch(_aPostAuthUploadManRegDoc(manFormData)).then(
           (res: any) => {
-            const tokenInfo: AuthTokenInfo = parseJwt(Cookies.get("mk_token"));
+            const tokenInfo: AuthTokenInfo = parseJwt(
+              Cookies.get(process.env.NEXT_PUBLIC_TK_NAME),
+              process.env.NEXT_PUBLIC_TK_KEY
+            ) as AuthTokenInfo;
             dispatch(_aPatchAuthRequestCompany(tokenInfo.cID)).then(
               (res: any) => {
                 if (res.payload) {

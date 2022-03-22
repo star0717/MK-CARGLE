@@ -57,7 +57,7 @@ import NavbarMenu from "src/components/layout/NavbarMenu";
 import BlackWrapper from "src/components/layout/BlackWrapper";
 import { Maintenance } from "src/models/maintenance.entity";
 import dayjs from "dayjs";
-import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -181,39 +181,29 @@ export default MainPage;
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext<ParsedUrlQuery>
 ) => {
-  /// *** 토큰 테스트
-
-  try {
-    // 토큰명과 토큰암호(secret) env 파일 참조
-    // evn 파일 값을 미리 const로 잡아서 재활용
-    // 파일 업로드 부분에 토큰 주입 부분 수정
-    // cookies.mk_token도 (토큰명으로)
-    const t1 = jwt.verify(context.req.cookies["mk_token"], "mk_secret_token");
-    console.log(t1);
-  } catch (err) {
-    console.log(err);
-    // 쿠키(토큰) 삭제 후 로그인 화면으로 리다이렉트
-  }
-
   // 현재 URL
   const url: string = context.resolvedUrl;
 
-  /** 요효환 pagePath들 */
+  /** 유효한 pagePath들 */
   const useUrlArray: string[] = Object.values(UseLink);
 
   /** 호출된 페이지 URL */
   const pagePath: string = getPathName(url);
 
+  /** 인증토큰관련 */
+  const tokenKey: string = process.env.TK_KEY;
+  const tokenName: string = process.env.TK_NAME;
+
   /** API 호출 시 사용할 인증 토큰 값. 각 axios 호출 시 옵션으로 주입 */
   const authConfig = {
     headers: {
-      Cookie: `mk_token=${context.req.cookies.mk_token}`,
+      Cookie: `${tokenName}=${context.req.cookies[tokenName]}`,
     },
     withCredentials: true,
   };
 
   // 토큰이 없을 경우 index 페이지로 리다이렉트
-  if (!context.req.cookies.mk_token) {
+  if (!context.req.cookies[tokenName]) {
     return {
       redirect: {
         permanent: false,
@@ -223,7 +213,22 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 
   /** 로그인 토큰 */
-  const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
+  let tokenValue: AuthTokenInfo;
+  try {
+    tokenValue = parseJwt(
+      context.req.cookies[tokenName],
+      tokenKey
+    ) as AuthTokenInfo;
+  } catch (err) {
+    console.error("토큰에러 : ", err);
+    context.res.setHeader("Set-Cookie", `${tokenName}=; path=/; Max-Age=0`);
+    return {
+      redirect: {
+        permanent: false,
+        destination: UseLink.INDEX,
+      },
+    };
+  }
 
   /** 데이터 조회용 ID */
   const routerQuery = getQuery(url);
