@@ -106,6 +106,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
+  const [nickName, setNickName] = useState<string>();
 
   /*********************************************************************
    * 3. Handlers
@@ -862,27 +863,33 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                             <datalist id="workList">
                               {props.data.allParts.docs.map(
                                 (item: Part, idx: number) => {
+                                  let nickStr = "";
                                   return (
                                     <Wrapper key={idx}>
-                                      {item.nickName.length > 1 ? (
-                                        item.nickName.map(
-                                          (nickname: string, iidx: number) => {
-                                            return (
-                                              <option
-                                                key={`${idx}.${iidx}`}
-                                                label={nickname}
-                                                value={item.name}
-                                              />
-                                            );
+                                      {item.nickName.map(
+                                        (str: string, iidx: number) => {
+                                          // iidx !== item.nickName.length - 1
+                                          //   ? (nickStr += str + " / ")
+                                          //   : (nickStr += str);
+
+                                          // str.includes(data.name)
+                                          //     ? (nickStr = str)
+                                          //     : (nickStr = "");
+
+                                          if (str.includes(data.name)) {
+                                            console.log("%%%%%%%%%%%%%%%%%");
+                                            return (nickStr = str);
+                                          } else {
+                                            console.log("^^^^^^^^^^^^^^^^");
+                                            return (nickStr = "");
                                           }
-                                        )
-                                      ) : (
-                                        <option
-                                          key={idx}
-                                          label={item.nickName[0]}
-                                          value={item.name}
-                                        />
+                                          console.log("!!!", nickStr);
+                                        }
                                       )}
+                                      <option
+                                        label={nickStr}
+                                        value={item.name}
+                                      />
                                     </Wrapper>
                                   );
                                 }
