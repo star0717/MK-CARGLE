@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@nestjs/swagger": "^5.1.4",
+    "@types/jsonwebtoken": "^8.5.8",
     "@types/redux-logger": "^3.0.9",
     "@types/redux-promise": "^0.5.29",
     "axios": "^0.24.0",
@@ -30,6 +31,7 @@
     "http": "^0.0.1-security",
     "jotai": "^1.5.0",
     "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
     "jspdf": "^2.5.1",
     "multiparty": "^4.2.3",
     "next": "^12.1.0",

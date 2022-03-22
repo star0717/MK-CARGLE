@@ -57,6 +57,7 @@ import NavbarMenu from "src/components/layout/NavbarMenu";
 import BlackWrapper from "src/components/layout/BlackWrapper";
 import { Maintenance } from "src/models/maintenance.entity";
 import dayjs from "dayjs";
+import jwt from "jsonwebtoken";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -180,6 +181,20 @@ export default MainPage;
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext<ParsedUrlQuery>
 ) => {
+  /// *** 토큰 테스트
+
+  try {
+    // 토큰명과 토큰암호(secret) env 파일 참조
+    // evn 파일 값을 미리 const로 잡아서 재활용
+    // 파일 업로드 부분에 토큰 주입 부분 수정
+    // cookies.mk_token도 (토큰명으로)
+    const t1 = jwt.verify(context.req.cookies["mk_token"], "mk_secret_token");
+    console.log(t1);
+  } catch (err) {
+    console.log(err);
+    // 쿠키(토큰) 삭제 후 로그인 화면으로 리다이렉트
+  }
+
   // 현재 URL
   const url: string = context.resolvedUrl;
 
