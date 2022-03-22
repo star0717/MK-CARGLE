@@ -195,6 +195,14 @@ export const create2dArray = (rows: number, columns: number, initArr?: any) => {
   return arr;
 };
 
+/**
+ * 데이터 정렬
+ * @param data
+ * @param type
+ * @param sort
+ * @param opt
+ * @returns
+ */
 export const dataSort = (
   data: any,
   type: string,

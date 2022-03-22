@@ -106,11 +106,30 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
-  const [nickName, setNickName] = useState<string>();
+  const [nameList, setNameList] = useState<string[][]>(); // 부품명+부품별칭 합친 전체리스트
+  const [autoRow, setAutoRow] = useState<number>(null); // 자동완성할 row 위치
+  const [autoCell, setAutoCell] = useState<number[]>([]); // 자동완성할 cell 배열(row별로)
+  const [autoList, setAutoList] = useState<string[][]>([]); // 자동완성 리스트
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+
+  useEffect(() => {
+    let nameArr: string[][] = [];
+    props.data.allParts.docs.map((item: Part) => {
+      let arr: string[] = [];
+      arr.push(item.name);
+      item.nickName.map((nick: string) => {
+        arr.push(nick);
+      });
+      nameArr.push(arr);
+    });
+    setNameList(nameArr);
+  }, [props.data.allParts]);
+
+  // console.log(nameList);
+  console.log(autoList);
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
@@ -163,7 +182,9 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   /**
    * 정비내역 input handler
    * @param e
-   * @param idx
+   * @param rowIdx
+   * @param cellIdx
+   * @returns
    */
   const onChangeInputArr = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -172,6 +193,25 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   ) => {
     switch (e.target.name) {
       case "name":
+        setAutoList([]);
+        if (e.target.value.length >= 2) {
+          nameList.map((name) => {
+            let update = false;
+            name.map((str, idx) => {
+              if (str.includes(e.target.value)) {
+                update = true;
+                console.log("######", idx);
+              }
+            });
+            if (update) {
+              setAutoList((list) => [...list, name]);
+              setAutoRow(rowIdx);
+            }
+            if (name.includes(e.target.value)) {
+              setAutoList([]);
+            }
+          });
+        }
         const partOne: Part[] = props.data.allParts.docs.filter(
           (item: Part) =>
             e.target.value === item.name ||
@@ -282,7 +322,9 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   }, [workList, price.isIncluded]);
 
   /**
-   * 차량 저장 handler
+   * 차량저장 handler
+   * @param opt
+   * @returns
    */
   const onSaveWorkInfo = async (opt: boolean) => {
     let mainWorkList: MainWork[] = workList.filter((item) => item.name !== "");
@@ -837,7 +879,11 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                               <AiFillMinusSquare />
                             </IconButton>
                           </TableRowLIST>
-                          <TableRowLIST width={`14%`}>
+                          <TableRowLIST
+                            isRelative
+                            width={`14%`}
+                            overflow={`none`}
+                          >
                             <TextInput2
                               type="text"
                               ref={(elem: HTMLInputElement) =>
@@ -852,7 +898,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                               }
                               value={data.name}
                               name="name"
-                              list={data.name.length < 2 || `workList`}
+                              // list={data.name.length >= 2 ? "workList" : ""}
                               onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                               ) => {
@@ -860,7 +906,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                               }}
                             />
 
-                            <datalist id="workList">
+                            {/* <datalist id="workList">
                               {props.data.allParts.docs.map(
                                 (item: Part, idx: number) => {
                                   let nickStr = "";
@@ -868,22 +914,13 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                                     <Wrapper key={idx}>
                                       {item.nickName.map(
                                         (str: string, iidx: number) => {
-                                          // iidx !== item.nickName.length - 1
-                                          //   ? (nickStr += str + " / ")
-                                          //   : (nickStr += str);
+                                          iidx !== item.nickName.length - 1
+                                            ? (nickStr += str + " / ")
+                                            : (nickStr += str);
 
                                           // str.includes(data.name)
                                           //     ? (nickStr = str)
                                           //     : (nickStr = "");
-
-                                          if (str.includes(data.name)) {
-                                            console.log("%%%%%%%%%%%%%%%%%");
-                                            return (nickStr = str);
-                                          } else {
-                                            console.log("^^^^^^^^^^^^^^^^");
-                                            return (nickStr = "");
-                                          }
-                                          console.log("!!!", nickStr);
                                         }
                                       )}
                                       <option
@@ -894,7 +931,26 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                                   );
                                 }
                               )}
-                            </datalist>
+                            </datalist> */}
+                            {idx === autoRow && autoList ? (
+                              <Wrapper
+                                isAbsolute
+                                top={`40px`}
+                                let={`0`}
+                                bgColor={`red`}
+                                zIndex={`9999`}
+                              >
+                                {autoList.map((item, idx) => {
+                                  let result: string =
+                                    autoCell[idx] === 0
+                                      ? item[0]
+                                      : `${item[0]}(${item[autoCell[idx]]})`;
+                                  console.log(item[autoCell[idx]]);
+
+                                  return <Text key={idx}>{result}</Text>;
+                                })}
+                              </Wrapper>
+                            ) : null}
                           </TableRowLIST>
                           <TableRowLIST width={`12%`}>
                             <SmallButton

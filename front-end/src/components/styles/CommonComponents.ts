@@ -1404,6 +1404,7 @@ export const TableRow = styled.ul<any>`
 export const TableRowLIST = styled.li<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `100%`};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
   display: ${(props) => props.display || `flex`};
   color: ${(props) => props.color || ``};
   font-size: ${(props) => props.fontSize || `16px`};
@@ -1416,7 +1417,7 @@ export const TableRowLIST = styled.li<any>`
   text-align: start;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: ${(props) => props.overflow || `hidden`};
   letter-spacing: 0px;
 `;
 
