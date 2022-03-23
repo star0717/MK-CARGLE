@@ -343,7 +343,7 @@ const ManBusinessList: NextPage<any> = (props) => {
                     </ToolTipWrapper>
                   </TableRowLIST>
                   <TableRowLIST width={`12%`}>{list.manager}</TableRowLIST>
-                  <TableRowLIST width={`23%`}>
+                  <TableRowLIST width={`23%`} overflow={`none`}>
                     <ToolTipWrapper>
                       <ToolTip>
                         {list.memo}

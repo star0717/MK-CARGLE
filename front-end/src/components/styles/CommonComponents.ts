@@ -1416,7 +1416,7 @@ export const TableRowLIST = styled.li<any>`
   text-align: start;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: ${(props) => props.overflow || `hidden`};
   letter-spacing: 0px;
 `;
 

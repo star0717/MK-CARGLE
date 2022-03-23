@@ -106,7 +106,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
-  const [nickName, setNickName] = useState<string>();
+  const [nickName, setNickName] = useState<string[]>();
 
   /*********************************************************************
    * 3. Handlers
@@ -331,6 +331,30 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
         }
       );
     }
+  };
+
+  const creat2Darray = () => {
+    var arr = new Array(props.data.allParts.docs.length);
+    for (let i = 0; i < props.data.allParts.docs.length; i++) {
+      arr[i] = new Array(props.data.allParts.docs[i].nickName.length);
+      for (let j = 0; j < props.data.allParts.docs[i].nickName.length; j++) {
+        arr[i][j] = props.data.allParts.docs[i].nickName[j];
+      }
+    }
+    return arr;
+    // {props.data.allParts.docs.map(
+    //   (item: Part, idx: number) => {
+    //     return (
+    //       <Wrapper key={idx}>
+    //         {item.nickName.map(
+    //           (str: string, iidx: number) => {
+    //             setNickName()
+    //           }
+    //         )}
+    //       </Wrapper>
+    //     );
+    //   }
+    // )}
   };
 
   /*********************************************************************
@@ -852,7 +876,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                               }
                               value={data.name}
                               name="name"
-                              list={data.name.length < 2 || `workList`}
+                              list="workList"
                               onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                               ) => {
@@ -860,36 +884,37 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                               }}
                             />
 
-                            <datalist id="workList">
+                            <datalist id={"workList"}>
                               {props.data.allParts.docs.map(
                                 (item: Part, idx: number) => {
-                                  let nickStr = "";
+                                  // console.log(data.name.length);
                                   return (
                                     <Wrapper key={idx}>
                                       {item.nickName.map(
                                         (str: string, iidx: number) => {
-                                          // iidx !== item.nickName.length - 1
-                                          //   ? (nickStr += str + " / ")
-                                          //   : (nickStr += str);
-
-                                          // str.includes(data.name)
-                                          //     ? (nickStr = str)
-                                          //     : (nickStr = "");
-
-                                          if (str.includes(data.name)) {
-                                            console.log("%%%%%%%%%%%%%%%%%");
-                                            return (nickStr = str);
-                                          } else {
-                                            console.log("^^^^^^^^^^^^^^^^");
-                                            return (nickStr = "");
-                                          }
-                                          console.log("!!!", nickStr);
+                                          // console.log("nick", nickName);
+                                          // setNickName({
+                                          //   ...nickName,
+                                          //   [nickName[0][0]]: str,
+                                          // });
+                                          // // iidx !== item.nickName.length - 1
+                                          // //   ? (nickStr += str + " / ")
+                                          // //   : (nickStr += str);
+                                          // // str.includes(data.name)
+                                          // //     ? (nickStr = str)
+                                          // //     : (nickStr = "");
+                                          // if (str.includes(data.name)) {
+                                          //   console.log("%%%%%%%%%%%%%%%%%");
+                                          //   return (nickStr = str);
+                                          // } else {
+                                          //   console.log("^^^^^^^^^^^^^^^^");
+                                          //   return (nickStr = "");
+                                          // }
+                                          // console.log("!!!", nickStr);
+                                          // console.log(nickName);
                                         }
                                       )}
-                                      <option
-                                        label={nickStr}
-                                        value={item.name}
-                                      />
+                                      <option label={""} value={item.name} />
                                     </Wrapper>
                                   );
                                 }
