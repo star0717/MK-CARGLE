@@ -138,8 +138,6 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
     setNameList(nameArr);
   }, [props.data.allParts]);
 
-  console.log(nameList);
-
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
     modalOpen === true
@@ -191,7 +189,6 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
         }
     }
     if (e.key === "ArrowDown") {
-      e.preventDefault();
       if (autoList.length !== 0 && idx % 7 === 0) {
         if (autoWrapRef.current.style.display === "none") {
           return (autoWrapRef.current.style.display = "block");
