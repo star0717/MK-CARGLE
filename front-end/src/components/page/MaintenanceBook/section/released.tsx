@@ -198,6 +198,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
+    e.preventDefault();
     if (e.key === "Enter") {
       if (idx % 7 === 0) {
         if (autoList.length !== 0) {
@@ -217,6 +218,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
+    e.preventDefault();
     if (e.key === "Enter") {
       if (idx === cellCount - 1) {
         setWorkList(workList.concat(workInit));
