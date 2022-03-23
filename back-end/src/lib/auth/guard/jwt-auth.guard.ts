@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { AuthTokenInfo } from 'src/models/auth.entity';
 
 /**
  * 로그인된 사용자 인증 가드
@@ -42,9 +41,11 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   //  * @returns
   //  */
   // handleRequest(err, user, info) {
-  //   console.log('*** handleRequest in JwtAuthGuard (4/4)');
-  //   console.log(user);
+  //   // console.log('*** handleRequest in JwtAuthGuard (4/4)');
+  //   // console.log(user);
   //   if (err || !user) {
+  //     // console.log(err);
+  //     // console.log(info);
   //     throw err || new UnauthorizedException();
   //   }
   //   return user;

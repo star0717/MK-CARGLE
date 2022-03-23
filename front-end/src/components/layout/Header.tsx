@@ -288,13 +288,11 @@ const Header: NextPage<_MainProps> = (props) => {
               </HeaderIconAlarmWrapper> */}
                 </Wrapper>
               )}
-            {props.tokenValue &&
-              (props.tokenValue.cApproval === CompanyApproval.DONE ||
-                props.tokenValue.cApproval === CompanyApproval.ING) && (
-                <HeaderIconButton onClick={onSignOutHandler}>
-                  <MdLogout />
-                </HeaderIconButton>
-              )}
+            {props.tokenValue && (
+              <HeaderIconButton onClick={onSignOutHandler}>
+                <MdLogout />
+              </HeaderIconButton>
+            )}
           </Wrapper>
         </Wrapper>
       </HeaderWrapper>
@@ -317,16 +315,19 @@ const Header: NextPage<_MainProps> = (props) => {
             width={`20%`}
             al={`flex-start`}
           >
-            <HeaderIconButton
-              type="button"
-              onClick={() => {
-                props.setOpenMenu(!props.openMenu);
-              }}
-              bgColor={`inherit`}
-              color={`#8DAFCE`}
-            >
-              <AiOutlineMenu />
-            </HeaderIconButton>
+            {props.tokenValue &&
+              props.tokenValue.cApproval === CompanyApproval.DONE && (
+                <HeaderIconButton
+                  type="button"
+                  onClick={() => {
+                    props.setOpenMenu(!props.openMenu);
+                  }}
+                  bgColor={`inherit`}
+                  color={`#8DAFCE`}
+                >
+                  <AiOutlineMenu />
+                </HeaderIconButton>
+              )}
           </Wrapper>
           <Wrapper width={props.tokenValue ? `60%` : `100%`}>
             <Link href={UseLink.MAIN}>
@@ -346,21 +347,19 @@ const Header: NextPage<_MainProps> = (props) => {
             ju={`flex-end`}
             wrap={`no-wrap`}
           >
-            {props.tokenValue &&
+            {/* {props.tokenValue &&
               props.tokenValue.cApproval === CompanyApproval.DONE && (
                 <Wrapper isRelative={true} width={`auto`} al={`flex-end`}>
                   <HeaderIconButton opacity={`0`}>
                     <FaBell />
                   </HeaderIconButton>
                 </Wrapper>
-              )}
-            {props.tokenValue &&
-              (props.tokenValue.cApproval === CompanyApproval.DONE ||
-                props.tokenValue.cApproval === CompanyApproval.ING) && (
-                <HeaderIconButton onClick={onSignOutHandler}>
-                  <MdLogout />
-                </HeaderIconButton>
-              )}
+              )} */}
+            {props.tokenValue && (
+              <HeaderIconButton onClick={onSignOutHandler}>
+                <MdLogout />
+              </HeaderIconButton>
+            )}
           </Wrapper>
         </MobileFixed>
       </MobileHeader>

@@ -57,6 +57,7 @@ import NavbarMenu from "src/components/layout/NavbarMenu";
 import BlackWrapper from "src/components/layout/BlackWrapper";
 import { Maintenance } from "src/models/maintenance.entity";
 import dayjs from "dayjs";
+import Cookies from "js-cookie";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -183,22 +184,26 @@ export const getServerSideProps: GetServerSideProps = async (
   // 현재 URL
   const url: string = context.resolvedUrl;
 
-  /** 요효환 pagePath들 */
+  /** 유효한 pagePath들 */
   const useUrlArray: string[] = Object.values(UseLink);
 
   /** 호출된 페이지 URL */
   const pagePath: string = getPathName(url);
 
+  /** 인증토큰관련 */
+  const tokenKey: string = process.env.TK_KEY;
+  const tokenName: string = process.env.TK_NAME;
+
   /** API 호출 시 사용할 인증 토큰 값. 각 axios 호출 시 옵션으로 주입 */
   const authConfig = {
     headers: {
-      Cookie: `mk_token=${context.req.cookies.mk_token}`,
+      Cookie: `${tokenName}=${context.req.cookies[tokenName]}`,
     },
     withCredentials: true,
   };
 
   // 토큰이 없을 경우 index 페이지로 리다이렉트
-  if (!context.req.cookies.mk_token) {
+  if (!context.req.cookies[tokenName]) {
     return {
       redirect: {
         permanent: false,
@@ -208,7 +213,22 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 
   /** 로그인 토큰 */
-  const tokenValue: AuthTokenInfo = parseJwt(context.req.cookies.mk_token);
+  let tokenValue: AuthTokenInfo;
+  try {
+    tokenValue = parseJwt(
+      context.req.cookies[tokenName],
+      tokenKey
+    ) as AuthTokenInfo;
+  } catch (err) {
+    console.error("토큰에러 : ", err);
+    context.res.setHeader("Set-Cookie", `${tokenName}=; path=/; Max-Age=0`);
+    return {
+      redirect: {
+        permanent: false,
+        destination: UseLink.INDEX,
+      },
+    };
+  }
 
   /** 데이터 조회용 ID */
   const routerQuery = getQuery(url);

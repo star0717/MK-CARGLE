@@ -84,10 +84,6 @@ export class CommonService {
     return fileName.substr(fileName.lastIndexOf('.') + 1);
   }
 
-  private _genJwtToken(authToken: AuthTokenInfo) {
-    return this.jwtService.sign(authToken);
-  }
-
   /**
    * 토큰을 생성하여 쿠키에 주입
    * @param signUpInfo 토큰에 주입될 사용자와 사업체의 정보
@@ -106,7 +102,7 @@ export class CommonService {
       uAuth: signUpInfo.user.auth,
       uApproval: signUpInfo.user.approval,
     };
-    const token = this._genJwtToken(authToken);
+    const token = this.jwtService.sign(authToken);
     res.cookie(process.env.TK_NAME, token);
   }
 
