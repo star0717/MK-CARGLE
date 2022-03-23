@@ -111,7 +111,6 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
   const [price, setPrice] = useState<MainPrice>(props.data.mtData.price); // 가격정보
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
-
   const [nameList, setNameList] = useState<string[][]>(); // 부품명+부품별칭 합친 전체리스트
   const [autoRow, setAutoRow] = useState<number>(null); // 자동완성할 row 위치
   const [autoList, setAutoList] = useState<string[][]>([]); // 자동완성 리스트
@@ -446,30 +445,6 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
         }
       );
     }
-  };
-
-  const creat2Darray = () => {
-    var arr = new Array(props.data.allParts.docs.length);
-    for (let i = 0; i < props.data.allParts.docs.length; i++) {
-      arr[i] = new Array(props.data.allParts.docs[i].nickName.length);
-      for (let j = 0; j < props.data.allParts.docs[i].nickName.length; j++) {
-        arr[i][j] = props.data.allParts.docs[i].nickName[j];
-      }
-    }
-    return arr;
-    // {props.data.allParts.docs.map(
-    //   (item: Part, idx: number) => {
-    //     return (
-    //       <Wrapper key={idx}>
-    //         {item.nickName.map(
-    //           (str: string, iidx: number) => {
-    //             setNickName()
-    //           }
-    //         )}
-    //       </Wrapper>
-    //     );
-    //   }
-    // )}
   };
 
   /*********************************************************************
@@ -993,7 +968,6 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                                 onChangeInputArr(e, idx);
                               }}
                             />
-
                             {idx === autoRow && autoList && (
                               <Wrapper
                                 ref={autoWrapRef}
