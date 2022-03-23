@@ -41,7 +41,7 @@ import {
   MainPrice,
   MainWork,
 } from "src/models/maintenance.entity";
-import { maskingStr, trim } from "src/modules/commonModule";
+import { dataSort, maskingStr, trim } from "src/modules/commonModule";
 import { PartsSet } from "src/models/partsset.entity";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -139,7 +139,13 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
   /**nameList(부품명/별칭 리스트)에 데이터 넣기 */
   useEffect(() => {
     let nameArr: string[][] = [];
-    props.data.allParts.docs.map((item: Part) => {
+    const sortParts: Part[] = dataSort(
+      props.data.allParts.docs,
+      "string",
+      1,
+      "name"
+    );
+    sortParts.map((item: Part) => {
       let arr: string[] = [];
       arr.push(item.name);
       item.nickName.map((nick: string) => {
@@ -170,7 +176,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
-    e.preventDefault();
     if (e.key === "Enter") {
       if (idx % 7 === 0) {
         if (autoList.length !== 0) {
@@ -190,7 +195,6 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
    * @param idx
    */
   const onKeyDownhandler = (e: KeyboardEvent, idx: number) => {
-    e.preventDefault();
     if (e.key === "Enter") {
       if (idx === cellCount - 1) {
         setWorkList(workList.concat(workInit));
@@ -203,6 +207,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
         }
     }
     if (e.key === "ArrowDown") {
+      e.preventDefault();
       if (autoList.length !== 0 && idx % 7 === 0) {
         if (autoWrapRef.current.style.display === "none") {
           return (autoWrapRef.current.style.display = "block");
