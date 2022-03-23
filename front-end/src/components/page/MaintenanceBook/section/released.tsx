@@ -235,7 +235,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
         }
     }
     if (e.key === "ArrowDown") {
-      e.preventDefault();
       if (autoList.length !== 0 && idx % 7 === 0) {
         if (autoWrapRef.current.style.display === "none") {
           return (autoWrapRef.current.style.display = "block");
