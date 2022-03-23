@@ -107,7 +107,7 @@ export const Wrapper = styled.div<any>`
   background-attachment: ${(props) => props.attachment || `fixed`};
   background-position: center;
   background-color: ${(props) => props.bgColor};
-  transition: 0.5s;
+  transition: ${(props) => props.transition || `0.5s`};
   cursor: ${(props) => props.cursor};
   transform: ${(props) => props.transform};
   line-height: ${(props) => props.lineHeight};
@@ -142,17 +142,18 @@ export const Wrapper = styled.div<any>`
     font-weight: ${(props) => (props.isHeaderHover ? `800` : ``)};
     ${(props) =>
       props.kindOf === `hoverWrap` &&
-      `background-color: gray;
-      color: #ffffff;
+      `background-color: #f5f5f5;
+      color: #343a40;
       cursor: pointer`}
   }
 
   &:focus {
     ${(props) =>
       props.kindOf === `hoverWrap` &&
-      `background-color: gray;
-      color: #ffffff;
-      cursor: pointer`}
+      `background-color: #8DAFCE;
+      color: #343a40;
+      cursor: pointer;
+      outline-style:none;`}
   }
 
   @media (max-width: 700px) {

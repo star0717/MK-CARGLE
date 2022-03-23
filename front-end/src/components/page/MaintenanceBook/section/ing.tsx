@@ -981,11 +981,11 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                                 top={`40px`}
                                 let={`0`}
                                 zIndex={`1000`}
-                                padding={`2px 0`}
+                                padding={`0`}
                                 border={theme.border}
                                 radius={theme.radius}
-                                bgColor={`#c4c4c4`}
-                                color={`#ffffff`}
+                                bgColor={`#fff`}
+                                color={theme.black_C}
                               >
                                 {autoList.map((item, aIdx) => {
                                   return (
@@ -993,9 +993,11 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                                       tabIndex={aIdx}
                                       key={aIdx}
                                       kindOf={`hoverWrap`}
+                                      padding={`4px`}
+                                      al={`flex-start`}
                                       borderBottom={
                                         aIdx !== autoList.length - 1 &&
-                                        `1px solid #ffffff`
+                                        `1px solid #ccc`
                                       }
                                       ref={(elem: HTMLDivElement) =>
                                         (autoListRef.current[aIdx] = elem)
