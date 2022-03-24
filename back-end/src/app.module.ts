@@ -8,6 +8,7 @@ import { AdminModule } from './lib/admin/admin.module';
 import { AuthModule } from './lib/auth/auth.module';
 import { SafeCrudModule } from './lib/safe-crud/safe-crud.module';
 import { FcmModule } from './lib/fcm/fcm.module';
+import { SmsModule } from './lib/sms/sms.module';
 
 const dbInfo = isUseAuthDB()
   ? 'mongodb://' +
@@ -37,6 +38,7 @@ console.log(dbInfo);
     SafeCrudModule,
     ModulesModule,
     FcmModule,
+    SmsModule,
   ],
 })
 export class AppModule {}
