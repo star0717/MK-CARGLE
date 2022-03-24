@@ -9,6 +9,9 @@ import {
 } from "src/configure/iamport.entity";
 import { nanoid } from "nanoid";
 import hmacSHA512 from "crypto-js/hmac-sha512";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
 
 const CustomerPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -79,6 +82,10 @@ const CustomerPage: NextPage<any> = (props) => {
   };
 
   const onSmsHandler = () => {
+    const salt = nanoid();
+    const date = dayjs().format();
+    console.log(salt);
+
     // const messageService = new solapi(
     //   process.env.NEXT_PUBLIC_SOL_KEY,
     //   process.env.NEXT_PUBLIC_SOL_SECRET
