@@ -187,6 +187,16 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       if (idx % 7 === 4) return inputRef.current[idx + 2].focus();
       return inputRef.current[idx + 1].focus();
     }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (autoList.length !== 0 && idx % 7 === 0) {
+        if (autoWrapRef.current.style.display === "none") {
+          return (autoWrapRef.current.style.display = "block");
+        } else {
+          return autoListRef.current[0].focus();
+        }
+      }
+    }
   };
 
   /**
@@ -206,15 +216,7 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
           return autoListRef.current[0].focus();
         }
     }
-    if (e.key === "ArrowDown") {
-      if (autoList.length !== 0 && idx % 7 === 0) {
-        if (autoWrapRef.current.style.display === "none") {
-          return (autoWrapRef.current.style.display = "block");
-        } else {
-          return autoListRef.current[0].focus();
-        }
-      }
-    }
+
     if (e.key === "Escape") {
       if (autoList.length !== 0 && idx % 7 === 0) {
         return (autoWrapRef.current.style.display = "none");
@@ -1010,11 +1012,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                                 top={`40px`}
                                 let={`0`}
                                 zIndex={`1000`}
-                                padding={`2px 0`}
+                                padding={`0`}
                                 border={theme.border}
                                 radius={theme.radius}
-                                bgColor={`#c4c4c4`}
-                                color={`#ffffff`}
+                                bgColor={`#fff`}
+                                color={theme.black_C}
                               >
                                 {autoList.map((item, aIdx) => {
                                   return (
@@ -1022,9 +1024,11 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
                                       tabIndex={aIdx}
                                       key={aIdx}
                                       kindOf={`hoverWrap`}
+                                      padding={`4px`}
+                                      al={`flex-start`}
                                       borderBottom={
                                         aIdx !== autoList.length - 1 &&
-                                        `1px solid #ffffff`
+                                        `1px solid #ccc`
                                       }
                                       ref={(elem: HTMLDivElement) =>
                                         (autoListRef.current[aIdx] = elem)

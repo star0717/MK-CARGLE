@@ -170,7 +170,11 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       return inputRef.current[idx + 1].focus();
     }
     if (e.key === "ArrowDown") {
+<<<<<<< HEAD
       console.log(e.isComposing);
+=======
+      e.preventDefault();
+>>>>>>> fcf9a5fcf4a1f2cbefc2d449043039e3a30173ac
       if (autoList.length !== 0 && idx % 7 === 0) {
         if (autoWrapRef.current.style.display === "none") {
           return (autoWrapRef.current.style.display = "block");
@@ -981,11 +985,11 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                                 top={`40px`}
                                 let={`0`}
                                 zIndex={`1000`}
-                                padding={`2px 0`}
+                                padding={`0`}
                                 border={theme.border}
                                 radius={theme.radius}
-                                bgColor={`#c4c4c4`}
-                                color={`#ffffff`}
+                                bgColor={`#fff`}
+                                color={theme.black_C}
                               >
                                 {autoList.map((item, aIdx) => {
                                   return (
@@ -993,9 +997,11 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
                                       tabIndex={aIdx}
                                       key={aIdx}
                                       kindOf={`hoverWrap`}
+                                      padding={`4px`}
+                                      al={`flex-start`}
                                       borderBottom={
                                         aIdx !== autoList.length - 1 &&
-                                        `1px solid #ffffff`
+                                        `1px solid #ccc`
                                       }
                                       ref={(elem: HTMLDivElement) =>
                                         (autoListRef.current[aIdx] = elem)
