@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
 
 interface Propsinterface {
@@ -107,12 +107,17 @@ export const Wrapper = styled.div<any>`
   background-attachment: ${(props) => props.attachment || `fixed`};
   background-position: center;
   background-color: ${(props) => props.bgColor};
-  transition: 0.5s;
+  transition: ${(props) => props.transition || `0.5s`};
   cursor: ${(props) => props.cursor};
   transform: ${(props) => props.transform};
   line-height: ${(props) => props.lineHeight};
   text-align: ${(props) => props.textAlign};
-  animation: ${appearAnimation} 1s forwards;
+  animation: ${(props) =>
+    props.notAnimate
+      ? ``
+      : css`
+          ${appearAnimation} 1s forwards
+        `};
   opacity: ${(props) => props.opacity};
   page-break-after: ${(props) => props.pageBreakAfter};
 
@@ -140,6 +145,20 @@ export const Wrapper = styled.div<any>`
 
   &:hover {
     font-weight: ${(props) => (props.isHeaderHover ? `800` : ``)};
+    ${(props) =>
+      props.kindOf === `hoverWrap` &&
+      `background-color: #f5f5f5;
+      color: #343a40;
+      cursor: pointer`}
+  }
+
+  &:focus {
+    ${(props) =>
+      props.kindOf === `hoverWrap` &&
+      `background-color: #8DAFCE;
+      color: #343a40;
+      cursor: pointer;
+      outline-style:none;`}
   }
 
   @media (max-width: 700px) {
@@ -150,85 +169,6 @@ export const Wrapper = styled.div<any>`
     }
   }
 `;
-
-// export const CommonForm = styled.form<any>`
-//   width: ${(props) => props.width || `100%`};
-//   min-width: ${(props) => props.minWidth};
-//   height: ${(props) => props.height};
-//   min-height: ${(props) => props.minHeight};
-//   display: ${(props) => props.display || `flex`};
-//   flex-direction: ${(props) => props.dr || `column`};
-//   align-items: ${(props) => props.al || `center`};
-//   justify-content: ${(props) => props.ju || `center`};
-//   flex-wrap: ${(props) => props.wrap || `wrap`};
-//   background: ${(props) => props.white_C};
-//   color: ${(props) => props.color};
-//   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
-//   position: ${(props) => (props.isRelative ? `relative` : ``)};
-//   top: ${(props) => props.top};
-//   left: ${(props) => props.left};
-//   bottom: ${(props) => props.bottom};
-//   right: ${(props) => props.right};
-//   z-index: ${(props) => props.zIndex};
-//   border: ${(props) => props.border};
-//   border-bottom: ${(props) => props.borderBottom};
-//   border-top: ${(props) => props.borderTop};
-//   border-right: ${(props) => props.borderRight};
-//   border-left: ${(props) => props.borderLeft};
-//   border-radius: ${(props) => props.radius};
-//   box-shadow: ${(props) => props.shadow};
-//   font-size: ${(props) => props.fontSize};
-//   font-weight: ${(props) => props.fontWeight};
-//   margin: ${(props) => props.margin};
-//   padding: ${(props) => props.padding};
-//   overflow: ${(props) => (props.isOverflow ? `auto` : props.overflow || ``)};
-//   background-image: ${(props) => props.bgImg};
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   background-attachment: ${(props) => props.attachment || `fixed`};
-//   background-position: center;
-//   background-color: ${(props) => props.bgColor};
-
-//   transition: 0.5s;
-//   cursor: ${(props) => props.cursor};
-//   line-height: ${(props) => props.lineHeight};
-//   text-align: ${(props) => props.textAlign};
-//   animation: ${appearAnimation} 1s forwards;
-
-//   &.active div {
-//     color: ${(props) => props.theme.black_C};
-//     font-weight: 700;
-//     text-decoration: underline;
-//   }
-
-//   & .react-reveal {
-//     width: inherit;
-//     z-index: 1;
-//   }
-
-//   & pre {
-//     white-space: pre-wrap;
-//     line-height: 1.4;
-//     color: #6f6f6f;
-//     font-size: 14px;
-//   }
-
-//   &.faqBoard:last-child {
-//     border-bottom: 1px solid #3c3c3c;
-//   }
-
-//   &:hover {
-//     font-weight: ${(props) => (props.isHeaderHover ? `800` : ``)};
-//   }
-
-//   @media (max-width: 700px) {
-//     font-size: 14px;
-
-//     & svg {
-//       font-size: 20px;
-//     }
-//   }
-// `;
 
 /**text */
 
@@ -569,51 +509,49 @@ export const SmallButton = styled.button<any>`
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
-  border-radius: ${(props) => props.radius};
+  border-radius: ${(props) => props.radius || `5px`};
   font-size: ${(props) => props.fontSize || `16px`};
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
   background-color: ${(props) => props.bgColor};
-  border-radius: 5px;
   color: #fff;
   cursor: ${(props) => props.cursor || `pointer`};
   vertical-align: unset;
-
+  box-shadow: ${(props) => props.shadow || ``};
   ${(props) =>
     props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
   ${(props) =>
     props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
-  ${(props) =>
+    ${(props) =>
     props.kindOf === `default` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
-
     ${(props) =>
     props.kindOf === `cancle` && `background ${props.theme.subWhite_C};`}
     ${(props) => props.kindOf === `cancle` && `color ${props.theme.red_C};`}
     ${(props) =>
     props.kindOf === `cancle` && `border : 1px solid ${props.theme.red_C};`}
-  
-
-  ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
-  ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `ghost` && `cursor : default;`}
-  ${(props) => props.kindOf === `ghost` && `border : none;`}
-
-  ${(props) =>
+    ${(props) =>
+    props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
+    ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
+    ${(props) => props.kindOf === `ghost` && `cursor : default;`}
+    ${(props) => props.kindOf === `ghost` && `border : none;`}
+    ${(props) =>
+    props.kindOf === `black` && `background : rgba(255,255,255,0.7);`}
+    ${(props) => props.kindOf === `black` && `color ${props.theme.black_C};`}
+    ${(props) => props.kindOf === `black` && `border : 1px solid #343a40;`}
+    ${(props) =>
     props.kindOf === `fillDefault` && `background ${props.theme.basicTheme_C};`}
-  ${(props) =>
+    ${(props) =>
     props.kindOf === `fillDefault` && `color ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `fillDefault` && `border : none;`}
-
-  ${(props) => props.kindOf === `input` && `background ${props.theme.white_C};`}
+    ${(props) => props.kindOf === `fillDefault` && `border : none;`}
+    ${(props) =>
+    props.kindOf === `input` && `background ${props.theme.white_C};`}
     ${(props) => props.kindOf === `input` && `border ${props.theme.border};`}
     ${(props) => props.kindOf === `input` && `color ${props.theme.black_C};`}
-    ${(props) => props.kindOf === `input` && `justify-content : flex-start;`}
-  
-
-  & svg {
+    ${(props) => props.kindOf === `input` && `justify-content : flex-start;`} &
+    svg {
   }
 
   &:hover {
@@ -1328,7 +1266,7 @@ export const TableHead = styled.ul<any>`
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
   border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
-  background: #343a40;
+  background-color: ${(props) => props.bgColor || `${props.theme.black_C}`};
   color: #fff;
   padding: ${(props) => props.padding || `0px 20px`};
   font-size: ${(props) => props.fontSize || `16px`};
@@ -1404,6 +1342,7 @@ export const TableRow = styled.ul<any>`
 export const TableRowLIST = styled.li<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height || `100%`};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
   display: ${(props) => props.display || `flex`};
   color: ${(props) => props.color || ``};
   font-size: ${(props) => props.fontSize || `16px`};
@@ -1416,7 +1355,7 @@ export const TableRowLIST = styled.li<any>`
   text-align: start;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: ${(props) => props.overflow || `hidden`};
   letter-spacing: 0px;
 `;
 

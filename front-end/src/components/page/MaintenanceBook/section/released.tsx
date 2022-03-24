@@ -56,7 +56,7 @@ import {
   MainPrice,
   MainWork,
 } from "src/models/maintenance.entity";
-import { maskingStr } from "src/modules/commonModule";
+import { dataSort, maskingStr, trim } from "src/modules/commonModule";
 import { PartsSet } from "src/models/partsset.entity";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -71,6 +71,7 @@ import PaymentModal from "./paymentModal";
 import EditMolitModal from "./editMolitModal";
 import MolitSettingModal from "./molitSettingModal";
 import PreviewModal from "./previewModal";
+import theme from "styles/theme";
 
 const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
@@ -78,6 +79,7 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
+
   /**작업내용 초기값 */
   const workInit: MainWork[] = [
     {
@@ -91,8 +93,11 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       wage: 0,
     },
   ];
+
   /**input태그연결 */
   let inputRef = useRef<HTMLInputElement[]>([]);
+  let autoWrapRef = useRef<HTMLDivElement>(null);
+  let autoListRef = useRef<HTMLDivElement[]>([]);
 
   /*********************************************************************
    * 2. State settings
@@ -113,9 +118,31 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   const [initMtInfo, setInitMtInfo] = useState<Maintenance>(props.data.mtData);
 
   const [clickDoc, setClickDoc] = useState<MainWork>(workInit[0]);
+  const [nameList, setNameList] = useState<string[][]>(); // 부품명+부품별칭 합친 전체리스트
+  const [autoRow, setAutoRow] = useState<number>(null); // 자동완성할 row 위치
+  const [autoList, setAutoList] = useState<string[][]>([]); // 자동완성 리스트
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**nameList(부품명/별칭 리스트)에 데이터 넣기 */
+  useEffect(() => {
+    let nameArr: string[][] = [];
+    const sortParts: Part[] = dataSort(
+      props.data.allParts.docs,
+      "string",
+      1,
+      "name"
+    );
+    sortParts.map((item: Part) => {
+      let arr: string[] = [];
+      arr.push(item.name);
+      item.nickName.map((nick: string) => {
+        arr.push(nick);
+      });
+      nameArr.push(arr);
+    });
+    setNameList(nameArr);
+  }, [props.data.allParts]);
 
   // modal 창 팝업 시 뒤에 배경 scroll 막기
   useEffect(() => {
@@ -172,20 +199,36 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   /**
-   * keyup event handler
+   * 정비내역 keyup event handler
    * @param e
    * @param idx
    */
   const onKeyUpHandler = (e: KeyboardEvent, idx: number) => {
     if (e.key === "Enter") {
-      if (idx % 7 === 0) return inputRef.current[idx + 2].focus();
+      if (idx % 7 === 0) {
+        if (autoList.length !== 0) {
+          return false;
+        } else {
+          return inputRef.current[idx + 2].focus();
+        }
+      }
       if (idx % 7 === 4) return inputRef.current[idx + 2].focus();
       return inputRef.current[idx + 1].focus();
+    }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (autoList.length !== 0 && idx % 7 === 0) {
+        if (autoWrapRef.current.style.display === "none") {
+          return (autoWrapRef.current.style.display = "block");
+        } else {
+          return autoListRef.current[0].focus();
+        }
+      }
     }
   };
 
   /**
-   * keydown event handler
+   * 정비내역 keydown event handler
    * @param e
    * @param idx
    */
@@ -193,6 +236,18 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
     if (e.key === "Enter") {
       if (idx === cellCount - 1) {
         setWorkList(workList.concat(workInit));
+      }
+      if (autoList.length !== 0 && idx % 7 === 0)
+        if (autoWrapRef.current.style.display === "none") {
+          return (autoWrapRef.current.style.display = "block");
+        } else {
+          return autoListRef.current[0].focus();
+        }
+    }
+
+    if (e.key === "Escape") {
+      if (autoList.length !== 0 && idx % 7 === 0) {
+        return (autoWrapRef.current.style.display = "none");
       }
     }
   };
@@ -219,36 +274,42 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
   /**
    * 정비내역 input handler
    * @param e
-   * @param idx
+   * @param rowIdx
+   * @param cellIdx
+   * @returns
    */
   const onChangeInputArr = (
     e: React.ChangeEvent<HTMLInputElement>,
     rowIdx: number,
     cellIdx?: number
   ) => {
+    e.target.value = trim(e.target.value);
     switch (e.target.name) {
       case "name":
-        const partOne: Part[] = props.data.allParts.docs.filter(
-          (item: Part) =>
-            e.target.value === item.name ||
-            item.nickName.includes(e.target.value)
-        );
-        return setWorkList(
-          workList.map((item, index) =>
-            index === rowIdx
-              ? {
-                  ...item,
-                  name: e.target.value,
-                  code: partOne[0]?.code,
-                  tsCode: partOne[0]?.tsCode || "",
-                }
-              : item
-          )
-        );
+        setAutoList([]);
+        setAutoRow(null);
+        if (e.target.value.length >= 2) {
+          nameList.map((name) => {
+            let update = false;
+            name.map((str) => {
+              if (str.includes(e.target.value)) {
+                update = true;
+              }
+            });
+            if (update) {
+              setAutoList((list) => [...list, name]);
+              setAutoRow(rowIdx);
+            }
+            if (name.includes(e.target.value)) {
+              setAutoList([]);
+              setAutoRow(null);
+            }
+          });
+        }
+        return onClickAutoList(e.target.value, rowIdx);
       case "price":
       case "quantity":
       case "wage":
-        e.target.value = e.target.value.replaceAll(",", "");
         if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
           return setWorkList(
             workList.map((item, index) =>
@@ -293,6 +354,64 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
           )
         );
         return inputRef.current[cellIdx + 1].focus();
+    }
+  };
+
+  /**
+   * 자동완성 리스트 클릭 기능(직접 입력 기능과 같음)
+   * @param str
+   * @param rowIdx
+   * @returns
+   */
+  const onClickAutoList = (str: string, rowIdx: number) => {
+    const partOne: Part[] = props.data.allParts.docs.filter(
+      (item: Part) => str === item.name || item.nickName.includes(str)
+    );
+    return setWorkList(
+      workList.map((item, index) =>
+        index === rowIdx
+          ? {
+              ...item,
+              name: str,
+              code: partOne[0]?.code,
+              tsCode: partOne[0]?.tsCode || "",
+            }
+          : item
+      )
+    );
+  };
+
+  /** 리스트 keydown handler */
+  const onKeyDownList = (
+    e: KeyboardEvent,
+    aIdx: number,
+    data: string,
+    rowIdx: number,
+    cellIdx: number
+  ) => {
+    e.preventDefault();
+    if (e.key === "ArrowDown") {
+      if (aIdx !== autoList.length - 1) {
+        return autoListRef.current[aIdx + 1].focus();
+      } else {
+        return autoListRef.current[0].focus();
+      }
+    }
+    if (e.key === "ArrowUp") {
+      if (aIdx !== 0) {
+        return autoListRef.current[aIdx - 1].focus();
+      } else {
+        return autoListRef.current[autoList.length - 1].focus();
+      }
+    }
+    if (e.key === "Enter") {
+      onClickAutoList(data, rowIdx);
+      setAutoList([]);
+      setAutoRow(null);
+    }
+    if (e.key === "Escape") {
+      autoWrapRef.current.style.display = "none";
+      return inputRef.current[cellIdx].focus();
     }
   };
 
@@ -373,16 +492,6 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
       <RsWrapper>
         <CommonForm autoComplete="off">
           <Wrapper>
-            {/* <Wrapper
-            padding={`20px`}
-            width={`400px`}
-            margin={`0px 0px 10px 600px`}
-            al={`flex-start`}
-          >
-            <SpeechBubbleRight fontSize={`20px`}>
-              "현재 정비 단계는 출고완료입니다."
-            </SpeechBubbleRight>
-          </Wrapper> */}
             <JoinStepBarWrapper padding={`0px 0px 50px`}>
               <Wrapper width={`auto`}>
                 <JoinStepBar kindOf={`complete`}>
@@ -891,7 +1000,11 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                               <AiFillMinusSquare />
                             </IconButton>
                           </TableRowLIST>
-                          <TableRowLIST width={`14%`}>
+                          <TableRowLIST
+                            isRelative
+                            width={`14%`}
+                            overflow={`none`}
+                          >
                             <TextInput2
                               type="text"
                               ref={(elem: HTMLInputElement) =>
@@ -905,44 +1018,62 @@ const MaintenanceReleased: NextPage<_pMaintenanceProps> = (props) => {
                                 onKeyUpHandler(e, (idx + 1) * 7 - 7)
                               }
                               value={data.name}
-                              readOnly={!modify}
                               name="name"
-                              list={data.name.length < 2 || `workList`}
                               onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                               ) => {
                                 onChangeInputArr(e, idx);
                               }}
                             />
-                            <datalist id="workList">
-                              {props.data.allParts.docs.map(
-                                (item: Part, idx: number) => {
+                            {idx === autoRow && autoList && (
+                              <Wrapper
+                                ref={autoWrapRef}
+                                isAbsolute
+                                top={`40px`}
+                                let={`0`}
+                                zIndex={`1000`}
+                                padding={`0`}
+                                border={theme.border}
+                                radius={theme.radius}
+                                bgColor={`#fff`}
+                                color={theme.black_C}
+                              >
+                                {autoList.map((item, aIdx) => {
                                   return (
-                                    <Wrapper key={idx}>
-                                      {item.nickName.length > 1 ? (
-                                        item.nickName.map(
-                                          (nickname: string, iidx: number) => {
-                                            return (
-                                              <option
-                                                key={`${idx}.${iidx}`}
-                                                label={nickname}
-                                                value={item.name}
-                                              />
-                                            );
-                                          }
-                                        )
-                                      ) : (
-                                        <option
-                                          key={idx}
-                                          label={item.nickName[0]}
-                                          value={item.name}
-                                        />
-                                      )}
+                                    <Wrapper
+                                      tabIndex={aIdx}
+                                      key={aIdx}
+                                      kindOf={`hoverWrap`}
+                                      padding={`4px`}
+                                      al={`flex-start`}
+                                      borderBottom={
+                                        aIdx !== autoList.length - 1 &&
+                                        `1px solid #ccc`
+                                      }
+                                      ref={(elem: HTMLDivElement) =>
+                                        (autoListRef.current[aIdx] = elem)
+                                      }
+                                      onKeyDown={(e: KeyboardEvent) => {
+                                        onKeyDownList(
+                                          e,
+                                          aIdx,
+                                          item[0],
+                                          idx,
+                                          (idx + 1) * 7 - 7
+                                        );
+                                      }}
+                                      onClick={() => {
+                                        onClickAutoList(item[0], idx);
+                                        setAutoList([]);
+                                        setAutoRow(null);
+                                      }}
+                                    >
+                                      <Text>{item[0]}</Text>
                                     </Wrapper>
                                   );
-                                }
-                              )}
-                            </datalist>
+                                })}
+                              </Wrapper>
+                            )}
                           </TableRowLIST>
                           <TableRowLIST width={`12%`}>
                             <SmallButton

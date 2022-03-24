@@ -1,23 +1,21 @@
-import { GetServerSidePropsContext, PreviewData } from "next";
-import { ParsedUrlQuery } from "querystring";
 import parse from "url-parse";
 import { MbType } from "../configure/etc.entity";
 import { mbTypeOption } from "../configure/list.entity";
 import { genFindParamQuery } from "../constants/model.const";
-import { AuthTokenInfo } from "../models/auth.entity";
 import { FindParameters } from "../models/base.entity";
 import { Company } from "../models/company.entity";
+import jwt from "jsonwebtoken";
 
 /**
- * jwt를 json으로 만드는 함수
- * @param token
+ * jwt를 검증하여 토큰값 받아오는 함수
+ * @param cookie
  * @returns
  */
-export const parseJwt = (token: string): AuthTokenInfo => {
-  var base64Payload = token.split(".")[1];
-  var payload = Buffer.from(base64Payload, "base64");
-  var result = JSON.parse(payload.toString());
-  console.log(result);
+export const parseJwt = (
+  cookie: string,
+  key: string
+): string | jwt.JwtPayload => {
+  const result = jwt.verify(cookie, key);
   return result;
 };
 
@@ -195,6 +193,14 @@ export const create2dArray = (rows: number, columns: number, initArr?: any) => {
   return arr;
 };
 
+/**
+ * 데이터 정렬
+ * @param data
+ * @param type
+ * @param sort
+ * @param opt
+ * @returns
+ */
 export const dataSort = (
   data: any,
   type: string,
