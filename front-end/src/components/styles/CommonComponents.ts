@@ -313,8 +313,7 @@ export const Text = styled.p<any>`
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
   text-decoration: ${(props) => props.decoration};
   text-overflow: ${(props) => props.textOverflow || ``};
-
-  & svg {
+  text-shadow: ${(props) => props.textShadow || ``} & svg {
     color: ${(props) => props.color};
     margin-top: ${(props) => props.marginTop || `4px`};
     margin-bottom: ${(props) => props.marginBottom};
