@@ -169,6 +169,16 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       if (idx % 7 === 4) return inputRef.current[idx + 2].focus();
       return inputRef.current[idx + 1].focus();
     }
+    if (e.key === "ArrowDown") {
+      console.log(e.isComposing);
+      if (autoList.length !== 0 && idx % 7 === 0) {
+        if (autoWrapRef.current.style.display === "none") {
+          return (autoWrapRef.current.style.display = "block");
+        } else {
+          return autoListRef.current[0].focus();
+        }
+      }
+    }
   };
 
   /**
@@ -188,15 +198,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
           return autoListRef.current[0].focus();
         }
     }
-    if (e.key === "ArrowDown") {
-      if (autoList.length !== 0 && idx % 7 === 0) {
-        if (autoWrapRef.current.style.display === "none") {
-          return (autoWrapRef.current.style.display = "block");
-        } else {
-          return autoListRef.current[0].focus();
-        }
-      }
-    }
+
     if (e.key === "Escape") {
       if (autoList.length !== 0 && idx % 7 === 0) {
         return (autoWrapRef.current.style.display = "none");
