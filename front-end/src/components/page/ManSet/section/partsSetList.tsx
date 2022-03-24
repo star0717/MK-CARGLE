@@ -143,8 +143,11 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
   /** 세트 저장(실제타는 api는 수정) */
   const onSavePartsSet = () => {
     for (let i = 0; i < props.partSetClass.length; i++) {
-      if (props.partSetData.name === props.partSetClass[i].name)
-        return alert("중복된 세트명입니다.");
+      if (props.partSetData.name === props.partSetClass[i].name) {
+        if (props.partSetData._id !== props.partSetClass[i]._id) {
+          return alert("중복된 세트명입니다.");
+        }
+      }
     }
     dispatch(
       _aPatchPartssetsOne(props.partSetData._id, props.partSetData)
