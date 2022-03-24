@@ -7,8 +7,8 @@ import {
   RequestPayParams,
   RequestPayResponse,
 } from "src/configure/iamport.entity";
-import solapi from "solapi";
-import fs from "fs";
+import { nanoid } from "nanoid";
+import hmacSHA512 from "crypto-js/hmac-sha512";
 
 const CustomerPage: NextPage<any> = (props) => {
   /*********************************************************************
@@ -79,25 +79,24 @@ const CustomerPage: NextPage<any> = (props) => {
   };
 
   const onSmsHandler = () => {
-    const messageService = new solapi(
-      process.env.NEXT_PUBLIC_SOL_KEY,
-      process.env.NEXT_PUBLIC_SOL_SECRET
-    );
-
-    messageService
-      .sendOne({
-        to: "01090309615",
-        from: "16443486",
-        text: "안뇽",
-        kakaoOptions: {
-          pfId: process.env.NEXT_PUBLIC_KAKAO_PFID,
-          disableSms: true,
-          adFlag: false,
-          templateId: process.env.NEXT_PUBLIC_KAKAO_TID,
-        },
-        autoTypeDetect: true,
-      })
-      .then((res) => console.log(res));
+    // const messageService = new solapi(
+    //   process.env.NEXT_PUBLIC_SOL_KEY,
+    //   process.env.NEXT_PUBLIC_SOL_SECRET
+    // );
+    // messageService
+    //   .sendOne({
+    //     to: "01090309615",
+    //     from: "16443486",
+    //     text: "안뇽",
+    //     kakaoOptions: {
+    //       pfId: process.env.NEXT_PUBLIC_KAKAO_PFID,
+    //       disableSms: true,
+    //       adFlag: false,
+    //       templateId: process.env.NEXT_PUBLIC_KAKAO_TID,
+    //     },
+    //     autoTypeDetect: true,
+    //   })
+    //   .then((res) => console.log(res));
   };
 
   /*********************************************************************
