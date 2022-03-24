@@ -10,6 +10,7 @@ import { DeleteResult, FindResult } from "../../../src/models/base.entity";
 import { Company } from "src/models/company.entity";
 import { Part } from "src/models/part.entity";
 import { User } from "src/models/user.entity";
+import { SingleMessageSentResponse } from "solapi";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
@@ -485,4 +486,5 @@ export type ActionInterfaces =
   | _iMaintenances
   | _iMaintenancesOne
   | _iEstimate
-  | _iStatement;
+  | _iStatement
+  | _iPayment;

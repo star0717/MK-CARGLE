@@ -11,13 +11,22 @@ import { nanoid } from "nanoid";
 import hmacSHA512 from "crypto-js/hmac-sha512";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import { HmacSHA256 } from "crypto-js";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import solapi from "solapi";
 dayjs.locale("ko");
 
-const CustomerPage: NextPage<any> = (props) => {
+const HeoTest: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const router = useRouter();
+  const dispatch = useDispatch();
 
+  const impCode: string = process.env.NEXT_PUBLIS_IMP_CODE;
+  const solKey: string = process.env.NEXT_PUBLIC_SOL_KEY;
+  const solSecret: string = process.env.NEXT_PUBLIC_SOL_SECRET;
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -27,7 +36,7 @@ const CustomerPage: NextPage<any> = (props) => {
    *********************************************************************/
   const onPaymentHandler = () => {
     const { IMP } = window;
-    IMP.init("imp16600554");
+    IMP.init(impCode);
 
     const data: RequestPayParams = {
       pg: "html5_inicis", // PG사
@@ -81,11 +90,23 @@ const CustomerPage: NextPage<any> = (props) => {
     IMP.request_pay(data, callback);
   };
 
-  const onSmsHandler = () => {
-    const salt = nanoid();
-    const date = dayjs().format();
-    console.log(salt);
-
+  const onSmsHandler = async () => {
+    // const salt: string = nanoid();
+    // const date: string = dayjs().format();
+    // const hmacData: string = date + salt;
+    // const signature: CryptoJS.lib.WordArray = HmacSHA256(hmacData, solSecret);
+    // const solAuth: string = `HMAC-SHA256 apiKey=${solKey}, date=${date}, salt=${salt}, signature=${signature}`;
+    // const data = {
+    //   message: {
+    //     to: "01090309615",
+    //     from: "16443486",
+    //     text: "하이염",
+    //     type: "SMS",
+    //   },
+    //   agent: {
+    //     appId: "555245",
+    //   },
+    // };
     // const messageService = new solapi(
     //   process.env.NEXT_PUBLIC_SOL_KEY,
     //   process.env.NEXT_PUBLIC_SOL_SECRET
@@ -136,4 +157,4 @@ const CustomerPage: NextPage<any> = (props) => {
   );
 };
 
-export default CustomerPage;
+export default HeoTest;
