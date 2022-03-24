@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { NextPage } from "next";
 import Modal from "react-modal";
-import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
   Checkbox,
   CheckInput,
