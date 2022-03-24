@@ -52,9 +52,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   const router = useRouter();
 
   const [registerOpen, setRegisterOpen] = useState(false);
-  const [schedule, setSchedule] = useState(
-    `${dayjs().format("YYYY.MM.DD")} 일정`
-  );
+  const [schedule, setSchedule] = useState(`${dayjs().format("YYYY.MM.DD")}`);
   const [maintenanceList, setMaintenanceList] = useState(
     props.findResult.docs.filter(
       (item: { status: string }) => item.status !== "r"
@@ -166,6 +164,13 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
               fontSize={`20px`}
               color={theme.basicTheme_C}
             >
+              예약목록
+            </Text>
+            <Text
+              padding={`4px 0px 0px`}
+              fontSize={`14px`}
+              color={theme.darkGrey_C}
+            >
               {schedule}
             </Text>
             <TableWrapper minHeight={`300px`} padding={`20px 40px`}>
@@ -204,73 +209,77 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
         <CommonSubTitle></CommonSubTitle>
       </CommonTitleWrapper>
       <Wrapper width={`1200px`} padding={`40px 0px`}>
-        <TableWrapper minHeight={`275px`}>
-          <TableHead>
-            <TableHeadLIST width={`15%`}>입고일자</TableHeadLIST>
-            <TableHeadLIST width={`15%`}>차량번호</TableHeadLIST>
-            <TableHeadLIST width={`11%`}>구분</TableHeadLIST>
-            <TableHeadLIST width={`20%`}>작업내용</TableHeadLIST>
-            <TableHeadLIST width={`13%`}>문서발급</TableHeadLIST>
-            <TableHeadLIST width={`13%`}>국토부</TableHeadLIST>
-            <TableHeadLIST width={`13%`}>정비상태</TableHeadLIST>
-          </TableHead>
-          <TableBody>
-            {props.data.totalDocs > 0 ? (
-              maintenanceList?.map((list: any) => (
-                <TableRow
-                  key={list._id}
-                  onClick={() => {
-                    router.push(
-                      `${UseLink.MAINTENANCE_BOOK}?id=${list._id}&step=${list.status}`
-                    );
-                  }}
-                >
-                  <TableRowLIST width={`15%`}>
-                    {dayjs(list.createdAt).format("YYYY-MM-DD")}
-                  </TableRowLIST>
-                  <TableRowLIST width={`15%`}>
-                    {list.car.regNumber}
-                  </TableRowLIST>
-                  <TableRowLIST width={`11%`}>
-                    {getStrMainCustomerType(list.costomerType)}
-                  </TableRowLIST>
-                  <TableRowLIST width={`20%`}>
-                    {list.works?.length > 1
-                      ? `${list.works[0]?.name} 외 ${list.works.length - 1}건`
-                      : list.works[0]?.name}
-                  </TableRowLIST>
-                  <TableRowLIST width={`13%`}>
-                    {list?.estimate ? (
-                      <Wrapper dr={`row`} width={`auto`}>
-                        <ColorSpan color={`#51b351`} margin={`4px 0px 0px`}>
-                          <GoPrimitiveDot />
-                        </ColorSpan>
-                        발급완료
-                      </Wrapper>
-                    ) : (
-                      <Wrapper dr={`row`} width={`auto`}>
-                        <ColorSpan color={`#d6263b`} margin={`4px 0px 0px`}>
-                          <GoPrimitiveDot />
-                        </ColorSpan>
-                        미발급
-                      </Wrapper>
-                    )}
-                  </TableRowLIST>
-                  <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
-                  <TableRowLIST width={`13%`}>
-                    {getStrMainStatus(list.status)}
-                  </TableRowLIST>
-                </TableRow>
-              ))
-            ) : (
-              <Wrapper minHeight={`445px`}>
-                <Text fontSize={`48px`} color={`#c4c4c4`}>
-                  <BsEmojiFrownFill />
-                </Text>
-                <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
-              </Wrapper>
-            )}
-          </TableBody>
+        <TableWrapper>
+          <Wrapper isSticky={true}>
+            <TableHead>
+              <TableHeadLIST width={`15%`}>입고일자</TableHeadLIST>
+              <TableHeadLIST width={`15%`}>차량번호</TableHeadLIST>
+              <TableHeadLIST width={`11%`}>구분</TableHeadLIST>
+              <TableHeadLIST width={`20%`}>작업내용</TableHeadLIST>
+              <TableHeadLIST width={`13%`}>문서발급</TableHeadLIST>
+              <TableHeadLIST width={`13%`}>국토부</TableHeadLIST>
+              <TableHeadLIST width={`13%`}>정비상태</TableHeadLIST>
+            </TableHead>
+          </Wrapper>
+          <Wrapper overflow={`auto`} height={`450px`} ju={`flex-start`}>
+            <TableBody>
+              {props.data.totalDocs > 0 ? (
+                maintenanceList?.map((list: any) => (
+                  <TableRow
+                    key={list._id}
+                    onClick={() => {
+                      router.push(
+                        `${UseLink.MAINTENANCE_BOOK}?id=${list._id}&step=${list.status}`
+                      );
+                    }}
+                  >
+                    <TableRowLIST width={`15%`}>
+                      {dayjs(list.createdAt).format("YYYY-MM-DD")}
+                    </TableRowLIST>
+                    <TableRowLIST width={`15%`}>
+                      {list.car.regNumber}
+                    </TableRowLIST>
+                    <TableRowLIST width={`11%`}>
+                      {getStrMainCustomerType(list.costomerType)}
+                    </TableRowLIST>
+                    <TableRowLIST width={`20%`}>
+                      {list.works?.length > 1
+                        ? `${list.works[0]?.name} 외 ${list.works.length - 1}건`
+                        : list.works[0]?.name}
+                    </TableRowLIST>
+                    <TableRowLIST width={`13%`}>
+                      {list?.estimate ? (
+                        <Wrapper dr={`row`} width={`auto`}>
+                          <ColorSpan color={`#51b351`} margin={`4px 0px 0px`}>
+                            <GoPrimitiveDot />
+                          </ColorSpan>
+                          발급완료
+                        </Wrapper>
+                      ) : (
+                        <Wrapper dr={`row`} width={`auto`}>
+                          <ColorSpan color={`#d6263b`} margin={`4px 0px 0px`}>
+                            <GoPrimitiveDot />
+                          </ColorSpan>
+                          미발급
+                        </Wrapper>
+                      )}
+                    </TableRowLIST>
+                    <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                    <TableRowLIST width={`13%`}>
+                      {getStrMainStatus(list.status)}
+                    </TableRowLIST>
+                  </TableRow>
+                ))
+              ) : (
+                <Wrapper minHeight={`445px`}>
+                  <Text fontSize={`48px`} color={`#c4c4c4`}>
+                    <BsEmojiFrownFill />
+                  </Text>
+                  <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
+                </Wrapper>
+              )}
+            </TableBody>
+          </Wrapper>
         </TableWrapper>
         {/* <PagenationSection {...props} /> */}
         <Wrapper padding={`50px 0px 30px`}>
