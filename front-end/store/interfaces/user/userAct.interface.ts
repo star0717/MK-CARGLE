@@ -10,7 +10,6 @@ import { DeleteResult, FindResult } from "../../../src/models/base.entity";
 import { Company } from "src/models/company.entity";
 import { Part } from "src/models/part.entity";
 import { User } from "src/models/user.entity";
-import { SingleMessageSentResponse } from "solapi";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
@@ -463,6 +462,12 @@ export class _iPayment implements baseActionInterface {
   payload: RequestPayResponse;
 }
 
+/** SMS 전송 */
+export class _iSms implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: any;
+}
+
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
@@ -487,4 +492,5 @@ export type ActionInterfaces =
   | _iMaintenancesOne
   | _iEstimate
   | _iStatement
-  | _iPayment;
+  | _iPayment
+  | _iSms;

@@ -54,6 +54,7 @@ import {
   _iEstimate,
   _iStatement,
   _iPayment,
+  _iSms,
 } from "../interfaces";
 
 import {
@@ -1402,7 +1403,7 @@ export async function _aGetStatement(id: string) {
  */
 export async function _aPostPaymentComplete(data: any) {
   const req: RequestPayResponse = await axios
-    .post("")
+    .post("/api/payment/complete")
     .then((res: AxiosResponse<RequestPayResponse, any>): RequestPayResponse => {
       return res.data;
     });
@@ -1411,5 +1412,24 @@ export async function _aPostPaymentComplete(data: any) {
     type: ActionAPIs.USER_API,
     payload: req,
   };
+  return result;
+}
+
+/**
+ * SMS 알림톡 api
+ * @returns
+ */
+export async function _aPostSms() {
+  const req: any = await axios
+    .post("/api/sms/send")
+    .then((res: AxiosResponse<unknown, any>): any => {
+      return res.data;
+    });
+
+  const result: _iSms = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+
   return result;
 }
