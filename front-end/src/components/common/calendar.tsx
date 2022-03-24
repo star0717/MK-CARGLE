@@ -149,6 +149,7 @@ const Calendar: NextPage<CalendarProps> = (props) => {
         navbarElement={Navbar}
         localeUtils={MomentLocaleUtils}
         locale={`ko`}
+        showOutsideDays
       />
     </Wrapper>
   );
