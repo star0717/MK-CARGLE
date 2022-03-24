@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
 
 interface Propsinterface {
@@ -112,7 +112,12 @@ export const Wrapper = styled.div<any>`
   transform: ${(props) => props.transform};
   line-height: ${(props) => props.lineHeight};
   text-align: ${(props) => props.textAlign};
-  animation: ${appearAnimation} 1s forwards;
+  animation: ${(props) =>
+    props.notAnimate
+      ? ``
+      : css`
+          ${appearAnimation} 1s forwards
+        `};
   opacity: ${(props) => props.opacity};
   page-break-after: ${(props) => props.pageBreakAfter};
 
@@ -504,14 +509,13 @@ export const SmallButton = styled.button<any>`
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
-  border-radius: ${(props) => props.radius};
+  border-radius: ${(props) => props.radius || `5px`};
   font-size: ${(props) => props.fontSize || `16px`};
   display: flex;
   flex-direction: ${(props) => props.dr || `row`};
   align-items: ${(props) => props.al || `center`};
   justify-content: ${(props) => props.ju || `center`};
   background-color: ${(props) => props.bgColor};
-  border-radius: 5px;
   color: #fff;
   cursor: ${(props) => props.cursor || `pointer`};
   vertical-align: unset;

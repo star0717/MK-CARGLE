@@ -266,6 +266,24 @@ export const getServerSideProps: GetServerSideProps = async (
   // 렌더링 시 데이터가 필요한 페이지만 URL 및 API 추가
   try {
     switch (pagePath) {
+      case UseLink.MAIN:
+        const mtData: FindResult<Maintenance> = await axios
+          .get(
+            genApiPath(MaintenancesApiPath.maintenances, {
+              id: id,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then(
+            (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
+              res.data
+          );
+        successResult.props.data = {
+          mtData: mtData,
+        };
+        return successResult;
+
       case UseLink.TEST:
         successResult.props.data = await axios
           .get(
