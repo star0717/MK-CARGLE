@@ -200,8 +200,8 @@ const ManBusinessList: NextPage<any> = (props) => {
                   padding={`0px 5px 0px 5px`}
                   placeholder={
                     props.searchOption === "name"
-                      ? `상호명을 입력 해주세요.`
-                      : `담당자명을 입력 해주세요.`
+                      ? `검색할 업체의 상호명을 입력하세요.`
+                      : `검색할 업체의 담당자명을 입력하세요.`
                   }
                   type="text"
                   value={props.filterValue}
