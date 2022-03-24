@@ -204,7 +204,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
           </SmallButton>
         </Wrapper>
       </Wrapper>
-      <CommonTitleWrapper padding={`100px 0px 0px`}>
+      <CommonTitleWrapper padding={`60px 0px 0px`}>
         <CommonTitle>정비장부</CommonTitle>
         <CommonSubTitle></CommonSubTitle>
       </CommonTitleWrapper>
