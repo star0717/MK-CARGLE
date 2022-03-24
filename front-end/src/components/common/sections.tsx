@@ -8,7 +8,7 @@ import { Pagenation, PagenationWrapper } from "../styles/CommonComponents";
 export const PagenationSection: NextPage<_pFindDocs<any>> = (props) => {
   const pagenationBtn = () => {
     const result = [];
-    console.log("page", props);
+
     const cPage = props.findResult.currentPage;
     var sPage: number, lPage: number;
     sPage =
