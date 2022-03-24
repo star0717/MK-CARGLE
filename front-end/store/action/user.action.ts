@@ -1,3 +1,4 @@
+import { RequestPayResponse } from "./../../src/configure/iamport.entity";
 import { genMainOptionQuery } from "./../../src/constants/maintenance.const";
 import {
   EstimatesApiPath,
@@ -52,6 +53,7 @@ import {
   _iMaintenancesOne,
   _iEstimate,
   _iStatement,
+  _iPayment,
 } from "../interfaces";
 
 import {
@@ -1387,6 +1389,25 @@ export async function _aGetStatement(id: string) {
     });
 
   const result: _iStatement = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 결제모듈 처리 api
+ * @param data
+ * @returns
+ */
+export async function _aPostPaymentComplete(data: any) {
+  const req: RequestPayResponse = await axios
+    .post("")
+    .then((res: AxiosResponse<RequestPayResponse, any>): RequestPayResponse => {
+      return res.data;
+    });
+
+  const result: _iPayment = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

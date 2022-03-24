@@ -1,3 +1,4 @@
+import { RequestPayResponse } from "src/configure/iamport.entity";
 import { Agency } from "src/models/agency.entity";
 import { Car } from "src/models/car.entity";
 import { Estimate } from "src/models/estimate.entity";
@@ -6,10 +7,9 @@ import { PartsSet } from "src/models/partsset.entity";
 import { Statement } from "src/models/statement.entity";
 import { SignUpInfo } from "../../../src/models/auth.entity";
 import { DeleteResult, FindResult } from "../../../src/models/base.entity";
-import { Company } from "../../../src/models/company.entity";
-import { Part } from "../../../src/models/part.entity";
-
-import { User } from "../../../src/models/user.entity";
+import { Company } from "src/models/company.entity";
+import { Part } from "src/models/part.entity";
+import { User } from "src/models/user.entity";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
@@ -454,6 +454,12 @@ export class _iEstimate implements baseActionInterface {
 export class _iStatement implements baseActionInterface {
   type: ActionAPIs.USER_API;
   payload: Statement;
+}
+
+/** 결제모듈 인터페이스 */
+export class _iPayment implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: RequestPayResponse;
 }
 
 /*****************************************************
