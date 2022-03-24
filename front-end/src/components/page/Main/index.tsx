@@ -51,7 +51,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
 
   const [registerOpen, setRegisterOpen] = useState(false);
   const [schedule, setSchedule] = useState(
-    `${dayjs().format("YYYY-MM-DD")} 일정`
+    `${dayjs().format("YYYY.MM.DD")} 일정`
   );
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
 
