@@ -278,7 +278,6 @@ export const getServerSideProps: GetServerSideProps = async (
           .get(
             genApiPath(MaintenancesApiPath.maintenances, {
               findParams: {
-                ...params7,
                 sFrom: LastMonth,
                 sTo: Today,
               },
