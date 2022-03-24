@@ -20,7 +20,7 @@ const theme = {
   textPadding: "10px",
   boxShadow: "0px 10px 15px rgba(220,220,220,1)",
   boxShadowV2: "0px 5px 10px rgba(220,220,220,1)",
-  boxShadowDark: "0px 10px 10px  rgba(120,120,120,0.2)",
+  boxShadowDark: "0px 6px 16px  rgba(120,120,120,0.4)",
   transition: "0.4s",
 };
 
