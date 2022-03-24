@@ -103,7 +103,6 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
           <form onSubmit={onSearchHandler}>
             <SearchInputWrapper
               type="text"
-              placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputSearchHandler(e);
               }}
@@ -117,7 +116,11 @@ const AdminReviewCompaniesList: NextPage<_pAdminReviewCompanies> = (props) => {
                 <SearchInput
                   width={`532px`}
                   padding={`0px 5px 0px 5px`}
-                  placeholder="검색할 업체의 상호명 또는, 사업자등록번호를 입력하세요"
+                  placeholder={
+                    props.searchOption === "name"
+                      ? `검색할 업체의 상호명을 입력하세요.`
+                      : `검색할 업체의 사업자등록번호를 입력하세요.`
+                  }
                   type="text"
                 />
               </Wrapper>
