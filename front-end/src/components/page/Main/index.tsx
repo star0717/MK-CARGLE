@@ -28,6 +28,9 @@ import {
   CheckInput,
   CheckMark,
   ColorSpan,
+  CommonSubTitle,
+  CommonTitle,
+  CommonTitleWrapper,
   RsWrapper,
   SmallButton,
   TableBody,
@@ -40,6 +43,7 @@ import {
   WholeWrapper,
   Wrapper,
 } from "../../styles/CommonComponents";
+import { RiArrowDropRightLine } from "react-icons/ri";
 
 const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   const dispatch = useDispatch();
@@ -47,7 +51,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
 
   const [registerOpen, setRegisterOpen] = useState(false);
   const [schedule, setSchedule] = useState(
-    `${new Date().toLocaleDateString()} 일정`
+    `${dayjs().format("YYYY-MM-DD")} 일정`
   );
   const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
 
@@ -70,7 +74,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   return (
     <WholeWrapper>
       <Wrapper bgColor={`#8DAFCE`} padding={`40px 0px`}>
-        <Wrapper padding={`0px 0px 20px`} al={`flex-start`} width={`1200px`}>
+        <Wrapper padding={`20px 0px 20px`} al={`flex-start`} width={`1200px`}>
           <Text color={`#fff`} fontSize={`32px`}>
             {/* 홍길동님, 반갑습니다! */}
             {props.tokenValue.uName}님, 반갑습니다!
@@ -113,11 +117,25 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
           >
             {schedule}
           </Wrapper>
-          {/* )} */}
+        </Wrapper>
+        <Wrapper padding={`50px 0px 30px`}>
+          <SmallButton
+            width={`160px`}
+            height={`48px`}
+            kindOf={`fillDefault`}
+            radius={`48px`}
+            shadow={theme.boxShadowDark}
+          >
+            정비장부 <RiArrowDropRightLine />
+          </SmallButton>
         </Wrapper>
       </Wrapper>
+      <CommonTitleWrapper padding={`100px 0px 0px`}>
+        <CommonTitle>정비장부</CommonTitle>
+        <CommonSubTitle></CommonSubTitle>
+      </CommonTitleWrapper>
       <Wrapper width={`1200px`} padding={`40px 0px`}>
-        <TableWrapper>
+        <TableWrapper minHeight={`275px`}>
           <TableHead>
             <TableHeadLIST
               width={`5%`}

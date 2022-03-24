@@ -519,40 +519,39 @@ export const SmallButton = styled.button<any>`
   color: #fff;
   cursor: ${(props) => props.cursor || `pointer`};
   vertical-align: unset;
-
+  box-shadow: ${(props) => props.shadow || ``};
   ${(props) =>
     props.kindOf === `default` && `background ${props.theme.subWhite_C};`}
   ${(props) =>
     props.kindOf === `default` && `color ${props.theme.basicTheme_C};`}
-  ${(props) =>
+    ${(props) =>
     props.kindOf === `default` &&
     `border : 1px solid ${props.theme.basicTheme_C};`}
-
     ${(props) =>
     props.kindOf === `cancle` && `background ${props.theme.subWhite_C};`}
     ${(props) => props.kindOf === `cancle` && `color ${props.theme.red_C};`}
     ${(props) =>
     props.kindOf === `cancle` && `border : 1px solid ${props.theme.red_C};`}
-  
-
-  ${(props) => props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
-  ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `ghost` && `cursor : default;`}
-  ${(props) => props.kindOf === `ghost` && `border : none;`}
-
-  ${(props) =>
+    ${(props) =>
+    props.kindOf === `ghost` && `background ${props.theme.grey_C};`}
+    ${(props) => props.kindOf === `ghost` && `color ${props.theme.white_C};`}
+    ${(props) => props.kindOf === `ghost` && `cursor : default;`}
+    ${(props) => props.kindOf === `ghost` && `border : none;`}
+    ${(props) =>
+    props.kindOf === `black` && `background : rgba(255,255,255,0.7);`}
+    ${(props) => props.kindOf === `black` && `color ${props.theme.black_C};`}
+    ${(props) => props.kindOf === `black` && `border : 1px solid #343a40;`}
+    ${(props) =>
     props.kindOf === `fillDefault` && `background ${props.theme.basicTheme_C};`}
-  ${(props) =>
+    ${(props) =>
     props.kindOf === `fillDefault` && `color ${props.theme.white_C};`}
-  ${(props) => props.kindOf === `fillDefault` && `border : none;`}
-
-  ${(props) => props.kindOf === `input` && `background ${props.theme.white_C};`}
+    ${(props) => props.kindOf === `fillDefault` && `border : none;`}
+    ${(props) =>
+    props.kindOf === `input` && `background ${props.theme.white_C};`}
     ${(props) => props.kindOf === `input` && `border ${props.theme.border};`}
     ${(props) => props.kindOf === `input` && `color ${props.theme.black_C};`}
-    ${(props) => props.kindOf === `input` && `justify-content : flex-start;`}
-  
-
-  & svg {
+    ${(props) => props.kindOf === `input` && `justify-content : flex-start;`} &
+    svg {
   }
 
   &:hover {
