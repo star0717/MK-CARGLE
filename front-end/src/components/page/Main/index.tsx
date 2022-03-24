@@ -15,6 +15,7 @@ import { PagenationSection } from "src/components/common/sections";
 import {
   getStrMainCustomerType,
   getStrMainStatus,
+  MainStatus,
 } from "src/constants/maintenance.const";
 import { FindParameters, FindResult } from "src/models/base.entity";
 import { Maintenance } from "src/models/maintenance.entity";
@@ -50,7 +51,6 @@ import { url } from "inspector";
 const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
   const [registerOpen, setRegisterOpen] = useState(false);
   const [schedule, setSchedule] = useState(`${dayjs().format("YYYY.MM.DD")}`);
   const [maintenanceList, setMaintenanceList] = useState(
@@ -288,6 +288,9 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
             height={`48px`}
             kindOf={`fillDefault`}
             shadow={theme.boxShadowDark}
+            onClick={() => {
+              router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
+            }}
           >
             신규정비등록
             <HiOutlinePlusSm />
