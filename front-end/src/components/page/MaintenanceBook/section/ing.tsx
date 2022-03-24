@@ -170,11 +170,7 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       return inputRef.current[idx + 1].focus();
     }
     if (e.key === "ArrowDown") {
-<<<<<<< HEAD
-      console.log(e.isComposing);
-=======
       e.preventDefault();
->>>>>>> fcf9a5fcf4a1f2cbefc2d449043039e3a30173ac
       if (autoList.length !== 0 && idx % 7 === 0) {
         if (autoWrapRef.current.style.display === "none") {
           return (autoWrapRef.current.style.display = "block");
