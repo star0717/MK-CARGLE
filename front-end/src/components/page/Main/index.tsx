@@ -55,11 +55,19 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   const [schedule, setSchedule] = useState(
     `${dayjs().format("YYYY.MM.DD")} 일정`
   );
-  const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
+  const [maintenanceList, setMaintenanceList] = useState(
+    props.findResult.docs.filter(
+      (item: { status: string }) => item.status !== "r"
+    )
+  );
 
   // state초기값으로 props를 넣게 되는경우 발생하는 오류방지용
   useEffect(() => {
-    setMaintenanceList(props.findResult.docs);
+    setMaintenanceList(
+      props.findResult.docs.filter(
+        (item: { status: string }) => item.status !== "r"
+      )
+    );
   }, [props.findResult.docs]);
 
   // calendar에 넘길 props 정의
@@ -289,9 +297,9 @@ const Main: NextPage<_MainProps> = (props) => {
   const dispatch = useDispatch();
 
   const [findResult, setFindResult] = useState<FindResult<Maintenance>>(
-    props.data.docs.map((item: any) => {})
+    props.data
   );
-  console.log(props);
+
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   const [searchList, setSearchList] = useState({
