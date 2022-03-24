@@ -239,8 +239,8 @@ export const getServerSideProps: GetServerSideProps = async (
     take: 10,
   };
 
-  let params5: FindParameters = {
-    take: 5,
+  let params7: FindParameters = {
+    take: 7,
   };
 
   /** axios로 수신된 데이터 */
@@ -278,7 +278,7 @@ export const getServerSideProps: GetServerSideProps = async (
           .get(
             genApiPath(MaintenancesApiPath.maintenances, {
               findParams: {
-                ...params5,
+                ...params7,
                 sFrom: LastMonth,
                 sTo: Today,
               },

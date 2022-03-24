@@ -582,6 +582,11 @@ export const SmallButton = styled.button<any>`
   &:focus {
     ${(props) => props.kindOf === `input` && `out-line : none;`}
   }
+
+  & svg {
+    font-size: 24px;
+    margin: 0px;
+  }
 `;
 
 export const FocusButton = styled.button<any>`
@@ -1266,6 +1271,7 @@ export const TableHead = styled.ul<any>`
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
   border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
+  border-top: ${(props) => props.borderTop || ``};
   background-color: ${(props) => props.bgColor || `${props.theme.black_C}`};
   color: #fff;
   padding: ${(props) => props.padding || `0px 20px`};

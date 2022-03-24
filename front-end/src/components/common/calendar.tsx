@@ -16,6 +16,7 @@ import {
   RiArrowRightSFill,
 } from "react-icons/ri";
 import dayjs from "dayjs";
+import theme from "styles/theme";
 
 interface CalendarProps {
   schedule: string;
@@ -80,7 +81,12 @@ const Calendar: NextPage<CalendarProps> = (props) => {
     const monthTitle = localeUtils.formatMonthTitle(date, locale);
 
     return (
-      <Text className="DayPicker-Caption" title={monthTitle} fontSize={`20px`}>
+      <Text
+        className="DayPicker-Caption"
+        title={monthTitle}
+        fontSize={`20px`}
+        color={theme.basicTheme_C}
+      >
         {monthTitle}
       </Text>
     );
@@ -129,7 +135,7 @@ const Calendar: NextPage<CalendarProps> = (props) => {
   // 날짜 클릭 이벤트
   const handleDayClick = (day: any) => {
     setDay(day);
-    props.setSchedule(`${dayjs(day).format("YYYY.MM.DD")} 일정`);
+    props.setSchedule(`${dayjs(day).format("YYYY.MM.DD")}`);
   };
   return (
     <Wrapper padding={`20px`}>
