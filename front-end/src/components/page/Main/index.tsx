@@ -92,6 +92,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
         padding={`40px 0px`}
         bgImg={`url(../../../../images/mainImage.png)`}
         attachment={`scroll`}
+        shadow={theme.boxShadowDark}
       >
         <Wrapper
           padding={`20px 0px 20px`}
