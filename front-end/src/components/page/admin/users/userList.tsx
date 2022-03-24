@@ -136,7 +136,6 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
             <SearchInputWrapper
               type="text"
               value={props.filterValue}
-              placeholder="검색할 직원의 이름 또는, 전화번호를 입력하세요"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputSearchHandler(e);
               }}
@@ -150,7 +149,11 @@ const UsersList: NextPage<_pAdminUsers> = (props) => {
                 <SearchInput
                   width={`532px`}
                   padding={`0px 5px 0px 5px`}
-                  placeholder="검색할 직원의 이름 또는, 전화번호를 입력하세요"
+                  placeholder={
+                    props.searchOption === "name"
+                      ? `검색할 직원의 이름을 입력하세요.`
+                      : `검색할 직원의 전화번호를 입력하세요.`
+                  }
                   type="text"
                 />
               </Wrapper>

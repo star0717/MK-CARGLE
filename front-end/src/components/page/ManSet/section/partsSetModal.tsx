@@ -108,8 +108,12 @@ const PartsSetModal: NextPage<_pPartsSetProps> = (props) => {
     const partCodeList: string[] = [];
     for (let i = 0; i < selectPart.length; i++) {
       for (let j = 0; j < props.partSetData.partsCodes?.length; j++) {
-        if (selectPart[i].code === props.partSetData.partsCodes[j])
+        if (selectPart[i].code === props.partSetData.partsCodes[j]) {
+          setSelectPart(
+            selectPart.filter((select) => select._id !== selectPart[i]._id)
+          );
           return alert(`${selectPart[i].name}은 이미 추가된 부품입니다.`);
+        }
       }
       partCodeList.push(selectPart[i].code);
     }

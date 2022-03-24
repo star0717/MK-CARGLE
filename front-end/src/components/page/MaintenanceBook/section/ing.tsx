@@ -25,7 +25,7 @@ import {
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
-import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
+import { AiFillMinusSquare } from "react-icons/ai";
 import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
 import {
   _pMaintenanceProps,
