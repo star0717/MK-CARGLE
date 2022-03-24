@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import router, { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { BsEmojiFrownFill } from "react-icons/bs";
+import { HiOutlinePlusSm } from "react-icons/hi";
 import { GoPrimitiveDot } from "react-icons/go";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import { useDispatch } from "react-redux";
@@ -43,7 +44,8 @@ import {
   WholeWrapper,
   Wrapper,
 } from "../../styles/CommonComponents";
-import { RiArrowDropRightLine } from "react-icons/ri";
+import { RiArrowDownSLine, RiArrowDropRightLine } from "react-icons/ri";
+import { url } from "inspector";
 
 const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   const dispatch = useDispatch();
@@ -73,11 +75,31 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
 
   return (
     <WholeWrapper>
-      <Wrapper bgColor={`#8DAFCE`} padding={`40px 0px`}>
-        <Wrapper padding={`20px 0px 20px`} al={`flex-start`} width={`1200px`}>
-          <Text color={`#fff`} fontSize={`32px`}>
+      <Wrapper
+        padding={`40px 0px`}
+        bgImg={`url(../../../../images/mainImage.png)`}
+        attachment={`scroll`}
+      >
+        <Wrapper
+          padding={`20px 0px 20px`}
+          ju={`flex-start`}
+          al={`flex-end`}
+          width={`1200px`}
+          dr={`row`}
+        >
+          <Wrapper
+            width={`auto`}
+            padding={`4px 10px 8px`}
+            bgColor={theme.basicTheme_C}
+            margin={`0px 4px`}
+          >
+            <ColorSpan fontSize={`32px`} color={`#fff`}>
+              {props.tokenValue.uName}
+            </ColorSpan>
+          </Wrapper>
+          <Text color={`#fff`} fontSize={`28px`}>
             {/* 홍길동님, 반갑습니다! */}
-            {props.tokenValue.uName}님, 반갑습니다!
+            님, 반갑습니다!
           </Text>
         </Wrapper>
         <Wrapper dr={`row`} isRelative width={`1200px`} ju={`space-between`}>
@@ -114,8 +136,29 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
             radius={theme.radius}
             height={`410px`}
             shadow={theme.boxShadowDark}
+            ju={`flex-start`}
           >
-            {schedule}
+            <Text
+              padding={`20px 0px 0px`}
+              fontSize={`20px`}
+              color={theme.basicTheme_C}
+            >
+              {schedule}
+            </Text>
+            <TableWrapper minHeight={`300px`} padding={`20px 40px`}>
+              <TableHead
+                bgColor={`#f5f5f5`}
+                radius={`0px`}
+                borderTop={`1px solid #000`}
+              >
+                <TableHeadLIST color={theme.black_C}>일정표</TableHeadLIST>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableRowLIST color={theme.black_C}>내용</TableRowLIST>
+                </TableRow>
+              </TableBody>
+            </TableWrapper>
           </Wrapper>
         </Wrapper>
         <Wrapper padding={`50px 0px 30px`}>
@@ -123,10 +166,10 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
             width={`160px`}
             height={`48px`}
             kindOf={`fillDefault`}
-            radius={`48px`}
             shadow={theme.boxShadowDark}
           >
-            정비장부 <RiArrowDropRightLine />
+            정비장부
+            <RiArrowDownSLine />
           </SmallButton>
         </Wrapper>
       </Wrapper>
@@ -137,21 +180,10 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
       <Wrapper width={`1200px`} padding={`40px 0px`}>
         <TableWrapper minHeight={`275px`}>
           <TableHead>
-            <TableHeadLIST
-              width={`5%`}
-              onClick={(e: React.MouseEvent<HTMLLIElement>) => {
-                e.stopPropagation();
-              }}
-            >
-              <Checkbox kindOf={`TableCheckBox`}>
-                <CheckInput type="checkbox" />
-                <CheckMark></CheckMark>
-              </Checkbox>
-            </TableHeadLIST>
             <TableHeadLIST width={`15%`}>입고일자</TableHeadLIST>
             <TableHeadLIST width={`15%`}>차량번호</TableHeadLIST>
             <TableHeadLIST width={`11%`}>구분</TableHeadLIST>
-            <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
+            <TableHeadLIST width={`20%`}>작업내용</TableHeadLIST>
             <TableHeadLIST width={`13%`}>문서발급</TableHeadLIST>
             <TableHeadLIST width={`13%`}>국토부</TableHeadLIST>
             <TableHeadLIST width={`13%`}>정비상태</TableHeadLIST>
@@ -167,17 +199,6 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
                     );
                   }}
                 >
-                  <TableRowLIST
-                    width={`5%`}
-                    onClick={(e: React.MouseEvent<HTMLLIElement>) =>
-                      e.stopPropagation()
-                    }
-                  >
-                    <Checkbox kindOf={`TableCheckBox`}>
-                      <CheckInput type="checkbox" />
-                      <CheckMark></CheckMark>
-                    </Checkbox>
-                  </TableRowLIST>
                   <TableRowLIST width={`15%`}>
                     {dayjs(list.createdAt).format("YYYY-MM-DD")}
                   </TableRowLIST>
@@ -187,7 +208,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
                   <TableRowLIST width={`11%`}>
                     {getStrMainCustomerType(list.costomerType)}
                   </TableRowLIST>
-                  <TableRowLIST width={`15%`}>
+                  <TableRowLIST width={`20%`}>
                     {list.works?.length > 1
                       ? `${list.works[0]?.name} 외 ${list.works.length - 1}건`
                       : list.works[0]?.name}
@@ -225,7 +246,18 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
             )}
           </TableBody>
         </TableWrapper>
-        <PagenationSection {...props} />
+        {/* <PagenationSection {...props} /> */}
+        <Wrapper padding={`50px 0px 30px`}>
+          <SmallButton
+            width={`160px`}
+            height={`48px`}
+            kindOf={`fillDefault`}
+            shadow={theme.boxShadowDark}
+          >
+            신규정비등록
+            <HiOutlinePlusSm />
+          </SmallButton>
+        </Wrapper>
       </Wrapper>
     </WholeWrapper>
   );
@@ -261,7 +293,7 @@ const Main: NextPage<_MainProps> = (props) => {
   const findCompanyHandler = (page: number) => {
     const param: FindParameters = {
       page,
-      take: 5,
+      take: 7,
       filterKey: searchOption,
       filterValue: filterValue,
       useRegSearch: true,
