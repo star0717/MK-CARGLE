@@ -32,10 +32,14 @@ const Calendar: NextPage<CalendarProps> = (props) => {
     Days: { daysOfWeek: [0, 1, 2, 3, 4, 5, 6] },
   };
   const modifiersStyles = {
-    toDay: { color: "white", backgroundColor: "#314FA5" },
+    toDay: { color: "white", backgroundColor: "#8DAFCE" },
     selectDay: {
-      backgroundColor: "#8DAFCE",
-      color: "#fff",
+      color:
+        dayjs(new Date()).format("YYYY-MM-DD") ===
+        dayjs(day).format("YYYY-MM-DD")
+          ? "white"
+          : "#314FA5",
+      fontWeight: "600",
     },
     Days: {
       padding: "14px",
@@ -79,15 +83,19 @@ const Calendar: NextPage<CalendarProps> = (props) => {
 
   const caption = ({ date, className, localeUtils, locale }: any) => {
     const monthTitle = localeUtils.formatMonthTitle(date, locale);
+    const splitTitle = monthTitle.split(" ");
+    const month = splitTitle[0];
+    const year = splitTitle[1];
+    const newTitle = `${year}년 ${month}`;
 
     return (
       <Text
         className="DayPicker-Caption"
-        title={monthTitle}
+        title={newTitle}
         fontSize={`20px`}
         color={theme.basicTheme_C}
       >
-        {monthTitle}
+        {newTitle}
       </Text>
     );
     // const captionComment = localeUtils.format(caption, locale);
