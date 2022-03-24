@@ -73,6 +73,13 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
     e.preventDefault();
   };
 
+  const handleScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
+    window.scrollBy({
+      top: window.document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <WholeWrapper>
       <Wrapper
@@ -93,12 +100,20 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
             bgColor={theme.basicTheme_C}
             margin={`0px 4px`}
           >
-            <ColorSpan fontSize={`32px`} color={`#fff`}>
+            <ColorSpan
+              fontSize={`32px`}
+              color={`#fff`}
+              textShadow={`2px 2px 2px gray;`}
+              fintWeight={`500`}
+            >
               {props.tokenValue.uName}
             </ColorSpan>
           </Wrapper>
-          <Text color={`#fff`} fontSize={`28px`}>
-            {/* 홍길동님, 반갑습니다! */}
+          <Text
+            color={`#fff`}
+            fontSize={`28px`}
+            textShadow={`2px 2px 2px gray;`}
+          >
             님, 반갑습니다!
           </Text>
         </Wrapper>
@@ -167,6 +182,9 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
             height={`48px`}
             kindOf={`fillDefault`}
             shadow={theme.boxShadowDark}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              handleScroll(e);
+            }}
           >
             정비장부
             <RiArrowDownSLine />
@@ -271,8 +289,9 @@ const Main: NextPage<_MainProps> = (props) => {
   const dispatch = useDispatch();
 
   const [findResult, setFindResult] = useState<FindResult<Maintenance>>(
-    props.data
+    props.data.docs.map((item: any) => {})
   );
+  console.log(props);
   const [searchOption, setSearchOption] = useState<string>("name"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   const [searchList, setSearchList] = useState({
