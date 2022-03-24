@@ -1267,7 +1267,7 @@ export const TableHead = styled.ul<any>`
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
   border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
-  background: #343a40;
+  background-color: ${(props) => props.bgColor || `${props.theme.black_C}`};
   color: #fff;
   padding: ${(props) => props.padding || `0px 20px`};
   font-size: ${(props) => props.fontSize || `16px`};
