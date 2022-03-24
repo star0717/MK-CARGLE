@@ -239,6 +239,10 @@ export const getServerSideProps: GetServerSideProps = async (
     take: 10,
   };
 
+  let params5: FindParameters = {
+    take: 5,
+  };
+
   /** axios로 수신된 데이터 */
   let data: any;
 
@@ -267,10 +271,17 @@ export const getServerSideProps: GetServerSideProps = async (
   try {
     switch (pagePath) {
       case UseLink.MAIN:
-        const mtData: FindResult<Maintenance> = await axios
+        let Today = dayjs().toDate();
+        let LastMonth = dayjs().subtract(1, "month").toDate();
+
+        successResult.props.data = await axios
           .get(
             genApiPath(MaintenancesApiPath.maintenances, {
-              id: id,
+              findParams: {
+                ...params5,
+                sFrom: LastMonth,
+                sTo: Today,
+              },
               isServerSide: true,
             }),
             authConfig
@@ -279,9 +290,7 @@ export const getServerSideProps: GetServerSideProps = async (
             (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
               res.data
           );
-        successResult.props.data = {
-          mtData: mtData,
-        };
+
         return successResult;
 
       case UseLink.TEST:
