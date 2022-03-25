@@ -1924,6 +1924,7 @@ export const ColorSpan = styled.span<any>`
   margin: ${(props) => props.margin || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || ``};
+  text-shadow: ${(props) => props.textShadow || ``};
 `;
 
 export const SpeechBubbleLeft = styled.div<any>`
