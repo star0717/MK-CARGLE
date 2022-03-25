@@ -33,6 +33,7 @@ import {
   getStrMainStatus,
 } from "src/constants/maintenance.const";
 import theme from "styles/theme";
+import { useResizeDetector } from "react-resize-detector";
 
 const TestPage: NextPage<any> = () => {
   /*********************************************************************
@@ -64,12 +65,16 @@ const TestPage: NextPage<any> = () => {
   };
 
   const handleScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
-    window.scrollBy({
-      top: window.document.documentElement.scrollHeight,
+    // window.scrollBy({
+    //   top: window.document.documentElement.scrollHeight,
+    //   behavior: "smooth",
+    // });
+    ref.current.scrollIntoView({
       behavior: "smooth",
     });
   };
 
+  const { width, height, ref } = useResizeDetector();
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
@@ -135,7 +140,7 @@ const TestPage: NextPage<any> = () => {
           </SmallButton>
         </Wrapper>
       </Wrapper>
-      <CommonTitleWrapper padding={`100px 0px 0px`}>
+      <CommonTitleWrapper padding={`100px 0px 0px`} ref={ref}>
         <CommonTitle>정비장부</CommonTitle>
         <CommonSubTitle></CommonSubTitle>
       </CommonTitleWrapper>
