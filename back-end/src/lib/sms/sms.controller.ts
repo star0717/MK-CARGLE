@@ -5,7 +5,7 @@ import { AuthTokenInfo } from 'src/models/auth.entity';
 import { SmsService } from './sms.service';
 import { UserAuthority } from 'src/constants/model.const';
 
-@ApiTags('SMS 알림톡')
+@ApiTags('SMS 알림톡 API')
 @Controller('sms')
 export class SmsController {
   constructor(private readonly smsService: SmsService) {}

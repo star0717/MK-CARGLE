@@ -11,7 +11,7 @@ interface payResult {
   message: string;
 }
 
-@ApiTags('결제모듈')
+@ApiTags('결제모듈 API')
 @Controller('payment')
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
