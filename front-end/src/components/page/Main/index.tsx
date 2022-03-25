@@ -75,7 +75,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   const handleScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
     window.scrollBy({
       // top: window.document.documentElement.scrollHeight,
-      top: ref.current,
+      top: ref.current.scrollIntoView(),
       behavior: "smooth",
     });
   };
