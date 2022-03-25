@@ -52,6 +52,8 @@ import {
   _iMaintenancesOne,
   _iEstimate,
   _iStatement,
+  _iPayment,
+  _iSms,
 } from "../interfaces";
 
 import {
@@ -74,6 +76,7 @@ import {
 } from "src/models/maintenance.entity";
 import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";
+import { RequestPayResponse } from "iamport-typings";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1390,5 +1393,64 @@ export async function _aGetStatement(id: string) {
     type: ActionAPIs.USER_API,
     payload: req,
   };
+  return result;
+}
+
+/**
+ * 결제모듈 처리완료 api
+ * @param data
+ * @returns
+ */
+export async function _aPostPaymentComplete(data: any) {
+  const req: any = await axios
+    .post("/api/payment/complete", data)
+    .then((res: AxiosResponse<any, any>): any => {
+      return res.data;
+    });
+
+  const result: _iPayment = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 결제 조회
+ * @param id
+ * @returns
+ */
+export async function _aGetPaymentData(id: string) {
+  const req: RequestPayResponse = await axios
+    .get(`/api/payment/${id}`)
+    .then(
+      (res: AxiosResponse<RequestPayResponse, string>): RequestPayResponse => {
+        return res.data;
+      }
+    );
+
+  const result: _iPayment = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * SMS 알림톡 api
+ * @returns
+ */
+export async function _aPostSms() {
+  const req: any = await axios
+    .post("/api/sms/send")
+    .then((res: AxiosResponse<unknown, any>): any => {
+      return res.data;
+    });
+
+  const result: _iSms = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+
   return result;
 }

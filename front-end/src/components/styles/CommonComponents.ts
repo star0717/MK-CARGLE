@@ -177,6 +177,7 @@ export const CommonTitleWrapper = styled.div<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
   padding: ${(props) => props.padding || `0px 0px 50px 0px`};
+  margin: ${(props) => props.margin || ``};
   padding-bottom: ${(props) => props.paddingBottom};
   color: ${(props) => props.color};
   text-align: ${(props) => props.textAlign || `center`};
@@ -313,8 +314,7 @@ export const Text = styled.p<any>`
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
   text-decoration: ${(props) => props.decoration};
   text-overflow: ${(props) => props.textOverflow || ``};
-
-  & svg {
+  text-shadow: ${(props) => props.textShadow || ``} & svg {
     color: ${(props) => props.color};
     margin-top: ${(props) => props.marginTop || `4px`};
     margin-bottom: ${(props) => props.marginBottom};
@@ -581,6 +581,11 @@ export const SmallButton = styled.button<any>`
 
   &:focus {
     ${(props) => props.kindOf === `input` && `out-line : none;`}
+  }
+
+  & svg {
+    font-size: 24px;
+    margin: 0px;
   }
 `;
 
@@ -1266,6 +1271,7 @@ export const TableHead = styled.ul<any>`
   box-shadow: ${(props) => props.shadow};
   margin: ${(props) => props.margin || `0px`};
   border-radius: ${(props) => props.radius || `8px 8px 0px 0px`};
+  border-top: ${(props) => props.borderTop || ``};
   background-color: ${(props) => props.bgColor || `${props.theme.black_C}`};
   color: #fff;
   padding: ${(props) => props.padding || `0px 20px`};
@@ -1919,6 +1925,7 @@ export const ColorSpan = styled.span<any>`
   margin: ${(props) => props.margin || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || ``};
+  text-shadow: ${(props) => props.textShadow || ``};
 `;
 
 export const SpeechBubbleLeft = styled.div<any>`

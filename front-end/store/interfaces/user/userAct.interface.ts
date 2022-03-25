@@ -6,10 +6,10 @@ import { PartsSet } from "src/models/partsset.entity";
 import { Statement } from "src/models/statement.entity";
 import { SignUpInfo } from "../../../src/models/auth.entity";
 import { DeleteResult, FindResult } from "../../../src/models/base.entity";
-import { Company } from "../../../src/models/company.entity";
-import { Part } from "../../../src/models/part.entity";
-
-import { User } from "../../../src/models/user.entity";
+import { Company } from "src/models/company.entity";
+import { Part } from "src/models/part.entity";
+import { User } from "src/models/user.entity";
+import { RequestPayResponse } from "iamport-typings";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
@@ -456,6 +456,18 @@ export class _iStatement implements baseActionInterface {
   payload: Statement;
 }
 
+/** 결제모듈 인터페이스 */
+export class _iPayment implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: RequestPayResponse;
+}
+
+/** SMS 전송 */
+export class _iSms implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: any;
+}
+
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
@@ -479,4 +491,6 @@ export type ActionInterfaces =
   | _iMaintenances
   | _iMaintenancesOne
   | _iEstimate
-  | _iStatement;
+  | _iStatement
+  | _iPayment
+  | _iSms;

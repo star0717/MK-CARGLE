@@ -1,12 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
-import { Wrapper, Text } from "src/components/styles/CommonComponents";
+import {
+  Wrapper,
+  Text,
+  Checkbox,
+  CheckInput,
+  CheckMark,
+  ColorSpan,
+  CommonSubTitle,
+  CommonTitle,
+  CommonTitleWrapper,
+  SmallButton,
+  TableBody,
+  TableHead,
+  TableHeadLIST,
+  TableRow,
+  TableRowLIST,
+  TableWrapper,
+  WholeWrapper,
+} from "src/components/styles/CommonComponents";
+import dayjs from "dayjs";
+import router from "next/router";
+import { BsEmojiFrownFill } from "react-icons/bs";
+import { GoPrimitiveDot } from "react-icons/go";
+import { RiArrowDropRightLine } from "react-icons/ri";
+import Calendar from "src/components/common/calendar";
+import { PagenationSection } from "src/components/common/sections";
+import maintenanceList from "src/components/page/MaintenanceBook/section/maintenanceList";
+import { UseLink } from "src/configure/router.entity";
+import {
+  getStrMainCustomerType,
+  getStrMainStatus,
+} from "src/constants/maintenance.const";
+import theme from "styles/theme";
+import { useResizeDetector } from "react-resize-detector";
 
-const TestPage: NextPage<any> = (props) => {
+const TestPage: NextPage<any> = () => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  const [schedule, setSchedule] = useState(
+    `${dayjs().format("YYYY.MM.DD")} 일정`
+  );
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -18,961 +53,191 @@ const TestPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
+  // calendar에 넘길 props 정의
+  const calendarProps = {
+    schedule,
+    setSchedule,
+  };
 
+  // 파일 업로드
+  const onStampUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
+  const handleScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // window.scrollBy({
+    //   top: window.document.documentElement.scrollHeight,
+    //   behavior: "smooth",
+    // });
+    ref.current.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
+  const { width, height, ref } = useResizeDetector();
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
   return (
-    <>
-      <Wrapper padding={`0px`}>
-        <Wrapper
-          width={`49.58333em`}
-          height={`70.08334em`}
-          margin={`0 auto`}
-          padding={`0px`}
-          ju={`flex-start`}
-          al={`flex-start`}
-        >
-          <Wrapper ju={`flex-start`} al={`flex-start`} dr={`row`}>
-            <Text fontSize={`0.67em`} fontWeight={`400`}>
-              ■ 자동차관리법 시행규칙 [별지 제89호의2 서식]&nbsp;
-            </Text>
-            <Text fontSize={`0.67em`} color={`blue`} fontWeight={`400`}>
-              &lt;개정 2014.10.6.&gt;
-            </Text>
-          </Wrapper>
-          <Wrapper padding={`10px 0px`}>
-            <Text fontSize={`24px`} fontWeight={`600`}>
-              자동차점검 &#183; 정비견적서
-            </Text>
-          </Wrapper>
-          <Wrapper dr={`row`} ju={`flex-end`}>
-            <Text fontSize={`0.83em`} fontWeight={`400`}>
-              일련번호:
-            </Text>
-            <Text
-              fontSize={`0.83em`}
-              fontWeight={`400`}
-              width={`160px`}
-              textAlign={`right`}
-            >
-              {/* 일련번호 입력하세요 */}
-              20150128001008
-            </Text>
-          </Wrapper>
-
-          {/* 차량소유자 정보 시작 */}
-          <Wrapper dr={`row`} border={`2px solid #000`} height={`120px`}>
-            <Wrapper
-              width={`10%`}
-              borderRight={` 1px solid #ccc`}
-              height={`100%`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}>
-                차량
-                <br />
-                소유자
-              </Text>
-            </Wrapper>
-            <Wrapper
-              borderRight={` 1px solid #ccc`}
-              height={`100%`}
-              width={`12%`}
-            >
-              <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  등록번호
-                </Text>
-              </Wrapper>
-              <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  등록년월일
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              borderRight={` 1px solid #ccc`}
-              height={`100%`}
-              width={`28%`}
-            >
-              <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 등록번호 입력하세용 */}12가1234
-                </Text>
-              </Wrapper>
-              <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 등록년월일 입력하세용 */}2018년 08월 15일
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper height={`120px`} width={`60%`}>
-              <Wrapper
-                dr={`row`}
-                height={`50%`}
-                borderBottom={`1px solid #ccc`}
-              >
-                <Wrapper
-                  width={`20%`}
-                  borderRight={` 1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    차명
-                    <br />
-                    (차종)
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`30%`}
-                  borderRight={` 1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 차종입력칸이용 */} 그렌저 TG Q270
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`20%`}
-                  borderRight={` 1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    주행거리
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`30%`}
-                  ju={`space-between`}
-                  dr={`row`}
-                  padding={`0px 10px`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 주행거리 입력~~ */} 185,550
-                  </Text>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    km
-                  </Text>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper dr={`row`} height={`50%`}>
-                <Wrapper
-                  width={`20%`}
-                  borderRight={` 1px solid #ccc`}
-                  height={`100%`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    차대번호
-                  </Text>
-                </Wrapper>
-                <Wrapper width={`80%`}>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 차대번호 입력하세용~ */} KGSDGSDGSDGSDG
-                  </Text>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
-          </Wrapper>
-          {/* 차량소유자 정보 끝 */}
-
-          {/* 정비사업자 정보 시작 */}
+    <WholeWrapper>
+      <Wrapper bgColor={`#8DAFCE`} padding={`40px 0px`}>
+        <Wrapper padding={`20px 0px 20px`} al={`flex-start`} width={`1200px`}>
+          <Text color={`#fff`} fontSize={`32px`}>
+            {/* 홍길동님, 반갑습니다! */}
+            {/* {props.tokenValue.uName}님, 반갑습니다! */}
+          </Text>
+        </Wrapper>
+        <Wrapper dr={`row`} isRelative width={`1200px`} ju={`space-between`}>
           <Wrapper
-            dr={`row`}
-            border={`2px solid #000`}
-            borderTop={`none`}
-            height={`180px`}
+            width={`410px`}
+            border={theme.border}
+            bgColor={`#fff`}
+            height={`410px`}
+            radius={theme.radius}
+            shadow={theme.boxShadowDark}
           >
-            <Wrapper
-              width={`10%`}
-              borderRight={` 1px solid #ccc`}
-              height={`100%`}
-            >
-              <Text fontSize={`0.83em`} fontWeight={`400`}>
-                정비
-                <br />
-                사업자
-              </Text>
-            </Wrapper>
-            <Wrapper height={`100%`}>
-              <Wrapper height={`25%`} dr={`row`}>
-                <Wrapper
-                  width={`12%`}
-                  height={`100%`}
-                  borderRight={`1px solid #ccc`}
-                  borderBottom={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    사업자
-                    <br />
-                    등록번호
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`28%`}
-                  height={`100%`}
-                  borderRight={`1px solid #ccc`}
-                  borderBottom={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 사업자등록번호 입력 */}33-888-00960
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`20%`}
-                  height={`100%`}
-                  borderRight={`1px solid #ccc`}
-                  borderBottom={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    정비업 등록번호
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`40%`}
-                  height={`100%`}
-                  borderRight={`1px solid #ccc`}
-                  borderBottom={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 정비업 등록번호 입력이용 */} GSDGSDGSDGSDGS
-                  </Text>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper height={`25%`} dr={`row`}>
-                <Wrapper
-                  width={`12%`}
-                  height={`100%`}
-                  borderRight={`1px solid #ccc`}
-                  borderBottom={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    업체명 및
-                    <br />
-                    대표자
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`63%`}
-                  height={`100%`}
-                  borderBottom={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 댕댕나라 윤초코 */} 주식회사 엠케이 변무영
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  height={`100%`}
-                  borderBottom={`1px solid #ccc`}
-                  al={`flex-start`}
-                >
-                  <Text
-                    fontSize={`0.67em`}
-                    fontWeight={`400`}
-                    color={`#9d9d9d`}
-                  >
-                    (서명 또는 인)
-                  </Text>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper height={`25%`} dr={`row`}>
-                <Wrapper
-                  width={`12%`}
-                  height={`100%`}
-                  borderRight={`1px solid #ccc`}
-                  borderBottom={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    주소
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`63%`}
-                  height={`100%`}
-                  borderBottom={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    {/* 댕댕나라 멍멍구 왈왈동 */} 대전광역시 유성구 은구비로8
-                    보광빌딩 402호(MK)
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`25%`}
-                  height={`100%`}
-                  borderBottom={`1px solid #ccc`}
-                  al={`flex-end`}
-                  ju={`flex-end`}
-                  padding={`4px 6px`}
-                  dr={`row`}
-                >
-                  <Text fontSize={`0.75em`} fontWeight={`400`} width={`100px`}>
-                    (전화번호:&nbsp;
-                  </Text>
-                  <Text fontSize={`0.75em`} fontWeight={`400`} width={`120px`}>
-                    1644-3486
-                  </Text>
-                  <Text fontSize={`0.75em`} fontWeight={`400`}>
-                    )
-                  </Text>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper height={`25%`} dr={`row`}>
-                <Wrapper
-                  width={`12%`}
-                  height={`100%`}
-                  borderRight={`1px solid #ccc`}
-                  borderBottom={`1px solid #ccc`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    견적구분
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`18%`}
-                  height={`100%`}
-                  borderBottom={`1px solid #ccc`}
-                  al={`flex-start`}
-                  padding={`0px 0px 0px 10px`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    [&nbsp;&nbsp;]보험
-                  </Text>
-                </Wrapper>
-                <Wrapper
-                  width={`70%`}
-                  height={`100%`}
-                  borderBottom={`1px solid #ccc`}
-                  al={`flex-start`}
-                  padding={`0px 0px 0px 10px`}
-                >
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    [&nbsp;&nbsp;]일반
-                  </Text>
-                </Wrapper>
-              </Wrapper>
-            </Wrapper>
+            <Calendar {...calendarProps} />
           </Wrapper>
-          {/* 정비사업자 정보 끝 */}
-          <Wrapper al={`flex-start`} padding={`2px`}>
-            <Text fontSize={`0.92em`} fontWeight={`400`}>
-              아래와 같이 견적합니다
-            </Text>
-          </Wrapper>
-
-          {/* 견적내용 시작 */}
-          <Wrapper border={`2px solid #000`} height={`auto`}>
-            <Wrapper dr={`row`} height={`36px`} borderBottom={`1px solid #ccc`}>
-              <Wrapper
-                width={`30%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  견적내용
-                </Text>
-              </Wrapper>
-              <Wrapper width={`40%`} borderRight={`1px solid #ccc`}>
-                <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
-                  <Text fontSize={`0.83em`} fontWeight={`400`}>
-                    부품내역
-                  </Text>
-                </Wrapper>
-                <Wrapper dr={`row`} height={`50%`}>
-                  <Wrapper width={`25%`} borderRight={`1px solid #ccc`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      코드
-                    </Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`} borderRight={`1px solid #ccc`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      수량
-                    </Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`} borderRight={`1px solid #ccc`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      단가
-                    </Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      계
-                    </Text>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper
-                width={`15%`}
-                height={`36px`}
-                borderRight={`1px solid #ccc`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  공임
-                </Text>
-              </Wrapper>
-              <Wrapper width={`15%`} height={`100%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  합계
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
-              <Wrapper
-                width={`30%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/* 견적내용 입력하세요 */} 디젤 분사 펌프 교환
-                </Text>
-              </Wrapper>
-              <Wrapper
-                width={`40%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Wrapper dr={`row`} height={`100%`}>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {/* 코드 입력하세요 */} A
-                    </Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {/*수량 입력하세요 */}3
-                    </Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {/*단가 입력하세요*/}15,000,000
-                    </Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`} height={`100%`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}>
-                      {/*계 입력하세요*/} 45,000,000
-                    </Text>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper
-                width={`15%`}
-                height={`100%`}
-                borderRight={`1px solid #ccc`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/*공임 입력하세요*/}14,000,000
-                </Text>
-              </Wrapper>
-              <Wrapper width={`15%`} height={`100%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/*합계 입력하세요*/}18,500,000
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
-              <Wrapper
-                width={`30%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper
-                width={`40%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Wrapper dr={`row`} height={`100%`}>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`} height={`100%`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper
-                width={`15%`}
-                height={`100%`}
-                borderRight={`1px solid #ccc`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper width={`15%`} height={`100%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
-              <Wrapper
-                width={`30%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper
-                width={`40%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Wrapper dr={`row`} height={`100%`}>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`} height={`100%`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper
-                width={`15%`}
-                height={`100%`}
-                borderRight={`1px solid #ccc`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper width={`15%`} height={`100%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
-              <Wrapper
-                width={`30%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper
-                width={`40%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Wrapper dr={`row`} height={`100%`}>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`} height={`100%`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper
-                width={`15%`}
-                height={`100%`}
-                borderRight={`1px solid #ccc`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper width={`15%`} height={`100%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper dr={`row`} height={`28px`} borderBottom={`1px solid #ccc`}>
-              <Wrapper
-                width={`30%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper
-                width={`40%`}
-                borderRight={`1px solid #ccc`}
-                height={`100%`}
-              >
-                <Wrapper dr={`row`} height={`100%`}>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper
-                    width={`25%`}
-                    borderRight={`1px solid #ccc`}
-                    height={`100%`}
-                  >
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                  <Wrapper width={`25%`} height={`100%`}>
-                    <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-                  </Wrapper>
-                </Wrapper>
-              </Wrapper>
-              <Wrapper
-                width={`15%`}
-                height={`100%`}
-                borderRight={`1px solid #ccc`}
-              >
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-              <Wrapper width={`15%`} height={`100%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}></Text>
-              </Wrapper>
-            </Wrapper>
-          </Wrapper>
-          {/* 견적내용 끝 */}
-
-          {/* 보험/일반 구분 시작 */}
+          {/* <Wrapper width={`10%`}> */}
+          {/* <SmallButton
+                  type="button"
+                  width={`40px`}
+                  height={`40px`}
+                  kindOf={`default`}
+                  fontSize={`40px`}
+                  radius={`40px`}
+                  onClick={() => {
+                    // setRegisterOpen(!registerOpen);
+                  }}
+                > */}
+          {/* {registerOpen ? <MdArrowLeft /> : <MdArrowRight />} */}
+          {/* </SmallButton>
+              </Wrapper> */}
+          {/* {registerOpen && ( */}
           <Wrapper
-            dr={`row`}
-            border={`2px solid #000`}
-            borderTop={`none`}
-            height={`54px`}
+            width={`60%`}
+            border={theme.border}
+            bgColor={`#fff`}
+            radius={theme.radius}
+            height={`410px`}
+            shadow={theme.boxShadowDark}
           >
-            <Wrapper
-              width={`17%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  구분(보험&#183;일반)
-                </Text>
-              </Wrapper>
-              <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/*구분 입력하세요*/}일반
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`16%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  부품
-                </Text>
-              </Wrapper>
-              <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/*부품 합계 입력하세요*/}800,000,000
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`16%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  공임
-                </Text>
-              </Wrapper>
-              <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/*공입 합계 입력하세요*/}450,000,000
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`17%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  계
-                </Text>
-              </Wrapper>
-              <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/*총계 입력하세요*/}999,999,999
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`17%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  부가가치세
-                </Text>
-              </Wrapper>
-              <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/*부가 가치세 입력하세요*/}999,999,999
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`17%`}
-              height={`100%`}
-              borderRight={`1px solid #ccc`}
-            >
-              <Wrapper height={`50%`} borderBottom={`1px solid #ccc`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  총액
-                </Text>
-              </Wrapper>
-              <Wrapper height={`50%`}>
-                <Text fontSize={`0.83em`} fontWeight={`400`}>
-                  {/*총액 입력하세요!*/} 999,999,999
-                </Text>
-              </Wrapper>
-            </Wrapper>
-          </Wrapper>
-          {/* 보험/일반 구분 끝 */}
-          <Wrapper al={`flex-start`} padding={`2px`}>
-            <Text fontSize={`0.92em`} fontWeight={`400`}>
-              「자동차관리법」 제58조제4항 및 같은 법 시행규칙 제134조제2항에
-              따라 위와 같이 발급합니다
-            </Text>
-          </Wrapper>
-          <Wrapper ju={`flex-end`} padding={`14px 0px`} dr={`row`}>
-            <Text
-              fontSize={`0.75em`}
-              textAlign={`right`}
-              fontWeight={`400`}
-              width={`80px`}
-            >
-              {/* 연도 */}2022
-            </Text>
-            <Text
-              fontSize={`0.75em`}
-              textAlign={`right`}
-              fontWeight={`400`}
-              width={`20px`}
-            >
-              년
-            </Text>
-            <Text
-              fontSize={`0.75em`}
-              textAlign={`right`}
-              fontWeight={`400`}
-              width={`40px`}
-            >
-              {/* 월 */}03
-            </Text>
-            <Text
-              fontSize={`0.75em`}
-              textAlign={`right`}
-              fontWeight={`400`}
-              width={`20px`}
-            >
-              월
-            </Text>
-            <Text
-              fontSize={`0.75em`}
-              textAlign={`right`}
-              fontWeight={`400`}
-              width={`40px`}
-            >
-              {/* 일 */}03
-            </Text>
-            <Text
-              fontSize={`0.75em`}
-              textAlign={`right`}
-              fontWeight={`400`}
-              width={`20px`}
-            >
-              일
-            </Text>
-          </Wrapper>
-          <Wrapper al={`flex-end`}>
-            <Wrapper
-              width={`60%`}
-              ju={`space-between`}
-              padding={`0px 20px`}
-              al={`flex-end`}
-              dr={`row`}
-            >
-              <Wrapper width={`20%`} al={`flex-end`}>
-                <Text
-                  textAlign={`right`}
-                  fontSize={`0.83em`}
-                  fontWeight={`400`}
-                >
-                  작성자
-                </Text>
-              </Wrapper>
-              <Wrapper width={`30%`} al={`flex-start`}>
-                <Text
-                  textAlign={`right`}
-                  fontSize={`0.83em`}
-                  fontWeight={`400`}
-                  padding={`0px 16px`}
-                >
-                  {/* 작성자 입력하세용 */}
-                  윤별
-                </Text>
-              </Wrapper>
-              <Wrapper width={`50%`} al={`flex-end`}>
-                <Text
-                  fontSize={`0.67em`}
-                  fontWeight={`400`}
-                  color={`#9d9d9d`}
-                  textAlign={`right`}
-                >
-                  (서명 또는 인)
-                </Text>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper
-              width={`60%`}
-              ju={`space-between`}
-              padding={`0px 20px`}
-              al={`flex-end`}
-              dr={`row`}
-            >
-              <Wrapper width={`20%`} al={`flex-end`}>
-                <Text
-                  textAlign={`right`}
-                  fontSize={`0.83em`}
-                  fontWeight={`400`}
-                >
-                  대표이사
-                </Text>
-              </Wrapper>
-              <Wrapper width={`30%`} al={`flex-start`}>
-                <Text
-                  textAlign={`right`}
-                  fontSize={`0.83em`}
-                  fontWeight={`400`}
-                  padding={`0px 16px`}
-                >
-                  {/* 대표이사 입력하세용 */}
-                  변무영
-                </Text>
-              </Wrapper>
-              <Wrapper width={`50%`} al={`flex-end`}>
-                <Text
-                  fontSize={`0.67em`}
-                  fontWeight={`400`}
-                  color={`#9d9d9d`}
-                  textAlign={`right`}
-                >
-                  (서명 또는 인)
-                </Text>
-              </Wrapper>
-            </Wrapper>
-          </Wrapper>
-          <Wrapper
-            bgColor={`#c4c4c4`}
-            padding={`2px`}
-            margin={`20px 0px 0px`}
-            borderTop={`2px solid #575757`}
-          >
-            <Text fontSize={`0.83em`} fontWeight={`400`}>
-              안내사항
-            </Text>
-          </Wrapper>
-          <Wrapper
-            borderBottom={`1px solid #ccc`}
-            padding={`2px 8px`}
-            al={`flex-start`}
-          >
-            <Text fontSize={`0.75em`} textAlign={`left`} fontWeight={`400`}>
-              1.견적요금은 교통사고 등의 처리를 목적으로 견적서를 발행한 경우에
-              청구가 가능합니다.
-            </Text>
-            <Text fontSize={`0.75em`} textAlign={`left`} fontWeight={`400`}>
-              2.본 견적서는 교부일로부터 1개월간 유효합니다.
-            </Text>
-            <Text fontSize={`0.75em`} textAlign={`left`} fontWeight={`400`}>
-              3.본 견적서에 포함되지 아니한 부품을 추가 시에는 소비자의 동의를
-              받아야 하며, 정비의뢰자는 동의한 부품 및 <br />
-              &nbsp;&nbsp;&nbsp;작업부분만 금액을 지불합니다.
-            </Text>
-            <Text fontSize={`0.75em`} textAlign={`left`} fontWeight={`400`}>
-              4.공급자의 직인이 없는 것은 무효로 합니다.
-            </Text>
-            <Text fontSize={`0.75em`} textAlign={`left`} fontWeight={`400`}>
-              5.부품가는 견적일자 기준입니다.
-            </Text>
-            <Text fontSize={`0.75em`} textAlign={`left`} fontWeight={`400`}>
-              6.본 견적서는 2부를 작성, 정비의뢰자에게 1부를 교부하고,
-              정비업자는 1부를 1년간 문서 또는 전산자료로 <br />
-              &nbsp;&nbsp;&nbsp;보관하여야 합니다.
-            </Text>
-          </Wrapper>
-          <Wrapper al={`flex-end`} padding={`2px`}>
-            <Text fontSize={`0.67em`} fontWeight={`400`}>
-              210mm×297mm[백상지 80g/㎡]
-            </Text>
+            {schedule}
           </Wrapper>
         </Wrapper>
+        <Wrapper padding={`50px 0px 30px`}>
+          <SmallButton
+            width={`160px`}
+            height={`48px`}
+            kindOf={`fillDefault`}
+            radius={`48px`}
+            shadow={theme.boxShadowDark}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              handleScroll(e);
+            }}
+          >
+            정비장부 <RiArrowDropRightLine />
+          </SmallButton>
+        </Wrapper>
       </Wrapper>
-    </>
+      <CommonTitleWrapper padding={`100px 0px 0px`} ref={ref}>
+        <CommonTitle>정비장부</CommonTitle>
+        <CommonSubTitle></CommonSubTitle>
+      </CommonTitleWrapper>
+      <Wrapper width={`1200px`} padding={`40px 0px`}>
+        <TableWrapper minHeight={`275px`}>
+          <TableHead>
+            <TableHeadLIST
+              width={`5%`}
+              onClick={(e: React.MouseEvent<HTMLLIElement>) => {
+                e.stopPropagation();
+              }}
+            >
+              <Checkbox kindOf={`TableCheckBox`}>
+                <CheckInput type="checkbox" />
+                <CheckMark></CheckMark>
+              </Checkbox>
+            </TableHeadLIST>
+            <TableHeadLIST width={`15%`}>입고일자</TableHeadLIST>
+            <TableHeadLIST width={`15%`}>차량번호</TableHeadLIST>
+            <TableHeadLIST width={`11%`}>구분</TableHeadLIST>
+            <TableHeadLIST width={`15%`}>작업내용</TableHeadLIST>
+            <TableHeadLIST width={`13%`}>문서발급</TableHeadLIST>
+            <TableHeadLIST width={`13%`}>국토부</TableHeadLIST>
+            <TableHeadLIST width={`13%`}>정비상태</TableHeadLIST>
+          </TableHead>
+          <TableBody>
+            {/* {props.data.totalDocs > 0 ? (
+              maintenanceList?.map((list: any) => (
+                <TableRow
+                  key={list._id}
+                  onClick={() => {
+                    router.push(
+                      `${UseLink.MAINTENANCE_BOOK}?id=${list._id}&step=${list.status}`
+                    );
+                  }}
+                >
+                  <TableRowLIST
+                    width={`5%`}
+                    onClick={(e: React.MouseEvent<HTMLLIElement>) =>
+                      e.stopPropagation()
+                    }
+                  >
+                    <Checkbox kindOf={`TableCheckBox`}>
+                      <CheckInput type="checkbox" />
+                      <CheckMark></CheckMark>
+                    </Checkbox>
+                  </TableRowLIST>
+                  <TableRowLIST width={`15%`}>
+                    {dayjs(list.createdAt).format("YYYY-MM-DD")}
+                  </TableRowLIST>
+                  <TableRowLIST width={`15%`}>
+                    {list.car.regNumber}
+                  </TableRowLIST>
+                  <TableRowLIST width={`11%`}>
+                    {getStrMainCustomerType(list.costomerType)}
+                  </TableRowLIST>
+                  <TableRowLIST width={`15%`}>
+                    {list.works?.length > 1
+                      ? `${list.works[0]?.name} 외 ${list.works.length - 1}건`
+                      : list.works[0]?.name}
+                  </TableRowLIST>
+                  <TableRowLIST width={`13%`}>
+                    {list?.estimate ? (
+                      <Wrapper dr={`row`} width={`auto`}>
+                        <ColorSpan color={`#51b351`} margin={`4px 0px 0px`}>
+                          <GoPrimitiveDot />
+                        </ColorSpan>
+                        발급완료
+                      </Wrapper>
+                    ) : (
+                      <Wrapper dr={`row`} width={`auto`}>
+                        <ColorSpan color={`#d6263b`} margin={`4px 0px 0px`}>
+                          <GoPrimitiveDot />
+                        </ColorSpan>
+                        미발급
+                      </Wrapper>
+                    )}
+                  </TableRowLIST>
+                  <TableRowLIST width={`13%`}>{"api준비중"}</TableRowLIST>
+                  <TableRowLIST width={`13%`}>
+                    {getStrMainStatus(list.status)}
+                  </TableRowLIST>
+                </TableRow>
+              ))
+            ) : (
+              <Wrapper minHeight={`445px`}>
+                <Text fontSize={`48px`} color={`#c4c4c4`}>
+                  <BsEmojiFrownFill />
+                </Text>
+                <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
+              </Wrapper>
+            )} */}
+          </TableBody>
+        </TableWrapper>
+        {/* <PagenationSection {...props} /> */}
+      </Wrapper>
+    </WholeWrapper>
   );
 };
 
