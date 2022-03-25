@@ -92,3 +92,115 @@ next.js 기반인 front-end의 경우 백그라운드 실행을 해도 포트가
 lsof -i TCP:3000
 kill -9 pid번호
 ```
+
+### BeansTalk의 Docker 이미지 배포
+
+기본적인 Docker의 개념과 사용법은 다음 포스팅을 참고 한다.
+https://here4you.tistory.com/search/docker
+
+아마존 리눅스 Docker 이미지 당기기
+
+```
+sudo docker pull amazonlinux
+Using default tag: latest
+latest: Pulling from library/amazonlinux
+20e1cc2336fb: Pull complete
+Digest: sha256:b33b787cdb0e82495d2dc115745f68c7cd8d2585d9d83812fdc183ad39d1b753
+Status: Downloaded newer image for amazonlinux:latest
+docker.io/library/amazonlinux:latest
+dev@dev:~$
+```
+
+아마존 리눅스 컨테이너 생성
+
+```
+sudo docker run -it -p 80:80 --name n2server amazonlinux
+bash-4.2#
+```
+
+sudo 명령어 설치
+
+```
+yum install sudo
+```
+
+패키지 업데이트
+
+- amazonlinux는 apt-get이 아닌 yum을 통해 패키지를 관리한다.
+
+```
+yum update
+Loaded plugins: ovl, priorities
+amzn2-core                                                                                                                                                                                   | 3.7 kB  00:00:00
+(1/3): amzn2-core/2/x86_64/group_gz                                                                                                                                                          | 2.5 kB  00:00:00
+(2/3): amzn2-core/2/x86_64/updateinfo                                                                                                                                                        | 452 kB  00:00:04
+(3/3): amzn2-core/2/x86_64/primary_db                                                                                                                                                        |  60 MB  00:00:05
+No packages marked for update
+bash-4.2#
+```
+
+패키지의 압축 해제를 위해 tar와 gzip 설치
+
+```
+yum install tar gzip
+```
+
+nvm(Node Version Manage) 설치
+
+- nvm을 설치하면 npm도 같이 설치된다.
+
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install node
+```
+
+node 설치 확인
+
+```
+bash-4.2# node -e "console.log('Running Node.js ' + process.version)"
+Running Node.js v17.8.0
+bash-4.2#
+```
+
+n2server 개발용 node 버전 설치
+
+```
+nvm install 16.13.2
+```
+
+next.js와 nestjs 설치
+
+```
+npm i npx -g --force
+npm i create-next-app -g
+npm i -g @nestjs/cli
+```
+
+Git 설치
+
+```
+yum install git
+```
+
+github 연결을 위핸 ssh 키 생성
+
+```
+ssh-keygen -t rsa -b 4096 -C "mk@mklc.co.kr"
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
+```
+
+ssh 키 확인
+
+```
+bash-4.2# cat /root/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDDU7uaugfW+5caH+yQkb6yqe/jWUYJh36y+I2XFcK6cdbHVuqG1eG2HvVlrAdHwG0/JmSEdtE2i8+itsrxD/c2NycSzbHUzq7ZbwB5Ntn/+/MLSZadyZisr5YY0qZJEvOk3QJ/qy0LvqAvXMwoEfVUOQfimWs1yqDtw5O4TmVcBmSwr5cqmJe5xoxVFZNP+I79rb0fmXeNc21htXPH+jQZ4DJoezr9fnv+nlPK4KBttom7pj7dFQfS0Lm4PA+YldIxJ8SExMyUQMMchfHyo03FBzJXSwks7pOPRZ98CmaspRGtLbeDEoJbcW9DUN8qG1G2quA3GPnAnzTQZGvQf/eIeXFjxZhoFXXOtzxHWSPetpMICEo/S+ybW1rKo/+2GStqdfpD988xg04kI+JQDogvvpbX6ww+Fz4cOI5YRgrxpy8EEy/GfKAC8Kemc6IUCduhvOw/Hmvk60zQJ9njNXnDIeQpNLSE/w4XrOINICmA8oPUM2TljBII23/bh4Eg2pZnCh1sPU+MJK5zcKNDAb0L+th7iMFmLeVcZ9lzRoYagBG9x4AH48DSDsILUHXGjOOj3OAb/cnT8dh52ie/99d2xlKPmOYkiTAhv0SIm+di6+GPyFb2E6Z3c+BpYmJFOAGNWHzptdwQ4WV/Dq6tkJOvY13Y9Q9tQSqW2mvjqCnFgQ== mk@mklc.co.kr
+bash-4.2#
+```
+
+n2server 소스 클론
+
+```
+git clone git@github.com:ByunMooYoung/n2server.git
+```
