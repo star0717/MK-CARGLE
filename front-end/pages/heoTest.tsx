@@ -61,30 +61,6 @@ const HeoTest: NextPage<any> = (props) => {
           merchant_uid: rsp.merchant_uid,
         };
         // 요청이 성공ㅎㅆ을 경우, 결제번호(imp_uid)와 주문번호(merchant_uid) 등 을 서버에 전달
-        // 제이쿼리와 ajax 사용(아임포트에서 제공해주는 로직)
-        // ex)
-        // $.ajax({
-        //   url: "/api/payment/complete",
-        //   method: "POST",
-        //   headers: { "Content-Type": "application/json" },
-        //   data: {
-        //     imp_uid: rsp.imp_uid,
-        //     merchant_uid: rsp.merchant_uid,
-        //   },
-        // }).done(function (data) {
-        //   switch (data.result) {
-        //     case "success":
-        //       break;
-        //     case "cancelled":
-        //       break;
-        //     case "failed":
-        //       break;
-        //     case "forgery":
-        //       break;
-        //   }
-        //   // 가맹점 서버 결제 API 성공시 로직
-        // });
-        // alert("결제 성공");
         await dispatch(_aPostPaymentComplete(rspData)).then(
           (res: _iPayment) => {
             switch (res.payload.result) {

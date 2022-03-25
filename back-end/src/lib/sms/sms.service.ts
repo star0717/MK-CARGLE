@@ -7,8 +7,8 @@ import solapi from 'solapi';
 export class SmsService {
   // private readonly envConfig = config();
   private readonly messageService = new solapi(
-    'NCSMNANKNQH14COH', // 솔라피 key
-    'GM8GU2DMJSVBUYEYYQ0U0IMQ6ONFVPNR', // 솔라피 secret
+    process.env.SOL_KEY, // 솔라피 key
+    process.env.SOL_SECRET, // 솔라피 secret
   );
 
   /**
@@ -22,12 +22,12 @@ export class SmsService {
       .sendOne({
         to: '01090309615',
         from: '16443486',
-        text: '팔콘펀치@@@',
+        text: '팔콘펀치 (((c=(ﾟﾛﾟ;q',
         kakaoOptions: {
-          pfId: 'KA01PF210319072804501wAicQajTRe4',
+          pfId: process.env.KAKAO_PFID,
           disableSms: false,
           adFlag: false,
-          //   templateId: 'KA01TP210319073206523xHrOHWU7j12', // 템플릿 ID
+          //   templateId: process.env.KAKAO_TID, // 템플릿 ID
         },
         autoTypeDetect: true,
       })

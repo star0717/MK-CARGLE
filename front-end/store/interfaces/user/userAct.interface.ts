@@ -1,4 +1,3 @@
-import { RequestPayResponse } from "src/configure/iamport.entity";
 import { Agency } from "src/models/agency.entity";
 import { Car } from "src/models/car.entity";
 import { Estimate } from "src/models/estimate.entity";
@@ -10,6 +9,7 @@ import { DeleteResult, FindResult } from "../../../src/models/base.entity";
 import { Company } from "src/models/company.entity";
 import { Part } from "src/models/part.entity";
 import { User } from "src/models/user.entity";
+import { RequestPayResponse } from "iamport-typings";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",

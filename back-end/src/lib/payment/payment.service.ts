@@ -25,9 +25,8 @@ interface PayResult {
 export class PaymentService {
   // private readonly envConfig = config();
   private readonly impConfig = {
-    imp_key: '1854779461352956',
-    imp_secret:
-      'JthGdTwoL7TzRO3tUp1bmzNscsveX3IHxZnLST9E02eSQhmLHnX3XLw9d2oa56RC5enY8xD9AR1r9ocQ',
+    imp_key: process.env.IMP_KEY,
+    imp_secret: process.env.IMP_SECRET,
   };
 
   /**
@@ -98,7 +97,14 @@ export class PaymentService {
       })
       .then((res: AxiosResponse<Result<RequestPayResponse>, string>) => {
         return res.data.response;
+      })
+      .catch((err) => {
+        throw new BadRequestException();
       });
     return payData;
   }
+
+  // 웹훅(필수사항)
+  // 통신오류 등으로 인해 결제가 끊길 때를 대비해 준비하는 api
+  async webHook(): Promise<any> {}
 }
