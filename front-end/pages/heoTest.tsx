@@ -151,7 +151,7 @@ const HeoTest: NextPage<any> = (props) => {
             );
           }}
         >
-          조회
+          결제조회
         </CommonButton>
       </Wrapper>
     </>
