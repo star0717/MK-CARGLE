@@ -73,9 +73,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   const handleScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
-    window.scrollBy({
-      // top: window.document.documentElement.scrollHeight,
-      top: ref.current.scrollIntoView(),
+    ref.current.scrollIntoView({
       behavior: "smooth",
     });
   };
@@ -186,7 +184,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
             </TableWrapper>
           </Wrapper>
         </Wrapper>
-        <Wrapper padding={`50px 0px 30px`} ref={ref}>
+        <Wrapper padding={`50px 0px 30px`}>
           <SmallButton
             width={`160px`}
             height={`48px`}
@@ -201,7 +199,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
           </SmallButton>
         </Wrapper>
       </Wrapper>
-      <CommonTitleWrapper padding={`60px 0px 0px`}>
+      <CommonTitleWrapper padding={`60px 0px 0px`} ref={ref}>
         <CommonTitle>정비장부</CommonTitle>
         <CommonSubTitle></CommonSubTitle>
       </CommonTitleWrapper>
