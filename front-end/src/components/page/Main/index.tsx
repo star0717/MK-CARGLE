@@ -45,6 +45,7 @@ import {
   WholeWrapper,
   Wrapper,
 } from "../../styles/CommonComponents";
+import { useResizeDetector } from "react-resize-detector";
 import { RiArrowDownSLine, RiArrowDropRightLine } from "react-icons/ri";
 import { url } from "inspector";
 
@@ -81,10 +82,13 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
 
   const handleScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
     window.scrollBy({
-      top: window.document.documentElement.scrollHeight,
+      // top: window.document.documentElement.scrollHeight,
+      top: ref.current,
       behavior: "smooth",
     });
   };
+
+  const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper>
@@ -190,7 +194,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
             </TableWrapper>
           </Wrapper>
         </Wrapper>
-        <Wrapper padding={`50px 0px 30px`}>
+        <Wrapper padding={`50px 0px 30px`} ref={ref}>
           <SmallButton
             width={`160px`}
             height={`48px`}
