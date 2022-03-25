@@ -1,21 +1,18 @@
 import dayjs from "dayjs";
 import type { NextPage } from "next";
-import router, { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/dist/client/router";
 import React, { useEffect, useState } from "react";
 import { BsEmojiFrownFill } from "react-icons/bs";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { GoPrimitiveDot } from "react-icons/go";
-import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import { UseLink } from "src/configure/router.entity";
 import { _pMaintenanceProps } from "src/configure/_pProps.entity";
 import { _MainProps } from "src/configure/_props.entity";
-import { PagenationSection } from "src/components/common/sections";
 import {
   getStrMainCustomerType,
   getStrMainStatus,
-  MainStatus,
 } from "src/constants/maintenance.const";
 import { FindParameters, FindResult } from "src/models/base.entity";
 import { Maintenance } from "src/models/maintenance.entity";
@@ -26,14 +23,10 @@ import {
 } from "../../../../store/action/user.action";
 import Calendar from "../../common/calendar";
 import {
-  Checkbox,
-  CheckInput,
-  CheckMark,
   ColorSpan,
   CommonSubTitle,
   CommonTitle,
   CommonTitleWrapper,
-  RsWrapper,
   SmallButton,
   TableBody,
   TableHead,
@@ -45,8 +38,8 @@ import {
   WholeWrapper,
   Wrapper,
 } from "../../styles/CommonComponents";
-import { RiArrowDownSLine, RiArrowDropRightLine } from "react-icons/ri";
-import { url } from "inspector";
+import { useResizeDetector } from "react-resize-detector";
+import { RiArrowDownSLine } from "react-icons/ri";
 
 const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   const dispatch = useDispatch();
@@ -80,11 +73,12 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   };
 
   const handleScroll = (e: React.MouseEvent<HTMLButtonElement>) => {
-    window.scrollBy({
-      top: window.document.documentElement.scrollHeight,
+    ref.current.scrollIntoView({
       behavior: "smooth",
     });
   };
+
+  const { width, height, ref } = useResizeDetector();
 
   return (
     <WholeWrapper>
@@ -205,7 +199,7 @@ const MainPage: NextPage<_pMaintenanceProps> = (props) => {
           </SmallButton>
         </Wrapper>
       </Wrapper>
-      <CommonTitleWrapper padding={`60px 0px 0px`}>
+      <CommonTitleWrapper padding={`60px 0px 0px`} ref={ref}>
         <CommonTitle>정비장부</CommonTitle>
         <CommonSubTitle></CommonSubTitle>
       </CommonTitleWrapper>

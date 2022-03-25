@@ -177,6 +177,7 @@ export const CommonTitleWrapper = styled.div<any>`
   display: ${(props) => props.display || `flex`};
   flex-direction: ${(props) => props.dr || `column`};
   padding: ${(props) => props.padding || `0px 0px 50px 0px`};
+  margin: ${(props) => props.margin || ``};
   padding-bottom: ${(props) => props.paddingBottom};
   color: ${(props) => props.color};
   text-align: ${(props) => props.textAlign || `center`};
@@ -1924,6 +1925,7 @@ export const ColorSpan = styled.span<any>`
   margin: ${(props) => props.margin || `0px`};
   font-size: ${(props) => props.fontSize || `16px`};
   font-weight: ${(props) => props.fontWeight || ``};
+  text-shadow: ${(props) => props.textShadow || ``};
 `;
 
 export const SpeechBubbleLeft = styled.div<any>`
