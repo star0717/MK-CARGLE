@@ -1,9 +1,15 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { RequestPayResponse } from 'iamport-typings';
 import { UserAuthority } from 'src/constants/model.const';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { AuthToken } from '../decorators/decorators';
 import { PaymentService } from './payment.service';
+
+interface payResult {
+  result: string;
+  message: string;
+}
 
 @ApiTags('결제모듈')
 @Controller('payment')
@@ -17,7 +23,7 @@ export class PaymentController {
   async payComplete(
     @Body() doc: any,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<any> {
+  ): Promise<payResult> {
     return await this.paymentService.payComplete(
       token,
       doc,
@@ -33,7 +39,7 @@ export class PaymentController {
   async getPayData(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<any> {
+  ): Promise<RequestPayResponse> {
     return await this.paymentService.getPayData(
       token,
       id,

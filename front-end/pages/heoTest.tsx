@@ -3,10 +3,6 @@ import { NextPage } from "next";
 import EstimateFile from "src/components/page/FileHTML/estimateFile";
 import { CommonButton, Wrapper } from "src/components/styles/CommonComponents";
 import Script from "next/script";
-import {
-  RequestPayParams,
-  RequestPayResponse,
-} from "src/configure/iamport.entity";
 import { nanoid } from "nanoid";
 import hmacSHA512 from "crypto-js/hmac-sha512";
 import dayjs from "dayjs";
@@ -14,8 +10,13 @@ import "dayjs/locale/ko";
 import { HmacSHA256 } from "crypto-js";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { _aPostPaymentComplete, _aPostSms } from "store/action/user.action";
+import {
+  _aGetPaymentData,
+  _aPostPaymentComplete,
+  _aPostSms,
+} from "store/action/user.action";
 import { _iPayment, _iSms } from "store/interfaces";
+import { RequestPayParams, RequestPayResponse } from "iamport-typings";
 dayjs.locale("ko");
 
 const HeoTest: NextPage<any> = (props) => {
@@ -41,7 +42,7 @@ const HeoTest: NextPage<any> = (props) => {
       pg: "html5_inicis", // PG사
       pay_method: "card", // 결제수단
       merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
-      amount: 1000, // 결제금액
+      amount: 10, // 결제금액
       name: "아임포트 결제 데이터 분석", // 주문명
       buyer_name: "홍길동", // 구매자 이름
       buyer_tel: "01012341234", // 구매자 전화번호
@@ -86,7 +87,17 @@ const HeoTest: NextPage<any> = (props) => {
         // alert("결제 성공");
         await dispatch(_aPostPaymentComplete(rspData)).then(
           (res: _iPayment) => {
-            console.log(res);
+            switch (res.payload.result) {
+              case "success":
+                break;
+              case "cancelled":
+                break;
+              case "failed":
+                break;
+              case "forgery":
+                break;
+            }
+            alert(res.payload.message);
           }
         );
 
@@ -129,6 +140,18 @@ const HeoTest: NextPage<any> = (props) => {
         </CommonButton>
         <CommonButton type="button" onClick={onSmsHandler}>
           SMS전송
+        </CommonButton>
+        <CommonButton
+          type="button"
+          onClick={() => {
+            dispatch(_aGetPaymentData("imp_916671932697")).then(
+              (res: _iPayment) => {
+                console.log(res.payload);
+              }
+            );
+          }}
+        >
+          조회
         </CommonButton>
       </Wrapper>
     </>

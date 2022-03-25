@@ -1,4 +1,3 @@
-import { RequestPayResponse } from "./../../src/configure/iamport.entity";
 import { genMainOptionQuery } from "./../../src/constants/maintenance.const";
 import {
   EstimatesApiPath,
@@ -77,6 +76,7 @@ import {
 } from "src/models/maintenance.entity";
 import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";
+import { RequestPayResponse } from "iamport-typings";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1397,16 +1397,37 @@ export async function _aGetStatement(id: string) {
 }
 
 /**
- * 결제모듈 처리 api
+ * 결제모듈 처리완료 api
  * @param data
  * @returns
  */
 export async function _aPostPaymentComplete(data: any) {
-  const req: RequestPayResponse = await axios
-    .post("/api/payment/complete")
-    .then((res: AxiosResponse<RequestPayResponse, any>): RequestPayResponse => {
+  const req: any = await axios
+    .post("/api/payment/complete", data)
+    .then((res: AxiosResponse<any, any>): any => {
       return res.data;
     });
+
+  const result: _iPayment = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 결제 조회
+ * @param id
+ * @returns
+ */
+export async function _aGetPaymentData(id: string) {
+  const req: RequestPayResponse = await axios
+    .get(`/api/payment/${id}`)
+    .then(
+      (res: AxiosResponse<RequestPayResponse, string>): RequestPayResponse => {
+        return res.data;
+      }
+    );
 
   const result: _iPayment = {
     type: ActionAPIs.USER_API,

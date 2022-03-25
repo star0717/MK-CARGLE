@@ -11,6 +11,12 @@ export class SmsService {
     'GM8GU2DMJSVBUYEYYQ0U0IMQ6ONFVPNR', // 솔라피 secret
   );
 
+  /**
+   * SMS전송
+   * @param token
+   * @param auth
+   * @returns
+   */
   async sendSms(token: AuthTokenInfo, auth?: UserAuthority): Promise<any> {
     const sendResult = await this.messageService
       .sendOne({
@@ -26,7 +32,6 @@ export class SmsService {
         autoTypeDetect: true,
       })
       .then((res) => {
-        console.log(res);
         return res;
       })
       .catch((err) => {
@@ -42,6 +47,12 @@ export class SmsService {
     return getResultOne;
   }
 
+  /**
+   * 전송내역 조회
+   * @param token
+   * @param id
+   * @param auth
+   */
   async getOneSms(
     token: AuthTokenInfo,
     id: string,
@@ -52,7 +63,6 @@ export class SmsService {
         messageId: id,
       })
       .then((res) => {
-        console.log('####', res);
         return res;
       })
       .catch((err) => {
