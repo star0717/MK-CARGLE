@@ -54,6 +54,7 @@ import {
   _iStatement,
   _iPayment,
   _iSms,
+  _iPaymentComplete,
 } from "../interfaces";
 
 import {
@@ -1408,7 +1409,7 @@ export async function _aPostPaymentComplete(data: any) {
       return res.data;
     });
 
-  const result: _iPayment = {
+  const result: _iPaymentComplete = {
     type: ActionAPIs.USER_API,
     payload: req,
   };
@@ -1429,7 +1430,26 @@ export async function _aGetPaymentData(id: string) {
       }
     );
 
-  const result: _iPayment = {
+  const result: _iPaymentComplete = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 결제 환불
+ * @param data
+ * @returns
+ */
+export async function _aPostPayCancel(data: any) {
+  const req: any = await axios
+    .post("/api/payment/cancel", data)
+    .then((res: AxiosResponse<any, any>): any => {
+      return res.data;
+    });
+
+  const result: _iPaymentComplete = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

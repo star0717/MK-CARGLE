@@ -1,21 +1,18 @@
 import React from "react";
 import { NextPage } from "next";
-import EstimateFile from "src/components/page/FileHTML/estimateFile";
 import { CommonButton, Wrapper } from "src/components/styles/CommonComponents";
 import Script from "next/script";
-import { nanoid } from "nanoid";
-import hmacSHA512 from "crypto-js/hmac-sha512";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-import { HmacSHA256 } from "crypto-js";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import {
   _aGetPaymentData,
+  _aPostPayCancel,
   _aPostPaymentComplete,
   _aPostSms,
 } from "store/action/user.action";
-import { _iPayment, _iSms } from "store/interfaces";
+import { _iPayment, _iPaymentComplete, _iSms } from "store/interfaces";
 import { RequestPayParams, RequestPayResponse } from "iamport-typings";
 dayjs.locale("ko");
 
@@ -34,6 +31,9 @@ const HeoTest: NextPage<any> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 결제 handler
+   */
   const onPaymentHandler = () => {
     const { IMP } = window;
     IMP.init(impCode);
@@ -49,20 +49,20 @@ const HeoTest: NextPage<any> = (props) => {
       buyer_email: "example@example", // 구매자 이메일
       buyer_addr: "신사동 661-16", // 구매자 주소
       buyer_postcode: "06018", // 구매자 우편번호
-      // m_redirect_url: "",  // 리다이렉트 url(필요함)
+      m_redirect_url: "/api/payment/mobile", // 리다이렉트 url(필요함)
     };
 
     const callback = async (rsp: RequestPayResponse) => {
       const { success, merchant_uid, error_msg, imp_uid, error_code } = rsp;
       // 결제가 완료되면 반환되는 응답 객체(rsp)의 결제 성공 여부에 따라 처리 로직 필요
       if (success) {
-        const rspData = {
+        const rspData: Partial<RequestPayResponse> = {
           imp_uid: rsp.imp_uid,
           merchant_uid: rsp.merchant_uid,
         };
         // 요청이 성공ㅎㅆ을 경우, 결제번호(imp_uid)와 주문번호(merchant_uid) 등 을 서버에 전달
         await dispatch(_aPostPaymentComplete(rspData)).then(
-          (res: _iPayment) => {
+          (res: _iPaymentComplete) => {
             switch (res.payload.result) {
               case "success":
                 break;
@@ -74,6 +74,9 @@ const HeoTest: NextPage<any> = (props) => {
                 break;
             }
             alert(res.payload.message);
+          },
+          (err) => {
+            alert("결제 실패");
           }
         );
 
@@ -86,8 +89,31 @@ const HeoTest: NextPage<any> = (props) => {
     IMP.request_pay(data, callback);
   };
 
+  const cancelPay = async () => {
+    const cancelData: any = {
+      merchant_uid: "mid_1648444116040", // 주문번호
+      cancel_request_amount: 10, // 환불금액
+      reason: "테스트 결제 환불", // 환불사유
+    };
+    await dispatch(_aPostPayCancel(cancelData)).then(
+      (res: _iPaymentComplete) => {
+        switch (res.payload) {
+          case "success":
+            break;
+        }
+        alert(res.payload.message);
+      },
+      (err) => {
+        alert("환불 실패");
+      }
+    );
+  };
+
+  /**
+   * SMS handler
+   */
   const onSmsHandler = async () => {
-    dispatch(_aPostSms()).then((res: _iSms) => {
+    await dispatch(_aPostSms()).then((res: _iSms) => {
       alert("메시지를 전송했습니다.");
     });
   };
@@ -128,6 +154,9 @@ const HeoTest: NextPage<any> = (props) => {
           }}
         >
           결제조회
+        </CommonButton>
+        <CommonButton type="button" onClick={cancelPay}>
+          환불하기
         </CommonButton>
       </Wrapper>
     </>

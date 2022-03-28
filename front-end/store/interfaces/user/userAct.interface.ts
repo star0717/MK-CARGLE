@@ -462,6 +462,11 @@ export class _iPayment implements baseActionInterface {
   payload: RequestPayResponse;
 }
 
+export class _iPaymentComplete implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: any;
+}
+
 /** SMS 전송 */
 export class _iSms implements baseActionInterface {
   type: ActionAPIs.USER_API;
@@ -493,4 +498,5 @@ export type ActionInterfaces =
   | _iEstimate
   | _iStatement
   | _iPayment
+  | _iPaymentComplete
   | _iSms;
