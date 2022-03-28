@@ -22,7 +22,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "forever": "forever start -a --uid back-end dist/main.js -w",
     "forever:start": "forever start -a --uid back-end dist/main.js -w",
-    "forever:stop": "forever stop back-end"
+    "forever:stop": "forever stop back-end",
+    "docker:build": "sudo docker build -t back-end .",
+    "docker:run": "sudo docker run -d -p 7001:7001 --name back-end back-end",
+    "docker:start": "sudo docker start back-end",
+    "docker:restart": "sudo docker restart back-end",
+    "docker:stop": "sudo docker stop back-end",
+    "docker:exec": "sudo docker exec -it back-end /bin/sh",
+    "docker:logs": "sudo docker logs back-end"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.3.17",

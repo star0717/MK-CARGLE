@@ -94,3 +94,24 @@ next.js 기반인 front-end의 경우 백그라운드 실행을 해도 포트가
 lsof -i TCP:3000
 kill -9 pid번호
 ```
+
+## Docker 명령어
+
+모든 컨테이너 삭제
+
+```
+sudo docker stop $(docker ps -a -q)
+sudo docker rm -f $(docker ps -aq)
+```
+
+사용하지 않는 이미지 삭제
+
+```
+sudo docker image prune
+```
+
+모든 이미지 삭제
+
+```
+sudo docker rmi $(docker images -q)
+```
