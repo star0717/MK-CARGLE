@@ -35,7 +35,7 @@ export class PaymentService {
    */
   async getToken(): Promise<Token> {
     const tokenApi = await axios
-      .post('https://api.iamport.kr/users/getToken', this.impConfig)
+      .post(process.env.IMP_TOKEN_URL, this.impConfig)
       .then((res: AxiosResponse<Result<Token>, any>) => {
         return res.data;
       })
@@ -90,7 +90,7 @@ export class PaymentService {
   ): Promise<RequestPayResponse> {
     const accessToken = (await this.getToken()).access_token;
     const payData = await axios
-      .get(`https://api.iamport.kr/payments/${id}`, {
+      .get(`${process.env.IMP_PAY_URL}${id}`, {
         headers: {
           Authorization: accessToken,
         },
@@ -104,7 +104,37 @@ export class PaymentService {
     return payData;
   }
 
-  // 웹훅(필수사항)
-  // 통신오류 등으로 인해 결제가 끊길 때를 대비해 준비하는 api
-  async webHook(): Promise<any> {}
+  async payCancel(
+    token: AuthTokenInfo,
+    doc: any,
+    auth?: UserAuthority,
+  ): Promise<PayResult> {
+    const accessToken = (await this.getToken()).access_token;
+    // merchant_uid를 통한 결제정보 조회 로직 필요(doc.merchant_uid)
+    const cancelData: any = {
+      reason: doc.reason,
+      imp_uid: 'imp_440900092871', //조회한 db에서 가져온 imp_uid
+      amount: doc.cancel_request_amount,
+      checksum: 10, //조회한 db에서 가져온 amount
+    };
+    const getCancelData = await axios
+      .post(process.env.IMP_CANCEL_URL, cancelData, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then((res: AxiosResponse<Result<any>, any>) => {
+        console.log(res);
+        return res.data;
+      })
+      .catch((err) => {
+        throw new BadRequestException();
+      });
+    // 리턴값을 통해 db에 업데이트 작업 필요
+    // 상태: 결제완료 -> 환불
+    // 금액: 10 -> 0
+
+    // 업데이트 후에
+    return { result: 'success', message: '환불 완료' };
+  }
 }
