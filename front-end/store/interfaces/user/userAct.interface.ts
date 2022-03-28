@@ -10,6 +10,7 @@ import { Company } from "src/models/company.entity";
 import { Part } from "src/models/part.entity";
 import { User } from "src/models/user.entity";
 import { RequestPayResponse } from "iamport-typings";
+import { PayResult, RequestCustomResponse } from "src/models/payment.entity";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
@@ -459,12 +460,12 @@ export class _iStatement implements baseActionInterface {
 /** 결제모듈 인터페이스 */
 export class _iPayment implements baseActionInterface {
   type: ActionAPIs.USER_API;
-  payload: RequestPayResponse;
+  payload: RequestCustomResponse;
 }
 
 export class _iPaymentComplete implements baseActionInterface {
   type: ActionAPIs.USER_API;
-  payload: any;
+  payload: PayResult;
 }
 
 /** SMS 전송 */
