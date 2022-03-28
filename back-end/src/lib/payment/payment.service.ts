@@ -90,7 +90,7 @@ export class PaymentService {
   ): Promise<RequestPayResponse> {
     const accessToken = (await this.getToken()).access_token;
     const payData = await axios
-      .get(`${process.env.IMP_PAY_URL}${id}`, {
+      .get(process.env.IMP_PAY_URL + id, {
         headers: {
           Authorization: accessToken,
         },
@@ -117,7 +117,7 @@ export class PaymentService {
       amount: doc.cancel_request_amount,
       checksum: 10, //조회한 db에서 가져온 amount
     };
-    const getCancelData = await axios
+    const getCancelData: any = await axios
       .post(process.env.IMP_CANCEL_URL, cancelData, {
         headers: {
           Authorization: accessToken,

@@ -1,9 +1,5 @@
+import { SmsApiPath } from "./../../../back-end/src/constants/api-path.const";
 import { genMainOptionQuery } from "./../../src/constants/maintenance.const";
-import {
-  EstimatesApiPath,
-  MaintenancesApiPath,
-  StatementsApiPath,
-} from "./../../src/constants/api-path.const";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
   ConfirmPWD,
@@ -63,7 +59,11 @@ import {
   SettingsApiPath,
   AgenciesApiPath,
   PartsSetsApiPath,
-} from "../../src/constants/api-path.const";
+  EstimatesApiPath,
+  MaintenancesApiPath,
+  PaymentApiPath,
+  StatementsApiPath,
+} from "src/constants/api-path.const";
 import { genApiPath } from "../../src/modules/commonModule";
 import { DeleteObjectIds } from "../../src/models/base.entity";
 import { Part } from "../../src/models/part.entity";
@@ -1404,7 +1404,7 @@ export async function _aGetStatement(id: string) {
  */
 export async function _aPostPaymentComplete(data: any) {
   const req: any = await axios
-    .post("/api/payment/complete", data)
+    .post(genApiPath(PaymentApiPath.complete), data)
     .then((res: AxiosResponse<any, any>): any => {
       return res.data;
     });
@@ -1423,7 +1423,7 @@ export async function _aPostPaymentComplete(data: any) {
  */
 export async function _aGetPaymentData(id: string) {
   const req: RequestPayResponse = await axios
-    .get(`/api/payment/${id}`)
+    .get(genApiPath(PaymentApiPath.payment, { id: id }))
     .then(
       (res: AxiosResponse<RequestPayResponse, string>): RequestPayResponse => {
         return res.data;
@@ -1444,7 +1444,7 @@ export async function _aGetPaymentData(id: string) {
  */
 export async function _aPostPayCancel(data: any) {
   const req: any = await axios
-    .post("/api/payment/cancel", data)
+    .post(genApiPath(PaymentApiPath.payment), data)
     .then((res: AxiosResponse<any, any>): any => {
       return res.data;
     });
@@ -1462,7 +1462,7 @@ export async function _aPostPayCancel(data: any) {
  */
 export async function _aPostSms() {
   const req: any = await axios
-    .post("/api/sms/send")
+    .post(genApiPath(SmsApiPath.send))
     .then((res: AxiosResponse<unknown, any>): any => {
       return res.data;
     });
