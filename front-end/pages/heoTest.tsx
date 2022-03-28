@@ -146,7 +146,7 @@ const HeoTest: NextPage<any> = (props) => {
         <CommonButton
           type="button"
           onClick={() => {
-            dispatch(_aGetPaymentData("imp_916671932697")).then(
+            dispatch(_aGetPaymentData("imp_440900092871")).then(
               (res: _iPayment) => {
                 console.log(res.payload);
               }
