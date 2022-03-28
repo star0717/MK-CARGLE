@@ -58,6 +58,8 @@ SSH 키 생성
 ```bash
 cd ~/.ssh
 ssh-keygen -t rsa -b 4096 -C "mk@mklc.co.kr"
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
 ```
 
 생성된 키를 Github의 settings/SSH keys 항목에 추가함
