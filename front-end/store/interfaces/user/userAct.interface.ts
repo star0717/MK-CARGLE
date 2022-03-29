@@ -4,13 +4,13 @@ import { Estimate } from "src/models/estimate.entity";
 import { Maintenance } from "src/models/maintenance.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Statement } from "src/models/statement.entity";
-import { SignUpInfo } from "../../../src/models/auth.entity";
-import { DeleteResult, FindResult } from "../../../src/models/base.entity";
+import { SignUpInfo } from "src/models/auth.entity";
+import { DeleteResult, FindResult } from "src/models/base.entity";
 import { Company } from "src/models/company.entity";
 import { Part } from "src/models/part.entity";
 import { User } from "src/models/user.entity";
-import { RequestPayResponse } from "iamport-typings";
 import { PayResult, RequestCustomResponse } from "src/models/payment.entity";
+import { GetMessagesResponse } from "src/models/sms.entity";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
@@ -471,7 +471,7 @@ export class _iPaymentComplete implements baseActionInterface {
 /** SMS 전송 */
 export class _iSms implements baseActionInterface {
   type: ActionAPIs.USER_API;
-  payload: any;
+  payload: GetMessagesResponse;
 }
 
 /*****************************************************

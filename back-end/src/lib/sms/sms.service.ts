@@ -1,7 +1,12 @@
 import { UserAuthority } from 'src/constants/model.const';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { AuthTokenInfo } from 'src/models/auth.entity';
-import solapi from 'solapi';
+import solapi, {
+  GetMessagesRequestType,
+  GetMessagesResponse,
+  Message,
+  SingleMessageSentResponse,
+} from 'solapi';
 
 @Injectable()
 export class SmsService {
@@ -17,20 +22,24 @@ export class SmsService {
    * @param auth
    * @returns
    */
-  async sendSms(token: AuthTokenInfo, auth?: UserAuthority): Promise<any> {
-    const sendResult = await this.messageService
-      .sendOne({
-        to: '01093681143',
-        from: '16443486',
-        text: '팔콘펀치 (((c=(ﾟﾛﾟ;q',
-        kakaoOptions: {
-          pfId: process.env.KAKAO_PFID,
-          disableSms: false,
-          adFlag: false,
-          //   templateId: process.env.KAKAO_TID, // 템플릿 ID
-        },
-        autoTypeDetect: true,
-      })
+  async sendSms(
+    token: AuthTokenInfo,
+    auth?: UserAuthority,
+  ): Promise<GetMessagesResponse> {
+    const messageData: Message = {
+      to: '01093681143',
+      from: '16443486',
+      text: '팔콘펀치 (((c=(ﾟﾛﾟ);q',
+      kakaoOptions: {
+        pfId: process.env.KAKAO_PFID,
+        disableSms: false,
+        adFlag: false,
+        //   templateId: process.env.KAKAO_TID, // 템플릿 ID
+      },
+      autoTypeDetect: true,
+    };
+    const sendResult: SingleMessageSentResponse = await this.messageService
+      .sendOne(messageData)
       .then((res) => {
         return res;
       })
@@ -38,9 +47,7 @@ export class SmsService {
         throw new BadRequestException();
       });
 
-    console.log('###', sendResult);
-
-    const getResultOne = await this.getOneSms(
+    const getResultOne: GetMessagesResponse = await this.getOneSms(
       token,
       sendResult.messageId,
       auth,
@@ -59,18 +66,18 @@ export class SmsService {
     token: AuthTokenInfo,
     id: string,
     auth?: UserAuthority,
-  ): Promise<any> {
-    const result = this.messageService
-      .getMessages({
-        messageId: id,
-      })
+  ): Promise<GetMessagesResponse> {
+    const messageData: GetMessagesRequestType = {
+      messageId: id,
+    };
+    const result: GetMessagesResponse = await this.messageService
+      .getMessages(messageData)
       .then((res) => {
         return res;
       })
       .catch((err) => {
         throw new BadRequestException();
       });
-    console.log('###', result);
 
     return result;
   }

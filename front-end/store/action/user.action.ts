@@ -1,6 +1,6 @@
-import { SmsApiPath } from "./../../../back-end/src/constants/api-path.const";
-import { genMainOptionQuery } from "./../../src/constants/maintenance.const";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import { SmsApiPath } from "src/constants/api-path.const";
+import { genMainOptionQuery } from "src/constants/maintenance.const";
+import axios, { AxiosResponse } from "axios";
 import {
   ConfirmPWD,
   HelpChangePWD,
@@ -8,15 +8,15 @@ import {
   HelpFindPWD,
   SignUpInfo,
   UserInfo,
-} from "../../src/models/auth.entity";
+} from "src/models/auth.entity";
 import {
   DeleteResult,
   FindParameters,
   FindResult,
   OptionalInfo,
-} from "../../src/models/base.entity";
-import { Company } from "../../src/models/company.entity";
-import { User } from "../../src/models/user.entity";
+} from "src/models/base.entity";
+import { Company } from "src/models/company.entity";
+import { User } from "src/models/user.entity";
 import {
   ActionAPIs,
   actionTypesUser,
@@ -64,9 +64,9 @@ import {
   PaymentApiPath,
   StatementsApiPath,
 } from "src/constants/api-path.const";
-import { genApiPath } from "../../src/modules/commonModule";
-import { DeleteObjectIds } from "../../src/models/base.entity";
-import { Part } from "../../src/models/part.entity";
+import { genApiPath } from "src/modules/commonModule";
+import { DeleteObjectIds } from "src/models/base.entity";
+import { Part } from "src/models/part.entity";
 import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Car } from "src/models/car.entity";
@@ -77,13 +77,13 @@ import {
 } from "src/models/maintenance.entity";
 import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";
-import { RequestPayResponse } from "iamport-typings";
 import {
   CancelData,
   PayData,
   PayResult,
   RequestCustomResponse,
 } from "src/models/payment.entity";
+import { GetMessagesResponse } from "src/models/sms.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1468,11 +1468,13 @@ export async function _aPostPayCancel(data: CancelData) {
  * @returns
  */
 export async function _aPostSms() {
-  const req: any = await axios
+  const req: GetMessagesResponse = await axios
     .post(genApiPath(SmsApiPath.send))
-    .then((res: AxiosResponse<unknown, any>): any => {
-      return res.data;
-    });
+    .then(
+      (res: AxiosResponse<GetMessagesResponse, any>): GetMessagesResponse => {
+        return res.data;
+      }
+    );
 
   const result: _iSms = {
     type: ActionAPIs.USER_API,

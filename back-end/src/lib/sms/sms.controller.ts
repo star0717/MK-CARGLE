@@ -4,6 +4,7 @@ import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { SmsService } from './sms.service';
 import { UserAuthority } from 'src/constants/model.const';
+import { GetMessagesResponse } from 'solapi';
 
 @ApiTags('SMS 알림톡 API')
 @Controller('sms')
@@ -14,7 +15,9 @@ export class SmsController {
   @ApiOperation({
     summary: `[WORKER] [TEST] 고객에게 SMS 알림톡 메시지 전송`,
   })
-  async sendSms(@AuthToken() token: AuthTokenInfo): Promise<any> {
+  async sendSms(
+    @AuthToken() token: AuthTokenInfo,
+  ): Promise<GetMessagesResponse> {
     return await this.smsService.sendSms(token, UserAuthority.WORKER);
   }
 
@@ -26,7 +29,7 @@ export class SmsController {
   async getSms(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<any> {
+  ): Promise<GetMessagesResponse> {
     return await this.smsService.getOneSms(token, id, UserAuthority.WORKER);
   }
 }
