@@ -2,16 +2,25 @@ version: '3'
 services:
   front-end:
     build: ./front-end
+    image: front-end
     container_name: font-end
     expose:
       - "7000"
+    depends_on:
+      - back-end
+    entrypoint:
+      - NODE_ENV=production
   back-end:
     build: ./back-end
+    image: back-end
     container_name: back-end
     expose:
       - "7001"
   nginx: 
     build: ./nginx
+    image: nginx-end
     container_name: nginx
     ports:
     - "80:80"
+    depends_on:
+      - front-end
