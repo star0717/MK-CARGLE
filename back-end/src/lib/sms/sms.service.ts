@@ -20,7 +20,7 @@ export class SmsService {
   async sendSms(token: AuthTokenInfo, auth?: UserAuthority): Promise<any> {
     const sendResult = await this.messageService
       .sendOne({
-        to: '01090309615',
+        to: '01093681143',
         from: '16443486',
         text: '팔콘펀치 (((c=(ﾟﾛﾟ;q',
         kakaoOptions: {
@@ -37,6 +37,8 @@ export class SmsService {
       .catch((err) => {
         throw new BadRequestException();
       });
+
+    console.log('###', sendResult);
 
     const getResultOne = await this.getOneSms(
       token,
@@ -68,5 +70,8 @@ export class SmsService {
       .catch((err) => {
         throw new BadRequestException();
       });
+    console.log('###', result);
+
+    return result;
   }
 }
