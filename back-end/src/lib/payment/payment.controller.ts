@@ -1,15 +1,16 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { RequestPayResponse } from 'iamport-typings';
 import { UserAuthority } from 'src/constants/model.const';
 import { AuthTokenInfo } from 'src/models/auth.entity';
+import {
+  CancelData,
+  PayData,
+  PayResult,
+  RequestCustomResponse,
+  Result,
+} from 'src/models/payment.entity';
 import { AuthToken } from '../decorators/decorators';
 import { PaymentService } from './payment.service';
-
-interface payResult {
-  result: string;
-  message: string;
-}
 
 @ApiTags('결제모듈 API')
 @Controller('payment')
@@ -21,9 +22,9 @@ export class PaymentController {
     summary: `[WORKER] [TEST] 결제모듈을 통한 결제 완료`,
   })
   async payComplete(
-    @Body() doc: any,
+    @Body() doc: PayData,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<payResult> {
+  ): Promise<PayResult> {
     return await this.paymentService.payComplete(
       token,
       doc,
@@ -36,9 +37,9 @@ export class PaymentController {
     summary: `[WORKER] [TEST] 결제모듈 WebHook`,
   })
   async payWebHook(
-    @Body() doc: any,
+    @Body() doc: PayData,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<payResult> {
+  ): Promise<PayResult> {
     return await this.paymentService.payComplete(
       token,
       doc,
@@ -51,9 +52,9 @@ export class PaymentController {
     summary: `[WORKER] [TEST] 결제 환불`,
   })
   async payCancel(
-    @Body() doc: any,
+    @Body() doc: CancelData,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<any> {
+  ): Promise<PayResult> {
     return await this.paymentService.payCancel(
       token,
       doc,
@@ -69,8 +70,8 @@ export class PaymentController {
     @Query('imp_uid') imp_uid: string,
     @Query('merchant_uid') merchant_uid: string,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<payResult> {
-    const doc: Partial<RequestPayResponse> = {
+  ): Promise<PayResult> {
+    const doc: PayData = {
       imp_uid: imp_uid,
       merchant_uid: merchant_uid,
     };
@@ -89,7 +90,7 @@ export class PaymentController {
   async getPayData(
     @Param('id') id: string,
     @AuthToken() token: AuthTokenInfo,
-  ): Promise<RequestPayResponse> {
+  ): Promise<Result<RequestCustomResponse>> {
     return await this.paymentService.getPayData(
       token,
       id,

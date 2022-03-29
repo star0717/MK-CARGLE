@@ -122,3 +122,18 @@ export class StatementsApiPath {
   static BASE = '/statements/';
   static statements = StatementsApiPath.BASE;
 }
+
+// 결제모듈 API
+export class PaymentApiPath {
+  static BASE = '/payment/';
+  static payment = PaymentApiPath.BASE;
+  static complete = PaymentApiPath.BASE + 'complete';
+  static cancel = PaymentApiPath.BASE + 'cancel';
+}
+
+// SMS 알림톡 API
+export class SmsApiPath {
+  static BASE = '/sms/';
+  static sms = SmsApiPath.BASE;
+  static send = SmsApiPath.BASE + 'send';
+}

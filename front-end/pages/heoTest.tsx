@@ -14,6 +14,7 @@ import {
 } from "store/action/user.action";
 import { _iPayment, _iPaymentComplete, _iSms } from "store/interfaces";
 import { RequestPayParams, RequestPayResponse } from "iamport-typings";
+import { CancelData, PayData } from "src/models/payment.entity";
 dayjs.locale("ko");
 
 const HeoTest: NextPage<any> = (props) => {
@@ -46,7 +47,7 @@ const HeoTest: NextPage<any> = (props) => {
       name: "아임포트 결제 데이터 분석", // 주문명
       buyer_name: "홍길동", // 구매자 이름
       buyer_tel: "01012341234", // 구매자 전화번호
-      buyer_email: "example@example", // 구매자 이메일
+      buyer_email: "hbc3869@naver.com", // 구매자 이메일
       buyer_addr: "신사동 661-16", // 구매자 주소
       buyer_postcode: "06018", // 구매자 우편번호
       m_redirect_url: "/api/payment/mobile", // 리다이렉트 url(필요함)
@@ -56,13 +57,14 @@ const HeoTest: NextPage<any> = (props) => {
       const { success, merchant_uid, error_msg, imp_uid, error_code } = rsp;
       // 결제가 완료되면 반환되는 응답 객체(rsp)의 결제 성공 여부에 따라 처리 로직 필요
       if (success) {
-        const rspData: Partial<RequestPayResponse> = {
+        const rspData: PayData = {
           imp_uid: rsp.imp_uid,
           merchant_uid: rsp.merchant_uid,
         };
         // 요청이 성공ㅎㅆ을 경우, 결제번호(imp_uid)와 주문번호(merchant_uid) 등 을 서버에 전달
         await dispatch(_aPostPaymentComplete(rspData)).then(
           (res: _iPaymentComplete) => {
+            console.log(res);
             switch (res.payload.result) {
               case "success":
                 break;
@@ -90,15 +92,17 @@ const HeoTest: NextPage<any> = (props) => {
   };
 
   const cancelPay = async () => {
-    const cancelData: any = {
+    const cancelData: CancelData = {
       merchant_uid: "mid_1648444116040", // 주문번호
       cancel_request_amount: 10, // 환불금액
       reason: "테스트 결제 환불", // 환불사유
     };
     await dispatch(_aPostPayCancel(cancelData)).then(
       (res: _iPaymentComplete) => {
-        switch (res.payload) {
+        switch (res.payload.result) {
           case "success":
+            break;
+          case "already":
             break;
         }
         alert(res.payload.message);
@@ -146,7 +150,7 @@ const HeoTest: NextPage<any> = (props) => {
         <CommonButton
           type="button"
           onClick={() => {
-            dispatch(_aGetPaymentData("imp_440900092871")).then(
+            dispatch(_aGetPaymentData("imp_298880665696")).then(
               (res: _iPayment) => {
                 console.log(res.payload);
               }

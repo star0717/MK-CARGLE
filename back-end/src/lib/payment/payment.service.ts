@@ -3,23 +3,14 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserAuthority } from 'src/constants/model.const';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { RequestPayResponse } from 'iamport-typings';
-
-interface Result<T> {
-  code: number;
-  message: string;
-  response: T;
-}
-
-interface Token {
-  access_token: string;
-  now: number;
-  expired_at: number;
-}
-
-interface PayResult {
-  result: string;
-  message: string;
-}
+import {
+  CancelData,
+  PayData,
+  PayResult,
+  RequestCustomResponse,
+  Result,
+  Token,
+} from 'src/models/payment.entity';
 
 @Injectable()
 export class PaymentService {
@@ -54,14 +45,18 @@ export class PaymentService {
    */
   async payComplete(
     token: AuthTokenInfo,
-    doc: any,
+    doc: PayData,
     auth?: UserAuthority,
   ): Promise<PayResult> {
-    const payData = await this.getPayData(token, doc.imp_uid, auth);
+    const payData: Result<RequestCustomResponse> = await this.getPayData(
+      token,
+      doc.imp_uid,
+      auth,
+    );
     // 결제조회 데이터와 doc 데이터를 DB에서 조회한 데이터(주로 금액)를 비교하여
     // 일치할 경우에만 처리
     // if (payData.amount === dbData.amount) {
-    switch (payData.status) {
+    switch (payData.response.status) {
       case 'paid':
         // DB에 저장 처리 필요
         return { result: 'success', message: '결제 완료' };
@@ -87,16 +82,16 @@ export class PaymentService {
     token: AuthTokenInfo,
     id: string,
     auth?: UserAuthority,
-  ): Promise<RequestPayResponse> {
+  ): Promise<Result<RequestCustomResponse>> {
     const accessToken = (await this.getToken()).access_token;
     const payData = await axios
-      .get(`${process.env.IMP_PAY_URL}${id}`, {
+      .get(process.env.IMP_PAY_URL + id, {
         headers: {
           Authorization: accessToken,
         },
       })
-      .then((res: AxiosResponse<Result<RequestPayResponse>, string>) => {
-        return res.data.response;
+      .then((res: AxiosResponse<Result<RequestCustomResponse>, string>) => {
+        return res.data;
       })
       .catch((err) => {
         throw new BadRequestException();
@@ -106,35 +101,38 @@ export class PaymentService {
 
   async payCancel(
     token: AuthTokenInfo,
-    doc: any,
+    doc: CancelData,
     auth?: UserAuthority,
   ): Promise<PayResult> {
     const accessToken = (await this.getToken()).access_token;
     // merchant_uid를 통한 결제정보 조회 로직 필요(doc.merchant_uid)
-    const cancelData: any = {
+    const cancelData: CancelData = {
       reason: doc.reason,
-      imp_uid: 'imp_440900092871', //조회한 db에서 가져온 imp_uid
+      imp_uid: 'imp_298880665696', //조회한 db에서 가져온 imp_uid
       amount: doc.cancel_request_amount,
       checksum: 10, //조회한 db에서 가져온 amount
     };
-    const getCancelData = await axios
+    const getCancelData: Result<RequestCustomResponse> = await axios
       .post(process.env.IMP_CANCEL_URL, cancelData, {
         headers: {
           Authorization: accessToken,
         },
       })
-      .then((res: AxiosResponse<Result<any>, any>) => {
-        console.log(res);
+      .then((res: AxiosResponse<Result<RequestCustomResponse>, CancelData>) => {
         return res.data;
       })
       .catch((err) => {
         throw new BadRequestException();
       });
-    // 리턴값을 통해 db에 업데이트 작업 필요
-    // 상태: 결제완료 -> 환불
-    // 금액: 10 -> 0
 
     // 업데이트 후에
-    return { result: 'success', message: '환불 완료' };
+    if (getCancelData.response) {
+      // 리턴값을 통해 db에 업데이트 작업 필요
+      // 상태: 결제완료 -> 환불
+      // 금액: 10 -> 0
+      return { result: 'success', message: '환불 완료' };
+    } else {
+      return { result: 'already', message: '이미 처리된 환불사항' };
+    }
   }
 }
