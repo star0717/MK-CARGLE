@@ -16,5 +16,7 @@ FROM node:16.13.2-alpine AS production-env
 WORKDIR /app
 ## Step 1의 builder에서 build된 프로젝트를 가져온다
 COPY --from=build-env /app ./
+# Expose the listening port
+EXPOSE 7000
 ## application 실행
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]

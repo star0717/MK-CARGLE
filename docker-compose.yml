@@ -1,0 +1,17 @@
+version: '3'
+services:
+  front-end:
+    build: ./front-end
+    container_name: font-end
+    expose:
+      - "7000"
+  back-end:
+    build: ./back-end
+    container_name: back-end
+    expose:
+      - "7001"
+  nginx: 
+    build: ./nginx
+    container_name: nginx
+    ports:
+    - "80:80"
