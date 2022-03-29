@@ -38,9 +38,12 @@
 //     }
 //   },
 // });
+
+const node_env = process.env.NODE_ENV;
+
 module.exports = {
   async rewrites() {
-    if (process.env.NODE_ENV !== "production") {
+    if (node_env !== "production") {
       return [
         {
           source: process.env.SOURCE_PATH,

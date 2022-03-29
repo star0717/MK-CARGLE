@@ -28,6 +28,7 @@
     "docker:start": "sudo docker start back-end",
     "docker:restart": "sudo docker restart back-end",
     "docker:stop": "sudo docker stop back-end",
+    "docker:rm": "sudo docker rm back-end",
     "docker:exec": "sudo docker exec -it back-end /bin/sh",
     "docker:logs": "sudo docker logs back-end"
   },

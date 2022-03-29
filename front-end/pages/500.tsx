@@ -9,7 +9,7 @@ import {
   Image,
   CommonButton,
   RsWrapper,
-} from "../../../n2server/front-end/src/components/styles/CommonComponents";
+} from "src/components/styles/CommonComponents";
 import { UseLink } from "../src/configure/router.entity";
 
 /**
