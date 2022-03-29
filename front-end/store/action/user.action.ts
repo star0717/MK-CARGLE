@@ -1,5 +1,5 @@
-import { SmsApiPath } from "./../../../back-end/src/constants/api-path.const";
-import { genMainOptionQuery } from "./../../src/constants/maintenance.const";
+import { SmsApiPath } from "src/constants/api-path.const";
+import { genMainOptionQuery } from "src/constants/maintenance.const";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
   ConfirmPWD,
@@ -8,15 +8,15 @@ import {
   HelpFindPWD,
   SignUpInfo,
   UserInfo,
-} from "../../src/models/auth.entity";
+} from "src/models/auth.entity";
 import {
   DeleteResult,
   FindParameters,
   FindResult,
   OptionalInfo,
-} from "../../src/models/base.entity";
-import { Company } from "../../src/models/company.entity";
-import { User } from "../../src/models/user.entity";
+} from "src/models/base.entity";
+import { Company } from "src/models/company.entity";
+import { User } from "src/models/user.entity";
 import {
   ActionAPIs,
   actionTypesUser,
