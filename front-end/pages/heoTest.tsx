@@ -64,7 +64,6 @@ const HeoTest: NextPage<any> = (props) => {
         // 요청이 성공ㅎㅆ을 경우, 결제번호(imp_uid)와 주문번호(merchant_uid) 등 을 서버에 전달
         await dispatch(_aPostPaymentComplete(rspData)).then(
           (res: _iPaymentComplete) => {
-            console.log(res);
             switch (res.payload.result) {
               case "success":
                 break;
@@ -117,9 +116,14 @@ const HeoTest: NextPage<any> = (props) => {
    * SMS handler
    */
   const onSmsHandler = async () => {
-    await dispatch(_aPostSms()).then((res: _iSms) => {
-      alert("메시지를 전송했습니다.");
-    });
+    await dispatch(_aPostSms()).then(
+      (res: _iSms) => {
+        alert("메시지를 전송했습니다.");
+      },
+      (err) => {
+        alert("메시지 전송 실패");
+      }
+    );
   };
 
   /*********************************************************************
