@@ -14,14 +14,14 @@
     "forever": "forever start -a --uid front-end -c 'npm run start' ./",
     "forever:start": "forever start -a --uid front-end -c 'npm run start' ./",
     "forever:stop": "forever stop front-end",
-    "docker:build": "sudo docker build -t font-end .",
-    "docker:run": "sudo docker run -d -p 7000:7000 --name font-end font-end",
-    "docker:start": "sudo docker start font-end",
-    "docker:restart": "sudo docker restart font-end",
-    "docker:stop": "sudo docker stop font-end",
-    "docker:rm": "sudo docker rm font-end",
-    "docker:exec": "sudo docker exec -it font-end /bin/sh",
-    "docker:logs": "sudo docker logs font-end"
+    "docker:build": "sudo docker build -t front-end .",
+    "docker:run": "sudo docker run -d -p 7000:7000 --name front-end front-end",
+    "docker:start": "sudo docker start front-end",
+    "docker:restart": "sudo docker restart front-end",
+    "docker:stop": "sudo docker stop front-end",
+    "docker:rm": "sudo docker rm front-end",
+    "docker:exec": "sudo docker exec -it front-end /bin/sh",
+    "docker:logs": "sudo docker logs front-end"
   },
   "dependencies": {
     "@nestjs/swagger": "^5.1.4",
