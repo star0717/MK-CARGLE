@@ -100,8 +100,8 @@ class GenPathArgs {
 
 const _externalApiPath =
   process.env.NODE_ENV == "production"
-    ? `${process.env.DESTINATION_API}:${process.env.PORT}/api/`
-    : `${process.env.DESTINATION_API}/api/`;
+    ? `${process.env.DESTINATION_API}/api/`
+    : `${process.env.DESTINATION_API}:${process.env.PORT}/api/`;
 console.log("*************************************");
 console.log("*************************************");
 console.log("*************************************");
