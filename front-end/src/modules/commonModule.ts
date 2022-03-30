@@ -94,20 +94,11 @@ class GenPathArgs {
   isServerSide?: boolean;
 }
 
-// 서버사이드 랜더링시 사용되는 Back-End 주소
-// const _externalApiPath = `${process.env.DESTINATION_API}:${process.env.PORT}/api/`;
-// const _externalApiPath = `${process.env.DESTINATION_API}/api/`;
-
-const _externalApiPath =
+let _externalApiPath =
   process.env.NODE_ENV == "production"
     ? `${process.env.DESTINATION_API}/api/`
     : `${process.env.DESTINATION_API}:${process.env.PORT}/api/`;
-console.log("*************************************");
-console.log("*************************************");
-console.log("*************************************");
-console.log("*************************************");
-console.log("*************************************");
-console.log("*************************************");
+
 console.log("External API Path: " + _externalApiPath);
 
 /**
@@ -120,7 +111,6 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   let apiPath = "/api" + path;
   console.log(apiPath);
   if (args?.isServerSide) {
-    // apiPath = `${process.env.DESTINATION_API}:${process.env.PORT}/api/${path}`;
     apiPath = `${_externalApiPath}${path}`;
   }
 
@@ -131,7 +121,7 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   if (args?.findParams) {
     apiPath += genFindParamQuery(args.findParams);
   }
-  console.log("API 호출 경로:", apiPath);
+  // console.log("API 호출 경로:", apiPath);
   return apiPath;
 };
 

@@ -1,5 +1,32 @@
 {
   "dependencies": {
     "@nestjs/mapped-types": "*"
-  }
+  },
+  "name": "n2server",
+  "description": "Next.js + Nestjs 기반의 통합서버",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "docker-compose build",
+    "up": "docker-compose up",
+    "up:build": "docker-compose up --build",
+    "up:daemon": "docker-compose up -d",
+    "down": "docker-compose down",
+    "logs": "docker-compose logs",
+    "rm": "docker-compose rm",
+    "port": "docker-compose port",
+    "image:prune": "sudo docker image prune",
+    "image:rmAll": "sudo docker rmi $(docker images -q)",
+    "container:prune": "sudo docker container prune"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ByunMooYoung/n2server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ByunMooYoung/n2server/issues"
+  },
+  "homepage": "https://github.com/ByunMooYoung/n2server#readme"
 }

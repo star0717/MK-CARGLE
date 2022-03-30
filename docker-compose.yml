@@ -3,12 +3,12 @@ services:
   front-end:
     build: ./front-end
     image: front-end
-    container_name: font-end
+    container_name: front-end
     expose:
-      - "7000"
+      - "3000"
     depends_on:
       - back-end
-    entrypoint:
+    environment:
       - NODE_ENV=production
   back-end:
     build: ./back-end
@@ -16,10 +16,10 @@ services:
     container_name: back-end
     expose:
       - "7001"
-  nginx: 
-    build: ./nginx
-    image: nginx-end
-    container_name: nginx
+  proxy-server: 
+    build: ./proxy-server
+    image: proxy-server
+    container_name: proxy-server
     ports:
     - "80:80"
     depends_on:
