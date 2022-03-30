@@ -253,31 +253,22 @@ const MaintenanceIng: NextPage<_pMaintenanceProps> = (props) => {
       case "price":
       case "quantity":
       case "wage":
-        let value: number = Number(e.target.value);
-        if (e.target.value === "") {
-          value = 0;
-        } else {
-          if (e.target.value.includes(",")) {
-            e.target.value = e.target.value.replaceAll(",", "");
-            if (!basicRegEx.NUM.test(e.target.value)) {
-              return false;
-            } else {
-              value = Number(e.target.value);
-            }
-          }
-        }
+        if (e.target.value.includes(","))
+          e.target.value = e.target.value.replaceAll(",", "");
+
+        if (!basicRegEx.NUM.test(e.target.value)) return false;
 
         return setWorkList(
           workList.map((item, index) =>
             index === rowIdx
               ? {
                   ...item,
-                  [e.target.name]: value,
+                  [e.target.name]: Number(e.target.value),
                   sum:
                     e.target.name === "price"
-                      ? value * item.quantity
+                      ? Number(e.target.value) * item.quantity
                       : e.target.name === "quantity"
-                      ? item.price * value
+                      ? item.price * Number(e.target.value)
                       : item.price * item.quantity,
                 }
               : item
