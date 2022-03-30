@@ -308,308 +308,325 @@ const MaintenanceCreate: NextPage = () => {
             <Wrapper
               border={`1px solid #ccc`}
               margin={`10px 0px 0px 0px`}
-              padding={`10px`}
+              padding={`0px 10px`}
+              height={`610px`}
             >
               {showCar ? (
                 <form
                   id="carInfoForm"
                   onSubmit={handleSubmit(onCarStoredHandler)}
                 >
-                  <Wrapper height={`610px`} al={`center`}>
-                    <Wrapper
-                      dr={`row`}
-                      padding={`10px 0px 0px 0px`}
-                      ju={`space-between`}
-                    >
-                      <Text
-                        width={`80px`}
-                        textAlign={`right`}
-                        margin={`0px 10px 0px 0px`}
+                  <Wrapper height={`570px`} ju={`space-between`}>
+                    <Wrapper>
+                      <Wrapper dr={`row`} ju={`space-between`}>
+                        <Text
+                          width={`80px`}
+                          textAlign={`right`}
+                          margin={`0px 10px 0px 0px`}
+                        >
+                          <ColorSpan color={`#d6263b`}>*</ColorSpan>
+                          주행거리
+                        </Text>
+                        <TextInput2
+                          type="text"
+                          value={carInfo.distance}
+                          placeholder="주행거리를 입력하세요(km)"
+                          {...register("distance", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeCarInfo(e);
+                            },
+                            required: {
+                              value: true,
+                              message: "필수 입력사항입니다.",
+                            },
+                            pattern: {
+                              value: basicRegEx.NUM,
+                              message: "형식에 맞게 입력하세요.",
+                            },
+                          })}
+                        />
+                      </Wrapper>
+                      {(errors.distance?.type === "required" ||
+                        errors.distance?.type === "pattern") && (
+                        <Text
+                          margin={`0px -184px 0px 0px`}
+                          width={`100%`}
+                          color={`#d6263b`}
+                          al={`flex-start`}
+                          fontSize={`14px`}
+                          textAlign={`left`}
+                        >
+                          {errors.distance.message}
+                        </Text>
+                      )}
+                      <Wrapper
+                        dr={`row`}
+                        padding={`10px 0px 0px 0px`}
+                        ju={`space-between`}
                       >
-                        <ColorSpan color={`#d6263b`}>*</ColorSpan>
-                        주행거리
-                      </Text>
-                      <TextInput2
-                        type="text"
-                        value={carInfo.distance}
-                        placeholder="주행거리를 입력하세요(km)"
-                        {...register("distance", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                          required: {
-                            value: true,
-                            message: "필수 입력사항입니다.",
-                          },
-                          pattern: {
-                            value: basicRegEx.NUM,
-                            message: "형식에 맞게 입력하세요.",
-                          },
-                        })}
-                      />
+                        <Text
+                          width={`80px`}
+                          textAlign={`right`}
+                          margin={`0px 10px 0px 0px`}
+                        >
+                          고객명
+                        </Text>
+                        <TextInput2
+                          type="text"
+                          value={cusInfo.name}
+                          {...register("cusName", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setCusInfo({
+                                ...cusInfo,
+                                name: trim(e.target.value),
+                              });
+                            },
+                          })}
+                        />
+                      </Wrapper>
+                      <Wrapper
+                        dr={`row`}
+                        padding={`10px 0px 0px 0px`}
+                        ju={`space-between`}
+                      >
+                        <Text
+                          width={`80px`}
+                          textAlign={`right`}
+                          margin={`0px 10px 0px 0px`}
+                        >
+                          <ColorSpan color={`#d6263b`}>*</ColorSpan>
+                          전화번호
+                        </Text>
+                        <TextInput2
+                          type="text"
+                          value={cusInfo.phoneNumber}
+                          {...register("phoneNumber", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              if (!basicRegEx.NUM.test(e.target.value))
+                                return false;
+                              setCusInfo({
+                                ...cusInfo,
+                                phoneNumber: trim(e.target.value).replaceAll(
+                                  "-",
+                                  ""
+                                ),
+                              });
+                            },
+                            required: {
+                              value: true,
+                              message: "필수 입력사항입니다.",
+                            },
+                            pattern: {
+                              value: formRegEx.HP_NUM,
+                              message: "형식에 맞게 입력하세요.",
+                            },
+                          })}
+                        />
+                      </Wrapper>
+                      {(errors.phoneNumber?.type === "required" ||
+                        errors.phoneNumber?.type === "pattern") && (
+                        <Text
+                          margin={`0px -184px 0px 0px`}
+                          width={`100%`}
+                          color={`#d6263b`}
+                          al={`flex-start`}
+                          fontSize={`14px`}
+                          textAlign={`left`}
+                        >
+                          {errors.phoneNumber.message}
+                        </Text>
+                      )}
+                      <Wrapper
+                        dr={`row`}
+                        padding={`10px 0px 0px 0px`}
+                        ju={`space-between`}
+                      >
+                        <Text
+                          width={`80px`}
+                          textAlign={`right`}
+                          margin={`0px 10px 0px 0px`}
+                        >
+                          <ColorSpan color={`#d6263b`}>*</ColorSpan>
+                          차량명
+                        </Text>
+                        <TextInput2
+                          type="text"
+                          value={carInfo.name}
+                          {...register("name", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeCarInfo(e);
+                            },
+                            required: {
+                              value: true,
+                              message: "필수 입력사항입니다.",
+                            },
+                          })}
+                        />
+                      </Wrapper>
+                      {errors.name?.type === "required" && (
+                        <Text
+                          margin={`0px -184px 0px 0px`}
+                          width={`100%`}
+                          color={`#d6263b`}
+                          al={`flex-start`}
+                          fontSize={`14px`}
+                          textAlign={`left`}
+                        >
+                          {errors.name.message}
+                        </Text>
+                      )}
+                      <Wrapper
+                        dr={`row`}
+                        padding={`10px 0px 0px 0px`}
+                        ju={`space-between`}
+                      >
+                        <Text
+                          width={`80px`}
+                          textAlign={`right`}
+                          margin={`0px 10px 0px 0px`}
+                        >
+                          모델명
+                        </Text>
+                        <TextInput2
+                          type="text"
+                          value={carInfo.model}
+                          {...register("model", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeCarInfo(e);
+                            },
+                          })}
+                        />
+                      </Wrapper>
+                      <Wrapper
+                        dr={`row`}
+                        padding={`10px 0px 0px 0px`}
+                        ju={`space-between`}
+                      >
+                        <Text
+                          width={`80px`}
+                          textAlign={`right`}
+                          margin={`0px 10px 0px 0px`}
+                        >
+                          연식
+                        </Text>
+                        <TextInput2
+                          type="text"
+                          value={carInfo.age}
+                          {...register("age", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeCarInfo(e);
+                            },
+                          })}
+                        />
+                      </Wrapper>
+                      <Wrapper
+                        dr={`row`}
+                        padding={`10px 0px 0px 0px`}
+                        ju={`space-between`}
+                      >
+                        <Text
+                          width={`80px`}
+                          textAlign={`right`}
+                          margin={`0px 10px 0px 0px`}
+                        >
+                          차대번호
+                        </Text>
+                        <TextInput2
+                          type="text"
+                          value={carInfo.idNumber}
+                          {...register("idNumber", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeCarInfo(e);
+                            },
+                            pattern: {
+                              value: basicRegEx.NUM,
+                              message: "형식에 맞게 입력하세요.",
+                            },
+                          })}
+                        />
+                      </Wrapper>
+                      {errors.idNumber?.type === "pattern" && (
+                        <Text
+                          margin={`0px -184px 0px 0px`}
+                          width={`100%`}
+                          color={`#d6263b`}
+                          al={`flex-start`}
+                          fontSize={`14px`}
+                          textAlign={`left`}
+                        >
+                          {errors.idNumber.message}
+                        </Text>
+                      )}
+                      <Wrapper
+                        dr={`row`}
+                        padding={`10px 0px 0px 0px`}
+                        ju={`space-between`}
+                      >
+                        <Text
+                          width={`80px`}
+                          textAlign={`right`}
+                          margin={`0px 10px 0px 0px`}
+                        >
+                          등록일자
+                        </Text>
+                        <TextInput2
+                          type="text"
+                          value={carInfo.regDate}
+                          {...register("regDate", {
+                            onChange: (
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              onChangeCarInfo(e);
+                            },
+                          })}
+                        />
+                      </Wrapper>
                     </Wrapper>
-                    {(errors.distance?.type === "required" ||
-                      errors.distance?.type === "pattern") && (
-                      <Text
-                        margin={`0px -184px 0px 0px`}
-                        width={`100%`}
-                        color={`#d6263b`}
-                        al={`flex-start`}
-                        fontSize={`14px`}
-                        textAlign={`left`}
+                    <Wrapper>
+                      <Wrapper
+                        dr={`row`}
+                        ju={`space-between`}
+                        padding={`10px 0px`}
                       >
-                        {errors.distance.message}
-                      </Text>
-                    )}
-                    <Wrapper
-                      dr={`row`}
-                      padding={`10px 0px 0px 0px`}
-                      ju={`space-between`}
-                    >
-                      <Text
-                        width={`80px`}
-                        textAlign={`right`}
-                        margin={`0px 10px 0px 0px`}
-                      >
-                        고객명
-                      </Text>
-                      <TextInput2
-                        type="text"
-                        value={cusInfo.name}
-                        {...register("cusName", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            setCusInfo({
-                              ...cusInfo,
-                              name: trim(e.target.value),
-                            });
-                          },
-                        })}
-                      />
+                        <SmallButton
+                          type="button"
+                          width={`48%`}
+                          kindOf={`ghost`}
+                        >
+                          정비요청사항
+                        </SmallButton>
+                        <SmallButton
+                          type="button"
+                          width={`48%`}
+                          kindOf={`ghost`}
+                        >
+                          차량정보공유
+                        </SmallButton>
+                      </Wrapper>
+                      <Wrapper>
+                        <SmallButton
+                          type="button"
+                          width={`100%`}
+                          kindOf={`ghost`}
+                        >
+                          정비사진확인
+                        </SmallButton>
+                      </Wrapper>
                     </Wrapper>
-                    <Wrapper
-                      dr={`row`}
-                      padding={`10px 0px 0px 0px`}
-                      ju={`space-between`}
-                    >
-                      <Text
-                        width={`80px`}
-                        textAlign={`right`}
-                        margin={`0px 10px 0px 0px`}
-                      >
-                        <ColorSpan color={`#d6263b`}>*</ColorSpan>
-                        전화번호
-                      </Text>
-                      <TextInput2
-                        type="text"
-                        value={cusInfo.phoneNumber}
-                        {...register("phoneNumber", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            if (!basicRegEx.NUM.test(e.target.value))
-                              return false;
-                            setCusInfo({
-                              ...cusInfo,
-                              phoneNumber: trim(e.target.value).replaceAll(
-                                "-",
-                                ""
-                              ),
-                            });
-                          },
-                          required: {
-                            value: true,
-                            message: "필수 입력사항입니다.",
-                          },
-                          pattern: {
-                            value: formRegEx.HP_NUM,
-                            message: "형식에 맞게 입력하세요.",
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    {(errors.phoneNumber?.type === "required" ||
-                      errors.phoneNumber?.type === "pattern") && (
-                      <Text
-                        margin={`0px -184px 0px 0px`}
-                        width={`100%`}
-                        color={`#d6263b`}
-                        al={`flex-start`}
-                        fontSize={`14px`}
-                        textAlign={`left`}
-                      >
-                        {errors.phoneNumber.message}
-                      </Text>
-                    )}
-                    <Wrapper
-                      dr={`row`}
-                      padding={`10px 0px 0px 0px`}
-                      ju={`space-between`}
-                    >
-                      <Text
-                        width={`80px`}
-                        textAlign={`right`}
-                        margin={`0px 10px 0px 0px`}
-                      >
-                        <ColorSpan color={`#d6263b`}>*</ColorSpan>
-                        차량명
-                      </Text>
-                      <TextInput2
-                        type="text"
-                        value={carInfo.name}
-                        {...register("name", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                          required: {
-                            value: true,
-                            message: "필수 입력사항입니다.",
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    {errors.name?.type === "required" && (
-                      <Text
-                        margin={`0px -184px 0px 0px`}
-                        width={`100%`}
-                        color={`#d6263b`}
-                        al={`flex-start`}
-                        fontSize={`14px`}
-                        textAlign={`left`}
-                      >
-                        {errors.name.message}
-                      </Text>
-                    )}
-                    <Wrapper
-                      dr={`row`}
-                      padding={`10px 0px 0px 0px`}
-                      ju={`space-between`}
-                    >
-                      <Text
-                        width={`80px`}
-                        textAlign={`right`}
-                        margin={`0px 10px 0px 0px`}
-                      >
-                        모델명
-                      </Text>
-                      <TextInput2
-                        type="text"
-                        value={carInfo.model}
-                        {...register("model", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    <Wrapper
-                      dr={`row`}
-                      padding={`10px 0px 0px 0px`}
-                      ju={`space-between`}
-                    >
-                      <Text
-                        width={`80px`}
-                        textAlign={`right`}
-                        margin={`0px 10px 0px 0px`}
-                      >
-                        연식
-                      </Text>
-                      <TextInput2
-                        type="text"
-                        value={carInfo.age}
-                        {...register("age", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    <Wrapper
-                      dr={`row`}
-                      padding={`10px 0px 0px 0px`}
-                      ju={`space-between`}
-                    >
-                      <Text
-                        width={`80px`}
-                        textAlign={`right`}
-                        margin={`0px 10px 0px 0px`}
-                      >
-                        차대번호
-                      </Text>
-                      <TextInput2
-                        type="text"
-                        value={carInfo.idNumber}
-                        {...register("idNumber", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                          pattern: {
-                            value: basicRegEx.NUM,
-                            message: "형식에 맞게 입력하세요.",
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                    {errors.idNumber?.type === "pattern" && (
-                      <Text
-                        margin={`0px -184px 0px 0px`}
-                        width={`100%`}
-                        color={`#d6263b`}
-                        al={`flex-start`}
-                        fontSize={`14px`}
-                        textAlign={`left`}
-                      >
-                        {errors.idNumber.message}
-                      </Text>
-                    )}
-                    <Wrapper
-                      dr={`row`}
-                      padding={`10px 0px 0px 0px`}
-                      ju={`space-between`}
-                    >
-                      <Text
-                        width={`80px`}
-                        textAlign={`right`}
-                        margin={`0px 10px 0px 0px`}
-                      >
-                        등록일자
-                      </Text>
-                      <TextInput2
-                        type="text"
-                        value={carInfo.regDate}
-                        {...register("regDate", {
-                          onChange: (
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            onChangeCarInfo(e);
-                          },
-                        })}
-                      />
-                    </Wrapper>
-                  </Wrapper>
-                  <Wrapper dr={`row`} ju={`space-between`} padding={`10px 0px`}>
-                    <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
-                      정비요청사항
-                    </SmallButton>
-                    <SmallButton type="button" width={`48%`} kindOf={`ghost`}>
-                      차량정보공유
-                    </SmallButton>
-                  </Wrapper>
-                  <Wrapper>
-                    <SmallButton type="button" width={`100%`} kindOf={`ghost`}>
-                      정비사진확인
-                    </SmallButton>
                   </Wrapper>
                 </form>
               ) : (
@@ -802,7 +819,7 @@ const MaintenanceCreate: NextPage = () => {
                 <TableHeadLIST width={`14%`}>계</TableHeadLIST>
                 <TableHeadLIST width={`8%`}>기술료</TableHeadLIST>
               </TableHead>
-              <TableBody minHeight={`130px`}></TableBody>
+              <TableBody minHeight={`289px`}></TableBody>
             </TableWrapper>
             <Wrapper dr={`row`} ju={`flex-end`}>
               <Text>부품계 : 0 </Text>
