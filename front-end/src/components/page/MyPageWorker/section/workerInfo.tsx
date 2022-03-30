@@ -80,9 +80,14 @@ const WorkerInfo: NextPage<_pWorkerDataProps> = (props) => {
               >
                 <TableRowLIST width={`25%`}>{doc.name}</TableRowLIST>
                 <TableRowLIST width={`25%`}>{doc.hpNumber}</TableRowLIST>
-                <TableRowLIST width={`25%`}>
-                  {dayjs(doc.joinDate).format("YYYY-MM-DD")}
-                </TableRowLIST>
+                {doc.joinDate ? (
+                  <TableRowLIST width={`25%`}>
+                    {dayjs(doc.joinDate).format("YYYY-MM-DD")}
+                  </TableRowLIST>
+                ) : (
+                  <TableRowLIST width={`25%`}>-</TableRowLIST>
+                )}
+
                 {doc.approval ? (
                   <TableRowLIST width={`25%`}>승인</TableRowLIST>
                 ) : (
