@@ -10,7 +10,6 @@ import {
 import { _pPreviewModalProps } from "src/configure/_pProps.entity";
 import EstimateFile from "../../FileHTML/estimateFile";
 import StatementFile from "../../FileHTML/statementFile";
-import { AiOutlineCaretLeft, AiOutlineCaretRight } from "react-icons/ai";
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,

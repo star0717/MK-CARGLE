@@ -100,6 +100,9 @@ const MaintenanceCreate: NextPage = () => {
    * @param e
    */
   const onChangeCarInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "distance") {
+      if (!basicRegEx.NUM.test(e.target.value)) return false;
+    }
     setCarInfo({ ...carInfo, [e.target.name]: trim(e.target.value) });
   };
 
@@ -238,13 +241,13 @@ const MaintenanceCreate: NextPage = () => {
                   padding={`10px 0px`}
                 >
                   <Text fontSize={`24px`}>{searchCarText}</Text>
-                  {/* <IconButton
+                  <IconButton
                     type="button"
                     shadow={`none`}
                     onClick={onResetCar}
                   >
                     <AiFillCloseCircle />
-                  </IconButton> */}
+                  </IconButton>
                 </Wrapper>
               </Wrapper>
             ) : (
@@ -312,7 +315,7 @@ const MaintenanceCreate: NextPage = () => {
                   id="carInfoForm"
                   onSubmit={handleSubmit(onCarStoredHandler)}
                 >
-                  <Wrapper>
+                  <Wrapper height={`610px`} al={`center`}>
                     <Wrapper
                       dr={`row`}
                       padding={`10px 0px 0px 0px`}
@@ -350,7 +353,7 @@ const MaintenanceCreate: NextPage = () => {
                     {(errors.distance?.type === "required" ||
                       errors.distance?.type === "pattern") && (
                       <Text
-                        margin={`0px 0px 0px 186px`}
+                        margin={`0px -184px 0px 0px`}
                         width={`100%`}
                         color={`#d6263b`}
                         al={`flex-start`}
@@ -407,9 +410,14 @@ const MaintenanceCreate: NextPage = () => {
                           onChange: (
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
+                            if (!basicRegEx.NUM.test(e.target.value))
+                              return false;
                             setCusInfo({
                               ...cusInfo,
-                              phoneNumber: trim(e.target.value),
+                              phoneNumber: trim(e.target.value).replaceAll(
+                                "-",
+                                ""
+                              ),
                             });
                           },
                           required: {
@@ -426,7 +434,7 @@ const MaintenanceCreate: NextPage = () => {
                     {(errors.phoneNumber?.type === "required" ||
                       errors.phoneNumber?.type === "pattern") && (
                       <Text
-                        margin={`0px 0px 0px 186px`}
+                        margin={`0px -184px 0px 0px`}
                         width={`100%`}
                         color={`#d6263b`}
                         al={`flex-start`}
@@ -467,7 +475,7 @@ const MaintenanceCreate: NextPage = () => {
                     </Wrapper>
                     {errors.name?.type === "required" && (
                       <Text
-                        margin={`0px 0px 0px 186px`}
+                        margin={`0px -184px 0px 0px`}
                         width={`100%`}
                         color={`#d6263b`}
                         al={`flex-start`}
@@ -555,7 +563,7 @@ const MaintenanceCreate: NextPage = () => {
                     </Wrapper>
                     {errors.idNumber?.type === "pattern" && (
                       <Text
-                        margin={`0px 0px 0px 186px`}
+                        margin={`0px -184px 0px 0px`}
                         width={`100%`}
                         color={`#d6263b`}
                         al={`flex-start`}

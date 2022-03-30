@@ -271,41 +271,36 @@ const MaintenanceStored: NextPage<_pMaintenanceProps> = (props) => {
       case "price":
       case "quantity":
       case "wage":
-        if (e.target.value === "" || !basicRegEx.NUM.test(e.target.value)) {
-          return setWorkList(
-            workList.map((item, index) =>
-              index === rowIdx
-                ? {
-                    ...item,
-                    [e.target.name]: 0,
-                    sum:
-                      e.target.name === "price"
-                        ? Number(e.target.value) * item.quantity
-                        : e.target.name === "quantity"
-                        ? item.price * Number(e.target.value)
-                        : item.price * item.quantity,
-                  }
-                : item
-            )
-          );
+        let value: number = Number(e.target.value);
+        if (e.target.value === "") {
+          value = 0;
         } else {
-          return setWorkList(
-            workList.map((item, index) =>
-              index === rowIdx
-                ? {
-                    ...item,
-                    [e.target.name]: Number(e.target.value),
-                    sum:
-                      e.target.name === "price"
-                        ? Number(e.target.value) * item.quantity
-                        : e.target.name === "quantity"
-                        ? item.price * Number(e.target.value)
-                        : item.price * item.quantity,
-                  }
-                : item
-            )
-          );
+          if (e.target.value.includes(",")) {
+            e.target.value = e.target.value.replaceAll(",", "");
+            if (!basicRegEx.NUM.test(e.target.value)) {
+              return false;
+            } else {
+              value = Number(e.target.value);
+            }
+          }
         }
+
+        return setWorkList(
+          workList.map((item, index) =>
+            index === rowIdx
+              ? {
+                  ...item,
+                  [e.target.name]: value,
+                  sum:
+                    e.target.name === "price"
+                      ? value * item.quantity
+                      : e.target.name === "quantity"
+                      ? item.price * value
+                      : item.price * item.quantity,
+                }
+              : item
+          )
+        );
       default:
         setWorkList(
           workList.map((item, index) =>

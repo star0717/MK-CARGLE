@@ -27,14 +27,14 @@ export class SmsService {
     auth?: UserAuthority,
   ): Promise<GetMessagesResponse> {
     const messageData: Message = {
-      to: '01093681143',
+      to: '01077109917',
       from: '16443486',
-      text: '팔콘펀치 (((c=(ﾟﾛﾟ);q',
+      // text: '⎛⎝(•‿•)⎠⎞⎛⎝(•‿•)⎠⎞⎛⎝(•‿•)⎠⎞⎛⎝(•‿•)⎠⎞',
       kakaoOptions: {
         pfId: process.env.KAKAO_PFID,
         disableSms: false,
         adFlag: false,
-        //   templateId: process.env.KAKAO_TID, // 템플릿 ID
+        templateId: process.env.KAKAO_TID, // 템플릿 ID
       },
       autoTypeDetect: true,
     };
