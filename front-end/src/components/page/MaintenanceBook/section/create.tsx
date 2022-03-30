@@ -36,7 +36,7 @@ import { FaCarAlt, FaFlagCheckered } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
 import { RiFileList2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { basicRegEx, formRegEx, NUM_ONLY } from "src/validation/regEx";
+import { basicRegEx, formRegEx } from "src/validation/regEx";
 import {
   _aGetMaintenancesCarInfo,
   _aPostMaintenancesStore,
