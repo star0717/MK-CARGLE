@@ -115,3 +115,54 @@ sudo docker image prune
 ```
 sudo docker rmi $(docker images -q)
 ```
+
+### ECR을 통한 Docker 이미지 관리
+
+ecs용 context 생성
+
+- mkecscontext란 이름을 가지는 ecs타입의 컨텍스트 생성
+
+```
+sudo docker context create ecs mkecscontext
+```
+
+생성된 컨텍스트 확인
+
+```
+sudo docker context ls
+NAME                TYPE                DESCRIPTION                               DOCKER ENDPOINT               KUBERNETES ENDPOINT   ORCHESTRATOR
+default *           moby                Current DOCKER_HOST based configuration   unix:///var/run/docker.sock                         swarm
+mkecscontext        ecs
+```
+
+생성한 컨텍스트 사용
+
+```
+sudo docker context use mkecscontext
+```
+
+#### ecr 로그인용 토큰 발급
+
+- region: ECR 리전
+- password-stdin: ECR 기본 URL
+
+```
+aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 617699280027.dkr. ecr.ap-northeast-2.amazonaws.com
+WARNING! Your password will be stored unencrypted in /home/dev/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+```
+
+ecs용 도커 이미지들 빌드
+
+```
+docker-compose --file docker-compose.ecs.yml build
+```
+
+빌드한 이미지를 ecr에 업로드(push)
+
+```
+docker-compose --file docker-compose.ecs.yml push
+```
