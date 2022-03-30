@@ -16,6 +16,7 @@ import { _iPayment, _iPaymentComplete, _iSms } from "store/interfaces";
 import { RequestPayParams, RequestPayResponse } from "iamport-typings";
 import { CancelData, PayData } from "src/models/payment.entity";
 dayjs.locale("ko");
+import AWS from "aws-sdk";
 
 const HeoTest: NextPage<any> = (props) => {
   /*********************************************************************
@@ -25,6 +26,24 @@ const HeoTest: NextPage<any> = (props) => {
   const dispatch = useDispatch();
 
   const impCode: string = process.env.NEXT_PUBLIC_IMP_CODE;
+
+  const ACCESS_KEY = "IAM의 ACCESS KEY";
+  const SECRET_ACCESS_KEY = "IAM의 SECRET ACCESS KEY";
+  const REGION = "ap-northeast-2";
+  const S3_BUCKET = "mk-cargle-img";
+
+  AWS.config.update({
+    accessKeyId: ACCESS_KEY,
+    secretAccessKey: SECRET_ACCESS_KEY,
+  });
+
+  const myBucket = new AWS.S3({
+    params: {
+      Bucket: { Bucket: S3_BUCKET },
+      region: REGION,
+    },
+  });
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -90,6 +109,9 @@ const HeoTest: NextPage<any> = (props) => {
     IMP.request_pay(data, callback);
   };
 
+  /**
+   * 환불 handler
+   */
   const cancelPay = async () => {
     const cancelData: CancelData = {
       merchant_uid: "mid_1648444116040", // 주문번호
@@ -124,6 +146,15 @@ const HeoTest: NextPage<any> = (props) => {
         alert("메시지 전송 실패");
       }
     );
+  };
+
+  const s3FileUpload = async () => {
+    // const params = {
+    //   ACL: 'public-read',
+    //   Body: file,
+    //   Bucket: S3_BUCKET,
+    //   Key:
+    // }
   };
 
   /*********************************************************************
@@ -165,6 +196,9 @@ const HeoTest: NextPage<any> = (props) => {
         </CommonButton>
         <CommonButton type="button" onClick={cancelPay}>
           환불하기
+        </CommonButton>
+        <CommonButton type="button" onClick={s3FileUpload}>
+          파일업로드
         </CommonButton>
       </Wrapper>
     </>

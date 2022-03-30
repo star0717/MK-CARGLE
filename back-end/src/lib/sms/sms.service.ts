@@ -4,6 +4,7 @@ import { AuthTokenInfo } from 'src/models/auth.entity';
 import solapi, {
   GetMessagesRequestType,
   GetMessagesResponse,
+  KakaoButton,
   Message,
   SingleMessageSentResponse,
 } from 'solapi';
@@ -26,16 +27,25 @@ export class SmsService {
     token: AuthTokenInfo,
     auth?: UserAuthority,
   ): Promise<GetMessagesResponse> {
+    //메세지 버튼
+    const messageBtn: KakaoButton = {
+      buttonName: '확인하기',
+      buttonType: 'WL',
+      linkPc: 'https://www.cleanoasis.net',
+      linkMo: 'https://www.cleanoasis.net',
+    };
+    //메세지 내용
     const messageData: Message = {
-      to: '01077109917',
+      to: '01071626630',
       from: '16443486',
       // text: '⎛⎝(•‿•)⎠⎞⎛⎝(•‿•)⎠⎞⎛⎝(•‿•)⎠⎞⎛⎝(•‿•)⎠⎞',
-      text: '안녕하세요 테스트입니다. 소독이 완료되었습니다.',
+      text: '안녕하세요 테스트입니다. 소독이 완료되었습니다.(미소)',
       kakaoOptions: {
         pfId: process.env.KAKAO_PFID,
         disableSms: false,
         adFlag: false,
         templateId: process.env.KAKAO_TID, // 템플릿 ID
+        buttons: [messageBtn],
       },
       autoTypeDetect: true,
     };
