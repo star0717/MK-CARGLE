@@ -30,6 +30,7 @@ export class SmsService {
       to: '01077109917',
       from: '16443486',
       // text: '⎛⎝(•‿•)⎠⎞⎛⎝(•‿•)⎠⎞⎛⎝(•‿•)⎠⎞⎛⎝(•‿•)⎠⎞',
+      text: '안녕하세요 테스트입니다. 소독이 완료되었습니다.',
       kakaoOptions: {
         pfId: process.env.KAKAO_PFID,
         disableSms: false,
