@@ -553,7 +553,7 @@ const MaintenanceCreate: NextPage = () => {
                               onChangeCarInfo(e);
                             },
                             pattern: {
-                              value: basicRegEx.NUM,
+                              value: formRegEx.CAR_ID_NUM,
                               message: "형식에 맞게 입력하세요.",
                             },
                           })}
@@ -584,7 +584,7 @@ const MaintenanceCreate: NextPage = () => {
                           등록일자
                         </Text>
                         <TextInput2
-                          type="text"
+                          type="date"
                           value={carInfo.regDate}
                           {...register("regDate", {
                             onChange: (
