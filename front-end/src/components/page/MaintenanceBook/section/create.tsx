@@ -584,6 +584,7 @@ const MaintenanceCreate: NextPage = () => {
                           등록일자
                         </Text>
                         <TextInput2
+                          width={`189px`}
                           type="date"
                           value={carInfo.regDate}
                           {...register("regDate", {
