@@ -315,7 +315,7 @@ const MaintenanceCreate: NextPage = () => {
                   id="carInfoForm"
                   onSubmit={handleSubmit(onCarStoredHandler)}
                 >
-                  <Wrapper>
+                  <Wrapper height={`610px`} al={`center`}>
                     <Wrapper
                       dr={`row`}
                       padding={`10px 0px 0px 0px`}

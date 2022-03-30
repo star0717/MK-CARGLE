@@ -28,11 +28,3 @@ export const CHAR_DEL = (str: any) => {
     return str;
   }
 };
-
-export const NUM_ONLY = (num: any) => {
-  if (!basicRegEx.NUM.test(num)) {
-    return false;
-  } else {
-    return num;
-  }
-};
