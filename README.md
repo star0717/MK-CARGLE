@@ -120,7 +120,7 @@ sudo docker rmi $(docker images -q)
 
 ecs용 context 생성
 
-- mkecscontext란 이름을 가지는 ecs타입의 컨텍스트 생성
+mkecscontext란 이름을 가지는 ecs타입의 컨텍스트 생성
 
 ```
 sudo docker context create ecs mkecscontext
@@ -141,7 +141,7 @@ mkecscontext        ecs
 sudo docker context use mkecscontext
 ```
 
-#### ecr 로그인용 토큰 발급
+ecr 로그인용 토큰 발급
 
 - region: ECR 리전
 - password-stdin: ECR 기본 URL
@@ -166,3 +166,5 @@ docker-compose --file docker-compose.ecs.yml build
 ```
 docker-compose --file docker-compose.ecs.yml push
 ```
+
+업로드에 성공하는 AWS ECR 콘솔에서 업로드된 이미지들을 확인할 수 있다.

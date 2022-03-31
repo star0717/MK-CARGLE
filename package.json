@@ -19,7 +19,8 @@
     "local:image:rmAll": "sudo docker rmi $(docker images -q)",
     "local:container:prune": "sudo docker container prune",
     "ecs:build": "docker-compose --file docker-compose.ecs.yml build",
-    "ecs:push": "docker-compose --file docker-compose.ecs.yml push"
+    "ecs:push": "docker-compose --file docker-compose.ecs.yml push",
+    "ecs:up": "docker-compose --file docker-compose.ecs.yml up"
   },
   "repository": {
     "type": "git",
