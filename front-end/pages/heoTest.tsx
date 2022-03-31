@@ -284,6 +284,7 @@ const HeoTest: NextPage<any> = (props) => {
             src={process.env.NEXT_PUBLIC_GET_IMG_LINK}
             width={300}
             height={300}
+            priority
           />
         </Wrapper>
       </Wrapper>
