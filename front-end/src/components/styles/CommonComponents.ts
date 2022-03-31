@@ -2007,3 +2007,22 @@ export const CommonForm = styled.form<any>`
   align-items: ${(props) => props.al || `inherit`};
   justify-content: ${(props) => props.ju || `inherit`};
 `;
+
+export const ProgressBar = styled.progress<any>`
+  width: 300px;
+  height: 34px;
+  padding: 4px;
+  -webkit-appearance: none;
+
+  &::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 40px;
+    padding: 4px;
+    box-shadow: 0px 3px 6px rgba(120, 120, 120, 0.4);
+  }
+
+  &::-webkit-progress-value {
+    background-color: #8dafce;
+    border-radius: 40px;
+  }
+`;

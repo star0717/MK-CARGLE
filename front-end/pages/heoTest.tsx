@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
 import {
   CommonButton,
+  ProgressBar,
   Text,
   TextInput2,
   Wrapper,
@@ -23,6 +24,7 @@ import { CancelData, PayData } from "src/models/payment.entity";
 dayjs.locale("ko");
 import AWS from "aws-sdk";
 import Image, { ImageProps } from "next/image";
+import { FiCheckCircle } from "react-icons/fi";
 
 const HeoTest: NextPage<any> = (props) => {
   /*********************************************************************
@@ -246,14 +248,27 @@ const HeoTest: NextPage<any> = (props) => {
         </Wrapper>
         <Wrapper border="1px solid black" padding={"20px 0px"}>
           {showAlert && (
-            <Wrapper dr={`row`}>
+            <Wrapper dr={`row`} padding={`20px 0px`}>
               <Text>진행률 : </Text>
-              <progress id="progress" max="100" value={progress}>
+              <ProgressBar id="progress" max="100" value={progress}>
                 {progress}%
-              </progress>
+              </ProgressBar>
             </Wrapper>
           )}
-          {progress === 100 && <Text>전송 완료!</Text>}
+          {progress === 100 && (
+            <Wrapper padding={`20px 0px`}>
+              <Text
+                color={`#8dafce`}
+                fontSize={`32px`}
+                padding={`0`}
+                margin={`0`}
+              >
+                <FiCheckCircle />
+              </Text>
+              <Text>전송 완료!</Text>
+            </Wrapper>
+          )}
+
           <TextInput2
             type="file"
             onChange={fileHandler}
