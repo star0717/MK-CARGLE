@@ -1819,7 +1819,6 @@ export const ToolTipWrapper = styled.div<any>`
   transition: 0.5s;
   position: relative;
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
-  word-break: break-all;
 
   & svg {
   }
