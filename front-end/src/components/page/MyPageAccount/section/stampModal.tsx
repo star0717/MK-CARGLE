@@ -34,7 +34,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
   const dispatch = useDispatch();
 
   // state 관리
-  const [fileName, setFileName] = useState<string>(""); // 도장 이미지 파일명
+  const [fileName, setFileName] = useState<string>(props.selectedFile.name); // 도장 이미지 파일명
   const [upImg, setUpImg] = useState<any>(); // React-crop
   const imgRef = useRef<any>(null); // React-crop
   const previewCanvasRef = useRef<any>(null); // React-crop
@@ -79,18 +79,24 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
     );
   };
 
-  /**
-   * 이미지 파일 선택 handler
-   * @param e
-   */
-  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFileName(e.target.files[0].name);
-      const reader = new FileReader();
-      reader.addEventListener("load", () => setUpImg(reader.result));
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
+  useEffect(() => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => setUpImg(reader.result));
+    reader.readAsDataURL(props.selectedFile);
+  }, [props.selectedFile]);
+
+  // /**
+  //  * 이미지 파일 선택 handler
+  //  * @param e
+  //  */
+  // const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     setFileName(e.target.files[0].name);
+  //     // const reader = new FileReader();
+  //     // reader.addEventListener("load", () => setUpImg(reader.result));
+  //     // reader.readAsDataURL(e.target.files[0]);
+  //   }
+  // };
 
   /**
    * React-crop 기능(이미지 반환)
@@ -160,7 +166,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
         <Text>파일 선택</Text>
         <Wrapper dr={`row`} ju={`center`}>
           <TextInput2
-            width={`300px`}
+            width={`400px`}
             type="text"
             placeholder="이미지 파일을 선택해주세요 (png,jpg)"
             value={fileName}
@@ -168,21 +174,21 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
             readOnly
           />
 
-          <LabelButton
+          {/* <LabelButton
             kindOf={`default`}
             margin={`0px 0px 0px 20px`}
             htmlFor="stamp"
           >
             파일선택
-          </LabelButton>
+          </LabelButton> */}
 
-          <TextInput2
+          {/* <TextInput2
             style={{ display: "none" }}
             id="stamp"
             type="file"
-            onChange={onSelectFile}
+            // onChange={onSelectFile}
             accept="image/*"
-          />
+          /> */}
         </Wrapper>
         {upImg && (
           <StampWrapper

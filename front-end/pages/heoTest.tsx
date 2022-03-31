@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NextPage } from "next";
-import { CommonButton, Wrapper } from "src/components/styles/CommonComponents";
+import {
+  CommonButton,
+  ProgressBar,
+  Text,
+  TextInput2,
+  Wrapper,
+} from "src/components/styles/CommonComponents";
 import Script from "next/script";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -17,6 +23,8 @@ import { RequestPayParams, RequestPayResponse } from "iamport-typings";
 import { CancelData, PayData } from "src/models/payment.entity";
 dayjs.locale("ko");
 import AWS from "aws-sdk";
+import Image, { ImageProps } from "next/image";
+import { FiCheckCircle } from "react-icons/fi";
 
 const HeoTest: NextPage<any> = (props) => {
   /*********************************************************************
@@ -27,26 +35,29 @@ const HeoTest: NextPage<any> = (props) => {
 
   const impCode: string = process.env.NEXT_PUBLIC_IMP_CODE;
 
-  const ACCESS_KEY = "IAM의 ACCESS KEY";
-  const SECRET_ACCESS_KEY = "IAM의 SECRET ACCESS KEY";
-  const REGION = "ap-northeast-2";
-  const S3_BUCKET = "mk-cargle-img";
+  const ACCESS_KEY: string = process.env.NEXT_PUBLIC_ACCESS_KEY;
+  const SECRET_ACCESS_KEY: string = process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY;
+  const REGION: string = process.env.NEXT_PUBLIC_REGION;
+  const S3_BUCKET: string = process.env.NEXT_PUBLIC_S3_BUCKET;
 
   AWS.config.update({
     accessKeyId: ACCESS_KEY,
     secretAccessKey: SECRET_ACCESS_KEY,
   });
 
-  const myBucket = new AWS.S3({
+  const s3 = new AWS.S3({
     params: {
       Bucket: { Bucket: S3_BUCKET },
-      region: REGION,
     },
+    region: REGION,
   });
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [progress, setProgress] = useState<number>(0);
+  const [selectedFile, setSelectedFile] = useState<File>(null);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
 
   /*********************************************************************
    * 3. Handlers
@@ -148,13 +159,46 @@ const HeoTest: NextPage<any> = (props) => {
     );
   };
 
+  const fileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProgress(0);
+    setSelectedFile(e.target.files[0]);
+  };
+
   const s3FileUpload = async () => {
-    // const params = {
-    //   ACL: 'public-read',
-    //   Body: file,
-    //   Bucket: S3_BUCKET,
-    //   Key:
-    // }
+    if (!selectedFile) return alert("파일을 선택하세요");
+    setProgress(0);
+    let fileType = selectedFile.name;
+    fileType = fileType.substring(fileType.lastIndexOf("."), fileType.length);
+    const acceptType: string[] = [".jpeg", ".jpg", ".png", ".pdf"];
+    if (!acceptType.includes(fileType))
+      return alert("jpeg, jpg, png, pdf 파일만 가능합니다");
+
+    const params = {
+      ACL: "public-read",
+      Body: selectedFile,
+      Bucket: S3_BUCKET,
+      Key: "crn/3388800960" + fileType,
+    };
+
+    s3.putObject(params)
+      .on("httpUploadProgress", (evt) => {
+        setProgress(Math.round((evt.loaded / evt.total) * 100));
+        setShowAlert(true);
+      })
+      .send((err) => {
+        if (err) return alert("업로드 에러");
+      });
+  };
+
+  useEffect(() => {
+    if (progress === 100) {
+      setShowAlert(false);
+      setSelectedFile(null);
+    }
+  }, [progress]);
+
+  const imgLoader = ({ src }: ImageProps) => {
+    return `https://${S3_BUCKET}${src}crn/3388800960.jpeg`;
   };
 
   /*********************************************************************
@@ -176,30 +220,73 @@ const HeoTest: NextPage<any> = (props) => {
         src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"
       ></Script>
       <Wrapper>
-        <CommonButton type="button" onClick={onPaymentHandler}>
-          결제하기
-        </CommonButton>
-        <CommonButton type="button" onClick={onSmsHandler}>
-          SMS전송
-        </CommonButton>
-        <CommonButton
-          type="button"
-          onClick={() => {
-            dispatch(_aGetPaymentData("imp_298880665696")).then(
-              (res: _iPayment) => {
-                console.log(res.payload);
-              }
-            );
-          }}
-        >
-          결제조회
-        </CommonButton>
-        <CommonButton type="button" onClick={cancelPay}>
-          환불하기
-        </CommonButton>
-        <CommonButton type="button" onClick={s3FileUpload}>
-          파일업로드
-        </CommonButton>
+        <Wrapper border="1px solid black" padding={"20px 0px"}>
+          <CommonButton type="button" onClick={onPaymentHandler}>
+            결제하기
+          </CommonButton>
+
+          <CommonButton
+            type="button"
+            onClick={() => {
+              dispatch(_aGetPaymentData("imp_298880665696")).then(
+                (res: _iPayment) => {
+                  console.log(res.payload);
+                }
+              );
+            }}
+          >
+            결제조회
+          </CommonButton>
+          <CommonButton type="button" onClick={cancelPay}>
+            환불하기
+          </CommonButton>
+        </Wrapper>
+        <Wrapper border="1px solid black" padding={"20px 0px"}>
+          <CommonButton type="button" onClick={onSmsHandler}>
+            SMS전송
+          </CommonButton>
+        </Wrapper>
+        <Wrapper border="1px solid black" padding={"20px 0px"}>
+          {showAlert && (
+            <Wrapper dr={`row`} padding={`20px 0px`}>
+              <Text>진행률 : </Text>
+              <ProgressBar id="progress" max="100" value={progress}>
+                {progress}%
+              </ProgressBar>
+            </Wrapper>
+          )}
+          {progress === 100 && (
+            <Wrapper padding={`20px 0px`}>
+              <Text
+                color={`#8dafce`}
+                fontSize={`32px`}
+                padding={`0`}
+                margin={`0`}
+              >
+                <FiCheckCircle />
+              </Text>
+              <Text>전송 완료!</Text>
+            </Wrapper>
+          )}
+
+          <TextInput2
+            type="file"
+            onChange={fileHandler}
+            accept="image/*, .pdf"
+          />
+          <CommonButton type="button" onClick={s3FileUpload}>
+            파일업로드
+          </CommonButton>
+        </Wrapper>
+        <Wrapper border="1px solid black" padding={"20px 0px"}>
+          <Image
+            loader={imgLoader}
+            src={process.env.NEXT_PUBLIC_GET_IMG_LINK}
+            width={300}
+            height={300}
+            priority
+          />
+        </Wrapper>
       </Wrapper>
     </>
   );

@@ -1,5 +1,5 @@
 import { AuthToken } from 'src/lib/decorators/decorators';
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post, UploadedFile } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { SmsService } from './sms.service';

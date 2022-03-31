@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePwModal from "./changePwModal";
@@ -42,6 +42,8 @@ import {
   _pStampModalProps,
 } from "../../../../configure/_pProps.entity";
 import { User } from "../../../../models/user.entity";
+import { useDropzone } from "react-dropzone";
+import { BsDownload, BsUpload } from "react-icons/bs";
 
 /**
  * 마이 페이지: 계정관리 수정 컴포넌트(기능)
@@ -67,6 +69,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
   const [userData, setUserData] = useState<User>(props.accountInfo.user); // 불러온 계정정보 - 유저
   const [comData, setComData] = useState<Company>(props.accountInfo.company); // 불러온 계정정보 - 회사
+  const [selectedFile, setSelectedFile] = useState();
   const [stampImgSrc, setStampImgSrc] = useState<string>(
     "/api/settings/myinfo/stamp"
   ); // url src 설정
@@ -183,6 +186,44 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
       });
   };
 
+  const DropZone: any = () => {
+    const onDrop = useCallback((acceptedFiles) => {
+      // Do something with the files
+      console.log(acceptedFiles);
+      setSelectedFile(acceptedFiles[0]);
+      setModalOpen(!modalOpen);
+      setModalOption("stamp");
+    }, []);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+    });
+
+    return (
+      <Wrapper {...getRootProps()}>
+        <input {...getInputProps()} />
+        {isDragActive ? (
+          <>
+            <Text fontSize={`40px`} color={`#ccc`}>
+              <BsDownload />
+            </Text>
+            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+              업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+            </Text>
+          </>
+        ) : (
+          <>
+            <Text fontSize={`40px`} color={`#ccc`}>
+              <BsUpload />
+            </Text>
+            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+              업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+            </Text>
+          </>
+        )}
+      </Wrapper>
+    );
+  };
+
   // 비밀번호 변경 modal props
   const ChangePwModalProps: _pMyPageAccountProps = {
     ...props,
@@ -194,6 +235,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   const StampModalProps: _pStampModalProps = {
     stampNum,
     setStampNum,
+    selectedFile,
     setModalOpen,
     stampImgSrc,
     setStampImgSrc,
@@ -756,12 +798,16 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                         radius={`5px`}
                         padding={`10px 0px`}
                       >
-                        <Image
-                          alt="도장 사진"
-                          width={`100 px`}
-                          // height={200}
-                          src={stampImgSrc}
-                        />
+                        {stampImgSrc ? (
+                          <Image
+                            alt="도장 사진"
+                            width={`100 px`}
+                            // height={200}
+                            src={stampImgSrc}
+                          />
+                        ) : (
+                          <DropZone />
+                        )}
                       </Wrapper>
 
                       <SmallButton
