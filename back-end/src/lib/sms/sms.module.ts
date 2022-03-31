@@ -4,7 +4,6 @@ import { SmsController } from './sms.controller';
 import { CompaniesModule } from 'src/modules/companies/companies.module';
 
 @Module({
-  imports: [CompaniesModule],
   controllers: [SmsController],
   providers: [SmsService],
 })
