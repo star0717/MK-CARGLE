@@ -2,7 +2,7 @@
 FROM node:16.13.2-alpine AS be-deps
 WORKDIR /app
 COPY package*.json ./ 
-RUN npm i
+RUN npm i --legacy-peer-deps
 
 # Rebuild the source code only when needed
 FROM node:16.13.2-alpine AS be-builder
