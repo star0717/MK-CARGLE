@@ -15,6 +15,11 @@ RUN npm run build
 FROM node:16.13.2-alpine AS be-runner
 WORKDIR /app
 
+RUN mkdir -p /app/storage
+RUN mkdir -p /app/storage/crn
+RUN mkdir -p /app/storage/mrn
+RUN mkdir -p /app/storage/stamp
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nestjs
 
@@ -22,9 +27,6 @@ RUN adduser --system --uid 1001 nestjs
 COPY --from=be-builder --chown=nestjs:nodejs /app ./
 USER nestjs
 
-RUN mkdir -p /app/storage
-RUN mkdir -p  /app/storage/crn
-RUN mkdir -p  /app/storage/mrn
-RUN mkdir -p  /app/storage/stamp
+
 
 CMD ["npm", "run", "start:prod"]
