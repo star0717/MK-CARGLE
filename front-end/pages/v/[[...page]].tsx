@@ -271,37 +271,28 @@ export const getServerSideProps: GetServerSideProps = async (
   try {
     switch (pagePath) {
       case UseLink.MAIN:
-        let Today = dayjs().toDate();
-        let LastMonth = dayjs().subtract(1, "month").toDate();
+        if (tokenValue.cApproval === CompanyApproval.DONE) {
+          let Today = dayjs().toDate();
+          let LastMonth = dayjs().subtract(1, "month").toDate();
 
-        successResult.props.data = await axios
-          .get(
-            genApiPath(MaintenancesApiPath.maintenances, {
-              findParams: {
-                sFrom: LastMonth,
-                sTo: Today,
-              },
-              isServerSide: true,
-            }),
-            authConfig
-          )
-          .then(
-            (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
-              res.data
-          );
-
-        return successResult;
-
-      case UseLink.TEST:
-        successResult.props.data = await axios
-          .get(
-            genApiPath(AgenciesApiPath.agencies, {
-              findParams: params,
-              isServerSide: true,
-            }),
-            authConfig
-          )
-          .then((res: AxiosResponse<FindResult<Agency>, Agency>) => res.data);
+          successResult.props.data = await axios
+            .get(
+              genApiPath(MaintenancesApiPath.maintenances, {
+                findParams: {
+                  sFrom: LastMonth,
+                  sTo: Today,
+                },
+                isServerSide: true,
+              }),
+              authConfig
+            )
+            .then(
+              (res: AxiosResponse<FindResult<Maintenance>, Maintenance>) =>
+                res.data
+            );
+        } else {
+          delete successResult.props.data;
+        }
         return successResult;
 
       // 부품 관리

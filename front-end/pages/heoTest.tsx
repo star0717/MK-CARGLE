@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NextPage } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from "next";
 import {
   CommonButton,
   ProgressBar,
@@ -25,6 +25,10 @@ dayjs.locale("ko");
 import AWS from "aws-sdk";
 import Image, { ImageProps } from "next/image";
 import { FiCheckCircle } from "react-icons/fi";
+import { ParsedUrlQuery } from "querystring";
+import { UseLink } from "src/configure/router.entity";
+import { AuthTokenInfo } from "src/models/auth.entity";
+import { parseJwt } from "src/modules/commonModule";
 
 const HeoTest: NextPage<any> = (props) => {
   /*********************************************************************
@@ -33,23 +37,16 @@ const HeoTest: NextPage<any> = (props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const impCode: string = process.env.NEXT_PUBLIC_IMP_CODE;
-
-  const ACCESS_KEY: string = process.env.NEXT_PUBLIC_ACCESS_KEY;
-  const SECRET_ACCESS_KEY: string = process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY;
-  const REGION: string = process.env.NEXT_PUBLIC_REGION;
-  const S3_BUCKET: string = process.env.NEXT_PUBLIC_S3_BUCKET;
-
   AWS.config.update({
-    accessKeyId: ACCESS_KEY,
-    secretAccessKey: SECRET_ACCESS_KEY,
+    accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
+    secretAccessKey: process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY,
   });
 
   const s3 = new AWS.S3({
     params: {
-      Bucket: { Bucket: S3_BUCKET },
+      Bucket: { Bucket: process.env.NEXT_PUBLIC_S3_BUCKET },
     },
-    region: REGION,
+    region: process.env.NEXT_PUBLIC_REGION,
   });
 
   /*********************************************************************
@@ -67,7 +64,7 @@ const HeoTest: NextPage<any> = (props) => {
    */
   const onPaymentHandler = () => {
     const { IMP } = window;
-    IMP.init(impCode);
+    IMP.init(process.env.NEXT_PUBLIC_IMP_CODE);
 
     const data: RequestPayParams = {
       pg: "html5_inicis", // PG사
@@ -176,8 +173,8 @@ const HeoTest: NextPage<any> = (props) => {
     const params = {
       ACL: "public-read",
       Body: selectedFile,
-      Bucket: S3_BUCKET,
-      Key: "crn/3388800960" + fileType,
+      Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+      Key: "crn/3388800960",
     };
 
     s3.putObject(params)
@@ -198,7 +195,7 @@ const HeoTest: NextPage<any> = (props) => {
   }, [progress]);
 
   const imgLoader = ({ src }: ImageProps) => {
-    return `https://${S3_BUCKET}${src}crn/3388800960.jpeg`;
+    return `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${src}crn/3388800960.png`;
   };
 
   /*********************************************************************
@@ -293,3 +290,33 @@ const HeoTest: NextPage<any> = (props) => {
 };
 
 export default HeoTest;
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext<ParsedUrlQuery>
+) => {
+  /** 인증토큰관련 */
+  const tokenKey: string = process.env.TK_KEY;
+  const tokenName: string = process.env.TK_NAME;
+
+  /** 로그인 토큰 */
+  let tokenValue: AuthTokenInfo;
+  try {
+    tokenValue = parseJwt(
+      context.req.cookies[tokenName],
+      tokenKey
+    ) as AuthTokenInfo;
+  } catch (err) {
+    console.error("토큰에러 : ", err);
+    context.res.setHeader("Set-Cookie", `${tokenName}=; path=/; Max-Age=0`);
+    return {
+      redirect: {
+        permanent: false,
+        destination: UseLink.INDEX,
+      },
+    };
+  }
+
+  return {
+    props: tokenValue,
+  };
+};

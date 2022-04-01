@@ -150,7 +150,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
               가입 승인을 위해 서류를 제출해주세요
             </CommonSubTitle>
           </CommonTitleWrapper>
-          {router.query.page[0] !== "main" && (
+          {router.query.page && router.query.page[0] !== "main" && (
             <JoinStepBarWrapper>
               <Wrapper width={`auto`}>
                 <JoinStepBar
