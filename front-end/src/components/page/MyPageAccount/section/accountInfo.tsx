@@ -201,23 +201,55 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
     return (
       <Wrapper {...getRootProps()}>
         <input {...getInputProps()} />
-        {isDragActive ? (
+        {stampImgSrc ? (
           <>
-            <Text fontSize={`40px`} color={`#ccc`}>
-              <BsDownload />
-            </Text>
-            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-              업로드할 파일을 드래그하거나 클릭하여 선택하세요.
-            </Text>
+            {isDragActive ? (
+              <>
+                <Image
+                  alt="도장 사진"
+                  width={`100 px`}
+                  // height={200}
+                  src={stampImgSrc}
+                />
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  변경할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+              </>
+            ) : (
+              <>
+                <Image
+                  alt="도장 사진"
+                  width={`100 px`}
+                  // height={200}
+                  src={stampImgSrc}
+                />
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  변경할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+              </>
+            )}
           </>
         ) : (
           <>
-            <Text fontSize={`40px`} color={`#ccc`}>
-              <BsUpload />
-            </Text>
-            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-              업로드할 파일을 드래그하거나 클릭하여 선택하세요.
-            </Text>
+            {isDragActive ? (
+              <>
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsUpload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+              </>
+            )}
           </>
         )}
       </Wrapper>
@@ -792,35 +824,14 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                     </Text>
                     <Wrapper dr={`row`} width={`auto`}>
                       <Wrapper
-                        width={`700px`}
+                        width={`800px`}
                         height={`150px`}
                         border={`1px solid #ccc`}
                         radius={`5px`}
                         padding={`10px 0px`}
                       >
-                        {stampImgSrc ? (
-                          <Image
-                            alt="도장 사진"
-                            width={`100 px`}
-                            // height={200}
-                            src={stampImgSrc}
-                          />
-                        ) : (
-                          <DropZone />
-                        )}
+                        <DropZone />
                       </Wrapper>
-
-                      <SmallButton
-                        type="button"
-                        kindOf={`default`}
-                        margin={`0px 0px 0px 20px`}
-                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                          setModalOpen(!modalOpen);
-                          setModalOption("stamp");
-                        }}
-                      >
-                        파일선택
-                      </SmallButton>
                     </Wrapper>
                   </Wrapper>
                 </Wrapper>

@@ -1,8 +1,8 @@
 # Install dependencies only when needed
 FROM node:16.13.2-alpine AS fe-deps
 WORKDIR /app
-COPY package.json package-lock.json ./ 
-RUN npm ci
+COPY package*.json ./ 
+RUN npm i
 
 # Rebuild the source code only when needed
 FROM node:16.13.2-alpine AS fe-builder

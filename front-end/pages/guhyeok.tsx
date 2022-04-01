@@ -20,6 +20,7 @@ const DropZone: any = () => {
   return (
     <Wrapper {...getRootProps()}>
       <input {...getInputProps()} />
+      {}
       {isDragActive ? (
         <>
           <Text fontSize={`40px`} color={`#ccc`}>
