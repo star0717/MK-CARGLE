@@ -22,9 +22,9 @@ RUN adduser --system --uid 1001 nestjs
 COPY --from=be-builder --chown=nestjs:nodejs /app ./
 USER nestjs
 
-RUN mkdir /app/storage
-RUN mkdir /app/storage/crn
-RUN mkdir /app/storage/mrn
-RUN mkdir /app/storage/stamp
+RUN mkdir storage/
+RUN mkdir storage/crn
+RUN mkdir storage/mrn
+RUN mkdir storage/stamp
 
 CMD ["npm", "run", "start:prod"]
