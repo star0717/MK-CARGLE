@@ -10,7 +10,7 @@ services:
       - back-end
     environment:
       - NODE_ENV=production
-      - DESTINATION_API=http://172.30.1.10
+      - DESTINATION_API=http://cargle.net
   back-end:
     build: ./back-end
     image: 617699280027.dkr.ecr.ap-northeast-2.amazonaws.com/cargle/back-end
