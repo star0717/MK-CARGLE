@@ -9,7 +9,6 @@ import {
   Wrapper,
   Text,
   TextInput2,
-  LabelButton,
   CommonSmallTitle,
   CommonButtonWrapper,
   CommonButton,
@@ -17,7 +16,6 @@ import {
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import gm from "gm";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -84,19 +82,6 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
     reader.addEventListener("load", () => setUpImg(reader.result));
     reader.readAsDataURL(props.selectedFile);
   }, [props.selectedFile]);
-
-  // /**
-  //  * 이미지 파일 선택 handler
-  //  * @param e
-  //  */
-  // const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files && e.target.files.length > 0) {
-  //     setFileName(e.target.files[0].name);
-  //     // const reader = new FileReader();
-  //     // reader.addEventListener("load", () => setUpImg(reader.result));
-  //     // reader.readAsDataURL(e.target.files[0]);
-  //   }
-  // };
 
   /**
    * React-crop 기능(이미지 반환)
@@ -170,22 +155,6 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
             required
             readOnly
           />
-
-          {/* <LabelButton
-            kindOf={`default`}
-            margin={`0px 0px 0px 20px`}
-            htmlFor="stamp"
-          >
-            파일선택
-          </LabelButton> */}
-
-          {/* <TextInput2
-            style={{ display: "none" }}
-            id="stamp"
-            type="file"
-            // onChange={onSelectFile}
-            accept="image/*"
-          /> */}
         </Wrapper>
         {upImg && (
           <StampWrapper
