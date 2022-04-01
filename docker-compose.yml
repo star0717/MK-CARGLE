@@ -3,14 +3,14 @@ services:
   front-end:
     build: ./front-end
     image: front-end
+    environment:
+      - NODE_ENV=production
+      - DESTINATION_API=http://172.30.1.10
     container_name: front-end
     expose:
       - "3000"
     depends_on:
       - back-end
-    environment:
-      - NODE_ENV=production
-      - DESTINATION_API=http://172.30.1.10
   back-end:
     build: ./back-end
     image: back-end
