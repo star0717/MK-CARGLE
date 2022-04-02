@@ -2,7 +2,7 @@ version: '3'
 services:
   front-end:
     build: ./front-end
-    image: front-end
+    image: 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/front-end
     container_name: front-end
     expose:
       - "3000"
@@ -10,27 +10,18 @@ services:
       - back-end
     environment:
       - NODE_ENV=production
-      - DESTINATION_API=http://52.78.182.5
-    networks:
-      - cargle-network
+      - DESTINATION_API=http://cargle.net
   back-end:
     build: ./back-end
-    image: back-end
+    image: 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/back-end
     container_name: back-end
     expose:
       - "7001"
-    networks:
-      - cargle-network
   proxy-server: 
     build: ./proxy-server
-    image: proxy-server
+    image: 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/proxy-server
     container_name: proxy-server
     ports:
     - "80:80"
     depends_on:
       - front-end
-    networks:
-      - cargle-network
-networks:
-  cargle-network:
-    driver: bridge
