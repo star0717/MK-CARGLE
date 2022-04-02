@@ -10,13 +10,17 @@ services:
       - back-end
     environment:
       - NODE_ENV=production
-      - DESTINATION_API=http://172.30.1.9
+      - DESTINATION_API=http://52.78.182.5
+    networks:
+      - cargle-network
   back-end:
     build: ./back-end
     image: back-end
     container_name: back-end
     expose:
       - "7001"
+    networks:
+      - cargle-network
   proxy-server: 
     build: ./proxy-server
     image: proxy-server
@@ -25,3 +29,8 @@ services:
     - "80:80"
     depends_on:
       - front-end
+    networks:
+      - cargle-network
+networks:
+  cargle-network:
+    driver: bridge
