@@ -1,0 +1,45 @@
+{
+  "Services": {
+    "back-end": {
+      "Image": "151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/back-end@sha256:69d4bf881cf64ac2dfae3e6c8a168107131eb565f0de6d691361fc2fb84f5d8c",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 7001,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    "front-end": {
+      "Env": [
+        "NODE_ENV=production",
+        "DESTINATION_API=http://cargle.net"
+      ],
+      "Image": "151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/front-end@sha256:ffd3eb170379c572101c550572c552f1add1df6af6b2e41ef9e87b4e36e823dd",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 3000,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    "proxy-server": {
+      "Image": "151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/proxy-server@sha256:609395812c414227314a94478d26a37b6600344e6ef7bbc74863e65fcb49c85a",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 80,
+          "Protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "Version": "0.1"
+}
