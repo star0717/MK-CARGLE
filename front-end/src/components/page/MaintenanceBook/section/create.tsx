@@ -103,6 +103,16 @@ const MaintenanceCreate: NextPage = () => {
     if (e.target.name === "distance") {
       if (!basicRegEx.NUM.test(e.target.value)) return false;
     }
+    if (e.target.name === "idNumber") {
+      if (
+        e.target.value.length >= 18 ||
+        !basicRegEx.ENGNUM.test(e.target.value)
+      ) {
+        return false;
+      }
+      var upper = e.target.value.toUpperCase();
+      return setCarInfo({ ...carInfo, [e.target.name]: upper });
+    }
     setCarInfo({ ...carInfo, [e.target.name]: trim(e.target.value) });
   };
 
