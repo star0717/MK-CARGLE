@@ -11,12 +11,24 @@ services:
     environment:
       - NODE_ENV=production
       - DESTINATION_API=http://cargle.net
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: cargle_cluster
+        awslogs-region: ap-northeast-2
+        awslogs-stream-prefix: front-end
   back-end:
     build: ./back-end
     image: 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/back-end
     container_name: back-end
     expose:
       - "7001"
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: cargle_cluster
+        awslogs-region: ap-northeast-2
+        awslogs-stream-prefix: back-end
   proxy-server: 
     build: ./proxy-server
     image: 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/proxy-server
@@ -25,3 +37,9 @@ services:
     - "80:80"
     depends_on:
       - front-end
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-group: cargle_cluster
+        awslogs-region: ap-northeast-2
+        awslogs-stream-prefix: front-end
