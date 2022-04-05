@@ -104,7 +104,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   업로드할 파일을 드래그하거나 클릭하여 선택하세요.
                 </Text>
-                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
                   사업자등록증
                 </Text>
               </Wrapper>
@@ -122,7 +122,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   업로드할 파일을 드래그하거나 클릭하여 선택하세요.
                 </Text>
-                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                <Text fontSize={`24px`} fontWeight={`700`}>
                   사업자등록증
                 </Text>
               </Wrapper>
@@ -141,9 +141,10 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
               정상적으로 업로드 되었습니다.
             </Text>
-            <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+            <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
               사업자등록증
             </Text>
+            <Text>{fileName.comFile}</Text>
           </Wrapper>
         )}
       </Wrapper>
@@ -180,7 +181,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   업로드할 파일을 드래그하거나 클릭하여 선택하세요.
                 </Text>
-                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
                   정비업등록증
                 </Text>
               </Wrapper>
@@ -198,7 +199,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   업로드할 파일을 드래그하거나 클릭하여 선택하세요.
                 </Text>
-                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                <Text fontSize={`24px`} fontWeight={`700`}>
                   정비업등록증
                 </Text>
               </Wrapper>
@@ -217,9 +218,10 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
               정상적으로 업로드 되었습니다.
             </Text>
-            <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+            <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
               정비업등록증
             </Text>
+            <Text>{fileName.manFile}</Text>
           </Wrapper>
         )}
       </Wrapper>
