@@ -25,6 +25,7 @@ import {
   CommonTitleWrapper,
   JoinStepBar,
   JoinStepBarWrapper,
+  CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
 import {
   BsDownload,
@@ -40,7 +41,7 @@ import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
 import { GoCheck } from "react-icons/go";
 import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
-import { useDropzone } from "react-dropzone";
+import Dropzone, { useDropzone } from "react-dropzone";
 
 /**
  * 파일 데이터 초기화
@@ -73,7 +74,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     setFileName({ ...fileName, [e.target.name]: fileData.name });
   };
 
-  const comDropZone: any = () => {
+  const ComDropZone: any = () => {
     const onDrop = useCallback((acceptedFiles) => {
       // Do something with the files
     }, []);
@@ -84,11 +85,27 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     return (
       <Wrapper {...getRootProps()}>
         <input {...getInputProps()} />
+        <Wrapper
+          width={`480px`}
+          height={`380px`}
+          border={`1px solid #c4c4c4`}
+          radius={`5px`}
+        >
+          <Text fontSize={`40px`} color={`#ccc`}>
+            <BsDownload />
+          </Text>
+          <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+            업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+          </Text>
+          <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+            사업자등록증
+          </Text>
+        </Wrapper>
       </Wrapper>
     );
   };
 
-  const manDropZone: any = () => {
+  const ManDropZone: any = () => {
     const onDrop = useCallback((acceptedFiles) => {
       // Do something with the files
     }, []);
@@ -99,6 +116,22 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     return (
       <Wrapper {...getRootProps()}>
         <input {...getInputProps()} />
+        <Wrapper
+          width={`480px`}
+          height={`380px`}
+          border={`1px solid #c4c4c4`}
+          radius={`5px`}
+        >
+          <Text fontSize={`40px`} color={`#ccc`}>
+            <BsDownload />
+          </Text>
+          <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+            업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+          </Text>
+          <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+            정비업등록증
+          </Text>
+        </Wrapper>
       </Wrapper>
     );
   };
@@ -256,13 +289,13 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             </JoinStepBarWrapper>
           )}
           <form onSubmit={onFileUploadHandler}>
-            <Wrapper
+            {/* <Wrapper
               width={`auto`}
               padding={`50px`}
               border={`1px solid #ccc`}
               radius={`5px`}
-            >
-              <Wrapper
+            > */}
+            {/* <Wrapper
                 ju={`flex-start`}
                 al={`flex-start`}
                 width={`auto`}
@@ -300,8 +333,8 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                     accept=".jpg, .png, .pdf"
                   />
                 </Wrapper>
-              </Wrapper>
-              <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
+              </Wrapper> */}
+            {/* <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
                 <Text margin={`0px 0px 10px`}>정비업등록증</Text>
                 <Wrapper dr={`row`} ju={`flex-start`} al={`flex-start`}>
                   <TextInput2
@@ -330,26 +363,23 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                   />
                 </Wrapper>
               </Wrapper>
+            </Wrapper> */}
+            <Wrapper dr={`row`} radius={`5px`}>
+              <ComDropZone />
+              <ManDropZone />
             </Wrapper>
-            <Wrapper padding={`50px 0px 50px 0px`}>
+            <CommonButtonWrapper padding={`50px 0px 50px 0px`} dr={`row`}>
               <CommonButton
                 type="button"
-                margin={`0px 0px 10px 0px`}
                 kindOf={`white`}
                 onClick={onSignOutHandler}
               >
                 다음에하기
               </CommonButton>
-              <CommonButton type="submit" margin={`10px 0px 0px 0px`}>
-                제출하기
-              </CommonButton>
-            </Wrapper>
+              <CommonButton type="submit">제출하기</CommonButton>
+            </CommonButtonWrapper>
             <Wrapper padding={`0px 0px 0px`}>
-              <Wrapper
-                borderTop={`1px solid #c4c4c4`}
-                al={`flex-start`}
-                width={`500px`}
-              >
+              <Wrapper borderTop={`1px solid #c4c4c4`} al={`flex-start`}>
                 <Wrapper
                   al={`flex-end`}
                   padding={`30px 15px 10px 0px`}
@@ -367,7 +397,6 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                     </Text>
                     <Text textAlign={`start`}>
                       서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
-                      <br />
                       로그인하면 이어서 진행이 가능해요.
                       <br />
                       <br />
