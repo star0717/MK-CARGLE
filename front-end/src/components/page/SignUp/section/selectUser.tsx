@@ -58,7 +58,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
               <Image
                 position={`relative`}
                 src="/images/JoinSelectIcon01.png"
-                alt="Cargle Logo"
+                alt="JoinSelectIcon"
                 padding={`20px`}
                 width={`120px`}
                 display={`flex`}
@@ -89,7 +89,7 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
               <Image
                 position={`relative`}
                 src="/images/JoinSelectIcon02.png"
-                alt="Cargle Logo"
+                alt="JoinSelectIcon"
                 padding={`20px`}
                 width={`120px`}
                 display={`flex`}

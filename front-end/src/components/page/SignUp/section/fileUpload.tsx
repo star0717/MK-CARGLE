@@ -25,6 +25,7 @@ import {
   CommonTitleWrapper,
   JoinStepBar,
   JoinStepBarWrapper,
+  CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
 import {
   BsDownload,
@@ -41,6 +42,7 @@ import { GoCheck } from "react-icons/go";
 import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import { useDropzone } from "react-dropzone";
+import theme from "styles/theme";
 
 /**
  * 파일 데이터 초기화
@@ -73,70 +75,154 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     setFileName({ ...fileName, [e.target.name]: fileData.name });
   };
 
-  const DropZone: any = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const ComDropZone: any = () => {
     const onDrop = useCallback((acceptedFiles) => {
       // Do something with the files
+      setFile({ ...file, comFile: acceptedFiles[0] });
+      setFileName({ ...file, comFile: acceptedFiles[0].name });
     }, []);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
     });
 
     return (
-      <></>
-      // <Wrapper {...getRootProps()}>
-      //   <input {...getInputProps()} />
-      //   {stampImgSrc ? (
-      //     <>
-      //       {isDragActive ? (
-      //         <>
-      //           <Image
-      //             alt="도장 사진"
-      //             width={`100 px`}
-      //             // height={200}
-      //             src={stampImgSrc}
-      //           />
-      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-      //             변경할 파일을 드래그하거나 클릭하여 선택하세요.
-      //           </Text>
-      //         </>
-      //       ) : (
-      //         <>
-      //           <Image
-      //             alt="도장 사진"
-      //             width={`100 px`}
-      //             // height={200}
-      //             src={stampImgSrc}
-      //           />
-      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-      //             변경할 파일을 드래그하거나 클릭하여 선택하세요.
-      //           </Text>
-      //         </>
-      //       )}
-      //     </>
-      //   ) : (
-      //     <>
-      //       {isDragActive ? (
-      //         <>
-      //           <Text fontSize={`40px`} color={`#ccc`}>
-      //             <BsDownload />
-      //           </Text>
-      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-      //             업로드할 파일을 드래그하거나 클릭하여 선택하세요.
-      //           </Text>
-      //         </>
-      //       ) : (
-      //         <>
-      //           <Text fontSize={`40px`} color={`#ccc`}>
-      //             <BsUpload />
-      //           </Text>
-      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-      //             업로드할 파일을 드래그하거나 클릭하여 선택하세요.
-      //           </Text>
-      //         </>
-      //       )}
-      //     </>
-      //   )}
-      // </Wrapper>
+      <Wrapper {...getRootProps()}>
+        <input {...getInputProps()} />
+        {file.comFile === "" ? (
+          <>
+            {isDragActive ? (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                shadow={theme.boxShadow}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                  사업자등록증
+                </Text>
+              </Wrapper>
+            ) : (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                bgColor={`#f5f5f5`}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                  사업자등록증
+                </Text>
+              </Wrapper>
+            )}
+          </>
+        ) : (
+          <Wrapper
+            width={`480px`}
+            height={`380px`}
+            border={`1px solid #c4c4c4`}
+            radius={`5px`}
+          >
+            <Text fontSize={`40px`} color={`#314af5`}>
+              <GoCheck />
+            </Text>
+            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+              정상적으로 업로드 되었습니다.
+            </Text>
+            <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+              사업자등록증
+            </Text>
+          </Wrapper>
+        )}
+      </Wrapper>
+    );
+  };
+
+  const ManDropZone: any = () => {
+    const onDrop = useCallback((acceptedFiles) => {
+      // Do something with the files
+      console.log(acceptedFiles);
+      setFile({ ...file, manFile: acceptedFiles[0] });
+      setFileName({ ...file, manFile: acceptedFiles[0].name });
+    }, []);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+    });
+
+    return (
+      <Wrapper {...getRootProps()}>
+        <input {...getInputProps()} />
+        {file.manFile === "" ? (
+          <>
+            {isDragActive ? (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                shadow={theme.boxShadow}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                  정비업등록증
+                </Text>
+              </Wrapper>
+            ) : (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                bgColor={`#f5f5f5`}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                  정비업등록증
+                </Text>
+              </Wrapper>
+            )}
+          </>
+        ) : (
+          <Wrapper
+            width={`480px`}
+            height={`380px`}
+            border={`1px solid #c4c4c4`}
+            radius={`5px`}
+          >
+            <Text fontSize={`40px`} color={`#314af5`}>
+              <GoCheck />
+            </Text>
+            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+              정상적으로 업로드 되었습니다.
+            </Text>
+            <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+              정비업등록증
+            </Text>
+          </Wrapper>
+        )}
+      </Wrapper>
     );
   };
 
@@ -293,13 +379,13 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             </JoinStepBarWrapper>
           )}
           <form onSubmit={onFileUploadHandler}>
-            <Wrapper
+            {/* <Wrapper
               width={`auto`}
               padding={`50px`}
               border={`1px solid #ccc`}
               radius={`5px`}
-            >
-              <Wrapper
+            > */}
+            {/* <Wrapper
                 ju={`flex-start`}
                 al={`flex-start`}
                 width={`auto`}
@@ -337,8 +423,8 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                     accept=".jpg, .png, .pdf"
                   />
                 </Wrapper>
-              </Wrapper>
-              <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
+              </Wrapper> */}
+            {/* <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
                 <Text margin={`0px 0px 10px`}>정비업등록증</Text>
                 <Wrapper dr={`row`} ju={`flex-start`} al={`flex-start`}>
                   <TextInput2
@@ -367,26 +453,23 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                   />
                 </Wrapper>
               </Wrapper>
+            </Wrapper> */}
+            <Wrapper dr={`row`} radius={`5px`}>
+              <ComDropZone />
+              <ManDropZone />
             </Wrapper>
-            <Wrapper padding={`50px 0px 50px 0px`}>
+            <CommonButtonWrapper padding={`50px 0px 50px 0px`} dr={`row`}>
               <CommonButton
                 type="button"
-                margin={`0px 0px 10px 0px`}
                 kindOf={`white`}
                 onClick={onSignOutHandler}
               >
                 다음에하기
               </CommonButton>
-              <CommonButton type="submit" margin={`10px 0px 0px 0px`}>
-                제출하기
-              </CommonButton>
-            </Wrapper>
+              <CommonButton type="submit">제출하기</CommonButton>
+            </CommonButtonWrapper>
             <Wrapper padding={`0px 0px 0px`}>
-              <Wrapper
-                borderTop={`1px solid #c4c4c4`}
-                al={`flex-start`}
-                width={`500px`}
-              >
+              <Wrapper borderTop={`1px solid #c4c4c4`} al={`flex-start`}>
                 <Wrapper
                   al={`flex-end`}
                   padding={`30px 15px 10px 0px`}
@@ -404,7 +487,6 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                     </Text>
                     <Text textAlign={`start`}>
                       서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
-                      <br />
                       로그인하면 이어서 진행이 가능해요.
                       <br />
                       <br />
