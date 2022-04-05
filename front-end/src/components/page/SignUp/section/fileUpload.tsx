@@ -172,6 +172,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 onClick={(e: React.MouseEvent<MouseEvent>) => {
                   e.stopPropagation();
                   setFile({ ...file, comFile: "" });
+                  setFileName({ ...fileName, comFile: "" });
                 }}
               >
                 <FaTrashAlt />
@@ -278,6 +279,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 onClick={(e: React.MouseEvent<MouseEvent>) => {
                   e.stopPropagation();
                   setFile({ ...file, manFile: "" });
+                  setFileName({ ...fileName, manFile: "" });
                 }}
               >
                 <FaTrashAlt />
