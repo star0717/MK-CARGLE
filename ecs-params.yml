@@ -1,0 +1,12 @@
+version: 1
+task_definition:
+  services:
+    front-end:
+      cpu_shares: 100
+      mem_limit: 524288000
+    back-end:
+      cpu_shares: 100
+      mem_limit: 524288000
+    proxy-server:
+      cpu_shares: 100
+      mem_limit: 524288000
