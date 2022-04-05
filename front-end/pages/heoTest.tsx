@@ -13,24 +13,37 @@ import "dayjs/locale/ko";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import {
+  _aGetAuthCompany,
+  _aGetAuthCompanyId,
   _aGetPaymentData,
+  _aPostAuthUploadComRegName,
   _aPostPayCancel,
   _aPostPaymentComplete,
   _aPostSms,
 } from "store/action/user.action";
-import { _iPayment, _iPaymentComplete, _iSms } from "store/interfaces";
+import {
+  ComFileUpload,
+  UserCompanyFind,
+  _iPayment,
+  _iPaymentComplete,
+  _iSms,
+} from "store/interfaces";
 import { RequestPayParams, RequestPayResponse } from "iamport-typings";
 import { CancelData, PayData } from "src/models/payment.entity";
 dayjs.locale("ko");
-import AWS from "aws-sdk";
+import AWS, { S3 } from "aws-sdk";
 import Image, { ImageProps } from "next/image";
 import { FiCheckCircle } from "react-icons/fi";
 import { ParsedUrlQuery } from "querystring";
 import { UseLink } from "src/configure/router.entity";
 import { AuthTokenInfo } from "src/models/auth.entity";
 import { parseJwt } from "src/modules/commonModule";
+import { CompanyDocList } from "src/models/company.doc.entity";
+import { _MainProps } from "src/configure/_props.entity";
+import { Company } from "src/models/company.entity";
+import { ObjectList } from "aws-sdk/clients/s3";
 
-const HeoTest: NextPage<any> = (props) => {
+const HeoTest: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -42,7 +55,7 @@ const HeoTest: NextPage<any> = (props) => {
     secretAccessKey: process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY,
   });
 
-  const s3 = new AWS.S3({
+  const s3: AWS.S3 = new AWS.S3({
     params: {
       Bucket: { Bucket: process.env.NEXT_PUBLIC_S3_BUCKET },
     },
@@ -55,6 +68,7 @@ const HeoTest: NextPage<any> = (props) => {
   const [progress, setProgress] = useState<number>(0);
   const [selectedFile, setSelectedFile] = useState<File>(null);
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [s3FileList, setS3FileList] = useState<ObjectList>([]);
 
   /*********************************************************************
    * 3. Handlers
@@ -156,6 +170,19 @@ const HeoTest: NextPage<any> = (props) => {
     );
   };
 
+  /**
+   * 사업자정보 조회
+   * @returns
+   */
+  const getComInfo = async () => {
+    const company = await dispatch(
+      _aGetAuthCompanyId(props.tokenValue.cID)
+    ).then((res: UserCompanyFind) => {
+      return res.payload;
+    });
+    return company;
+  };
+
   const fileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProgress(0);
     setSelectedFile(e.target.files[0]);
@@ -164,17 +191,19 @@ const HeoTest: NextPage<any> = (props) => {
   const s3FileUpload = async () => {
     if (!selectedFile) return alert("파일을 선택하세요");
     setProgress(0);
-    let fileType = selectedFile.name;
+    let fileType: string = selectedFile.name;
     fileType = fileType.substring(fileType.lastIndexOf("."), fileType.length);
     const acceptType: string[] = [".jpeg", ".jpg", ".png", ".pdf"];
     if (!acceptType.includes(fileType))
       return alert("jpeg, jpg, png, pdf 파일만 가능합니다");
+    const company: Company = await getComInfo();
+    const fileName: string = company.comRegNum + fileType;
 
-    const params = {
+    const params: S3.Types.PutObjectRequest = {
       ACL: "public-read",
       Body: selectedFile,
       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
-      Key: "crn/3388800960",
+      Key: "crn/" + fileName,
     };
 
     s3.putObject(params)
@@ -184,8 +213,33 @@ const HeoTest: NextPage<any> = (props) => {
       })
       .send((err) => {
         if (err) return alert("업로드 에러");
+        // const fileList: Partial<CompanyDocList> = {
+        //   crn: fileName,
+        // };
+        // dispatch(_aPostAuthUploadComRegName(fileList)).then(
+        //   (res: ComFileUpload) => {
+        //     console.log(res);
+        //   }
+        // );
       });
   };
+
+  const s3GetFileList = async (fold?: string) => {
+    // const company: Company = await getComInfo();
+    const params: S3.Types.ListObjectsRequest = {
+      Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+      Prefix: fold,
+    };
+    const s3List: AWS.Request<S3.ListObjectsOutput, AWS.AWSError> =
+      s3.listObjects(params, (err, data) => {
+        if (err) throw err;
+        // console.log(data.Contents);
+        return setS3FileList(data.Contents);
+      });
+    // return s3List;
+  };
+
+  // s3GetFileList("crn");
 
   useEffect(() => {
     if (progress === 100) {
@@ -317,6 +371,6 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 
   return {
-    props: tokenValue,
+    props: { tokenValue },
   };
 };
