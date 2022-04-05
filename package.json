@@ -7,21 +7,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "local:build": "docker-compose build",
-    "local:up": "docker-compose up",
-    "local:up:build": "docker-compose up --build",
-    "local:up:daemon": "docker-compose up -d",
-    "local:down": "docker-compose down",
-    "local:logs": "docker-compose logs",
-    "local:rm": "docker-compose rm",
-    "local:port": "docker-compose port",
-    "local:image:prune": "sudo docker image prune",
-    "local:image:rmAll": "sudo docker rmi $(docker images -q)",
-    "local:container:prune": "sudo docker container prune",
-    "ecs:login": "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com",
-    "ecs:build": "docker-compose --file docker-compose.ecs.yml build",
-    "ecs:push": "docker-compose --file docker-compose.ecs.yml push",
-    "ecs:up": "docker-compose --file docker-compose.ecs.yml up"
+    "login":"aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com",
+    "prebuild":"docker-compose -f docker-compose.local.yml build",
+    "build":"docker-compose build",
+    "push":"docker-compose push",
+    "ps":"ecs-cli compose ps --cluster-config n2server --ecs-profile n2server",
+    "ecs:up":"ecs-cli compose up --cluster-config n2server --ecs-profile n2server",
+    "ecs:down":"ecs-cli compose down --cluster-config n2server --ecs-profile n2server"
   },
   "repository": {
     "type": "git",

@@ -10,7 +10,7 @@ services:
       - back-end
     environment:
       - NODE_ENV=production
-      - DESTINATION_API=http://cargle.net
+      - DESTINATION_API=http://13.125.211.74/
     logging:
       driver: awslogs
       options: 
@@ -34,9 +34,12 @@ services:
     image: 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/proxy-server
     container_name: proxy-server
     ports:
-    - "80:80"
+    - "80"
     depends_on:
       - front-end
+    links:
+      - front-end
+      - back-end
     logging:
       driver: awslogs
       options: 
