@@ -24,7 +24,6 @@ import { CommonService } from '../common/common.service';
 import { CompaniesService } from 'src/modules/companies/companies.service';
 import { UsersService } from 'src/modules/users/users.service';
 import { CompanyApproval, UserAuthority } from 'src/constants/model.const';
-import { CompanyDocList } from 'src/models/company.doc.entity';
 
 @Injectable()
 export class AuthService {
@@ -265,45 +264,6 @@ export class AuthService {
     );
     return newFileName;
   }
-
-  /***************************************************
-   * 파일 업로드 테스트 시작
-   ***************************************************/
-  async uploadComRegName(
-    token: AuthTokenInfo,
-    fileName: string,
-  ): Promise<Company> {
-    let company: Company;
-    // let docList: CompanyDocList = {};
-    // console.log('hi', docList);
-    // docList.crn = fileName;
-    console.log(fileName);
-    company = await this.companiesService.findByIdForAuth(token.cID);
-    console.log(company);
-    // company = await this.companiesService.findByIdAndUpdateForAuth(token.cID, {
-    //   docList: docList,
-    // });
-
-    return company;
-  }
-
-  async uploadMainRegName(
-    token: AuthTokenInfo,
-    fileName: string,
-  ): Promise<Company> {
-    let company: Company;
-    let docList: CompanyDocList;
-
-    // docList.mrn = fileName;
-    // company = await this.companiesService.findByIdAndUpdateForAuth(token.cID, {
-    //   docList: docList,
-    // });
-
-    return company;
-  }
-  /***************************************************
-   * 테스트 끝
-   ***************************************************/
 
   async getComRegFileName(token: AuthTokenInfo): Promise<string> | null {
     const company = await this.companiesService.findById(token, token.cID);

@@ -16,6 +16,7 @@ import {
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { Company } from "src/models/company.entity";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -45,6 +46,7 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
   });
   const [completedCrop, setCompletedCrop] = useState<any>(null); // React-crop
   const [imgStyle, setImgStyle] = useState<ImgStyle>();
+
   /**
    * 도장 파일 업로드 handler
    * @param canvas
@@ -64,8 +66,8 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
         dispatch(uploadStampAction(formData)).then((res: any) => {
           if (res.payload.length !== 0) {
             alert("도장이 업로드되었습니다.");
-            props.setStampNum(props.stampNum + 1);
-            props.setStampImgSrc(`${props.stampImgSrc}?num=${props.stampNum}`);
+            // props.setStampNum(props.stampNum + 1);
+            props.setFileUrl(``);
             props.setModalOpen(false);
           } else {
             alert("업로드에 실패했습니다.");

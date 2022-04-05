@@ -12,10 +12,8 @@ export class AuthApiPath {
   static validate_email = AuthApiPath.BASE + 'validate/email';
   static validate_email_token = AuthApiPath.BASE + 'validate/email-token';
   static validate_phone = AuthApiPath.BASE + 'validate/phone';
-  // static upload_com_reg_doc = AuthApiPath.BASE + 'upload/com-reg-doc';
-  // static upload_man_reg_doc = AuthApiPath.BASE + 'upload/man-reg-doc';
-  static upload_com_reg_name = AuthApiPath.BASE + 'upload/com-reg-name';
-  static upload_man_reg_name = AuthApiPath.BASE + 'upload/man-reg-name';
+  static upload_com_reg_doc = AuthApiPath.BASE + 'upload/com-reg-doc';
+  static upload_man_reg_doc = AuthApiPath.BASE + 'upload/man-reg-doc';
   static filename_comRegDoc = AuthApiPath.BASE + 'file-name/com-reg-doc';
   static filename_manRegDoc = AuthApiPath.BASE + 'file-name/man-reg-doc';
   static request_company = AuthApiPath.BASE + 'request/company';

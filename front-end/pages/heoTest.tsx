@@ -16,7 +16,6 @@ import {
   _aGetAuthCompany,
   _aGetAuthCompanyId,
   _aGetPaymentData,
-  _aPostAuthUploadComRegName,
   _aPostPayCancel,
   _aPostPaymentComplete,
   _aPostSms,
@@ -42,6 +41,7 @@ import { CompanyDocList } from "src/models/company.doc.entity";
 import { _MainProps } from "src/configure/_props.entity";
 import { Company } from "src/models/company.entity";
 import { ObjectList } from "aws-sdk/clients/s3";
+import { PromiseResult } from "aws-sdk/lib/request";
 
 const HeoTest: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -183,11 +183,19 @@ const HeoTest: NextPage<_MainProps> = (props) => {
     return company;
   };
 
+  /**
+   * 파일 선택(변경) handler
+   * @param e
+   */
   const fileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProgress(0);
     setSelectedFile(e.target.files[0]);
   };
 
+  /**
+   * AWS S3 파일 업로드
+   * @returns
+   */
   const s3FileUpload = async () => {
     if (!selectedFile) return alert("파일을 선택하세요");
     setProgress(0);
@@ -197,13 +205,14 @@ const HeoTest: NextPage<_MainProps> = (props) => {
     if (!acceptType.includes(fileType))
       return alert("jpeg, jpg, png, pdf 파일만 가능합니다");
     const company: Company = await getComInfo();
-    const fileName: string = company.comRegNum + fileType;
+    const fileName: string = company.comRegNum;
 
     const params: S3.Types.PutObjectRequest = {
       ACL: "public-read",
       Body: selectedFile,
       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
       Key: "crn/" + fileName,
+      ContentType: selectedFile.type,
     };
 
     s3.putObject(params)
@@ -213,33 +222,36 @@ const HeoTest: NextPage<_MainProps> = (props) => {
       })
       .send((err) => {
         if (err) return alert("업로드 에러");
-        // const fileList: Partial<CompanyDocList> = {
-        //   crn: fileName,
-        // };
-        // dispatch(_aPostAuthUploadComRegName(fileList)).then(
-        //   (res: ComFileUpload) => {
-        //     console.log(res);
-        //   }
-        // );
       });
   };
 
-  const s3GetFileList = async (fold?: string) => {
-    // const company: Company = await getComInfo();
-    const params: S3.Types.ListObjectsRequest = {
+  /**
+   * AWS S3 전체 리스트(1000개 이상) 불러오기
+   * @param fold
+   * @returns
+   */
+  const s3GetFileListAll = async (fold?: string) => {
+    const params: S3.Types.ListObjectsV2Request = {
       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
       Prefix: fold,
     };
-    const s3List: AWS.Request<S3.ListObjectsOutput, AWS.AWSError> =
-      s3.listObjects(params, (err, data) => {
-        if (err) throw err;
-        // console.log(data.Contents);
-        return setS3FileList(data.Contents);
-      });
-    // return s3List;
-  };
 
-  // s3GetFileList("crn");
+    let fileList: any[] = [];
+    let res: PromiseResult<S3.ListObjectsV2Output, AWS.AWSError>;
+
+    try {
+      do {
+        res = await s3.listObjectsV2(params).promise();
+        fileList = fileList.concat(res.Contents.slice(1));
+        if (res.IsTruncated) {
+          params.ContinuationToken = res.NextContinuationToken;
+        }
+      } while (res.IsTruncated);
+      return fileList;
+    } catch (err) {
+      return alert("파일 조회 에러");
+    }
+  };
 
   useEffect(() => {
     if (progress === 100) {
@@ -249,7 +261,16 @@ const HeoTest: NextPage<_MainProps> = (props) => {
   }, [progress]);
 
   const imgLoader = ({ src }: ImageProps) => {
-    return `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${src}crn/3388800960.png`;
+    let fileUrl: string = "crn/3388800960";
+    const params: S3.Types.GetObjectRequest = {
+      Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+      Key: fileUrl,
+    };
+    s3.getObject(params, (err, data) => {
+      if (err) return false;
+      fileUrl = fileUrl + data.ContentType.split("/")[1];
+    });
+    return `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${src}${fileUrl}`;
   };
 
   /*********************************************************************

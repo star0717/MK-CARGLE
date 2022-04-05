@@ -215,35 +215,35 @@ export async function _aGetAuthCompanies(dataToSubmit: string) {
   };
 }
 
-// // 사업자등록증 업로드 action
-// export async function _aPostAuthUploadComRegDoc(dataToSubmit: FormData) {
-//   const req = await axios
-//     .post(genApiPath(AuthApiPath.upload_com_reg_doc), dataToSubmit, {
-//       headers: {
-//         "Content-Type": "multipart/form-data",
-//       },
-//     })
-//     .then((res: AxiosResponse<unknown, any>) => res.data);
-//   return {
-//     type: actionTypesUser.COM_FILE_UPLOAD,
-//     payload: req,
-//   };
-// }
+// 사업자등록증 업로드 action
+export async function _aPostAuthUploadComRegDoc(dataToSubmit: FormData) {
+  const req = await axios
+    .post(genApiPath(AuthApiPath.upload_com_reg_doc), dataToSubmit, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.COM_FILE_UPLOAD,
+    payload: req,
+  };
+}
 
-// // 정비업등록증 업로드 action
-// export async function _aPostAuthUploadManRegDoc(dataToSubmit: FormData) {
-//   const req = await axios
-//     .post(genApiPath(AuthApiPath.upload_man_reg_doc), dataToSubmit, {
-//       headers: {
-//         "Content-Type": "multipart/form-data",
-//       },
-//     })
-//     .then((res: AxiosResponse<unknown, any>) => res.data);
-//   return {
-//     type: actionTypesUser.MAN_FILE_UPLOAD,
-//     payload: req,
-//   };
-// }
+// 정비업등록증 업로드 action
+export async function _aPostAuthUploadManRegDoc(dataToSubmit: FormData) {
+  const req = await axios
+    .post(genApiPath(AuthApiPath.upload_man_reg_doc), dataToSubmit, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res: AxiosResponse<unknown, any>) => res.data);
+  return {
+    type: actionTypesUser.MAN_FILE_UPLOAD,
+    payload: req,
+  };
+}
 
 // 가입 심사 요청 action (업체)
 export async function _aPatchAuthRequestCompany(dataToSubmit: string) {
@@ -1501,39 +1501,3 @@ export async function _aPostSms() {
 
   return result;
 }
-
-/***************************************************
- * 파일 업로드 테스트 시작
- ***************************************************/
-// 사업자등록증 업로드 action
-export async function _aPostAuthUploadComRegName(
-  fileName: Partial<CompanyDocList>
-) {
-  const req: Company = await axios
-    .post(genApiPath(AuthApiPath.upload_com_reg_name), fileName)
-    .then((res: AxiosResponse<Company, string>) => res.data);
-
-  const result: ComFileUpload = {
-    type: actionTypesUser.COM_FILE_UPLOAD,
-    payload: req,
-  };
-
-  return result;
-}
-
-// 정비업등록증 업로드 action
-export async function _aPostAuthUploadManRegName(
-  fileName: Partial<CompanyDocList>
-) {
-  const req: Company = await axios
-    .post(genApiPath(AuthApiPath.upload_man_reg_name), fileName)
-    .then((res: AxiosResponse<Company, string>) => res.data);
-  const result: ManFileUpload = {
-    type: actionTypesUser.MAN_FILE_UPLOAD,
-    payload: req,
-  };
-  return result;
-}
-/***************************************************
- * 테스트 끝
- ***************************************************/

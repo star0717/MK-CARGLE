@@ -266,23 +266,6 @@ export class AuthController {
     return await this.authService.uploadMainRegFile(token, file);
   }
 
-  /***************************************************
-   * 파일 업로드 테스트 시작
-   ***************************************************/
-  @ApiResponse({ description: '업로드된 파일명', type: String })
-  @Post('upload/com-reg-name')
-  async uploadComRegName(
-    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
-    @Body() fileName: string,
-  ): Promise<Company> {
-    console.log('@@@', fileName);
-    return await this.authService.uploadComRegName(token, fileName);
-  }
-
-  /***************************************************
-   * 테스트 끝
-   ***************************************************/
-
   @ApiOperation({ summary: '[WORKER] 업로드된 사업자등록증 파일명 반환' })
   @ApiResponse({ description: '성공: 파일명, 실패: null' })
   @Get('file-name/com-reg-doc')

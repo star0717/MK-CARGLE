@@ -4,7 +4,10 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePwModal from "./changePwModal";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { setMyInfoAction } from "../../../../../store/action/user.action";
+import {
+  setMyInfoAction,
+  _aGetAuthCompanyId,
+} from "../../../../../store/action/user.action";
 import { useDispatch } from "react-redux";
 import { SignUpInfo } from "../../../../models/auth.entity";
 import StampModal from "./stampModal";
@@ -23,7 +26,6 @@ import {
   TextInput2,
   SmallButton,
   Combo,
-  Image,
   CommonTitle,
   CommonSubTitle,
   CommonButton,
@@ -44,6 +46,8 @@ import {
 import { User } from "../../../../models/user.entity";
 import { useDropzone } from "react-dropzone";
 import { BsDownload, BsUpload } from "react-icons/bs";
+import Image, { ImageProps } from "next/image";
+import { UserCompanyFind } from "store/interfaces";
 
 /**
  * 마이 페이지: 계정관리 수정 컴포넌트(기능)
@@ -66,13 +70,12 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [modalOption, setModalOption] = useState<string>(""); // modal 내용
   const [readOnly, setReadOnly] = useState<boolean>(true); // 계정 권한에 따른 readonly
-  const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
+  // const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
   const [userData, setUserData] = useState<User>(props.accountInfo.user); // 불러온 계정정보 - 유저
   const [comData, setComData] = useState<Company>(props.accountInfo.company); // 불러온 계정정보 - 회사
-  const [selectedFile, setSelectedFile] = useState();
-  const [stampImgSrc, setStampImgSrc] = useState<string>(
-    "/api/settings/myinfo/stamp"
-  ); // url src 설정
+  const [selectedFile, setSelectedFile] = useState(); // 선택한 파일
+  const [fileUrl, setFileUrl] = useState<string>(""); // url src 설정
+  const [comInfo, setComInfo] = useState<Company>();
 
   // useEffect 관리
   // 계정 권한에 따라 readOnly state 변경
@@ -187,12 +190,21 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   };
 
   const DropZone: any = () => {
-    const onDrop = useCallback((acceptedFiles) => {
+    const onDrop = useCallback(async (acceptedFiles) => {
       // Do something with the files
-      console.log("!@#!@#", acceptedFiles);
-      setSelectedFile(acceptedFiles[0]);
-      setModalOpen(!modalOpen);
-      setModalOption("stamp");
+      await dispatch(_aGetAuthCompanyId(props.tokenValue.cID)).then(
+        (res: UserCompanyFind) => {
+          if (res.payload) {
+            setSelectedFile(acceptedFiles[0]);
+            setComInfo(res.payload);
+            setModalOpen(!modalOpen);
+            setModalOption("stamp");
+          }
+        },
+        (err) => {
+          alert("사업자 정보 조회 에러");
+        }
+      );
     }, []);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
@@ -201,15 +213,16 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
     return (
       <Wrapper {...getRootProps()}>
         <input {...getInputProps()} />
-        {stampImgSrc ? (
+        {fileUrl ? (
           <>
             {isDragActive ? (
               <>
                 <Image
+                  loader={imgLoader}
                   alt="도장 사진"
-                  width={`100 px`}
+                  width={100}
                   // height={200}
-                  src={stampImgSrc}
+                  src={process.env.NEXT_PUBLIC_GET_IMG_LINK}
                 />
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   변경할 파일을 드래그하거나 클릭하여 선택하세요.
@@ -221,7 +234,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                   alt="도장 사진"
                   width={`100 px`}
                   // height={200}
-                  src={stampImgSrc}
+                  src={process.env.NEXT_PUBLIC_GET_IMG_LINK}
                 />
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   변경할 파일을 드래그하거나 클릭하여 선택하세요.
@@ -263,14 +276,19 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
     style: { height: "500px" },
   };
 
+  const imgLoader = ({ src }: ImageProps) => {
+    return `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${src}${fileUrl}`;
+  };
+
   // 도장 modal props
   const StampModalProps: _pStampModalProps = {
-    stampNum,
-    setStampNum,
+    //   stampNum,
+    //   setStampNum,
+    comInfo,
     selectedFile,
     setModalOpen,
-    stampImgSrc,
-    setStampImgSrc,
+    fileUrl,
+    setFileUrl,
     style: { height: "500px" },
   };
 

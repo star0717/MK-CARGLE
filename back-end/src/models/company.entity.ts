@@ -3,7 +3,6 @@ import { IsOptional, IsString } from 'class-validator';
 import { BaseEntity } from './base.entity';
 import { prop } from '@typegoose/typegoose';
 import { CompanyApproval } from 'src/constants/model.const';
-import { CompanyDocList } from './company.doc.entity';
 
 export class Company extends BaseEntity {
   @ApiProperty({ description: '상호명' })
@@ -138,15 +137,4 @@ export class Company extends BaseEntity {
     default: CompanyApproval.BEFORE,
   })
   public approval: CompanyApproval;
-
-  // @ApiProperty({
-  //   description: '업로드 파일명(사업자등록증, 정비업등록증, 도장)',
-  //   required: false,
-  // })
-  // @IsOptional()
-  // @prop({
-  //   unique: false,
-  //   required: false,
-  // })
-  // public docList: CompanyDocList;
 }
