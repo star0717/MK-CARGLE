@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import {
@@ -25,8 +25,14 @@ import {
   CommonTitleWrapper,
   JoinStepBar,
   JoinStepBarWrapper,
+  CommonButtonWrapper,
 } from "../../../styles/CommonComponents";
-import { BsFillLightbulbFill, BsFillQuestionCircleFill } from "react-icons/bs";
+import {
+  BsDownload,
+  BsFillLightbulbFill,
+  BsFillQuestionCircleFill,
+  BsUpload,
+} from "react-icons/bs";
 import { parseJwt } from "../../../../modules/commonModule";
 import { AuthTokenInfo } from "../../../../models/auth.entity";
 import { FileInit } from "../../../../configure/etc.entity";
@@ -35,6 +41,9 @@ import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
 import { GoCheck } from "react-icons/go";
 import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
+import { useDropzone } from "react-dropzone";
+import theme from "styles/theme";
+import { FaTrashAlt } from "react-icons/fa";
 
 /**
  * 파일 데이터 초기화
@@ -65,6 +74,221 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     let fileData = e.target.files[0];
     setFile({ ...file, [e.target.name]: fileData });
     setFileName({ ...fileName, [e.target.name]: fileData.name });
+  };
+
+  const ComDropZone: any = () => {
+    const onDrop = useCallback((acceptedFiles) => {
+      if (
+        acceptedFiles[0].type.includes("jpg") ||
+        acceptedFiles[0].type.includes("png") ||
+        acceptedFiles[0].type.includes("jpeg") ||
+        acceptedFiles[0].type.includes("pdf")
+      ) {
+        // Do something with the files
+        setFile({ ...file, comFile: acceptedFiles[0] });
+        setFileName({ ...fileName, comFile: acceptedFiles[0].name });
+      } else {
+        return alert("형식에 알맞지 않습니다.");
+      }
+    }, []);
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+    });
+
+    return (
+      <Wrapper {...getRootProps()}>
+        <input {...getInputProps()} />
+        {file.comFile === "" ? (
+          <>
+            {isDragActive ? (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                shadow={theme.boxShadow}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                  사업자등록증
+                </Text>
+                <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                  jpg, jpeg, pdf, png 확장자의 파일만 업로드 가능합니다.
+                </Text>
+              </Wrapper>
+            ) : (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                bgColor={`#f5f5f5`}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text fontSize={`24px`} fontWeight={`700`}>
+                  사업자등록증
+                </Text>
+                <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                  jpg, jpeg, pdf, png 확장자의 파일만 업로드 가능합니다.
+                </Text>
+              </Wrapper>
+            )}
+          </>
+        ) : (
+          <Wrapper
+            width={`480px`}
+            height={`380px`}
+            border={`1px solid #c4c4c4`}
+            radius={`5px`}
+          >
+            <Text fontSize={`40px`} color={`#314FA5`}>
+              <GoCheck />
+            </Text>
+            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+              정상적으로 업로드 되었습니다.
+            </Text>
+            <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
+              사업자등록증
+            </Text>
+            <Wrapper dr={`row`}>
+              <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                {fileName.comFile}
+              </Text>
+              <Text
+                margin={`105px 0px 0px 8px`}
+                color={`#c4c4c4`}
+                cursor={`pointer`}
+                onClick={(e: React.MouseEvent<MouseEvent>) => {
+                  e.stopPropagation();
+                  setFile({ ...file, comFile: "" });
+                  setFileName({ ...fileName, comFile: "" });
+                }}
+              >
+                <FaTrashAlt />
+              </Text>
+            </Wrapper>
+          </Wrapper>
+        )}
+      </Wrapper>
+    );
+  };
+
+  const ManDropZone: any = () => {
+    const onDrop = useCallback((acceptedFiles) => {
+      if (
+        acceptedFiles[0].type.includes("jpg") ||
+        acceptedFiles[0].type.includes("png") ||
+        acceptedFiles[0].type.includes("jpeg") ||
+        acceptedFiles[0].type.includes("pdf")
+      ) {
+        // Do something with the files
+        setFile({ ...file, manFile: acceptedFiles[0] });
+        setFileName({ ...fileName, manFile: acceptedFiles[0].name });
+      } else {
+        return alert("형식에 알맞지 않습니다.");
+      }
+    }, []);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+    });
+
+    return (
+      <Wrapper {...getRootProps()}>
+        <input {...getInputProps()} />
+        {file.manFile === "" ? (
+          <>
+            {isDragActive ? (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                shadow={theme.boxShadow}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                  정비업등록증
+                </Text>
+                <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                  jpg, jpeg, pdf, png 확장자의 파일만 업로드 가능합니다.
+                </Text>
+              </Wrapper>
+            ) : (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                bgColor={`#f5f5f5`}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text fontSize={`24px`} fontWeight={`700`}>
+                  정비업등록증
+                </Text>
+                <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                  jpg, jpeg, pdf, png 확장자의 파일만 업로드 가능합니다.
+                </Text>
+              </Wrapper>
+            )}
+          </>
+        ) : (
+          <Wrapper
+            width={`480px`}
+            height={`380px`}
+            border={`1px solid #c4c4c4`}
+            radius={`5px`}
+          >
+            <Text fontSize={`40px`} color={`#314FA5`}>
+              <GoCheck />
+            </Text>
+            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+              정상적으로 업로드 되었습니다.
+            </Text>
+            <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
+              정비업등록증
+            </Text>
+            <Wrapper dr={`row`}>
+              <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                {fileName.manFile}
+              </Text>
+              <Text
+                margin={`105px 0px 0px 8px`}
+                color={`#c4c4c4`}
+                cursor={`pointer`}
+                onClick={(e: React.MouseEvent<MouseEvent>) => {
+                  e.stopPropagation();
+                  setFile({ ...file, manFile: "" });
+                  setFileName({ ...fileName, manFile: "" });
+                }}
+              >
+                <FaTrashAlt />
+              </Text>
+            </Wrapper>
+          </Wrapper>
+        )}
+      </Wrapper>
+    );
   };
 
   /**
@@ -220,13 +444,13 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             </JoinStepBarWrapper>
           )}
           <form onSubmit={onFileUploadHandler}>
-            <Wrapper
+            {/* <Wrapper
               width={`auto`}
               padding={`50px`}
               border={`1px solid #ccc`}
               radius={`5px`}
-            >
-              <Wrapper
+            > */}
+            {/* <Wrapper
                 ju={`flex-start`}
                 al={`flex-start`}
                 width={`auto`}
@@ -264,8 +488,8 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                     accept=".jpg, .png, .pdf"
                   />
                 </Wrapper>
-              </Wrapper>
-              <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
+              </Wrapper> */}
+            {/* <Wrapper ju={`flex-start`} al={`flex-start`} width={`auto`}>
                 <Text margin={`0px 0px 10px`}>정비업등록증</Text>
                 <Wrapper dr={`row`} ju={`flex-start`} al={`flex-start`}>
                   <TextInput2
@@ -294,26 +518,23 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                   />
                 </Wrapper>
               </Wrapper>
+            </Wrapper> */}
+            <Wrapper dr={`row`} radius={`5px`}>
+              <ComDropZone />
+              <ManDropZone />
             </Wrapper>
-            <Wrapper padding={`50px 0px 50px 0px`}>
+            <CommonButtonWrapper padding={`50px 0px 50px 0px`} dr={`row`}>
               <CommonButton
                 type="button"
-                margin={`0px 0px 10px 0px`}
                 kindOf={`white`}
                 onClick={onSignOutHandler}
               >
                 다음에하기
               </CommonButton>
-              <CommonButton type="submit" margin={`10px 0px 0px 0px`}>
-                제출하기
-              </CommonButton>
-            </Wrapper>
+              <CommonButton type="submit">제출하기</CommonButton>
+            </CommonButtonWrapper>
             <Wrapper padding={`0px 0px 0px`}>
-              <Wrapper
-                borderTop={`1px solid #c4c4c4`}
-                al={`flex-start`}
-                width={`500px`}
-              >
+              <Wrapper borderTop={`1px solid #c4c4c4`} al={`flex-start`}>
                 <Wrapper
                   al={`flex-end`}
                   padding={`30px 15px 10px 0px`}
@@ -331,7 +552,6 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                     </Text>
                     <Text textAlign={`start`}>
                       서류가 준비되지 않으셨더라도 회원가입 시 입력한 계정정보로
-                      <br />
                       로그인하면 이어서 진행이 가능해요.
                       <br />
                       <br />

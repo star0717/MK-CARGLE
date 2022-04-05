@@ -189,7 +189,6 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   const DropZone: any = () => {
     const onDrop = useCallback((acceptedFiles) => {
       // Do something with the files
-      console.log(acceptedFiles);
       setSelectedFile(acceptedFiles[0]);
       setModalOpen(!modalOpen);
       setModalOption("stamp");
