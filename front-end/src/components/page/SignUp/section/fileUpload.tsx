@@ -79,8 +79,9 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     const onDrop = useCallback((acceptedFiles) => {
       // Do something with the files
       setFile({ ...file, comFile: acceptedFiles[0] });
-      setFileName({ ...file, comFile: acceptedFiles[0].name });
+      setFileName({ ...fileName, comFile: acceptedFiles[0].name });
     }, []);
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
     });
@@ -144,7 +145,6 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
               사업자등록증
             </Text>
-            <Text>{fileName.comFile}</Text>
           </Wrapper>
         )}
       </Wrapper>
@@ -154,9 +154,8 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
   const ManDropZone: any = () => {
     const onDrop = useCallback((acceptedFiles) => {
       // Do something with the files
-      console.log(acceptedFiles);
       setFile({ ...file, manFile: acceptedFiles[0] });
-      setFileName({ ...file, manFile: acceptedFiles[0].name });
+      setFileName({ ...fileName, manFile: acceptedFiles[0].name });
     }, []);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
@@ -221,7 +220,6 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
               정비업등록증
             </Text>
-            <Text>{fileName.manFile}</Text>
           </Wrapper>
         )}
       </Wrapper>
