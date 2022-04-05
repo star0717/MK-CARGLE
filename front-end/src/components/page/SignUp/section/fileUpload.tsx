@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import {
@@ -26,7 +26,12 @@ import {
   JoinStepBar,
   JoinStepBarWrapper,
 } from "../../../styles/CommonComponents";
-import { BsFillLightbulbFill, BsFillQuestionCircleFill } from "react-icons/bs";
+import {
+  BsDownload,
+  BsFillLightbulbFill,
+  BsFillQuestionCircleFill,
+  BsUpload,
+} from "react-icons/bs";
 import { parseJwt } from "../../../../modules/commonModule";
 import { AuthTokenInfo } from "../../../../models/auth.entity";
 import { FileInit } from "../../../../configure/etc.entity";
@@ -35,6 +40,7 @@ import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
 import { GoCheck } from "react-icons/go";
 import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
+import { useDropzone } from "react-dropzone";
 
 /**
  * 파일 데이터 초기화
@@ -65,6 +71,73 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     let fileData = e.target.files[0];
     setFile({ ...file, [e.target.name]: fileData });
     setFileName({ ...fileName, [e.target.name]: fileData.name });
+  };
+
+  const DropZone: any = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onDrop = useCallback((acceptedFiles) => {
+      // Do something with the files
+    }, []);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+    });
+
+    return (
+      <></>
+      // <Wrapper {...getRootProps()}>
+      //   <input {...getInputProps()} />
+      //   {stampImgSrc ? (
+      //     <>
+      //       {isDragActive ? (
+      //         <>
+      //           <Image
+      //             alt="도장 사진"
+      //             width={`100 px`}
+      //             // height={200}
+      //             src={stampImgSrc}
+      //           />
+      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+      //             변경할 파일을 드래그하거나 클릭하여 선택하세요.
+      //           </Text>
+      //         </>
+      //       ) : (
+      //         <>
+      //           <Image
+      //             alt="도장 사진"
+      //             width={`100 px`}
+      //             // height={200}
+      //             src={stampImgSrc}
+      //           />
+      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+      //             변경할 파일을 드래그하거나 클릭하여 선택하세요.
+      //           </Text>
+      //         </>
+      //       )}
+      //     </>
+      //   ) : (
+      //     <>
+      //       {isDragActive ? (
+      //         <>
+      //           <Text fontSize={`40px`} color={`#ccc`}>
+      //             <BsDownload />
+      //           </Text>
+      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+      //             업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+      //           </Text>
+      //         </>
+      //       ) : (
+      //         <>
+      //           <Text fontSize={`40px`} color={`#ccc`}>
+      //             <BsUpload />
+      //           </Text>
+      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+      //             업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+      //           </Text>
+      //         </>
+      //       )}
+      //     </>
+      //   )}
+      // </Wrapper>
+    );
   };
 
   /**
