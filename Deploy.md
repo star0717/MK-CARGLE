@@ -256,12 +256,28 @@ ecs-cli up --keypair cargle \
 ecs-cli compose up --cluster-config n2server --ecs-profile n2server
 ```
 
+태스크 생성
 ```
 ecs-cli compose \
   -f docker-compose.yml \
   -p n2server \
   create \
   --cluster-config n2server
+```
+
+서비스 생성(위에 태스크 생성 후에 이용 가능)
+```
+aws ecs create-service \
+  --service-name n2server \
+  --launch-type EC2 \
+  --task-definition n2server \
+  --cluster n2server \
+  --desired-count 3 \
+  --deployment-controller type=ECS \
+  --deployment-configuration minimumHealthyPercent=100,maximumPercent=200 \
+  --health-check-grace-period-seconds 600 \
+  --scheduling-strategy REPLICA \
+  --load-balancers '[{"targetGroupArn": "arn:aws:elasticloadbalancing:ap-northeast-2:151333897315:targetgroup/n2server-vpc-tg/930cb2f780759e85", "containerName": "proxy-server", "containerPort": 80}]'
 ```
 
 ```
@@ -274,8 +290,7 @@ aws ecs create-service \
   --deployment-controller type=ECS \
   --deployment-configuration minimumHealthyPercent=100,maximumPercent=200 \
   --health-check-grace-period-seconds 600 \
-  --scheduling-strategy REPLICA \
-  --load-balancers '[{"targetGroupArn": "arn:aws:elasticloadbalancing:ap-northeast-2:151333897315:targetgroup/n2server-vpc-tg/930cb2f780759e85", "containerName": "proxy-server", "containerPort": 80}]'
+  --scheduling-strategy REPLICA
 ```
 
 ```
@@ -284,4 +299,28 @@ aws ecs update-service \
   --task-definition n2server \
   --cluster n2server \
   --force-new-deployment
+```
+
+서비스 up
+
+```
+ecs-cli compose --project-name n2server service up --create-log-groups --cluster-config n2server
+```
+
+서비스 ps
+
+```
+ecs-cli compose --project-name n2server service ps --cluster-config n2server
+```
+
+서비스 down
+
+```
+ecs-cli compose --project-name n2server service down --cluster-config n2server
+```
+
+클러스터 설정
+
+```
+ecs-cli configure --config-name n2server --cluster n2server --default-launch-type EC2  --region ap-northeast-2
 ```
