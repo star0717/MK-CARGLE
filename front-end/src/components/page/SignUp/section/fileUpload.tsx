@@ -88,22 +88,64 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     return (
       <Wrapper {...getRootProps()}>
         <input {...getInputProps()} />
-        <Wrapper
-          width={`480px`}
-          height={`380px`}
-          border={`1px solid #c4c4c4`}
-          radius={`5px`}
-        >
-          <Text fontSize={`40px`} color={`#ccc`}>
-            <BsDownload />
-          </Text>
-          <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-            업로드할 파일을 드래그하거나 클릭하여 선택하세요.
-          </Text>
-          <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
-            사업자등록증
-          </Text>
-        </Wrapper>
+        {file.comFile === "" ? (
+          <>
+            {isDragActive ? (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                shadow={theme.boxShadow}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                  사업자등록증
+                </Text>
+              </Wrapper>
+            ) : (
+              <Wrapper
+                width={`480px`}
+                height={`380px`}
+                border={`1px solid #c4c4c4`}
+                radius={`5px`}
+                bgColor={`#f5f5f5`}
+              >
+                <Text fontSize={`40px`} color={`#ccc`}>
+                  <BsDownload />
+                </Text>
+                <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+                  업로드할 파일을 드래그하거나 클릭하여 선택하세요.
+                </Text>
+                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                  사업자등록증
+                </Text>
+              </Wrapper>
+            )}
+          </>
+        ) : (
+          <Wrapper
+            width={`480px`}
+            height={`380px`}
+            border={`1px solid #c4c4c4`}
+            radius={`5px`}
+          >
+            <Text fontSize={`40px`} color={`#314af5`}>
+              <GoCheck />
+            </Text>
+            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+              정상적으로 업로드 되었습니다.
+            </Text>
+            <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+              사업자등록증
+            </Text>
+          </Wrapper>
+        )}
       </Wrapper>
     );
   };
@@ -173,7 +215,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
               <GoCheck />
             </Text>
             <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-              정상적으로 업로드 돠었습니다.
+              정상적으로 업로드 되었습니다.
             </Text>
             <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
               정비업등록증
