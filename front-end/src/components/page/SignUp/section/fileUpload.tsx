@@ -73,7 +73,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     setFileName({ ...fileName, [e.target.name]: fileData.name });
   };
 
-  const DropZone: any = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const comDropZone: any = () => {
     const onDrop = useCallback((acceptedFiles) => {
       // Do something with the files
     }, []);
@@ -82,61 +82,24 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     });
 
     return (
-      <></>
-      // <Wrapper {...getRootProps()}>
-      //   <input {...getInputProps()} />
-      //   {stampImgSrc ? (
-      //     <>
-      //       {isDragActive ? (
-      //         <>
-      //           <Image
-      //             alt="도장 사진"
-      //             width={`100 px`}
-      //             // height={200}
-      //             src={stampImgSrc}
-      //           />
-      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-      //             변경할 파일을 드래그하거나 클릭하여 선택하세요.
-      //           </Text>
-      //         </>
-      //       ) : (
-      //         <>
-      //           <Image
-      //             alt="도장 사진"
-      //             width={`100 px`}
-      //             // height={200}
-      //             src={stampImgSrc}
-      //           />
-      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-      //             변경할 파일을 드래그하거나 클릭하여 선택하세요.
-      //           </Text>
-      //         </>
-      //       )}
-      //     </>
-      //   ) : (
-      //     <>
-      //       {isDragActive ? (
-      //         <>
-      //           <Text fontSize={`40px`} color={`#ccc`}>
-      //             <BsDownload />
-      //           </Text>
-      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-      //             업로드할 파일을 드래그하거나 클릭하여 선택하세요.
-      //           </Text>
-      //         </>
-      //       ) : (
-      //         <>
-      //           <Text fontSize={`40px`} color={`#ccc`}>
-      //             <BsUpload />
-      //           </Text>
-      //           <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
-      //             업로드할 파일을 드래그하거나 클릭하여 선택하세요.
-      //           </Text>
-      //         </>
-      //       )}
-      //     </>
-      //   )}
-      // </Wrapper>
+      <Wrapper {...getRootProps()}>
+        <input {...getInputProps()} />
+      </Wrapper>
+    );
+  };
+
+  const manDropZone: any = () => {
+    const onDrop = useCallback((acceptedFiles) => {
+      // Do something with the files
+    }, []);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+      onDrop,
+    });
+
+    return (
+      <Wrapper {...getRootProps()}>
+        <input {...getInputProps()} />
+      </Wrapper>
     );
   };
 
