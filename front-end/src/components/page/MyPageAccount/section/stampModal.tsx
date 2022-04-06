@@ -1,8 +1,7 @@
 import { NextPage } from "next";
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { uploadStampAction } from "../../../../../store/action/user.action";
-import { _pStampModalProps } from "../../../../configure/_pProps.entity";
+import { _pStampModalProps } from "src/configure/_pProps.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
@@ -16,9 +15,7 @@ import {
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { Company } from "src/models/company.entity";
-import { s3FileUploadV1, s3GetFile } from "src/modules/commonModule";
-import AWS, { S3 } from "aws-sdk";
+import { s3FileUploadV1, s3GetFileUrl } from "src/modules/commonModule";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -48,7 +45,6 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
   });
   const [completedCrop, setCompletedCrop] = useState<any>(null); // React-crop
   const [imgStyle, setImgStyle] = useState<ImgStyle>();
-
   /**
    * 도장 파일 업로드 handler
    * @param canvas
@@ -61,16 +57,14 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
     }
 
     canvas.toBlob(
-      (blob: any) => {
-        if (!blob) return alert("파일을 선택하세요");
-        s3FileUploadV1(blob, props.comData.comRegNum, "stamp")
-          .then((res) => {
-            props.setStampNum(props.stampNum + 1);
-            props.setModalOpen(false);
-          })
-          .catch((err) => {
-            alert("이미지 업로드 에러");
-          });
+      async (blob: Blob) => {
+        await s3FileUploadV1(blob, props.comData.comRegNum, "stamp");
+        const newUrl: string = await s3GetFileUrl(
+          props.comData.comRegNum,
+          "stamp"
+        );
+        props.setStampImgSrc(newUrl);
+        props.setModalOpen(false);
       },
       "image/png",
       1

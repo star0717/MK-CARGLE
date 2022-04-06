@@ -1,12 +1,11 @@
 import parse from "url-parse";
-import { MbType } from "../configure/etc.entity";
-import { mbTypeOption } from "../configure/list.entity";
-import { genFindParamQuery } from "../constants/model.const";
-import { FindParameters } from "../models/base.entity";
-import { Company } from "../models/company.entity";
+import { MbType } from "src/configure/etc.entity";
+import { mbTypeOption } from "src/configure/list.entity";
+import { genFindParamQuery } from "src/constants/model.const";
+import { FindParameters } from "src/models/base.entity";
+import { Company } from "src/models/company.entity";
 import jwt from "jsonwebtoken";
 import AWS, { S3 } from "aws-sdk";
-import { PromiseResult } from "aws-sdk/lib/request";
 
 AWS.config.update({
   accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -301,7 +300,14 @@ const s3FileUpload = async () => {
     });
 };
 
-export const s3FileUploadV1 = (blob: any, fileName: string, fold?: string) => {
+/**
+ * AWS S3 파일 업로드(Blob 타입)
+ * @param blob
+ * @param fileName
+ * @param fold
+ * @returns
+ */
+export const s3FileUploadV1 = (blob: Blob, fileName: string, fold?: string) => {
   const params: S3.Types.PutObjectRequest = {
     ACL: "public-read",
     Body: blob,
@@ -315,20 +321,40 @@ export const s3FileUploadV1 = (blob: any, fileName: string, fold?: string) => {
 };
 
 /**
- * AWS S3 파일 가져오기
+ * AWS S3 파일 data 가져오기
  * @param fileName
  * @param fold
+ * @returns
  */
-export const s3GetFile = async (fileName?: string, fold?: string) => {
+export const s3GetFileData = async (fileName: string, fold?: string) => {
   const params: S3.Types.GetObjectRequest = {
     Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
     Key: fold + "/" + fileName,
   };
-  const res: PromiseResult<S3.GetObjectOutput, AWS.AWSError> = await s3
-    .getObject(params)
-    .promise();
+  let result: S3.GetObjectAclOutput;
+  try {
+    result = await s3.getObject(params).promise();
+  } catch (err) {
+    return (result = null);
+  }
 
-  return res;
+  return result;
 };
 
-// `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${process.env.NEXT_PUBLIC_GET_IMG_LINK}stamp/${comInfo.comRegNum}`
+/**
+ * AWS S3 파일 url 가져오기
+ * @param fileName
+ * @param fold
+ */
+export const s3GetFileUrl = async (fileName: string, fold?: string) => {
+  const params: any = {
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+    Expires: 30,
+  };
+  let url: string;
+  const exist = await s3GetFileData(fileName, fold);
+  exist ? (url = s3.getSignedUrl("getObject", params)) : (url = null);
+
+  return url;
+};

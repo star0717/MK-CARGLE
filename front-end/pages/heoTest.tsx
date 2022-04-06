@@ -211,7 +211,7 @@ const HeoTest: NextPage<_MainProps> = (props) => {
       ACL: "public-read",
       Body: selectedFile,
       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
-      Key: "crn/" + fileName,
+      Key: "stamp/" + fileName,
       ContentType: selectedFile.type,
     };
 
@@ -262,10 +262,15 @@ const HeoTest: NextPage<_MainProps> = (props) => {
 
   const imgLoader = ({ src }: ImageProps) => {
     let fileUrl: string = "crn/3388800960";
-    const params: S3.Types.GetObjectRequest = {
-      Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
-      Key: fileUrl,
-    };
+    // const params: any = {
+    //   Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    //   Key: fileUrl,
+    //   Expires: 60,
+    // };
+    // s3.getSignedUrl("getObject", params, (err: any, url: string) => {
+    //   if (err) alert("조회 에러");
+    //   console.log(url);
+    // });
     return `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${src}${fileUrl}`;
   };
 
@@ -354,6 +359,23 @@ const HeoTest: NextPage<_MainProps> = (props) => {
             height={300}
             priority
           />
+        </Wrapper>
+        <Wrapper border="1px solid black" padding={"20px 0px"}>
+          <CommonButton
+            type="button"
+            onClick={() => {
+              const params: S3.Types.DeleteObjectRequest = {
+                Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+                Key: "stamp/3388800960",
+              };
+              s3.deleteObject(params, (err, data) => {
+                if (err) alert("삭제 에러");
+                console.log(data);
+              });
+            }}
+          >
+            파일 삭제
+          </CommonButton>
         </Wrapper>
       </Wrapper>
     </>
