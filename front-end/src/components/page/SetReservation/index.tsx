@@ -5,6 +5,7 @@ import {
   RsWrapper,
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
+import BasicInfo from "./section/basicInfo";
 
 const SetReservation: NextPage<any> = (props) => {
   /*********************************************************************
@@ -28,9 +29,7 @@ const SetReservation: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <BodyWrapper>
-      <WholeWrapper>
-        <RsWrapper></RsWrapper>
-      </WholeWrapper>
+      <BasicInfo />
     </BodyWrapper>
   );
 };
