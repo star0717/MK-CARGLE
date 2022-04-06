@@ -43,6 +43,7 @@ import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import { useDropzone } from "react-dropzone";
 import theme from "styles/theme";
+import { FaTrashAlt } from "react-icons/fa";
 
 /**
  * 파일 데이터 초기화
@@ -77,10 +78,20 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
 
   const ComDropZone: any = () => {
     const onDrop = useCallback((acceptedFiles) => {
-      // Do something with the files
-      setFile({ ...file, comFile: acceptedFiles[0] });
-      setFileName({ ...file, comFile: acceptedFiles[0].name });
+      if (
+        acceptedFiles[0].type.includes("jpg") ||
+        acceptedFiles[0].type.includes("png") ||
+        acceptedFiles[0].type.includes("jpeg") ||
+        acceptedFiles[0].type.includes("pdf")
+      ) {
+        // Do something with the files
+        setFile({ ...file, comFile: acceptedFiles[0] });
+        setFileName({ ...fileName, comFile: acceptedFiles[0].name });
+      } else {
+        return alert("형식에 알맞지 않습니다.");
+      }
     }, []);
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
     });
@@ -104,8 +115,11 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   업로드할 파일을 드래그하거나 클릭하여 선택하세요.
                 </Text>
-                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
                   사업자등록증
+                </Text>
+                <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                  jpg, jpeg, pdf, png 확장자의 파일만 업로드 가능합니다.
                 </Text>
               </Wrapper>
             ) : (
@@ -122,8 +136,11 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   업로드할 파일을 드래그하거나 클릭하여 선택하세요.
                 </Text>
-                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                <Text fontSize={`24px`} fontWeight={`700`}>
                   사업자등록증
+                </Text>
+                <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                  jpg, jpeg, pdf, png 확장자의 파일만 업로드 가능합니다.
                 </Text>
               </Wrapper>
             )}
@@ -135,15 +152,32 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             border={`1px solid #c4c4c4`}
             radius={`5px`}
           >
-            <Text fontSize={`40px`} color={`#314af5`}>
+            <Text fontSize={`40px`} color={`#314FA5`}>
               <GoCheck />
             </Text>
             <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
               정상적으로 업로드 되었습니다.
             </Text>
-            <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+            <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
               사업자등록증
             </Text>
+            <Wrapper dr={`row`}>
+              <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                {fileName.comFile}
+              </Text>
+              <Text
+                margin={`105px 0px 0px 8px`}
+                color={`#c4c4c4`}
+                cursor={`pointer`}
+                onClick={(e: React.MouseEvent<MouseEvent>) => {
+                  e.stopPropagation();
+                  setFile({ ...file, comFile: "" });
+                  setFileName({ ...fileName, comFile: "" });
+                }}
+              >
+                <FaTrashAlt />
+              </Text>
+            </Wrapper>
           </Wrapper>
         )}
       </Wrapper>
@@ -152,10 +186,18 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
 
   const ManDropZone: any = () => {
     const onDrop = useCallback((acceptedFiles) => {
-      // Do something with the files
-      console.log(acceptedFiles);
-      setFile({ ...file, manFile: acceptedFiles[0] });
-      setFileName({ ...file, manFile: acceptedFiles[0].name });
+      if (
+        acceptedFiles[0].type.includes("jpg") ||
+        acceptedFiles[0].type.includes("png") ||
+        acceptedFiles[0].type.includes("jpeg") ||
+        acceptedFiles[0].type.includes("pdf")
+      ) {
+        // Do something with the files
+        setFile({ ...file, manFile: acceptedFiles[0] });
+        setFileName({ ...fileName, manFile: acceptedFiles[0].name });
+      } else {
+        return alert("형식에 알맞지 않습니다.");
+      }
     }, []);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
@@ -180,8 +222,11 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   업로드할 파일을 드래그하거나 클릭하여 선택하세요.
                 </Text>
-                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
                   정비업등록증
+                </Text>
+                <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                  jpg, jpeg, pdf, png 확장자의 파일만 업로드 가능합니다.
                 </Text>
               </Wrapper>
             ) : (
@@ -198,8 +243,11 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   업로드할 파일을 드래그하거나 클릭하여 선택하세요.
                 </Text>
-                <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+                <Text fontSize={`24px`} fontWeight={`700`}>
                   정비업등록증
+                </Text>
+                <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                  jpg, jpeg, pdf, png 확장자의 파일만 업로드 가능합니다.
                 </Text>
               </Wrapper>
             )}
@@ -211,15 +259,32 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             border={`1px solid #c4c4c4`}
             radius={`5px`}
           >
-            <Text fontSize={`40px`} color={`#314af5`}>
+            <Text fontSize={`40px`} color={`#314FA5`}>
               <GoCheck />
             </Text>
             <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
               정상적으로 업로드 되었습니다.
             </Text>
-            <Text color={`314FA5`} fontSize={`24px`} fontWeight={`700`}>
+            <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
               정비업등록증
             </Text>
+            <Wrapper dr={`row`}>
+              <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+                {fileName.manFile}
+              </Text>
+              <Text
+                margin={`105px 0px 0px 8px`}
+                color={`#c4c4c4`}
+                cursor={`pointer`}
+                onClick={(e: React.MouseEvent<MouseEvent>) => {
+                  e.stopPropagation();
+                  setFile({ ...file, manFile: "" });
+                  setFileName({ ...fileName, manFile: "" });
+                }}
+              >
+                <FaTrashAlt />
+              </Text>
+            </Wrapper>
           </Wrapper>
         )}
       </Wrapper>

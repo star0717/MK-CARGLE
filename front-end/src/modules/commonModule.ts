@@ -123,7 +123,7 @@ console.log("External API Path: " + _externalApiPath);
  */
 export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   let apiPath = "/api" + path;
-  console.log(apiPath);
+  // console.log(apiPath);
   if (args?.isServerSide) {
     apiPath = `${_externalApiPath}${path}`;
   }
@@ -135,7 +135,7 @@ export const genApiPath = (path: string, args?: Partial<GenPathArgs>) => {
   if (args?.findParams) {
     apiPath += genFindParamQuery(args.findParams);
   }
-  // console.log("API 호출 경로:", apiPath);
+  console.log("API 호출 경로:", apiPath);
   return apiPath;
 };
 
