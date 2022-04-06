@@ -10,7 +10,7 @@ services:
       - back-end
     environment:
       - NODE_ENV=production
-      - DESTINATION_API=http://cargle.net
+      - DESTINATION_API=http://elb-746451595.ap-northeast-2.elb.amazonaws.com/
     logging:
       driver: awslogs
       options: 
@@ -37,6 +37,9 @@ services:
     - "80:80"
     depends_on:
       - front-end
+    links:
+      - front-end
+      - back-end
     logging:
       driver: awslogs
       options: 
