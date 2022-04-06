@@ -285,7 +285,7 @@ export const Text = styled.p<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   min-height: ${(props) => props.minHeight};
-  max-height: ${(props) => props.maxHeight};
+  max-width: ${(props) => props.maxWidth};
   display: ${(props) => props.display};
   flex-direction: ${(props) => props.dr};
   align-items: ${(props) => props.al};
@@ -1871,7 +1871,6 @@ export const ToolTip = styled.div<any>`
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
   z-index: 0;
-  white-space: pre-wrap;
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
   text-overflow: ${(props) => props.textOverflow || `ellipsis`};
   white-space: nowrap;
