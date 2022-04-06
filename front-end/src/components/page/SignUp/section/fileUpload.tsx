@@ -201,7 +201,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 color={`#343a40`}
                 bgColor={`#fff`}
                 fontSize={`20px`}
-                margin={`105px 0px 0px 0px`}
+                margin={`105px 0px 5px 0px`}
               >
                 <IoIosCloseCircle />
               </CloseButton>
@@ -318,7 +318,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 color={`#343a40`}
                 bgColor={`#fff`}
                 fontSize={`20px`}
-                margin={`105px 0px 0px 0px`}
+                margin={`105px 0px 5px 0px`}
               >
                 <IoIosCloseCircle />
               </CloseButton>
