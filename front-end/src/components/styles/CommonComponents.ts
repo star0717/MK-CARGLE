@@ -31,12 +31,7 @@ export const WholeWrapper = styled.div<any>`
   bottom: ${(props) => props.bottom};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
-  animation: ${(props) =>
-    props.notAnimate
-      ? ``
-      : css`
-          ${appearAnimation} 1s forwards
-        `};
+  animation: ${appearAnimation} 1s forwards;
   min-height: ${(props) => props.minHeight || ``};
   min-width: ${(props) => props.minWidth || ``};
   box-shadow: ${(props) => props.shadow};
@@ -2028,5 +2023,41 @@ export const ProgressBar = styled.progress<any>`
   &::-webkit-progress-value {
     background-color: #8dafce;
     border-radius: 40px;
+  }
+`;
+
+export const SelectDays = styled.button<any>`
+  width: auto;
+  height: 40px;
+  padding: 0px 40px;
+  border-radius: 4px;
+  border: 1px solid #c4c4c4;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  background-color: ${(props) => props.theme.white_C};
+  margin: 0px 8px 0px 0px;
+
+  ${(props) =>
+    props.kindOf === `focus` &&
+    `background-color : ${props.theme.basicTheme_C};`}
+  ${(props) => props.kindOf === `focus` && `color : ${props.theme.white_C};`}
+
+  ${(props) =>
+    props.kindOf === `ghost` && `background-color : ${props.theme.subWhite_C};`}
+  ${(props) => props.kindOf === `ghost` && `color : ${props.theme.darkGrey_C};`}
+
+  &:hover {
+    background-color: ${(props) => props.theme.basicTheme_C};
+    color: ${(props) => props.theme.white_C};
+  }
+
+  &:focus {
+    background-color: ${(props) => props.theme.basicTheme_C};
+    color: ${(props) => props.theme.white_C};
   }
 `;

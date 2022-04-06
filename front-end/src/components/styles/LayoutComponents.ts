@@ -70,7 +70,7 @@ export const HeaderFixed = styled.div<any>`
     animation: ${appearAnimation} 0.5s forwards;
     padding: 20px 0px;
     background-color: #fafafa;
-    height: 150px;
+    height: 180px;
     position: absolute;
     transition: 0.5s;
     flex-direction: ${(props) => props.dr};

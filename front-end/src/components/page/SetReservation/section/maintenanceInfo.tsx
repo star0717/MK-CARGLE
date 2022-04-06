@@ -51,6 +51,7 @@ const MaintenanceInfo: NextPage<any> = (props) => {
             onClick={() => {
               router.push(`${UseLink.MYPAGE_SET}`);
             }}
+            cursor={`pointer`}
           >
             <Text>기본정보</Text>
           </Wrapper>
@@ -60,6 +61,7 @@ const MaintenanceInfo: NextPage<any> = (props) => {
             onClick={() => {
               router.push(`${UseLink.MYPAGE_SET}?step=F`);
             }}
+            cursor={`pointer`}
           >
             <Text color={`#c4c4c4`}>영업시간</Text>
           </Wrapper>
@@ -67,6 +69,7 @@ const MaintenanceInfo: NextPage<any> = (props) => {
             padding={`10px`}
             width={`120px`}
             borderBottom={`2px solid #314fa5`}
+            cursor={`pointer`}
           >
             <Text>정비정보</Text>
           </Wrapper>
