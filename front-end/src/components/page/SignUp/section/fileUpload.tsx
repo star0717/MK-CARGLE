@@ -26,6 +26,7 @@ import {
   JoinStepBar,
   JoinStepBarWrapper,
   CommonButtonWrapper,
+  CloseButton,
 } from "../../../styles/CommonComponents";
 import {
   BsDownload,
@@ -37,13 +38,18 @@ import { parseJwt } from "../../../../modules/commonModule";
 import { AuthTokenInfo } from "../../../../models/auth.entity";
 import { FileInit } from "../../../../configure/etc.entity";
 import { _pFileUploadProps } from "../../../../configure/_pProps.entity";
-import { AiOutlineFileText, AiOutlineUser } from "react-icons/ai";
+import {
+  AiOutlineClose,
+  AiOutlineFileText,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { GoCheck } from "react-icons/go";
 import { MdOutlineBusinessCenter, MdOutlineUploadFile } from "react-icons/md";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import { useDropzone } from "react-dropzone";
 import theme from "styles/theme";
 import { FaTrashAlt } from "react-icons/fa";
+import { IoIosCloseCircle } from "react-icons/io";
 
 /**
  * 파일 데이터 초기화
@@ -162,10 +168,18 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
               사업자등록증
             </Text>
             <Wrapper dr={`row`}>
-              <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+              <Text
+                margin={`100px 0px 0px`}
+                color={`#c4c4c4`}
+                overflow={`hidden`}
+                textOverflow={`ellipsis`}
+                whiteSpace={`nowrap`}
+                width={`auto`}
+                maxWidth={`300px`}
+              >
                 {fileName.comFile}
               </Text>
-              <Text
+              {/* <Text
                 margin={`105px 0px 0px 8px`}
                 color={`#c4c4c4`}
                 cursor={`pointer`}
@@ -176,7 +190,21 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 }}
               >
                 <FaTrashAlt />
-              </Text>
+              </Text> */}
+              <CloseButton
+                type="button"
+                onClick={(e: React.MouseEvent<MouseEvent>) => {
+                  e.stopPropagation();
+                  setFile({ ...file, comFile: "" });
+                  setFileName({ ...fileName, comFile: "" });
+                }}
+                color={`#343a40`}
+                bgColor={`#fff`}
+                fontSize={`20px`}
+                margin={`105px 0px 0px 0px`}
+              >
+                <IoIosCloseCircle />
+              </CloseButton>
             </Wrapper>
           </Wrapper>
         )}
@@ -275,22 +303,25 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 overflow={`hidden`}
                 textOverflow={`ellipsis`}
                 whiteSpace={`nowrap`}
-                width={`10px`}
+                width={`auto`}
+                maxWidth={`300px`}
               >
                 {fileName.manFile}
               </Text>
-              <Text
-                margin={`105px 0px 0px 8px`}
-                color={`#c4c4c4`}
-                cursor={`pointer`}
+              <CloseButton
+                type="button"
                 onClick={(e: React.MouseEvent<MouseEvent>) => {
                   e.stopPropagation();
                   setFile({ ...file, manFile: "" });
                   setFileName({ ...fileName, manFile: "" });
                 }}
+                color={`#343a40`}
+                bgColor={`#fff`}
+                fontSize={`20px`}
+                margin={`105px 0px 0px 0px`}
               >
-                <FaTrashAlt />
-              </Text>
+                <IoIosCloseCircle />
+              </CloseButton>
             </Wrapper>
           </Wrapper>
         )}
