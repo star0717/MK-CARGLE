@@ -285,7 +285,7 @@ export const Text = styled.p<any>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   min-height: ${(props) => props.minHeight};
-  max-height: ${(props) => props.maxHeight};
+  max-width: ${(props) => props.maxWidth};
   display: ${(props) => props.display};
   flex-direction: ${(props) => props.dr};
   align-items: ${(props) => props.al};
@@ -1871,7 +1871,6 @@ export const ToolTip = styled.div<any>`
   position: ${(props) => (props.isRelative ? `relative` : ``)};
   position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
   z-index: 0;
-  white-space: pre-wrap;
   letter-spacing: ${(props) => props.letterSpacing || `0px`};
   text-overflow: ${(props) => props.textOverflow || `ellipsis`};
   white-space: nowrap;
@@ -2024,5 +2023,41 @@ export const ProgressBar = styled.progress<any>`
   &::-webkit-progress-value {
     background-color: #8dafce;
     border-radius: 40px;
+  }
+`;
+
+export const SelectDays = styled.button<any>`
+  width: auto;
+  height: 40px;
+  padding: 0px 40px;
+  border-radius: 4px;
+  border: 1px solid #c4c4c4;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  background-color: ${(props) => props.theme.white_C};
+  margin: 0px 8px 0px 0px;
+
+  ${(props) =>
+    props.kindOf === `focus` &&
+    `background-color : ${props.theme.basicTheme_C};`}
+  ${(props) => props.kindOf === `focus` && `color : ${props.theme.white_C};`}
+
+  ${(props) =>
+    props.kindOf === `ghost` && `background-color : ${props.theme.subWhite_C};`}
+  ${(props) => props.kindOf === `ghost` && `color : ${props.theme.darkGrey_C};`}
+
+  &:hover {
+    background-color: ${(props) => props.theme.basicTheme_C};
+    color: ${(props) => props.theme.white_C};
+  }
+
+  &:focus {
+    background-color: ${(props) => props.theme.basicTheme_C};
+    color: ${(props) => props.theme.white_C};
   }
 `;

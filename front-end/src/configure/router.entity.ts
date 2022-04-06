@@ -27,6 +27,7 @@ export const MainRoute = {
 export const SubRoute = {
   ACCOUNT: "account",
   WORKER: "worker",
+  SET: "set_reservation",
   REVIEW_COMPANIES: "review_companies",
   MAN_COMPANIES: "man_companies",
   USERS: "users",
@@ -37,6 +38,7 @@ export const SubRoute = {
   MAINTENANCE_BOOK: "maintenance_book",
   MAN_CUSTOMER: "man_customer",
   MAN_RESERVATION: "man_reservation",
+
   TEST: "test",
 };
 
@@ -84,6 +86,7 @@ export const UseLink = {
   MAN_BUSINESS: `${BaseLink.V}/${MainRoute.PARTS}/${SubRoute.MAN_BUSINESS}`,
   MYPAGE_ACCOUNT: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.ACCOUNT}`,
   MYPAGE_WORKER: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.WORKER}`,
+  MYPAGE_SET: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.SET}`,
   MAINTENANCE_BOOK: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAINTENANCE_BOOK}`,
   MAN_CUSTOMER: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAN_CUSTOMER}`,
   MAN_RESERVATION: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAN_RESERVATION}`,

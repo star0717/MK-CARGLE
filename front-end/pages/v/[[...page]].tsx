@@ -58,6 +58,7 @@ import BlackWrapper from "src/components/layout/BlackWrapper";
 import { Maintenance } from "src/models/maintenance.entity";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
+import SetReservation from "src/components/page/SetReservation";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -116,6 +117,9 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.MAN_RESERVATION:
       return <ManReservationPage {...props} />;
+
+    case UseLink.MYPAGE_SET:
+      return <SetReservation {...props} />;
 
     case UseLink.TEST:
       return <Test {...props} />;
