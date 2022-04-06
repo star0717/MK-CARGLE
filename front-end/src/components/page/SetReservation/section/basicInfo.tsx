@@ -18,12 +18,14 @@ import theme from "styles/theme";
 import { FileInit } from "src/configure/etc.entity";
 import { BsDownload } from "react-icons/bs";
 import { AiFillPicture } from "react-icons/ai";
+import { useRouter } from "next/router";
+import { UseLink } from "src/configure/router.entity";
 
 const BasicInfo: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  const router = useRouter();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -41,7 +43,7 @@ const BasicInfo: NextPage<any> = (props) => {
    *********************************************************************/
 
   return (
-    <WholeWrapper>
+    <WholeWrapper notAnimate>
       <RsWrapper>
         <CommonTitleWrapper>
           <CommonTitle>예약설정</CommonTitle>
@@ -57,10 +59,22 @@ const BasicInfo: NextPage<any> = (props) => {
           >
             <Text>기본정보</Text>
           </Wrapper>
-          <Wrapper padding={`10px`} width={`120px`}>
+          <Wrapper
+            padding={`10px`}
+            width={`120px`}
+            onClick={() => {
+              router.push(`${UseLink.MYPAGE_SET}?step=F`);
+            }}
+          >
             <Text color={`#c4c4c4`}>영업시간</Text>
           </Wrapper>
-          <Wrapper padding={`10px`} width={`120px`}>
+          <Wrapper
+            padding={`10px`}
+            width={`120px`}
+            onClick={() => {
+              router.push(`${UseLink.MYPAGE_SET}?step=S`);
+            }}
+          >
             <Text color={`#c4c4c4`}>정비정보</Text>
           </Wrapper>
         </Wrapper>

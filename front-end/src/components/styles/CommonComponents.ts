@@ -31,7 +31,12 @@ export const WholeWrapper = styled.div<any>`
   bottom: ${(props) => props.bottom};
   margin: ${(props) => props.margin || `0px`};
   padding: ${(props) => props.padding || `0px`};
-  animation: ${appearAnimation} 1s forwards;
+  animation: ${(props) =>
+    props.notAnimate
+      ? ``
+      : css`
+          ${appearAnimation} 1s forwards
+        `};
   min-height: ${(props) => props.minHeight || ``};
   min-width: ${(props) => props.minWidth || ``};
   box-shadow: ${(props) => props.shadow};
