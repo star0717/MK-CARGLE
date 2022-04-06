@@ -127,6 +127,12 @@ export const menuList = [
       },
       {
         key: "5.3",
+        subMenuName: "예약 설정",
+        subMenuLink: UseLink.MYPAGE_SET,
+        subMenuAuth: UserAuthority.OWNER,
+      },
+      {
+        key: "5.4",
         subMenuName: "포인트 관리",
         subMenuLink: "#",
         subMenuAuth: UserAuthority.WORKER,

@@ -8,8 +8,12 @@ import {
   _aPostAuthUploadComRegDoc,
   _aPostAuthUploadManRegDoc,
   _aGetAuthSignout,
+  _aGetAuthCompanyId,
 } from "../../../../../store/action/user.action";
-import { actionTypesUser } from "../../../../../store/interfaces";
+import {
+  actionTypesUser,
+  UserCompanyFind,
+} from "../../../../../store/interfaces";
 import { UseLink } from "../../../../configure/router.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -34,9 +38,9 @@ import {
   BsFillQuestionCircleFill,
   BsUpload,
 } from "react-icons/bs";
-import { parseJwt } from "../../../../modules/commonModule";
+import { parseJwt, s3FileUploadV2 } from "../../../../modules/commonModule";
 import { AuthTokenInfo } from "../../../../models/auth.entity";
-import { FileInit } from "../../../../configure/etc.entity";
+import { FileDataInit, FileNameInit } from "../../../../configure/etc.entity";
 import { _pFileUploadProps } from "../../../../configure/_pProps.entity";
 import {
   AiOutlineClose,
@@ -50,11 +54,17 @@ import { useDropzone } from "react-dropzone";
 import theme from "styles/theme";
 import { FaTrashAlt } from "react-icons/fa";
 import { IoIosCloseCircle } from "react-icons/io";
+import { Company } from "src/models/company.entity";
+import { S3 } from "aws-sdk";
 
 /**
  * 파일 데이터 초기화
  */
-const fileInit: FileInit = {
+const fileDataInit: FileDataInit = {
+  comFile: null,
+  manFile: null,
+};
+const fileNameInit: FileNameInit = {
   comFile: "",
   manFile: "",
 };
@@ -69,8 +79,8 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
   const router = useRouter();
 
   // state 관리
-  const [file, setFile] = useState<FileInit>(fileInit); // 업로드할 파일 state
-  const [fileName, setFileName] = useState<FileInit>(fileInit); // 업로드할 파일명 state
+  const [file, setFile] = useState<FileDataInit>(fileDataInit); // 업로드할 파일 state
+  const [fileName, setFileName] = useState<FileNameInit>(fileNameInit); // 업로드할 파일명 state
 
   /**
    * 파일 선택 시 파일명 state 변경
@@ -105,7 +115,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     return (
       <Wrapper {...getRootProps()}>
         <input {...getInputProps()} />
-        {file.comFile === "" ? (
+        {!file.comFile ? (
           <>
             {isDragActive ? (
               <Wrapper
@@ -195,7 +205,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 type="button"
                 onClick={(e: React.MouseEvent<MouseEvent>) => {
                   e.stopPropagation();
-                  setFile({ ...file, comFile: "" });
+                  setFile({ ...file, comFile: null });
                   setFileName({ ...fileName, comFile: "" });
                 }}
                 color={`#343a40`}
@@ -234,7 +244,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
     return (
       <Wrapper {...getRootProps()}>
         <input {...getInputProps()} />
-        {file.manFile === "" ? (
+        {!file.manFile ? (
           <>
             {isDragActive ? (
               <Wrapper
@@ -312,7 +322,7 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
                 type="button"
                 onClick={(e: React.MouseEvent<MouseEvent>) => {
                   e.stopPropagation();
-                  setFile({ ...file, manFile: "" });
+                  setFile({ ...file, manFile: null });
                   setFileName({ ...fileName, manFile: "" });
                 }}
                 color={`#343a40`}
@@ -345,57 +355,46 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
    * 파일 업로드 handler
    * @param e
    */
-  const onFileUploadHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const onFileUploadHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const comFormData = new FormData();
-    const manFormData = new FormData();
-    comFormData.append("file", file.comFile); // NestJs의 fileinterceptor의 name과 일치해야 됨
-    manFormData.append("file", file.manFile);
-    dispatch(_aPostAuthUploadComRegDoc(comFormData)).then(
-      (res: any) => {
-        dispatch(_aPostAuthUploadManRegDoc(manFormData)).then(
-          (res: any) => {
-            const tokenInfo: AuthTokenInfo = parseJwt(
-              Cookies.get(process.env.NEXT_PUBLIC_TK_NAME),
-              process.env.NEXT_PUBLIC_TK_KEY
-            ) as AuthTokenInfo;
-            dispatch(_aPatchAuthRequestCompany(tokenInfo.cID)).then(
-              (res: any) => {
-                if (res.payload) {
-                  if (props.stepNumber) {
-                    props.setStepNumber(props.stepNumber + 1);
-                  } else {
-                    alert(
-                      "제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다."
-                    );
-                    dispatch(_aGetAuthSignout()).then((res: any) => {
-                      dispatch({ type: actionTypesUser.USER_INIT });
-                      router.push(UseLink.INDEX);
-                    });
-                  }
-                } else {
-                  alert("파일 업로드에 실패했습니다.");
-                }
-              }
-            );
-          },
-          (err) => {
-            if (err.response.status === 400 || 500) {
-              alert("정비업 등록증을 확인해주세요.");
-              setFile(fileInit);
-              setFileName(fileInit);
-            }
-          }
+    if (!file.comFile) return alert("사업자 등록증을 선택하세요.");
+    if (!file.manFile) return alert("정비업 등록증을 선택하세요.");
+    const tokenInfo: AuthTokenInfo = parseJwt(
+      Cookies.get(process.env.NEXT_PUBLIC_TK_NAME),
+      process.env.NEXT_PUBLIC_TK_KEY
+    ) as AuthTokenInfo;
+    await dispatch(_aGetAuthCompanyId(tokenInfo.cID)).then(
+      async (res: UserCompanyFind) => {
+        if (!res.payload) return alert("업체 조회 에러");
+        const company: Company = await res.payload;
+        const comResult: void | S3.Types.PutObjectOutput = await s3FileUploadV2(
+          file.comFile,
+          company.comRegNum,
+          "crn"
         );
+        const manResult: void | S3.Types.PutObjectOutput = await s3FileUploadV2(
+          file.manFile,
+          company.comRegNum,
+          "mrn"
+        );
+
+        if (!comResult || !manResult) return alert("파일 업로드 에러");
+
+        if (props.stepNumber) {
+          props.setStepNumber(props.stepNumber + 1);
+        } else {
+          alert("제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다.");
+          dispatch(_aGetAuthSignout()).then((res: any) => {
+            dispatch({ type: actionTypesUser.USER_INIT });
+            router.push(UseLink.INDEX);
+          });
+        }
       },
       (err) => {
-        if (err.response.status === 400 || 500) {
-          alert("사업자 등록증을 확인해주세요.");
-          setFile(fileInit);
-          setFileName(fileInit);
-        }
+        return alert("업체 조회 에러");
       }
     );
+
     window.scrollTo(0, 0);
   };
 

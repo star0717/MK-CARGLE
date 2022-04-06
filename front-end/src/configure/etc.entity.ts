@@ -1,7 +1,12 @@
 /**
  * 회원가입: 파일업로드 초기값
  */
-export interface FileInit {
+export interface FileDataInit {
+  comFile: File;
+  manFile: File;
+}
+
+export interface FileNameInit {
   comFile: string;
   manFile: string;
 }

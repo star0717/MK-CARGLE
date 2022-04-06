@@ -269,45 +269,17 @@ export const dataSort = (
 };
 
 /**
- * AWS S3 파일 업로드
- * @returns
- */
-const s3FileUpload = async () => {
-  if (!selectedFile) return alert("파일을 선택하세요");
-  setProgress(0);
-  let fileType: string = selectedFile.name;
-  fileType = fileType.substring(fileType.lastIndexOf("."), fileType.length);
-  const acceptType: string[] = [".jpeg", ".jpg", ".png", ".pdf"];
-  if (!acceptType.includes(fileType))
-    return alert("jpeg, jpg, png, pdf 파일만 가능합니다");
-  const fileName: string = company.comRegNum;
-
-  const params: S3.Types.PutObjectRequest = {
-    ACL: "public-read",
-    Body: selectedFile,
-    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
-    Key: "crn/" + fileName,
-    ContentType: selectedFile.type,
-  };
-
-  s3.putObject(params)
-    .on("httpUploadProgress", (evt) => {
-      setProgress(Math.round((evt.loaded / evt.total) * 100));
-      setShowAlert(true);
-    })
-    .send((err) => {
-      if (err) return alert("업로드 에러");
-    });
-};
-
-/**
  * AWS S3 파일 업로드(Blob 타입)
  * @param blob
  * @param fileName
  * @param fold
  * @returns
  */
-export const s3FileUploadV1 = (blob: Blob, fileName: string, fold?: string) => {
+export const s3FileUploadV1 = async (
+  blob: Blob,
+  fileName: string,
+  fold?: string
+) => {
   const params: S3.Types.PutObjectRequest = {
     ACL: "public-read",
     Body: blob,
@@ -316,8 +288,60 @@ export const s3FileUploadV1 = (blob: Blob, fileName: string, fold?: string) => {
     ContentType: blob.type,
   };
 
-  const res = s3.putObject(params).promise();
-  return res;
+  let result: S3.Types.PutObjectOutput;
+  try {
+    result = await s3.putObject(params).promise();
+  } catch (err) {
+    result = null;
+  }
+  return result;
+};
+
+/**
+ * AWS S3 파일 업로드(fileData 타입)
+ * @param file
+ * @param fileName
+ * @param fold
+ * @returns
+ */
+export const s3FileUploadV2 = async (
+  file: File,
+  fileName: string,
+  fold?: string
+) => {
+  // setProgress(0);
+  let result: S3.Types.PutObjectOutput;
+  let progress: number = 0;
+  let fileType: string = file.name;
+  fileType = fileType.substring(fileType.lastIndexOf("."), fileType.length);
+  const acceptType: string[] = [".jpeg", ".jpg", ".png", ".pdf"];
+  if (!acceptType.includes(fileType))
+    return alert("jpeg, jpg, png, pdf 파일만 가능합니다.");
+
+  const params: S3.Types.PutObjectRequest = {
+    ACL: "public-read",
+    Body: file,
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+    ContentType: file.type,
+  };
+
+  try {
+    result = await s3.putObject(params).promise();
+  } catch (err) {
+    result = null;
+  }
+  // .on("httpUploadProgress", (evt) => {
+  //   // setProgress(Math.round((evt.loaded / evt.total) * 100));
+  //   // setShowAlert(true);
+  //   progress = Math.round((evt.loaded / evt.total) * 100);
+  // })
+  // .send((err, data) => {
+  //   if (err) return null;
+  //   return data;
+  // });
+
+  return result;
 };
 
 /**
@@ -335,7 +359,7 @@ export const s3GetFileData = async (fileName: string, fold?: string) => {
   try {
     result = await s3.getObject(params).promise();
   } catch (err) {
-    return (result = null);
+    result = null;
   }
 
   return result;

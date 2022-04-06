@@ -257,6 +257,7 @@ ecs-cli compose up --cluster-config n2server --ecs-profile n2server
 ```
 
 태스크 생성
+
 ```
 ecs-cli compose \
   -f docker-compose.yml \
@@ -266,6 +267,7 @@ ecs-cli compose \
 ```
 
 서비스 생성(위에 태스크 생성 후에 이용 가능)
+
 ```
 aws ecs create-service \
   --service-name n2server \
@@ -286,18 +288,21 @@ aws ecs create-service \
   --launch-type EC2 \
   --task-definition n2server \
   --cluster n2server \
-  --desired-count 2 \
+  --desired-count 3 \
   --deployment-controller type=ECS \
   --deployment-configuration minimumHealthyPercent=100,maximumPercent=200 \
   --health-check-grace-period-seconds 600 \
   --scheduling-strategy REPLICA
 ```
 
+ecs-cli up --keypair cargle --capability-iam --size 4 --instance-type t2.medium --cluster-config n2server --ecs-profile n2server
+
 ```
 aws ecs update-service \
   --service n2server \
   --task-definition n2server \
   --cluster n2server \
+  --desired-count 4 \
   --force-new-deployment
 ```
 
