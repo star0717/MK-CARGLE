@@ -266,10 +266,6 @@ const HeoTest: NextPage<_MainProps> = (props) => {
       Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
       Key: fileUrl,
     };
-    s3.getObject(params, (err, data) => {
-      if (err) return false;
-      fileUrl = fileUrl + data.ContentType.split("/")[1];
-    });
     return `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${src}${fileUrl}`;
   };
 

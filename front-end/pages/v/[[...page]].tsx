@@ -33,6 +33,7 @@ import { PageWrapper } from "../../src/components/styles/LayoutComponents";
 import {
   AdminApiPath,
   AgenciesApiPath,
+  AuthApiPath,
   MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
@@ -57,7 +58,9 @@ import NavbarMenu from "src/components/layout/NavbarMenu";
 import BlackWrapper from "src/components/layout/BlackWrapper";
 import { Maintenance } from "src/models/maintenance.entity";
 import dayjs from "dayjs";
-import Cookies from "js-cookie";
+import { s3GetFile } from "src/modules/commonModule";
+import { PromiseResult } from "aws-sdk/lib/request";
+import { AWSError, S3 } from "aws-sdk";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -349,6 +352,7 @@ export const getServerSideProps: GetServerSideProps = async (
         return successResult;
       }
 
+      // 직원 관리
       case UseLink.MYPAGE_WORKER: {
         successResult.props.data = await axios
           .get(
@@ -362,6 +366,7 @@ export const getServerSideProps: GetServerSideProps = async (
         return successResult;
       }
 
+      // 정비내역
       case UseLink.MAINTENANCE_BOOK: {
         if (id) {
           const setList: FindResult<PartsSet> = await axios

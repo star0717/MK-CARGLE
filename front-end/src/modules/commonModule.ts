@@ -5,6 +5,20 @@ import { genFindParamQuery } from "../constants/model.const";
 import { FindParameters } from "../models/base.entity";
 import { Company } from "../models/company.entity";
 import jwt from "jsonwebtoken";
+import AWS, { S3 } from "aws-sdk";
+import { PromiseResult } from "aws-sdk/lib/request";
+
+AWS.config.update({
+  accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
+  secretAccessKey: process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY,
+});
+
+const s3: AWS.S3 = new AWS.S3({
+  params: {
+    Bucket: { Bucket: process.env.NEXT_PUBLIC_S3_BUCKET },
+  },
+  region: process.env.NEXT_PUBLIC_REGION,
+});
 
 /**
  * jwt를 검증하여 토큰값 받아오는 함수
@@ -254,3 +268,67 @@ export const dataSort = (
   }
   return sortData;
 };
+
+/**
+ * AWS S3 파일 업로드
+ * @returns
+ */
+const s3FileUpload = async () => {
+  if (!selectedFile) return alert("파일을 선택하세요");
+  setProgress(0);
+  let fileType: string = selectedFile.name;
+  fileType = fileType.substring(fileType.lastIndexOf("."), fileType.length);
+  const acceptType: string[] = [".jpeg", ".jpg", ".png", ".pdf"];
+  if (!acceptType.includes(fileType))
+    return alert("jpeg, jpg, png, pdf 파일만 가능합니다");
+  const fileName: string = company.comRegNum;
+
+  const params: S3.Types.PutObjectRequest = {
+    ACL: "public-read",
+    Body: selectedFile,
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: "crn/" + fileName,
+    ContentType: selectedFile.type,
+  };
+
+  s3.putObject(params)
+    .on("httpUploadProgress", (evt) => {
+      setProgress(Math.round((evt.loaded / evt.total) * 100));
+      setShowAlert(true);
+    })
+    .send((err) => {
+      if (err) return alert("업로드 에러");
+    });
+};
+
+export const s3FileUploadV1 = (blob: any, fileName: string, fold?: string) => {
+  const params: S3.Types.PutObjectRequest = {
+    ACL: "public-read",
+    Body: blob,
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+    ContentType: blob.type,
+  };
+
+  const res = s3.putObject(params).promise();
+  return res;
+};
+
+/**
+ * AWS S3 파일 가져오기
+ * @param fileName
+ * @param fold
+ */
+export const s3GetFile = async (fileName?: string, fold?: string) => {
+  const params: S3.Types.GetObjectRequest = {
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+  };
+  const res: PromiseResult<S3.GetObjectOutput, AWS.AWSError> = await s3
+    .getObject(params)
+    .promise();
+
+  return res;
+};
+
+// `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${process.env.NEXT_PUBLIC_GET_IMG_LINK}stamp/${comInfo.comRegNum}`

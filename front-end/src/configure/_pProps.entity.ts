@@ -100,13 +100,13 @@ export interface _pMyPageAccountProps extends _MainProps {
 
 // 도장 업로드 modal props
 export interface _pStampModalProps {
-  // stampNum: number;
-  // setStampNum: React.Dispatch<React.SetStateAction<number>>;
-  comInfo: Company;
+  stampNum: number;
+  setStampNum: React.Dispatch<React.SetStateAction<number>>;
+  comData: Company;
+  imgSrc: string;
+  setImgSrc: React.Dispatch<React.SetStateAction<string>>;
   selectedFile: any;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  fileUrl: string;
-  setFileUrl: React.Dispatch<React.SetStateAction<string>>;
   style: {
     height: string;
   };

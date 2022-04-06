@@ -38,6 +38,7 @@ import dayjs from "dayjs";
 import {
   makeFullAddress,
   mbTypeToString,
+  s3GetFile,
 } from "../../../../modules/commonModule";
 import {
   _pMyPageAccountProps,
@@ -47,7 +48,6 @@ import { User } from "../../../../models/user.entity";
 import { useDropzone } from "react-dropzone";
 import { BsDownload, BsUpload } from "react-icons/bs";
 import Image, { ImageProps } from "next/image";
-import { UserCompanyFind } from "store/interfaces";
 
 /**
  * 마이 페이지: 계정관리 수정 컴포넌트(기능)
@@ -70,12 +70,14 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [modalOption, setModalOption] = useState<string>(""); // modal 내용
   const [readOnly, setReadOnly] = useState<boolean>(true); // 계정 권한에 따른 readonly
-  // const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
+  const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
   const [userData, setUserData] = useState<User>(props.accountInfo.user); // 불러온 계정정보 - 유저
   const [comData, setComData] = useState<Company>(props.accountInfo.company); // 불러온 계정정보 - 회사
   const [selectedFile, setSelectedFile] = useState(); // 선택한 파일
-  const [fileUrl, setFileUrl] = useState<string>(""); // url src 설정
-  const [comInfo, setComInfo] = useState<Company>();
+  const [fileExist, setFileExist] = useState<boolean>(true); // 파일 존재여부
+  const [imgSrc, setImgSrc] = useState<string>(
+    `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${process.env.NEXT_PUBLIC_GET_IMG_LINK}stamp/${comData.comRegNum}`
+  );
 
   // useEffect 관리
   // 계정 권한에 따라 readOnly state 변경
@@ -190,21 +192,11 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   };
 
   const DropZone: any = () => {
-    const onDrop = useCallback(async (acceptedFiles) => {
+    const onDrop = useCallback((acceptedFiles) => {
       // Do something with the files
-      await dispatch(_aGetAuthCompanyId(props.tokenValue.cID)).then(
-        (res: UserCompanyFind) => {
-          if (res.payload) {
-            setSelectedFile(acceptedFiles[0]);
-            setComInfo(res.payload);
-            setModalOpen(!modalOpen);
-            setModalOption("stamp");
-          }
-        },
-        (err) => {
-          alert("사업자 정보 조회 에러");
-        }
-      );
+      setSelectedFile(acceptedFiles[0]);
+      setModalOpen(!modalOpen);
+      setModalOption("stamp");
     }, []);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
       onDrop,
@@ -213,16 +205,19 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
     return (
       <Wrapper {...getRootProps()}>
         <input {...getInputProps()} />
-        {fileUrl ? (
+        {fileExist ? (
           <>
             {isDragActive ? (
               <>
                 <Image
-                  loader={imgLoader}
+                  // loader={imgLoader}
                   alt="도장 사진"
                   width={100}
-                  // height={200}
-                  src={process.env.NEXT_PUBLIC_GET_IMG_LINK}
+                  height={100}
+                  src={imgSrc}
+                  onError={() => {
+                    setFileExist(false);
+                  }}
                 />
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   변경할 파일을 드래그하거나 클릭하여 선택하세요.
@@ -231,10 +226,14 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
             ) : (
               <>
                 <Image
+                  // loader={imgLoader}
                   alt="도장 사진"
-                  width={`100 px`}
-                  // height={200}
-                  src={process.env.NEXT_PUBLIC_GET_IMG_LINK}
+                  width={100}
+                  height={100}
+                  src={imgSrc}
+                  onError={() => {
+                    setFileExist(false);
+                  }}
                 />
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   변경할 파일을 드래그하거나 클릭하여 선택하세요.
@@ -276,19 +275,22 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
     style: { height: "500px" },
   };
 
-  const imgLoader = ({ src }: ImageProps) => {
-    return `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${src}${fileUrl}`;
-  };
+  // 이미지 즉시 변경
+  useEffect(() => {
+    setImgSrc(
+      `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${process.env.NEXT_PUBLIC_GET_IMG_LINK}stamp/${comData.comRegNum}?num=${stampNum}`
+    );
+  }, [stampNum]);
 
   // 도장 modal props
   const StampModalProps: _pStampModalProps = {
-    //   stampNum,
-    //   setStampNum,
-    comInfo,
+    stampNum,
+    setStampNum,
+    imgSrc,
+    setImgSrc,
+    comData,
     selectedFile,
     setModalOpen,
-    fileUrl,
-    setFileUrl,
     style: { height: "500px" },
   };
 
