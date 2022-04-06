@@ -269,7 +269,14 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
               정비업등록증
             </Text>
             <Wrapper dr={`row`}>
-              <Text margin={`100px 0px 0px`} color={`#c4c4c4`}>
+              <Text
+                margin={`100px 0px 0px`}
+                color={`#c4c4c4`}
+                overflow={`hidden`}
+                textOverflow={`ellipsis`}
+                whiteSpace={`nowrap`}
+                width={`10px`}
+              >
                 {fileName.manFile}
               </Text>
               <Text
