@@ -60,6 +60,7 @@ import BlackWrapper from "src/components/layout/BlackWrapper";
 import { Maintenance } from "src/models/maintenance.entity";
 import dayjs from "dayjs";
 import SetReservation from "src/components/page/SetReservation";
+import { s3Folder } from "src/configure/s3.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -368,7 +369,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
         successResult.props.data = await s3GetFileUrl(
           company.comRegNum,
-          "stamp"
+          s3Folder.stamp
         );
 
         return successResult;

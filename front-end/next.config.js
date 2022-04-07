@@ -1,6 +1,9 @@
 const node_env = process.env.NODE_ENV;
 
 module.exports = {
+  images: {
+    domains: ["mk-cargle-img.s3.ap-northeast-2.amazonaws.com"],
+  },
   experimental: {
     outputStandalone: true,
   },

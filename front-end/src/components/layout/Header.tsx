@@ -8,7 +8,6 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  Image,
   IconButton,
 } from "../styles/CommonComponents";
 import {
@@ -30,6 +29,7 @@ import { CompanyApproval, UserAuthority } from "../../constants/model.const";
 import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { _MainProps } from "src/configure/_props.entity";
+import Image from "next/image";
 
 const Header: NextPage<_MainProps> = (props) => {
   const dispatch = useDispatch();
@@ -119,7 +119,8 @@ const Header: NextPage<_MainProps> = (props) => {
                 <Image
                   src="/images/mainLogo.png"
                   alt="Cargle Logo"
-                  width={width < 1450 ? `80px` : `100px`}
+                  width={width < 1450 ? 80 : 100}
+                  height={width < 1450 ? 24 : 30}
                 />
               </a>
             </Link>
@@ -335,7 +336,8 @@ const Header: NextPage<_MainProps> = (props) => {
                 <Image
                   src="/images/mainLogo.png"
                   alt="Cargle Logo"
-                  width={`80px`}
+                  width={80}
+                  height={100}
                 />
               </a>
             </Link>

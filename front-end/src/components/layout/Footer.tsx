@@ -1,7 +1,8 @@
 import { useResizeDetector } from "react-resize-detector";
 import type { NextPage } from "next";
-import { Wrapper, Text, Image } from "../styles/CommonComponents";
+import { Wrapper, Text } from "../styles/CommonComponents";
 import { FooterWrapper } from "../styles/LayoutComponents";
+import Image from "next/image";
 
 // import { useResizeDetector } from "react-resize-detector";
 // import type { NextPage } from "next";
@@ -9,7 +10,6 @@ import { FooterWrapper } from "../styles/LayoutComponents";
 //   WholeWrapper,
 //   Wrapper,
 //   Text,
-//   Image,
 //   FooterWrapper,
 // } from "../styles/CommonComponents";
 
@@ -75,14 +75,14 @@ const Footer: NextPage = () => {
         padding={width < 1200 ? `24px 0px` : ``}
       >
         <Wrapper ju={`center`} dr={width < 1200 ? `column` : `row`}>
-          <Image
-            src="/images/whiteLogo.png"
-            alt="Cargle Logo"
-            width={`140px`}
-            padding={`10px`}
-            opacity={`0.7`}
-          />
-
+          <Wrapper width={`auto`} padding={`20px`}>
+            <Image
+              src="/images/whiteLogo.png"
+              alt="Cargle Logo"
+              width={100}
+              height={30}
+            />
+          </Wrapper>
           <Wrapper
             fontSize={`14px`}
             lineHeignt={`22px`}
