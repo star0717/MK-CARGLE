@@ -56,6 +56,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { IoIosCloseCircle } from "react-icons/io";
 import { Company } from "src/models/company.entity";
 import { S3 } from "aws-sdk";
+import { s3Folder } from "src/configure/s3.entity";
 
 /**
  * 파일 데이터 초기화
@@ -370,25 +371,33 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
         const comResult: void | S3.Types.PutObjectOutput = await s3FileUploadV2(
           file.comFile,
           company.comRegNum,
-          "crn"
+          s3Folder.crn
         );
         const manResult: void | S3.Types.PutObjectOutput = await s3FileUploadV2(
           file.manFile,
           company.comRegNum,
-          "mrn"
+          s3Folder.mrn
         );
 
         if (!comResult || !manResult) return alert("파일 업로드 에러");
 
-        if (props.stepNumber) {
-          props.setStepNumber(props.stepNumber + 1);
-        } else {
-          alert("제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다.");
-          dispatch(_aGetAuthSignout()).then((res: any) => {
-            dispatch({ type: actionTypesUser.USER_INIT });
-            router.push(UseLink.INDEX);
-          });
-        }
+        await dispatch(_aPatchAuthRequestCompany(tokenInfo.cID)).then(
+          (res: any) => {
+            if (!res.payload) return alert("승인 요청 에러");
+            if (props.stepNumber) {
+              props.setStepNumber(props.stepNumber + 1);
+            } else {
+              alert("제출이 완료되었습니다.\n승인 후에 로그인이 가능합니다.");
+              dispatch(_aGetAuthSignout()).then((res: any) => {
+                dispatch({ type: actionTypesUser.USER_INIT });
+                router.push(UseLink.INDEX);
+              });
+            }
+          },
+          (err) => {
+            return alert("승인 요청 에러");
+          }
+        );
       },
       (err) => {
         return alert("업체 조회 에러");

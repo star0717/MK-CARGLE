@@ -16,7 +16,10 @@ import {
 } from "../../../styles/CommonComponents";
 import React, { useState } from "react";
 import { _pAdminManCompanies } from "../../../../configure/_pProps.entity";
-import { makeFullAddress } from "../../../../modules/commonModule";
+import {
+  makeFullAddress,
+  s3DeleteFile,
+} from "../../../../modules/commonModule";
 import { Company } from "../../../../models/company.entity";
 import { User } from "../../../../models/user.entity";
 import { mbTypeOption } from "../../../../configure/list.entity";
@@ -33,6 +36,8 @@ import {
 } from "../../../../../store/interfaces";
 import { useRouter } from "next/router";
 import { UseLink } from "../../../../configure/router.entity";
+import { s3Folder } from "src/configure/s3.entity";
+import { S3 } from "aws-sdk";
 
 const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
   /*********************************************************************
@@ -98,14 +103,27 @@ const ManCompanyInfo: NextPage<_pAdminManCompanies> = (props) => {
     }
   };
 
-  const onDeleteCompany = () => {
+  const onDeleteCompany = async () => {
     if (
       window.confirm(
         "삭제할 경우 업체, 소속 직원 정보가 모두 삭제됩니다.\n삭제하시겠습니까?"
       )
     ) {
-      dispatch(_aDeleteAdminCompanies(comData._id)).then(
-        (res: _iDeleteAdminCompanies) => {
+      await dispatch(_aDeleteAdminCompanies(comData._id)).then(
+        async (res: _iDeleteAdminCompanies) => {
+          const crnDel: S3.Types.DeleteObjectOutput = await s3DeleteFile(
+            comData.comRegNum,
+            s3Folder.crn
+          );
+          const mrnDel: S3.Types.DeleteObjectOutput = await s3DeleteFile(
+            comData.comRegNum,
+            s3Folder.mrn
+          );
+          const stampDel: S3.Types.DeleteObjectOutput = await s3DeleteFile(
+            comData.comRegNum,
+            s3Folder.stamp
+          );
+          if (!crnDel || !mrnDel || !stampDel) return alert("파일 삭제 실패");
           alert("삭제되었습니다.");
           props.findDocHandler(props.findResult.currentPage);
           router.push(UseLink.ADMIN_MAN_COMPANIES);

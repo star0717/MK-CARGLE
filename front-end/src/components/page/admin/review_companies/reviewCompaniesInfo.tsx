@@ -7,7 +7,7 @@ import {
   _pComPageModalProps,
 } from "../../../../configure/_pProps.entity";
 import { Company } from "../../../../models/company.entity";
-import AdminReviewCompaniesModal from "./review_Company_Modal";
+import AdminReviewCompaniesModal from "./reviewCompanyModal";
 import {
   CloseButton,
   RsWrapper,
@@ -25,7 +25,10 @@ import {
   CommonSubTitle,
 } from "../../../styles/CommonComponents";
 import { useResizeDetector } from "react-resize-detector";
-import { makeFullAddress } from "../../../../modules/commonModule";
+import {
+  makeFullAddress,
+  s3GetFileUrl,
+} from "../../../../modules/commonModule";
 import { mbTypeOption } from "../../../../configure/list.entity";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { User } from "../../../../models/user.entity";
@@ -33,6 +36,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { _aPatchAdminSignUpInfo } from "../../../../../store/action/user.action";
 import { SignUpInfo } from "../../../../models/auth.entity";
+import { s3Folder } from "src/configure/s3.entity";
 
 const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
   const router = useRouter();
@@ -87,6 +91,25 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
     ...props,
     setModalOpen,
     style: { height: "500px" },
+  };
+
+  const docLinkHandler = async (fold: string) => {
+    let docLink: string = "";
+    switch (fold) {
+      case s3Folder.crn:
+        // let comRegDocLink = `/api/admin/review/com-reg-doc/${comData._id}`;
+        // window.open(comRegDocLink);
+        docLink = await s3GetFileUrl(comData.comRegNum, s3Folder.crn);
+        break;
+
+      case s3Folder.mrn:
+        // let mainRegDocLink = `/api/admin/review/main-reg-doc/${comData._id}`;
+        // window.open(mainRegDocLink);
+        docLink = await s3GetFileUrl(comData.comRegNum, s3Folder.mrn);
+        break;
+    }
+    console.log("@@", docLink);
+    return window.open(docLink);
   };
 
   return (
@@ -412,8 +435,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             <CommonButton
               kindOf={`white`}
               onClick={() => {
-                let comRegDocLink = `/api/admin/review/com-reg-doc/${comData._id}`;
-                window.open(comRegDocLink);
+                docLinkHandler(s3Folder.crn);
               }}
             >
               사업자등록증 확인
@@ -421,8 +443,7 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
             </CommonButton>
             <CommonButton
               onClick={() => {
-                let mainRegDocLink = `/api/admin/review/main-reg-doc/${comData._id}`;
-                window.open(mainRegDocLink);
+                docLinkHandler(s3Folder.mrn);
               }}
             >
               정비업등록증 확인

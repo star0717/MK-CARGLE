@@ -36,12 +36,13 @@ import { FiCheckCircle } from "react-icons/fi";
 import { ParsedUrlQuery } from "querystring";
 import { UseLink } from "src/configure/router.entity";
 import { AuthTokenInfo } from "src/models/auth.entity";
-import { parseJwt } from "src/modules/commonModule";
+import { parseJwt, s3DeleteFile } from "src/modules/commonModule";
 import { CompanyDocList } from "src/models/company.doc.entity";
 import { _MainProps } from "src/configure/_props.entity";
 import { Company } from "src/models/company.entity";
 import { ObjectList } from "aws-sdk/clients/s3";
 import { PromiseResult } from "aws-sdk/lib/request";
+import { s3Folder } from "src/configure/s3.entity";
 
 const HeoTest: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -363,15 +364,8 @@ const HeoTest: NextPage<_MainProps> = (props) => {
         <Wrapper border="1px solid black" padding={"20px 0px"}>
           <CommonButton
             type="button"
-            onClick={() => {
-              const params: S3.Types.DeleteObjectRequest = {
-                Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
-                Key: "stamp/3388800960",
-              };
-              s3.deleteObject(params, (err, data) => {
-                if (err) alert("삭제 에러");
-                console.log(data);
-              });
+            onClick={async () => {
+              await s3DeleteFile("1168200276", s3Folder.stamp);
             }}
           >
             파일 삭제

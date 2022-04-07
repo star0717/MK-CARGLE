@@ -355,7 +355,7 @@ export const s3GetFileData = async (fileName: string, fold?: string) => {
     Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
     Key: fold + "/" + fileName,
   };
-  let result: S3.GetObjectAclOutput;
+  let result: S3.Types.GetObjectOutput;
   try {
     result = await s3.getObject(params).promise();
   } catch (err) {
@@ -374,11 +374,35 @@ export const s3GetFileUrl = async (fileName: string, fold?: string) => {
   const params: any = {
     Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
     Key: fold + "/" + fileName,
-    Expires: 30,
+    Expires: 3600,
   };
   let url: string;
   const exist = await s3GetFileData(fileName, fold);
   exist ? (url = s3.getSignedUrl("getObject", params)) : (url = null);
 
   return url;
+};
+
+/**
+ * AWS S3 파일 삭제
+ * @param fileName
+ * @param fold
+ * @returns
+ */
+export const s3DeleteFile = async (fileName: string, fold?: string) => {
+  const params: S3.Types.DeleteObjectRequest = {
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+  };
+  let result: S3.Types.DeleteObjectOutput;
+
+  try {
+    result = await s3.deleteObject(params).promise();
+  } catch (err) {
+    result = null;
+  }
+
+  console.log(result);
+
+  return result;
 };

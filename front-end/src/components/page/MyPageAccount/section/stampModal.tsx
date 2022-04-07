@@ -16,6 +16,7 @@ import {
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { s3FileUploadV1, s3GetFileUrl } from "src/modules/commonModule";
+import { s3Folder } from "src/configure/s3.entity";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -58,10 +59,10 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
 
     canvas.toBlob(
       async (blob: Blob) => {
-        await s3FileUploadV1(blob, props.comData.comRegNum, "stamp");
+        await s3FileUploadV1(blob, props.comData.comRegNum, s3Folder.stamp);
         const newUrl: string = await s3GetFileUrl(
           props.comData.comRegNum,
-          "stamp"
+          s3Folder.stamp
         );
         props.setStampImgSrc(newUrl);
         props.setModalOpen(false);
