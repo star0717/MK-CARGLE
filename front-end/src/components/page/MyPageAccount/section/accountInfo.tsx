@@ -23,7 +23,6 @@ import {
   TextInput2,
   SmallButton,
   Combo,
-  Image,
   CommonTitle,
   CommonSubTitle,
   CommonButton,
@@ -41,6 +40,7 @@ import {
 import { User } from "src/models/user.entity";
 import { useDropzone } from "react-dropzone";
 import { BsDownload, BsUpload } from "react-icons/bs";
+import Image from "next/image";
 
 /**
  * 마이 페이지: 계정관리 수정 컴포넌트(기능)
@@ -203,6 +203,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                   width={100}
                   height={100}
                   src={stampImgSrc}
+                  // unoptimized
                 />
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   변경할 파일을 드래그하거나 클릭하여 선택하세요.
@@ -215,6 +216,7 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
                   width={100}
                   height={100}
                   src={stampImgSrc}
+                  // unoptimized
                 />
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
                   변경할 파일을 드래그하거나 클릭하여 선택하세요.

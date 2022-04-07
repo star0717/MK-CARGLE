@@ -7,7 +7,6 @@ import {
   Text,
   JoinFirstStepSelect,
   JoinFirstStepSelectText,
-  Image,
   RsWrapper,
   CommonButtonWrapper,
   CommonSubTitle,
@@ -22,6 +21,7 @@ import { UseLink } from "../../../../configure/router.entity";
 import { IoIosArrowForward } from "react-icons/io";
 import { _pSignUpProps } from "../../../../configure/_pProps.entity";
 import { UserAuthority } from "../../../../constants/model.const";
+import Image from "next/image";
 
 /**
  * 회원가입: 가입유형 선택 컴포넌트(기능)
@@ -55,15 +55,14 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
                 window.scrollTo(0, 0);
               }}
             >
-              <Image
-                position={`relative`}
-                src="/images/JoinSelectIcon01.png"
-                alt="JoinSelectIcon"
-                padding={`20px`}
-                width={`120px`}
-                display={`flex`}
-                margin={`0 auto`}
-              />
+              <Wrapper width={`120px`} height={`120px`} padding={`20px`}>
+                <Image
+                  src="/images/JoinSelectIcon01.png"
+                  alt="JoinSelectIcon"
+                  width={120}
+                  height={120}
+                />
+              </Wrapper>
               <JoinFirstStepSelectText>
                 카센터를 운영하고 계신가요?
               </JoinFirstStepSelectText>
@@ -86,15 +85,14 @@ const SelectUser: NextPage<_pSignUpProps> = (props) => {
                 window.scrollTo(0, 0);
               }}
             >
-              <Image
-                position={`relative`}
-                src="/images/JoinSelectIcon02.png"
-                alt="JoinSelectIcon"
-                padding={`20px`}
-                width={`120px`}
-                display={`flex`}
-                margin={`0 auto`}
-              />
+              <Wrapper width={`120px`} height={`120px`} padding={`20px`}>
+                <Image
+                  src="/images/JoinSelectIcon02.png"
+                  alt="JoinSelectIcon"
+                  width={120}
+                  height={120}
+                />
+              </Wrapper>
               <JoinFirstStepSelectText>
                 카센터에서 근무하고 계신가요?
               </JoinFirstStepSelectText>

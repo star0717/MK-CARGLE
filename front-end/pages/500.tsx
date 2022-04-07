@@ -6,7 +6,6 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  Image,
   CommonButton,
   RsWrapper,
 } from "src/components/styles/CommonComponents";

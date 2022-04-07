@@ -1036,35 +1036,6 @@ export const Label = styled.label<any>`
   justify-content: ${(props) => props.ju || `center`};
 `;
 
-export const Image = styled.img<any>`
-  display: ${(props) => props.display};
-  width: ${(props) => props.width || `100%`};
-  min-width: ${(props) => props.minWidth};
-  height: ${(props) => props.height || `auto`};
-  margin: ${(props) => props.margin};
-  object-fit: ${(props) => props.objectFit || `cover`};
-  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
-  box-shadow: ${(props) => props.shadow};
-  border-radius: ${(props) => props.radius};
-  z-index: ${(props) => props.zIndex};
-  top: ${(props) => props.top};
-  left: ${(props) => props.left};
-  bottom: ${(props) => props.bottom};
-  right: ${(props) => props.right};
-  transition: 0.3s;
-  padding: ${(props) => props.padding};
-  align-items: center;
-  opacity: ${(props) => props.opacity};
-
-  filter: ${(props) => (props.isFilter ? `brightness(30%) opacity(0.4)` : ` `)};
-
-  filter: ${(props) => (props.isTransparency ? ` opacity(0.3)` : ` `)};
-
-  &:hover {
-    filter: ${(props) => (props.isHover ? `brightness(100%) opacity(1)` : ` `)};
-  }
-`;
-
 /* start test */
 
 // export const TestWrapper = styled.div<any>`
