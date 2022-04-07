@@ -5,43 +5,45 @@ import type {
 } from "next";
 import { NextRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
-import Footer from "../../src/components/layout/Footer";
-import Header from "../../src/components/layout/Header";
+import Footer from "src/components/layout/Footer";
+import Header from "src/components/layout/Header";
 import {
   genApiPath,
   getPathName,
   getQuery,
   parseJwt,
-} from "../../src/modules/commonModule";
-import { AuthTokenInfo } from "../../src/models/auth.entity";
-import { Company } from "../../src/models/company.entity";
-import FileUpload from "../../src/components/page/SignUp/section/fileUpload";
-import Approval from "../../src/components/page/SignUp/section/approval";
-import Main from "../../src/components/page/Main";
-import { UseLink } from "../../src/configure/router.entity";
+  s3GetFileUrl,
+} from "src/modules/commonModule";
+import { AuthTokenInfo } from "src/models/auth.entity";
+import { Company } from "src/models/company.entity";
+import FileUpload from "src/components/page/SignUp/section/fileUpload";
+import Approval from "src/components/page/SignUp/section/approval";
+import Main from "src/components/page/Main";
+import { UseLink } from "src/configure/router.entity";
 import { useRouter } from "next/dist/client/router";
-import MyPageAccount from "../../src/components/page/MyPageAccount";
-import MyPageWorker from "../../src/components/page/MyPageWorker";
-import Test from "../../src/components/page/Test";
-import { _MainProps } from "../../src/configure/_props.entity";
+import MyPageAccount from "src/components/page/MyPageAccount";
+import MyPageWorker from "src/components/page/MyPageWorker";
+import Test from "src/components/page/Test";
+import { _MainProps } from "src/configure/_props.entity";
 import axios, { AxiosResponse } from "axios";
-import { FindParameters, FindResult } from "../../src/models/base.entity";
-import { User } from "../../src/models/user.entity";
-import AdminManCompaniesPage from "../../src/components/page/admin/man_companies";
-import AdminReviewCompaniesPage from "../../src/components/page/admin/review_companies";
-import { PageWrapper } from "../../src/components/styles/LayoutComponents";
+import { FindParameters, FindResult } from "src/models/base.entity";
+import { User } from "src/models/user.entity";
+import AdminManCompaniesPage from "src/components/page/admin/man_companies";
+import AdminReviewCompaniesPage from "src/components/page/admin/review_companies";
+import { PageWrapper } from "src/components/styles/LayoutComponents";
 import {
   AdminApiPath,
   AgenciesApiPath,
+  AuthApiPath,
   MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
   SettingsApiPath,
-} from "../../src/constants/api-path.const";
-import AdminUsersPage from "../../src/components/page/admin/users";
-import AdminManPartsPage from "../../src/components/page/admin/man_parts";
-import AdminMolitItemsPage from "../../src/components/page/admin/molit_items";
-import { CompanyApproval } from "../../src/constants/model.const";
+} from "src/constants/api-path.const";
+import AdminUsersPage from "src/components/page/admin/users";
+import AdminManPartsPage from "src/components/page/admin/man_parts";
+import AdminMolitItemsPage from "src/components/page/admin/molit_items";
+import { CompanyApproval } from "src/constants/model.const";
 import ManPartsPage from "src/components/page/ManPart";
 import ManSetPage from "src/components/page/ManSet";
 import ManBusinessPage from "src/components/page/ManBusiness";
@@ -57,8 +59,8 @@ import NavbarMenu from "src/components/layout/NavbarMenu";
 import BlackWrapper from "src/components/layout/BlackWrapper";
 import { Maintenance } from "src/models/maintenance.entity";
 import dayjs from "dayjs";
-import Cookies from "js-cookie";
 import SetReservation from "src/components/page/SetReservation";
+import { s3Folder } from "src/configure/s3.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -353,6 +355,27 @@ export const getServerSideProps: GetServerSideProps = async (
         return successResult;
       }
 
+      // 계정 관리
+      case UseLink.MYPAGE_ACCOUNT: {
+        const company: Company = await axios
+          .get(
+            genApiPath(AuthApiPath.companyId, {
+              id: tokenValue.cID,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<Company, string>) => res.data);
+
+        successResult.props.data = await s3GetFileUrl(
+          company.comRegNum,
+          s3Folder.stamp
+        );
+
+        return successResult;
+      }
+
+      // 직원 관리
       case UseLink.MYPAGE_WORKER: {
         successResult.props.data = await axios
           .get(
@@ -366,6 +389,7 @@ export const getServerSideProps: GetServerSideProps = async (
         return successResult;
       }
 
+      // 정비내역
       case UseLink.MAINTENANCE_BOOK: {
         if (id) {
           const setList: FindResult<PartsSet> = await axios

@@ -1,10 +1,23 @@
 import parse from "url-parse";
-import { MbType } from "../configure/etc.entity";
-import { mbTypeOption } from "../configure/list.entity";
-import { genFindParamQuery } from "../constants/model.const";
-import { FindParameters } from "../models/base.entity";
-import { Company } from "../models/company.entity";
+import { MbType } from "src/configure/etc.entity";
+import { mbTypeOption } from "src/configure/list.entity";
+import { genFindParamQuery } from "src/constants/model.const";
+import { FindParameters } from "src/models/base.entity";
+import { Company } from "src/models/company.entity";
 import jwt from "jsonwebtoken";
+import AWS, { S3 } from "aws-sdk";
+
+AWS.config.update({
+  accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
+  secretAccessKey: process.env.NEXT_PUBLIC_SECRET_ACCESS_KEY,
+});
+
+const s3: AWS.S3 = new AWS.S3({
+  params: {
+    Bucket: { Bucket: process.env.NEXT_PUBLIC_S3_BUCKET },
+  },
+  region: process.env.NEXT_PUBLIC_REGION,
+});
 
 /**
  * jwt를 검증하여 토큰값 받아오는 함수
@@ -253,4 +266,143 @@ export const dataSort = (
       break;
   }
   return sortData;
+};
+
+/**
+ * AWS S3 파일 업로드(Blob 타입)
+ * @param blob
+ * @param fileName
+ * @param fold
+ * @returns
+ */
+export const s3FileUploadV1 = async (
+  blob: Blob,
+  fileName: string,
+  fold?: string
+) => {
+  const params: S3.Types.PutObjectRequest = {
+    ACL: "public-read",
+    Body: blob,
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+    ContentType: blob.type,
+  };
+
+  let result: S3.Types.PutObjectOutput;
+  try {
+    result = await s3.putObject(params).promise();
+  } catch (err) {
+    result = null;
+  }
+  return result;
+};
+
+/**
+ * AWS S3 파일 업로드(fileData 타입)
+ * @param file
+ * @param fileName
+ * @param fold
+ * @returns
+ */
+export const s3FileUploadV2 = async (
+  file: File,
+  fileName: string,
+  fold?: string
+) => {
+  // setProgress(0);
+  let result: S3.Types.PutObjectOutput;
+  let progress: number = 0;
+  let fileType: string = file.name;
+  fileType = fileType.substring(fileType.lastIndexOf("."), fileType.length);
+  const acceptType: string[] = [".jpeg", ".jpg", ".png", ".pdf"];
+  if (!acceptType.includes(fileType))
+    return alert("jpeg, jpg, png, pdf 파일만 가능합니다.");
+
+  const params: S3.Types.PutObjectRequest = {
+    ACL: "public-read",
+    Body: file,
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+    ContentType: file.type,
+  };
+
+  try {
+    result = await s3.putObject(params).promise();
+  } catch (err) {
+    result = null;
+  }
+  // .on("httpUploadProgress", (evt) => {
+  //   // setProgress(Math.round((evt.loaded / evt.total) * 100));
+  //   // setShowAlert(true);
+  //   progress = Math.round((evt.loaded / evt.total) * 100);
+  // })
+  // .send((err, data) => {
+  //   if (err) return null;
+  //   return data;
+  // });
+
+  return result;
+};
+
+/**
+ * AWS S3 파일 data 가져오기
+ * @param fileName
+ * @param fold
+ * @returns
+ */
+export const s3GetFileData = async (fileName: string, fold?: string) => {
+  const params: S3.Types.GetObjectRequest = {
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+  };
+  let result: S3.Types.GetObjectOutput;
+  try {
+    result = await s3.getObject(params).promise();
+  } catch (err) {
+    result = null;
+  }
+
+  return result;
+};
+
+/**
+ * AWS S3 파일 url 가져오기
+ * @param fileName
+ * @param fold
+ */
+export const s3GetFileUrl = async (fileName: string, fold?: string) => {
+  const params: any = {
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+    Expires: 3600,
+  };
+  let url: string;
+  const exist = await s3GetFileData(fileName, fold);
+  exist ? (url = s3.getSignedUrl("getObject", params)) : (url = null);
+
+  return url;
+};
+
+/**
+ * AWS S3 파일 삭제
+ * @param fileName
+ * @param fold
+ * @returns
+ */
+export const s3DeleteFile = async (fileName: string, fold?: string) => {
+  const params: S3.Types.DeleteObjectRequest = {
+    Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
+    Key: fold + "/" + fileName,
+  };
+  let result: S3.Types.DeleteObjectOutput;
+
+  try {
+    result = await s3.deleteObject(params).promise();
+  } catch (err) {
+    result = null;
+  }
+
+  console.log(result);
+
+  return result;
 };

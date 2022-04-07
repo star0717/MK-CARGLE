@@ -40,6 +40,7 @@ import {
 } from "../../styles/CommonComponents";
 import { useResizeDetector } from "react-resize-detector";
 import { RiArrowDownSLine } from "react-icons/ri";
+import { Company } from "src/models/company.entity";
 
 const MainPage: NextPage<_pMaintenanceProps> = (props) => {
   const dispatch = useDispatch();

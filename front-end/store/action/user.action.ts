@@ -51,6 +51,9 @@ import {
   _iPayment,
   _iSms,
   _iPaymentComplete,
+  ComFileUpload,
+  ManFileUpload,
+  UserCompanyFind,
 } from "../interfaces";
 
 import {
@@ -84,6 +87,7 @@ import {
   RequestCustomResponse,
 } from "src/models/payment.entity";
 import { GetMessagesResponse } from "src/models/sms.entity";
+import { CompanyDocList } from "src/models/company.doc.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -173,6 +177,20 @@ export async function _aGetAuthValidateComRegNumber(dataToSubmit: string) {
     type: actionTypesUser.USER_COMPANY_CHECK,
     payload: req,
   };
+}
+
+// 업체ID 검색 action
+export async function _aGetAuthCompanyId(id: string) {
+  const req: Company = await axios
+    .get(genApiPath(AuthApiPath.companyId, { id: id }))
+    .then((res: AxiosResponse<Company, string>) => res.data);
+
+  const result: UserCompanyFind = {
+    type: actionTypesUser.USER_COMPANY_FIND,
+    payload: req,
+  };
+
+  return result;
 }
 
 // 사업자번호 검색 action

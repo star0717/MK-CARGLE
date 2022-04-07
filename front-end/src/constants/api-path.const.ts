@@ -5,6 +5,7 @@ export class AuthApiPath {
   static signout = AuthApiPath.BASE + 'signout';
   static withdrawal = AuthApiPath.BASE + 'withdrawal';
   static profile = AuthApiPath.BASE + 'profile';
+  static companyId = AuthApiPath.BASE + 'companyId';
   static company = AuthApiPath.BASE + 'company';
   static companies = AuthApiPath.BASE + 'companies';
   static validate_com_reg_number = AuthApiPath.BASE + 'validate/com-reg-number';

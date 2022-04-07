@@ -4,16 +4,16 @@ import Modal from "react-modal";
 import DaumPostcode from "react-daum-postcode";
 import ChangePwModal from "./changePwModal";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { setMyInfoAction } from "../../../../../store/action/user.action";
+import { setMyInfoAction } from "src/../store/action/user.action";
 import { useDispatch } from "react-redux";
-import { SignUpInfo } from "../../../../models/auth.entity";
+import { SignUpInfo } from "src/models/auth.entity";
 import StampModal from "./stampModal";
 import { IoIosCloseCircle } from "react-icons/io";
-import { UserAuthority } from "../../../../constants/model.const";
-import { Company } from "../../../../models/company.entity";
+import { UserAuthority } from "src/constants/model.const";
+import { Company } from "src/models/company.entity";
 import { AxiosError } from "axios";
-import { DbErrorInfo } from "../../../../models/base.entity";
-import { mbTypeOption } from "../../../../configure/list.entity";
+import { DbErrorInfo } from "src/models/base.entity";
+import { mbTypeOption } from "src/configure/list.entity";
 import { useResizeDetector } from "react-resize-detector";
 import {
   WholeWrapper,
@@ -31,17 +31,14 @@ import {
   CommonTitleWrapper,
   CloseButton,
 } from "../../../styles/CommonComponents";
-import { formRegEx } from "../../../../validation/regEx";
+import { formRegEx } from "src/validation/regEx";
 import dayjs from "dayjs";
-import {
-  makeFullAddress,
-  mbTypeToString,
-} from "../../../../modules/commonModule";
+import { makeFullAddress, mbTypeToString } from "src/modules/commonModule";
 import {
   _pMyPageAccountProps,
   _pStampModalProps,
-} from "../../../../configure/_pProps.entity";
-import { User } from "../../../../models/user.entity";
+} from "src/configure/_pProps.entity";
+import { User } from "src/models/user.entity";
 import { useDropzone } from "react-dropzone";
 import { BsDownload, BsUpload } from "react-icons/bs";
 
@@ -66,13 +63,10 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
   const [modalOption, setModalOption] = useState<string>(""); // modal 내용
   const [readOnly, setReadOnly] = useState<boolean>(true); // 계정 권한에 따른 readonly
-  const [stampNum, setStampNum] = useState<number>(0); // 도장 이미지 reload를 위한 number
   const [userData, setUserData] = useState<User>(props.accountInfo.user); // 불러온 계정정보 - 유저
   const [comData, setComData] = useState<Company>(props.accountInfo.company); // 불러온 계정정보 - 회사
   const [selectedFile, setSelectedFile] = useState();
-  const [stampImgSrc, setStampImgSrc] = useState<string>(
-    "/api/settings/myinfo/stamp"
-  ); // url src 설정
+  const [stampImgSrc, setStampImgSrc] = useState<string>(props.data); // url src 설정
 
   // useEffect 관리
   // 계정 권한에 따라 readOnly state 변경
@@ -206,8 +200,8 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
               <>
                 <Image
                   alt="도장 사진"
-                  width={`100 px`}
-                  // height={200}
+                  width={100}
+                  height={100}
                   src={stampImgSrc}
                 />
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
@@ -218,8 +212,8 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
               <>
                 <Image
                   alt="도장 사진"
-                  width={`100 px`}
-                  // height={200}
+                  width={100}
+                  height={100}
                   src={stampImgSrc}
                 />
                 <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
@@ -264,12 +258,11 @@ const AccountInfo: NextPage<_pMyPageAccountProps> = (props) => {
 
   // 도장 modal props
   const StampModalProps: _pStampModalProps = {
-    stampNum,
-    setStampNum,
     selectedFile,
     setModalOpen,
     stampImgSrc,
     setStampImgSrc,
+    comData,
     style: { height: "500px" },
   };
 

@@ -37,6 +37,7 @@ import { docFileInterceptor } from 'src/config/multer.option';
 import { CommonService } from '../common/common.service';
 import { AuthToken, Public } from '../decorators/decorators';
 import { UserAuthority } from 'src/constants/model.const';
+import { CompaniesService } from 'src/modules/companies/companies.service';
 
 @Controller('auth')
 @ApiTags('인증 API')
@@ -44,6 +45,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly comService: CommonService,
+    private readonly companyService: CompaniesService,
   ) {}
 
   private readonly env_config = config();
@@ -127,6 +129,17 @@ export class AuthController {
     @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
   ): AuthTokenInfo {
     return token;
+  }
+
+  @ApiOperation({ summary: '[WORKER] 업체ID로 사업자 조회' })
+  @ApiParam({ name: 'id', description: '조회할 사업자번호' })
+  @ApiResponse({ description: '사업자정보', type: Company || null })
+  @Get('companyId/:id')
+  async findCompanyById(
+    @AuthToken({ allowUnapproved: true }) token: AuthTokenInfo,
+    @Param('id') id: string,
+  ): Promise<Partial<Company>> {
+    return await this.companyService.findById(token, id);
   }
 
   @Public()
