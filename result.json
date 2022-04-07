@@ -1,0 +1,248 @@
+{
+    "NetworkInterfaces": [
+        {
+            "Attachment": {
+                "AttachmentId": "ela-attach-0a00f8b646e99d39e",
+                "DeleteOnTermination": false,
+                "DeviceIndex": 1,
+                "InstanceOwnerId": "amazon-aws",
+                "Status": "attached"
+            },
+            "AvailabilityZone": "ap-northeast-2b",
+            "Description": "GlobalAccelerator configured ENI",
+            "Groups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-094c6c7f4580a5bac"
+                }
+            ],
+            "InterfaceType": "global_accelerator_managed",
+            "Ipv6Addresses": [],
+            "MacAddress": "06:c5:af:b1:91:64",
+            "NetworkInterfaceId": "eni-01bc051a1db0ed726",
+            "OwnerId": "151333897315",
+            "PrivateIpAddress": "10.0.1.169",
+            "PrivateIpAddresses": [
+                {
+                    "Primary": true,
+                    "PrivateIpAddress": "10.0.1.169"
+                }
+            ],
+            "RequesterId": "AROASGPBUARR6Q46ZGDBO:403895955171",
+            "RequesterManaged": false,
+            "SourceDestCheck": true,
+            "Status": "in-use",
+            "SubnetId": "subnet-00997e93fab621727",
+            "TagSet": [],
+            "VpcId": "vpc-082ccfc4dfa5f3676"
+        },
+        {
+            "Attachment": {
+                "AttachmentId": "ela-attach-090b0b6d7d888d861",
+                "DeleteOnTermination": false,
+                "DeviceIndex": 1,
+                "InstanceOwnerId": "amazon-aws",
+                "Status": "attached"
+            },
+            "AvailabilityZone": "ap-northeast-2a",
+            "Description": "GlobalAccelerator configured ENI",
+            "Groups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-cd892aaf"
+                }
+            ],
+            "InterfaceType": "global_accelerator_managed",
+            "Ipv6Addresses": [],
+            "MacAddress": "02:2f:7d:e8:cc:f0",
+            "NetworkInterfaceId": "eni-025fea13a40a6b121",
+            "OwnerId": "151333897315",
+            "PrivateDnsName": "ip-172-31-7-240.ap-northeast-2.compute.internal",
+            "PrivateIpAddress": "172.31.7.240",
+            "PrivateIpAddresses": [
+                {
+                    "Primary": true,
+                    "PrivateDnsName": "ip-172-31-7-240.ap-northeast-2.compute.internal",
+                    "PrivateIpAddress": "172.31.7.240"
+                }
+            ],
+            "RequesterId": "AROASGPBUARR6Q46ZGDBO:403895955171",
+            "RequesterManaged": false,
+            "SourceDestCheck": false,
+            "Status": "in-use",
+            "SubnetId": "subnet-3528e05e",
+            "TagSet": [
+                {
+                    "Key": "AWSServiceName",
+                    "Value": "GlobalAccelerator"
+                }
+            ],
+            "VpcId": "vpc-fcfa2497"
+        },
+        {
+            "Attachment": {
+                "AttachmentId": "ela-attach-0c65cc62980a80938",
+                "DeleteOnTermination": false,
+                "DeviceIndex": 1,
+                "InstanceOwnerId": "amazon-aws",
+                "Status": "attached"
+            },
+            "AvailabilityZone": "ap-northeast-2a",
+            "Description": "GlobalAccelerator configured ENI",
+            "Groups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-094c6c7f4580a5bac"
+                }
+            ],
+            "InterfaceType": "global_accelerator_managed",
+            "Ipv6Addresses": [],
+            "MacAddress": "02:c6:eb:d4:78:90",
+            "NetworkInterfaceId": "eni-002d9f3abc8ebc2f2",
+            "OwnerId": "151333897315",
+            "PrivateIpAddress": "10.0.0.79",
+            "PrivateIpAddresses": [
+                {
+                    "Primary": true,
+                    "PrivateIpAddress": "10.0.0.79"
+                }
+            ],
+            "RequesterId": "AROASGPBUARR6Q46ZGDBO:403895955171",
+            "RequesterManaged": false,
+            "SourceDestCheck": false,
+            "Status": "in-use",
+            "SubnetId": "subnet-0914b9ca91bf49a74",
+            "TagSet": [],
+            "VpcId": "vpc-082ccfc4dfa5f3676"
+        },
+        {
+            "Attachment": {
+                "AttachmentId": "ela-attach-0d44871632101a77b",
+                "DeleteOnTermination": false,
+                "DeviceIndex": 1,
+                "InstanceOwnerId": "amazon-aws",
+                "Status": "attached"
+            },
+            "AvailabilityZone": "ap-northeast-2b",
+            "Description": "GlobalAccelerator configured ENI",
+            "Groups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-cd892aaf"
+                }
+            ],
+            "InterfaceType": "global_accelerator_managed",
+            "Ipv6Addresses": [],
+            "MacAddress": "06:28:d3:ae:7c:fa",
+            "NetworkInterfaceId": "eni-07a8122b3e073b6e2",
+            "OwnerId": "151333897315",
+            "PrivateDnsName": "ip-172-31-31-73.ap-northeast-2.compute.internal",
+            "PrivateIpAddress": "172.31.31.73",
+            "PrivateIpAddresses": [
+                {
+                    "Primary": true,
+                    "PrivateDnsName": "ip-172-31-31-73.ap-northeast-2.compute.internal",
+                    "PrivateIpAddress": "172.31.31.73"
+                }
+            ],
+            "RequesterId": "AROASGPBUARR6Q46ZGDBO:403895955171",
+            "RequesterManaged": false,
+            "SourceDestCheck": false,
+            "Status": "in-use",
+            "SubnetId": "subnet-02149179",
+            "TagSet": [
+                {
+                    "Key": "AWSServiceName",
+                    "Value": "GlobalAccelerator"
+                }
+            ],
+            "VpcId": "vpc-fcfa2497"
+        },
+        {
+            "Attachment": {
+                "AttachmentId": "ela-attach-05dabf83b47fb0c6a",
+                "DeleteOnTermination": false,
+                "DeviceIndex": 1,
+                "InstanceOwnerId": "amazon-aws",
+                "Status": "attached"
+            },
+            "AvailabilityZone": "ap-northeast-2d",
+            "Description": "GlobalAccelerator configured ENI",
+            "Groups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-cd892aaf"
+                }
+            ],
+            "InterfaceType": "global_accelerator_managed",
+            "Ipv6Addresses": [],
+            "MacAddress": "0e:0c:4b:57:da:ee",
+            "NetworkInterfaceId": "eni-0d8b64444cbfbd926",
+            "OwnerId": "151333897315",
+            "PrivateDnsName": "ip-172-31-52-188.ap-northeast-2.compute.internal",
+            "PrivateIpAddress": "172.31.52.188",
+            "PrivateIpAddresses": [
+                {
+                    "Primary": true,
+                    "PrivateDnsName": "ip-172-31-52-188.ap-northeast-2.compute.internal",
+                    "PrivateIpAddress": "172.31.52.188"
+                }
+            ],
+            "RequesterId": "AROASGPBUARR6Q46ZGDBO:403895955171",
+            "RequesterManaged": false,
+            "SourceDestCheck": false,
+            "Status": "in-use",
+            "SubnetId": "subnet-e8e7c8b4",
+            "TagSet": [
+                {
+                    "Key": "AWSServiceName",
+                    "Value": "GlobalAccelerator"
+                }
+            ],
+            "VpcId": "vpc-fcfa2497"
+        },
+        {
+            "Attachment": {
+                "AttachmentId": "ela-attach-0090b9ef91c87a4be",
+                "DeleteOnTermination": false,
+                "DeviceIndex": 1,
+                "InstanceOwnerId": "amazon-aws",
+                "Status": "attached"
+            },
+            "AvailabilityZone": "ap-northeast-2c",
+            "Description": "GlobalAccelerator configured ENI",
+            "Groups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-cd892aaf"
+                }
+            ],
+            "InterfaceType": "global_accelerator_managed",
+            "Ipv6Addresses": [],
+            "MacAddress": "0a:54:ce:70:10:22",
+            "NetworkInterfaceId": "eni-02f71e5b484670f07",
+            "OwnerId": "151333897315",
+            "PrivateDnsName": "ip-172-31-38-211.ap-northeast-2.compute.internal",
+            "PrivateIpAddress": "172.31.38.211",
+            "PrivateIpAddresses": [
+                {
+                    "Primary": true,
+                    "PrivateDnsName": "ip-172-31-38-211.ap-northeast-2.compute.internal",
+                    "PrivateIpAddress": "172.31.38.211"
+                }
+            ],
+            "RequesterId": "AROASGPBUARR6Q46ZGDBO:403895955171",
+            "RequesterManaged": false,
+            "SourceDestCheck": true,
+            "Status": "in-use",
+            "SubnetId": "subnet-8dc9f5c1",
+            "TagSet": [
+                {
+                    "Key": "AWSServiceName",
+                    "Value": "GlobalAccelerator"
+                }
+            ],
+            "VpcId": "vpc-fcfa2497"
+        }
+    ]
+}
