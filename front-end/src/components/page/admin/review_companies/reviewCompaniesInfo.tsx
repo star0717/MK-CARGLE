@@ -29,6 +29,7 @@ import {
   makeFullAddress,
   s3GetFileUrl,
   s3GetFileData,
+  s3ToUrl,
 } from "src/modules/commonModule";
 import { mbTypeOption } from "src/configure/list.entity";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -105,24 +106,23 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
         docLink = await s3GetFileUrl(comData.comRegNum, s3Folder.mrn);
         break;
     }
-    const test = await s3GetFileData(comData.comRegNum, s3Folder.crn);
-    const str = test.Body.toString("base64");
-    docLink = `data:${test.ContentType};base64,${str}`;
+    // const test = await s3GetFileData(comData.comRegNum, s3Folder.crn);
+    // docLink = s3ToUrl(test);
 
-    var image = new Image();
-    image.src = docLink;
+    // var image = new Image();
+    // image.src = docLink;
 
-    console.log(docLink);
+    // console.log(docLink);
 
-    let w = window.open();
-    if (test.ContentType.split("/")[1] === "pdf") {
-      // return window.open(docLink);
-      return (w.document.body.innerHTML = `<iframe width='100%' height='100%' src='${docLink}'></iframe>`);
-    } else {
-      // return w.document.write(image.outerHTML);
-      return (w.document.body.innerHTML = `<img src="${docLink}" width="100px" height="100px">`);
-    }
-    // return window.open(docLink);
+    // let w = window.open();
+    // if (test.ContentType.split("/")[1] === "pdf") {
+    //   // return window.open(docLink);
+    //   return (w.document.body.innerHTML = `<iframe width='100%' height='100%' src='${docLink}'></iframe>`);
+    // } else {
+    //   // return w.document.write(image.outerHTML);
+    //   return (w.document.body.innerHTML = `<img src="${docLink}" width="100px" height="100px">`);
+    // }
+    return window.open(docLink);
   };
 
   return (

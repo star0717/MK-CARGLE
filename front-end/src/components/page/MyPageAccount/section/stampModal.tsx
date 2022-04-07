@@ -15,8 +15,14 @@ import {
 } from "../../../styles/CommonComponents";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { s3FileUploadV1, s3GetFileUrl } from "src/modules/commonModule";
+import {
+  s3FileUploadV1,
+  s3GetFileData,
+  s3GetFileUrl,
+  s3ToUrl,
+} from "src/modules/commonModule";
 import { s3Folder } from "src/configure/s3.entity";
+import { S3 } from "aws-sdk";
 
 /**
  * 마이 페이지: 계정관리 도장 업로드 모달 컴포넌트(기능)
@@ -64,6 +70,11 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
           props.comData.comRegNum,
           s3Folder.stamp
         );
+        // const data: S3.Types.GetObjectOutput = await s3GetFileData(
+        //   props.comData.comRegNum,
+        //   s3Folder.stamp
+        // );
+        // const newUrl: string = s3ToUrl(data);
         props.setStampImgSrc(newUrl);
         props.setModalOpen(false);
       },
