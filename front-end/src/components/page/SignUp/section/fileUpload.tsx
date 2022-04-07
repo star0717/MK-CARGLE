@@ -171,9 +171,9 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             <Text fontSize={`40px`} color={`#314FA5`}>
               <GoCheck />
             </Text>
-            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+            {/* <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
               정상적으로 업로드 되었습니다.
-            </Text>
+            </Text> */}
             <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
               사업자등록증
             </Text>
@@ -300,9 +300,9 @@ const FileUpload: NextPage<_pFileUploadProps> = (props) => {
             <Text fontSize={`40px`} color={`#314FA5`}>
               <GoCheck />
             </Text>
-            <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
+            {/* <Text fontSize={`28`} fontWeight={`600`} color={`#ccc`}>
               정상적으로 업로드 되었습니다.
-            </Text>
+            </Text> */}
             <Text color={`#314FA5`} fontSize={`24px`} fontWeight={`700`}>
               정비업등록증
             </Text>
