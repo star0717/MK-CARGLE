@@ -95,6 +95,8 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
             height={`140px`}
             placeholder="고객님께 노출되는 소개글입니다."
             width={`1200px`}
+            value={props.booking.intro}
+            // onChange={() => {}}
             shadow={theme.boxShadow}
           ></TextArea>
         </Wrapper>
