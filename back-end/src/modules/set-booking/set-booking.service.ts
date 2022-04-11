@@ -1,8 +1,9 @@
 import { AuthTokenInfo } from 'src/models/auth.entity';
+import { DeleteResult } from 'src/models/base.entity';
 import { CommonService } from './../../lib/common/common.service';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { SetBooking } from 'src/models/booking.entity';
 import { Company } from 'src/models/company.entity';
@@ -31,5 +32,11 @@ export class SetBookingService extends SafeService<SetBooking> {
 
   async findByBookingId(id: string): Promise<SetBooking> {
     return await this.model.findOne({ _cID: id });
+  }
+
+  async DeleteSetBooking(id: string): Promise<DeleteResult> {
+    const company: Company = await this.model.findOne({ _cID: id });
+    if (!company) throw new BadRequestException();
+    return await this.model.deleteOne({ _cID: id });
   }
 }

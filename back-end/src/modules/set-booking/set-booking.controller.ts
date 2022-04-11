@@ -58,8 +58,8 @@ export class SetBookingController {
   })
   async DeleteSetBooking(
     @Param('id') id: string,
-    @AuthToken() token: AuthTokenInfo,
+    @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
   ): Promise<DeleteResult> {
-    return await this.service.DeleteSetBooking(token, id);
+    return await this.service.DeleteSetBooking(id);
   }
 }
