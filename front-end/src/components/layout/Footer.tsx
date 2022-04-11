@@ -81,6 +81,7 @@ const Footer: NextPage = () => {
               alt="Cargle Logo"
               width={100}
               height={30}
+              priority
             />
           </Wrapper>
           <Wrapper

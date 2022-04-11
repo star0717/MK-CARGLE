@@ -66,15 +66,15 @@ const StampModal: NextPage<_pStampModalProps> = (props) => {
     canvas.toBlob(
       async (blob: Blob) => {
         await s3FileUploadV1(blob, props.comData.comRegNum, s3Folder.stamp);
-        const newUrl: string = await s3GetFileUrl(
-          props.comData.comRegNum,
-          s3Folder.stamp
-        );
-        // const data: S3.Types.GetObjectOutput = await s3GetFileData(
+        // const newUrl: string = await s3GetFileUrl(
         //   props.comData.comRegNum,
         //   s3Folder.stamp
         // );
-        // const newUrl: string = s3ToUrl(data);
+        const data: S3.Types.GetObjectOutput = await s3GetFileData(
+          props.comData.comRegNum,
+          s3Folder.stamp
+        );
+        const newUrl: string = s3ToUrl(data);
         props.setStampImgSrc(newUrl);
         props.setModalOpen(false);
       },

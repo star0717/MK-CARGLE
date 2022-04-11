@@ -121,6 +121,7 @@ const Header: NextPage<_MainProps> = (props) => {
                   alt="Cargle Logo"
                   width={width < 1450 ? 80 : 100}
                   height={width < 1450 ? 24 : 30}
+                  priority
                 />
               </a>
             </Link>
@@ -338,6 +339,7 @@ const Header: NextPage<_MainProps> = (props) => {
                   alt="Cargle Logo"
                   width={80}
                   height={100}
+                  priority
                 />
               </a>
             </Link>
