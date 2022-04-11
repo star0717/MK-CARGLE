@@ -3,81 +3,66 @@ import { ApiProperty } from '@nestjs/swagger';
 import { prop } from '@typegoose/typegoose';
 import {
   IsArray,
-  IsDate,
   IsNumber,
   IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
 import { BaseEntity } from './base.entity';
 
 export class Hours {
-  @ApiProperty({ description: '영업시작시간', required: false })
-  @IsOptional()
-  @IsDate()
-  @prop()
-  openingHours?: Date;
+  @ApiProperty({ description: '영업시작시간' })
+  @IsString()
+  openingHours: Date;
 
-  @ApiProperty({ description: '영업종료시간', required: false })
-  @IsOptional()
-  @IsDate()
-  @prop()
-  closingHours?: Date;
+  @ApiProperty({ description: '영업종료시간' })
+  @IsString()
+  closingHours: Date;
 
-  @ApiProperty({ description: '휴식시작시간', required: false })
-  @IsOptional()
-  @IsDate()
-  @prop()
-  breakTime?: Date;
+  @ApiProperty({ description: '휴식시작시간' })
+  @IsString()
+  breakTime: Date;
 
-  @ApiProperty({ description: '휴식종료시간', required: false })
-  @IsOptional()
-  @IsDate()
-  @prop()
-  breakEndTime?: Date;
+  @ApiProperty({ description: '휴식종료시간' })
+  @IsString()
+  breakEndTime: Date;
 }
 
 export class OfficeHours {
-  @ApiProperty({ description: '월요일', required: false })
-  @IsOptional()
+  @ApiProperty({ description: '월요일', type: Hours })
+  @ValidateNested()
   @Type(() => Hours)
-  @prop()
-  MON?: Hours;
+  MON: Hours;
 
-  @ApiProperty({ description: '화요일', required: false })
-  @IsOptional()
+  @ApiProperty({ description: '화요일', type: Hours })
+  @ValidateNested()
   @Type(() => Hours)
-  @prop()
-  TUE?: Hours;
+  TUE: Hours;
 
-  @ApiProperty({ description: '수요일', required: false })
-  @IsOptional()
+  @ApiProperty({ description: '수요일', type: Hours })
+  @ValidateNested()
   @Type(() => Hours)
-  @prop()
-  WED?: Hours;
+  WED: Hours;
 
-  @ApiProperty({ description: '목요일', required: false })
-  @IsOptional()
+  @ApiProperty({ description: '목요일', type: Hours })
+  @ValidateNested()
   @Type(() => Hours)
-  @prop()
-  THU?: Hours;
+  THU: Hours;
 
-  @ApiProperty({ description: '금요일', required: false })
-  @IsOptional()
+  @ApiProperty({ description: '금요일', type: Hours })
+  @ValidateNested()
   @Type(() => Hours)
-  @prop()
-  FRI?: Hours;
+  FRI: Hours;
 
-  @ApiProperty({ description: '토요일', required: false })
-  @IsOptional()
+  @ApiProperty({ description: '토요일', type: Hours })
+  @ValidateNested()
   @Type(() => Hours)
-  @prop()
-  SET?: Hours;
+  SET: Hours;
 
-  @ApiProperty({ description: '일요일', required: false })
-  @IsOptional()
+  @ApiProperty({ description: '일요일', type: Hours })
+  @ValidateNested()
   @Type(() => Hours)
-  @prop()
-  SUN?: Hours;
+  SUN: Hours;
 }
 
 export class Mprice {
@@ -107,9 +92,10 @@ export class SetBooking extends BaseEntity {
   @prop()
   dayOff?: string[];
 
-  @ApiProperty({ description: '영업시간' })
+  @ApiProperty({ description: '영업시간', type: OfficeHours })
+  @ValidateNested()
   @Type(() => OfficeHours)
-  @prop({ required: true })
+  @prop({ required: true, type: () => OfficeHours })
   officeHour: OfficeHours;
 
   @ApiProperty({ description: '리프트 수량', required: false })

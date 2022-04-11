@@ -7,19 +7,12 @@ import {
   ApiBody,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { SetBookingService } from './set-booking.service';
 import { SetBooking } from 'src/models/booking.entity';
-import { AuthToken } from 'src/lib/decorators/decorators';
+import { AuthToken, Public } from 'src/lib/decorators/decorators';
 import { AuthTokenInfo } from 'src/models/auth.entity';
+import { UserAuthority } from 'src/constants/model.const';
 
 @Controller('set-booking')
 @ApiTags('예약설정 API')
@@ -35,11 +28,12 @@ export class SetBookingController {
   })
   async createSetBooking(
     @Body() doc: SetBooking,
-    @AuthToken() token: AuthTokenInfo,
+    @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
   ): Promise<SetBooking> {
-    return await this.service.createSetBooking(token, doc);
+    return await this.service.createSetBooking(doc);
   }
 
+  @Public()
   @Get(':id')
   @ApiOperation({
     summary: `[PUBLIC]id에 해당하는 업체의 예약설정 정보 반환`,
@@ -49,10 +43,7 @@ export class SetBookingController {
     description: `검색된 예약설정 정보`,
     type: SetBooking,
   })
-  async findByBookingId(
-    @Param('id') id: string,
-    @AuthToken() token: AuthTokenInfo,
-  ): Promise<SetBooking> {
-    return await this.service.findByBookingId(token, id);
+  async findByBookingId(@Param('id') id: string): Promise<SetBooking> {
+    return await this.service.findByBookingId(id);
   }
 }
