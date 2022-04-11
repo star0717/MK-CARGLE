@@ -1,3 +1,4 @@
+import { SetBooking } from "src/models/booking.entity";
 import React from "react";
 import { FieldValues, UseFormSetValue } from "react-hook-form";
 import { AuthTokenInfo, SignUpInfo } from "../models/auth.entity";
@@ -128,6 +129,12 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
   style?: {
     height: string;
   };
+}
+
+// 예약 설정용 props
+export interface _pSetBookingDataProps {
+  booking: SetBooking;
+  setBooking: React.Dispatch<React.SetStateAction<SetBooking>>;
 }
 
 // 부품 세트 관리 props
