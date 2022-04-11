@@ -87,7 +87,6 @@ import {
   RequestCustomResponse,
 } from "src/models/payment.entity";
 import { GetMessagesResponse } from "src/models/sms.entity";
-import { CompanyDocList } from "src/models/company.doc.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {

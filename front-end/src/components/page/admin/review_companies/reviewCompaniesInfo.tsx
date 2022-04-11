@@ -106,23 +106,12 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
         docLink = await s3GetFileUrl(comData.comRegNum, s3Folder.mrn);
         break;
     }
-    // const test = await s3GetFileData(comData.comRegNum, s3Folder.crn);
-    // docLink = s3ToUrl(test);
 
-    // var image = new Image();
-    // image.src = docLink;
+    const test = await s3GetFileData(comData.comRegNum, s3Folder.crn);
+    docLink = s3ToUrl(test);
+    console.log(docLink);
 
-    // console.log(docLink);
-
-    // let w = window.open();
-    // if (test.ContentType.split("/")[1] === "pdf") {
-    //   // return window.open(docLink);
-    //   return (w.document.body.innerHTML = `<iframe width='100%' height='100%' src='${docLink}'></iframe>`);
-    // } else {
-    //   // return w.document.write(image.outerHTML);
-    //   return (w.document.body.innerHTML = `<img src="${docLink}" width="100px" height="100px">`);
-    // }
-    return window.open(docLink);
+    window.open(docLink);
   };
 
   return (

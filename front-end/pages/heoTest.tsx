@@ -36,8 +36,12 @@ import { FiCheckCircle } from "react-icons/fi";
 import { ParsedUrlQuery } from "querystring";
 import { UseLink } from "src/configure/router.entity";
 import { AuthTokenInfo } from "src/models/auth.entity";
-import { parseJwt, s3DeleteFile } from "src/modules/commonModule";
-import { CompanyDocList } from "src/models/company.doc.entity";
+import {
+  parseJwt,
+  s3DeleteFile,
+  s3GetFileData,
+  s3ToUrl,
+} from "src/modules/commonModule";
 import { _MainProps } from "src/configure/_props.entity";
 import { Company } from "src/models/company.entity";
 import { ObjectList } from "aws-sdk/clients/s3";
@@ -262,17 +266,7 @@ const HeoTest: NextPage<_MainProps> = (props) => {
   }, [progress]);
 
   const imgLoader = ({ src }: ImageProps) => {
-    let fileUrl: string = "crn/3388800960";
-    // const params: any = {
-    //   Bucket: process.env.NEXT_PUBLIC_S3_BUCKET,
-    //   Key: fileUrl,
-    //   Expires: 60,
-    // };
-    // s3.getSignedUrl("getObject", params, (err: any, url: string) => {
-    //   if (err) alert("조회 에러");
-    //   console.log(url);
-    // });
-    return `https://${process.env.NEXT_PUBLIC_S3_BUCKET}${src}${fileUrl}`;
+    return `${src}`;
   };
 
   /*********************************************************************

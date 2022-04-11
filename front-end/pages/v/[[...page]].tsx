@@ -12,7 +12,9 @@ import {
   getPathName,
   getQuery,
   parseJwt,
+  s3GetFileData,
   s3GetFileUrl,
+  s3ToUrl,
 } from "src/modules/commonModule";
 import { AuthTokenInfo } from "src/models/auth.entity";
 import { Company } from "src/models/company.entity";
@@ -62,6 +64,7 @@ import { Maintenance } from "src/models/maintenance.entity";
 import dayjs from "dayjs";
 import SetReservation from "src/components/page/SetReservation";
 import { s3Folder } from "src/configure/s3.entity";
+import { S3 } from "aws-sdk";
 import { SetBooking } from "src/models/booking.entity";
 
 /**
@@ -369,10 +372,12 @@ export const getServerSideProps: GetServerSideProps = async (
           )
           .then((res: AxiosResponse<Company, string>) => res.data);
 
-        successResult.props.data = await s3GetFileUrl(
+        const fileData: S3.Types.GetObjectOutput = await s3GetFileData(
           company.comRegNum,
           s3Folder.stamp
         );
+
+        successResult.props.data = s3ToUrl(fileData);
 
         return successResult;
       }
