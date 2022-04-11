@@ -1,0 +1,44 @@
+{
+  "dependencies": {
+    "@nestjs/mapped-types": "*"
+  },
+  "name": "n2server",
+  "description": "Next.js + Nestjs 기반의 통합서버",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "login":"aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com",
+    "prebuild":"docker-compose -f docker-compose.local.yml build",
+    "build":"docker-compose build",
+    "push":"docker-compose push",
+    "cluster:config":"ecs-cli configure --config-name n2server --cluster n2server --default-launch-type EC2 --region ap-northeast-2",
+    "cluster:up":"ecs-cli up --keypair cargle --capability-iam --instance-type t2.medium --cluster-config n2server --ecs-profile n2server",
+    "cluster:up:force":"ecs-cli up --keypair cargle --capability-iam --instance-type t2.medium --cluster-config n2server --ecs-profile n2server --force",
+    "cluster:scale:1":"ecs-cli scale --size 1 --capability-iam --cluster-config n2server --ecs-profile n2server",
+    "cluster:scale:2":"ecs-cli scale --size 2 --capability-iam --cluster-config n2server --ecs-profile n2server",
+    "cluster:ps":"ecs-cli ps --cluster-config n2server --ecs-profile n2server",
+    "cluster:down":"ecs-cli down --force --cluster-config n2server --ecs-profile n2server",
+    "compose:create":"ecs-cli compose -f docker-compose.yml -p n2server create --cluster-config n2server",
+    "compose:up":"ecs-cli compose up --cluster-config n2server --ecs-profile n2server",
+    "compose:ps":"ecs-cli compose ps --cluster-config n2server --ecs-profile n2server",
+    "compose:down":"ecs-cli compose down --cluster-config n2server --ecs-profile n2server",
+    "service:create":"deploy.md 참고",
+    "service:up":"ecs-cli compose --project-name n2server service up --create-log-groups --cluster-config n2server",
+    "service:ps":"ecs-cli compose --project-name n2server service ps --cluster-config n2server",
+    "service:down":"ecs-cli compose --project-name n2server service down --cluster-config n2server",
+    "service:scale:1":"ecs-cli compose --project-name n2server service scale 1 --cluster-config n2server",
+    "service:scale:2":"ecs-cli compose --project-name n2server service scale 2 --cluster-config n2server"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ByunMooYoung/n2server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ByunMooYoung/n2server/issues"
+  },
+  "homepage": "https://github.com/ByunMooYoung/n2server#readme"
+}
+
