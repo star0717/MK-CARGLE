@@ -8,7 +8,11 @@
   "main": "index.js",
   "scripts": {
     "build": "docker-compose build",
-    "push": "docker-compose push"
+    "push": "docker-compose push",
+    "local:up":"docker-compose -f docker-compose.local.yml up -d",
+    "local:down":"docker-compose down",
+    "local:ps":"docker-compose ps",
+    "local:image:prune":"docker image prune"
   },
   "repository": {
     "type": "git",
