@@ -1,17 +1,17 @@
+import { DeleteResult } from 'src/models/base.entity';
+import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   ApiOperation,
   ApiTags,
   ApiResponse,
   ApiParam,
-  ApiProperty,
   ApiBody,
   ApiCreatedResponse,
 } from '@nestjs/swagger';
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { SetBookingService } from './set-booking.service';
 import { SetBooking } from 'src/models/booking.entity';
 import { AuthToken, Public } from 'src/lib/decorators/decorators';
-import { AuthTokenInfo } from 'src/models/auth.entity';
 import { UserAuthority } from 'src/constants/model.const';
 
 @Controller('set-booking')
@@ -30,7 +30,7 @@ export class SetBookingController {
     @Body() doc: SetBooking,
     @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
   ): Promise<SetBooking> {
-    return await this.service.createSetBooking(doc);
+    return await this.service.createSetBooking(token, doc);
   }
 
   @Public()
@@ -38,12 +38,28 @@ export class SetBookingController {
   @ApiOperation({
     summary: `[PUBLIC]id에 해당하는 업체의 예약설정 정보 반환`,
   })
-  @ApiParam({ name: 'id', description: `해당 업체의 오브젝트 ID` })
+  @ApiParam({ name: 'id', description: `해당 업체의 CID` })
   @ApiResponse({
     description: `검색된 예약설정 정보`,
     type: SetBooking,
   })
   async findByBookingId(@Param('id') id: string): Promise<SetBooking> {
     return await this.service.findByBookingId(id);
+  }
+
+  @Delete(':id')
+  @ApiOperation({
+    summary: `[OWNER] id에 해당하는 SetBooking 삭제`,
+  })
+  @ApiParam({ name: 'id', description: `해당 SetBooking의 CID` })
+  @ApiResponse({
+    description: `삭제된 SetBooking의 수`,
+    type: DeleteResult,
+  })
+  async DeleteSetBooking(
+    @Param('id') id: string,
+    @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
+  ): Promise<DeleteResult> {
+    return await this.service.DeleteSetBooking(id);
   }
 }

@@ -18,8 +18,9 @@ import {
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import theme from "styles/theme";
+import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
 
-const BusinessHours: NextPage<any> = (props) => {
+const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -54,7 +55,7 @@ const BusinessHours: NextPage<any> = (props) => {
             padding={`10px`}
             width={`120px`}
             onClick={() => {
-              router.push(`${UseLink.MYPAGE_SET}`);
+              router.push(`${UseLink.MYPAGE_SET_BOOKING}`);
             }}
             cursor={`pointer`}
           >
@@ -72,7 +73,7 @@ const BusinessHours: NextPage<any> = (props) => {
             padding={`10px`}
             width={`120px`}
             onClick={() => {
-              router.push(`${UseLink.MYPAGE_SET}?step=S`);
+              router.push(`${UseLink.MYPAGE_SET_BOOKING}?step=S`);
             }}
             cursor={`pointer`}
           >

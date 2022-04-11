@@ -40,6 +40,7 @@ import {
   MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
+  SetBookingApiPath,
   SettingsApiPath,
 } from "src/constants/api-path.const";
 import AdminUsersPage from "src/components/page/admin/users";
@@ -64,6 +65,7 @@ import dayjs from "dayjs";
 import SetReservation from "src/components/page/SetReservation";
 import { s3Folder } from "src/configure/s3.entity";
 import { S3 } from "aws-sdk";
+import { SetBooking } from "src/models/booking.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -123,7 +125,7 @@ const SubComponent: NextPage<_MainProps> = (props) => {
     case UseLink.MAN_RESERVATION:
       return <ManReservationPage {...props} />;
 
-    case UseLink.MYPAGE_SET:
+    case UseLink.MYPAGE_SET_BOOKING:
       return <SetReservation {...props} />;
 
     case UseLink.TEST:
@@ -391,6 +393,20 @@ export const getServerSideProps: GetServerSideProps = async (
             authConfig
           )
           .then((res: AxiosResponse<FindResult<User>, User>) => res.data);
+        return successResult;
+      }
+
+      case UseLink.MYPAGE_SET_BOOKING: {
+        successResult.props.data = await axios
+          .get(
+            genApiPath(SetBookingApiPath.BASE, {
+              id: tokenValue.cID,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<SetBooking>) => res.data);
+
         return successResult;
       }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
@@ -9,21 +9,25 @@ import BasicInfo from "./section/basicInfo";
 import { useRouter } from "next/router";
 import BusinessHours from "./section/businessHours";
 import MaintenanceInfo from "./section/maintenanceInfo";
+import { SetBooking } from "src/models/booking.entity";
+import { _MainProps } from "src/configure/_props.entity";
+import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
 
-const StepReservation: NextPage<any> = (props) => {
+const StepReservation: NextPage<_pSetBookingDataProps> = (props) => {
   const router = useRouter();
 
   switch (router.query.step) {
     case "F":
-      return <BusinessHours />;
+      return <BusinessHours {...props} />;
     case "S":
-      return <MaintenanceInfo />;
+      return <MaintenanceInfo {...props} />;
     default:
-      return <BasicInfo />;
+      return <BasicInfo {...props} />;
   }
 };
 
-const SetReservation: NextPage<any> = (props) => {
+const SetReservation: NextPage<_MainProps> = (props) => {
+  console.log("asdasd", props);
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -31,7 +35,7 @@ const SetReservation: NextPage<any> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [booking, setBooking] = useState<SetBooking>(props.data);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -39,8 +43,10 @@ const SetReservation: NextPage<any> = (props) => {
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const reservationProps: any = {
+  const reservationProps: _pSetBookingDataProps = {
     ...props,
+    booking,
+    setBooking,
   };
   /*********************************************************************
    * 5. Page configuration

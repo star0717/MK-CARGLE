@@ -138,3 +138,9 @@ export class SmsApiPath {
   static sms = SmsApiPath.BASE;
   static send = SmsApiPath.BASE + 'send';
 }
+
+// 예약관리 API
+export class SetBookingApiPath {
+  static BASE = '/set-booking';
+  static setbooking = SetBookingApiPath.BASE;
+}

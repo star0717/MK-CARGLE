@@ -1,10 +1,12 @@
-import { AuthTokenInfo } from './../../models/auth.entity';
+import { AuthTokenInfo } from 'src/models/auth.entity';
+import { DeleteResult } from 'src/models/base.entity';
 import { CommonService } from './../../lib/common/common.service';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { SetBooking } from 'src/models/booking.entity';
+import { Company } from 'src/models/company.entity';
 
 @Injectable()
 export class SetBookingService extends SafeService<SetBooking> {
@@ -15,11 +17,26 @@ export class SetBookingService extends SafeService<SetBooking> {
     super(model, commonService);
   }
 
-  async createSetBooking(doc: SetBooking): Promise<SetBooking> {
+  async createSetBooking(
+    token: AuthTokenInfo,
+    doc: SetBooking,
+  ): Promise<SetBooking> {
+    const company: Company = await this.model.findOne({ _cID: token.cID });
+    if (company) {
+      return await this.model.findOneAndUpdate({ _cID: token.cID }, doc);
+    }
+    doc._cID = token.cID;
+    doc._uID = token.uID;
     return await this.model.create(doc);
   }
 
   async findByBookingId(id: string): Promise<SetBooking> {
-    return await this.model.findById(id);
+    return await this.model.findOne({ _cID: id });
+  }
+
+  async DeleteSetBooking(id: string): Promise<DeleteResult> {
+    const company: Company = await this.model.findOne({ _cID: id });
+    if (!company) throw new BadRequestException();
+    return await this.model.deleteOne({ _cID: id });
   }
 }

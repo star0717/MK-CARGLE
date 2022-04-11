@@ -13,8 +13,9 @@ import {
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
+import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
 
-const MaintenanceInfo: NextPage<any> = (props) => {
+const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -49,7 +50,7 @@ const MaintenanceInfo: NextPage<any> = (props) => {
             width={`120px`}
             color={`#c4c4c4`}
             onClick={() => {
-              router.push(`${UseLink.MYPAGE_SET}`);
+              router.push(`${UseLink.MYPAGE_SET_BOOKING}`);
             }}
             cursor={`pointer`}
           >
@@ -59,7 +60,7 @@ const MaintenanceInfo: NextPage<any> = (props) => {
             padding={`10px`}
             width={`120px`}
             onClick={() => {
-              router.push(`${UseLink.MYPAGE_SET}?step=F`);
+              router.push(`${UseLink.MYPAGE_SET_BOOKING}?step=F`);
             }}
             cursor={`pointer`}
           >
