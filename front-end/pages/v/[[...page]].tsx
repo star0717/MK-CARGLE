@@ -116,6 +116,9 @@ const SubComponent: NextPage<_MainProps> = (props) => {
     case UseLink.MYPAGE_WORKER:
       return <MyPageWorker {...props} />;
 
+    case UseLink.MYPAGE_SET_BOOKING:
+      return <SetReservation {...props} />;
+
     case UseLink.MAINTENANCE_BOOK:
       return <MaintenanceBookPage {...props} />;
 
@@ -124,9 +127,6 @@ const SubComponent: NextPage<_MainProps> = (props) => {
 
     case UseLink.MAN_RESERVATION:
       return <ManReservationPage {...props} />;
-
-    case UseLink.MYPAGE_SET_BOOKING:
-      return <SetReservation {...props} />;
 
     case UseLink.TEST:
       return <Test {...props} />;
