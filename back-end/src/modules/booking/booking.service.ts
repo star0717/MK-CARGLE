@@ -1,15 +1,15 @@
-import { AuthTokenInfo } from 'src/models/auth.entity';
-import { DeleteResult } from 'src/models/base.entity';
-import { CommonService } from './../../lib/common/common.service';
-import { ReturnModelType } from '@typegoose/typegoose';
-import { InjectModel } from 'nestjs-typegoose';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ReturnModelType } from '@typegoose/typegoose';
+import { DeleteResult } from 'mongodb';
+import { InjectModel } from 'nestjs-typegoose';
+import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
+import { AuthTokenInfo } from 'src/models/auth.entity';
 import { SetBooking } from 'src/models/booking.entity';
 import { Company } from 'src/models/company.entity';
 
 @Injectable()
-export class SetBookingService extends SafeService<SetBooking> {
+export class BookingService extends SafeService<SetBooking> {
   constructor(
     @InjectModel(SetBooking) readonly model: ReturnModelType<typeof SetBooking>,
     readonly commonService: CommonService,
