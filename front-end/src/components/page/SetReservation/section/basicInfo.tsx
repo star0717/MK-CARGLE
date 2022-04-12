@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
@@ -10,7 +10,6 @@ import {
   WholeWrapper,
   Wrapper,
   Text,
-  CommonSmallTitle,
   CommonButtonWrapper,
   CommonButton,
 } from "src/components/styles/CommonComponents";
@@ -20,22 +19,28 @@ import { AiFillPicture } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
+import { useDispatch } from "react-redux";
+import { _aPostBooking } from "store/action/user.action";
 
 const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+  const dispatch = useDispatch();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [modify, setModify] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.setBooking({ ...props.booking, [e.target.name]: e.target.value });
   };
+
+  const onSaveHandler = (e: React.MouseEvent<HTMLButtonElement>) => {};
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -95,6 +100,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
           <TextArea
             padding={`10px`}
             height={`140px`}
+            readOnly={!modify}
             placeholder="고객님께 노출되는 소개글입니다."
             width={`1200px`}
             name="intro"
@@ -189,10 +195,41 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
               </Text>
             </Wrapper>
           </Wrapper>
-          <CommonButtonWrapper ju={`space-around`}>
-            <CommonButton kindOf={`white`}>취소</CommonButton>
-            <CommonButton>저장</CommonButton>
-          </CommonButtonWrapper>
+          {modify ? (
+            <CommonButtonWrapper ju={`space-around`}>
+              <CommonButton
+                kindOf={`white`}
+                onClick={() => {
+                  props.setBooking(props.data);
+                  setModify(false);
+                }}
+              >
+                취소
+              </CommonButton>
+              <CommonButton
+                onClick={() => {
+                  setModify(false);
+                  dispatch(_aPostBooking(props.booking)).then((res: any) => {
+                    props.setBooking(res.payload);
+                    alert("저장 되었습니다!");
+                  });
+                }}
+              >
+                저장
+              </CommonButton>
+            </CommonButtonWrapper>
+          ) : (
+            <CommonButtonWrapper ju={`space-around`}>
+              <CommonButton
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  setModify(true);
+                  window.scroll({ top: 0, left: 0, behavior: "smooth" });
+                }}
+              >
+                수정
+              </CommonButton>
+            </CommonButtonWrapper>
+          )}
         </Wrapper>
       </RsWrapper>
     </WholeWrapper>
