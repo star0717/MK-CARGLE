@@ -37,10 +37,10 @@ import {
   AdminApiPath,
   AgenciesApiPath,
   AuthApiPath,
+  BookingApiPath,
   MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
-  SetBookingApiPath,
   SettingsApiPath,
 } from "src/constants/api-path.const";
 import AdminUsersPage from "src/components/page/admin/users";
@@ -399,7 +399,7 @@ export const getServerSideProps: GetServerSideProps = async (
       case UseLink.MYPAGE_SET_BOOKING: {
         successResult.props.data = await axios
           .get(
-            genApiPath(SetBookingApiPath.BASE, {
+            genApiPath(BookingApiPath.set_booking, {
               id: tokenValue.cID,
               isServerSide: true,
             }),

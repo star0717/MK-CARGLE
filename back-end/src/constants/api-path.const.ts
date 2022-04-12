@@ -142,5 +142,5 @@ export class SmsApiPath {
 // 예약관리 API
 export class BookingApiPath {
   static BASE = '/booking/';
-  static booking = BookingApiPath.BASE + 'set';
+  static set_booking = BookingApiPath.BASE + 'set';
 }
