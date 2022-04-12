@@ -37,10 +37,10 @@ import {
   AdminApiPath,
   AgenciesApiPath,
   AuthApiPath,
-  BookingApiPath,
   MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
+  SetBookingApiPath,
   SettingsApiPath,
 } from "src/constants/api-path.const";
 import AdminUsersPage from "src/components/page/admin/users";
@@ -65,7 +65,7 @@ import dayjs from "dayjs";
 import SetReservation from "src/components/page/SetReservation";
 import { s3Folder } from "src/configure/s3.entity";
 import { S3 } from "aws-sdk";
-import { SetBooking } from "src/models/booking.entity";
+import { SetBooking } from "src/models/setbooking.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -399,7 +399,7 @@ export const getServerSideProps: GetServerSideProps = async (
       case UseLink.MYPAGE_SET_BOOKING: {
         successResult.props.data = await axios
           .get(
-            genApiPath(BookingApiPath.set_booking, {
+            genApiPath(SetBookingApiPath.set_booking, {
               id: tokenValue.cID,
               isServerSide: true,
             }),

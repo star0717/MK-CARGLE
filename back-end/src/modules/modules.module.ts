@@ -11,6 +11,7 @@ import { CarsModule } from './cars/cars.module';
 import { EstimatesModule } from './estimates/estimates.module';
 import { StatementsModule } from './statements/statements.module';
 import { BookingModule } from './booking/booking.module';
+import { SetbookingModule } from './setbooking/setbooking.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { BookingModule } from './booking/booking.module';
     EstimatesModule,
     StatementsModule,
     BookingModule,
+    SetbookingModule,
   ],
 })
 export class ModulesModule {}
