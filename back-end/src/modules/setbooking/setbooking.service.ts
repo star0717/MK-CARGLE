@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { DeleteResult } from 'mongodb';
 import { InjectModel } from 'nestjs-typegoose';

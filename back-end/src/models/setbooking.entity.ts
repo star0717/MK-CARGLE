@@ -95,7 +95,7 @@ export class SetBooking extends BaseEntity {
   @ApiProperty({ description: '영업시간', type: OfficeHours })
   @ValidateNested()
   @Type(() => OfficeHours)
-  @prop({ required: true, type: () => OfficeHours })
+  @prop({ required: true, type: () => OfficeHours, _id: false })
   officeHour: OfficeHours;
 
   @ApiProperty({ description: '리프트 수량', required: false })
