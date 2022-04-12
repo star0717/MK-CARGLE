@@ -27,6 +27,7 @@ const StepReservation: NextPage<_pSetBookingDataProps> = (props) => {
 };
 
 const SetReservation: NextPage<_MainProps> = (props) => {
+  console.log(props);
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
