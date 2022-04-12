@@ -33,7 +33,9 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
-
+  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    props.setBooking({ ...props.booking, [e.target.name]: e.target.value });
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -95,8 +97,11 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
             height={`140px`}
             placeholder="고객님께 노출되는 소개글입니다."
             width={`1200px`}
-            // value={props.booking.intro}
-            // onChange={() => {}}
+            name="intro"
+            value={props.booking.intro}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              onInputHandler(e);
+            }}
             shadow={theme.boxShadow}
           ></TextArea>
         </Wrapper>
