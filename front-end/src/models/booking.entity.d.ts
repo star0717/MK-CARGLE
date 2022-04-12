@@ -1,4 +1,6 @@
 import { BaseEntity } from './base.entity';
+import { MainCar, MainCustomer } from './maintenance.entity';
+import { BookingState } from 'src/constants/booking.const';
 export declare class Hours {
     openingHours: Date;
     closingHours: Date;
@@ -24,4 +26,12 @@ export declare class SetBooking extends BaseEntity {
     officeHour: OfficeHours;
     lift?: number;
     mPrice?: Mprice[];
+}
+export declare class Booking extends BaseEntity {
+    bookingDate: Date;
+    mainHopeDate: Date;
+    customer: MainCustomer;
+    car: MainCar;
+    mainReContents: string;
+    bookingState: BookingState;
 }
