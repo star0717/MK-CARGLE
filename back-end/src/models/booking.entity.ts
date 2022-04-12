@@ -3,12 +3,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { prop } from '@typegoose/typegoose';
 import {
   IsArray,
+  IsDate,
   IsNumber,
   IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
 import { BaseEntity } from './base.entity';
+import { MainCar, MainCustomer } from './maintenance.entity';
+import { BookingState } from 'src/constants/booking.const';
 
 export class Hours {
   @ApiProperty({ description: '영업시작시간' })
@@ -109,4 +112,40 @@ export class SetBooking extends BaseEntity {
   @IsArray()
   @prop()
   mPrice?: Mprice[];
+}
+
+export class Booking extends BaseEntity {
+  @ApiProperty({ description: '예약접수일자' })
+  @IsDate()
+  @prop({ required: true, type: Date })
+  bookingDate: Date;
+
+  @ApiProperty({ description: '정비희망일자' })
+  @IsDate()
+  @prop({ required: true, type: Date })
+  mainHopeDate: Date;
+
+  @ApiProperty({ description: '고객' })
+  @Type(() => MainCustomer)
+  @prop({ required: true, type: MainCustomer, _id: false })
+  customer: MainCustomer;
+
+  @ApiProperty({ description: '차량' })
+  @Type(() => MainCar)
+  @prop({ required: true, type: MainCar, _id: false })
+  car: MainCar;
+
+  @ApiProperty({ description: '정비요청내용', required: false })
+  @IsString()
+  @prop()
+  mainReContents: string;
+
+  @ApiProperty({
+    description: '예약상태',
+    default: BookingState.NEW,
+    required: true,
+  })
+  @IsString()
+  @prop({ required: true, type: BookingState, default: BookingState.NEW })
+  bookingState: BookingState;
 }
