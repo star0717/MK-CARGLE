@@ -1,4 +1,4 @@
-import { SmsApiPath } from "src/constants/api-path.const";
+import { SetBookingApiPath, SmsApiPath } from "src/constants/api-path.const";
 import { genMainOptionQuery } from "src/constants/maintenance.const";
 import axios, { AxiosResponse } from "axios";
 import {
@@ -54,6 +54,7 @@ import {
   ComFileUpload,
   ManFileUpload,
   UserCompanyFind,
+  _iSetBooking,
 } from "../interfaces";
 
 import {
@@ -87,6 +88,7 @@ import {
   RequestCustomResponse,
 } from "src/models/payment.entity";
 import { GetMessagesResponse } from "src/models/sms.entity";
+import { SetBooking } from "src/models/setbooking.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1498,5 +1500,62 @@ export async function _aPostSms() {
     payload: req,
   };
 
+  return result;
+}
+
+/**
+ * 예약설정 생성 및 수정
+ * @param data
+ * @returns
+ */
+export async function _aPostBooking(data: SetBooking) {
+  const req: SetBooking = await axios
+    .post(genApiPath(SetBookingApiPath.set_booking), data)
+    .then((res: AxiosResponse<SetBooking>): SetBooking => {
+      return res.data;
+    });
+
+  const result: _iSetBooking = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 예약설정 데이터 반환
+ * @param id
+ * @returns
+ */
+export async function _aGetBooking(id: string) {
+  const req: SetBooking = await axios
+    .get(genApiPath(SetBookingApiPath.set_booking, { id: id }))
+    .then((res: AxiosResponse<SetBooking, string>): SetBooking => {
+      return res.data;
+    });
+
+  const result: _iSetBooking = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 예약설정 데이터 삭제(한개)
+ * @param id _id
+ * @returns
+ */
+export async function _aDeleteBooking(id: string) {
+  const req: DeleteResult = await axios
+    .delete(genApiPath(SetBookingApiPath.set_booking, { id: id }))
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
   return result;
 }

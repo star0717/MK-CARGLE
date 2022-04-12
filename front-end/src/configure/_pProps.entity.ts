@@ -14,6 +14,7 @@ import { Maintenance, MainWork } from "src/models/maintenance.entity";
 import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";
 import { SetBooking } from "src/models/setbooking.entity";
+import { Booking } from "src/models/booking.entity";
 
 /***********************************************************************
  * 기본
