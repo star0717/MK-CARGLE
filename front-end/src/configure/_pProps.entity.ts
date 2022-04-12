@@ -1,4 +1,3 @@
-import { SetBooking } from "src/models/booking.entity";
 import React from "react";
 import { FieldValues, UseFormSetValue } from "react-hook-form";
 import { AuthTokenInfo, SignUpInfo } from "../models/auth.entity";
@@ -14,6 +13,7 @@ import { PartsSet } from "src/models/partsset.entity";
 import { Maintenance, MainWork } from "src/models/maintenance.entity";
 import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";
+import { SetBooking } from "src/models/setbooking.entity";
 
 /***********************************************************************
  * 기본
