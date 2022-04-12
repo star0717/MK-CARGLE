@@ -107,10 +107,6 @@ const AdminReviewCompaniesinfo: NextPage<_pAdminReviewCompanies> = (props) => {
         break;
     }
 
-    const test = await s3GetFileData(comData.comRegNum, s3Folder.crn);
-    docLink = s3ToUrl(test);
-    console.log(docLink);
-
     window.open(docLink);
   };
 

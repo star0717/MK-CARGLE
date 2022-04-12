@@ -144,8 +144,13 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
             </SearchInputWrapper>
           </form>
           <Wrapper dr={`row`} ju={`space-between`} width={`470px`}>
-            <SmallButton width={`150px`} fontSize={`16px`} kindOf={`default`}>
-              캘린더
+            <SmallButton
+              type="button"
+              width={`150px`}
+              fontSize={`16px`}
+              kindOf={`cancle`}
+            >
+              선택삭제
             </SmallButton>
             <SmallButton
               type="button"
@@ -158,14 +163,6 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
               }}
             >
               +신규예약등록
-            </SmallButton>
-            <SmallButton
-              type="button"
-              width={`150px`}
-              fontSize={`16px`}
-              kindOf={`cancle`}
-            >
-              선택삭제
             </SmallButton>
           </Wrapper>
         </Wrapper>
