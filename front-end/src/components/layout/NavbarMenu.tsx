@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
 import { AiOutlineClose } from "react-icons/ai";
-import { Wrapper, CloseButton, Text, Image } from "../styles/CommonComponents";
+import { Wrapper, CloseButton, Text } from "../styles/CommonComponents";
 import { _MainProps } from "src/configure/_props.entity";
 import { menuList } from "src/configure/list.entity";
 import { UserAuthority } from "src/constants/model.const";
@@ -9,6 +9,7 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { UseLink } from "src/configure/router.entity";
+import Image from "next/image";
 
 const NavbarMenu: NextPage<_MainProps> = (props) => {
   /*********************************************************************

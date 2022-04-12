@@ -2,7 +2,7 @@ version: '3'
 services:
   front-end:
     build: ./front-end
-    image: 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/front-end
+    image: 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/front-end
     container_name: front-end
     expose:
       - "3000"
@@ -10,19 +10,19 @@ services:
       - back-end
     environment:
       - NODE_ENV=production
-      - DESTINATION_API=http://52.78.182.5/
+      - DESTINATION_API=http://3.38.193.165/
   back-end:
     build: ./back-end
-    image: 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/back-end
+    image: 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/backend-end
     container_name: back-end
     expose:
       - "7001"
-  proxy-server: 
+  proxy-server:
     build: ./proxy-server
-    image: 151333897315.dkr.ecr.ap-northeast-2.amazonaws.com/proxy-server
+    image: 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/proxy-server
     container_name: proxy-server
     ports:
-    - "80"
+      - "80:80"
     depends_on:
       - front-end
     links:
