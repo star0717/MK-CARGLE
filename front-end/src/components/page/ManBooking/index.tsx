@@ -30,11 +30,11 @@ import { _MainProps } from "src/configure/_props.entity";
 import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import { PagenationSection } from "src/components/common/sections";
-import AddReservation from "./section/addReservationModal";
-import EditReservation from "./section/editReservationModal";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import { GoPrimitiveDot } from "react-icons/go";
 import theme from "styles/theme";
+import AddBooking from "./section/addBookingModal";
+import EditBooking from "./section/editBookingModal";
 
 const ManReservationPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -290,8 +290,8 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
               <IoIosCloseCircle />
             </CloseButton>
           </Wrapper>
-          {modalOption === "add" && <AddReservation {...ModalProps} />}
-          {modalOption === "edit" && <EditReservation {...ModalProps} />}
+          {modalOption === "add" && <AddBooking {...ModalProps} />}
+          {modalOption === "edit" && <EditBooking {...ModalProps} />}
         </Modal>
       </WholeWrapper>
     </BodyWrapper>

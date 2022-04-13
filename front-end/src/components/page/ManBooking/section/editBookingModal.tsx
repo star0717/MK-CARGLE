@@ -1,23 +1,21 @@
 import {
-  CloseButton,
   ColorSpan,
+  Combo,
+  Text,
   CommonButton,
   CommonButtonWrapper,
-  Text,
   CommonSmallTitle,
   SmallButton,
   TextArea,
   TextInput2,
-  WholeWrapper,
   Wrapper,
-  Combo,
+  RsWrapper,
+  WholeWrapper,
 } from "src/components/styles/CommonComponents";
 import { NextPage } from "next";
-import DaumPostcode from "react-daum-postcode";
-import { IoIosCloseCircle } from "react-icons/io";
 import theme from "styles/theme";
 
-const AddReservation: NextPage<any> = (props) => {
+const EditBooking: NextPage<any> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -40,18 +38,30 @@ const AddReservation: NextPage<any> = (props) => {
 
   return (
     <WholeWrapper>
-      <CommonSmallTitle>신규 예약 등록</CommonSmallTitle>
+      <CommonSmallTitle>예약요청서</CommonSmallTitle>
       <form>
         <Wrapper>
           <Wrapper
             borderBottom={`1px solid #c4c4c4`}
-            al={`flex-start`}
+            dr={`row`}
+            ju={`space-between`}
             padding={`10px 0px`}
             margin={`0px 0px 10px`}
           >
-            <Text color={theme.basicTheme_C} fontSize={`18px`}>
-              예약정보
-            </Text>
+            <Wrapper width={`auto`}>
+              <Text color={theme.basicTheme_C} fontSize={`18px`}>
+                예약정보
+              </Text>
+            </Wrapper>
+            <Wrapper width={`auto`} dr={`row`}>
+              <Text>예약상태</Text>
+              <Combo>
+                <option>대기</option>
+                <option>승인</option>
+                <option>정비</option>
+                <option>거절</option>
+              </Combo>
+            </Wrapper>
           </Wrapper>
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>
@@ -59,7 +69,7 @@ const AddReservation: NextPage<any> = (props) => {
               예약접수일자
             </Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} name="" type="date" />
+              <TextInput2 width={`400px`} name="" type="text" readOnly />
             </Wrapper>
           </Wrapper>
 
@@ -74,7 +84,7 @@ const AddReservation: NextPage<any> = (props) => {
               dr={`row`}
               ju={`space-between`}
             >
-              <TextInput2 width={`300px`} type="date" name="" />
+              <TextInput2 width={`300px`} type="text" readOnly name="" />
               <Combo width={`80px`}>
                 <option>?</option>
               </Combo>
@@ -87,30 +97,21 @@ const AddReservation: NextPage<any> = (props) => {
               고객전화번호
             </Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" />
+              <TextInput2 width={`400px`} type="text" readOnly name="" />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
-            <Text>
-              <ColorSpan color={`#d6263b`}>*</ColorSpan>
-              차량번호
-            </Text>
+            <Text>차량번호</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
               <Wrapper dr={`row`} margin={`0px 0px 10px 0px`}>
                 <TextInput2
-                  width={`300px`}
+                  width={`400px`}
                   // margin={`0px 0px 10px 0px`}
                   type="text"
                   name=""
+                  readOnly
                 />
-                <SmallButton
-                  type="button"
-                  kindOf={`default`}
-                  margin={`0px 0px 0px 20px`}
-                >
-                  번호검색
-                </SmallButton>
               </Wrapper>
             </Wrapper>
           </Wrapper>
@@ -125,6 +126,7 @@ const AddReservation: NextPage<any> = (props) => {
                 al={`flex-start`}
                 type="text"
                 name=""
+                readOnly
               />
             </Wrapper>
           </Wrapper>
@@ -141,49 +143,49 @@ const AddReservation: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>차량명</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" />
+              <TextInput2 width={`400px`} type="text" name="" readOnly />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>모델명</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" />
+              <TextInput2 width={`400px`} type="text" name="" readOnly />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>연식</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" />
+              <TextInput2 width={`400px`} type="text" name="" readOnly />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>차대번호</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" />
+              <TextInput2 width={`400px`} type="text" name="" readOnly />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>등록일자</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" />
+              <TextInput2 width={`400px`} type="text" name="" readOnly />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>주행거리</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" />
+              <TextInput2 width={`400px`} type="text" name="" readOnly />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>고객명</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" />
+              <TextInput2 width={`400px`} type="text" name="" readOnly />
             </Wrapper>
           </Wrapper>
           <CommonButtonWrapper kindOf={`column`}>
@@ -200,4 +202,4 @@ const AddReservation: NextPage<any> = (props) => {
   );
 };
 
-export default AddReservation;
+export default EditBooking;
