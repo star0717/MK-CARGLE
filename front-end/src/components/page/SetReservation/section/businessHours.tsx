@@ -33,6 +33,14 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
    * 3. Handlers
    *********************************************************************/
 
+  const dayOffHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const button: HTMLButtonElement = e.currentTarget;
+    if (props.booking.dayOff.includes(button.name)) {
+      // props.setBooking(props.booking.dayOff.filter((element) => element !== button.name))
+    } else {
+    }
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -90,13 +98,76 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
         </Wrapper>
         <Wrapper borderBottom={`1px solid #ccc`} padding={`0px 0px 40px`}>
           <Wrapper dr={`row`} ju={`flex-start`}>
-            <SelectDays>월</SelectDays>
-            <SelectDays>화</SelectDays>
-            <SelectDays>수</SelectDays>
-            <SelectDays>목</SelectDays>
-            <SelectDays>금</SelectDays>
-            <SelectDays>토</SelectDays>
-            <SelectDays>일</SelectDays>
+            <SelectDays
+              disabled={!props.modify}
+              name="MON"
+              // checked={}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              월
+            </SelectDays>
+            <SelectDays
+              disabled={!props.modify}
+              name="TUE"
+              // checked={}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              화
+            </SelectDays>
+            <SelectDays
+              disabled={!props.modify}
+              name="WED"
+              // checked={}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              수
+            </SelectDays>
+            <SelectDays
+              disabled={!props.modify}
+              name="THU"
+              // checked={}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              목
+            </SelectDays>
+            <SelectDays
+              disabled={!props.modify}
+              name="FRI"
+              // checked={}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              금
+            </SelectDays>
+            <SelectDays
+              disabled={!props.modify}
+              name="SAT"
+              // checked={}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              토
+            </SelectDays>
+            <SelectDays
+              disabled={!props.modify}
+              name="SUN"
+              // checked={}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              일
+            </SelectDays>
           </Wrapper>
         </Wrapper>
         <Wrapper
