@@ -36,13 +36,20 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   const dayOffHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const button: HTMLButtonElement = e.currentTarget;
+    const arr = props.booking.dayOff;
+
     if (props.booking.dayOff.includes(button.name)) {
       props.setBooking({
         ...props.booking,
         dayOff: props.booking.dayOff.filter((dayOff) => dayOff !== button.name),
       });
     } else {
-      props.booking.dayOff.push(button.name);
+      arr.push(button.name);
+      props.setBooking({
+        ...props.booking,
+        dayOff: arr,
+      });
+      // props.booking.dayOff.push(button.name);
     }
   };
 
@@ -106,7 +113,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <SelectDays
               // disabled={!props.modify}
               name="MON"
-              // checked={}
+              checked={props.booking.dayOff.includes("MON")}
+              kindOf={
+                props.booking.dayOff.includes("MON") ? `default` : `ghost`
+              }
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -116,7 +126,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <SelectDays
               // disabled={!props.modify}
               name="TUE"
-              // checked={}
+              checked={props.booking.dayOff.includes("TUE")}
+              kindOf={
+                props.booking.dayOff.includes("TUE") ? `default` : `ghost`
+              }
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -126,7 +139,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <SelectDays
               // disabled={!props.modify}
               name="WED"
-              // checked={}
+              checked={props.booking.dayOff.includes("WED")}
+              kindOf={
+                props.booking.dayOff.includes("WED") ? `default` : `ghost`
+              }
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -136,7 +152,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <SelectDays
               // disabled={!props.modify}
               name="THU"
-              // checked={}
+              checked={props.booking.dayOff.includes("THU")}
+              kindOf={
+                props.booking.dayOff.includes("THU") ? `default` : `ghost`
+              }
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -146,7 +165,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <SelectDays
               // disabled={!props.modify}
               name="FRI"
-              // checked={}
+              checked={props.booking.dayOff.includes("FRI")}
+              kindOf={
+                props.booking.dayOff.includes("FRI") ? `default` : `ghost`
+              }
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -156,7 +178,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <SelectDays
               // disabled={!props.modify}
               name="SAT"
-              // checked={}
+              checked={props.booking.dayOff.includes("SAT")}
+              kindOf={
+                props.booking.dayOff.includes("SAT") ? `default` : `ghost`
+              }
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -166,7 +191,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <SelectDays
               // disabled={!props.modify}
               name="SUN"
-              // checked={}
+              checked={props.booking.dayOff.includes("SUN")}
+              kindOf={
+                props.booking.dayOff.includes("SUN") ? `default` : `ghost`
+              }
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}

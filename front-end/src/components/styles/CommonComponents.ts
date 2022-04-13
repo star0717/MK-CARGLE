@@ -805,7 +805,7 @@ export const TextInput = styled.input<any>`
   border: 1px solid ${(props) => props.theme.grey_C};
   border-radius: ${(props) => props.theme.radius};
   background-color: ${(props) => props.bgColor};
-  padding: ${(props) => props.padding || props.theme.inputPadding};
+  padding: ${(props) => props.paddding || props.theme.inputPadding};
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
   margin-bottom: ${(props) => props.marginBottom};
@@ -2002,8 +2002,8 @@ export const SelectDays = styled.button<any>`
   height: 40px;
   padding: 0px 40px;
   border-radius: 4px;
-  border: 1px solid #c4c4c4;
-  font-weight: 800;
+  border: 1px solid #314fa5;
+  font-weight: 600;
   font-size: 16px;
   cursor: pointer;
   display: flex;
@@ -2014,21 +2014,16 @@ export const SelectDays = styled.button<any>`
   margin: 0px 8px 0px 0px;
 
   ${(props) =>
-    props.kindOf === `focus` &&
-    `background-color : ${props.theme.basicTheme_C};`}
-  ${(props) => props.kindOf === `focus` && `color : ${props.theme.white_C};`}
+    props.kindOf === `default` && `background-color : ${props.theme.red_C};`}
+  ${(props) => props.kindOf === `default` && `color : ${props.theme.red_C};`}
+    ${(props) => props.kindOf === `default` && `color : #fff;`}
 
   ${(props) =>
-    props.kindOf === `ghost` && `background-color : ${props.theme.subWhite_C};`}
-  ${(props) => props.kindOf === `ghost` && `color : ${props.theme.darkGrey_C};`}
+    props.kindOf === `ghost` && `background-color : ${props.theme.white_C};`}
+
 
   &:hover {
-    background-color: ${(props) => props.theme.basicTheme_C};
-    color: ${(props) => props.theme.white_C};
-  }
-
-  &:focus {
-    background-color: ${(props) => props.theme.basicTheme_C};
+    background-color: ${(props) => props.theme.red_C};
     color: ${(props) => props.theme.white_C};
   }
 `;
