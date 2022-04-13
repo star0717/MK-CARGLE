@@ -1,4 +1,8 @@
-import { SetBookingApiPath, SmsApiPath } from "src/constants/api-path.const";
+import {
+  BookingApiPath,
+  SetBookingApiPath,
+  SmsApiPath,
+} from "src/constants/api-path.const";
 import { genMainOptionQuery } from "src/constants/maintenance.const";
 import axios, { AxiosResponse } from "axios";
 import {
@@ -55,6 +59,7 @@ import {
   ManFileUpload,
   UserCompanyFind,
   _iSetBooking,
+  _iBooking,
 } from "../interfaces";
 
 import {
@@ -89,6 +94,7 @@ import {
 } from "src/models/payment.entity";
 import { GetMessagesResponse } from "src/models/sms.entity";
 import { SetBooking } from "src/models/setbooking.entity";
+import { Booking } from "src/models/booking.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1503,12 +1509,31 @@ export async function _aPostSms() {
   return result;
 }
 
+export async function _aGetBooking(data: FindParameters) {
+  const req: FindResult<Booking> = await axios
+    .get(genApiPath(BookingApiPath.booking, { findParams: data }))
+    .then(
+      (
+        res: AxiosResponse<FindResult<Booking>, FindParameters>
+      ): FindResult<Booking> => {
+        return res.data;
+      }
+    );
+
+  const result: _iBooking = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+
+  return result;
+}
+
 /**
  * 예약설정 생성 및 수정
  * @param data
  * @returns
  */
-export async function _aPostBooking(data: SetBooking) {
+export async function _aPostSetBooking(data: SetBooking) {
   const req: SetBooking = await axios
     .post(genApiPath(SetBookingApiPath.set_booking), data)
     .then((res: AxiosResponse<SetBooking, SetBooking>): SetBooking => {
@@ -1528,7 +1553,7 @@ export async function _aPostBooking(data: SetBooking) {
  * @param id
  * @returns
  */
-export async function _aGetBooking(id: string) {
+export async function _aGetSetBooking(id: string) {
   const req: SetBooking = await axios
     .get(genApiPath(SetBookingApiPath.set_booking, { id: id }))
     .then((res: AxiosResponse<SetBooking, string>): SetBooking => {
@@ -1547,7 +1572,7 @@ export async function _aGetBooking(id: string) {
  * @param id _id
  * @returns
  */
-export async function _aDeleteBooking(id: string) {
+export async function _aDeleteSetBooking(id: string) {
   const req: DeleteResult = await axios
     .delete(genApiPath(SetBookingApiPath.set_booking, { id: id }))
     .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {

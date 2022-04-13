@@ -44,7 +44,7 @@ export class SetbookingController {
     type: SetBooking,
   })
   async findByBookingId(@Param('id') id: string): Promise<SetBooking> {
-    return await this.setbookingService.findByBookingId(id);
+    return await this.setbookingService.findBySetBookingId(id);
   }
 
   @Delete(':id')

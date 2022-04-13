@@ -35,7 +35,7 @@ export class SetbookingService extends SafeService<SetBooking> {
     });
   }
 
-  async findByBookingId(id: string): Promise<SetBooking> {
+  async findBySetBookingId(id: string): Promise<SetBooking> {
     return await this.model.findOne({ _cID: id });
   }
 
