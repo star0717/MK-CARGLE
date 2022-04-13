@@ -1,12 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { prop } from '@typegoose/typegoose';
 import { Type } from 'class-transformer';
-import { IsDate, IsEnum, IsString, ValidateNested } from 'class-validator';
+import { IsEnum, IsNumber, IsString, ValidateNested } from 'class-validator';
 import { BookingState } from 'src/constants/booking.const';
 import { BaseEntity } from './base.entity';
 import { MainCustomer, MainCar } from './maintenance.entity';
 
 export class Booking extends BaseEntity {
+  @ApiProperty({ description: '예약접수번호' })
+  @IsString()
+  @prop({ required: true })
+  bookingNum: string;
+
   @ApiProperty({ description: '예약접수일자' })
   @IsString()
   @prop({ required: true })

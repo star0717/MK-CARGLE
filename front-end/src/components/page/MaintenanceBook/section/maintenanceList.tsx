@@ -55,8 +55,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [checkedList, setCheckedList] = useState([]);
-  const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
+  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [maintenanceList, setMaintenanceList] = useState<Maintenance[]>(
+    props.findResult.docs
+  );
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
 
   /*********************************************************************
