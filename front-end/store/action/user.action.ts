@@ -1511,7 +1511,7 @@ export async function _aPostSms() {
 export async function _aPostBooking(data: SetBooking) {
   const req: SetBooking = await axios
     .post(genApiPath(SetBookingApiPath.set_booking), data)
-    .then((res: AxiosResponse<SetBooking, string>): SetBooking => {
+    .then((res: AxiosResponse<SetBooking, SetBooking>): SetBooking => {
       return res.data;
     });
 
@@ -1519,6 +1519,7 @@ export async function _aPostBooking(data: SetBooking) {
     type: ActionAPIs.USER_API,
     payload: req,
   };
+
   return result;
 }
 

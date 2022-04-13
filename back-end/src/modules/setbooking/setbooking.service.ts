@@ -21,14 +21,18 @@ export class SetbookingService extends SafeService<SetBooking> {
     token: AuthTokenInfo,
     doc: SetBooking,
   ): Promise<SetBooking> {
-    const company: Company = await this.model.findOne({ _cID: token.cID });
-    if (company) {
-      return await this.model.findOneAndUpdate({ _cID: token.cID }, doc);
-    }
+    // let setBooking: SetBooking = {
+    //   ...doc,
+    //   _cID: token.cID,
+    //   _uID: token.uID,
+    // };
     doc._cID = token.cID;
     doc._uID = token.uID;
 
-    return await this.model.create(doc);
+    return await this.model.findOneAndUpdate({ _cID: token.cID }, doc, {
+      upsert: true,
+      new: true,
+    });
   }
 
   async findByBookingId(id: string): Promise<SetBooking> {

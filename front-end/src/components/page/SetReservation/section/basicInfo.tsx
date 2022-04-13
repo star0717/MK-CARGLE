@@ -206,12 +206,14 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
                 취소
               </CommonButton>
               <CommonButton
-                onClick={() => {
-                  dispatch(_aPostBooking(props.booking)).then((res: any) => {
-                    console.log("!@#!@#", res.payload);
-                    props.setBooking(res.payload);
-                    alert("저장 되었습니다!");
-                  });
+                onClick={async () => {
+                  await dispatch(_aPostBooking(props.booking)).then(
+                    (res: any) => {
+                      props.setBooking(res.payload);
+                      alert("저장 되었습니다!");
+                    }
+                  );
+
                   props.setModify(false);
                 }}
               >
