@@ -55,7 +55,7 @@ import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import MaintenanceBookPage from "src/components/page/MaintenanceBook";
 import ManCustomerPage from "src/components/page/ManCustomer";
-import ManReservationPage from "src/components/page/ManReservation";
+import ManReservationPage from "src/components/page/ManBooking";
 import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import NavbarMenu from "src/components/layout/NavbarMenu";
