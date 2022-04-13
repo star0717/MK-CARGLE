@@ -38,8 +38,6 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     props.setBooking({ ...props.booking, [e.target.name]: e.target.value });
   };
-
-  const onSaveHandler = (e: React.MouseEvent<HTMLButtonElement>) => {};
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
