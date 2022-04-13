@@ -1,0 +1,13 @@
+{
+    "Name": "tg-n2server",
+    "Protocol": "HTTP",
+    "ProtocolVersion": "HTTP1",
+    "Port": 80,
+    "VpcId": "vpc-1e1fee78",
+    "HealthCheckProtocol": "HTTP",
+    "HealthCheckPort": "traffic-port",
+    "HealthCheckEnabled": true,
+    "HealthCheckPath": "/health-check",
+    "TargetType": "instance",
+    "IpAddressType": "ipv4"
+}

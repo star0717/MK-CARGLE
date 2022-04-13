@@ -1,18 +1,33 @@
 {
   "dependencies": {
-    "@nestjs/mapped-types": "*"
+    "@nestjs/mapped-types": "*",
+    "cross-var": "^1.1.0",
+    "dotenv-cli": "^5.1.0",
+    "script-launcher": "^1.37.1",
+    "dotenv-replace": "^0.0.2"
   },
   "name": "n2server",
   "description": "Next.js + Nestjs 기반의 통합서버",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "ctx:create": "docker context create ecs ecs --profile default",
+    "ctx:ls": "docker context ls",
+    "ctx:ecs": "docker context use ecs",
+    "ctx:default": "docker context use default",
     "build": "docker-compose build",
     "push": "docker-compose push",
-    "local:up":"docker-compose -f docker-compose.local.yml up -d",
-    "local:down":"docker-compose down",
-    "local:ps":"docker-compose ps",
-    "local:image:prune":"docker image prune"
+    "local:up": "docker-compose up",
+    "local:up:d": "docker-compose up -d",
+    "local:down": "docker-compose down",
+    "local:logs": "docker-compose logs -f",
+    "local:ps": "docker-compose ps",
+    "local:image:prune": "npm run ctx:default && docker images -a && docker image prune && npm run ctx:ecs",
+    "ecr:login": "dotenv cross-var %ecs_login_cmd%",
+    "ecs:local:up": "ecs-cli local up",
+    "ecs:local:down": "ecs-cli local down",
+    "ecs:local:ps": "ecs-cli local ps",
+    "start": "launch"
   },
   "repository": {
     "type": "git",
