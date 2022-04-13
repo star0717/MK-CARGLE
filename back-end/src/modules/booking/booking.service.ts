@@ -18,7 +18,19 @@ export class BookingService extends SafeService<Booking> {
     super(model, commonService);
   }
 
-  async registerBooking(token: AuthTokenInfo, doc: Booking): Promise<Booking> {
-    return await this.model.create(doc);
+  async create(token: AuthTokenInfo, doc: Booking): Promise<Booking> {
+    return await super.create(token, doc);
+  }
+
+  async findByIdAndUpdate(
+    token: AuthTokenInfo,
+    id: string,
+    doc: Partial<Booking>,
+  ): Promise<Booking> {
+    return await super.findByIdAndUpdate(token, id, doc);
+  }
+
+  async findByBookingId(token: AuthTokenInfo, id: string): Promise<Booking> {
+    return await super.findById(token, id);
   }
 }
