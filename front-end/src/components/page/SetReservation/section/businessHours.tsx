@@ -118,23 +118,71 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
               <Wrapper al={`flex-start`}>
                 <Text>영업시작</Text>
-                <TextInput2 placeholder=":" textAlign={`center`} />
+                <Wrapper border={`1px solid #ccc`} dr={`row`}>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                  <Text margin={`0px 4px`}>:</Text>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                </Wrapper>
               </Wrapper>
               <Text margin={`18px 10px 0px 10px`}>~</Text>
               <Wrapper al={`flex-start`}>
                 <Text>영업종료</Text>
-                <TextInput2 placeholder=":" textAlign={`center`} />
+                <Wrapper border={`1px solid #ccc`} dr={`row`}>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                  <Text margin={`0px 4px`}>:</Text>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                </Wrapper>
               </Wrapper>
             </Wrapper>
             <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
               <Wrapper al={`flex-start`}>
                 <Text>휴게시간 시작</Text>
-                <TextInput2 placeholder=":" textAlign={`center`} />
+                <Wrapper border={`1px solid #ccc`} dr={`row`}>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                  <Text margin={`0px 4px`}>:</Text>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                </Wrapper>
               </Wrapper>
               <Text margin={`18px 10px 0px 10px`}>~</Text>
               <Wrapper al={`flex-start`}>
                 <Text>휴게시간 종료</Text>
-                <TextInput2 placeholder=":" textAlign={`center`} />
+                <Wrapper border={`1px solid #ccc`} dr={`row`}>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                  <Text margin={`0px 4px`}>:</Text>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                </Wrapper>
               </Wrapper>
             </Wrapper>
           </Wrapper>
