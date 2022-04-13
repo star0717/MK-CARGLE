@@ -196,7 +196,6 @@ const AddReservation: NextPage<any> = (props) => {
           </CommonButtonWrapper>
         </Wrapper>
       </form>
-      <Wrapper></Wrapper>
     </WholeWrapper>
   );
 };
