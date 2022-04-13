@@ -21,6 +21,9 @@ import {
   TableBody,
   CloseButton,
   CommonButton,
+  TableRow,
+  TableRowLIST,
+  ColorSpan,
 } from "src/components/styles/CommonComponents";
 import Modal from "react-modal";
 import { _MainProps } from "src/configure/_props.entity";
@@ -30,6 +33,8 @@ import { PagenationSection } from "src/components/common/sections";
 import AddReservation from "./section/addReservationModal";
 import EditReservation from "./section/editReservationModal";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
+import { GoPrimitiveDot } from "react-icons/go";
+import theme from "styles/theme";
 
 const ManReservationPage: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -203,61 +208,44 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
               <TableHeadLIST width={`8%`}>예약상태</TableHeadLIST>
             </TableHead>
             <TableBody>
-              {/* {props.findResult.totalDocs > 0 ? (
-                  props.findResult.docs.map((list: Agency) => (
-                    <TableRow
-                      key={list._id}
-                      onClick={() => {
-                        setClickDoc(list);
-                        setModalOption("edit");
-                        setModalOpen(true);
-                      }}
-                    >
-                      <TableRowLIST
-                        width={`10%`}
-                        onClick={(e: React.MouseEvent<HTMLLIElement>) =>
-                          e.stopPropagation()
-                        }
-                      >
-                        <Checkbox kindOf={`TableCheckBox`}>
-                          <CheckInput
-                            type="checkbox"
-                            onChange={(
-                              e: React.ChangeEvent<HTMLInputElement>
-                            ) => onCheckedElement(e.target.checked, list)}
-                            checked={
-                              checkedList.includes(list._id) ? true : false
-                            }
-                          />
-                          <CheckMark></CheckMark>
-                        </Checkbox>
-                      </TableRowLIST>
-                      <TableRowLIST width={`15%`}>{list.name}</TableRowLIST>
-                      <TableRowLIST width={`15%`}>{list.hpNum}</TableRowLIST>
-                      <TableRowLIST width={`22%`}>
-                        <ToolTipWrapper>
-                          <ToolTip>{list.address1}</ToolTip>
-                        </ToolTipWrapper>
-                      </TableRowLIST>
-                      <TableRowLIST width={`15%`}>{list.manager}</TableRowLIST>
-                      <TableRowLIST width={`23%`}>
-                        <ToolTipWrapper>
-                          <ToolTip>
-                            {list.memo}
-                            <ToolTipText>{list.memo}</ToolTipText>
-                          </ToolTip>
-                        </ToolTipWrapper>
-                      </TableRowLIST>
-                    </TableRow>
-                  ))
-                ) : (
-                  <Wrapper minHeight={`445px`}>
-                    <Text fontSize={`48px`} color={`#c4c4c4`}>
-                      <BsEmojiFrownFill />
-                    </Text>
-                    <Text color={`#c4c4c4`}>검색 결과가 없습니다.</Text>
+              <TableRow>
+                <TableRowLIST width={`5%`}>
+                  <Checkbox kindOf={`TableCheckBox`}>
+                    <CheckInput type="checkbox" />
+                    <CheckMark></CheckMark>
+                  </Checkbox>
+                </TableRowLIST>
+                <TableRowLIST width={`20%`}>2021-01-01-001</TableRowLIST>
+                <TableRowLIST width={`24%`}>2021-01-01(16:00)</TableRowLIST>
+                <TableRowLIST width={`18%`}>11가1111</TableRowLIST>
+                <TableRowLIST width={`25%`}>010-1111-1111</TableRowLIST>
+                <TableRowLIST width={`8%`}>
+                  <Wrapper dr={`row`} width={`auto`}>
+                    <ColorSpan color={`#51b351`} margin={`4px 0px 0px`}>
+                      <GoPrimitiveDot />
+                    </ColorSpan>
+                    승인
                   </Wrapper>
-                )} */}
+                  {/* <Wrapper dr={`row`} width={`auto`}>
+                    <ColorSpan color={theme.basicTheme_C} margin={`4px 0px 0px`}>
+                      <GoPrimitiveDot />
+                    </ColorSpan>
+                    대기
+                  </Wrapper>
+                  <Wrapper dr={`row`} width={`auto`}>
+                    <ColorSpan color={theme.red_C} margin={`4px 0px 0px`}>
+                      <GoPrimitiveDot />
+                    </ColorSpan>
+                    거절
+                  </Wrapper>
+                  <Wrapper dr={`row`} width={`auto`}>
+                    <ColorSpan color={theme.darkGrey_C} margin={`4px 0px 0px`}>
+                      <GoPrimitiveDot />
+                    </ColorSpan>
+                    정비
+                  </Wrapper> */}
+                </TableRowLIST>
+              </TableRow>
             </TableBody>
           </TableWrapper>
           {/* <PagenationSection {...props} /> */}
