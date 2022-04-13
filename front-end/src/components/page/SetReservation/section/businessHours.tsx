@@ -36,15 +36,16 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   const dayOffHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const button: HTMLButtonElement = e.currentTarget;
-    // console.log(props.booking.dayOff.filter((asd) => asd !== button.name));
     if (props.booking.dayOff.includes(button.name)) {
       props.setBooking({
         ...props.booking,
         dayOff: props.booking.dayOff.filter((dayOff) => dayOff !== button.name),
       });
     } else {
+      props.booking.dayOff.push(button.name);
     }
   };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
