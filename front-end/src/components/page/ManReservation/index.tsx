@@ -208,7 +208,12 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
               <TableHeadLIST width={`8%`}>예약상태</TableHeadLIST>
             </TableHead>
             <TableBody>
-              <TableRow>
+              <TableRow
+                onClick={() => {
+                  setModalOption("edit");
+                  setModalOpen(true);
+                }}
+              >
                 <TableRowLIST width={`5%`}>
                   <Checkbox kindOf={`TableCheckBox`}>
                     <CheckInput type="checkbox" />
