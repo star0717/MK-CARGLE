@@ -27,6 +27,7 @@ export class SetbookingService extends SafeService<SetBooking> {
     }
     doc._cID = token.cID;
     doc._uID = token.uID;
+
     return await this.model.create(doc);
   }
 

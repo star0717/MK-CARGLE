@@ -31,7 +31,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [modify, setModify] = useState<boolean>(false);
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -40,7 +40,6 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   };
 
   const onSaveHandler = (e: React.MouseEvent<HTMLButtonElement>) => {};
-
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -100,7 +99,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
           <TextArea
             padding={`10px`}
             height={`140px`}
-            readOnly={!modify}
+            readOnly={!props.modify}
             placeholder="고객님께 노출되는 소개글입니다."
             width={`1200px`}
             name="intro"
@@ -195,20 +194,20 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
               </Text>
             </Wrapper>
           </Wrapper>
-          {modify ? (
+          {props.modify ? (
             <CommonButtonWrapper ju={`space-around`}>
               <CommonButton
                 kindOf={`white`}
                 onClick={() => {
                   props.setBooking(props.data);
-                  setModify(false);
+                  props.setModify(false);
                 }}
               >
                 취소
               </CommonButton>
               <CommonButton
                 onClick={() => {
-                  setModify(false);
+                  props.setModify(false);
                   dispatch(_aPostBooking(props.booking)).then((res: any) => {
                     props.setBooking(res.payload);
                     alert("저장 되었습니다!");
@@ -222,7 +221,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
             <CommonButtonWrapper ju={`space-around`}>
               <CommonButton
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  setModify(true);
+                  props.setModify(true);
                   window.scroll({ top: 0, left: 0, behavior: "smooth" });
                 }}
               >
