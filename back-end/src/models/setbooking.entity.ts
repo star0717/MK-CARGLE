@@ -13,54 +13,65 @@ import { BaseEntity } from './base.entity';
 export class Hours {
   @ApiProperty({ description: '영업시작시간' })
   @IsString()
+  @prop()
   openingHours: Date;
 
   @ApiProperty({ description: '영업종료시간' })
   @IsString()
+  @prop()
   closingHours: Date;
 
   @ApiProperty({ description: '휴식시작시간' })
   @IsString()
+  @prop()
   breakTime: Date;
 
   @ApiProperty({ description: '휴식종료시간' })
   @IsString()
+  @prop()
   breakEndTime: Date;
 }
 
 export class OfficeHours {
   @ApiProperty({ description: '월요일', type: Hours })
   @ValidateNested()
+  @prop({ _id: false })
   @Type(() => Hours)
   MON: Hours;
 
   @ApiProperty({ description: '화요일', type: Hours })
   @ValidateNested()
+  @prop({ _id: false })
   @Type(() => Hours)
   TUE: Hours;
 
   @ApiProperty({ description: '수요일', type: Hours })
   @ValidateNested()
+  @prop({ _id: false })
   @Type(() => Hours)
   WED: Hours;
 
   @ApiProperty({ description: '목요일', type: Hours })
   @ValidateNested()
+  @prop({ _id: false })
   @Type(() => Hours)
   THU: Hours;
 
   @ApiProperty({ description: '금요일', type: Hours })
   @ValidateNested()
+  @prop({ _id: false })
   @Type(() => Hours)
   FRI: Hours;
 
   @ApiProperty({ description: '토요일', type: Hours })
   @ValidateNested()
+  @prop({ _id: false })
   @Type(() => Hours)
   SET: Hours;
 
   @ApiProperty({ description: '일요일', type: Hours })
   @ValidateNested()
+  @prop({ _id: false })
   @Type(() => Hours)
   SUN: Hours;
 }
@@ -104,9 +115,14 @@ export class SetBooking extends BaseEntity {
   @prop()
   lift?: number;
 
-  @ApiProperty({ description: '주요 정비 가격', required: false })
+  @ApiProperty({
+    description: '주요 정비 가격',
+    type: [Mprice],
+    required: false,
+  })
   @IsOptional()
-  @IsArray()
-  @prop()
+  @ValidateNested({ each: true })
+  @Type(() => Mprice)
+  @prop({ type: () => Mprice })
   mPrice?: Mprice[];
 }
