@@ -134,7 +134,6 @@ export class SafeService<T extends BaseEntity> {
       if (!this.isContainedKey(fParams.filterKey)) {
         throw new BadRequestException();
       }
-
       if (fParams.useRegSearch === true) {
         fQuery[fParams.filterKey] = {
           $regex: fParams.filterValue,

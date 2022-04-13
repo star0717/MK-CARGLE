@@ -56,11 +56,17 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
   const [modalOption, setModalOption] = useState<string>("");
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const [clickDoc, setClickDoc] = useState<string>("");
-  const [bookingList, setBookingList] = useState<Booking[]>(props.data.docs);
+  const [bookingList, setBookingList] = useState<Booking[]>(
+    props.findResult.docs
+  );
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  useEffect(() => {
+    setBookingList(props.findResult.docs);
+  }, [props.findResult]);
+
   /**
    * 전체 선택 기능
    */
@@ -92,8 +98,6 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
     },
     [checkedList]
   );
-
-  console.log(checkedList);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -178,6 +182,14 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
     props.setSearchOption(e.target.value);
   };
 
+  /**
+   * 검색 input handler
+   * @param e
+   */
+  const onInputSearchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    props.setFilterValue(e.target.value);
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -215,8 +227,8 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
             height={`46px`}
             width={`150px`}
           >
-            <option value="car.regNumber">차량번호 검색</option>
-            <option value="customer.phoneNumber">전화번호 검색</option>
+            <option value="regNumber">차량번호 검색</option>
+            <option value="phoneNumber">전화번호 검색</option>
           </Combo>
           <form onSubmit={onSearchHandler}>
             <SearchInputWrapper
@@ -231,10 +243,12 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
                   width={`532px`}
                   type="text"
                   placeholder={
-                    props.searchOption === "car.regNumber"
+                    props.searchOption === "regNumber"
                       ? `검색할 차량번호를 입력하세요.`
                       : `검색할 전화번호를 입력하세요.`
                   }
+                  value={props.filterValue}
+                  onChange={onInputSearchHandler}
                 />
               </Wrapper>
               <Wrapper>

@@ -94,7 +94,8 @@ import {
 } from "src/models/payment.entity";
 import { GetMessagesResponse } from "src/models/sms.entity";
 import { SetBooking } from "src/models/setbooking.entity";
-import { Booking } from "src/models/booking.entity";
+import { Booking, BookingFindOptions } from "src/models/booking.entity";
+import { genBookingOptionQuery } from "src/constants/booking.const";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1509,9 +1510,20 @@ export async function _aPostSms() {
   return result;
 }
 
-export async function _aGetBooking(data: FindParameters) {
+/**
+ * 예약관리 리스트 반환
+ * @param data
+ * @returns
+ */
+export async function _aGetBooking(
+  findParams: FindParameters,
+  options: BookingFindOptions
+) {
   const req: FindResult<Booking> = await axios
-    .get(genApiPath(BookingApiPath.booking, { findParams: data }))
+    .get(
+      genApiPath(BookingApiPath.booking, { findParams: findParams }) +
+        genBookingOptionQuery(options)
+    )
     .then(
       (
         res: AxiosResponse<FindResult<Booking>, FindParameters>
