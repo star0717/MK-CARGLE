@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { CommonModule } from 'src/lib/common/common.module';
 import { Booking } from 'src/models/booking.entity';
-import { SetbookingModule } from '../setbooking/setbooking.module';
+import { CarsModule } from 'src/modules/cars/cars.module';
+import { SetbookingModule } from 'src/modules/setbooking/setbooking.module';
 import { BookingController } from './booking.controller';
 import { BookingService } from './booking.service';
 
@@ -11,6 +12,7 @@ import { BookingService } from './booking.service';
     TypegooseModule.forFeature([Booking]),
     CommonModule,
     SetbookingModule,
+    CarsModule,
   ],
   controllers: [BookingController],
   providers: [BookingService],
