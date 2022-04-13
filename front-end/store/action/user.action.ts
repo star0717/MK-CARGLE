@@ -1511,7 +1511,7 @@ export async function _aPostSms() {
 export async function _aPostBooking(data: SetBooking) {
   const req: SetBooking = await axios
     .post(genApiPath(SetBookingApiPath.set_booking), data)
-    .then((res: AxiosResponse<SetBooking>): SetBooking => {
+    .then((res: AxiosResponse<SetBooking, string>): SetBooking => {
       return res.data;
     });
 

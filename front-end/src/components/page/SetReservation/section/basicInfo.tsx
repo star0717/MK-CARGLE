@@ -207,11 +207,12 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
               </CommonButton>
               <CommonButton
                 onClick={() => {
-                  props.setModify(false);
                   dispatch(_aPostBooking(props.booking)).then((res: any) => {
+                    console.log("!@#!@#", res.payload);
                     props.setBooking(res.payload);
                     alert("저장 되었습니다!");
                   });
+                  props.setModify(false);
                 }}
               >
                 저장
