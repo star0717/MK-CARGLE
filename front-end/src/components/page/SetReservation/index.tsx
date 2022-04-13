@@ -36,6 +36,7 @@ const SetReservation: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   const [booking, setBooking] = useState<SetBooking>(props.data);
   const [modify, setModify] = useState<boolean>(false);
+  const [businessTime, setBusinessTime] = useState<string>("");
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -49,6 +50,8 @@ const SetReservation: NextPage<_MainProps> = (props) => {
     setBooking,
     modify,
     setModify,
+    businessTime,
+    setBusinessTime,
   };
 
   /*********************************************************************

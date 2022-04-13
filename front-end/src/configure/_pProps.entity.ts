@@ -138,6 +138,8 @@ export interface _pSetBookingDataProps extends _MainProps {
   setBooking: React.Dispatch<React.SetStateAction<SetBooking>>;
   modify: boolean;
   setModify: React.Dispatch<React.SetStateAction<boolean>>;
+  businessTime: string;
+  setBusinessTime: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // 부품 세트 관리 props
