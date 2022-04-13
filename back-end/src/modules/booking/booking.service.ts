@@ -4,6 +4,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { AuthTokenInfo } from 'src/models/auth.entity';
+import { DeleteObjectIds, DeleteResult } from 'src/models/base.entity';
 import { Booking } from 'src/models/booking.entity';
 import { SetbookingService } from '../setbooking/setbooking.service';
 
@@ -30,7 +31,21 @@ export class BookingService extends SafeService<Booking> {
     return await super.findByIdAndUpdate(token, id, doc);
   }
 
-  async findByBookingId(token: AuthTokenInfo, id: string): Promise<Booking> {
+  async findById(token: AuthTokenInfo, id: string): Promise<Booking> {
     return await super.findById(token, id);
+  }
+
+  async findByIdAndRemove(
+    token: AuthTokenInfo,
+    id: string,
+  ): Promise<DeleteResult> {
+    return await super.findByIdAndRemove(token, id);
+  }
+
+  async deleteManyByIds(
+    token: AuthTokenInfo,
+    objectIds: DeleteObjectIds,
+  ): Promise<DeleteResult> {
+    return await super.deleteManyByIds(token, objectIds);
   }
 }
