@@ -26,7 +26,6 @@ export class BookingService extends SafeService<Booking> {
     const car: MainCar = await this.carsService.updateOrInsertByCarInfo(
       doc.car,
     );
-    console.log('@@@', car);
     if (!car) throw new BadRequestException();
 
     return await super.create(token, doc);
