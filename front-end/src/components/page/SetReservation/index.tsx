@@ -9,9 +9,9 @@ import BasicInfo from "./section/basicInfo";
 import { useRouter } from "next/router";
 import BusinessHours from "./section/businessHours";
 import MaintenanceInfo from "./section/maintenanceInfo";
-import { SetBooking } from "src/models/booking.entity";
 import { _MainProps } from "src/configure/_props.entity";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
+import { SetBooking } from "src/models/setbooking.entity";
 
 const StepReservation: NextPage<_pSetBookingDataProps> = (props) => {
   const router = useRouter();
@@ -35,6 +35,8 @@ const SetReservation: NextPage<_MainProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [booking, setBooking] = useState<SetBooking>(props.data);
+  const [modify, setModify] = useState<boolean>(false);
+  const [businessTime, setBusinessTime] = useState<string>("");
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -46,7 +48,12 @@ const SetReservation: NextPage<_MainProps> = (props) => {
     ...props,
     booking,
     setBooking,
+    modify,
+    setModify,
+    businessTime,
+    setBusinessTime,
   };
+
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/

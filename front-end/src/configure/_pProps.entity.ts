@@ -1,4 +1,3 @@
-import { SetBooking } from "src/models/booking.entity";
 import React from "react";
 import { FieldValues, UseFormSetValue } from "react-hook-form";
 import { AuthTokenInfo, SignUpInfo } from "../models/auth.entity";
@@ -14,6 +13,8 @@ import { PartsSet } from "src/models/partsset.entity";
 import { Maintenance, MainWork } from "src/models/maintenance.entity";
 import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";
+import { SetBooking } from "src/models/setbooking.entity";
+import { Booking } from "src/models/booking.entity";
 
 /***********************************************************************
  * 기본
@@ -132,9 +133,13 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
 }
 
 // 예약 설정용 props
-export interface _pSetBookingDataProps {
+export interface _pSetBookingDataProps extends _MainProps {
   booking: SetBooking;
   setBooking: React.Dispatch<React.SetStateAction<SetBooking>>;
+  modify: boolean;
+  setModify: React.Dispatch<React.SetStateAction<boolean>>;
+  businessTime: string;
+  setBusinessTime: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // 부품 세트 관리 props
@@ -206,7 +211,7 @@ export interface _pComPageModalProps extends _pFindDocs<Company> {
 }
 
 // 정비장부용 props
-export interface _pMaintenanceProps extends _pFindDocs<any> {
+export interface _pMaintenanceProps extends _pFindDocs<Maintenance> {
   searchOption: string;
   setSearchOption: React.Dispatch<React.SetStateAction<string>>;
   filterValue: string;
@@ -217,6 +222,14 @@ export interface _pMaintenanceProps extends _pFindDocs<any> {
   // setSearchTo: React.Dispatch<React.SetStateAction<string>>;
   // searchDetails: any;
   // setSearchDetails: React.Dispatch<React.SetStateAction<MainFindOptions>>;
+}
+
+// 예약관리용 props
+export interface _pBookingProps extends _pFindDocs<Booking> {
+  searchOption: string;
+  setSearchOption: React.Dispatch<React.SetStateAction<string>>;
+  filterValue: string;
+  setFilterValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // 서류 미리보기 props

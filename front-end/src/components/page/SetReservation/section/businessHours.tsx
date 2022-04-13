@@ -33,6 +33,26 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
    * 3. Handlers
    *********************************************************************/
 
+  const dayOffHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const button: HTMLButtonElement = e.currentTarget;
+    const arr = props.booking.dayOff;
+
+    if (props.booking.dayOff.includes(button.name)) {
+      props.setBooking({
+        ...props.booking,
+        dayOff: props.booking.dayOff.filter((dayOff) => dayOff !== button.name),
+      });
+    } else {
+      arr.push(button.name);
+      props.setBooking({
+        ...props.booking,
+        dayOff: arr,
+      });
+      // props.booking.dayOff.push(button.name);
+    }
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -90,13 +110,97 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
         </Wrapper>
         <Wrapper borderBottom={`1px solid #ccc`} padding={`0px 0px 40px`}>
           <Wrapper dr={`row`} ju={`flex-start`}>
-            <SelectDays>월</SelectDays>
-            <SelectDays>화</SelectDays>
-            <SelectDays>수</SelectDays>
-            <SelectDays>목</SelectDays>
-            <SelectDays>금</SelectDays>
-            <SelectDays>토</SelectDays>
-            <SelectDays>일</SelectDays>
+            <SelectDays
+              // disabled={!props.modify}
+              name="MON"
+              checked={props.booking.dayOff.includes("MON")}
+              kindOf={
+                props.booking.dayOff.includes("MON") ? `default` : `ghost`
+              }
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              월
+            </SelectDays>
+            <SelectDays
+              // disabled={!props.modify}
+              name="TUE"
+              checked={props.booking.dayOff.includes("TUE")}
+              kindOf={
+                props.booking.dayOff.includes("TUE") ? `default` : `ghost`
+              }
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              화
+            </SelectDays>
+            <SelectDays
+              // disabled={!props.modify}
+              name="WED"
+              checked={props.booking.dayOff.includes("WED")}
+              kindOf={
+                props.booking.dayOff.includes("WED") ? `default` : `ghost`
+              }
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              수
+            </SelectDays>
+            <SelectDays
+              // disabled={!props.modify}
+              name="THU"
+              checked={props.booking.dayOff.includes("THU")}
+              kindOf={
+                props.booking.dayOff.includes("THU") ? `default` : `ghost`
+              }
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              목
+            </SelectDays>
+            <SelectDays
+              // disabled={!props.modify}
+              name="FRI"
+              checked={props.booking.dayOff.includes("FRI")}
+              kindOf={
+                props.booking.dayOff.includes("FRI") ? `default` : `ghost`
+              }
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              금
+            </SelectDays>
+            <SelectDays
+              // disabled={!props.modify}
+              name="SAT"
+              checked={props.booking.dayOff.includes("SAT")}
+              kindOf={
+                props.booking.dayOff.includes("SAT") ? `default` : `ghost`
+              }
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              토
+            </SelectDays>
+            <SelectDays
+              // disabled={!props.modify}
+              name="SUN"
+              checked={props.booking.dayOff.includes("SUN")}
+              kindOf={
+                props.booking.dayOff.includes("SUN") ? `default` : `ghost`
+              }
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                dayOffHandler(e);
+              }}
+            >
+              일
+            </SelectDays>
           </Wrapper>
         </Wrapper>
         <Wrapper
@@ -118,23 +222,71 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
               <Wrapper al={`flex-start`}>
                 <Text>영업시작</Text>
-                <TextInput2 placeholder=":" textAlign={`center`} />
+                <Wrapper border={`1px solid #ccc`} dr={`row`}>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                  <Text margin={`0px 4px`}>:</Text>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                </Wrapper>
               </Wrapper>
               <Text margin={`18px 10px 0px 10px`}>~</Text>
               <Wrapper al={`flex-start`}>
                 <Text>영업종료</Text>
-                <TextInput2 placeholder=":" textAlign={`center`} />
+                <Wrapper border={`1px solid #ccc`} dr={`row`}>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                  <Text margin={`0px 4px`}>:</Text>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                </Wrapper>
               </Wrapper>
             </Wrapper>
             <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
               <Wrapper al={`flex-start`}>
                 <Text>휴게시간 시작</Text>
-                <TextInput2 placeholder=":" textAlign={`center`} />
+                <Wrapper border={`1px solid #ccc`} dr={`row`}>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                  <Text margin={`0px 4px`}>:</Text>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                </Wrapper>
               </Wrapper>
               <Text margin={`18px 10px 0px 10px`}>~</Text>
               <Wrapper al={`flex-start`}>
                 <Text>휴게시간 종료</Text>
-                <TextInput2 placeholder=":" textAlign={`center`} />
+                <Wrapper border={`1px solid #ccc`} dr={`row`}>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                  <Text margin={`0px 4px`}>:</Text>
+                  <TextInput2
+                    border={`none`}
+                    textAlign={`center`}
+                    width={`100px`}
+                  />
+                </Wrapper>
               </Wrapper>
             </Wrapper>
           </Wrapper>

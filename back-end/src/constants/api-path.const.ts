@@ -139,8 +139,14 @@ export class SmsApiPath {
   static send = SmsApiPath.BASE + 'send';
 }
 
-// 예약관리 API
+// 예약설정 API
 export class SetBookingApiPath {
-  static BASE = '/set-booking';
-  static setbooking = SetBookingApiPath.BASE;
+  static BASE = '/setbooking/';
+  static set_booking = SetBookingApiPath.BASE;
+}
+
+// 예약관리 API
+export class BookingApiPath {
+  static BASE = '/booking/';
+  static booking = BookingApiPath.BASE;
 }

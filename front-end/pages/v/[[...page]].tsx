@@ -37,6 +37,7 @@ import {
   AdminApiPath,
   AgenciesApiPath,
   AuthApiPath,
+  BookingApiPath,
   MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
@@ -55,7 +56,7 @@ import { Agency } from "src/models/agency.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import MaintenanceBookPage from "src/components/page/MaintenanceBook";
 import ManCustomerPage from "src/components/page/ManCustomer";
-import ManReservationPage from "src/components/page/ManReservation";
+import ManReservationPage from "src/components/page/ManBooking";
 import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import NavbarMenu from "src/components/layout/NavbarMenu";
@@ -65,7 +66,8 @@ import dayjs from "dayjs";
 import SetReservation from "src/components/page/SetReservation";
 import { s3Folder } from "src/configure/s3.entity";
 import { S3 } from "aws-sdk";
-import { SetBooking } from "src/models/booking.entity";
+import { SetBooking } from "src/models/setbooking.entity";
+import { Booking } from "src/models/booking.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -116,17 +118,17 @@ const SubComponent: NextPage<_MainProps> = (props) => {
     case UseLink.MYPAGE_WORKER:
       return <MyPageWorker {...props} />;
 
+    case UseLink.MYPAGE_SET_BOOKING:
+      return <SetReservation {...props} />;
+
     case UseLink.MAINTENANCE_BOOK:
       return <MaintenanceBookPage {...props} />;
 
     case UseLink.MAN_CUSTOMER:
       return <ManCustomerPage {...props} />;
 
-    case UseLink.MAN_RESERVATION:
+    case UseLink.MAN_BOOKING:
       return <ManReservationPage {...props} />;
-
-    case UseLink.MYPAGE_SET_BOOKING:
-      return <SetReservation {...props} />;
 
     case UseLink.TEST:
       return <Test {...props} />;
@@ -360,6 +362,20 @@ export const getServerSideProps: GetServerSideProps = async (
         return successResult;
       }
 
+      // 예약 관리
+      case UseLink.MAN_BOOKING: {
+        successResult.props.data = await axios
+          .get(
+            genApiPath(BookingApiPath.BASE, {
+              findParams: params,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<FindResult<Booking>, Booking>) => res.data);
+        return successResult;
+      }
+
       // 계정 관리
       case UseLink.MYPAGE_ACCOUNT: {
         const company: Company = await axios
@@ -399,7 +415,7 @@ export const getServerSideProps: GetServerSideProps = async (
       case UseLink.MYPAGE_SET_BOOKING: {
         successResult.props.data = await axios
           .get(
-            genApiPath(SetBookingApiPath.BASE, {
+            genApiPath(SetBookingApiPath.set_booking, {
               id: tokenValue.cID,
               isServerSide: true,
             }),

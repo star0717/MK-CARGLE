@@ -10,7 +10,8 @@ import { PartsModule } from './parts/parts.module';
 import { CarsModule } from './cars/cars.module';
 import { EstimatesModule } from './estimates/estimates.module';
 import { StatementsModule } from './statements/statements.module';
-import { SetBookingModule } from './set-booking/set-booking.module';
+import { BookingModule } from './booking/booking.module';
+import { SetbookingModule } from './setbooking/setbooking.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { SetBookingModule } from './set-booking/set-booking.module';
     CarsModule,
     EstimatesModule,
     StatementsModule,
-    SetBookingModule,
+    BookingModule,
+    SetbookingModule,
   ],
 })
 export class ModulesModule {}

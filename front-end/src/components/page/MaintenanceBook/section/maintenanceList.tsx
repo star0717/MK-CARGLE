@@ -55,8 +55,10 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [checkedList, setCheckedList] = useState([]);
-  const [maintenanceList, setMaintenanceList] = useState(props.findResult.docs);
+  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [maintenanceList, setMaintenanceList] = useState<Maintenance[]>(
+    props.findResult.docs
+  );
   const [reset, setReset] = useState<number>(0); // 리스트 재출력 여부
 
   /*********************************************************************
@@ -242,28 +244,26 @@ const MaintenenanceList: NextPage<_pMaintenanceProps> = (props) => {
             </Wrapper>
           </form>
           <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
-            <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
-              <SmallButton
-                type="button"
-                kindOf={`cancle`}
-                width={`150px`}
-                fontSize={`16px`}
-                onClick={onDeleteMaintenances}
-              >
-                선택삭제
-              </SmallButton>
-              <SmallButton
-                type="button"
-                width={`150px`}
-                fontSize={`16px`}
-                kindOf={`fillDefault`}
-                onClick={() => {
-                  router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
-                }}
-              >
-                +신규정비등록
-              </SmallButton>
-            </Wrapper>
+            <SmallButton
+              type="button"
+              kindOf={`cancle`}
+              width={`150px`}
+              fontSize={`16px`}
+              onClick={onDeleteMaintenances}
+            >
+              선택삭제
+            </SmallButton>
+            <SmallButton
+              type="button"
+              width={`150px`}
+              fontSize={`16px`}
+              kindOf={`fillDefault`}
+              onClick={() => {
+                router.push(`${UseLink.MAINTENANCE_BOOK}?step=c`);
+              }}
+            >
+              +신규정비등록
+            </SmallButton>
           </Wrapper>
         </Wrapper>
 

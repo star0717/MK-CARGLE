@@ -11,6 +11,8 @@ import { Part } from "src/models/part.entity";
 import { User } from "src/models/user.entity";
 import { PayResult, RequestCustomResponse } from "src/models/payment.entity";
 import { GetMessagesResponse } from "src/models/sms.entity";
+import { SetBooking } from "src/models/setbooking.entity";
+import { Booking } from "src/models/booking.entity";
 
 export enum actionTypesUser {
   USER_INIT = "USER_INIT",
@@ -474,6 +476,23 @@ export class _iSms implements baseActionInterface {
   payload: GetMessagesResponse;
 }
 
+/** 예약관리 인터페이스 */
+export class _iBooking implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: FindResult<Booking>;
+}
+
+export class _iBookingOne implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: Booking;
+}
+
+/** 예약설정 인터페이스 */
+export class _iSetBooking implements baseActionInterface {
+  type: ActionAPIs.USER_API;
+  payload: SetBooking;
+}
+
 /*****************************************************
  * 3. ActionInterfaces 정의부
  * - store에 등록(Redux???)
@@ -500,4 +519,5 @@ export type ActionInterfaces =
   | _iStatement
   | _iPayment
   | _iPaymentComplete
-  | _iSms;
+  | _iSms
+  | _iSetBooking;

@@ -1,23 +1,23 @@
-import { DeleteResult } from 'src/models/base.entity';
-import { AuthTokenInfo } from 'src/models/auth.entity';
+import { Controller, Post, Body, Get, Param, Delete } from '@nestjs/common';
 import {
-  ApiOperation,
   ApiTags,
-  ApiResponse,
-  ApiParam,
+  ApiOperation,
   ApiBody,
   ApiCreatedResponse,
+  ApiParam,
+  ApiResponse,
 } from '@nestjs/swagger';
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
-import { SetBookingService } from './set-booking.service';
-import { SetBooking } from 'src/models/booking.entity';
-import { AuthToken, Public } from 'src/lib/decorators/decorators';
 import { UserAuthority } from 'src/constants/model.const';
+import { AuthToken, Public } from 'src/lib/decorators/decorators';
+import { AuthTokenInfo } from 'src/models/auth.entity';
+import { DeleteResult } from 'src/models/base.entity';
+import { SetBooking } from 'src/models/setbooking.entity';
+import { SetbookingService } from './setbooking.service';
 
-@Controller('set-booking')
+@Controller('setbooking')
 @ApiTags('예약설정 API')
-export class SetBookingController {
-  constructor(private readonly service: SetBookingService) {}
+export class SetbookingController {
+  constructor(private readonly setbookingService: SetbookingService) {}
 
   @Post()
   @ApiOperation({ summary: `[OWNER] 새로운 예약설정 데이터 추가` })
@@ -30,7 +30,7 @@ export class SetBookingController {
     @Body() doc: SetBooking,
     @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
   ): Promise<SetBooking> {
-    return await this.service.createSetBooking(token, doc);
+    return await this.setbookingService.createSetBooking(token, doc);
   }
 
   @Public()
@@ -44,7 +44,7 @@ export class SetBookingController {
     type: SetBooking,
   })
   async findByBookingId(@Param('id') id: string): Promise<SetBooking> {
-    return await this.service.findByBookingId(id);
+    return await this.setbookingService.findBySetBookingId(id);
   }
 
   @Delete(':id')
@@ -60,6 +60,6 @@ export class SetBookingController {
     @Param('id') id: string,
     @AuthToken({ auth: UserAuthority.OWNER }) token: AuthTokenInfo,
   ): Promise<DeleteResult> {
-    return await this.service.DeleteSetBooking(id);
+    return await this.setbookingService.DeleteSetBooking(id);
   }
 }

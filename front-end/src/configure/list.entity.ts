@@ -62,7 +62,7 @@ export const menuList = [
       {
         key: "2.3",
         subMenuName: "예약관리",
-        subMenuLink: UseLink.MAN_RESERVATION,
+        subMenuLink: UseLink.MAN_BOOKING,
         subMenuAuth: UserAuthority.WORKER,
       },
     ],
