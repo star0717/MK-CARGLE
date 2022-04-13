@@ -37,6 +37,7 @@ import {
   AdminApiPath,
   AgenciesApiPath,
   AuthApiPath,
+  BookingApiPath,
   MaintenancesApiPath,
   PartsApiPath,
   PartsSetsApiPath,
@@ -66,6 +67,7 @@ import SetReservation from "src/components/page/SetReservation";
 import { s3Folder } from "src/configure/s3.entity";
 import { S3 } from "aws-sdk";
 import { SetBooking } from "src/models/setbooking.entity";
+import { Booking } from "src/models/booking.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -125,7 +127,7 @@ const SubComponent: NextPage<_MainProps> = (props) => {
     case UseLink.MAN_CUSTOMER:
       return <ManCustomerPage {...props} />;
 
-    case UseLink.MAN_RESERVATION:
+    case UseLink.MAN_BOOKING:
       return <ManReservationPage {...props} />;
 
     case UseLink.TEST:
@@ -357,6 +359,20 @@ export const getServerSideProps: GetServerSideProps = async (
             authConfig
           )
           .then((res: AxiosResponse<FindResult<Agency>, Agency>) => res.data);
+        return successResult;
+      }
+
+      // 예약 관리
+      case UseLink.MAN_BOOKING: {
+        successResult.props.data = await axios
+          .get(
+            genApiPath(BookingApiPath.BASE, {
+              findParams: params,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<FindResult<Booking>, Booking>) => res.data);
         return successResult;
       }
 

@@ -211,7 +211,7 @@ export interface _pComPageModalProps extends _pFindDocs<Company> {
 }
 
 // 정비장부용 props
-export interface _pMaintenanceProps extends _pFindDocs<any> {
+export interface _pMaintenanceProps extends _pFindDocs<Maintenance> {
   searchOption: string;
   setSearchOption: React.Dispatch<React.SetStateAction<string>>;
   filterValue: string;
@@ -222,6 +222,14 @@ export interface _pMaintenanceProps extends _pFindDocs<any> {
   // setSearchTo: React.Dispatch<React.SetStateAction<string>>;
   // searchDetails: any;
   // setSearchDetails: React.Dispatch<React.SetStateAction<MainFindOptions>>;
+}
+
+// 예약관리용 props
+export interface _pBookingProps extends _pFindDocs<Booking> {
+  searchOption: string;
+  setSearchOption: React.Dispatch<React.SetStateAction<string>>;
+  filterValue: string;
+  setFilterValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // 서류 미리보기 props

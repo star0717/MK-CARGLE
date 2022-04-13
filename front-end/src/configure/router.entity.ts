@@ -36,7 +36,7 @@ export const SubRoute = {
   MOLIT_ITEMS: "molit_items",
   MAINTENANCE_BOOK: "maintenance_book",
   MAN_CUSTOMER: "man_customer",
-  MAN_RESERVATION: "man_reservation",
+  MAN_BOOKING: "man_booking",
   SET_BOOKING: "set_booking",
   TEST: "test",
 };
@@ -87,7 +87,7 @@ export const UseLink = {
   MYPAGE_WORKER: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.WORKER}`,
   MAINTENANCE_BOOK: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAINTENANCE_BOOK}`,
   MAN_CUSTOMER: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAN_CUSTOMER}`,
-  MAN_RESERVATION: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAN_RESERVATION}`,
+  MAN_BOOKING: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAN_BOOKING}`,
   MYPAGE_SET_BOOKING: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.SET_BOOKING}`,
   TEST: `${BaseLink.V}/${MainRoute.TEST}`,
   // 관리자(Admin)
