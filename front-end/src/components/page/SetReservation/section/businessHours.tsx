@@ -37,10 +37,15 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     e.preventDefault();
     const button: HTMLButtonElement = e.currentTarget;
     if (props.booking.dayOff.includes(button.name)) {
-      // props.setBooking(props.booking.dayOff.filter((element) => element !== button.name))
+      props.setBooking({
+        ...props.booking,
+        dayOff: props.booking.dayOff.filter((dayOff) => dayOff !== button.name),
+      });
     } else {
+      props.booking.dayOff.push(button.name);
     }
   };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -99,7 +104,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
         <Wrapper borderBottom={`1px solid #ccc`} padding={`0px 0px 40px`}>
           <Wrapper dr={`row`} ju={`flex-start`}>
             <SelectDays
-              disabled={!props.modify}
+              // disabled={!props.modify}
               name="MON"
               // checked={}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,7 +114,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               월
             </SelectDays>
             <SelectDays
-              disabled={!props.modify}
+              // disabled={!props.modify}
               name="TUE"
               // checked={}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -119,7 +124,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               화
             </SelectDays>
             <SelectDays
-              disabled={!props.modify}
+              // disabled={!props.modify}
               name="WED"
               // checked={}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -129,7 +134,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               수
             </SelectDays>
             <SelectDays
-              disabled={!props.modify}
+              // disabled={!props.modify}
               name="THU"
               // checked={}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -139,7 +144,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               목
             </SelectDays>
             <SelectDays
-              disabled={!props.modify}
+              // disabled={!props.modify}
               name="FRI"
               // checked={}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -149,7 +154,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               금
             </SelectDays>
             <SelectDays
-              disabled={!props.modify}
+              // disabled={!props.modify}
               name="SAT"
               // checked={}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
@@ -159,7 +164,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               토
             </SelectDays>
             <SelectDays
-              disabled={!props.modify}
+              // disabled={!props.modify}
               name="SUN"
               // checked={}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
