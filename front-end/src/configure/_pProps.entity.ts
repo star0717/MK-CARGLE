@@ -136,6 +136,8 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
 export interface _pSetBookingDataProps extends _MainProps {
   booking: SetBooking;
   setBooking: React.Dispatch<React.SetStateAction<SetBooking>>;
+  modify: boolean;
+  setModify: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // 부품 세트 관리 props

@@ -27,7 +27,6 @@ const StepReservation: NextPage<_pSetBookingDataProps> = (props) => {
 };
 
 const SetReservation: NextPage<_MainProps> = (props) => {
-  console.log(props);
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -36,6 +35,7 @@ const SetReservation: NextPage<_MainProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [booking, setBooking] = useState<SetBooking>(props.data);
+  const [modify, setModify] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -47,6 +47,8 @@ const SetReservation: NextPage<_MainProps> = (props) => {
     ...props,
     booking,
     setBooking,
+    modify,
+    setModify,
   };
 
   /*********************************************************************
