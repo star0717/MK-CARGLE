@@ -43,13 +43,25 @@ const EditReservation: NextPage<any> = (props) => {
         <Wrapper>
           <Wrapper
             borderBottom={`1px solid #c4c4c4`}
-            al={`flex-start`}
+            dr={`row`}
+            ju={`space-between`}
             padding={`10px 0px`}
             margin={`0px 0px 10px`}
           >
-            <Text color={theme.basicTheme_C} fontSize={`18px`}>
-              예약정보
-            </Text>
+            <Wrapper width={`auto`}>
+              <Text color={theme.basicTheme_C} fontSize={`18px`}>
+                예약정보
+              </Text>
+            </Wrapper>
+            <Wrapper width={`auto`} dr={`row`}>
+              <Text>예약상태</Text>
+              <Combo>
+                <option>대기</option>
+                <option>승인</option>
+                <option>정비</option>
+                <option>거절</option>
+              </Combo>
+            </Wrapper>
           </Wrapper>
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>
