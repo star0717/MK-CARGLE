@@ -29,6 +29,7 @@ export class CarsService extends SafeService<Car> {
     };
     return await this.model.findOneAndUpdate(fQuery, car, {
       upsert: true,
+      new: true,
     });
   }
   async findByRegNumber(regNumber: string): Promise<Car> {
