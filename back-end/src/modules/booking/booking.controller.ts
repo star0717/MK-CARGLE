@@ -30,7 +30,7 @@ import { MainFindOptions } from 'src/models/maintenance.entity';
 import { BookingService } from './booking.service';
 
 @Controller('booking')
-@ApiTags('예약설정 API')
+@ApiTags('예약관리 API')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
@@ -46,22 +46,6 @@ export class BookingController {
     @AuthToken() token: AuthTokenInfo,
   ): Promise<Booking> {
     return await this.bookingService.create(token, doc);
-  }
-
-  @Patch(':id')
-  @ApiOperation({ summary: `[WORKER] id에 해당하는 Booking 상태 변경` })
-  @ApiParam({ name: 'id', description: `해당 Booking의 오브젝트 ID` })
-  @ApiBody({
-    description: `업데이트할 Booking 데이터`,
-    type: PartialType<Booking>(Booking),
-  })
-  @ApiResponse({ description: `업데이트된 Booking 데이터`, type: Booking })
-  async findByIdAndUpdate(
-    @Param('id') id: string,
-    @Body() doc: Partial<Booking>,
-    @AuthToken() token: AuthTokenInfo,
-  ): Promise<Booking> {
-    return await this.bookingService.findByIdAndUpdate(token, id, doc);
   }
 
   @Get()
@@ -91,6 +75,22 @@ export class BookingController {
     @AuthToken() token: AuthTokenInfo,
   ): Promise<Booking> {
     return await this.bookingService.findById(token, id);
+  }
+
+  @Patch(':id')
+  @ApiOperation({ summary: `[WORKER] id에 해당하는 Booking 상태 변경` })
+  @ApiParam({ name: 'id', description: `해당 Booking의 오브젝트 ID` })
+  @ApiBody({
+    description: `업데이트할 Booking 데이터`,
+    type: PartialType<Booking>(Booking),
+  })
+  @ApiResponse({ description: `업데이트된 Booking 데이터`, type: Booking })
+  async findByIdAndUpdate(
+    @Param('id') id: string,
+    @Body() doc: Partial<Booking>,
+    @AuthToken() token: AuthTokenInfo,
+  ): Promise<Booking> {
+    return await this.bookingService.findByIdAndUpdate(token, id, doc);
   }
 
   @Delete(':id')

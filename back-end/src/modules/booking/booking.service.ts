@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { CommonService } from 'src/lib/common/common.service';
@@ -6,7 +6,9 @@ import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import { DeleteObjectIds, DeleteResult } from 'src/models/base.entity';
 import { Booking } from 'src/models/booking.entity';
-import { SetbookingService } from '../setbooking/setbooking.service';
+import { MainCar } from 'src/models/maintenance.entity';
+import { CarsService } from 'src/modules/cars/cars.service';
+import { SetbookingService } from 'src/modules/setbooking/setbooking.service';
 
 @Injectable()
 export class BookingService extends SafeService<Booking> {
@@ -15,12 +17,23 @@ export class BookingService extends SafeService<Booking> {
     readonly model: ReturnModelType<typeof Booking>,
     readonly commonService: CommonService,
     readonly setBookingService: SetbookingService,
+    readonly carsService: CarsService,
   ) {
     super(model, commonService);
   }
 
   async create(token: AuthTokenInfo, doc: Booking): Promise<Booking> {
+    const car: MainCar = await this.carsService.updateOrInsertByCarInfo(
+      doc.car,
+    );
+    console.log('@@@', car);
+    if (!car) throw new BadRequestException();
+
     return await super.create(token, doc);
+  }
+
+  async findById(token: AuthTokenInfo, id: string): Promise<Booking> {
+    return await super.findById(token, id);
   }
 
   async findByIdAndUpdate(
@@ -28,17 +41,19 @@ export class BookingService extends SafeService<Booking> {
     id: string,
     doc: Partial<Booking>,
   ): Promise<Booking> {
-    return await super.findByIdAndUpdate(token, id, doc);
-  }
+    const booking: Booking = await this.findById(token, id);
+    if (!booking) throw new BadRequestException();
 
-  async findById(token: AuthTokenInfo, id: string): Promise<Booking> {
-    return await super.findById(token, id);
+    return await super.findByIdAndUpdate(token, id, doc);
   }
 
   async findByIdAndRemove(
     token: AuthTokenInfo,
     id: string,
   ): Promise<DeleteResult> {
+    const booking: Booking = await this.findById(token, id);
+    if (!booking) throw new BadRequestException();
+
     return await super.findByIdAndRemove(token, id);
   }
 
