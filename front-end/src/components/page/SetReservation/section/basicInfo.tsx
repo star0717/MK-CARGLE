@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
 import { useDispatch } from "react-redux";
-import { _aPostBooking } from "store/action/user.action";
+import { _aPostSetBooking } from "store/action/user.action";
 
 const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
@@ -205,7 +205,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
               </CommonButton>
               <CommonButton
                 onClick={async () => {
-                  await dispatch(_aPostBooking(props.booking)).then(
+                  await dispatch(_aPostSetBooking(props.booking)).then(
                     (res: any) => {
                       props.setBooking(res.payload);
                       alert("저장 되었습니다!");
