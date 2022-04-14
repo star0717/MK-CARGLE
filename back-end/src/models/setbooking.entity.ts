@@ -69,7 +69,7 @@ export class OfficeHours {
   @ValidateNested()
   @prop({ _id: false })
   @Type(() => Hours)
-  SET: Hours;
+  SAT: Hours;
 
   @ApiProperty({ description: '일요일', type: Hours })
   @ValidateNested()

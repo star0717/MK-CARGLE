@@ -18,10 +18,11 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import theme from "styles/theme";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
-import { SetBooking } from "src/models/setbooking.entity";
+import { Hours, OfficeHours, SetBooking } from "src/models/setbooking.entity";
 import { useDispatch } from "react-redux";
 import { _aPostSetBooking } from "store/action/user.action";
 import { SetBookingTime } from "src/constants/booking.const";
+import dayjs from "dayjs";
 
 const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
@@ -29,6 +30,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
+  interface KeyInput {
+    id: string;
+  }
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -37,6 +42,50 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   const [businessTime, setBusinessTime] = useState<SetBookingTime>(
     booking.setBookingTime
   );
+  const [time, setTime] = useState<OfficeHours>({
+    MON: {
+      openingHours: booking.officeHour.MON.openingHours,
+      closingHours: booking.officeHour.MON.closingHours,
+      breakTime: booking.officeHour.MON.breakTime,
+      breakEndTime: booking.officeHour.MON.breakEndTime,
+    },
+    TUE: {
+      openingHours: booking.officeHour.TUE.openingHours,
+      closingHours: booking.officeHour.TUE.closingHours,
+      breakTime: booking.officeHour.TUE.breakTime,
+      breakEndTime: booking.officeHour.TUE.breakEndTime,
+    },
+    WED: {
+      openingHours: booking.officeHour.WED.openingHours,
+      closingHours: booking.officeHour.WED.closingHours,
+      breakTime: booking.officeHour.WED.breakTime,
+      breakEndTime: booking.officeHour.WED.breakEndTime,
+    },
+    THU: {
+      openingHours: booking.officeHour.THU.openingHours,
+      closingHours: booking.officeHour.THU.closingHours,
+      breakTime: booking.officeHour.THU.breakTime,
+      breakEndTime: booking.officeHour.THU.breakEndTime,
+    },
+    FRI: {
+      openingHours: booking.officeHour.FRI.openingHours,
+      closingHours: booking.officeHour.FRI.closingHours,
+      breakTime: booking.officeHour.FRI.breakTime,
+      breakEndTime: booking.officeHour.FRI.breakEndTime,
+    },
+    SAT: {
+      openingHours: booking.officeHour.SAT.openingHours,
+      closingHours: booking.officeHour.SAT.closingHours,
+      breakTime: booking.officeHour.SAT.breakTime,
+      breakEndTime: booking.officeHour.SAT.breakEndTime,
+    },
+    SUN: {
+      openingHours: booking.officeHour.SUN.openingHours,
+      closingHours: booking.officeHour.SUN.closingHours,
+      breakTime: booking.officeHour.SUN.breakTime,
+      breakEndTime: booking.officeHour.SUN.breakEndTime,
+    },
+  });
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -58,6 +107,12 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       });
     }
   };
+  const onTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (businessTime === SetBookingTime.ALL) {
+    } else if (businessTime === SetBookingTime.WEEK) {
+    } else {
+    }
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -65,7 +120,44 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  const BusinessHourInput = () => {
+  const BusinessHourInput = (key: KeyInput) => {
+    let value: Hours;
+    switch (key.id) {
+      case "Allday":
+        value = booking.officeHour.MON;
+        break;
+      case "Weekday":
+        value = booking.officeHour.MON;
+        break;
+      case "Weekend":
+        value = booking.officeHour.SAT;
+        break;
+      case "Monday":
+        value = booking.officeHour.MON;
+        break;
+      case "Tuesday":
+        value = booking.officeHour.TUE;
+        break;
+      case "Wedensday":
+        value = booking.officeHour.WED;
+        break;
+      case "Thursday":
+        value = booking.officeHour.THU;
+        break;
+      case "Friday":
+        value = booking.officeHour.FRI;
+        break;
+      case "Satureday":
+        value = booking.officeHour.SAT;
+        break;
+      case "Sunday":
+        value = booking.officeHour.SUN;
+        break;
+
+      default:
+        break;
+    }
+
     return (
       <>
         <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
@@ -76,12 +168,22 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
+                name={`startHour${key.id}`}
+                value={dayjs(value.openingHours).format("HH")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onTimeHandler(e);
+                }}
               />
               <Text margin={`0px 4px`}>:</Text>
               <TextInput2
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
+                name={`startMin${key.id}`}
+                value={dayjs(value.openingHours).format("mm")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onTimeHandler(e);
+                }}
               />
             </Wrapper>
           </Wrapper>
@@ -93,12 +195,22 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
+                name={`endHour${key.id}`}
+                value={dayjs(value.closingHours).format("HH")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onTimeHandler(e);
+                }}
               />
               <Text margin={`0px 4px`}>:</Text>
               <TextInput2
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
+                name={`endMin${key.id}`}
+                value={dayjs(value.closingHours).format("mm")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onTimeHandler(e);
+                }}
               />
             </Wrapper>
           </Wrapper>
@@ -111,12 +223,22 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
+                name={`startBreakHour${key.id}`}
+                value={dayjs(value.breakTime).format("HH")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onTimeHandler(e);
+                }}
               />
               <Text margin={`0px 4px`}>:</Text>
               <TextInput2
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
+                name={`startBreakMin${key.id}`}
+                value={dayjs(value.breakTime).format("mm")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onTimeHandler(e);
+                }}
               />
             </Wrapper>
           </Wrapper>
@@ -128,12 +250,22 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
+                name={`endBreakHour${key.id}`}
+                value={dayjs(value.breakEndTime).format("HH")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onTimeHandler(e);
+                }}
               />
               <Text margin={`0px 4px`}>:</Text>
               <TextInput2
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
+                name={`endBreakMin${key.id}`}
+                value={dayjs(value.breakEndTime).format("mm")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onTimeHandler(e);
+                }}
               />
             </Wrapper>
           </Wrapper>
@@ -141,6 +273,35 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       </>
     );
   };
+
+  // const BusinessInputHandler = () => {
+  //   return (
+  //     <>
+  //       {businessTime === SetBookingTime.ALL ? (
+  //         <>
+  //         <Wrapper
+  //                   dr={`row`}
+  //                   ju={`flex-start`}
+  //                   padding={`30px 0px 0px`}
+  //                 >
+  //                   <Text margin={`18px 10px 0px 0px`}>모든 영업일</Text>
+  //           <BusinessHourInput id="MON"/>
+  //           </Wrapper>
+  //         </>
+  //       ) : (
+  //         <>
+  //           {businessTime === SetBookingTime.WEEK ? (
+  //             <>
+  //               <BusinessHourInput id="MON"/>
+  //               <BusinessHourInput id="MON"/>
+  //             </>
+  //           ) : ()}
+  //         </>
+  //       )}
+  //     </>
+  //   )
+  // }
+
   return (
     <WholeWrapper notAnimate>
       <RsWrapper>
@@ -314,7 +475,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           {businessTime === SetBookingTime.ALL ? (
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>모든 영업일</Text>
-              <BusinessHourInput />
+              <BusinessHourInput id="Allday" />
             </Wrapper>
           ) : (
             <>
@@ -326,7 +487,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     padding={`30px 0px 0px`}
                   >
                     <Text margin={`18px 10px 0px 0px`}>평일 영업일</Text>
-                    <BusinessHourInput />
+                    <BusinessHourInput id="Weekday" />
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -334,7 +495,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     padding={`30px 0px 0px`}
                   >
                     <Text margin={`18px 10px 0px 0px`}>주말 영업일</Text>
-                    <BusinessHourInput />
+                    <BusinessHourInput id="Weekend" />
                   </Wrapper>
                 </>
               ) : (
@@ -345,7 +506,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     padding={`30px 0px 0px`}
                   >
                     <Text margin={`18px 10px 0px 0px`}>월요일</Text>
-                    <BusinessHourInput />
+                    <BusinessHourInput id="Monday" />
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -353,7 +514,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     padding={`30px 0px 0px`}
                   >
                     <Text margin={`18px 10px 0px 0px`}>화요일</Text>
-                    <BusinessHourInput />
+                    <BusinessHourInput id="Tuesday" />
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -361,7 +522,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     padding={`30px 0px 0px`}
                   >
                     <Text margin={`18px 10px 0px 0px`}>수요일</Text>
-                    <BusinessHourInput />
+                    <BusinessHourInput id="Wedensday" />
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -369,7 +530,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     padding={`30px 0px 0px`}
                   >
                     <Text margin={`18px 10px 0px 0px`}>목요일</Text>
-                    <BusinessHourInput />
+                    <BusinessHourInput id="Thursday" />
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -377,7 +538,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     padding={`30px 0px 0px`}
                   >
                     <Text margin={`18px 10px 0px 0px`}>금요일</Text>
-                    <BusinessHourInput />
+                    <BusinessHourInput id="Friday" />
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -385,7 +546,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     padding={`30px 0px 0px`}
                   >
                     <Text margin={`18px 10px 0px 0px`}>토요일</Text>
-                    <BusinessHourInput />
+                    <BusinessHourInput id="Satureday" />
                   </Wrapper>
                   <Wrapper
                     dr={`row`}
@@ -393,7 +554,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     padding={`30px 0px 0px`}
                   >
                     <Text margin={`18px 10px 0px 0px`}>일요일</Text>
-                    <BusinessHourInput />
+                    <BusinessHourInput id="Sunday" />
                   </Wrapper>
                 </>
               )}

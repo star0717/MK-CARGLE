@@ -12,7 +12,7 @@ export declare class OfficeHours {
     WED: Hours;
     THU: Hours;
     FRI: Hours;
-    SET: Hours;
+    SAT: Hours;
     SUN: Hours;
 }
 export declare class Mprice {
