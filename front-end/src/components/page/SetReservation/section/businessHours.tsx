@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
-import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
   CommonSubTitle,
   CommonTitle,
@@ -18,7 +17,7 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import theme from "styles/theme";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
-import { Hours, OfficeHours, SetBooking } from "src/models/setbooking.entity";
+import { Hours, SetBooking } from "src/models/setbooking.entity";
 import { useDispatch } from "react-redux";
 import { _aPostSetBooking } from "store/action/user.action";
 import { SetBookingTime } from "src/constants/booking.const";
@@ -273,34 +272,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       </>
     );
   };
-
-  // const BusinessInputHandler = () => {
-  //   return (
-  //     <>
-  //       {businessTime === SetBookingTime.ALL ? (
-  //         <>
-  //         <Wrapper
-  //                   dr={`row`}
-  //                   ju={`flex-start`}
-  //                   padding={`30px 0px 0px`}
-  //                 >
-  //                   <Text margin={`18px 10px 0px 0px`}>모든 영업일</Text>
-  //           <BusinessHourInput id="MON"/>
-  //           </Wrapper>
-  //         </>
-  //       ) : (
-  //         <>
-  //           {businessTime === SetBookingTime.WEEK ? (
-  //             <>
-  //               <BusinessHourInput id="MON"/>
-  //               <BusinessHourInput id="MON"/>
-  //             </>
-  //           ) : ()}
-  //         </>
-  //       )}
-  //     </>
-  //   )
-  // }
 
   return (
     <WholeWrapper notAnimate>
