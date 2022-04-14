@@ -35,7 +35,6 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
       page,
       take: 10,
     };
-
     const option: any = {
       [searchOption]: filterValue,
     };
