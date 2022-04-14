@@ -10,3 +10,7 @@ export declare class Booking extends BaseEntity {
     mainReContents: string;
     bookingState: BookingState;
 }
+export declare class BookingFindOptions {
+    regNumber?: string;
+    phoneNumber?: string;
+}

@@ -25,7 +25,7 @@ import {
   FindParameters,
   FindResult,
 } from 'src/models/base.entity';
-import { Booking } from 'src/models/booking.entity';
+import { Booking, BookingFindOptions } from 'src/models/booking.entity';
 import { MainFindOptions } from 'src/models/maintenance.entity';
 import { BookingService } from './booking.service';
 
@@ -56,12 +56,20 @@ export class BookingController {
   })
   async findByOptions(
     @Query() fParams: FindParameters,
-    @Query() fOptions: MainFindOptions,
+    @Query() fOptions: BookingFindOptions,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<FindResult<Booking>> {
     fParams.useDurationSearch = true;
     if (fOptions) {
       fParams.filter = fOptions;
+      if (fOptions.regNumber) {
+        fOptions['car.regNumber'] = fOptions.regNumber;
+        delete fOptions.regNumber;
+      }
+      if (fOptions.phoneNumber) {
+        fOptions['customer.phoneNumber'] = fOptions.phoneNumber;
+        delete fOptions.regNumber;
+      }
     }
     return await this.bookingService.findByOptions(token, fParams);
   }

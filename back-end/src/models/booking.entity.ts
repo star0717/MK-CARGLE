@@ -1,7 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { prop } from '@typegoose/typegoose';
 import { Type } from 'class-transformer';
-import { IsEnum, IsNumber, IsString, ValidateNested } from 'class-validator';
+import {
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { BookingState } from 'src/constants/booking.const';
 import { BaseEntity } from './base.entity';
 import { MainCustomer, MainCar } from './maintenance.entity';
@@ -47,4 +53,16 @@ export class Booking extends BaseEntity {
   @IsEnum(BookingState)
   @prop({ enum: BookingState, required: true, default: BookingState.NEW })
   bookingState: BookingState;
+}
+
+export class BookingFindOptions {
+  @ApiProperty({ description: '챠량 등록번호', required: false })
+  @IsOptional()
+  @IsString()
+  regNumber?: string;
+
+  @ApiProperty({ description: '고객 전화번호', required: false })
+  @IsOptional()
+  @IsString()
+  phoneNumber?: string;
 }

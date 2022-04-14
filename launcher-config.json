@@ -1,0 +1,28 @@
+{
+  "scripts": {
+    "generate-cli-skeletons": [
+      "aws ec2 create-security-group --generate-cli-skeleton | tee sg-input.temp.json",
+      "aws elbv2 create-target-group --generate-cli-skeleton | tee tg-input.temp.json",
+      "aws elbv2 create-load-balancer --generate-cli-skeleton | tee elb-input.temp.json"
+    ],
+    "subnet:generate-cli-skeleton": "aws ec2 describe-subnets --generate-cli-skeleton | tee subnets-input.temp.json",
+    "subnet:describe": [
+      "aws ec2 describe-subnets --cli-input-json file://subnets-input.json | tee subnets-output.json",
+      "npx dotenv-replace Subnets=$(cat subnets-output.json | jq '.Subnets[].SubnetId' | xargs echo)"
+    ],
+    "subnet:parse": "cat subnets-output.json | jq '.Subnets[].SubnetId' | xargs echo",
+    "tg:generate-cli-skeleton": "aws elbv2 create-target-group --generate-cli-skeleton | tee tg-input.temp.json",
+    "tg:create": [
+      "aws elbv2 create-target-group --cli-input-json file://tg-input.json | tee tg-output.json",
+      "npx dotenv-replace TargetGroupArn=$(jq '.TargetGroups[0].TargetGroupArn' 'tg-output.json')"
+    ],
+    "tg:describe": [
+      "aws elbv2 describe-target-groups --name tg-n2server | tee tg-output.json",
+      "npx dotenv-replace TargetGroupArn=$(jq '.TargetGroups[0].TargetGroupArn' 'tg-output.json')"
+    ],
+    "tg.delete": "dotenv -- cross-var aws elbv2 delete-target-group --target-group-arn %TargetGroupArn%",
+    "elb:generate-cli-skeleton": "aws elbv2 create-load-balancer --generate-cli-skeleton | tee elb-input.temp.json",
+    "elb:create": "aws elbv2 create-load-balancer --cli-input-json file://elb-input.json | tee elb-output.json",
+    "elb:delete": "aws elbv2 delete-load-balancer --load-balancer-arn arn:aws:elasticloadbalancing:ap-southeast-1:617699280027:loadbalancer/app/n2server-elb/8b1c97dd75f7da30"
+  }
+}
