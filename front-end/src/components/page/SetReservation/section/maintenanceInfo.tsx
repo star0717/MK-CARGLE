@@ -10,7 +10,6 @@ import {
   RsWrapper,
   SmallButton,
   Text,
-  TextArea,
   TextInput2,
   WholeWrapper,
   Wrapper,

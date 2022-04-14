@@ -2014,16 +2014,24 @@ export const SelectDays = styled.button<any>`
   margin: 0px 8px 0px 0px;
 
   ${(props) =>
-    props.kindOf === `default` && `background-color : ${props.theme.red_C};`}
-  ${(props) => props.kindOf === `default` && `color : ${props.theme.red_C};`}
-    ${(props) => props.kindOf === `default` && `color : #fff;`}
+    props.kindOf === `hollyDay` && `background-color : ${props.theme.white_C};`}
+  ${(props) =>
+    props.kindOf === `hollyDay` && `border : 1px solid ${props.theme.red_C};`}
+    ${(props) => props.kindOf === `hollyDay` && `color : ${props.theme.red_C};`}
+
+    ${(props) =>
+    props.kindOf === `workingHour` &&
+    `background-color : ${props.theme.white_C};`}
+    ${(props) =>
+    props.kindOf === `workingHour` &&
+    `border : 1px solid ${props.theme.basicTheme_C};`}
+      ${(props) =>
+    props.kindOf === `workingHour` && `color : ${props.theme.basicTheme_C};`}
 
   ${(props) =>
     props.kindOf === `ghost` && `background-color : ${props.theme.white_C};`}
-
-
-  &:hover {
-    background-color: ${(props) => props.theme.red_C};
-    color: ${(props) => props.theme.white_C};
-  }
 `;
+// &:hover {
+//   background-color: ${(props) => props.theme.red_C};
+//   color: ${(props) => props.theme.white_C};
+// }

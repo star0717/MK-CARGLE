@@ -3,12 +3,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { prop } from '@typegoose/typegoose';
 import {
   IsArray,
+  IsEnum,
   IsNumber,
   IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
 import { BaseEntity } from './base.entity';
+import { SetBookingTime } from 'src/constants/booking.const';
 
 export class Hours {
   @ApiProperty({ description: '영업시작시간' })
@@ -102,6 +104,16 @@ export class SetBooking extends BaseEntity {
   @IsArray()
   @prop()
   dayOff?: string[];
+
+  @ApiProperty({
+    description: '영업시간구분',
+    default: SetBookingTime.ALL,
+    required: false,
+  })
+  @IsOptional()
+  @IsEnum(SetBookingTime)
+  @prop({ enum: SetBookingTime, required: true, default: SetBookingTime.ALL })
+  setBookingTime?: SetBookingTime;
 
   @ApiProperty({ description: '영업시간', type: OfficeHours })
   @ValidateNested()
