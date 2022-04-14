@@ -60,6 +60,7 @@ import {
   UserCompanyFind,
   _iSetBooking,
   _iBooking,
+  _iBookingOne,
 } from "../interfaces";
 
 import {
@@ -1503,6 +1504,21 @@ export async function _aPostSms() {
     );
 
   const result: _iSms = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+
+  return result;
+}
+
+export async function _aPostBooking(data: Booking) {
+  const req: Booking = await axios
+    .post(genApiPath(BookingApiPath.booking), data)
+    .then((res: AxiosResponse<Booking, Booking>): Booking => {
+      return res.data;
+    });
+
+  const result: _iBookingOne = {
     type: ActionAPIs.USER_API,
     payload: req,
   };

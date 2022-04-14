@@ -20,7 +20,7 @@ import { MainCar, MainCustomer } from "src/models/maintenance.entity";
 import { useDispatch } from "react-redux";
 import { _aGetMaintenancesCarInfo } from "store/action/user.action";
 import { _iGetMaintenancesCarInfo } from "store/interfaces";
-import { BookingState } from "src/constants/booking.const";
+import { BookingState, bookingTimeList } from "src/constants/booking.const";
 import dayjs from "dayjs";
 import { comma, trim } from "src/modules/commonModule";
 import { basicRegEx } from "src/validation/regEx";
@@ -32,8 +32,8 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
   const dispatch = useDispatch();
 
   const bookingInit: Partial<Booking> = {
-    bookingDate: new Date(),
-    mainHopeDate: new Date(),
+    bookingDate: null,
+    mainHopeDate: null,
     mainReContents: "",
     bookingState: BookingState.NEW,
   };
@@ -58,7 +58,8 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
   const [cusInfo, setCusInfo] = useState<MainCustomer>(cusInit); // 고객 정보
   const [carInfo, setCarInfo] = useState<MainCar>(carInit); // 차량 정보
   const [carExist, setCarExist] = useState<boolean>(false); // 차량 데이터 존재여부
-  const [hopeTime, setHopeTime] = useState<string>(""); // 정비희망시간
+  const [officeHour, setOfficeHour] = useState<any>(); // 선택 날짜의 영업시간
+  const [bookingTime, setBookingTime] = useState<string>(""); // 정비희망시간
 
   /*********************************************************************
    * 3. Handlers
@@ -123,11 +124,19 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
 
   const onBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("이게 뭐노");
   };
 
   console.log(bookingInfo);
   console.log(carInfo);
   console.log(cusInfo);
+
+  let date = new Date();
+  let date2 = new Date();
+  let rest = new Date();
+  let rest2 = new Date();
+  date2.setHours(date2.getHours() + 6);
+  rest2.setHours(rest2.getHours() + 1);
 
   /*********************************************************************
    * 4. Props settings
@@ -161,8 +170,13 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
                 width={`400px`}
                 name="bookingDate"
                 type="date"
-                value={dayjs(bookingInfo.bookingDate).format("YYYY-MM-DD")}
+                value={
+                  bookingInfo.bookingDate
+                    ? dayjs(bookingInfo.bookingDate).format("YYYY-MM-DD")
+                    : ""
+                }
                 onChange={onBookingHandler}
+                required
               />
             </Wrapper>
           </Wrapper>
@@ -182,11 +196,23 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
                 width={`300px`}
                 type="date"
                 name="mainHopeDate"
-                value={dayjs(bookingInfo.mainHopeDate).format("YYYY-MM-DD")}
+                value={
+                  bookingInfo.mainHopeDate
+                    ? dayjs(bookingInfo.mainHopeDate).format("YYYY-MM-DD")
+                    : ""
+                }
                 onChange={onBookingHandler}
+                required
               />
-              <Combo width={`80px`}>
+              <Combo width={`80px`} required>
                 <option value="">시간</option>
+                {bookingTimeList(date, date2).map((time, idx) => {
+                  return (
+                    <option key={idx} value={time}>
+                      {time}
+                    </option>
+                  );
+                })}
               </Combo>
             </Wrapper>
           </Wrapper>
@@ -203,6 +229,7 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
                 name="phoneNumber"
                 value={cusInfo.phoneNumber}
                 onChange={onCusHandler}
+                required
               />
             </Wrapper>
           </Wrapper>
@@ -221,6 +248,7 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
                   value={carInfo.regNumber}
                   readOnly={carExist}
                   onChange={onCarHandler}
+                  required
                 />
                 {carExist ? (
                   <SmallButton
@@ -286,6 +314,7 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
                 value={carInfo.name}
                 readOnly={carExist}
                 onChange={onCarHandler}
+                required
               />
             </Wrapper>
           </Wrapper>
