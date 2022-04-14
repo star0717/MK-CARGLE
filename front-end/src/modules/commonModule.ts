@@ -149,6 +149,16 @@ export const trim = (str: string) => {
 };
 
 /**
+ * 문자열 세자리마다 콤마찍기
+ * @param str
+ * @returns
+ */
+export const comma = (str: string) => {
+  const commaStr = str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  return commaStr;
+};
+
+/**
  * 빈 값을 가진 json key 제거
  */
 export const deleteKeyJson = (obj: any) => {

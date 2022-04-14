@@ -40,7 +40,15 @@ import { PagenationSection } from "src/components/common/sections";
 import AddBooking from "./addBookingModal";
 import EditBooking from "./editBookingModal";
 import Modal from "react-modal";
-import { _pBookingProps } from "src/configure/_pProps.entity";
+import {
+  _pBookingModalProps,
+  _pBookingProps,
+} from "src/configure/_pProps.entity";
+import {
+  _aDeleteBookingMany,
+  _aDeleteBookingOne,
+} from "store/action/user.action";
+import { _iDeleteByUser } from "store/interfaces";
 
 const BookingList: NextPage<_pBookingProps> = (props) => {
   /*********************************************************************
@@ -55,7 +63,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalOption, setModalOption] = useState<string>("");
   const [checkedList, setCheckedList] = useState<string[]>([]);
-  const [clickDoc, setClickDoc] = useState<string>("");
+  const [clickDoc, setClickDoc] = useState<Booking>(null);
   const [bookingList, setBookingList] = useState<Booking[]>(
     props.findResult.docs
   );
@@ -190,15 +198,48 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
     props.setFilterValue(e.target.value);
   };
 
+  /**
+   * 리스트 삭제 handler
+   * @returns
+   */
+  const onDeleteList = async () => {
+    if (window.confirm("삭제하시겠습니까?")) {
+      if (checkedList.length === 1) {
+        await dispatch(_aDeleteBookingOne(checkedList[0])).then(
+          (res: _iDeleteByUser) => {
+            alert("삭제되었습니다.");
+            props.setReset(props.reset + 1);
+          },
+          (err) => {
+            alert("삭제 에러");
+          }
+        );
+      } else {
+        await dispatch(_aDeleteBookingMany(checkedList)).then(
+          (res: _iDeleteByUser) => {
+            alert("삭제되었습니다.");
+            props.setReset(props.reset + 1);
+          },
+          (err) => {
+            alert("삭제 에러");
+          }
+        );
+      }
+      setCheckedList([]);
+    } else {
+      return false;
+    }
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
-  const ModalProps: any = {
+  const bookingModalProps: _pBookingModalProps = {
     ...props,
     setModalOpen,
     clickDoc,
     setClickDoc,
-    style: { height: "800px", width: "500px" },
+    style: { height: "800px" },
   };
 
   /*********************************************************************
@@ -267,6 +308,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
                 width={`150px`}
                 fontSize={`16px`}
                 kindOf={`cancle`}
+                onClick={onDeleteList}
               >
                 선택삭제
               </SmallButton>
@@ -410,8 +452,8 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "add" && <AddBooking {...ModalProps} />}
-        {modalOption === "edit" && <EditBooking {...ModalProps} />}
+        {modalOption === "add" && <AddBooking {...bookingModalProps} />}
+        {modalOption === "edit" && <EditBooking {...bookingModalProps} />}
       </Modal>
     </WholeWrapper>
   );
