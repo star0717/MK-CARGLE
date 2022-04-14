@@ -1,0 +1,27 @@
+{
+    "Name": "",
+    "Protocol": "UDP",
+    "ProtocolVersion": "",
+    "Port": 0,
+    "VpcId": "",
+    "HealthCheckProtocol": "UDP",
+    "HealthCheckPort": "",
+    "HealthCheckEnabled": true,
+    "HealthCheckPath": "",
+    "HealthCheckIntervalSeconds": 0,
+    "HealthCheckTimeoutSeconds": 0,
+    "HealthyThresholdCount": 0,
+    "UnhealthyThresholdCount": 0,
+    "Matcher": {
+        "HttpCode": "",
+        "GrpcCode": ""
+    },
+    "TargetType": "alb",
+    "Tags": [
+        {
+            "Key": "",
+            "Value": ""
+        }
+    ],
+    "IpAddressType": "ipv4"
+}

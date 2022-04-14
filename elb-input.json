@@ -1,0 +1,14 @@
+{
+    "Name": "n2server-elb",
+    "Subnets": [
+        "subnet-d297429a",
+        "subnet-78d04021",
+        "subnet-aed277c8"
+    ],
+    "SecurityGroups": [
+        "sg-02a8034b"
+    ],
+    "Scheme": "internet-facing",
+    "Type": "application",
+    "IpAddressType": "ipv4"
+}
