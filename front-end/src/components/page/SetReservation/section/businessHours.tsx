@@ -42,50 +42,50 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   const [businessTime, setBusinessTime] = useState<SetBookingTime>(
     booking.setBookingTime
   );
-  const [time, setTime] = useState<OfficeHours>({
-    MON: {
-      openingHours: booking.officeHour.MON.openingHours,
-      closingHours: booking.officeHour.MON.closingHours,
-      breakTime: booking.officeHour.MON.breakTime,
-      breakEndTime: booking.officeHour.MON.breakEndTime,
-    },
-    TUE: {
-      openingHours: booking.officeHour.TUE.openingHours,
-      closingHours: booking.officeHour.TUE.closingHours,
-      breakTime: booking.officeHour.TUE.breakTime,
-      breakEndTime: booking.officeHour.TUE.breakEndTime,
-    },
-    WED: {
-      openingHours: booking.officeHour.WED.openingHours,
-      closingHours: booking.officeHour.WED.closingHours,
-      breakTime: booking.officeHour.WED.breakTime,
-      breakEndTime: booking.officeHour.WED.breakEndTime,
-    },
-    THU: {
-      openingHours: booking.officeHour.THU.openingHours,
-      closingHours: booking.officeHour.THU.closingHours,
-      breakTime: booking.officeHour.THU.breakTime,
-      breakEndTime: booking.officeHour.THU.breakEndTime,
-    },
-    FRI: {
-      openingHours: booking.officeHour.FRI.openingHours,
-      closingHours: booking.officeHour.FRI.closingHours,
-      breakTime: booking.officeHour.FRI.breakTime,
-      breakEndTime: booking.officeHour.FRI.breakEndTime,
-    },
-    SAT: {
-      openingHours: booking.officeHour.SAT.openingHours,
-      closingHours: booking.officeHour.SAT.closingHours,
-      breakTime: booking.officeHour.SAT.breakTime,
-      breakEndTime: booking.officeHour.SAT.breakEndTime,
-    },
-    SUN: {
-      openingHours: booking.officeHour.SUN.openingHours,
-      closingHours: booking.officeHour.SUN.closingHours,
-      breakTime: booking.officeHour.SUN.breakTime,
-      breakEndTime: booking.officeHour.SUN.breakEndTime,
-    },
-  });
+  // const [time, setTime] = useState<OfficeHours>({
+  //   MON: {
+  //     openingHours: booking.officeHour.MON.openingHours,
+  //     closingHours: booking.officeHour.MON.closingHours,
+  //     breakTime: booking.officeHour.MON.breakTime,
+  //     breakEndTime: booking.officeHour.MON.breakEndTime,
+  //   },
+  //   TUE: {
+  //     openingHours: booking.officeHour.TUE.openingHours,
+  //     closingHours: booking.officeHour.TUE.closingHours,
+  //     breakTime: booking.officeHour.TUE.breakTime,
+  //     breakEndTime: booking.officeHour.TUE.breakEndTime,
+  //   },
+  //   WED: {
+  //     openingHours: booking.officeHour.WED.openingHours,
+  //     closingHours: booking.officeHour.WED.closingHours,
+  //     breakTime: booking.officeHour.WED.breakTime,
+  //     breakEndTime: booking.officeHour.WED.breakEndTime,
+  //   },
+  //   THU: {
+  //     openingHours: booking.officeHour.THU.openingHours,
+  //     closingHours: booking.officeHour.THU.closingHours,
+  //     breakTime: booking.officeHour.THU.breakTime,
+  //     breakEndTime: booking.officeHour.THU.breakEndTime,
+  //   },
+  //   FRI: {
+  //     openingHours: booking.officeHour.FRI.openingHours,
+  //     closingHours: booking.officeHour.FRI.closingHours,
+  //     breakTime: booking.officeHour.FRI.breakTime,
+  //     breakEndTime: booking.officeHour.FRI.breakEndTime,
+  //   },
+  //   SAT: {
+  //     openingHours: booking.officeHour.SAT.openingHours,
+  //     closingHours: booking.officeHour.SAT.closingHours,
+  //     breakTime: booking.officeHour.SAT.breakTime,
+  //     breakEndTime: booking.officeHour.SAT.breakEndTime,
+  //   },
+  //   SUN: {
+  //     openingHours: booking.officeHour.SUN.openingHours,
+  //     closingHours: booking.officeHour.SUN.closingHours,
+  //     breakTime: booking.officeHour.SUN.breakTime,
+  //     breakEndTime: booking.officeHour.SUN.breakEndTime,
+  //   },
+  // });
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
