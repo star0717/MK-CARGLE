@@ -7,6 +7,12 @@ export enum BookingState {
   MAINTENANCE = 'maintenance',
 }
 
+export enum SetBookingTime {
+  ALL = 'all',
+  WEEK = 'week',
+  DIFF = 'diff',
+}
+
 /********** 검색 옵션 쿼리 생성 ******************/
 export const genBookingOptionQuery = (data: BookingFindOptions) => {
   let query = '&';

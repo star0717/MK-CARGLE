@@ -20,7 +20,8 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
 import { useDispatch } from "react-redux";
-import { _aPostBooking } from "store/action/user.action";
+import { _aPostSetBooking } from "store/action/user.action";
+import { SetBooking } from "src/models/setbooking.entity";
 
 const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
@@ -31,12 +32,13 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [booking, setBooking] = useState<SetBooking>(props.data);
+  const [modify, setModify] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.setBooking({ ...props.booking, [e.target.name]: e.target.value });
+    setBooking({ ...booking, [e.target.name]: e.target.value });
   };
   /*********************************************************************
    * 4. Props settings
@@ -97,11 +99,11 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
           <TextArea
             padding={`10px`}
             height={`140px`}
-            readOnly={!props.modify}
+            readOnly={!modify}
             placeholder="고객님께 노출되는 소개글입니다."
             width={`1200px`}
             name="intro"
-            value={props.booking.intro}
+            value={booking.intro}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               onInputHandler(e);
             }}
@@ -192,27 +194,25 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
               </Text>
             </Wrapper>
           </Wrapper>
-          {props.modify ? (
+          {modify ? (
             <CommonButtonWrapper ju={`space-around`}>
               <CommonButton
                 kindOf={`white`}
                 onClick={() => {
-                  props.setBooking(props.data);
-                  props.setModify(false);
+                  setBooking(props.data);
+                  setModify(false);
                 }}
               >
                 취소
               </CommonButton>
               <CommonButton
                 onClick={async () => {
-                  await dispatch(_aPostBooking(props.booking)).then(
-                    (res: any) => {
-                      props.setBooking(res.payload);
-                      alert("저장 되었습니다!");
-                    }
-                  );
+                  await dispatch(_aPostSetBooking(booking)).then((res: any) => {
+                    setBooking(res.payload);
+                    alert("저장 되었습니다!");
+                  });
 
-                  props.setModify(false);
+                  setModify(false);
                 }}
               >
                 저장
@@ -222,7 +222,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
             <CommonButtonWrapper ju={`space-around`}>
               <CommonButton
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  props.setModify(true);
+                  setModify(true);
                   window.scroll({ top: 0, left: 0, behavior: "smooth" });
                 }}
               >

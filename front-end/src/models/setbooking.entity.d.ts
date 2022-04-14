@@ -1,4 +1,5 @@
 import { BaseEntity } from './base.entity';
+import { SetBookingTime } from 'src/constants/booking.const';
 export declare class Hours {
     openingHours: Date;
     closingHours: Date;
@@ -21,6 +22,7 @@ export declare class Mprice {
 export declare class SetBooking extends BaseEntity {
     intro?: string;
     dayOff?: string[];
+    setBookingTime?: SetBookingTime;
     officeHour: OfficeHours;
     lift?: number;
     mPrice?: Mprice[];
