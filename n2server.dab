@@ -1,0 +1,45 @@
+{
+  "Services": {
+    "back-end": {
+      "Image": "617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/backend-end@sha256:d58555029d789be9648854026b22a7f2bd22939c065f21a735c3caecfe437187",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 7001,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    "front-end": {
+      "Env": [
+        "NODE_ENV=production",
+        "DESTINATION_API=http://3.38.107.224"
+      ],
+      "Image": "617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/front-end@sha256:1d6b9c996280810cedb1599fa635dca6d30d8feb26b08a11ed59ae875ac602f5",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 3000,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    "proxy-server": {
+      "Image": "617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/proxy-server@sha256:6995edf5b42bb3cd59f8e87e7e2d3987e6adabd854e5a5018ee930f4432ce2fb",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 80,
+          "Protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "Version": "0.1"
+}
