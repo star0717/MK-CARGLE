@@ -22,7 +22,7 @@ import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
 import theme from "styles/theme";
 import { IoIosCloseCircle } from "react-icons/io";
 import { useDispatch } from "react-redux";
-import { SetBooking } from "src/models/setbooking.entity";
+import { Mprice, SetBooking } from "src/models/setbooking.entity";
 import { _aPostSetBooking } from "store/action/user.action";
 
 const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
@@ -36,6 +36,8 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
    *********************************************************************/
   const [booking, setBooking] = useState<SetBooking>(props.data);
   const [modify, setModify] = useState<boolean>(false);
+
+  let price: Mprice[] = booking.mPrice;
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -43,8 +45,30 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
     setBooking({ ...booking, [e.target.name]: e.target.value });
   };
 
-  const onPriceHanlder = (e: React.ChangeEvent<HTMLInputElement>) => {};
-
+  const onPriceHanlder = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const idx = parseInt(e.target.id);
+    if (e.target.name === "mainItems") {
+      setBooking({
+        ...booking,
+        mPrice: {
+          ...booking.mPrice,
+          [idx]: {
+            mainItems: e.target.value,
+            mainPrice: booking.mPrice[idx].mainPrice,
+          },
+        },
+      });
+      // setBooking({
+      //   ...booking,
+      //   mPrice: {
+      //     ...price,
+      //     [idx]: { mainItems: e.target.value, mainPrice: price[idx].mainPrice },
+      //   },
+      // });
+    } else {
+    }
+    // setBooking({ ...booking, [e.target.name]: e.target.value });
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -121,7 +145,6 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
             </Combo>
           </Wrapper>
         </Wrapper>
-
         <Wrapper al={`flex-start`} padding={`20px 0px 10px`} fontWeight={`800`}>
           <Text color={theme.basicTheme_C}>주요 정비 가격을 알려주세요.</Text>
           <Wrapper
