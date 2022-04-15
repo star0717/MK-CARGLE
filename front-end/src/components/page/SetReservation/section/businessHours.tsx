@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import theme from "styles/theme";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
-import { Hours, SetBooking } from "src/models/setbooking.entity";
+import { Hours, OfficeHours, SetBooking } from "src/models/setbooking.entity";
 import { useDispatch } from "react-redux";
 import { _aPostSetBooking } from "store/action/user.action";
 import { SetBookingTime } from "src/constants/booking.const";
@@ -41,50 +41,50 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   const [businessTime, setBusinessTime] = useState<SetBookingTime>(
     booking.setBookingTime
   );
-  // const [time, setTime] = useState<OfficeHours>({
-  //   MON: {
-  //     openingHours: booking.officeHour.MON.openingHours,
-  //     closingHours: booking.officeHour.MON.closingHours,
-  //     breakTime: booking.officeHour.MON.breakTime,
-  //     breakEndTime: booking.officeHour.MON.breakEndTime,
-  //   },
-  //   TUE: {
-  //     openingHours: booking.officeHour.TUE.openingHours,
-  //     closingHours: booking.officeHour.TUE.closingHours,
-  //     breakTime: booking.officeHour.TUE.breakTime,
-  //     breakEndTime: booking.officeHour.TUE.breakEndTime,
-  //   },
-  //   WED: {
-  //     openingHours: booking.officeHour.WED.openingHours,
-  //     closingHours: booking.officeHour.WED.closingHours,
-  //     breakTime: booking.officeHour.WED.breakTime,
-  //     breakEndTime: booking.officeHour.WED.breakEndTime,
-  //   },
-  //   THU: {
-  //     openingHours: booking.officeHour.THU.openingHours,
-  //     closingHours: booking.officeHour.THU.closingHours,
-  //     breakTime: booking.officeHour.THU.breakTime,
-  //     breakEndTime: booking.officeHour.THU.breakEndTime,
-  //   },
-  //   FRI: {
-  //     openingHours: booking.officeHour.FRI.openingHours,
-  //     closingHours: booking.officeHour.FRI.closingHours,
-  //     breakTime: booking.officeHour.FRI.breakTime,
-  //     breakEndTime: booking.officeHour.FRI.breakEndTime,
-  //   },
-  //   SAT: {
-  //     openingHours: booking.officeHour.SAT.openingHours,
-  //     closingHours: booking.officeHour.SAT.closingHours,
-  //     breakTime: booking.officeHour.SAT.breakTime,
-  //     breakEndTime: booking.officeHour.SAT.breakEndTime,
-  //   },
-  //   SUN: {
-  //     openingHours: booking.officeHour.SUN.openingHours,
-  //     closingHours: booking.officeHour.SUN.closingHours,
-  //     breakTime: booking.officeHour.SUN.breakTime,
-  //     breakEndTime: booking.officeHour.SUN.breakEndTime,
-  //   },
-  // });
+  let time: OfficeHours = {
+    MON: {
+      openingHours: booking.officeHour.MON.openingHours,
+      closingHours: booking.officeHour.MON.closingHours,
+      breakTime: booking.officeHour.MON.breakTime,
+      breakEndTime: booking.officeHour.MON.breakEndTime,
+    },
+    TUE: {
+      openingHours: booking.officeHour.TUE.openingHours,
+      closingHours: booking.officeHour.TUE.closingHours,
+      breakTime: booking.officeHour.TUE.breakTime,
+      breakEndTime: booking.officeHour.TUE.breakEndTime,
+    },
+    WED: {
+      openingHours: booking.officeHour.WED.openingHours,
+      closingHours: booking.officeHour.WED.closingHours,
+      breakTime: booking.officeHour.WED.breakTime,
+      breakEndTime: booking.officeHour.WED.breakEndTime,
+    },
+    THU: {
+      openingHours: booking.officeHour.THU.openingHours,
+      closingHours: booking.officeHour.THU.closingHours,
+      breakTime: booking.officeHour.THU.breakTime,
+      breakEndTime: booking.officeHour.THU.breakEndTime,
+    },
+    FRI: {
+      openingHours: booking.officeHour.FRI.openingHours,
+      closingHours: booking.officeHour.FRI.closingHours,
+      breakTime: booking.officeHour.FRI.breakTime,
+      breakEndTime: booking.officeHour.FRI.breakEndTime,
+    },
+    SAT: {
+      openingHours: booking.officeHour.SAT.openingHours,
+      closingHours: booking.officeHour.SAT.closingHours,
+      breakTime: booking.officeHour.SAT.breakTime,
+      breakEndTime: booking.officeHour.SAT.breakEndTime,
+    },
+    SUN: {
+      openingHours: booking.officeHour.SUN.openingHours,
+      closingHours: booking.officeHour.SUN.closingHours,
+      breakTime: booking.officeHour.SUN.breakTime,
+      breakEndTime: booking.officeHour.SUN.breakEndTime,
+    },
+  };
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -107,10 +107,62 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
   const onTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (businessTime === SetBookingTime.ALL) {
-    } else if (businessTime === SetBookingTime.WEEK) {
-    } else {
+    switch (e.target.id) {
+      case "Allday":
+        console.log(e.target.name);
+        break;
+      case "Weekday":
+        console.log(e.target.name);
+        break;
+      case "Weekend":
+        console.log(e.target.name);
+        break;
+      case "Monday":
+        switch (e.target.name) {
+          case "startHour":
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
+        break;
+      case "Tuesday":
+        console.log(e.target.name);
+        break;
+      case "Wedensday":
+        console.log(e.target.name);
+        break;
+      case "Thursday":
+        console.log(e.target.name);
+        break;
+      case "Friday":
+        console.log(e.target.name);
+        break;
+      case "Satureday":
+        console.log(e.target.name);
+        break;
+      case "Sunday":
+        console.log(e.target.name);
+        break;
+
+      default:
+        break;
     }
+    // if (businessTime === SetBookingTime.ALL) {
+    // } else if (businessTime === SetBookingTime.WEEK) {
+    // } else {
+    // }
   };
   /*********************************************************************
    * 4. Props settings
@@ -167,7 +219,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
-                name={`startHour${key.id}`}
+                name={`startHour`}
+                id={key.id}
                 value={dayjs(value.openingHours).format("HH")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onTimeHandler(e);
@@ -178,7 +231,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
-                name={`startMin${key.id}`}
+                name={`startMin`}
+                id={key.id}
                 value={dayjs(value.openingHours).format("mm")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onTimeHandler(e);
@@ -194,7 +248,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
-                name={`endHour${key.id}`}
+                name={`endHour`}
+                id={key.id}
                 value={dayjs(value.closingHours).format("HH")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onTimeHandler(e);
@@ -205,7 +260,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
-                name={`endMin${key.id}`}
+                name={`endMin`}
+                id={key.id}
                 value={dayjs(value.closingHours).format("mm")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onTimeHandler(e);
@@ -222,7 +278,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
-                name={`startBreakHour${key.id}`}
+                name={`startBreakHour`}
+                id={key.id}
                 value={dayjs(value.breakTime).format("HH")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onTimeHandler(e);
@@ -233,7 +290,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
-                name={`startBreakMin${key.id}`}
+                name={`startBreakMin`}
+                id={key.id}
                 value={dayjs(value.breakTime).format("mm")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onTimeHandler(e);
@@ -249,7 +307,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
-                name={`endBreakHour${key.id}`}
+                name={`endBreakHour`}
+                id={key.id}
                 value={dayjs(value.breakEndTime).format("HH")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onTimeHandler(e);
@@ -260,7 +319,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
-                name={`endBreakMin${key.id}`}
+                name={`endBreakMin`}
+                id={key.id}
                 value={dayjs(value.breakEndTime).format("mm")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onTimeHandler(e);
