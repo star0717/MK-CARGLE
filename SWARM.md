@@ -5,16 +5,14 @@ docker swarm init
 ```
 
 ```
-ubuntu@ip-192-168-125-59:~/n2server$ docker swarm init
-Swarm initialized: current node (qs3m6ir2zesp3jok358196hf0) is now a manager.
+ubuntu@ip-192-168-0-46:~/n2server$ docker swarm init
+Swarm initialized: current node (8j1gv2xqtxqng5ku55f0nofr8) is now a manager.
 
 To add a worker to this swarm, run the following command:
 
-    docker swarm join --token SWMTKN-1-0wfi9umc4l43xpg3qyx0nm4cpwgu4snuq94bz1winpg0o9s4we-2802lgrsv7lsigriuy36qli3k 192.168.125.59:2377
+    docker swarm join --token SWMTKN-1-0uthdexdzew0u9waj6j15e97kvsajkiw7o3lj57092pdacrrip-33ja6t4y4ed2tlstfiz7bxlg0 192.168.0.46:2377
 
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
-
-ubuntu@ip-192-168-125-59:~/n2server$
 ```
 
 # docker image용 registry를 생성

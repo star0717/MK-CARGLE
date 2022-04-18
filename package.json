@@ -29,10 +29,15 @@
     "ecs:local:ps": "ecs-cli local ps",
     "node:ls": "docker node ls",
     "node:ps": "docker node ps",
-    "stack:deploy": "docker stack deploy --compose-file compose.swarm.yml n2server",
+    "stack:deploy": "docker stack deploy --compose-file compose.swarm.yml --orchestrator swarm n2server",
     "stack:services": "docker stack services n2server",
     "stack:rm": "docker stack rm n2server",
-    "df": "df -h ."
+    "df": "df -h .",
+    "docker:build:front-end": "sudo docker build -t localhost:5000/front-end ./front-end",
+    "docker:build:back-end": "sudo docker build -t localhost:5000/back-end ./back-end",
+    "docker:build:proxy-server": "sudo docker build -t localhost:5000/proxy-server ./proxy-server",
+    "docker:build": "npm run docker:build:front-end & npm run docker:build:back-end & npm run docker:build:proxy-server",
+    "service:create": "docker service create --name neserver --"
   },
   "repository": {
     "type": "git",
