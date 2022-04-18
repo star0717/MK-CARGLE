@@ -16,6 +16,7 @@ import { MainCar } from 'src/models/maintenance.entity';
 import { CarsService } from 'src/modules/cars/cars.service';
 import { SetbookingService } from 'src/modules/setbooking/setbooking.service';
 import { FilterQuery } from 'mongoose';
+import { BookingState } from 'src/constants/booking.const';
 
 @Injectable()
 export class BookingService extends SafeService<Booking> {
@@ -63,7 +64,13 @@ export class BookingService extends SafeService<Booking> {
     const booking: Booking = await this.findById(token, id);
     if (!booking) throw new BadRequestException();
 
-    return await super.findByIdAndUpdate(token, id, doc);
+    let newDoc: any;
+    if (doc.bookingState !== BookingState.REJECT) {
+      newDoc = { $set: doc, $unset: { rejectOption: 1 } };
+    } else {
+      newDoc = doc;
+    }
+    return await super.findByIdAndUpdate(token, id, newDoc);
   }
 
   async findByIdAndRemove(

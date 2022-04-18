@@ -29,20 +29,16 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { GoPrimitiveDot } from "react-icons/go";
 import {
-  BookingState,
   bookingStateColor,
   bookingStateName,
 } from "src/constants/booking.const";
 import { Booking } from "src/models/booking.entity";
-import theme from "styles/theme";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
 import { BsSearch } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import { PagenationSection } from "src/components/common/sections";
-import AddBooking from "./addBookingModal";
-import EditBooking from "./editBookingModal";
 import Modal from "react-modal";
 import {
   _pBookingModalProps,
@@ -53,6 +49,9 @@ import {
   _aDeleteBookingOne,
 } from "store/action/user.action";
 import { _iDeleteByUser } from "store/interfaces";
+import RejectBookingModal from "./rejectBookingModal";
+import AddBookingModal from "./addBookingModal";
+import EditBookingModal from "./editBookingModal";
 
 const BookingList: NextPage<_pBookingProps> = (props) => {
   /*********************************************************************
@@ -186,6 +185,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
   const bookingModalProps: _pBookingModalProps = {
     ...props,
     setModalOpen,
+    setModalOption,
     clickDoc,
     setClickDoc,
     style: { height: "800px" },
@@ -408,8 +408,11 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
-        {modalOption === "add" && <AddBooking {...bookingModalProps} />}
-        {modalOption === "edit" && <EditBooking {...bookingModalProps} />}
+        {modalOption === "add" && <AddBookingModal {...bookingModalProps} />}
+        {modalOption === "edit" && <EditBookingModal {...bookingModalProps} />}
+        {modalOption === "reject" && (
+          <RejectBookingModal {...bookingModalProps} />
+        )}
       </Modal>
     </WholeWrapper>
   );

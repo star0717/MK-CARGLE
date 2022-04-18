@@ -15,7 +15,7 @@ import { NextPage } from "next";
 import theme from "styles/theme";
 import { _pBookingModalProps } from "src/configure/_pProps.entity";
 import { useState } from "react";
-import { Booking } from "src/models/booking.entity";
+import { Booking, MainHopeTime } from "src/models/booking.entity";
 import { MainCar, MainCustomer } from "src/models/maintenance.entity";
 import { useDispatch } from "react-redux";
 import {
@@ -25,11 +25,12 @@ import {
 import { _iBookingOne, _iGetMaintenancesCarInfo } from "store/interfaces";
 import { BookingState, bookingTimeList } from "src/constants/booking.const";
 import dayjs from "dayjs";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
 import { comma, deleteKeyJson, hourList, trim } from "src/modules/commonModule";
 import { basicRegEx } from "src/validation/regEx";
-import { SelectOpt } from "src/configure/etc.entity";
 
-const AddBooking: NextPage<_pBookingModalProps> = (props) => {
+const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -54,6 +55,10 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
     regNumber: "",
     distance: "",
   };
+  const mainHopeTimeInit: MainHopeTime = {
+    hour: "",
+    minute: "",
+  };
 
   /*********************************************************************
    * 2. State settings
@@ -62,6 +67,8 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
   const [cusInfo, setCusInfo] = useState<MainCustomer>(cusInit); // 고객 정보
   const [carInfo, setCarInfo] = useState<MainCar>(carInit); // 차량 정보
   const [carExist, setCarExist] = useState<boolean>(false); // 차량 데이터 존재여부
+  const [mainHopeTime, setMainHopeTime] =
+    useState<MainHopeTime>(mainHopeTimeInit); // 예약 희망 시분
   const [officeHour, setOfficeHour] = useState<any>(); // 선택 날짜의 영업시간
   const [bookingTime, setBookingTime] = useState<string>(""); // 정비희망시간
 
@@ -73,6 +80,8 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
    * @param e
    */
   const onBookingHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "mainReContents" && e.target.value.length > 100)
+      return false;
     setBookingInfo({ ...bookingInfo, [e.target.name]: e.target.value });
   };
   /**
@@ -110,6 +119,14 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
   };
 
   /**
+   * 예약 희망 시분 input handler
+   * @param e
+   */
+  const onMainHopeTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMainHopeTime({ ...mainHopeTime, [e.target.name]: e.target.value });
+  };
+
+  /**
    * 차량 검색 handler
    */
   const onCarSearch = async () => {
@@ -137,8 +154,14 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
     deleteKeyJson(carInfo);
     deleteKeyJson(cusInfo);
 
+    const hopeDate: Date = dayjs(bookingInfo.mainHopeDate)
+      .hour(Number(mainHopeTime.hour))
+      .minute(Number(mainHopeTime.minute))
+      .toDate();
+
     const bookingData: Partial<Booking> = {
       ...bookingInfo,
+      mainHopeDate: hopeDate,
       car: carInfo,
       customer: cusInfo,
     };
@@ -234,7 +257,14 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
                 radius={theme.radius}
                 dr={`row`}
               >
-                <Combo width={`80px`} border={"none"} required>
+                <Combo
+                  width={`80px`}
+                  border={"none"}
+                  name="hour"
+                  value={mainHopeTime.hour}
+                  onChange={onMainHopeTimeHandler}
+                  required
+                >
                   <option value="">시간</option>
                   {/* {bookingTimeList(date, date2).map((time, idx) => {
                     return (
@@ -252,7 +282,14 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
                   })}
                 </Combo>
                 <Text margin={`0px 4px`}>:</Text>
-                <Combo width={`80px`} border={"none"} required>
+                <Combo
+                  width={`80px`}
+                  border={"none"}
+                  name="minute"
+                  value={mainHopeTime.minute}
+                  onChange={onMainHopeTimeHandler}
+                  required
+                >
                   <option value="">분</option>
                   <option value="00">00</option>
                   <option value="30">30</option>
@@ -331,6 +368,7 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
                 al={`flex-start`}
                 type="text"
                 name="mainReContents"
+                placeholder="100자 이하로 입력하세요."
                 value={bookingInfo.mainReContents}
                 onChange={onBookingHandler}
               />
@@ -464,4 +502,4 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
   );
 };
 
-export default AddBooking;
+export default AddBookingModal;

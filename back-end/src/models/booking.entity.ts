@@ -8,9 +8,38 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { BookingState } from 'src/constants/booking.const';
+import { BookingState, RejectReason } from 'src/constants/booking.const';
 import { BaseEntity } from './base.entity';
 import { MainCustomer, MainCar } from './maintenance.entity';
+
+export class RejectOption {
+  @ApiProperty({
+    description: '전송번호',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  @prop()
+  phoneNumber?: string;
+
+  @ApiProperty({
+    description: '거절사유',
+    required: false,
+  })
+  @IsOptional()
+  @IsEnum(RejectReason)
+  @prop({ enum: RejectReason })
+  rejectReason?: RejectReason;
+
+  @ApiProperty({
+    description: '거절사유텍스트(직접입력시)',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  @prop()
+  rejectText?: string;
+}
 
 export class Booking extends BaseEntity {
   @ApiProperty({ description: '예약접수번호' })
@@ -24,7 +53,7 @@ export class Booking extends BaseEntity {
   @prop({ required: true })
   bookingDate: Date;
 
-  @ApiProperty({ description: '정비희망일자' })
+  @ApiProperty({ description: '정비희망일시' })
   @IsString()
   @prop({ required: true })
   mainHopeDate: Date;
@@ -55,6 +84,16 @@ export class Booking extends BaseEntity {
   @IsEnum(BookingState)
   @prop({ enum: BookingState, required: true, default: BookingState.NEW })
   bookingState: BookingState;
+
+  @ApiProperty({
+    description: '거절옵션',
+    required: false,
+  })
+  @ValidateNested()
+  @IsOptional()
+  @Type(() => RejectOption)
+  @prop({ type: () => RejectOption, _id: false })
+  rejectOption?: RejectOption;
 }
 
 export class BookingFindOptions {
@@ -67,4 +106,14 @@ export class BookingFindOptions {
   @IsOptional()
   @IsString()
   phoneNumber?: string;
+}
+
+export class MainHopeTime {
+  @ApiProperty({ description: '정비희망시간', required: true })
+  @IsString()
+  hour?: string;
+
+  @ApiProperty({ description: '정비희망분', required: true })
+  @IsString()
+  minute?: string;
 }

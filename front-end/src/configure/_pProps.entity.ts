@@ -238,6 +238,7 @@ export interface _pBookingProps extends _pFindDocs<Booking> {
 
 export interface _pBookingModalProps extends _pFindDocs<Booking> {
   setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalOption?: React.Dispatch<React.SetStateAction<string>>;
   clickDoc?: Booking;
   setClickDoc?: React.Dispatch<React.SetStateAction<Booking>>;
   style?: {

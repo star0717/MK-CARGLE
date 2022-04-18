@@ -9,17 +9,21 @@ export enum BookingState {
   MAINTENANCE = 'maintenance',
 }
 
-/**
- * 업무시간 종류
- * all: 매일 같음
- * week: 주말 다름
- * diff: 매일 다름
- */
-export enum SetBookingTime {
-  ALL = 'all',
-  WEEK = 'week',
-  DIFF = 'diff',
-}
+/** 예약 상태 string -> BookingState 변환 */
+export const bookingStateInput = (state: string) => {
+  switch (state) {
+    case 'new':
+      return BookingState.NEW;
+    case 'approval':
+      return BookingState.APPROVAL;
+    case 'reject':
+      return BookingState.REJECT;
+    case 'maintenance':
+      return BookingState.MAINTENANCE;
+    default:
+      return null;
+  }
+};
 
 /** 예약 상태별 문구 출력 */
 export const bookingStateName = (state: BookingState) => {
@@ -113,6 +117,24 @@ export const bookingTimeList = (
 
   return bookingArr;
 };
+
+export enum RejectReason {
+  hard = 'hard',
+  many = 'many',
+  text = 'text',
+}
+
+/**
+ * 업무시간 종류
+ * all: 매일 같음
+ * week: 주말 다름
+ * diff: 매일 다름
+ */
+export enum SetBookingTime {
+  ALL = 'all',
+  WEEK = 'week',
+  DIFF = 'diff',
+}
 
 /********** 검색 옵션 쿼리 생성 ******************/
 export const genBookingOptionQuery = (data: BookingFindOptions) => {

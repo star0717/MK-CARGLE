@@ -1511,9 +1511,35 @@ export async function _aPostSms() {
   return result;
 }
 
+/**
+ * 예약관리 등록
+ * @param data
+ * @returns
+ */
 export async function _aPostBooking(data: Partial<Booking>) {
   const req: Booking = await axios
     .post(genApiPath(BookingApiPath.booking), data)
+    .then((res: AxiosResponse<Booking, Partial<Booking>>): Booking => {
+      return res.data;
+    });
+
+  const result: _iBookingOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+
+  return result;
+}
+
+/**
+ * 예약관리 변경
+ * @param id
+ * @param data
+ * @returns
+ */
+export async function _aPatchBooking(id: string, data: Partial<Booking>) {
+  const req: Booking = await axios
+    .patch(genApiPath(BookingApiPath.booking, { id: id }), data)
     .then((res: AxiosResponse<Booking, Partial<Booking>>): Booking => {
       return res.data;
     });

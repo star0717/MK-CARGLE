@@ -824,6 +824,7 @@ export const TextInput = styled.input<any>`
 `;
 
 export const TextInput2 = styled.input<any>`
+  display: ${(props) => props.display};
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
   border: ${(props) => props.border || props.theme.border};
