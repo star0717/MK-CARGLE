@@ -27,7 +27,12 @@
     "ecs:local:up": "ecs-cli local up",
     "ecs:local:down": "ecs-cli local down",
     "ecs:local:ps": "ecs-cli local ps",
-    "start": "launch"
+    "node:ls": "docker node ls",
+    "node:ps": "docker node ps",
+    "stack:deploy": "docker stack deploy --compose-file compose.swarm.yml n2server",
+    "stack:services": "docker stack services n2server",
+    "stack:rm": "docker stack rm n2server",
+    "df": "df -h ."
   },
   "repository": {
     "type": "git",
