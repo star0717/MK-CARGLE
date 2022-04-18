@@ -1511,10 +1511,10 @@ export async function _aPostSms() {
   return result;
 }
 
-export async function _aPostBooking(data: Booking) {
+export async function _aPostBooking(data: Partial<Booking>) {
   const req: Booking = await axios
     .post(genApiPath(BookingApiPath.booking), data)
-    .then((res: AxiosResponse<Booking, Booking>): Booking => {
+    .then((res: AxiosResponse<Booking, Partial<Booking>>): Booking => {
       return res.data;
     });
 

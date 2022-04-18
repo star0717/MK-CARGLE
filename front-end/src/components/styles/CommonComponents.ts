@@ -852,7 +852,7 @@ export const TextInput2 = styled.input<any>`
 
   &:read-only {
     box-shadow: none;
-    border: ${(props) => props.theme.border};
+    border: ${(props) => props.border || props.theme.border};
     background-color: #f5f5f5;
     cursor: default;
   }

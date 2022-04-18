@@ -1,11 +1,11 @@
 import parse from "url-parse";
-import { MbType } from "src/configure/etc.entity";
 import { mbTypeOption } from "src/configure/list.entity";
 import { genFindParamQuery } from "src/constants/model.const";
 import { FindParameters } from "src/models/base.entity";
 import { Company } from "src/models/company.entity";
 import jwt from "jsonwebtoken";
 import AWS, { S3 } from "aws-sdk";
+import { SelectOpt } from "src/configure/etc.entity";
 
 AWS.config.update({
   accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
@@ -90,7 +90,7 @@ export const dateToString = (date: Date) => {
  * 정비업종을 해당하는 string으로 출력
  */
 export const mbTypeToString = (list: Company) => {
-  const textMbType: MbType = mbTypeOption.find((item) => {
+  const textMbType: SelectOpt = mbTypeOption.find((item) => {
     return item.value === list.mbTypeNum;
   });
   if (textMbType == null) return;
@@ -154,7 +154,9 @@ export const trim = (str: string) => {
  * @returns
  */
 export const comma = (str: string) => {
-  const commaStr = str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  let commaStr: string = "";
+  if (str && str !== "")
+    commaStr = str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   return commaStr;
 };
 
@@ -162,7 +164,7 @@ export const comma = (str: string) => {
  * 빈 값을 가진 json key 제거
  */
 export const deleteKeyJson = (obj: any) => {
-  Object.keys(obj).forEach((key) => {
+  Object.keys(obj).map((key) => {
     if (obj[key] === "" || obj[key] === undefined) {
       delete obj[key];
     }
@@ -428,4 +430,19 @@ export const s3ToUrl = (data: S3.Types.GetObjectOutput) => {
   const url: string = `data:${data.ContentType};base64,${str}`;
 
   return url;
+};
+
+/**
+ * 예약관리 임시 사용
+ * 시간 배열 생성
+ * @returns
+ */
+export const hourList = () => {
+  let hourArr: SelectOpt[] = [];
+  for (let i = 0; i < 24; i++) {
+    const hour: string = (i + 1).toString().padStart(2, "0");
+    const json: SelectOpt = { value: hour, label: hour };
+    hourArr.push(json);
+  }
+  return hourArr;
 };

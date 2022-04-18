@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { BookingFindOptions } from 'src/models/booking.entity';
 
+/** 예약 상태 */
 export enum BookingState {
   NEW = 'new',
   APPROVAL = 'approval',
@@ -8,12 +9,62 @@ export enum BookingState {
   MAINTENANCE = 'maintenance',
 }
 
+/**
+ * 업무시간 종류
+ * all: 매일 같음
+ * week: 주말 다름
+ * diff: 매일 다름
+ */
 export enum SetBookingTime {
   ALL = 'all',
   WEEK = 'week',
   DIFF = 'diff',
 }
 
+/** 예약 상태별 문구 출력 */
+export const bookingStateName = (state: BookingState) => {
+  switch (state) {
+    case 'new':
+      return '신규';
+    case 'approval':
+      return '승인';
+    case 'reject':
+      return '거절';
+    case 'maintenance':
+      return '정비';
+    default:
+      return null;
+  }
+};
+
+/** 예약 상태별 색상 출력 */
+export const bookingStateColor = (state: BookingState) => {
+  switch (state) {
+    case 'new':
+      return '#314FA5';
+    case 'approval':
+      return '#51b351';
+    case 'reject':
+      return '#d6263b';
+    case 'maintenance':
+      return '#9d9d9d';
+    default:
+      return null;
+  }
+};
+
+/** 예약 상태 리스트 */
+export const bookingStateList = Object.values(BookingState).map((e) => e);
+
+/**
+ * 추후 사용될 가능성있음
+ * 업체 업무시간 리스트
+ * @param workTo
+ * @param workFrom
+ * @param restTo
+ * @param restFrom
+ * @returns
+ */
 export const bookingTimeList = (
   workTo: Date,
   workFrom: Date,

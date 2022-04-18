@@ -23,6 +23,8 @@ export interface _pFindDocs<T> extends _MainProps {
   findResult: FindResult<T>;
   setFindResult: React.Dispatch<React.SetStateAction<FindResult<T>>>;
   findDocHandler: (page: number) => void;
+  reset?: number;
+  setReset?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 /***********************************************************************

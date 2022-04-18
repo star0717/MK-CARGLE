@@ -18,12 +18,16 @@ import { useState } from "react";
 import { Booking } from "src/models/booking.entity";
 import { MainCar, MainCustomer } from "src/models/maintenance.entity";
 import { useDispatch } from "react-redux";
-import { _aGetMaintenancesCarInfo } from "store/action/user.action";
-import { _iGetMaintenancesCarInfo } from "store/interfaces";
+import {
+  _aGetMaintenancesCarInfo,
+  _aPostBooking,
+} from "store/action/user.action";
+import { _iBookingOne, _iGetMaintenancesCarInfo } from "store/interfaces";
 import { BookingState, bookingTimeList } from "src/constants/booking.const";
 import dayjs from "dayjs";
-import { comma, trim } from "src/modules/commonModule";
+import { comma, deleteKeyJson, hourList, trim } from "src/modules/commonModule";
 import { basicRegEx } from "src/validation/regEx";
+import { SelectOpt } from "src/configure/etc.entity";
 
 const AddBooking: NextPage<_pBookingModalProps> = (props) => {
   /*********************************************************************
@@ -122,21 +126,41 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
     );
   };
 
+  /**
+   * 예약 등록 handler
+   * @param e
+   */
   const onBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("이게 뭐노");
+
+    deleteKeyJson(bookingInfo);
+    deleteKeyJson(carInfo);
+    deleteKeyJson(cusInfo);
+
+    const bookingData: Partial<Booking> = {
+      ...bookingInfo,
+      car: carInfo,
+      customer: cusInfo,
+    };
+    await dispatch(_aPostBooking(bookingData)).then(
+      (res: _iBookingOne) => {
+        if (!res.payload) return alert("예약 등록 에러");
+        props.setModalOpen(false);
+        props.setReset(props.reset + 1);
+      },
+      (err) => {
+        if (err) return alert("예약 등록 에러");
+      }
+    );
   };
 
-  console.log(bookingInfo);
-  console.log(carInfo);
-  console.log(cusInfo);
-
-  let date = new Date();
-  let date2 = new Date();
-  let rest = new Date();
-  let rest2 = new Date();
-  date2.setHours(date2.getHours() + 6);
-  rest2.setHours(rest2.getHours() + 1);
+  // /** 테스트 시간 */
+  // let date = new Date();
+  // let date2 = new Date();
+  // let rest = new Date();
+  // let rest2 = new Date();
+  // date2.setHours(date2.getHours() + 6);
+  // rest2.setHours(rest2.getHours() + 1);
 
   /*********************************************************************
    * 4. Props settings
@@ -184,7 +208,7 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>
               <ColorSpan color={`#d6263b`}>*</ColorSpan>
-              정비희망일자
+              정비희망일시
             </Text>
             <Wrapper
               width={`400px`}
@@ -193,7 +217,7 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
               ju={`space-between`}
             >
               <TextInput2
-                width={`300px`}
+                width={`212px`}
                 type="date"
                 name="mainHopeDate"
                 value={
@@ -204,16 +228,36 @@ const AddBooking: NextPage<_pBookingModalProps> = (props) => {
                 onChange={onBookingHandler}
                 required
               />
-              <Combo width={`80px`} required>
-                <option value="">시간</option>
-                {bookingTimeList(date, date2).map((time, idx) => {
-                  return (
-                    <option key={idx} value={time}>
-                      {time}
-                    </option>
-                  );
-                })}
-              </Combo>
+              <Wrapper
+                width={`168px`}
+                border={`1px solid #ccc`}
+                radius={theme.radius}
+                dr={`row`}
+              >
+                <Combo width={`80px`} border={"none"} required>
+                  <option value="">시간</option>
+                  {/* {bookingTimeList(date, date2).map((time, idx) => {
+                    return (
+                      <option key={idx} value={time}>
+                        {time}
+                      </option>
+                    );
+                  })} */}
+                  {hourList().map((item) => {
+                    return (
+                      <option key={item.value} value={item.value}>
+                        {item.label}
+                      </option>
+                    );
+                  })}
+                </Combo>
+                <Text margin={`0px 4px`}>:</Text>
+                <Combo width={`80px`} border={"none"} required>
+                  <option value="">분</option>
+                  <option value="00">00</option>
+                  <option value="30">30</option>
+                </Combo>
+              </Wrapper>
             </Wrapper>
           </Wrapper>
 

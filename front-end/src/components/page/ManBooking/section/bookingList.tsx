@@ -28,7 +28,11 @@ import {
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { GoPrimitiveDot } from "react-icons/go";
-import { BookingState } from "src/constants/booking.const";
+import {
+  BookingState,
+  bookingStateColor,
+  bookingStateName,
+} from "src/constants/booking.const";
 import { Booking } from "src/models/booking.entity";
 import theme from "styles/theme";
 import dayjs from "dayjs";
@@ -117,61 +121,6 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
       ? (document.body.style.overflow = "hidden")
       : (document.body.style.overflow = "unset");
   }, [modalOpen]);
-
-  /**
-   * Booking 상태 별 HTML 변경
-   * @param state
-   * @returns
-   */
-  const onBookingState = (state: BookingState) => {
-    let stateHtml: React.CElement<any, any>;
-    switch (state) {
-      case BookingState.NEW:
-        stateHtml = (
-          <Wrapper dr={`row`} width={`auto`}>
-            <ColorSpan color={theme.basicTheme_C} margin={"4px 0px 0px"}>
-              <GoPrimitiveDot />
-            </ColorSpan>
-            신규
-          </Wrapper>
-        );
-        break;
-
-      case BookingState.APPROVAL:
-        stateHtml = (
-          <Wrapper dr={`row`} width={`auto`}>
-            <ColorSpan color={"#51b351"} margin={"4px 0px 0px"}>
-              <GoPrimitiveDot />
-            </ColorSpan>
-            승인
-          </Wrapper>
-        );
-        break;
-
-      case BookingState.REJECT:
-        stateHtml = (
-          <Wrapper dr={`row`} width={`auto`}>
-            <ColorSpan color={theme.red_C} margin={"4px 0px 0px"}>
-              <GoPrimitiveDot />
-            </ColorSpan>
-            거절
-          </Wrapper>
-        );
-        break;
-
-      case BookingState.MAINTENANCE:
-        stateHtml = (
-          <Wrapper dr={`row`} width={`auto`}>
-            <ColorSpan color={theme.darkGrey_C} margin={`4px 0px 0px`}>
-              <GoPrimitiveDot />
-            </ColorSpan>
-            정비
-          </Wrapper>
-        );
-        break;
-    }
-    return stateHtml;
-  };
 
   /**
    * 검색 기능 handler
@@ -366,6 +315,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
                   <TableRow
                     key={list._id}
                     onClick={() => {
+                      setClickDoc(list);
                       setModalOption("edit");
                       setModalOpen(true);
                     }}
@@ -404,7 +354,13 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
                     </TableRowLIST>
                     <TableRowLIST width={`8%`}>
                       <Wrapper dr={`row`} width={`auto`}>
-                        {onBookingState(list.bookingState)}
+                        <ColorSpan
+                          color={bookingStateColor(list.bookingState)}
+                          margin={"4px 0px 0px"}
+                        >
+                          <GoPrimitiveDot />
+                        </ColorSpan>
+                        {bookingStateName(list.bookingState)}
                       </Wrapper>
                     </TableRowLIST>
                   </TableRow>

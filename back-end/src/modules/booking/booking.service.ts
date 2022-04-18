@@ -38,9 +38,7 @@ export class BookingService extends SafeService<Booking> {
     const fParams: FindParameters = {
       page: 1,
       take: 100,
-      useDurationSearch: true,
-      sFrom: doc.bookingDate,
-      sTo: doc.bookingDate,
+      filter: { bookingDate: doc.bookingDate },
     };
     const todayList: FindResult<Booking> = await super.findByOptions(
       token,
