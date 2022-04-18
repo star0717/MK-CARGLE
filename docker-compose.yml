@@ -2,7 +2,7 @@ version: '3'
 services:
   front-end:
     build: ./front-end
-    image: ${aws_id}.dkr.ecr.${aws_def_region}.amazonaws.com/${ecr_frontend}
+    image: localhost:5000/front-end
     container_name: front-end
     expose:
       - "3000"
@@ -13,13 +13,13 @@ services:
       - DESTINATION_API=${LOCAL_HOST}
   back-end:
     build: ./back-end
-    image: ${aws_id}.dkr.ecr.${aws_def_region}.amazonaws.com/${ecr_backend}
+    image: localhost:5000/back-end
     container_name: back-end
     expose:
       - "7001"
   proxy-server:
     build: ./proxy-server
-    image: ${aws_id}.dkr.ecr.${aws_def_region}.amazonaws.com/${ecr_proxyserver}
+    image: localhost:5000/proxy-server
     container_name: proxy-server
     ports:
       - "80:80"
