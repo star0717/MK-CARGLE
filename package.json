@@ -37,7 +37,19 @@
     "docker:build:back-end": "sudo docker build -t localhost:5000/back-end ./back-end",
     "docker:build:proxy-server": "sudo docker build -t localhost:5000/proxy-server ./proxy-server",
     "docker:build": "npm run docker:build:front-end & npm run docker:build:back-end & npm run docker:build:proxy-server",
-    "service:create": "docker service create --name neserver --"
+    "service:create:front-end": "docker service create --mode global --name front-end -p 3000:3000 localhost:5000/front-end",
+    "service:create:back-end": "docker service create --mode global --name back-end -p 7001:7001 localhost:5000/back-end",
+    "service:create:proxy-server": "docker service create --mode global --name proxy-server -p 80 localhost:5000/proxy-server",
+    "service:rm:front-end": "docker service rm front-end",
+    "service:rm:back-end": "docker service rm back-end",
+    "service:rm:proxy-server": "docker service rm proxy-server",
+    "n2:build": "docker build -t n2server .",
+    "n2:run": "docker run -d -p 80:80 --name n2server n2server",
+    "n2:stop": "docker stop n2server",
+    "n2:rm": "docker rm n2server",
+    "n2:exec": "docker exec -it n2server /bin/sh",
+    "n2:logs": "docker logs n2server",
+    "n2:rerun": "npm run n2:stop && npm run n2:rm && npm run n2:build && npm run n2:run"
   },
   "repository": {
     "type": "git",
