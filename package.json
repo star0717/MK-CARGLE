@@ -3,7 +3,6 @@
     "@nestjs/mapped-types": "*",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^5.1.0",
-    "script-launcher": "^1.37.1",
     "dotenv-replace": "^0.0.2"
   },
   "name": "n2server",
@@ -48,8 +47,10 @@
     "n2:stop": "docker stop n2server",
     "n2:rm": "docker rm n2server",
     "n2:exec": "docker exec -it n2server /bin/sh",
-    "n2:logs": "docker logs n2server",
-    "n2:rerun": "npm run n2:stop && npm run n2:rm && npm run n2:build && npm run n2:run"
+    "n2:logs": "docker logs -n 100 -f n2server",
+    "n2:rebuild": "npm run n2:stop && npm run n2:rm && npm run n2:build",
+    "n2:rerun": "npm run n2:rebuild && npm run n2:run",
+    "n2:reexec": "npm run n2:rerun && npm run n2:exec"
   },
   "repository": {
     "type": "git",
