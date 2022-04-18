@@ -14,8 +14,16 @@ import {
 } from "src/components/styles/CommonComponents";
 import { NextPage } from "next";
 import theme from "styles/theme";
+import { _pBookingModalProps } from "src/configure/_pProps.entity";
+import { useState } from "react";
+import { Booking } from "src/models/booking.entity";
+import {
+  BookingState,
+  bookingStateList,
+  bookingStateName,
+} from "src/constants/booking.const";
 
-const EditBooking: NextPage<any> = (props) => {
+const EditBooking: NextPage<_pBookingModalProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -23,10 +31,16 @@ const EditBooking: NextPage<any> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [bookingInfo, setBookingInfo] = useState<Booking>(props.clickDoc);
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  const onChangeState = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.value = e.target.value.toUpperCase();
+
+    // setBookingInfo({ ...bookingInfo, bookingState: BookingState[e.target.value] });
+  };
 
   /*********************************************************************
    * 4. Props settings
@@ -55,11 +69,14 @@ const EditBooking: NextPage<any> = (props) => {
             </Wrapper>
             <Wrapper width={`auto`} dr={`row`}>
               <Text>예약상태</Text>
-              <Combo>
-                <option>대기</option>
-                <option>승인</option>
-                <option>정비</option>
-                <option>거절</option>
+              <Combo value={bookingInfo.bookingState} onChange={onChangeState}>
+                {bookingStateList.map((state) => {
+                  {
+                    return (
+                      <option value={state}>{bookingStateName(state)}</option>
+                    );
+                  }
+                })}
               </Combo>
             </Wrapper>
           </Wrapper>
@@ -85,9 +102,29 @@ const EditBooking: NextPage<any> = (props) => {
               ju={`space-between`}
             >
               <TextInput2 width={`300px`} type="text" readOnly name="" />
-              <Combo width={`80px`}>
-                <option>?</option>
-              </Combo>
+              <Wrapper
+                width={`168px`}
+                border={`1px solid #ccc`}
+                background={`#f5f5f5`}
+                radius={theme.radius}
+                dr={`row`}
+              >
+                <TextInput2
+                  width={`80px`}
+                  border={`none`}
+                  type="text"
+                  readOnly
+                  name=""
+                />
+                <Text margin={`0px 4px`}>:</Text>
+                <TextInput2
+                  width={`80px`}
+                  border={`none`}
+                  type="text"
+                  readOnly
+                  name=""
+                />
+              </Wrapper>
             </Wrapper>
           </Wrapper>
 

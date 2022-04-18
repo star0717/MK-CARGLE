@@ -14,9 +14,10 @@ import { MainCustomer, MainCar } from './maintenance.entity';
 
 export class Booking extends BaseEntity {
   @ApiProperty({ description: '예약접수번호' })
+  @IsOptional()
   @IsString()
   @prop({ required: true })
-  bookingNum: string;
+  bookingNum?: string;
 
   @ApiProperty({ description: '예약접수일자' })
   @IsString()
@@ -32,18 +33,19 @@ export class Booking extends BaseEntity {
   @ValidateNested()
   @Type(() => MainCustomer)
   @prop({ required: true, type: () => MainCustomer, _id: false })
-  customer: MainCustomer;
+  customer?: MainCustomer;
 
   @ApiProperty({ description: '차량', type: MainCar })
   @ValidateNested()
   @Type(() => MainCar)
   @prop({ required: true, type: () => MainCar, _id: false })
-  car: MainCar;
+  car?: MainCar;
 
   @ApiProperty({ description: '정비요청내용', required: false })
+  @IsOptional()
   @IsString()
   @prop()
-  mainReContents: string;
+  mainReContents?: string;
 
   @ApiProperty({
     description: '예약상태',

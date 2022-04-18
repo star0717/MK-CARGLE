@@ -60,6 +60,7 @@ import {
   UserCompanyFind,
   _iSetBooking,
   _iBooking,
+  _iBookingOne,
 } from "../interfaces";
 
 import {
@@ -1510,9 +1511,25 @@ export async function _aPostSms() {
   return result;
 }
 
+export async function _aPostBooking(data: Partial<Booking>) {
+  const req: Booking = await axios
+    .post(genApiPath(BookingApiPath.booking), data)
+    .then((res: AxiosResponse<Booking, Partial<Booking>>): Booking => {
+      return res.data;
+    });
+
+  const result: _iBookingOne = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+
+  return result;
+}
+
 /**
  * 예약관리 리스트 반환
- * @param data
+ * @param findParams
+ * @param options
  * @returns
  */
 export async function _aGetBooking(
@@ -1533,6 +1550,49 @@ export async function _aGetBooking(
     );
 
   const result: _iBooking = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+
+  return result;
+}
+
+/**
+ * 예약관리 Booking 데이터 삭제(한개)
+ * @param id
+ * @returns
+ */
+export async function _aDeleteBookingOne(id: string) {
+  const req: DeleteResult = await axios
+    .delete(genApiPath(BookingApiPath.booking, { id: id }))
+    .then((res: AxiosResponse<DeleteResult, string>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+
+  return result;
+}
+
+/**
+ * 예약관리 Booking 데이터 삭제(여러개)
+ * @param ids
+ * @returns
+ */
+export async function _aDeleteBookingMany(ids: string[]) {
+  const oids: DeleteObjectIds = {
+    ids,
+  };
+  const req: DeleteResult = await axios
+    .post(genApiPath(BookingApiPath.booking_deletemany), oids)
+    .then((res: AxiosResponse<DeleteResult, string[]>): DeleteResult => {
+      return res.data;
+    });
+
+  const result: _iDeleteByUser = {
     type: ActionAPIs.USER_API,
     payload: req,
   };
