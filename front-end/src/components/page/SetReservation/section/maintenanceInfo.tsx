@@ -36,38 +36,63 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
    *********************************************************************/
   const [booking, setBooking] = useState<SetBooking>(props.data);
   const [modify, setModify] = useState<boolean>(false);
+  const [delNum, setDelNum] = useState<number>();
 
-  let price: Mprice[] = booking.mPrice;
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 객체형 배열 수정 핸들러
+   */
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBooking({ ...booking, [e.target.name]: e.target.value });
-  };
-
-  const onPriceHanlder = (e: React.ChangeEvent<HTMLInputElement>) => {
     const idx = parseInt(e.target.id);
-    if (e.target.name === "mainItems") {
+    if (e.target.name === "lift") {
+      setBooking({ ...booking, [e.target.name]: Number(e.target.value) });
+    } else if (e.target.name === "mainItems") {
       setBooking({
         ...booking,
-        mPrice: {
-          ...booking.mPrice,
-          [idx]: {
-            mainItems: e.target.value,
-            mainPrice: booking.mPrice[idx].mainPrice,
-          },
-        },
+        mPrice: booking.mPrice.map((item, index) =>
+          index === idx
+            ? (item = { ...item, [e.target.name]: e.target.value })
+            : item
+        ),
       });
-      // setBooking({
-      //   ...booking,
-      //   mPrice: {
-      //     ...price,
-      //     [idx]: { mainItems: e.target.value, mainPrice: price[idx].mainPrice },
-      //   },
-      // });
     } else {
+      setBooking({
+        ...booking,
+        mPrice: booking.mPrice.map((item, index) =>
+          index === idx
+            ? (item = { ...item, [e.target.name]: Number(e.target.value) })
+            : item
+        ),
+      });
     }
-    // setBooking({ ...booking, [e.target.name]: e.target.value });
+  };
+
+  /**
+   * 객체형 배열 삭제 핸들러
+   */
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(
+      booking.mPrice.map((item, index) =>
+        index !== delNum ? item : `여기위치한놈 지우기`
+      )
+    );
+  };
+
+  /**
+   * 객체형 배열 추가 핸들러
+   */
+  const onButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const addArray: Mprice = {
+      mainItems: "",
+      mainPrice: 0,
+    };
+    setBooking({
+      ...booking,
+      mPrice: booking.mPrice.concat(addArray),
+    });
+    console.log("okok");
   };
   /*********************************************************************
    * 4. Props settings
@@ -131,6 +156,7 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
             <Combo
               width={`191px`}
               value={booking.lift}
+              disabled={!modify}
               name="lift"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputHandler(e);
@@ -154,15 +180,21 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
           >
             {booking.mPrice.map((item, idx) => {
               return (
-                <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
+                <Wrapper
+                  key={idx}
+                  width={`auto`}
+                  margin={`0px 10px`}
+                  dr={`row`}
+                >
                   <Wrapper al={`flex-start`} margin={`0px 10px 0px 0px`}>
                     <Text>정비항목</Text>
                     <TextInput2
                       id={idx}
                       name="mainItems"
+                      readOnly={!modify}
                       value={item.mainItems}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onPriceHanlder(e);
+                        onInputHandler(e);
                       }}
                     />
                   </Wrapper>
@@ -171,26 +203,47 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
                     <TextInput2
                       id={idx}
                       name="mainPrice"
-                      value={item.mainPrice}
+                      readOnly={!modify}
+                      value={item.mainPrice.toLocaleString()}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onPriceHanlder(e);
+                        onInputHandler(e);
                       }}
                     />
                   </Wrapper>
-                  <Wrapper margin={`26px 0px 0px`}>
-                    <CloseButton>
-                      <IoIosCloseCircle />
-                    </CloseButton>
-                  </Wrapper>
+                  {modify === true ? (
+                    <Wrapper margin={`26px 0px 0px`}>
+                      <CloseButton
+                        onMouseDown={() => {
+                          setDelNum(idx);
+                        }}
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                          onClickHandler(e);
+                        }}
+                      >
+                        <IoIosCloseCircle />
+                      </CloseButton>
+                    </Wrapper>
+                  ) : (
+                    <></>
+                  )}
                 </Wrapper>
               );
             })}
-
-            <Wrapper al={`flex-start`} margin={`10px`}>
-              <SmallButton width={`392px`} kindOf={`default`}>
-                정비항목 추가하기
-              </SmallButton>
-            </Wrapper>
+            {modify === true ? (
+              <Wrapper al={`flex-start`} margin={`10px`}>
+                <SmallButton
+                  width={`392px`}
+                  kindOf={`default`}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    onButtonHandler(e);
+                  }}
+                >
+                  정비항목 추가하기
+                </SmallButton>
+              </Wrapper>
+            ) : (
+              <></>
+            )}
           </Wrapper>
         </Wrapper>
         {modify ? (
