@@ -3,7 +3,9 @@ import { NextPage } from "next";
 import {
   CommonButton,
   CommonButtonWrapper,
+  CommonForm,
   CommonSmallTitle,
+  Hr,
   Label,
   SmallButton,
   Text,
@@ -99,8 +101,8 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
             * 예약 거절 안내를 위한 고객님의 전화번호입니다.
           </Text>
         </Wrapper>
-        <hr style={{ width: "100%" }} />
-        <form>
+        <Hr style={{ width: "100%" }} />
+        <CommonForm>
           <Wrapper dr={`row`} ju={`space-between`} al={`center`}>
             <Wrapper>
               <TextInput2
@@ -239,7 +241,7 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               문자발송 및 저장
             </CommonButton>
           </CommonButtonWrapper>
-        </form>
+        </CommonForm>
       </Wrapper>
     </WholeWrapper>
   );
