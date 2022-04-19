@@ -146,6 +146,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
             </Text>
             <Wrapper
               width={`400px`}
+              height={`40px`}
               al={`flex-start`}
               dr={`row`}
               ju={`space-between`}
@@ -165,6 +166,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 dr={`row`}
               >
                 <TextInput2
+                  height={`39px`}
                   width={`80px`}
                   border={`none`}
                   textAlign={`center`}
@@ -175,6 +177,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 />
                 <Text margin={`0px 4px`}>:</Text>
                 <TextInput2
+                  height={`39px`}
                   width={`80px`}
                   border={`none`}
                   textAlign={`center`}
@@ -225,7 +228,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextArea
                 padding={`10px`}
                 width={`400px`}
-                height={`150px`}
+                height={`80px`}
                 al={`flex-start`}
                 type="text"
                 name="mainReContents"
@@ -352,7 +355,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
                   props.setModalOption("reject");
                 }}
               >
-                거절
+                다음
               </CommonButton>
             ) : (
               <CommonButton kindOf={`circleTheme`} type="submit">

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
 import {
+  ColorSpan,
   CommonButton,
   CommonButtonWrapper,
   CommonForm,
@@ -23,6 +24,7 @@ import { deleteKeyJson, trim } from "src/modules/commonModule";
 import { useDispatch } from "react-redux";
 import { _aPatchBooking } from "store/action/user.action";
 import { _iBookingOne } from "store/interfaces";
+import { IoIosArrowForward } from "react-icons/io";
 
 const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
   /*********************************************************************
@@ -41,6 +43,8 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
    *********************************************************************/
   const [rejectOption, setRejectOption] =
     useState<RejectOption>(rejectOptionInit);
+
+  const [typingCheck, setTypingCheck] = useState<number>(0);
 
   /*********************************************************************
    * 3. Handlers
@@ -89,22 +93,50 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
     <WholeWrapper>
       <CommonSmallTitle>예약 거절 사유를 선택하세요</CommonSmallTitle>
       <Wrapper>
-        <Wrapper dr={`row`}>
+        <Wrapper dr={`row`} ju={`space-between`}>
           <Text>휴대전화번호</Text>
           <TextInput2
             type="text"
             name="phoneNumber"
             value={rejectOption.phoneNumber}
             onChange={onInputHandler}
+            width={`360px`}
           />
-          <Text fontSize={`12px`}>
-            * 예약 거절 안내를 위한 고객님의 전화번호입니다.
+        </Wrapper>
+        <Wrapper
+          al={`flex-end`}
+          padding={`6px 0px`}
+          borderBottom={`1px solid #c4c4c4`}
+        >
+          <Text>
+            <ColorSpan color={`#d6263b`}>*</ColorSpan>
+            예약 거절 안내를 위한 고객님의 전화번호입니다.
           </Text>
         </Wrapper>
-        <Hr style={{ width: "100%" }} />
+
         <CommonForm>
-          <Wrapper dr={`row`} ju={`space-between`} al={`center`}>
-            <Wrapper>
+          <Wrapper
+            dr={`row`}
+            ju={`space-between`}
+            al={`center`}
+            width={`440px`}
+            padding={`10px 0px`}
+          >
+            <Wrapper
+              width={`210px`}
+              height={`190px`}
+              radius={`4px`}
+              border={
+                rejectOption.rejectReason === RejectReason.hard
+                  ? "1px solid #314fa5"
+                  : "1px solid #c4c4c4"
+              }
+              shadow={
+                rejectOption.rejectReason === RejectReason.hard
+                  ? "0px 10px 15px rgba(220,220,220,1)"
+                  : "none"
+              }
+            >
               <TextInput2
                 display={`none`}
                 type="radio"
@@ -114,7 +146,6 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 onChange={onInputHandler}
               />
               <Text
-                fontSize={`12px`}
                 color={
                   rejectOption.rejectReason === RejectReason.hard
                     ? "#314FA5"
@@ -134,7 +165,21 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 />
               </Label>
             </Wrapper>
-            <Wrapper>
+            <Wrapper
+              width={`210px`}
+              height={`190px`}
+              radius={`4px`}
+              border={
+                rejectOption.rejectReason === RejectReason.many
+                  ? "1px solid #314fa5"
+                  : "1px solid #c4c4c4"
+              }
+              shadow={
+                rejectOption.rejectReason === RejectReason.many
+                  ? "0px 10px 15px rgba(220,220,220,1)"
+                  : "none"
+              }
+            >
               <TextInput2
                 display={`none`}
                 type="radio"
@@ -144,7 +189,6 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 onChange={onInputHandler}
               />
               <Text
-                fontSize={`12px`}
                 color={
                   rejectOption.rejectReason === RejectReason.many
                     ? "#314FA5"
@@ -164,55 +208,68 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 />
               </Label>
             </Wrapper>
-            <Wrapper>
-              <TextInput2
-                display={`none`}
-                type="radio"
-                name="rejectReason"
-                id={RejectReason.text}
-                value={RejectReason.text}
-                onChange={onInputHandler}
-              />
+          </Wrapper>
+          <Wrapper al={`flex-start`} padding={`10px 0px`} width={`440px`}>
+            <TextInput2
+              display={`none`}
+              type="radio"
+              name="rejectReason"
+              id={RejectReason.text}
+              value={RejectReason.text}
+              onChange={onInputHandler}
+            />
+
+            <Label htmlFor={RejectReason.text}>
               <Text
-                fontSize={`12px`}
                 color={
                   rejectOption.rejectReason === RejectReason.text
                     ? "#314FA5"
                     : "#000000"
                 }
+                decoration={`underline`}
+                cursor={`pointer`}
               >
                 직접 입력
               </Text>
-              <Label htmlFor={RejectReason.text}>
-                <AiFillMessage
-                  size="100px"
-                  color={
-                    rejectOption.rejectReason === RejectReason.text
-                      ? "#314FA5"
-                      : "#000000"
-                  }
-                />
-              </Label>
-            </Wrapper>
+              <IoIosArrowForward />
+            </Label>
           </Wrapper>
+          <Wrapper
+            display={
+              rejectOption.rejectReason === RejectReason.text ? `none` : `block`
+            }
+            height={`106px`}
+          ></Wrapper>
           <Wrapper
             display={
               rejectOption.rejectReason === RejectReason.text ? `block` : `none`
             }
+            width={`440px`}
           >
             <TextArea
               padding={`10px`}
-              width={`400px`}
-              height={`150px`}
+              width={`100%`}
+              height={`80px`}
               al={`flex-start`}
               type="text"
               name="rejectText"
               placeholder="100자 이하로 입력하세요."
               value={rejectOption.rejectText}
-              onChange={onInputHandler}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputHandler(e);
+                setTypingCheck(e.target.value.length);
+              }}
             />
           </Wrapper>
-          <CommonButtonWrapper kindOf={`column`}>
+          <Wrapper
+            al={`flex-end`}
+            display={
+              rejectOption.rejectReason === RejectReason.text ? `block` : `none`
+            }
+          >
+            <Text textAlign={`right`}>({typingCheck}/100)</Text>
+          </Wrapper>
+          <Wrapper dr={`column`} padding={`20px 0px 0px`}>
             <CommonButton
               kindOf={`circleWhite`}
               type="button"
@@ -240,7 +297,7 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
             >
               문자발송 및 저장
             </CommonButton>
-          </CommonButtonWrapper>
+          </Wrapper>
         </CommonForm>
       </Wrapper>
     </WholeWrapper>

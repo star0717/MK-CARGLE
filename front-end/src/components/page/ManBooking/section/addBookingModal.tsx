@@ -71,6 +71,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
     useState<MainHopeTime>(mainHopeTimeInit); // 예약 희망 시분
   const [officeHour, setOfficeHour] = useState<any>(); // 선택 날짜의 영업시간
   const [bookingTime, setBookingTime] = useState<string>(""); // 정비희망시간
+  const [typingCheck, setTypingCheck] = useState<number>(0); //글자 수 제한
 
   /*********************************************************************
    * 3. Handlers
@@ -101,7 +102,9 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    */
   const onCarHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "distance") {
-      e.target.value = e.target.value.replaceAll(",", "");
+      if (e.target.value.includes(","))
+        e.target.value = e.target.value.replaceAll(",", "");
+
       if (!basicRegEx.NUM.test(e.target.value)) return false;
     }
     // return false;
@@ -360,7 +363,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>정비요청내용</Text>
-            <Wrapper width={`400px`} ju={`flex-start`}>
+            <Wrapper width={`400px`} ju={`flex-start`} height={`80px`}>
               <TextArea
                 padding={`10px`}
                 width={`400px`}
@@ -370,8 +373,14 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 name="mainReContents"
                 placeholder="100자 이하로 입력하세요."
                 value={bookingInfo.mainReContents}
-                onChange={onBookingHandler}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onBookingHandler(e);
+                  setTypingCheck(e.target.value.length);
+                }}
               />
+            </Wrapper>
+            <Wrapper al={`flex-end`}>
+              <Text textAlign={`right`}>({typingCheck}/100)</Text>
             </Wrapper>
           </Wrapper>
           <Wrapper
@@ -448,9 +457,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
             <Wrapper width={`400px`} ju={`flex-start`}>
               <TextInput2
                 width={`400px`}
-                type="text"
+                type="date"
                 name="regDate"
-                value={carInfo.regDate}
+                value={
+                  carInfo.regDate
+                    ? dayjs(carInfo.regDate).format("YYYY-MM-DD")
+                    : ""
+                }
                 readOnly={carExist}
                 onChange={onCarHandler}
               />

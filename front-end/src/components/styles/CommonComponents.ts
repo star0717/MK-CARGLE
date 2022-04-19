@@ -359,6 +359,12 @@ export const CommonButtonWrapper = styled.div<any>`
   color: ${(props) => props.color};
   cursor: pointer;
   border: none;
+  animation: ${(props) =>
+    props.notAnimate
+      ? ``
+      : css`
+          ${appearAnimation} 1s forwards
+        `};
 
   ${(props) => props.kindOf === `column` && `flex-direction : column;`}
   ${(props) => props.kindOf === `column` && `padding : 40px 0px 0px;`}
@@ -380,6 +386,12 @@ export const CommonButton = styled.button<any>`
   cursor: ${(props) => props.cursor || `pointer`};
   color: #fff;
   border: 0px;
+  animation: ${(props) =>
+    props.notAnimate
+      ? ``
+      : css`
+          ${appearAnimation} 1s forwards
+        `};
 
   ${(props) => !props.kindOf && `background : ${props.theme.basicTheme_C};`}
   ${(props) =>
