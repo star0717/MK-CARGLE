@@ -244,10 +244,11 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
             display={
               rejectOption.rejectReason === RejectReason.text ? `block` : `none`
             }
+            width={`440px`}
           >
             <TextArea
               padding={`10px`}
-              width={`438px`}
+              width={`100%`}
               height={`80px`}
               al={`flex-start`}
               type="text"
