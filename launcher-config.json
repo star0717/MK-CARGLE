@@ -1,7 +1,11 @@
 {
   "scripts": {
-    "env:hostname": [
+    "set:hostname:ec2-mode": [
       "npx dotenv-replace DESTINATION_API=http://$(curl https://ipinfo.io/ip)",
+      "dotenv cross-var echo %DESTINATION_API%"
+    ],
+    "set:hostname:domain-mode": [
+      "npx dotenv-replace DESTINATION_API=http://cargle.net",
       "dotenv cross-var echo %DESTINATION_API%"
     ],
     "build:build": "docker-compose build",
@@ -16,11 +20,15 @@
       "echo $v1",
       "dotenv cross-var echo %DESTINATION_API%"
     ],
+    "service:create": "docker service create --mode global --env-file .env -q --with-registry-auth --name n2server -p 80:80 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/n2server:latest",
     "service:create:ec2-mode": [
-      "env:hostname",
-      "docker service create --mode global --env-file .env -q --with-registry-auth --name n2server -p 80:80 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/n2server:latest"
+      "set:hostname:ec2-mode",
+      "service:create"
     ],
-    "service:create:domain-mode": "docker service create --mode global -q --with-registry-auth --name n2server -p 80:80 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/n2server:latest",
+    "service:create:domain-mode": [
+      "set:hostname:domain-mode",
+      "service:create"
+    ],
     "service:rm": "docker service rm n2server",
     "service:logs": "docker service logs -n 100 -f n2server",
     "service:list": "docker service list",
