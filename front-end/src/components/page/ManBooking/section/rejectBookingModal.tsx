@@ -209,7 +209,7 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               </Label>
             </Wrapper>
           </Wrapper>
-          <Wrapper al={`flex-start`} padding={`10px 0px`}>
+          <Wrapper al={`flex-start`} padding={`10px 0px`} width={`440px`}>
             <TextInput2
               display={`none`}
               type="radio"
