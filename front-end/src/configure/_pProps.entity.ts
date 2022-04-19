@@ -23,6 +23,8 @@ export interface _pFindDocs<T> extends _MainProps {
   findResult: FindResult<T>;
   setFindResult: React.Dispatch<React.SetStateAction<FindResult<T>>>;
   findDocHandler: (page: number) => void;
+  reset?: number;
+  setReset?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 /***********************************************************************
@@ -230,6 +232,19 @@ export interface _pBookingProps extends _pFindDocs<Booking> {
   setSearchOption: React.Dispatch<React.SetStateAction<string>>;
   filterValue: string;
   setFilterValue: React.Dispatch<React.SetStateAction<string>>;
+  reset?: number;
+  setReset?: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface _pBookingModalProps extends _pFindDocs<Booking> {
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalOption?: React.Dispatch<React.SetStateAction<string>>;
+  clickDoc?: Booking;
+  setClickDoc?: React.Dispatch<React.SetStateAction<Booking>>;
+  style?: {
+    height: string;
+    width?: string;
+  };
 }
 
 // 서류 미리보기 props

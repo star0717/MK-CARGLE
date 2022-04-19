@@ -63,12 +63,18 @@ export class BookingController {
     if (fOptions) {
       fParams.filter = fOptions;
       if (fOptions.regNumber) {
-        fOptions['car.regNumber'] = fOptions.regNumber;
+        fOptions['car.regNumber'] = {
+          $regex: fOptions.regNumber,
+          $options: '$i',
+        };
         delete fOptions.regNumber;
       }
       if (fOptions.phoneNumber) {
-        fOptions['customer.phoneNumber'] = fOptions.phoneNumber;
-        delete fOptions.regNumber;
+        fOptions['customer.phoneNumber'] = {
+          $regex: fOptions.phoneNumber,
+          $options: '$i',
+        };
+        delete fOptions.phoneNumber;
       }
     }
     return await this.bookingService.findByOptions(token, fParams);

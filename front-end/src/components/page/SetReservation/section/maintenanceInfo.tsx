@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import {
   CloseButton,
   Combo,
+  CommonButton,
+  CommonButtonWrapper,
   CommonSubTitle,
   CommonTitle,
   CommonTitleWrapper,
@@ -19,20 +21,75 @@ import { UseLink } from "src/configure/router.entity";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
 import theme from "styles/theme";
 import { IoIosCloseCircle } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { Mprice, SetBooking } from "src/models/setbooking.entity";
+import { _aPostSetBooking } from "store/action/user.action";
 
 const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const router = useRouter();
+  const dispatch = useDispatch();
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
+  const [booking, setBooking] = useState<SetBooking>(props.data);
+  const [modify, setModify] = useState<boolean>(false);
+  const [delNum, setDelNum] = useState<number>();
 
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 객체형 배열 수정 핸들러
+   */
+  const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const idx = parseInt(e.target.id);
+    if (e.target.name === "lift") {
+      setBooking({ ...booking, [e.target.name]: Number(e.target.value) });
+    } else if (e.target.name === "mainItems") {
+      setBooking({
+        ...booking,
+        mPrice: booking.mPrice.map((item, index) =>
+          index === idx
+            ? (item = { ...item, [e.target.name]: e.target.value })
+            : item
+        ),
+      });
+    } else {
+      setBooking({
+        ...booking,
+        mPrice: booking.mPrice.map((item, index) =>
+          index === idx
+            ? (item = { ...item, [e.target.name]: Number(e.target.value) })
+            : item
+        ),
+      });
+    }
+  };
 
+  /**
+   * 객체형 배열 삭제 핸들러
+   */
+  const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const arr = booking.mPrice.filter((item, index) => index !== delNum);
+    setBooking({ ...booking, mPrice: arr });
+  };
+
+  /**
+   * 객체형 배열 추가 핸들러
+   */
+  const onButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const addArray: Mprice = {
+      mainItems: "",
+      mainPrice: 0,
+    };
+    setBooking({
+      ...booking,
+      mPrice: booking.mPrice.concat(addArray),
+    });
+  };
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -92,12 +149,24 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
             padding={`20px 0px`}
             al={`flex-start`}
           >
-            <Combo width={`191px`}>
-              <option>해당없음</option>
+            <Combo
+              width={`191px`}
+              value={booking.lift}
+              disabled={!modify}
+              name="lift"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputHandler(e);
+              }}
+            >
+              <option value={1}>1대</option>
+              <option value={2}>2대</option>
+              <option value={3}>3대</option>
+              <option value={4}>4대</option>
+              <option value={5}>5대</option>
+              <option value={6}>6대 이상</option>
             </Combo>
           </Wrapper>
         </Wrapper>
-
         <Wrapper al={`flex-start`} padding={`20px 0px 10px`} fontWeight={`800`}>
           <Text color={theme.basicTheme_C}>주요 정비 가격을 알려주세요.</Text>
           <Wrapper
@@ -105,28 +174,110 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
             padding={`20px 0px`}
             al={`flex-start`}
           >
-            <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
-              <Wrapper al={`flex-start`} margin={`0px 10px 0px 0px`}>
-                <Text>정비항목</Text>
-                <TextInput2 />
+            {booking.mPrice.map((item, idx) => {
+              return (
+                <Wrapper
+                  key={idx}
+                  width={`auto`}
+                  margin={`0px 10px`}
+                  dr={`row`}
+                >
+                  <Wrapper al={`flex-start`} margin={`0px 10px 0px 0px`}>
+                    <Text>정비항목</Text>
+                    <TextInput2
+                      id={idx}
+                      name="mainItems"
+                      readOnly={!modify}
+                      value={item.mainItems}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        onInputHandler(e);
+                      }}
+                    />
+                  </Wrapper>
+                  <Wrapper al={`flex-start`}>
+                    <Text>가격</Text>
+                    <TextInput2
+                      id={idx}
+                      name="mainPrice"
+                      readOnly={!modify}
+                      value={item.mainPrice.toLocaleString()}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        onInputHandler(e);
+                      }}
+                    />
+                  </Wrapper>
+                  {modify === true ? (
+                    <Wrapper margin={`26px 0px 0px`}>
+                      <CloseButton
+                        onMouseDown={() => {
+                          setDelNum(idx);
+                        }}
+                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                          onClickHandler(e);
+                        }}
+                      >
+                        <IoIosCloseCircle />
+                      </CloseButton>
+                    </Wrapper>
+                  ) : (
+                    <></>
+                  )}
+                </Wrapper>
+              );
+            })}
+            {modify === true ? (
+              <Wrapper al={`flex-start`} margin={`10px`}>
+                <SmallButton
+                  width={`392px`}
+                  kindOf={`default`}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    onButtonHandler(e);
+                  }}
+                >
+                  정비항목 추가하기
+                </SmallButton>
               </Wrapper>
-              <Wrapper al={`flex-start`}>
-                <Text>가격</Text>
-                <TextInput2 />
-              </Wrapper>
-              <Wrapper margin={`26px 0px 0px`}>
-                <CloseButton>
-                  <IoIosCloseCircle />
-                </CloseButton>
-              </Wrapper>
-            </Wrapper>
-            <Wrapper al={`flex-start`} margin={`10px`}>
-              <SmallButton width={`392px`} kindOf={`default`}>
-                정비항목 추가하기
-              </SmallButton>
-            </Wrapper>
+            ) : (
+              <></>
+            )}
           </Wrapper>
         </Wrapper>
+        {modify ? (
+          <CommonButtonWrapper ju={`space-around`}>
+            <CommonButton
+              kindOf={`white`}
+              onClick={() => {
+                setBooking(props.data);
+                setModify(false);
+              }}
+            >
+              취소
+            </CommonButton>
+            <CommonButton
+              onClick={async () => {
+                await dispatch(_aPostSetBooking(booking)).then((res: any) => {
+                  setBooking(res.payload);
+                  alert("저장 되었습니다!");
+                });
+
+                setModify(false);
+              }}
+            >
+              저장
+            </CommonButton>
+          </CommonButtonWrapper>
+        ) : (
+          <CommonButtonWrapper ju={`space-around`}>
+            <CommonButton
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                setModify(true);
+                window.scroll({ top: 0, left: 0, behavior: "smooth" });
+              }}
+            >
+              수정
+            </CommonButton>
+          </CommonButtonWrapper>
+        )}
       </RsWrapper>
     </WholeWrapper>
   );

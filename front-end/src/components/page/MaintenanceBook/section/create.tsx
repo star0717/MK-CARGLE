@@ -155,7 +155,7 @@ const MaintenanceCreate: NextPage = () => {
   const onCarStoredHandler: SubmitHandler<Partial<Maintenance>> = async (
     data
   ) => {
-    const maintenanceData: Partial<Maintenance> = {
+    let maintenanceData: Partial<Maintenance> = {
       car: { ...carInfo, regNumber: searchCarText },
       customer: { ...cusInfo },
     };
