@@ -136,6 +136,19 @@ export enum SetBookingTime {
   DIFF = 'diff',
 }
 
+export enum dayOff {
+  MON = `monday`,
+  TUE = `tuesday`,
+  WED = `wedensday`,
+  THU = `thursday`,
+  FRI = `friday`,
+  SAT = `satureday`,
+  SUN = `sunday`,
+  ALLDAY = `allday`,
+  WEEKDAY = `weekday`,
+  WEEKEND = `weekend`,
+}
+
 /********** 검색 옵션 쿼리 생성 ******************/
 export const genBookingOptionQuery = (data: BookingFindOptions) => {
   let query = '&';
