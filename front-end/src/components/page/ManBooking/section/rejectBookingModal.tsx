@@ -105,7 +105,7 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
         </Wrapper>
         <Wrapper
           al={`flex-end`}
-          padding={`10px 0px`}
+          padding={`6px 0px`}
           borderBottom={`1px solid #c4c4c4`}
         >
           <Text>
@@ -255,10 +255,8 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               placeholder="100자 이하로 입력하세요."
               value={rejectOption.rejectText}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                if (e.target.value.length <= 100) {
-                  onInputHandler(e);
-                  setTypingCheck(e.target.value.length);
-                }
+                onInputHandler(e);
+                setTypingCheck(e.target.value.length);
               }}
             />
           </Wrapper>

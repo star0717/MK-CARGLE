@@ -228,7 +228,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextArea
                 padding={`10px`}
                 width={`400px`}
-                height={`150px`}
+                height={`80px`}
                 al={`flex-start`}
                 type="text"
                 name="mainReContents"
