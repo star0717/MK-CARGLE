@@ -8,10 +8,16 @@
       "npx dotenv-replace DESTINATION_API=http://cargle.net",
       "dotenv cross-var echo %DESTINATION_API%"
     ],
+    "set:registry": {
+      "sequential": [
+        "dotenv -- cross-var npx dotenv-replace ecr_base_url=%aws_id%.dkr.ecr.%aws_def_region%.amazonaws.com"
+      ]
+    },
     "build:build": "docker-compose build",
     "build:push": "docker-compose push",
     "build:prod": {
       "sequential": [
+        "set:registry",
         "build:*"
       ]
     },

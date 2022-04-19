@@ -2,10 +2,10 @@ version: '3'
 services:
   n2server:
     # image: localhost:5000/n2server
-    image: 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/n2server
+    image: "${ecr_base_url}/${service_name}"
     build: .
     ports:
       - "80:80"
     environment:
       - NODE_ENV=production
-      - DESTINATION_API=http://18.136.126.186
+      - DESTINATION_API=${DESTINATION_API}
