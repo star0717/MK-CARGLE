@@ -62,7 +62,7 @@ Docker swarm 모드를 이용하면 복수의 인스턴스에 n2server를 배치
 init 명령어는 매니저가 실행한다.
 
 ```
-ubuntu@ip-192-168-52-239:~/n2server$ npm start
+ubuntu@ip-192-168-3-243:~/n2server$ npm start
 
 > n2server@1.0.0 start /home/ubuntu/n2server
 > launch
@@ -73,11 +73,11 @@ ubuntu@ip-192-168-52-239:~/n2server$ npm start
 
 Executing: npm start swarm:init
 
-Swarm initialized: current node (k78g0etkh3gnrx58z2bn6udt0) is now a manager.
+Swarm initialized: current node (p8qqkclsvqbumchgtnew9etja) is now a manager.
 
 To add a worker to this swarm, run the following command:
 
-    docker swarm join --token SWMTKN-1-5udy7oaeiev7ul69khs8ynb9487q9kdyz8t4ilpfosa7qedu4o-c3xg5gc22jayje6wdq8up1t6v 192.168.52.239:2377
+    docker swarm join --token SWMTKN-1-5rnb5ocy1m3kbrjbamsupysjzb7rjzycz2bzag6sf8szhqynas-1tpcuge3mfskjbdchlhn004z6 192.168.3.243:2377
 
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```

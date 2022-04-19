@@ -43,7 +43,10 @@
     "context:ls": "docker context ls",
     "context:ecs": "docker context use ecs",
     "context:default": "docker context use default",
-    "context:login": "dotenv cross-var %ecs_login_cmd%"
+    "context:login": [
+      "dotenv cross-var echo %ecs_login_cmd%",
+      "dotenv cross-var %ecs_login_cmd%"
+    ]
   },
   "menu": {
     "description": "action",
