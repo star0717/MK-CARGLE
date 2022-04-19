@@ -52,6 +52,19 @@ export class BookingService extends SafeService<Booking> {
     return await super.create(token, doc);
   }
 
+  async mobileCreate(doc: Booking): Promise<Booking> {
+    // const car: MainCar = await this.carsService.updateOrInsertByCarInfo(
+    //   doc.car,
+    // );
+    // if (!car) throw new BadRequestException();
+
+    if (doc.bookingDate) {
+      const todayList = await this.model.find({ bookingDate: doc.bookingDate });
+      console.log(todayList);
+    }
+    return null;
+  }
+
   async findById(token: AuthTokenInfo, id: string): Promise<Booking> {
     return await super.findById(token, id);
   }
