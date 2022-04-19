@@ -107,6 +107,9 @@ class GenPathArgs {
   isServerSide?: boolean;
 }
 
+console.log("process.env.NODE_ENV: ", process.env.NODE_ENV);
+console.log("process.env.DESTINATION_API: ", process.env.DESTINATION_API);
+
 let _externalApiPath =
   process.env.NODE_ENV == "production"
     ? `${process.env.DESTINATION_API}/api/`
