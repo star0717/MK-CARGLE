@@ -15,12 +15,7 @@
         "build:*"
       ]
     },
-    "test": [
-      "dotenv cross-var v1=%DESTINATION_API%",
-      "echo $v1",
-      "dotenv cross-var echo %DESTINATION_API%"
-    ],
-    "service:create": "docker service create --mode global --env-file .env -q --with-registry-auth --name n2server -p 80:80 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/n2server:latest",
+    "service:create": "dotenv -- cross-var docker service create --mode global --env-file .env -q --with-registry-auth --name %service_name% -p 80:80 %ecr_base_url%/%service_name%:latest",
     "service:create:ec2-mode": [
       "set:hostname:ec2-mode",
       "service:create"
@@ -29,8 +24,8 @@
       "set:hostname:domain-mode",
       "service:create"
     ],
-    "service:rm": "docker service rm n2server",
-    "service:logs": "docker service logs -n 100 -f n2server",
+    "service:rm": "dotenv cross-var docker service rm %service_name%",
+    "service:logs": "dotenv -- cross-var docker service logs -n 100 -f %service_name%",
     "service:list": "docker service list",
     "swarm:init": "docker swarm init",
     "swarm:leave": "docker swarm leave --force",
