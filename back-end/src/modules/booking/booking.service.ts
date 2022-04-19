@@ -17,6 +17,10 @@ import { CarsService } from 'src/modules/cars/cars.service';
 import { SetbookingService } from 'src/modules/setbooking/setbooking.service';
 import { FilterQuery } from 'mongoose';
 import { BookingState } from 'src/constants/booking.const';
+import {
+  getEndOfDayDateTime,
+  getStartOfDayDateTime,
+} from 'src/lib/toolkit/back-end.toolkit';
 
 @Injectable()
 export class BookingService extends SafeService<Booking> {
@@ -39,7 +43,12 @@ export class BookingService extends SafeService<Booking> {
     const fParams: FindParameters = {
       page: 1,
       take: 100,
-      filter: { bookingDate: doc.bookingDate },
+      filter: {
+        bookingDate: {
+          $gte: getStartOfDayDateTime(doc.bookingDate),
+          $lt: getEndOfDayDateTime(doc.bookingDate),
+        },
+      },
     };
     const todayList: FindResult<Booking> = await super.findByOptions(
       token,
@@ -53,16 +62,24 @@ export class BookingService extends SafeService<Booking> {
   }
 
   async mobileCreate(doc: Booking): Promise<Booking> {
-    // const car: MainCar = await this.carsService.updateOrInsertByCarInfo(
-    //   doc.car,
-    // );
-    // if (!car) throw new BadRequestException();
+    const car: MainCar = await this.carsService.updateOrInsertByCarInfo(
+      doc.car,
+    );
+    if (!car) throw new BadRequestException();
 
     if (doc.bookingDate) {
-      const todayList = await this.model.find({ bookingDate: doc.bookingDate });
-      console.log(todayList);
+      const todayListCount = await this.model.count({
+        bookingDate: {
+          $gte: getStartOfDayDateTime(doc.bookingDate),
+          $lt: getEndOfDayDateTime(doc.bookingDate),
+        },
+      });
+
+      let docNum: number = todayListCount + 1;
+      doc.bookingNum = docNum.toString().padStart(3, '0');
     }
-    return null;
+
+    return await super._create(doc);
   }
 
   async findById(token: AuthTokenInfo, id: string): Promise<Booking> {

@@ -101,7 +101,9 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    */
   const onCarHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "distance") {
-      e.target.value = e.target.value.replaceAll(",", "");
+      if (e.target.value.includes(","))
+        e.target.value = e.target.value.replaceAll(",", "");
+
       if (!basicRegEx.NUM.test(e.target.value)) return false;
     }
     // return false;
@@ -448,9 +450,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
             <Wrapper width={`400px`} ju={`flex-start`}>
               <TextInput2
                 width={`400px`}
-                type="text"
+                type="date"
                 name="regDate"
-                value={carInfo.regDate}
+                value={
+                  carInfo.regDate
+                    ? dayjs(carInfo.regDate).format("YYYY-MM-DD")
+                    : ""
+                }
                 readOnly={carExist}
                 onChange={onCarHandler}
               />
