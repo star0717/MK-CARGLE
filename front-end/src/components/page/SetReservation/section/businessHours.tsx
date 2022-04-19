@@ -33,6 +33,12 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     id: string;
   }
 
+  // export enum s3Folder {
+  //   crn = "crn",
+  //   mrn = "mrn",
+  //   stamp = "stamp",
+  // }
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -216,6 +222,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Text>영업시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
               <TextInput2
+                readOnly={!modify}
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
@@ -228,6 +235,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               />
               <Text margin={`0px 4px`}>:</Text>
               <TextInput2
+                readOnly={!modify || booking.dayOff.includes(key.id)}
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
@@ -245,6 +253,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Text>영업종료</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
               <TextInput2
+                readOnly={!modify}
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
@@ -257,6 +266,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               />
               <Text margin={`0px 4px`}>:</Text>
               <TextInput2
+                readOnly={!modify}
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
@@ -275,6 +285,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Text>휴게시간 시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
               <TextInput2
+                readOnly={!modify}
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
@@ -287,6 +298,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               />
               <Text margin={`0px 4px`}>:</Text>
               <TextInput2
+                readOnly={!modify}
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
@@ -304,6 +316,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Text>휴게시간 종료</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
               <TextInput2
+                readOnly={!modify}
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}
@@ -316,6 +329,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               />
               <Text margin={`0px 4px`}>:</Text>
               <TextInput2
+                readOnly={!modify}
                 border={`none`}
                 textAlign={`center`}
                 width={`100px`}

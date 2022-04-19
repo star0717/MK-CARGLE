@@ -1,0 +1,64 @@
+{
+  "scripts": {
+    "env": [
+      "echo Environments",
+      "echo image"
+    ],
+    "build:build": "docker-compose build",
+    "build:push": "docker-compose push",
+    "build:prod": {
+      "sequential": [
+        "build:*"
+      ]
+    },
+    "service:create": "docker service create --mode global -q --with-registry-auth --name n2server -p 80:80 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/n2server:latest",
+    "service:rm": "docker service rm n2server",
+    "service:logs": "docker service logs -n 100 -f n2server",
+    "swarm:init": "docker swarm init",
+    "swarm:leave": "docker swarm leave --force",
+    "swarm:join-manager": "docker swarm join-token manager",
+    "swarm:join-waroker": "docker swarm join-token manager",
+    "node:list": "docker node list",
+    "node:ps": "docker node ps",
+    "context:create": "docker context create ecs ecs --profile default",
+    "context:ls": "docker context ls",
+    "context:ecs": "docker context use ecs",
+    "context:default": "docker context use default",
+    "context:login": "dotenv cross-var %ecs_login_cmd%"
+  },
+  "menu": {
+    "description": "action",
+    "build:소스 빌드 및 도커 이미지 관리": {
+      "description": "environment",
+      "prd:배포판 이미지 생성 및 저장소 저장": "build:prod"
+    },
+    "service:서비스 관리": {
+      "create:서비스 생성": "service:create",
+      "logs:서비스 로그 확인": "service:logs",
+      "rm:서비스 종료": "service:rm"
+    },
+    "swarm:도커 스왐 관련": {
+      "init:도커 스왐 시작": "swarm:init",
+      "leave:도커 스왐 종료": "swarm:leave",
+      "join-manager:매니저 노드로 조인": "swarm:join-manager",
+      "join-waroker:워커 노드로 조인": "swarm:join-waroker"
+    },
+    "node:도커 참여중인 노드": {
+      "list:스왐 모드에 참여중인 노드 리스트 확인": "node:list",
+      "ps:스왐 서비스 현황 확인": "node:ps"
+    },
+    "context:도커 컨택스트 관련(ECR 사용 목적)": {
+      "login:ecs사용을 위해 로그인": "context:login",
+      "create:ecs용 컨택스트 생성": "context:create",
+      "ls:컨택스트 목록 확인": "context:ls",
+      "ecs:ecs 컨택스트로 전환": "context:ecs",
+      "default:default 컨택스트로 전환": "context:default"
+    },
+    "env:환경변수": "env"
+  },
+  "options": {
+    "menu": {
+      "defaultChoice": "serve:development"
+    }
+  }
+}

@@ -50,7 +50,11 @@
     "n2:logs": "docker logs -n 100 -f n2server",
     "n2:rebuild": "npm run n2:stop && npm run n2:rm && npm run n2:build",
     "n2:rerun": "npm run n2:rebuild && npm run n2:run",
-    "n2:reexec": "npm run n2:rerun && npm run n2:exec"
+    "n2:reexec": "npm run n2:rerun && npm run n2:exec",
+    "n2:push": "docker-compose push",
+    "service:create": "docker service create --mode global -q --with-registry-auth --name n2server -p 80:80 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/n2server:latest",
+    "service:rm": "docker service rm n2server",
+    "start": "launch"
   },
   "repository": {
     "type": "git",
@@ -61,5 +65,8 @@
   "bugs": {
     "url": "https://github.com/ByunMooYoung/n2server/issues"
   },
-  "homepage": "https://github.com/ByunMooYoung/n2server#readme"
+  "homepage": "https://github.com/ByunMooYoung/n2server#readme",
+  "devDependencies": {
+    "script-launcher": "^1.37.1"
+  }
 }

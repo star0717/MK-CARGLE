@@ -1,30 +1,11 @@
 version: '3'
 services:
-  front-end:
-    build: ./front-end
-    image: localhost:5000/front-end
-    container_name: front-end
-    expose:
-      - "3000"
-    depends_on:
-      - back-end
-    environment:
-      - NODE_ENV=production
-      - DESTINATION_API=${LOCAL_HOST}
-  back-end:
-    build: ./back-end
-    image: localhost:5000/back-end
-    container_name: back-end
-    expose:
-      - "7001"
-  proxy-server:
-    build: ./proxy-server
-    image: localhost:5000/proxy-server
-    container_name: proxy-server
+  n2server:
+    # image: localhost:5000/n2server
+    image: 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/n2server
+    build: .
     ports:
       - "80:80"
-    depends_on:
-      - front-end
-    links:
-      - front-end
-      - back-end
+    environment:
+      - NODE_ENV=production
+      - DESTINATION_API=http://18.136.126.186
