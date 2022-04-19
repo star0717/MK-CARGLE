@@ -13,6 +13,7 @@
     },
     "service:create": "docker service create --mode global -q --with-registry-auth --name n2server -p 80:80 617699280027.dkr.ecr.ap-southeast-1.amazonaws.com/n2server:latest",
     "service:rm": "docker service rm n2server",
+    "service:logs": "docker service logs -n 100 -f n2server",
     "swarm:init": "docker swarm init",
     "swarm:leave": "docker swarm leave --force",
     "swarm:join-manager": "docker swarm join-token manager",
@@ -33,6 +34,7 @@
     },
     "service:서비스 관리": {
       "create:서비스 생성": "service:create",
+      "logs:서비스 로그 확인": "service:logs",
       "rm:서비스 종료": "service:rm"
     },
     "swarm:도커 스왐 관련": {
