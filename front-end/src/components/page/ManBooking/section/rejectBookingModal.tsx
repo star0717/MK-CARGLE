@@ -114,16 +114,20 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <Text
                 fontSize={`12px`}
                 color={
-                  rejectOption.rejectReason === RejectReason.hard && "#314FA5"
+                  rejectOption.rejectReason === RejectReason.hard
+                    ? "#314FA5"
+                    : "#000000"
                 }
               >
                 "정비가 어려운 차량이에요"
               </Text>
-              <Label for={RejectReason.hard}>
+              <Label htmlFor={RejectReason.hard}>
                 <AiFillCar
                   size="100px"
                   color={
-                    rejectOption.rejectReason === RejectReason.hard && "#314FA5"
+                    rejectOption.rejectReason === RejectReason.hard
+                      ? "#314FA5"
+                      : "#000000"
                   }
                 />
               </Label>
@@ -140,16 +144,20 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <Text
                 fontSize={`12px`}
                 color={
-                  rejectOption.rejectReason === RejectReason.many && "#314FA5"
+                  rejectOption.rejectReason === RejectReason.many
+                    ? "#314FA5"
+                    : "#000000"
                 }
               >
                 "수리할 차량이 밀려있어요"
               </Text>
-              <Label for={RejectReason.many}>
+              <Label htmlFor={RejectReason.many}>
                 <AiOutlineFieldTime
                   size="100px"
                   color={
-                    rejectOption.rejectReason === RejectReason.many && "#314FA5"
+                    rejectOption.rejectReason === RejectReason.many
+                      ? "#314FA5"
+                      : "#000000"
                   }
                 />
               </Label>
@@ -166,16 +174,20 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <Text
                 fontSize={`12px`}
                 color={
-                  rejectOption.rejectReason === RejectReason.text && "#314FA5"
+                  rejectOption.rejectReason === RejectReason.text
+                    ? "#314FA5"
+                    : "#000000"
                 }
               >
                 직접 입력
               </Text>
-              <Label for={RejectReason.text}>
+              <Label htmlFor={RejectReason.text}>
                 <AiFillMessage
                   size="100px"
                   color={
-                    rejectOption.rejectReason === RejectReason.text && "#314FA5"
+                    rejectOption.rejectReason === RejectReason.text
+                      ? "#314FA5"
+                      : "#000000"
                   }
                 />
               </Label>
