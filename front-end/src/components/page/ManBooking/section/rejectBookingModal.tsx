@@ -3,7 +3,9 @@ import { NextPage } from "next";
 import {
   CommonButton,
   CommonButtonWrapper,
+  CommonForm,
   CommonSmallTitle,
+  Hr,
   Label,
   SmallButton,
   Text,
@@ -99,8 +101,8 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
             * 예약 거절 안내를 위한 고객님의 전화번호입니다.
           </Text>
         </Wrapper>
-        <hr style={{ width: "100%" }} />
-        <form>
+        <Hr style={{ width: "100%" }} />
+        <CommonForm>
           <Wrapper dr={`row`} ju={`space-between`} al={`center`}>
             <Wrapper>
               <TextInput2
@@ -114,16 +116,20 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <Text
                 fontSize={`12px`}
                 color={
-                  rejectOption.rejectReason === RejectReason.hard && "#314FA5"
+                  rejectOption.rejectReason === RejectReason.hard
+                    ? "#314FA5"
+                    : "#000000"
                 }
               >
                 "정비가 어려운 차량이에요"
               </Text>
-              <Label for={RejectReason.hard}>
+              <Label htmlFor={RejectReason.hard}>
                 <AiFillCar
                   size="100px"
                   color={
-                    rejectOption.rejectReason === RejectReason.hard && "#314FA5"
+                    rejectOption.rejectReason === RejectReason.hard
+                      ? "#314FA5"
+                      : "#000000"
                   }
                 />
               </Label>
@@ -140,16 +146,20 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <Text
                 fontSize={`12px`}
                 color={
-                  rejectOption.rejectReason === RejectReason.many && "#314FA5"
+                  rejectOption.rejectReason === RejectReason.many
+                    ? "#314FA5"
+                    : "#000000"
                 }
               >
                 "수리할 차량이 밀려있어요"
               </Text>
-              <Label for={RejectReason.many}>
+              <Label htmlFor={RejectReason.many}>
                 <AiOutlineFieldTime
                   size="100px"
                   color={
-                    rejectOption.rejectReason === RejectReason.many && "#314FA5"
+                    rejectOption.rejectReason === RejectReason.many
+                      ? "#314FA5"
+                      : "#000000"
                   }
                 />
               </Label>
@@ -166,16 +176,20 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <Text
                 fontSize={`12px`}
                 color={
-                  rejectOption.rejectReason === RejectReason.text && "#314FA5"
+                  rejectOption.rejectReason === RejectReason.text
+                    ? "#314FA5"
+                    : "#000000"
                 }
               >
                 직접 입력
               </Text>
-              <Label for={RejectReason.text}>
+              <Label htmlFor={RejectReason.text}>
                 <AiFillMessage
                   size="100px"
                   color={
-                    rejectOption.rejectReason === RejectReason.text && "#314FA5"
+                    rejectOption.rejectReason === RejectReason.text
+                      ? "#314FA5"
+                      : "#000000"
                   }
                 />
               </Label>
@@ -227,7 +241,7 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               문자발송 및 저장
             </CommonButton>
           </CommonButtonWrapper>
-        </form>
+        </CommonForm>
       </Wrapper>
     </WholeWrapper>
   );

@@ -2036,3 +2036,8 @@ export const SelectDays = styled.button<any>`
 //   background-color: ${(props) => props.theme.red_C};
 //   color: ${(props) => props.theme.white_C};
 // }
+
+export const Hr = styled.hr<any>`
+  width: ${(props) => props.width || `100%`};
+  color: ${(props) => props.width || `#000000`};
+`;

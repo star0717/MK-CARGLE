@@ -73,11 +73,8 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
    * 객체형 배열 삭제 핸들러
    */
   const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(
-      booking.mPrice.map((item, index) =>
-        index !== delNum ? item : `여기위치한놈 지우기`
-      )
-    );
+    const arr = booking.mPrice.filter((item, index) => index !== delNum);
+    setBooking({ ...booking, mPrice: arr });
   };
 
   /**
@@ -92,7 +89,6 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
       ...booking,
       mPrice: booking.mPrice.concat(addArray),
     });
-    console.log("okok");
   };
   /*********************************************************************
    * 4. Props settings
