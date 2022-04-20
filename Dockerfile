@@ -75,4 +75,5 @@ WORKDIR /
 COPY --chown=n2server:nodejs n2server.sh .
 RUN chmod 700 n2server.sh
 # CMD [ "nginx", "-g", "daemon off;" ]
+RUN echo hello
 CMD ["./n2server.sh"]
