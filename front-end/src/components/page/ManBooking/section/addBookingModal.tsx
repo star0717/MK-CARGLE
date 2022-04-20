@@ -81,8 +81,6 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    * @param e
    */
   const onBookingHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "mainReContents" && e.target.value.length > 100)
-      return false;
     setBookingInfo({ ...bookingInfo, [e.target.name]: e.target.value });
   };
   /**
@@ -374,8 +372,10 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 placeholder="100자 이하로 입력하세요."
                 value={bookingInfo.mainReContents}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onBookingHandler(e);
-                  setTypingCheck(e.target.value.length);
+                  if (e.target.value.length <= 100) {
+                    onBookingHandler(e);
+                    setTypingCheck(e.target.value.length);
+                  }
                 }}
               />
             </Wrapper>

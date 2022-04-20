@@ -57,8 +57,6 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
         [e.target.name]: trim(e.target.value),
       });
     }
-    if (e.target.name === "rejectText" && e.target.value.length > 100)
-      return false;
     setRejectOption({ ...rejectOption, [e.target.name]: e.target.value });
   };
 
@@ -256,8 +254,10 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               placeholder="100자 이하로 입력하세요."
               value={rejectOption.rejectText}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onInputHandler(e);
-                setTypingCheck(e.target.value.length);
+                if (e.target.value.length <= 100) {
+                  onInputHandler(e);
+                  setTypingCheck(e.target.value.length);
+                }
               }}
             />
           </Wrapper>
