@@ -7,9 +7,11 @@
     },
     "build:build": "docker-compose build",
     "build:push": "docker-compose push",
-    "build:prod": {
-      "sequential": "build:*"
-    },
+    "build:prod": ["build:build", "build.push"],
+    "npm-check:back-end": "npm-check npm-check back-end/",
+    "npm-check:front-end": "npm-check npm-check back-end/",
+    "local:up": "docker-compose up -d",
+    "local:down": "docker-compose down",
     "service:create": "dotenv -- cross-var docker service create --mode global --env-file .env -q --with-registry-auth --name %service_name% -p 80:80 %ecr_base_url%/%service_name%:latest",
     "service:create:ec2-mode": ["set:hostname:ec2-mode", "service:create"],
     "service:create:domain-mode": ["set:hostname:domain-mode", "service:create"],
