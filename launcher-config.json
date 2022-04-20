@@ -8,7 +8,7 @@
     "build:build": "docker-compose build",
     "build:push": "docker-compose push",
     "build:prod": {
-      "sequential": ["context:login", "build:*"]
+      "sequential": "build:*"
     },
     "service:create": "dotenv -- cross-var docker service create --mode global --env-file .env -q --with-registry-auth --name %service_name% -p 80:80 %ecr_base_url%/%service_name%:latest",
     "service:create:ec2-mode": ["set:hostname:ec2-mode", "service:create"],
@@ -32,7 +32,9 @@
     "description": "action",
     "build:소스 빌드 및 도커 이미지 관리": {
       "description": "environment",
-      "prd:배포판 이미지 생성 및 저장소 저장": "build:prod"
+      "prd:배포판 이미지 생성 및 저장소 저장": "build:prod",
+      "build:소스 코드를 도커 이미지로 빌드": "build:build",
+      "push:도커 이미지를 저장소(ECR)로 Push": "build:push"
     },
     "service:서비스 관리": {
       "create:서비스 생성": {

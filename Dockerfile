@@ -45,35 +45,12 @@ COPY --from=builder --chown=n2server:nodejs /front-end/.next/static ./.next/stat
 # Nginx 설치 및 설정
 # USER root
 RUN apk add nginx curl
-# Remove any existing config files
-# RUN rm /etc/nginx/conf.d/*
-# Copy config files
-# *.conf files in conf.d/ dir get included in main config
-# COPY ./proxy-server/default.conf /etc/nginx/conf.d/
 COPY ./proxy-server/default.conf /etc/nginx/http.d/default.conf
 EXPOSE 80
-
-# Expose the listening port
-# RUN cat /etc/nginx/conf.d/default.conf
-# WORKDIR /usr/bin/
-# CMD [ "nginx", "-s", "reload" ]
-
-
-# Launch NGINX
-# CMD [ "nginx", "-g", "daemon off;" ]
-
-# RUN cd /front-end
-# RUN node server.js &
-# CMD ["node", "server.js"]
-
-# RUN cd /back-end
-# RUN npm run start:prod &
-# CMD ["npm", "run", "start:prod"]
 
 WORKDIR /
 # USER n2server
 COPY --chown=n2server:nodejs n2server.sh .
 RUN chmod 700 n2server.sh
-# CMD [ "nginx", "-g", "daemon off;" ]
 RUN echo hello
 CMD ["./n2server.sh"]
