@@ -18,6 +18,10 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 import { AuthToken, Public } from 'src/lib/decorators/decorators';
+import {
+  getEndOfDayDateTime,
+  getStartOfDayDateTime,
+} from 'src/lib/toolkit/back-end.toolkit';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   DeleteObjectIds,
@@ -26,7 +30,6 @@ import {
   FindResult,
 } from 'src/models/base.entity';
 import { Booking, BookingFindOptions } from 'src/models/booking.entity';
-import { MainFindOptions } from 'src/models/maintenance.entity';
 import { BookingService } from './booking.service';
 
 @Controller('booking')
@@ -87,6 +90,13 @@ export class BookingController {
           $options: '$i',
         };
         delete fOptions.phoneNumber;
+      }
+      if (fOptions.mainHopeDate) {
+        fOptions['mainHopeDate'] = {
+          $gte: getStartOfDayDateTime(fOptions.mainHopeDate),
+          $lt: getEndOfDayDateTime(fOptions.mainHopeDate),
+        };
+        delete fOptions.mainHopeDate;
       }
     }
     return await this.bookingService.findByOptions(token, fParams);

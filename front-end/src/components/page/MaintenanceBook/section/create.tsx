@@ -38,10 +38,14 @@ import { RiFileList2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
 import {
+  _aGetBooking,
   _aGetMaintenancesCarInfo,
+  _aPatchBooking,
   _aPostMaintenancesStore,
 } from "store/action/user.action";
 import {
+  _iBooking,
+  _iBookingOne,
   _iGetMaintenancesCarInfo,
   _iMaintenances,
   _iMaintenancesOne,
@@ -53,6 +57,10 @@ import {
   Maintenance,
 } from "src/models/maintenance.entity";
 import { deleteKeyJson, trim } from "src/modules/commonModule";
+import { Booking, BookingFindOptions } from "src/models/booking.entity";
+import { BookingState } from "src/constants/booking.const";
+import { FindParameters } from "src/models/base.entity";
+import dayjs from "dayjs";
 
 const MaintenanceCreate: NextPage = () => {
   /*********************************************************************
@@ -79,10 +87,15 @@ const MaintenanceCreate: NextPage = () => {
     regNumber: "",
     distance: "",
   };
-
   const cusInit: MainCustomer = {
     name: "",
     phoneNumber: "",
+  };
+  const bookingInit: Partial<Booking> = {
+    bookingDate: null,
+    mainHopeDate: null,
+    mainReContents: "",
+    bookingState: BookingState.NEW,
   };
 
   /*********************************************************************
@@ -92,6 +105,8 @@ const MaintenanceCreate: NextPage = () => {
   const [carInfo, setCarInfo] = useState<MainCar>(carInit); // 차량정보
   const [cusInfo, setCusInfo] = useState<MainCustomer>(cusInit); // 고객정보
   const [showCar, setShowCar] = useState<boolean>(false); // 차량검색 후 정보표시
+  const [bookingInfo, setBookingInfo] = useState<Partial<Booking>>(bookingInit); // 예약 정보
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -122,6 +137,7 @@ const MaintenanceCreate: NextPage = () => {
   const onResetCar = () => {
     setCarInfo(carInit);
     setCusInfo(cusInit);
+    setBookingInfo(bookingInit);
     setShowCar(false);
     setSearchCarText("");
     reset();
@@ -131,8 +147,27 @@ const MaintenanceCreate: NextPage = () => {
    * 차량 조회 handler
    * @param data
    */
-  const onSearchCarHandler: SubmitHandler<Partial<MainCar>> = (data) => {
-    dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
+  const onSearchCarHandler: SubmitHandler<Partial<MainCar>> = async (data) => {
+    const param: FindParameters = {
+      filterKey: "bookingState",
+      filterValue: BookingState.APPROVAL,
+    };
+    const option: BookingFindOptions = {
+      regNumber: searchCarText,
+      mainHopeDate: dayjs().toDate(),
+    };
+    await dispatch(_aGetBooking(param, option)).then(
+      (res: _iBooking) => {
+        if (!res.payload) return alert("차량 예약 조회 에러");
+        if (res.payload.totalDocs === 0) return setBookingInfo(bookingInit);
+        alert("오늘 정비예약한 차량입니다.");
+        setBookingInfo(res.payload.docs[0]);
+      },
+      (err) => {
+        return alert("차량 예약 조회 에러");
+      }
+    );
+    await dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
           setCarInfo(Object.assign(carInit, res.payload));
@@ -163,8 +198,23 @@ const MaintenanceCreate: NextPage = () => {
     deleteKeyJson(maintenanceData.customer);
 
     await dispatch(_aPostMaintenancesStore(maintenanceData)).then(
-      (res: _iMaintenancesOne) => {
+      async (res: _iMaintenancesOne) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
+        if (bookingInfo.car) {
+          console.log("들어옴");
+          const bookingData: Partial<Booking> = {
+            bookingState: BookingState.MAINTENANCE,
+          };
+          await dispatch(_aPatchBooking(bookingInfo._id, bookingData)).then(
+            (res: _iBookingOne) => {
+              if (!res.payload) return alert("예약 정비상태 에러");
+              console.log("처리함");
+            },
+            (err) => {
+              if (err) return alert("예약 정비상태 에러");
+            }
+          );
+        }
         router.push(
           `${UseLink.MAINTENANCE_BOOK}?id=${res.payload._id}&step=${MainStatus.STORED}`
         );
@@ -340,7 +390,7 @@ const MaintenanceCreate: NextPage = () => {
                         <TextInput2
                           type="text"
                           value={carInfo.distance}
-                          placeholder="주행거리를 입력하세요(km)"
+                          placeholder="주행거리(km)"
                           {...register("distance", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>

@@ -51,7 +51,7 @@ export class Booking extends BaseEntity {
   @ApiProperty({ description: '예약접수일자' })
   @IsOptional()
   @IsString()
-  @prop({ required: true })
+  @prop()
   bookingDate?: Date;
 
   @ApiProperty({ description: '정비희망일시' })
@@ -107,6 +107,11 @@ export class BookingFindOptions {
   @IsOptional()
   @IsString()
   phoneNumber?: string;
+
+  @ApiProperty({ description: '정비희망일시', required: false })
+  @IsOptional()
+  @IsString()
+  mainHopeDate?: any;
 }
 
 export class MainHopeTime {

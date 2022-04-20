@@ -12,6 +12,7 @@ import {
   Combo,
 } from "src/components/styles/CommonComponents";
 import { NextPage } from "next";
+import { SubmitHandler, useForm } from "react-hook-form";
 import theme from "styles/theme";
 import { _pBookingModalProps } from "src/configure/_pProps.entity";
 import { useState } from "react";
@@ -28,13 +29,22 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
 import { comma, deleteKeyJson, hourList, trim } from "src/modules/commonModule";
-import { basicRegEx } from "src/validation/regEx";
+import { basicRegEx, formRegEx } from "src/validation/regEx";
 
 const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+
+  // react-hook-form 사용을 위한 선언
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    setValue,
+    formState: { errors },
+  } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   const bookingInit: Partial<Booking> = {
     bookingDate: null,
@@ -69,8 +79,8 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   const [carExist, setCarExist] = useState<boolean>(false); // 차량 데이터 존재여부
   const [mainHopeTime, setMainHopeTime] =
     useState<MainHopeTime>(mainHopeTimeInit); // 예약 희망 시분
-  const [officeHour, setOfficeHour] = useState<any>(); // 선택 날짜의 영업시간
-  const [bookingTime, setBookingTime] = useState<string>(""); // 정비희망시간
+  // const [officeHour, setOfficeHour] = useState<any>(); // 선택 날짜의 영업시간
+  // const [bookingTime, setBookingTime] = useState<string>(""); // 정비희망시간
   const [typingCheck, setTypingCheck] = useState<number>(0); //글자 수 제한
 
   /*********************************************************************
@@ -89,9 +99,22 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    * @returns
    */
   const onCusHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "phoneNumber" && !basicRegEx.NUM.test(e.target.value))
-      return false;
-    setCusInfo({ ...cusInfo, [e.target.name]: trim(e.target.value) });
+    switch (e.target.name) {
+      case "cname":
+        return setCusInfo({ ...cusInfo, name: trim(e.target.value) });
+
+      case "phoneNumber":
+        if (!basicRegEx.NUM.test(e.target.value)) return false;
+        return setCusInfo({
+          ...cusInfo,
+          [e.target.name]: trim(e.target.value),
+        });
+      default:
+        return setCusInfo({
+          ...cusInfo,
+          [e.target.name]: trim(e.target.value),
+        });
+    }
   };
   /**
    * 차량 input handler
@@ -99,24 +122,32 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    * @returns
    */
   const onCarHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === "distance") {
-      if (e.target.value.includes(","))
-        e.target.value = e.target.value.replaceAll(",", "");
+    switch (e.target.name) {
+      case "distance":
+        if (e.target.value.includes(","))
+          e.target.value = e.target.value.replaceAll(",", "");
+        if (!basicRegEx.NUM.test(e.target.value)) return false;
 
-      if (!basicRegEx.NUM.test(e.target.value)) return false;
+        return setCarInfo({
+          ...carInfo,
+          [e.target.name]: trim(e.target.value),
+        });
+      case "idNumber":
+        if (
+          e.target.value.length >= 18 ||
+          !basicRegEx.ENGNUM.test(e.target.value)
+        ) {
+          return false;
+        }
+        var upper = e.target.value.toUpperCase();
+        return setCarInfo({ ...carInfo, [e.target.name]: upper });
+
+      default:
+        return setCarInfo({
+          ...carInfo,
+          [e.target.name]: trim(e.target.value),
+        });
     }
-    // return false;
-    if (e.target.name === "idNumber") {
-      if (
-        e.target.value.length >= 18 ||
-        !basicRegEx.ENGNUM.test(e.target.value)
-      ) {
-        return false;
-      }
-      var upper = e.target.value.toUpperCase();
-      return setCarInfo({ ...carInfo, [e.target.name]: upper });
-    }
-    setCarInfo({ ...carInfo, [e.target.name]: trim(e.target.value) });
   };
 
   /**
@@ -136,6 +167,12 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
       (res: _iGetMaintenancesCarInfo) => {
         if (!res.payload) return alert("신규차량입니다. 직접 입력해주세요.");
         setCarExist(true);
+        clearErrors("name");
+        clearErrors("age");
+        clearErrors("idNumber");
+        setValue("name", res.payload.name);
+        setValue("age", res.payload.age);
+        setValue("idNumber", res.payload.idNumber);
         setCarInfo(Object.assign(carInit, res.payload));
       },
       (err) => {
@@ -146,15 +183,9 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
 
   /**
    * 예약 등록 handler
-   * @param e
+   * @param data
    */
-  const onBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    deleteKeyJson(bookingInfo);
-    deleteKeyJson(carInfo);
-    deleteKeyJson(cusInfo);
-
+  const onBookingSubmit: SubmitHandler<Partial<Booking>> = async (data) => {
     const hopeDate: Date = dayjs(bookingInfo.mainHopeDate)
       .hour(Number(mainHopeTime.hour))
       .minute(Number(mainHopeTime.minute))
@@ -166,6 +197,11 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
       car: carInfo,
       customer: cusInfo,
     };
+
+    deleteKeyJson(bookingData);
+    deleteKeyJson(bookingData.car);
+    deleteKeyJson(bookingData.customer);
+
     await dispatch(_aPostBooking(bookingData)).then(
       (res: _iBookingOne) => {
         if (!res.payload) return alert("예약 등록 에러");
@@ -196,7 +232,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   return (
     <WholeWrapper>
       <CommonSmallTitle>신규 예약 등록</CommonSmallTitle>
-      <form onSubmit={onBookingSubmit}>
+      <form onSubmit={handleSubmit(onBookingSubmit)}>
         <Wrapper>
           <Wrapper
             borderBottom={`1px solid #c4c4c4`}
@@ -216,18 +252,36 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
             <Wrapper width={`400px`} ju={`flex-start`}>
               <TextInput2
                 width={`400px`}
-                name="bookingDate"
                 type="date"
                 value={
                   bookingInfo.bookingDate
                     ? dayjs(bookingInfo.bookingDate).format("YYYY-MM-DD")
                     : ""
                 }
-                onChange={onBookingHandler}
-                required
+                {...register("bookingDate", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onBookingHandler(e);
+                  },
+                  required: {
+                    value: true,
+                    message: "예약접수일자를 선택하세요",
+                  },
+                })}
               />
             </Wrapper>
           </Wrapper>
+          {errors.bookingDate?.type === "required" && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.bookingDate.message}
+            </Text>
+          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>
@@ -243,14 +297,17 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`212px`}
                 type="date"
-                name="mainHopeDate"
                 value={
                   bookingInfo.mainHopeDate
                     ? dayjs(bookingInfo.mainHopeDate).format("YYYY-MM-DD")
                     : ""
                 }
-                onChange={onBookingHandler}
-                required
+                {...register("mainHopeDate", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onBookingHandler(e);
+                  },
+                  required: true,
+                })}
               />
               <Wrapper
                 width={`168px`}
@@ -261,10 +318,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 <Combo
                   width={`80px`}
                   border={"none"}
-                  name="hour"
                   value={mainHopeTime.hour}
-                  onChange={onMainHopeTimeHandler}
-                  required
+                  {...register("hour", {
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                      onMainHopeTimeHandler(e);
+                    },
+                    required: true,
+                  })}
                 >
                   <option value="">시간</option>
                   {/* {bookingTimeList(date, date2).map((time, idx) => {
@@ -286,10 +346,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 <Combo
                   width={`80px`}
                   border={"none"}
-                  name="minute"
                   value={mainHopeTime.minute}
-                  onChange={onMainHopeTimeHandler}
-                  required
+                  {...register("minute", {
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                      onMainHopeTimeHandler(e);
+                    },
+                    required: true,
+                  })}
                 >
                   <option value="">분</option>
                   <option value="00">00</option>
@@ -298,6 +361,20 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
+          {(errors.mainHopeDate?.type === "required" ||
+            errors.hour?.type === "required" ||
+            errors.minute?.type === "required") && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              정비희망일시를 선택하세요
+            </Text>
+          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>
@@ -308,13 +385,36 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                name="phoneNumber"
                 value={cusInfo.phoneNumber}
-                onChange={onCusHandler}
-                required
+                {...register("phoneNumber", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onCusHandler(e);
+                  },
+                  required: {
+                    value: true,
+                    message: "고객전화번호를 입력하세요",
+                  },
+                  pattern: {
+                    value: formRegEx.HP_NUM,
+                    message: "형식에 맞게 입력하세요.",
+                  },
+                })}
               />
             </Wrapper>
           </Wrapper>
+          {(errors.phoneNumber?.type === "required" ||
+            errors.phoneNumber?.type === "pattern") && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.phoneNumber.message}
+            </Text>
+          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>
@@ -326,11 +426,21 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 <TextInput2
                   width={`300px`}
                   type="text"
-                  name="regNumber"
                   value={carInfo.regNumber}
                   readOnly={carExist}
-                  onChange={onCarHandler}
-                  required
+                  {...register("regNumber", {
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                      onCarHandler(e);
+                    },
+                    required: {
+                      value: true,
+                      message: "차량번호를 입력하세요",
+                    },
+                    pattern: {
+                      value: formRegEx.CAR_NUM,
+                      message: "형식에 맞게 입력하세요",
+                    },
+                  })}
                 />
                 {carExist ? (
                   <SmallButton
@@ -358,6 +468,19 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               </Wrapper>
             </Wrapper>
           </Wrapper>
+          {(errors.regNumber?.type === "required" ||
+            errors.regNumber?.type === "pattern") && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.regNumber.message}
+            </Text>
+          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>정비요청내용</Text>
@@ -368,15 +491,16 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 height={`150px`}
                 al={`flex-start`}
                 type="text"
-                name="mainReContents"
                 placeholder="100자 이하로 입력하세요."
-                value={bookingInfo.mainReContents}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  if (e.target.value.length <= 100) {
-                    onBookingHandler(e);
-                    setTypingCheck(e.target.value.length);
-                  }
-                }}
+                value={bookingInfo.mainReContents || ""}
+                {...register("mainReContents", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (e.target.value.length <= 100) {
+                      onBookingHandler(e);
+                      setTypingCheck(e.target.value.length);
+                    }
+                  },
+                })}
               />
             </Wrapper>
             <Wrapper al={`flex-end`}>
@@ -401,14 +525,32 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                name="name"
                 value={carInfo.name}
                 readOnly={carExist}
-                onChange={onCarHandler}
-                required
+                {...register("name", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onCarHandler(e);
+                  },
+                  required: {
+                    value: true,
+                    message: "차량명을 입력하세요",
+                  },
+                })}
               />
             </Wrapper>
           </Wrapper>
+          {errors.name?.type === "required" && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.name.message}
+            </Text>
+          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>모델명</Text>
@@ -416,10 +558,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                name="model"
                 value={carInfo.model}
                 readOnly={carExist}
-                onChange={onCarHandler}
+                {...register("model", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onCarHandler(e);
+                  },
+                })}
               />
             </Wrapper>
           </Wrapper>
@@ -430,13 +575,32 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                name="age"
                 value={carInfo.age}
                 readOnly={carExist}
-                onChange={onCarHandler}
+                {...register("age", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onCarHandler(e);
+                  },
+                  pattern: {
+                    value: basicRegEx.NUM,
+                    message: "숫자만 입력하세요",
+                  },
+                })}
               />
             </Wrapper>
           </Wrapper>
+          {errors.age?.type === "pattern" && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.age.message}
+            </Text>
+          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>차대번호</Text>
@@ -444,13 +608,32 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                name="idNumber"
-                value={carInfo.idNumber}
+                value={carInfo.idNumber || ""}
                 readOnly={carExist}
-                onChange={onCarHandler}
+                {...register("idNumber", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onCarHandler(e);
+                  },
+                  pattern: {
+                    value: formRegEx.CAR_ID_NUM,
+                    message: "형식에 맞게 입력하세요",
+                  },
+                })}
               />
             </Wrapper>
           </Wrapper>
+          {errors.idNumber?.type === "pattern" && (
+            <Text
+              margin={`0px`}
+              width={`100%`}
+              color={`#d6263b`}
+              al={`flex-start`}
+              fontSize={`14px`}
+              textAlign={`left`}
+            >
+              {errors.idNumber.message}
+            </Text>
+          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>등록일자</Text>
@@ -458,14 +641,17 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="date"
-                name="regDate"
                 value={
                   carInfo.regDate
                     ? dayjs(carInfo.regDate).format("YYYY-MM-DD")
                     : ""
                 }
                 readOnly={carExist}
-                onChange={onCarHandler}
+                {...register("regDate", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onCarHandler(e);
+                  },
+                })}
               />
             </Wrapper>
           </Wrapper>
@@ -476,9 +662,12 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                name="distance"
-                value={comma(carInfo.distance)}
-                onChange={onCarHandler}
+                value={comma(carInfo.distance) || ""}
+                {...register("distance", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onCarHandler(e);
+                  },
+                })}
               />
             </Wrapper>
           </Wrapper>
@@ -489,9 +678,12 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="text"
-                name="name"
-                value={cusInfo.name}
-                onChange={onCusHandler}
+                value={cusInfo.name || ""}
+                {...register("cname", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    onCusHandler(e);
+                  },
+                })}
               />
             </Wrapper>
           </Wrapper>
