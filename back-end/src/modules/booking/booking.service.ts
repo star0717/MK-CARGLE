@@ -16,6 +16,11 @@ import { MainCar } from 'src/models/maintenance.entity';
 import { CarsService } from 'src/modules/cars/cars.service';
 import { SetbookingService } from 'src/modules/setbooking/setbooking.service';
 import { FilterQuery } from 'mongoose';
+import { BookingState } from 'src/constants/booking.const';
+import {
+  getEndOfDayDateTime,
+  getStartOfDayDateTime,
+} from 'src/lib/toolkit/back-end.toolkit';
 
 @Injectable()
 export class BookingService extends SafeService<Booking> {
@@ -38,9 +43,12 @@ export class BookingService extends SafeService<Booking> {
     const fParams: FindParameters = {
       page: 1,
       take: 100,
-      useDurationSearch: true,
-      sFrom: doc.bookingDate,
-      sTo: doc.bookingDate,
+      filter: {
+        bookingDate: {
+          $gte: getStartOfDayDateTime(doc.bookingDate),
+          $lt: getEndOfDayDateTime(doc.bookingDate),
+        },
+      },
     };
     const todayList: FindResult<Booking> = await super.findByOptions(
       token,
@@ -51,6 +59,27 @@ export class BookingService extends SafeService<Booking> {
     doc.bookingNum = docNum.toString().padStart(3, '0');
 
     return await super.create(token, doc);
+  }
+
+  async mobileCreate(doc: Booking): Promise<Booking> {
+    const car: MainCar = await this.carsService.updateOrInsertByCarInfo(
+      doc.car,
+    );
+    if (!car) throw new BadRequestException();
+
+    if (doc.bookingDate) {
+      const todayListCount = await this.model.count({
+        bookingDate: {
+          $gte: getStartOfDayDateTime(doc.bookingDate),
+          $lt: getEndOfDayDateTime(doc.bookingDate),
+        },
+      });
+
+      let docNum: number = todayListCount + 1;
+      doc.bookingNum = docNum.toString().padStart(3, '0');
+    }
+
+    return await super._create(doc);
   }
 
   async findById(token: AuthTokenInfo, id: string): Promise<Booking> {
@@ -65,7 +94,13 @@ export class BookingService extends SafeService<Booking> {
     const booking: Booking = await this.findById(token, id);
     if (!booking) throw new BadRequestException();
 
-    return await super.findByIdAndUpdate(token, id, doc);
+    let newDoc: any;
+    if (doc.bookingState !== BookingState.REJECT) {
+      newDoc = { $set: doc, $unset: { rejectOption: 1 } };
+    } else {
+      newDoc = doc;
+    }
+    return await super.findByIdAndUpdate(token, id, newDoc);
   }
 
   async findByIdAndRemove(

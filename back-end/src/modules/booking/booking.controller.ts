@@ -17,7 +17,7 @@ import {
   ApiResponse,
   PartialType,
 } from '@nestjs/swagger';
-import { AuthToken } from 'src/lib/decorators/decorators';
+import { AuthToken, Public } from 'src/lib/decorators/decorators';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
   DeleteObjectIds,
@@ -48,6 +48,18 @@ export class BookingController {
     return await this.bookingService.create(token, doc);
   }
 
+  @Public()
+  @Post('/mobile')
+  @ApiOperation({ summary: `[PUBLIC] 신규 Booking 등록(모바일)` })
+  @ApiBody({ description: `생성할 신규 Booking 데이터`, type: Booking })
+  @ApiCreatedResponse({
+    description: `생성된 신규 Booking 데이터`,
+    type: Booking,
+  })
+  async mobileCreate(@Body() doc: Booking): Promise<Booking> {
+    return await this.bookingService.mobileCreate(doc);
+  }
+
   @Get()
   @ApiOperation({ summary: `[WORKER] Booking 리스트 반환` })
   @ApiResponse({
@@ -63,12 +75,18 @@ export class BookingController {
     if (fOptions) {
       fParams.filter = fOptions;
       if (fOptions.regNumber) {
-        fOptions['car.regNumber'] = fOptions.regNumber;
+        fOptions['car.regNumber'] = {
+          $regex: fOptions.regNumber,
+          $options: '$i',
+        };
         delete fOptions.regNumber;
       }
       if (fOptions.phoneNumber) {
-        fOptions['customer.phoneNumber'] = fOptions.phoneNumber;
-        delete fOptions.regNumber;
+        fOptions['customer.phoneNumber'] = {
+          $regex: fOptions.phoneNumber,
+          $options: '$i',
+        };
+        delete fOptions.phoneNumber;
       }
     }
     return await this.bookingService.findByOptions(token, fParams);

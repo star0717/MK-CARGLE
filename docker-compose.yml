@@ -1,5 +1,6 @@
 version: '3'
 services:
+<<<<<<< HEAD
   front-end:
     build: ./front-end
     image: ${aws_id}.dkr.ecr.${aws_def_region}.amazonaws.com/${ecr_frontend}
@@ -21,10 +22,14 @@ services:
     build: ./proxy-server
     image: ${aws_id}.dkr.ecr.${aws_def_region}.amazonaws.com/${ecr_proxyserver}
     container_name: proxy-server
+=======
+  n2server:
+    # image: localhost:5000/n2server
+    image: "${ecr_base_url}/${service_name}"
+    build: .
+>>>>>>> 278e0bede0b178576fe5fb752002b084e1acb529
     ports:
       - "80:80"
-    depends_on:
-      - front-end
-    links:
-      - front-end
-      - back-end
+    environment:
+      - NODE_ENV=production
+      - DESTINATION_API=${DESTINATION_API}

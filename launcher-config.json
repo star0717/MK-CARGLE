@@ -1,0 +1,90 @@
+{
+  "scripts": {
+    "set:hostname:ec2-mode": [
+      "npx dotenv-replace DESTINATION_API=http://$(curl https://ipinfo.io/ip)",
+      "dotenv cross-var echo %DESTINATION_API%"
+    ],
+    "set:hostname:domain-mode": [
+      "npx dotenv-replace DESTINATION_API=http://cargle.net",
+      "dotenv cross-var echo %DESTINATION_API%"
+    ],
+    "set:registry": {
+      "sequential": [
+        "dotenv -- cross-var npx dotenv-replace ecr_base_url=%aws_id%.dkr.ecr.%aws_def_region%.amazonaws.com"
+      ]
+    },
+    "build:build": "docker-compose build",
+    "build:push": "docker-compose push",
+    "build:prod": {
+      "sequential": [
+        "set:registry",
+        "build:*"
+      ]
+    },
+    "service:create": "dotenv -- cross-var docker service create --mode global --env-file .env -q --with-registry-auth --name %service_name% -p 80:80 %ecr_base_url%/%service_name%:latest",
+    "service:create:ec2-mode": [
+      "set:hostname:ec2-mode",
+      "service:create"
+    ],
+    "service:create:domain-mode": [
+      "set:hostname:domain-mode",
+      "service:create"
+    ],
+    "service:rm": "dotenv cross-var docker service rm %service_name%",
+    "service:logs": "dotenv -- cross-var docker service logs -n 100 -f %service_name%",
+    "service:list": "docker service list",
+    "swarm:init": "docker swarm init",
+    "swarm:leave": "docker swarm leave --force",
+    "swarm:join-manager": "docker swarm join-token manager",
+    "swarm:join-waroker": "docker swarm join-token manager",
+    "node:list": "docker node list",
+    "node:ps": "docker node ps",
+    "context:create": "docker context create ecs ecs --profile default",
+    "context:ls": "docker context ls",
+    "context:ecs": "docker context use ecs",
+    "context:default": "docker context use default",
+    "context:login": [
+      "dotenv cross-var echo %ecs_login_cmd%",
+      "dotenv cross-var %ecs_login_cmd%"
+    ]
+  },
+  "menu": {
+    "description": "action",
+    "build:소스 빌드 및 도커 이미지 관리": {
+      "description": "environment",
+      "prd:배포판 이미지 생성 및 저장소 저장": "build:prod"
+    },
+    "service:서비스 관리": {
+      "create:서비스 생성": {
+        "ec2-mode:ec2 모드로 서비스 실행(도메인 없이 IP 주소로 사용)": "service:create:ec2-mode",
+        "domain-mode: 도메인 모드로 서비스 실행(도메인 주소가 있는 경우)": "service:create:domain-mode"
+      },
+      "logs:서비스 로그 확인": "service:logs",
+      "rm:서비스 종료": "service:rm",
+      "list:실행중이 서비스 목록 확인": "service:list"
+    },
+    "swarm:도커 스왐 관련": {
+      "init:도커 스왐 시작": "swarm:init",
+      "leave:도커 스왐 종료": "swarm:leave",
+      "join-manager:매니저 노드로 조인": "swarm:join-manager",
+      "join-waroker:워커 노드로 조인": "swarm:join-waroker"
+    },
+    "node:도커 참여중인 노드": {
+      "list:스왐 모드에 참여중인 노드 리스트 확인": "node:list",
+      "ps:스왐 서비스 현황 확인": "node:ps"
+    },
+    "context:도커 컨택스트 관련(ECR 사용 목적)": {
+      "login:ecs사용을 위해 로그인": "context:login",
+      "create:ecs용 컨택스트 생성": "context:create",
+      "ls:컨택스트 목록 확인": "context:ls",
+      "ecs:ecs 컨택스트로 전환": "context:ecs",
+      "default:default 컨택스트로 전환": "context:default"
+    },
+    "env:환경변수": "env"
+  },
+  "options": {
+    "menu": {
+      "defaultChoice": "serve:development"
+    }
+  }
+}

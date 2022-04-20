@@ -359,6 +359,12 @@ export const CommonButtonWrapper = styled.div<any>`
   color: ${(props) => props.color};
   cursor: pointer;
   border: none;
+  animation: ${(props) =>
+    props.notAnimate
+      ? ``
+      : css`
+          ${appearAnimation} 1s forwards
+        `};
 
   ${(props) => props.kindOf === `column` && `flex-direction : column;`}
   ${(props) => props.kindOf === `column` && `padding : 40px 0px 0px;`}
@@ -380,6 +386,12 @@ export const CommonButton = styled.button<any>`
   cursor: ${(props) => props.cursor || `pointer`};
   color: #fff;
   border: 0px;
+  animation: ${(props) =>
+    props.notAnimate
+      ? ``
+      : css`
+          ${appearAnimation} 1s forwards
+        `};
 
   ${(props) => !props.kindOf && `background : ${props.theme.basicTheme_C};`}
   ${(props) =>
@@ -824,6 +836,7 @@ export const TextInput = styled.input<any>`
 `;
 
 export const TextInput2 = styled.input<any>`
+  display: ${(props) => props.display};
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
   border: ${(props) => props.border || props.theme.border};
@@ -852,7 +865,7 @@ export const TextInput2 = styled.input<any>`
 
   &:read-only {
     box-shadow: none;
-    border: ${(props) => props.theme.border};
+    border: ${(props) => props.border || props.theme.border};
     background-color: #f5f5f5;
     cursor: default;
   }
@@ -2035,3 +2048,8 @@ export const SelectDays = styled.button<any>`
 //   background-color: ${(props) => props.theme.red_C};
 //   color: ${(props) => props.theme.white_C};
 // }
+
+export const Hr = styled.hr<any>`
+  width: ${(props) => props.width || `100%`};
+  color: ${(props) => props.width || `#000000`};
+`;

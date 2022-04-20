@@ -149,4 +149,5 @@ export class SetBookingApiPath {
 export class BookingApiPath {
   static BASE = '/booking/';
   static booking = BookingApiPath.BASE;
+  static booking_deletemany = BookingApiPath.BASE + 'deletemany';
 }

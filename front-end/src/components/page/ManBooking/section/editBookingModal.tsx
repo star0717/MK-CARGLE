@@ -5,20 +5,34 @@ import {
   CommonButton,
   CommonButtonWrapper,
   CommonSmallTitle,
-  SmallButton,
   TextArea,
   TextInput2,
   Wrapper,
-  RsWrapper,
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
 import { NextPage } from "next";
 import theme from "styles/theme";
+import { _pBookingModalProps } from "src/configure/_pProps.entity";
+import { useState } from "react";
+import { Booking } from "src/models/booking.entity";
+import {
+  BookingState,
+  bookingStateInput,
+  bookingStateList,
+  bookingStateName,
+} from "src/constants/booking.const";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+import { useDispatch } from "react-redux";
+import { _aPatchBooking } from "store/action/user.action";
+import { _iBookingOne } from "store/interfaces";
+dayjs.locale("ko");
 
-const EditBooking: NextPage<any> = (props) => {
+const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+  const dispatch = useDispatch();
 
   /*********************************************************************
    * 2. State settings
@@ -27,6 +41,43 @@ const EditBooking: NextPage<any> = (props) => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+  /**
+   * 예약 input handler
+   * @param e
+   */
+  const onBookingHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "bookingState") {
+      props.setClickDoc({
+        ...props.clickDoc,
+        bookingState: bookingStateInput(e.target.value),
+      });
+    } else {
+      props.setClickDoc({ ...props.clickDoc, [e.target.name]: e.target.value });
+    }
+  };
+
+  /**
+   * 예약 변경 handler
+   * @param e
+   */
+  const onBookingChange = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const bookingData: Partial<Booking> = {
+      ...props.clickDoc,
+    };
+    if (props.clickDoc.bookingState !== BookingState.REJECT)
+      delete bookingData.rejectOption;
+    await dispatch(_aPatchBooking(props.clickDoc._id, bookingData)).then(
+      (res: _iBookingOne) => {
+        if (!res.payload) return alert("예약 변경 에러");
+        props.setModalOpen(false);
+        props.setReset(props.reset + 1);
+      },
+      (err) => {
+        if (err) return alert("예약 변경 에러");
+      }
+    );
+  };
 
   /*********************************************************************
    * 4. Props settings
@@ -39,7 +90,7 @@ const EditBooking: NextPage<any> = (props) => {
   return (
     <WholeWrapper>
       <CommonSmallTitle>예약요청서</CommonSmallTitle>
-      <form>
+      <form onSubmit={onBookingChange}>
         <Wrapper>
           <Wrapper
             borderBottom={`1px solid #c4c4c4`}
@@ -55,11 +106,20 @@ const EditBooking: NextPage<any> = (props) => {
             </Wrapper>
             <Wrapper width={`auto`} dr={`row`}>
               <Text>예약상태</Text>
-              <Combo>
-                <option>대기</option>
-                <option>승인</option>
-                <option>정비</option>
-                <option>거절</option>
+              <Combo
+                name="bookingState"
+                value={props.clickDoc.bookingState}
+                onChange={onBookingHandler}
+              >
+                {bookingStateList.map((state) => {
+                  {
+                    return (
+                      <option key={state} value={state}>
+                        {bookingStateName(state)}
+                      </option>
+                    );
+                  }
+                })}
               </Combo>
             </Wrapper>
           </Wrapper>
@@ -69,7 +129,13 @@ const EditBooking: NextPage<any> = (props) => {
               예약접수일자
             </Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} name="" type="text" readOnly />
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="bookingDate"
+                value={dayjs(props.clickDoc.bookingDate).format("YYYY-MM-DD")}
+                readOnly
+              />
             </Wrapper>
           </Wrapper>
 
@@ -80,14 +146,47 @@ const EditBooking: NextPage<any> = (props) => {
             </Text>
             <Wrapper
               width={`400px`}
+              height={`40px`}
               al={`flex-start`}
               dr={`row`}
               ju={`space-between`}
             >
-              <TextInput2 width={`300px`} type="text" readOnly name="" />
-              <Combo width={`80px`}>
-                <option>?</option>
-              </Combo>
+              <TextInput2
+                width={`212px`}
+                type="text"
+                name="mainHopeDate"
+                value={dayjs(props.clickDoc.mainHopeDate).format("YYYY-MM-DD")}
+                readOnly
+              />
+              <Wrapper
+                width={`180px`}
+                border={`1px solid #ccc`}
+                background={`#f5f5f5`}
+                radius={theme.radius}
+                dr={`row`}
+              >
+                <TextInput2
+                  height={`39px`}
+                  width={`80px`}
+                  border={`none`}
+                  textAlign={`center`}
+                  type="text"
+                  name="hour"
+                  value={dayjs(props.clickDoc.mainHopeDate).format("HH")}
+                  readOnly
+                />
+                <Text margin={`0px 4px`}>:</Text>
+                <TextInput2
+                  height={`39px`}
+                  width={`80px`}
+                  border={`none`}
+                  textAlign={`center`}
+                  type="text"
+                  name="minute"
+                  value={dayjs(props.clickDoc.mainHopeDate).format("mm")}
+                  readOnly
+                />
+              </Wrapper>
             </Wrapper>
           </Wrapper>
 
@@ -97,7 +196,13 @@ const EditBooking: NextPage<any> = (props) => {
               고객전화번호
             </Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" readOnly name="" />
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="phoneNumber"
+                value={props.clickDoc.customer.phoneNumber}
+                readOnly
+              />
             </Wrapper>
           </Wrapper>
 
@@ -109,7 +214,8 @@ const EditBooking: NextPage<any> = (props) => {
                   width={`400px`}
                   // margin={`0px 0px 10px 0px`}
                   type="text"
-                  name=""
+                  name="regNumber"
+                  value={props.clickDoc.car.regNumber}
                   readOnly
                 />
               </Wrapper>
@@ -122,10 +228,11 @@ const EditBooking: NextPage<any> = (props) => {
               <TextArea
                 padding={`10px`}
                 width={`400px`}
-                height={`150px`}
+                height={`80px`}
                 al={`flex-start`}
                 type="text"
-                name=""
+                name="mainReContents"
+                value={props.clickDoc.mainReContents}
                 readOnly
               />
             </Wrapper>
@@ -143,58 +250,118 @@ const EditBooking: NextPage<any> = (props) => {
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>차량명</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" readOnly />
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="name"
+                value={props.clickDoc.car.name}
+                readOnly
+              />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>모델명</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" readOnly />
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="model"
+                value={props.clickDoc.car.model}
+                readOnly
+              />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>연식</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" readOnly />
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="age"
+                value={props.clickDoc.car.age}
+                readOnly
+              />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>차대번호</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" readOnly />
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="idNumber"
+                value={props.clickDoc.car.idNumber}
+                readOnly
+              />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>등록일자</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" readOnly />
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="regDate"
+                value={props.clickDoc.car.regDate}
+                readOnly
+              />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>주행거리</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" readOnly />
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="distance"
+                value={props.clickDoc.car.distance}
+                readOnly
+              />
             </Wrapper>
           </Wrapper>
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>고객명</Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <TextInput2 width={`400px`} type="text" name="" readOnly />
+              <TextInput2
+                width={`400px`}
+                type="text"
+                name="name"
+                value={props.clickDoc.customer.name}
+                readOnly
+              />
             </Wrapper>
           </Wrapper>
           <CommonButtonWrapper kindOf={`column`}>
-            <CommonButton kindOf={`circleWhite`} type="button">
+            <CommonButton
+              kindOf={`circleWhite`}
+              type="button"
+              onClick={() => {
+                props.setModalOpen(false);
+              }}
+            >
               취소
             </CommonButton>
-            <CommonButton kindOf={`circleTheme`} type="submit">
-              저장
-            </CommonButton>
+            {props.clickDoc.bookingState === BookingState.REJECT ? (
+              <CommonButton
+                kindOf={`circleTheme`}
+                type="button"
+                onClick={() => {
+                  props.setModalOption("reject");
+                }}
+              >
+                다음
+              </CommonButton>
+            ) : (
+              <CommonButton kindOf={`circleTheme`} type="submit">
+                저장
+              </CommonButton>
+            )}
           </CommonButtonWrapper>
         </Wrapper>
       </form>
@@ -202,4 +369,4 @@ const EditBooking: NextPage<any> = (props) => {
   );
 };
 
-export default EditBooking;
+export default EditBookingModal;

@@ -12,9 +12,11 @@ export interface FileNameInit {
 }
 
 /**
- * 회원가입 및 마이페이지: 업종
+ * Select 박스 타입
  */
-export interface MbType {
+export interface SelectOpt {
+  key?: any;
   value: string;
-  text: string;
+  label?: string;
+  text?: string;
 }
