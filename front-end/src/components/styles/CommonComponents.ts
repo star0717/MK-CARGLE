@@ -68,6 +68,27 @@ ${(props) => props.kindOf === `short` && `padding:0px 0px 120px 0px`}
 
 `;
 
+export const MoWrapper = styled.div<any>`
+  width: 100%;
+  height: ${(props) => props.height || `100%`};
+  min-height: ${(props) => props.minHeight || `100vh`};
+  color: ${(props) => props.color};
+  display: flex;
+  background: ${(props) => props.bgColor};
+  color: ${(props) => props.color};
+  flex-direction: ${(props) => props.dr || `column`};
+  align-items: ${(props) => props.al || `center`};
+  justify-content: ${(props) => props.ju || `center`};
+  flex-wrap: ${(props) => props.wrap || `no-wrap`};
+  backdrop-filter: ${(props) => props.filter};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding || `40px`};
+  border-bottom: ${(props) => props.borderBottom};
+  border: ${(props) => props.border};
+  font-size: ${(props) => props.fontSize};
+  position: ${(props) => (props.isRelative ? `relative` : ``)};
+`;
+
 export const Wrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};
   min-width: ${(props) => props.minWidth};
@@ -868,6 +889,32 @@ export const TextInput2 = styled.input<any>`
     border: ${(props) => props.border || props.theme.border};
     background-color: #f5f5f5;
     cursor: default;
+  }
+`;
+
+export const MoTextInput = styled.input<any>`
+  width: ${(props) => props.width || `100%`};
+  height: ${(props) => props.height || `60px`};
+  border: none;
+  border-bottom: 2px solid ${(props) => props.theme.basicTheme_C};
+  background-color: ${(props) => props.bgColor || props.theme.subWhite_C};
+  padding: ${(props) => props.paddding || props.theme.inputPadding};
+  transition: ${(props) => props.transition || props.theme.transition};
+  margin: ${(props) => props.margin};
+  margin-bottom: ${(props) => props.marginBottom};
+  margin-top: ${(props) => props.marginTop};
+  font-size: 24px;
+  color: ${(props) => props.theme.basicTheme_C};
+  position: relative;
+  letter-spacing: 0px;
+  &:focus {
+    background: none;
+    outline: none;
+    box-shadow: ${(props) => props.theme.boxShadowV2};
+    border-bottom: 2px solid ${(props) => props.theme.darkTheme_C};
+  }
+  &::placeholder {
+    color: #ccc;
   }
 `;
 

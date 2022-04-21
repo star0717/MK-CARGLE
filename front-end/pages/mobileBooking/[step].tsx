@@ -51,11 +51,7 @@ const MobileBookingPage: NextPage<any> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return (
-    <BodyWrapper>
-      <MobileBookingComponent />
-    </BodyWrapper>
-  );
+  return <MobileBookingComponent />;
 };
 
 export default MobileBookingPage;
@@ -67,13 +63,13 @@ export const getServerSideProps: GetServerSideProps = async (
   const useUrlArray: string[] = Object.values(MobileRoute); // 사용가능한 url 배열
   const pathName: string = getPathName(url); // pathName 가져오기
 
-  if (pathName !== MobileRoute.m_car_select && !context.req.cookies.test)
-    return {
-      redirect: {
-        permanent: false,
-        destination: MobileRoute.m_car_select,
-      },
-    };
+  // if (pathName !== MobileRoute.m_car_select && !context.req.cookies.test)
+  //   return {
+  //     redirect: {
+  //       permanent: false,
+  //       destination: MobileRoute.m_car_select,
+  //     },
+  //   };
 
   if (useUrlArray.indexOf(pathName) === -1)
     return {

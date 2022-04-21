@@ -1,9 +1,12 @@
 import React from "react";
 import { NextPage } from "next";
 import {
+  CommonButton,
   RsWrapper,
   WholeWrapper,
 } from "src/components/styles/CommonComponents";
+import router from "next/router";
+import { MobileRoute } from "src/configure/router.entity";
 
 const MobileCarInfo: NextPage<any> = (props) => {
   /*********************************************************************
@@ -27,7 +30,23 @@ const MobileCarInfo: NextPage<any> = (props) => {
    *********************************************************************/
   return (
     <WholeWrapper>
-      <RsWrapper></RsWrapper>
+      <RsWrapper>
+        차량정보입력
+        <CommonButton
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            router.push(MobileRoute.m_car_select);
+          }}
+        >
+          이전
+        </CommonButton>
+        <CommonButton
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            router.push(MobileRoute.m_booking);
+          }}
+        >
+          다음
+        </CommonButton>
+      </RsWrapper>
     </WholeWrapper>
   );
 };

@@ -19,7 +19,7 @@ const theme = {
   inputPadding: "0px 8px",
   textPadding: "10px",
   boxShadow: "0px 10px 15px rgba(220,220,220,1)",
-  boxShadowV2: "0px 5px 10px rgba(220,220,220,1)",
+  boxShadowV2: "-1px 10px 8px -8px rgba(200,200,200,1)",
   boxShadowDark: "0px 6px 16px  rgba(120,120,120,0.4)",
   transition: "0.4s",
 };
