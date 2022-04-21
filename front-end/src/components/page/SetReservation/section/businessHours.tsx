@@ -12,6 +12,7 @@ import {
   TextInput2,
   CommonButton,
   CommonButtonWrapper,
+  Combo,
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
@@ -38,50 +39,50 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
    *********************************************************************/
   const [booking, setBooking] = useState<SetBooking>(props.data);
   const [modify, setModify] = useState<boolean>(false);
-  // let time: OfficeHours = {
-  //   MON: {
-  //     openingHours: booking.officeHour.MON.openingHours,
-  //     closingHours: booking.officeHour.MON.closingHours,
-  //     breakTime: booking.officeHour.MON.breakTime,
-  //     breakEndTime: booking.officeHour.MON.breakEndTime,
-  //   },
-  //   TUE: {
-  //     openingHours: booking.officeHour.TUE.openingHours,
-  //     closingHours: booking.officeHour.TUE.closingHours,
-  //     breakTime: booking.officeHour.TUE.breakTime,
-  //     breakEndTime: booking.officeHour.TUE.breakEndTime,
-  //   },
-  //   WED: {
-  //     openingHours: booking.officeHour.WED.openingHours,
-  //     closingHours: booking.officeHour.WED.closingHours,
-  //     breakTime: booking.officeHour.WED.breakTime,
-  //     breakEndTime: booking.officeHour.WED.breakEndTime,
-  //   },
-  //   THU: {
-  //     openingHours: booking.officeHour.THU.openingHours,
-  //     closingHours: booking.officeHour.THU.closingHours,
-  //     breakTime: booking.officeHour.THU.breakTime,
-  //     breakEndTime: booking.officeHour.THU.breakEndTime,
-  //   },
-  //   FRI: {
-  //     openingHours: booking.officeHour.FRI.openingHours,
-  //     closingHours: booking.officeHour.FRI.closingHours,
-  //     breakTime: booking.officeHour.FRI.breakTime,
-  //     breakEndTime: booking.officeHour.FRI.breakEndTime,
-  //   },
-  //   SAT: {
-  //     openingHours: booking.officeHour.SAT.openingHours,
-  //     closingHours: booking.officeHour.SAT.closingHours,
-  //     breakTime: booking.officeHour.SAT.breakTime,
-  //     breakEndTime: booking.officeHour.SAT.breakEndTime,
-  //   },
-  //   SUN: {
-  //     openingHours: booking.officeHour.SUN.openingHours,
-  //     closingHours: booking.officeHour.SUN.closingHours,
-  //     breakTime: booking.officeHour.SUN.breakTime,
-  //     breakEndTime: booking.officeHour.SUN.breakEndTime,
-  //   },
-  // };
+  let time = {
+    MON: {
+      openingHours: dayjs(booking.officeHour.MON.openingHours),
+      closingHours: dayjs(booking.officeHour.MON.closingHours),
+      breakTime: dayjs(booking.officeHour.MON.breakTime),
+      breakEndTime: dayjs(booking.officeHour.MON.breakEndTime),
+    },
+    TUE: {
+      openingHours: dayjs(booking.officeHour.TUE.openingHours),
+      closingHours: dayjs(booking.officeHour.TUE.closingHours),
+      breakTime: dayjs(booking.officeHour.TUE.breakTime),
+      breakEndTime: dayjs(booking.officeHour.TUE.breakEndTime),
+    },
+    WED: {
+      openingHours: dayjs(booking.officeHour.WED.openingHours),
+      closingHours: dayjs(booking.officeHour.WED.closingHours),
+      breakTime: dayjs(booking.officeHour.WED.breakTime),
+      breakEndTime: dayjs(booking.officeHour.WED.breakEndTime),
+    },
+    THU: {
+      openingHours: dayjs(booking.officeHour.THU.openingHours),
+      closingHours: dayjs(booking.officeHour.THU.closingHours),
+      breakTime: dayjs(booking.officeHour.THU.breakTime),
+      breakEndTime: dayjs(booking.officeHour.THU.breakEndTime),
+    },
+    FRI: {
+      openingHours: dayjs(booking.officeHour.FRI.openingHours),
+      closingHours: dayjs(booking.officeHour.FRI.closingHours),
+      breakTime: dayjs(booking.officeHour.FRI.breakTime),
+      breakEndTime: dayjs(booking.officeHour.FRI.breakEndTime),
+    },
+    SAT: {
+      openingHours: dayjs(booking.officeHour.SAT.openingHours),
+      closingHours: dayjs(booking.officeHour.SAT.closingHours),
+      breakTime: dayjs(booking.officeHour.SAT.breakTime),
+      breakEndTime: dayjs(booking.officeHour.SAT.breakEndTime),
+    },
+    SUN: {
+      openingHours: dayjs(booking.officeHour.SUN.openingHours),
+      closingHours: dayjs(booking.officeHour.SUN.closingHours),
+      breakTime: dayjs(booking.officeHour.SUN.breakTime),
+      breakEndTime: dayjs(booking.officeHour.SUN.breakEndTime),
+    },
+  };
 
   /*********************************************************************
    * 3. Handlers
@@ -107,16 +108,32 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
 
   const onTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.id) {
-      case "Allday":
-        console.log(e.target.name);
+      case "allday":
+        switch (e.target.name) {
+          case "startHour":
+            // console.log("before", time.openingHours);
+            // time.openingHours.format();
+            // time.openingHours.set("h", 18).format();
+            // console.log(time.openingHours.get("h"));
+
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
         break;
-      case "Weekday":
-        console.log(e.target.name);
-        break;
-      case "Weekend":
-        console.log(e.target.name);
-        break;
-      case "Monday":
+      case "weekday":
         switch (e.target.name) {
           case "startHour":
             break;
@@ -136,23 +153,165 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             break;
         }
         break;
-      case "Tuesday":
-        console.log(e.target.name);
+      case "weekend":
+        switch (e.target.name) {
+          case "startHour":
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
         break;
-      case "Wedensday":
-        console.log(e.target.name);
+      case "monday":
+        switch (e.target.name) {
+          case "startHour":
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
         break;
-      case "Thursday":
-        console.log(e.target.name);
+      case "tuesday":
+        switch (e.target.name) {
+          case "startHour":
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
         break;
-      case "Friday":
-        console.log(e.target.name);
+      case "wedensday":
+        switch (e.target.name) {
+          case "startHour":
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
         break;
-      case "Satureday":
-        console.log(e.target.name);
+      case "thursday":
+        switch (e.target.name) {
+          case "startHour":
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
         break;
-      case "Sunday":
-        console.log(e.target.name);
+      case "friday":
+        switch (e.target.name) {
+          case "startHour":
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
+        break;
+      case "satureday":
+        switch (e.target.name) {
+          case "startHour":
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
+        break;
+      case "sunday":
+        switch (e.target.name) {
+          case "startHour":
+            break;
+          case "startMin":
+            break;
+          case "endHour":
+            break;
+          case "endMin":
+            break;
+          case "startBreakHour":
+            break;
+          case "startBreakMin":
+            break;
+          case "endBreakHour":
+            break;
+          case "endBreakMin":
+            break;
+        }
         break;
 
       default:
@@ -214,11 +373,11 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text>영업시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
-              <TextInput2
-                readOnly={!modify}
+              <Combo
+                disabled={!modify}
                 border={`none`}
-                textAlign={`center`}
                 width={`100px`}
+                textAlign={`center`}
                 name={`startHour`}
                 id={key.id}
                 value={dayjs(value.openingHours).format("HH")}
@@ -226,13 +385,38 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   console.log(key.id);
                   onTimeHandler(e);
                 }}
-              />
+              >
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+                <option>19</option>
+                <option>20</option>
+                <option>21</option>
+                <option>22</option>
+                <option>23</option>
+              </Combo>
               <Text margin={`0px 4px`}>:</Text>
-              <TextInput2
-                readOnly={!modify}
+              <Combo
+                disabled={!modify}
                 border={`none`}
-                textAlign={`center`}
                 width={`100px`}
+                textAlign={`center`}
                 name={`startMin`}
                 id={key.id}
                 value={dayjs(value.openingHours).format("mm")}
@@ -240,18 +424,21 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   console.log(key.id);
                   onTimeHandler(e);
                 }}
-              />
+              >
+                <option>00</option>
+                <option>30</option>
+              </Combo>
             </Wrapper>
           </Wrapper>
           <Text margin={`18px 10px 0px 10px`}>~</Text>
           <Wrapper al={`flex-start`}>
             <Text>영업종료</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
-              <TextInput2
-                readOnly={!modify}
+              <Combo
+                disabled={!modify}
                 border={`none`}
-                textAlign={`center`}
                 width={`100px`}
+                textAlign={`center`}
                 name={`endHour`}
                 id={key.id}
                 value={dayjs(value.closingHours).format("HH")}
@@ -259,13 +446,38 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   console.log(key.id);
                   onTimeHandler(e);
                 }}
-              />
+              >
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+                <option>19</option>
+                <option>20</option>
+                <option>21</option>
+                <option>22</option>
+                <option>23</option>
+              </Combo>
               <Text margin={`0px 4px`}>:</Text>
-              <TextInput2
-                readOnly={!modify}
+              <Combo
+                disabled={!modify}
                 border={`none`}
-                textAlign={`center`}
                 width={`100px`}
+                textAlign={`center`}
                 name={`endMin`}
                 id={key.id}
                 value={dayjs(value.closingHours).format("mm")}
@@ -273,7 +485,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   console.log(key.id);
                   onTimeHandler(e);
                 }}
-              />
+              >
+                <option>00</option>
+                <option>30</option>
+              </Combo>
             </Wrapper>
           </Wrapper>
         </Wrapper>
@@ -281,11 +496,11 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           <Wrapper al={`flex-start`}>
             <Text>휴게시간 시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
-              <TextInput2
-                readOnly={!modify}
+              <Combo
+                disabled={!modify}
                 border={`none`}
-                textAlign={`center`}
                 width={`100px`}
+                textAlign={`center`}
                 name={`startBreakHour`}
                 id={key.id}
                 value={dayjs(value.breakTime).format("HH")}
@@ -293,13 +508,38 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   console.log(key.id);
                   onTimeHandler(e);
                 }}
-              />
+              >
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+                <option>19</option>
+                <option>20</option>
+                <option>21</option>
+                <option>22</option>
+                <option>23</option>
+              </Combo>
               <Text margin={`0px 4px`}>:</Text>
-              <TextInput2
-                readOnly={!modify}
+              <Combo
+                disabled={!modify}
                 border={`none`}
-                textAlign={`center`}
                 width={`100px`}
+                textAlign={`center`}
                 name={`startBreakMin`}
                 id={key.id}
                 value={dayjs(value.breakTime).format("mm")}
@@ -307,18 +547,21 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   console.log(key.id);
                   onTimeHandler(e);
                 }}
-              />
+              >
+                <option>00</option>
+                <option>30</option>
+              </Combo>
             </Wrapper>
           </Wrapper>
           <Text margin={`18px 10px 0px 10px`}>~</Text>
           <Wrapper al={`flex-start`}>
             <Text>휴게시간 종료</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
-              <TextInput2
-                readOnly={!modify}
+              <Combo
+                disabled={!modify}
                 border={`none`}
-                textAlign={`center`}
                 width={`100px`}
+                textAlign={`center`}
                 name={`endBreakHour`}
                 id={key.id}
                 value={dayjs(value.breakEndTime).format("HH")}
@@ -326,13 +569,38 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   console.log(key.id);
                   onTimeHandler(e);
                 }}
-              />
+              >
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+                <option>18</option>
+                <option>19</option>
+                <option>20</option>
+                <option>21</option>
+                <option>22</option>
+                <option>23</option>
+              </Combo>
               <Text margin={`0px 4px`}>:</Text>
-              <TextInput2
-                readOnly={!modify}
+              <Combo
+                disabled={!modify}
                 border={`none`}
-                textAlign={`center`}
                 width={`100px`}
+                textAlign={`center`}
                 name={`endBreakMin`}
                 id={key.id}
                 value={dayjs(value.breakEndTime).format("mm")}
@@ -340,7 +608,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   console.log(key.id);
                   onTimeHandler(e);
                 }}
-              />
+              >
+                <option>00</option>
+                <option>30</option>
+              </Combo>
             </Wrapper>
           </Wrapper>
         </Wrapper>

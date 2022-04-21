@@ -1029,6 +1029,7 @@ export const Combo = styled.select<any>`
   border-radius: ${(props) => props.theme.radius};
   margin: ${(props) => props.margin || `0px 5px`};
   font-size: 16px;
+  text-align: ${(props) => props.textAlign || `center`};
 
   &:focus {
     outline: none;
