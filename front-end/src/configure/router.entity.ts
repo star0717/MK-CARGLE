@@ -41,24 +41,13 @@ export const SubRoute = {
   TEST: "test",
 };
 
-// export const Step = {
-//   FIRST: "1",
-//   SECOND: "2",
-//   THIRD: "3",
-//   FOURTH: "4",
-//   FIFTH: "5",
-// };
-
-// /**
-//  * 컴포넌트 전환을 위한 스탭(Query parse)
-//  */
-// export const StepQuery = {
-//   FIRST: "?step=1",
-//   SECOND: "?step=2",
-//   THIRD: "?step=3",
-//   FOURTH: "?step=4",
-//   FIFTH: "?step=5",
-// };
+export class MobileRoute {
+  static BASE = "/mobileBooking/";
+  static m_car_select = MobileRoute.BASE + "m_car_select";
+  static m_car_info = MobileRoute.BASE + "m_car_info";
+  static m_booking = MobileRoute.BASE + "m_booking";
+  static m_complete = MobileRoute.BASE + "m_complete";
+}
 
 /**
  * 페이지 분기를 위한 링크
