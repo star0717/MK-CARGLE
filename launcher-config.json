@@ -1,13 +1,21 @@
 {
   "scripts": {
-    "set:hostname:ec2-mode": ["npx dotenv-replace DESTINATION_API=http://$(curl https://ipinfo.io/ip)", "dotenv cross-var echo %DESTINATION_API%"],
-    "set:hostname:domain-mode": ["npx dotenv-replace DESTINATION_API=http://cargle.net", "dotenv cross-var echo %DESTINATION_API%"],
+    "set:hostname:ec2-mode": [
+      "npx dotenv-replace DESTINATION_API=http://$(curl https://ipinfo.io/ip)",
+      "dotenv cross-var echo %DESTINATION_API%"
+    ],
+    "set:hostname:domain-mode": [
+      "npx dotenv-replace DESTINATION_API=http://cargle.net",
+      "dotenv cross-var echo %DESTINATION_API%"
+    ],
     "set:registry": {
-      "sequential": ["dotenv -- cross-var npx dotenv-replace ecr_base_url=%aws_id%.dkr.ecr.%aws_def_region%.amazonaws.com"]
+      "sequential": [
+        "dotenv -- cross-var npx dotenv-replace ecr_base_url=%aws_id%.dkr.ecr.%aws_def_region%.amazonaws.com"
+      ]
     },
     "build:build": "docker-compose build",
     "build:push": "docker-compose push",
-    "build:prod": ["build:build", "build.push"],
+    "build:prod": ["build:build", "build:push"],
     "npm-check:back-end": "npm-check npm-check back-end/",
     "npm-check:front-end": "npm-check npm-check back-end/",
     "local:up": "docker-compose up -d",
