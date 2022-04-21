@@ -50,7 +50,7 @@ COPY --from=builder --chown=n2server:nodejs /back-end ./
 
 WORKDIR /front-end
 ENV NODE_ENV production
-ENV DESTINATION_API http://18.136.126.186
+ENV DESTINATION_API ${DESTINATION_API}
 ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=builder /front-end/next.config.js ./
