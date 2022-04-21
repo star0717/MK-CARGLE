@@ -269,21 +269,21 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 })}
               />
             </Wrapper>
+            {errors.bookingDate?.type === "required" && (
+              <Text
+                margin={`0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.bookingDate.message}
+              </Text>
+            )}
           </Wrapper>
-          {errors.bookingDate?.type === "required" && (
-            <Text
-              margin={`0px`}
-              width={`100%`}
-              color={`#d6263b`}
-              al={`flex-start`}
-              fontSize={`14px`}
-              textAlign={`left`}
-            >
-              {errors.bookingDate.message}
-            </Text>
-          )}
 
-          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+          <Wrapper al={`flex-start`} width={`400px`}>
             <Text>
               <ColorSpan color={`#d6263b`}>*</ColorSpan>
               정비희망일시
@@ -365,7 +365,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
             errors.hour?.type === "required" ||
             errors.minute?.type === "required") && (
             <Text
-              margin={`0px`}
+              margin={`0px 0px 10px 0px`}
               width={`100%`}
               color={`#d6263b`}
               al={`flex-start`}
@@ -401,20 +401,20 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 })}
               />
             </Wrapper>
+            {(errors.phoneNumber?.type === "required" ||
+              errors.phoneNumber?.type === "pattern") && (
+              <Text
+                margin={`0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.phoneNumber.message}
+              </Text>
+            )}
           </Wrapper>
-          {(errors.phoneNumber?.type === "required" ||
-            errors.phoneNumber?.type === "pattern") && (
-            <Text
-              margin={`0px`}
-              width={`100%`}
-              color={`#d6263b`}
-              al={`flex-start`}
-              fontSize={`14px`}
-              textAlign={`left`}
-            >
-              {errors.phoneNumber.message}
-            </Text>
-          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>
@@ -422,7 +422,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               차량번호
             </Text>
             <Wrapper width={`400px`} ju={`flex-start`}>
-              <Wrapper dr={`row`} margin={`0px 0px 10px 0px`}>
+              <Wrapper dr={`row`}>
                 <TextInput2
                   width={`300px`}
                   type="text"
@@ -466,21 +466,21 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                   </SmallButton>
                 )}
               </Wrapper>
+              {(errors.regNumber?.type === "required" ||
+                errors.regNumber?.type === "pattern") && (
+                <Text
+                  margin={`0px 0px 10px 0px`}
+                  width={`100%`}
+                  color={`#d6263b`}
+                  al={`flex-start`}
+                  fontSize={`14px`}
+                  textAlign={`left`}
+                >
+                  {errors.regNumber.message}
+                </Text>
+              )}
             </Wrapper>
           </Wrapper>
-          {(errors.regNumber?.type === "required" ||
-            errors.regNumber?.type === "pattern") && (
-            <Text
-              margin={`0px`}
-              width={`100%`}
-              color={`#d6263b`}
-              al={`flex-start`}
-              fontSize={`14px`}
-              textAlign={`left`}
-            >
-              {errors.regNumber.message}
-            </Text>
-          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>정비요청내용</Text>
@@ -538,19 +538,19 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 })}
               />
             </Wrapper>
+            {errors.name?.type === "required" && (
+              <Text
+                margin={`0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.name.message}
+              </Text>
+            )}
           </Wrapper>
-          {errors.name?.type === "required" && (
-            <Text
-              margin={`0px`}
-              width={`100%`}
-              color={`#d6263b`}
-              al={`flex-start`}
-              fontSize={`14px`}
-              textAlign={`left`}
-            >
-              {errors.name.message}
-            </Text>
-          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>모델명</Text>
@@ -588,19 +588,19 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 })}
               />
             </Wrapper>
+            {errors.age?.type === "pattern" && (
+              <Text
+                margin={`0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.age.message}
+              </Text>
+            )}
           </Wrapper>
-          {errors.age?.type === "pattern" && (
-            <Text
-              margin={`0px`}
-              width={`100%`}
-              color={`#d6263b`}
-              al={`flex-start`}
-              fontSize={`14px`}
-              textAlign={`left`}
-            >
-              {errors.age.message}
-            </Text>
-          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>차대번호</Text>
@@ -621,19 +621,19 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 })}
               />
             </Wrapper>
+            {errors.idNumber?.type === "pattern" && (
+              <Text
+                margin={`0px`}
+                width={`100%`}
+                color={`#d6263b`}
+                al={`flex-start`}
+                fontSize={`14px`}
+                textAlign={`left`}
+              >
+                {errors.idNumber.message}
+              </Text>
+            )}
           </Wrapper>
-          {errors.idNumber?.type === "pattern" && (
-            <Text
-              margin={`0px`}
-              width={`100%`}
-              color={`#d6263b`}
-              al={`flex-start`}
-              fontSize={`14px`}
-              textAlign={`left`}
-            >
-              {errors.idNumber.message}
-            </Text>
-          )}
 
           <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
             <Text>등록일자</Text>
