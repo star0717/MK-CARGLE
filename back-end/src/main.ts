@@ -4,7 +4,6 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
-import { existsSync, mkdirSync } from 'fs';
 import config from './config/configuration';
 import { JwtAuthGuard } from './lib/auth/guard/jwt-auth.guard';
 
@@ -27,15 +26,6 @@ async function bootstrap() {
   // 가드설정
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new JwtAuthGuard(reflector));
-
-  // 파일 스토리지 설정
-  if (!existsSync(env.fileStorage.root)) mkdirSync(env.fileStorage.root);
-  if (!existsSync(env.fileStorage.root + env.fileStorage.crn_path))
-    mkdirSync(env.fileStorage.root + env.fileStorage.crn_path);
-  if (!existsSync(env.fileStorage.root + env.fileStorage.mrn_path))
-    mkdirSync(env.fileStorage.root + env.fileStorage.mrn_path);
-  if (!existsSync(env.fileStorage.root + env.fileStorage.stamp_path))
-    mkdirSync(env.fileStorage.root + env.fileStorage.stamp_path);
 
   // Swagger 문서툴 설정
   const swaggerConfig = new DocumentBuilder()

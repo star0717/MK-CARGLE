@@ -18,7 +18,7 @@ import {
 import { _pBookingModalProps } from "src/configure/_pProps.entity";
 import { AiFillCar, AiFillMessage, AiOutlineFieldTime } from "react-icons/ai";
 import { Booking, RejectOption } from "src/models/booking.entity";
-import { RejectReason } from "src/constants/booking.const";
+import { BookingState, RejectReason } from "src/constants/booking.const";
 import { basicRegEx } from "src/validation/regEx";
 import { deleteKeyJson, trim } from "src/modules/commonModule";
 import { useDispatch } from "react-redux";
@@ -57,8 +57,6 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
         [e.target.name]: trim(e.target.value),
       });
     }
-    if (e.target.name === "rejectText" && e.target.value.length > 100)
-      return false;
     setRejectOption({ ...rejectOption, [e.target.name]: e.target.value });
   };
 
@@ -68,6 +66,7 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
     deleteKeyJson(rejectOption);
     const bookingData: Booking = {
       ...props.clickDoc,
+      bookingState: BookingState.REJECT,
       rejectOption: rejectOption,
     };
     await dispatch(_aPatchBooking(props.clickDoc._id, bookingData)).then(
@@ -256,8 +255,10 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
               placeholder="100자 이하로 입력하세요."
               value={rejectOption.rejectText}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onInputHandler(e);
-                setTypingCheck(e.target.value.length);
+                if (e.target.value.length <= 100) {
+                  onInputHandler(e);
+                  setTypingCheck(e.target.value.length);
+                }
               }}
             />
           </Wrapper>

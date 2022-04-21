@@ -29,7 +29,10 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { GoPrimitiveDot } from "react-icons/go";
 import {
+  BookingState,
   bookingStateColor,
+  bookingStateInput,
+  bookingStateList,
   bookingStateName,
 } from "src/constants/booking.const";
 import { Booking } from "src/models/booking.entity";
@@ -219,6 +222,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
           >
             <option value="regNumber">차량번호 검색</option>
             <option value="phoneNumber">전화번호 검색</option>
+            <option value="bookingState">예약상태</option>
           </Combo>
           <form onSubmit={onSearchHandler}>
             <SearchInputWrapper
@@ -250,6 +254,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
               </Wrapper>
             </SearchInputWrapper>
           </form>
+
           <Wrapper dr={`row`} ju={`flex-end`} padding={`40px 0px 0px`}>
             <Wrapper width={`310px`} ju={`space-between`} dr={`row`}>
               <SmallButton

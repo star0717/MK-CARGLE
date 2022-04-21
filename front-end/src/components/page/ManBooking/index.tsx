@@ -15,6 +15,7 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -39,7 +40,6 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
       [searchOption]: filterValue,
     };
     if (filterValue === "") delete option[searchOption];
-
     dispatch(_aGetBooking(param, option)).then((res: _iBooking) => {
       setFindResult(res.payload);
     });
