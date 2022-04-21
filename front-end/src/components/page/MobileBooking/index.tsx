@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NextPage } from "next";
 import {
   CommonButton,
@@ -13,6 +13,7 @@ import { MobileRoute } from "src/configure/router.entity";
 import { useRouter } from "next/router";
 import theme from "styles/theme";
 import Image from "next/image";
+import { Agency } from "src/models/agency.entity";
 
 const MobileCarSelect: NextPage<any> = (props) => {
   /*********************************************************************
@@ -22,7 +23,19 @@ const MobileCarSelect: NextPage<any> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [addAgency, setAddAgency] = useState<Partial<Agency>>({
+    name: "",
+    comRegNum: "",
+    manager: "",
+    email: "",
+    phoneNum: "",
+    hpNum: "",
+    faxNum: "",
+    postcode: "",
+    address1: "",
+    address2: "",
+    memo: "",
+  });
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
