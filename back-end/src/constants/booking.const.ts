@@ -65,59 +65,79 @@ export const bookingStateList = Object.values(BookingState).map((e) => e);
  * 업체 업무시간 리스트
  * @param workTo
  * @param workFrom
- * @param restTo
- * @param restFrom
+ * @param breakTo
+ * @param breakFrom
  * @returns
  */
 export const bookingTimeList = (
   workTo: Date,
   workFrom: Date,
-  restTo?: Date,
-  restFrom?: Date,
+  breakTo?: Date,
+  breakFrom?: Date,
 ) => {
-  let toStr: string = dayjs(workTo).format('HH:mm'); // 시작시간 string
-  let fromStr: string = dayjs(workFrom).format('HH:mm'); // 종료시간 string
+  let workToDay: dayjs.Dayjs = dayjs(workTo);
+  let workFromDay: dayjs.Dayjs = dayjs(workFrom);
+  let breakToDay: dayjs.Dayjs = dayjs(breakTo);
+  let breakFromDay: dayjs.Dayjs = dayjs(breakFrom);
 
-  let toHour: number = Number(toStr.split(':')[0]); // 시작시간 시
-  let toMinute: number = Number(toStr.split(':')[1]); // 시작시간 분
-  let fromHour: number = Number(fromStr.split(':')[0]); // 종료시간 시
-  let fromMinute: number = Number(fromStr.split(':')[1]); // 종료시간 분
+  let workToStr: string = workToDay.format('HH:mm'); // 시작시간 string
+  let workFromStr: string = workFromDay.format('HH:mm'); // 종료시간 string
+  let breakToStr: string = breakToDay.format('HH:mm');
+  let breakFromStr: string = breakFromDay.format('HH:mm');
 
-  let toBookingTime: dayjs.Dayjs; // 예약가능 시작시간
-  let fromBookingTime: dayjs.Dayjs; // 예약가능 종료시간
-
-  if (toMinute === 0) toBookingTime = dayjs(workTo);
-  else if (toMinute <= 30) {
-    toBookingTime = dayjs(workTo).minute(30);
-  } else {
-    toBookingTime = dayjs(workTo)
-      .hour(toHour + 1)
-      .minute(0);
-  }
-
-  if (fromMinute <= 30) {
-    fromBookingTime = dayjs(workFrom).minute(0);
-  } else {
-    fromBookingTime = dayjs(workFrom).minute(30);
-  }
-
-  let bookingArr: string[] = [toBookingTime.format('HH:mm')]; // 예약가능시간 리스트(초기값: 시작시간)
+  // 예약가능시간 리스트(초기값: 업무시작시간)
+  let bookingArr: string[] = [workToStr];
+  // 휴게시간 리스트(초기값: 휴게시작시간)
+  let breakArr: string[] = [breakToStr];
 
   // 예약가능시간 간격(30분)
-  let interval: number = Math.floor(
-    fromBookingTime.diff(toBookingTime, 'minute') / 30,
-  );
-  console.log(interval);
+  let workInterval: number = workFromDay.diff(workToDay, 'minutes') / 30;
+  // 휴게시간 간격(30분)
+  let breakInterval: number = breakFromDay.diff(breakToDay, 'minutes') / 30;
 
+  // 휴게시간에 30분 더한 후, 리스트에 추가
+  for (let j = 0; j < breakInterval; j++) {
+    breakToDay = breakToDay.add(30, 'minutes');
+    breakArr.push(breakToDay.format('HH:mm'));
+  }
   // 예약가능시간에 30분 더한 후, 리스트에 추가
-  for (let i = 0; i < interval; i++) {
-    toBookingTime = toBookingTime.add(30, 'minutes');
-    bookingArr.push(toBookingTime.format('HH:mm'));
+  for (let i = 0; i < workInterval; i++) {
+    workToDay = workToDay.add(30, 'minutes');
+    if (!breakArr.includes(workToDay.format('HH:mm')))
+      bookingArr.push(workToDay.format('HH:mm'));
   }
 
   return bookingArr;
 };
 
+/**
+ * 업체 업무시간(시간) 리스트
+ * @param list
+ * @returns
+ */
+export const bookingHourList = (list: string[]) => {
+  let hourArr: string[] = [];
+  for (let i = 0; i < list.length; i++) {
+    if (!hourArr.includes(list[i].split(':')[0]))
+      hourArr.push(list[i].split(':')[0]);
+  }
+  return hourArr;
+};
+
+/**
+ * 업체 업무시간(분) 리스트
+ * @param list
+ * @returns
+ */
+export const bookingMinuteList = (list: string[], hour: string) => {
+  let minuteArr: string[] = [];
+  for (let i = 0; i < list.length; i++) {
+    if (hour === list[i].split(':')[0]) minuteArr.push(list[i].split(':')[1]);
+  }
+  return minuteArr;
+};
+
+/** 거절사유 */
 export enum RejectReason {
   hard = 'hard',
   many = 'many',
