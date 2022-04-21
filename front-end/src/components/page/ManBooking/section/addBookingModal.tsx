@@ -15,7 +15,7 @@ import { NextPage } from "next";
 import { SubmitHandler, useForm } from "react-hook-form";
 import theme from "styles/theme";
 import { _pBookingModalProps } from "src/configure/_pProps.entity";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Booking, MainHopeTime } from "src/models/booking.entity";
 import { MainCar, MainCustomer } from "src/models/maintenance.entity";
 import { useDispatch } from "react-redux";
@@ -24,7 +24,12 @@ import {
   _aPostBooking,
 } from "store/action/user.action";
 import { _iBookingOne, _iGetMaintenancesCarInfo } from "store/interfaces";
-import { BookingState, bookingTimeList } from "src/constants/booking.const";
+import {
+  bookingHourList,
+  bookingMinuteList,
+  BookingState,
+  bookingTimeList,
+} from "src/constants/booking.const";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
@@ -79,6 +84,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   const [carExist, setCarExist] = useState<boolean>(false); // 차량 데이터 존재여부
   const [mainHopeTime, setMainHopeTime] =
     useState<MainHopeTime>(mainHopeTimeInit); // 예약 희망 시분
+  const [mainHopeList, setMainHopeList] = useState<string[]>([]); // 예약 가능 시간 리스트
   // const [officeHour, setOfficeHour] = useState<any>(); // 선택 날짜의 영업시간
   // const [bookingTime, setBookingTime] = useState<string>(""); // 정비희망시간
   const [typingCheck, setTypingCheck] = useState<number>(0); //글자 수 제한
@@ -159,6 +165,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   };
 
   /**
+   * 예약 희망 일자 선택 시 가능시간 리스트 변경
+   */
+  useEffect(() => {
+    setMainHopeList(bookingTimeList(date, date2, rest, rest2));
+  }, [bookingInfo.mainHopeDate]);
+
+  /**
    * 차량 검색 handler
    */
   const onCarSearch = async () => {
@@ -214,13 +227,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
     );
   };
 
-  // /** 테스트 시간 */
-  // let date = new Date();
-  // let date2 = new Date();
-  // let rest = new Date();
-  // let rest2 = new Date();
-  // date2.setHours(date2.getHours() + 6);
-  // rest2.setHours(rest2.getHours() + 1);
+  /** 테스트 시간 */
+  let date = dayjs(new Date(Date.now())).minute(0).toDate();
+  let date2 = dayjs(new Date(Date.now())).minute(0).toDate();
+  let rest = dayjs(new Date(Date.now())).minute(0).toDate();
+  let rest2 = dayjs(new Date(Date.now())).minute(0).toDate();
+  date2.setHours(date2.getHours() + 6);
+  rest2.setHours(rest2.getHours() + 1);
 
   /*********************************************************************
    * 4. Props settings
@@ -253,6 +266,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="date"
+                min={dayjs().format("YYYY-MM-DD")}
                 value={
                   bookingInfo.bookingDate
                     ? dayjs(bookingInfo.bookingDate).format("YYYY-MM-DD")
@@ -297,6 +311,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`212px`}
                 type="date"
+                min={dayjs().format("YYYY-MM-DD")}
                 value={
                   bookingInfo.mainHopeDate
                     ? dayjs(bookingInfo.mainHopeDate).format("YYYY-MM-DD")
@@ -327,17 +342,10 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                   })}
                 >
                   <option value="">시간</option>
-                  {/* {bookingTimeList(date, date2).map((time, idx) => {
+                  {bookingHourList(mainHopeList).map((item) => {
                     return (
-                      <option key={idx} value={time}>
-                        {time}
-                      </option>
-                    );
-                  })} */}
-                  {hourList().map((item) => {
-                    return (
-                      <option key={item.value} value={item.value}>
-                        {item.label}
+                      <option key={item} value={item}>
+                        {item}
                       </option>
                     );
                   })}
@@ -347,6 +355,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                   width={`80px`}
                   border={"none"}
                   value={mainHopeTime.minute}
+                  disabled={mainHopeTime.hour === "" ? true : false}
                   {...register("minute", {
                     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                       onMainHopeTimeHandler(e);
@@ -355,8 +364,15 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                   })}
                 >
                   <option value="">분</option>
-                  <option value="00">00</option>
-                  <option value="30">30</option>
+                  {bookingMinuteList(mainHopeList, mainHopeTime.hour).map(
+                    (item) => {
+                      return (
+                        <option key={item} value={item}>
+                          {item}
+                        </option>
+                      );
+                    }
+                  )}
                 </Combo>
               </Wrapper>
             </Wrapper>
@@ -376,7 +392,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
             </Text>
           )}
 
-          <Wrapper al={`flex-start`} margin={`0px 0px 10px`} width={`400px`}>
+          <Wrapper al={`flex-start`} margin={`10px 0px 10px`} width={`400px`}>
             <Text>
               <ColorSpan color={`#d6263b`}>*</ColorSpan>
               고객전화번호

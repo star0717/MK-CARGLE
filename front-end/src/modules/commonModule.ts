@@ -417,8 +417,6 @@ export const s3DeleteFile = async (fileName: string, fold?: string) => {
     result = null;
   }
 
-  console.log(result);
-
   return result;
 };
 
@@ -436,7 +434,7 @@ export const s3ToUrl = (data: S3.Types.GetObjectOutput) => {
 };
 
 /**
- * 예약관리 임시 사용
+ * 예약관리
  * 시간 배열 생성
  * @returns
  */
