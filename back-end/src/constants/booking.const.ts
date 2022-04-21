@@ -28,13 +28,13 @@ export const bookingStateInput = (state: string) => {
 /** 예약 상태별 문구 출력 */
 export const bookingStateName = (state: BookingState) => {
   switch (state) {
-    case 'new':
+    case BookingState.NEW:
       return '신규';
-    case 'approval':
+    case BookingState.APPROVAL:
       return '승인';
-    case 'reject':
+    case BookingState.REJECT:
       return '거절';
-    case 'maintenance':
+    case BookingState.MAINTENANCE:
       return '정비';
     default:
       return null;
@@ -44,13 +44,13 @@ export const bookingStateName = (state: BookingState) => {
 /** 예약 상태별 색상 출력 */
 export const bookingStateColor = (state: BookingState) => {
   switch (state) {
-    case 'new':
+    case BookingState.NEW:
       return '#314FA5';
-    case 'approval':
+    case BookingState.APPROVAL:
       return '#51b351';
-    case 'reject':
+    case BookingState.REJECT:
       return '#d6263b';
-    case 'maintenance':
+    case BookingState.MAINTENANCE:
       return '#9d9d9d';
     default:
       return null;
@@ -124,6 +124,20 @@ export enum RejectReason {
   text = 'text',
 }
 
+/** 예약 상태별 문구 출력 */
+export const rejectReasonName = (reason: RejectReason) => {
+  switch (reason) {
+    case RejectReason.hard:
+      return '정비가 어려운 차량';
+    case RejectReason.many:
+      return '수리할 차량이 밀림';
+    case RejectReason.text:
+      return '직접 입력';
+    default:
+      return null;
+  }
+};
+
 /**
  * 업무시간 종류
  * all: 매일 같음
@@ -136,23 +150,24 @@ export enum SetBookingTime {
   DIFF = 'diff',
 }
 
-export enum dayOff {
-  MON = `monday`,
-  TUE = `tuesday`,
-  WED = `wedensday`,
-  THU = `thursday`,
-  FRI = `friday`,
-  SAT = `satureday`,
-  SUN = `sunday`,
-  ALLDAY = `allday`,
-  WEEKDAY = `weekday`,
-  WEEKEND = `weekend`,
-}
+// export enum dayOff {
+//   MON = `monday`,
+//   TUE = `tuesday`,
+//   WED = `wedensday`,
+//   THU = `thursday`,
+//   FRI = `friday`,
+//   SAT = `satureday`,
+//   SUN = `sunday`,
+//   ALLDAY = `allday`,
+//   WEEKDAY = `weekday`,
+//   WEEKEND = `weekend`,
+// }
 
 /********** 검색 옵션 쿼리 생성 ******************/
 export const genBookingOptionQuery = (data: BookingFindOptions) => {
   let query = '&';
-  if (data?.regNumber) query += 'regNumber=' + data.regNumber;
-  if (data?.phoneNumber) query += 'phoneNumber=' + data.phoneNumber;
+  if (data?.regNumber) query += 'regNumber=' + data.regNumber + '&';
+  if (data?.phoneNumber) query += 'phoneNumber=' + data.phoneNumber + '&';
+  if (data?.mainHopeDate) query += 'mainHopeDate=' + data.mainHopeDate;
   return query;
 };

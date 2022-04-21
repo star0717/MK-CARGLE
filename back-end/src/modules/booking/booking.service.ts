@@ -11,7 +11,7 @@ import {
   FindParameters,
   FindResult,
 } from 'src/models/base.entity';
-import { Booking } from 'src/models/booking.entity';
+import { Booking, BookingFindOptions } from 'src/models/booking.entity';
 import { MainCar } from 'src/models/maintenance.entity';
 import { CarsService } from 'src/modules/cars/cars.service';
 import { SetbookingService } from 'src/modules/setbooking/setbooking.service';

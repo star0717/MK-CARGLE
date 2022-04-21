@@ -19,6 +19,7 @@ export declare class Booking extends BaseEntity {
 export declare class BookingFindOptions {
     regNumber?: string;
     phoneNumber?: string;
+    mainHopeDate?: any;
 }
 export declare class MainHopeTime {
     hour?: string;

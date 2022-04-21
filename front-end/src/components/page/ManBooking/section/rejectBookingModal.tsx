@@ -18,7 +18,7 @@ import {
 import { _pBookingModalProps } from "src/configure/_pProps.entity";
 import { AiFillCar, AiFillMessage, AiOutlineFieldTime } from "react-icons/ai";
 import { Booking, RejectOption } from "src/models/booking.entity";
-import { RejectReason } from "src/constants/booking.const";
+import { BookingState, RejectReason } from "src/constants/booking.const";
 import { basicRegEx } from "src/validation/regEx";
 import { deleteKeyJson, trim } from "src/modules/commonModule";
 import { useDispatch } from "react-redux";
@@ -66,6 +66,7 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
     deleteKeyJson(rejectOption);
     const bookingData: Booking = {
       ...props.clickDoc,
+      bookingState: BookingState.REJECT,
       rejectOption: rejectOption,
     };
     await dispatch(_aPatchBooking(props.clickDoc._id, bookingData)).then(
