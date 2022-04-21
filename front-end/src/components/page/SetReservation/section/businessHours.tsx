@@ -110,7 +110,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     list: OfficeHours,
     day: string,
     time: string,
-    type: string,
+    type: boolean,
     e: React.ChangeEvent<HTMLInputElement>
   ): any => {
     switch (day) {
@@ -153,9 +153,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   };
 
   const onTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const test = "openingHours";
-    const test2 = "MON";
-
     const bDay = e.target.name.split("_")[0];
     const bTime = e.target.name.split("_")[1];
     const bTimeType = e.target.name.split("_")[2];
@@ -164,7 +161,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       ...time,
       [bDay]: {
         ...time[bDay],
-        [bTime]: fc(time, bDay, bTime, bTimeType, e).hour(
+        [bTime]: fc(time, bDay, bTime, Boolean(bTimeType), e).hour(
           Number(e.target.value)
         ),
       },
