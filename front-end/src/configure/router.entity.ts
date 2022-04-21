@@ -1,46 +1,3 @@
-import { MainStatus } from "src/constants/maintenance.const";
-
-/**
- * 계정 페이지(토큰 x) url
- */
-export const SignRoute = {
-  SIGNUP: "signup",
-  FINDEMAIL: "findemail",
-  FINDPASSWORD: "findpassword",
-};
-
-/**
- * 메인 페이지(토큰 o) url[0]
- */
-export const MainRoute = {
-  MAIN: "main",
-  MYPAGE: "mypage",
-  TEST: "test",
-  ADMIN: "admin",
-  PARTS: "parts",
-  MAINTENANCE: "maintenance",
-};
-
-/**
- * 메인 페이지(토큰 o) url[1]
- */
-export const SubRoute = {
-  ACCOUNT: "account",
-  WORKER: "worker",
-  REVIEW_COMPANIES: "review_companies",
-  MAN_COMPANIES: "man_companies",
-  USERS: "users",
-  MAN_PARTS: "man_parts",
-  MAN_SET: "man_set",
-  MAN_BUSINESS: "man_business",
-  MOLIT_ITEMS: "molit_items",
-  MAINTENANCE_BOOK: "maintenance_book",
-  MAN_CUSTOMER: "man_customer",
-  MAN_BOOKING: "man_booking",
-  SET_BOOKING: "set_booking",
-  TEST: "test",
-};
-
 export class MobileRoute {
   static BASE = "/mobileBooking/";
   static m_car_select = MobileRoute.BASE + "m_car_select";
@@ -49,41 +6,32 @@ export class MobileRoute {
   static m_complete = MobileRoute.BASE + "m_complete";
 }
 
-/**
- * 페이지 분기를 위한 링크
- */
-export const BaseLink = {
-  INDEX: "/",
-  SIGN: "/sign",
-  V: "/v",
-};
-
-/**
- * 실제 사용되는 전체 링크
- */
-export const UseLink = {
+export class UseLink {
+  static INDEX = "/";
+  static SIGN = "/sign/";
+  static V = "/v/";
   // 기본(로그인x)
-  INDEX: BaseLink.INDEX,
-  SIGNUP: `${BaseLink.SIGN}/${SignRoute.SIGNUP}`,
-  FIND_EMAIL: `${BaseLink.SIGN}/${SignRoute.FINDEMAIL}`,
-  FIND_PASSWORD: `${BaseLink.SIGN}/${SignRoute.FINDPASSWORD}`,
+  static SIGNUP = UseLink.SIGN + "signup";
+  static FIND_EMAIL = UseLink.SIGN + "findemail";
+  static FIND_PASSWORD = UseLink.SIGN + "findpassword";
   // 메인(로그인o)
-  MAIN: `${BaseLink.V}/${MainRoute.MAIN}`,
-  MAN_PARTS: `${BaseLink.V}/${MainRoute.PARTS}/${SubRoute.MAN_PARTS}`,
-  MAN_SET: `${BaseLink.V}/${MainRoute.PARTS}/${SubRoute.MAN_SET}`,
-  MAN_BUSINESS: `${BaseLink.V}/${MainRoute.PARTS}/${SubRoute.MAN_BUSINESS}`,
-  MYPAGE_ACCOUNT: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.ACCOUNT}`,
-  MYPAGE_WORKER: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.WORKER}`,
-  MAINTENANCE_BOOK: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAINTENANCE_BOOK}`,
-  MAN_CUSTOMER: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAN_CUSTOMER}`,
-  MAN_BOOKING: `${BaseLink.V}/${MainRoute.MAINTENANCE}/${SubRoute.MAN_BOOKING}`,
-  MYPAGE_SET_BOOKING: `${BaseLink.V}/${MainRoute.MYPAGE}/${SubRoute.SET_BOOKING}`,
-  TEST: `${BaseLink.V}/${MainRoute.TEST}`,
+  static MAIN = UseLink.V + "main";
+  static MAN_PARTS = UseLink.V + "parts/man_parts";
+  static MAN_SET = UseLink.V + "parts/man_set";
+  static MAN_BUSINESS = UseLink.V + "parts/man_business";
+  static MYPAGE_ACCOUNT = UseLink.V + "mypage/account";
+  static MYPAGE_WORKER = UseLink.V + "mypage/worker";
+  static MYPAGE_SET_BOOKING = UseLink.V + "mypage/set_booking";
+  static MAINTENANCE_BOOK = UseLink.V + "maintenance/maintenance_book";
+  static MAN_CUSTOMER = UseLink.V + "maintenance/man_customer";
+  static MAN_BOOKING = UseLink.V + "maintenance/man_booking";
+
+  static TEST = UseLink.V + "test";
   // 관리자(Admin)
-  ADMIN_REVIEW_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.REVIEW_COMPANIES}`,
-  ADMIN_MAN_COMPANIES: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.MAN_COMPANIES}`,
-  ADMIN_USERS: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.USERS}`,
-  ADMIN_MAN_PARTS: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.MAN_PARTS}`,
-  ADMIN_MOLIT_ITEMS: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.MOLIT_ITEMS}`,
-  ADMIN_TEST: `${BaseLink.V}/${MainRoute.ADMIN}/${SubRoute.TEST}`,
-};
+  static ADMIN_REVIEW_COMPANIES = UseLink.V + "admin/review_companies";
+  static ADMIN_MAN_COMPANIES = UseLink.V + "admin/man_companies";
+  static ADMIN_USERS = UseLink.V + "admin/users";
+  static ADMIN_MAN_PARTS = UseLink.V + "admin/man_parts";
+  static ADMIN_MOLIT_ITEMS = UseLink.V + "admin/molit_items";
+  static ADMIN_TEST = UseLink.V + "admin/test";
+}
