@@ -21,6 +21,7 @@
     "local:up": ["set:hostname:ec2-mode", "docker-compose up -d"],
     "local:down": "docker-compose down",
     "local:logs": "docker-compose  logs -t -f --tail 100",
+    "local:exec": "docker-compose exec n2server sh",
     "service:create": "dotenv -- cross-var docker service create --mode global --env-file .env -q --with-registry-auth --name %service_name% -p 80:80 %ecr_base_url%/%service_name%:latest",
     "service:create:ec2-mode": ["set:hostname:ec2-mode", "service:create"],
     "service:create:domain-mode": [
@@ -65,7 +66,8 @@
     "local-service:로컬에서 실행(테스트용)": {
       "up: 서비스 생성": "local:up",
       "down: 서비스 종료": "local:down",
-      "logs: 로그 확인": "local:logs"
+      "logs: 로그 확인": "local:logs",
+      "exec: 실행중인 도커 내부로 진입": "local:exec"
     },
     "swarm:도커 스왐 관련": {
       "init:도커 스왐 시작": "swarm:init",
