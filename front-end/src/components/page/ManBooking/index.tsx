@@ -4,7 +4,7 @@ import { _MainProps } from "src/configure/_props.entity";
 import { BodyWrapper } from "src/components/styles/LayoutComponents";
 import BookingList from "./section/bookingList";
 import { FindParameters, FindResult } from "src/models/base.entity";
-import { Booking } from "src/models/booking.entity";
+import { Booking, BookingFindOptions } from "src/models/booking.entity";
 import { _pBookingProps } from "src/configure/_pProps.entity";
 import { useDispatch } from "react-redux";
 import { _aGetBooking } from "store/action/user.action";
@@ -23,6 +23,10 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
   const [searchOption, setSearchOption] = useState<string>("regNumber"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   const [reset, setReset] = useState<number>(0);
+  const [searchList, setSearchList] = useState<BookingFindOptions>({
+    mainHopeDate: null,
+    bookingState: "",
+  });
 
   /*********************************************************************
    * 3. Handlers
@@ -36,10 +40,15 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
       page,
       take: 10,
     };
-    const option: any = {
-      [searchOption]: filterValue,
-    };
+    const option: any = {};
+
     if (filterValue === "") delete option[searchOption];
+    else option[searchOption] = filterValue;
+    if (!searchList.mainHopeDate) delete option.mainHopeDate;
+    else option.mainHopeDate = searchList.mainHopeDate;
+    if (searchList.bookingState === "") delete option.bookingState;
+    else option.bookingState = searchList.bookingState;
+
     dispatch(_aGetBooking(param, option)).then((res: _iBooking) => {
       setFindResult(res.payload);
     });
@@ -61,6 +70,8 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
     setSearchOption,
     filterValue,
     setFilterValue,
+    searchList,
+    setSearchList,
     reset,
     setReset,
   };

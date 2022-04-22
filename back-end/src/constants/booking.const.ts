@@ -188,6 +188,7 @@ export const genBookingOptionQuery = (data: BookingFindOptions) => {
   let query = '&';
   if (data?.regNumber) query += 'regNumber=' + data.regNumber + '&';
   if (data?.phoneNumber) query += 'phoneNumber=' + data.phoneNumber + '&';
-  if (data?.mainHopeDate) query += 'mainHopeDate=' + data.mainHopeDate;
+  if (data?.mainHopeDate) query += 'mainHopeDate=' + data.mainHopeDate + '&';
+  if (data?.bookingState) query += 'bookingState=' + data.bookingState;
   return query;
 };

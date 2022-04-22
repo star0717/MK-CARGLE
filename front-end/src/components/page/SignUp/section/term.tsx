@@ -186,7 +186,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
         <Wrapper>
           <form onSubmit={handleSubmit(agreeTermHandler)}>
             <Wrapper al={`flex-start`} width={`500px`} padding={`0px 0px 30px`}>
-              <Wrapper ju={`flex-start`} dr={`row`} padding={`10px 0px`}>
+              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
                 <Text></Text>
                 <Wrapper
                   dr={`row`}
@@ -237,14 +237,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   repellat
                 </Text>
               </Wrapper>
-              <Wrapper ju={`flex-start`} dr={`row`} padding={`10px 0px`}>
-                <Wrapper width={`auto`}>
-                  {errors.mkTerm && (
-                    <Text width={`100%`} textAlign={`right`} color={`#d6263b`}>
-                      필수사항입니다.
-                    </Text>
-                  )}
-                </Wrapper>
+              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
                 <Wrapper dr={`row`} width={`auto`}>
                   <Checkbox>
                     동의합니다.
@@ -266,6 +259,13 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     />
                     <CheckMark></CheckMark>
                   </Checkbox>
+                </Wrapper>
+                <Wrapper width={`auto`}>
+                  {errors.mkTerm && (
+                    <Text width={`100%`} textAlign={`right`} color={`#d6263b`}>
+                      필수사항입니다.
+                    </Text>
+                  )}
                 </Wrapper>
               </Wrapper>
             </Wrapper>
@@ -299,14 +299,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   repellat
                 </Text>
               </Wrapper>
-              <Wrapper ju={`flex-start`} dr={`row`} padding={`10px 0px`}>
-                <Wrapper width={`auto`}>
-                  {errors.privacyTerm && (
-                    <Text width={`auto`} al={`flex-start`} color={`#d6263b`}>
-                      필수사항입니다.
-                    </Text>
-                  )}
-                </Wrapper>
+              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
                 <Wrapper dr={`row`} width={`auto`}>
                   <Checkbox>
                     동의합니다.
@@ -328,6 +321,13 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                     />
                     <CheckMark></CheckMark>
                   </Checkbox>
+                </Wrapper>
+                <Wrapper width={`auto`}>
+                  {errors.privacyTerm && (
+                    <Text width={`auto`} al={`flex-start`} color={`#d6263b`}>
+                      필수사항입니다.
+                    </Text>
+                  )}
                 </Wrapper>
               </Wrapper>
             </Wrapper>
@@ -361,7 +361,7 @@ const Term: NextPage<_pSignUpProps> = (props) => {
                   repellat
                 </Text>
               </Wrapper>
-              <Wrapper ju={`flex-start`} dr={`row`} padding={`10px 0px`}>
+              <Wrapper ju={`space-between`} dr={`row`} padding={`10px 0px`}>
                 <Checkbox>
                   동의합니다.
                   <CheckInput

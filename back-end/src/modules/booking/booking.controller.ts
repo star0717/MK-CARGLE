@@ -75,6 +75,7 @@ export class BookingController {
     @AuthToken() token: AuthTokenInfo,
   ): Promise<FindResult<Booking>> {
     fParams.useDurationSearch = true;
+
     if (fOptions) {
       fParams.filter = fOptions;
       if (fOptions.regNumber) {
@@ -92,13 +93,14 @@ export class BookingController {
         delete fOptions.phoneNumber;
       }
       if (fOptions.mainHopeDate) {
+        console.log('##', fOptions);
         fOptions['mainHopeDate'] = {
           $gte: getStartOfDayDateTime(fOptions.mainHopeDate),
           $lt: getEndOfDayDateTime(fOptions.mainHopeDate),
         };
-        delete fOptions.mainHopeDate;
       }
     }
+
     return await this.bookingService.findByOptions(token, fParams);
   }
 

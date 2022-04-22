@@ -14,7 +14,7 @@ import { Maintenance, MainWork } from "src/models/maintenance.entity";
 import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";
 import { SetBooking } from "src/models/setbooking.entity";
-import { Booking } from "src/models/booking.entity";
+import { Booking, BookingFindOptions } from "src/models/booking.entity";
 
 /***********************************************************************
  * 기본
@@ -232,6 +232,8 @@ export interface _pBookingProps extends _pFindDocs<Booking> {
   setSearchOption: React.Dispatch<React.SetStateAction<string>>;
   filterValue: string;
   setFilterValue: React.Dispatch<React.SetStateAction<string>>;
+  searchList: BookingFindOptions;
+  setSearchList: React.Dispatch<React.SetStateAction<BookingFindOptions>>;
   reset?: number;
   setReset?: React.Dispatch<React.SetStateAction<number>>;
 }
