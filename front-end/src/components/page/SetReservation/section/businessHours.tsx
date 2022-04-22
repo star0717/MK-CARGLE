@@ -34,12 +34,39 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     id: string;
   }
 
+  const HoursOption = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24,
+  ];
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [booking, setBooking] = useState<SetBooking>(props.data);
   const [modify, setModify] = useState<boolean>(false);
-  const [time, setTime] = useState<OfficeHours>({
+  const [allDay, setAllDay] = useState({
+    ALLDAY: {
+      openingHours: booking.officeHour.MON.openingHours,
+      closingHours: booking.officeHour.MON.closingHours,
+      breakTime: booking.officeHour.MON.breakTime,
+      breakEndTime: booking.officeHour.MON.breakEndTime,
+    },
+  });
+  const [weekDay, setWeekDay] = useState({
+    WEEKDAY: {
+      openingHours: booking.officeHour.MON.openingHours,
+      closingHours: booking.officeHour.MON.closingHours,
+      breakTime: booking.officeHour.MON.breakTime,
+      breakEndTime: booking.officeHour.MON.breakEndTime,
+    },
+    WEEKEND: {
+      openingHours: booking.officeHour.SAT.openingHours,
+      closingHours: booking.officeHour.SAT.closingHours,
+      breakTime: booking.officeHour.SAT.breakTime,
+      breakEndTime: booking.officeHour.SAT.breakEndTime,
+    },
+  });
+  const [diffDay, setDiffDay] = useState<OfficeHours>({
     MON: {
       openingHours: booking.officeHour.MON.openingHours,
       closingHours: booking.officeHour.MON.closingHours,
@@ -106,69 +133,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
 
-  const fc = (
-    list: OfficeHours,
-    day: string,
-    time: string,
-    type: boolean,
-    e: React.ChangeEvent<HTMLInputElement>
-  ): any => {
-    switch (day) {
-      case "MON":
-        switch (time) {
-          case "openingHours":
-            if (type)
-              return dayjs(list.MON.openingHours).hour(Number(e.target.value));
-            return dayjs(list.MON.openingHours).minute(Number(e.target.value));
-          case "openingHours":
-            break;
-          case "openingHours":
-            break;
-          case "openingHours":
-            break;
-
-          default:
-            return null;
-        }
-        break;
-
-      case "TUE":
-        break;
-      case "WED":
-        break;
-      case "THU":
-        break;
-      case "FRI":
-        break;
-      case "SAT":
-        break;
-
-      case "SUN":
-        break;
-      default:
-        return null;
-    }
-
-    return null;
-  };
-
-  const onTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const bDay = e.target.name.split("_")[0];
-    const bTime = e.target.name.split("_")[1];
-    const bTimeType = e.target.name.split("_")[2];
-
-    setTime({
-      ...time,
-      [bDay]: {
-        ...time[bDay],
-        [bTime]: fc(time, bDay, bTime, Boolean(bTimeType), e).hour(
-          Number(e.target.value)
-        ),
-      },
-    });
-  };
-
-  console.log("$$", dayjs(time.MON.openingHours).hour());
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -176,44 +140,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  const BusinessHourInput = (key: KeyInput) => {
-    let value;
-    switch (key.id) {
-      case "allday":
-        value = time.MON;
-        break;
-      case "weekday":
-        value = time.MON;
-        break;
-      case "weekend":
-        value = time.SAT;
-        break;
-      case "monday":
-        value = time.MON;
-        break;
-      case "tuesday":
-        value = time.TUE;
-        break;
-      case "wedensday":
-        value = time.WED;
-        break;
-      case "thursday":
-        value = time.THU;
-        break;
-      case "friday":
-        value = time.FRI;
-        break;
-      case "satureday":
-        value = time.SAT;
-        break;
-      case "sunday":
-        value = time.SUN;
-        break;
-
-      default:
-        break;
-    }
-
+  const Inputlayout = () => {
     return (
       <>
         <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
@@ -225,38 +152,17 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                name={`startHour`}
-                id={key.id}
-                value={dayjs(value.openingHours).format("HH")}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(key.id);
-                  onTimeHandler(e);
-                }}
+                // name={`${key.id}_openingHours_true`}
+                // id={key.id}
+                // value={dayjs(value.openingHours).format("HH")}
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                //   console.log(key.id);
+                //   onTimeHandler(e);
+                // }}
               >
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
+                {HoursOption.map((time) => {
+                  return <option value={time}>{time}</option>;
+                })}
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
               <Combo
@@ -264,13 +170,13 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                name={`startMin`}
-                id={key.id}
-                value={dayjs(value.openingHours).format("mm")}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(key.id);
-                  onTimeHandler(e);
-                }}
+                // name={`${key.id}_openingHours_false`}
+                // id={key.id}
+                // value={dayjs(value.openingHours).format("mm")}
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                //   console.log(key.id);
+                //   onTimeHandler(e);
+                // }}
               >
                 <option value="00">00</option>
                 <option value="30">30</option>
@@ -286,38 +192,17 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                name={`endHour`}
-                id={key.id}
-                value={dayjs(value.closingHours).format("HH")}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(key.id);
-                  onTimeHandler(e);
-                }}
+                // name={`${key.id}_closingHours_true`}
+                // id={key.id}
+                // value={dayjs(value.closingHours).format("HH")}
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                //   console.log(key.id);
+                //   onTimeHandler(e);
+                // }}
               >
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
+                {HoursOption.map((time) => {
+                  return <option value={time}>{time}</option>;
+                })}
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
               <Combo
@@ -325,13 +210,13 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                name={`endMin`}
-                id={key.id}
-                value={dayjs(value.closingHours).format("mm")}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(key.id);
-                  onTimeHandler(e);
-                }}
+                // name={`${key.id}_closingHours_false`}
+                // id={key.id}
+                // value={dayjs(value.closingHours).format("mm")}
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                //   console.log(key.id);
+                //   onTimeHandler(e);
+                // }}
               >
                 <option value="00">00</option>
                 <option value="30">30</option>
@@ -348,38 +233,17 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                name={`startBreakHour`}
-                id={key.id}
-                value={dayjs(value.breakTime).format("HH")}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(key.id);
-                  onTimeHandler(e);
-                }}
+                // name={`${key.id}_breakTime_true`}
+                // id={key.id}
+                // value={dayjs(value.breakTime).format("HH")}
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                //   console.log(key.id);
+                //   onTimeHandler(e);
+                // }}
               >
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
+                {HoursOption.map((time) => {
+                  return <option value={time}>{time}</option>;
+                })}
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
               <Combo
@@ -387,13 +251,13 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                name={`startBreakMin`}
-                id={key.id}
-                value={dayjs(value.breakTime).format("mm")}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(key.id);
-                  onTimeHandler(e);
-                }}
+                // name={`${key.id}_breakTime_false`}
+                // id={key.id}
+                // value={dayjs(value.breakTime).format("mm")}
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                //   console.log(key.id);
+                //   onTimeHandler(e);
+                // }}
               >
                 <option value="00">00</option>
                 <option value="30">30</option>
@@ -409,38 +273,17 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                name={`endBreakHour`}
-                id={key.id}
-                value={dayjs(value.breakEndTime).format("HH")}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(key.id);
-                  onTimeHandler(e);
-                }}
+                // name={`${key.id}_breakEndTime_true`}
+                // id={key.id}
+                // value={dayjs(value.breakEndTime).format("HH")}
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                //   console.log(key.id);
+                //   onTimeHandler(e);
+                // }}
               >
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
+                {HoursOption.map((time) => {
+                  return <option value={time}>{time}</option>;
+                })}
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
               <Combo
@@ -448,13 +291,13 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                name={`endBreakMin`}
-                id={key.id}
-                value={dayjs(value.breakEndTime).format("mm")}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(key.id);
-                  onTimeHandler(e);
-                }}
+                // name={`${key.id}_breakEndTime_false`}
+                // id={key.id}
+                // value={dayjs(value.breakEndTime).format("mm")}
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                //   console.log(key.id);
+                //   onTimeHandler(e);
+                // }}
               >
                 <option value="00">00</option>
                 <option value="30">30</option>
@@ -464,6 +307,74 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
         </Wrapper>
       </>
     );
+  };
+
+  const BussinessHourInput = () => {
+    switch (booking.setBookingTime) {
+      case SetBookingTime.ALL:
+        return (
+          <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+            <Text margin={`18px 10px 0px 0px`}>모든영업일</Text>
+            <Inputlayout />
+          </Wrapper>
+        );
+        break;
+      case SetBookingTime.WEEK:
+        return (
+          <>
+            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+              <Text margin={`18px 10px 0px 0px`}>평일영업일</Text>
+              <Inputlayout />
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+              <Text margin={`18px 10px 0px 0px`}>주말영업일</Text>
+              <Inputlayout />
+            </Wrapper>
+          </>
+        );
+        break;
+      case SetBookingTime.DIFF:
+        return (
+          <>
+            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+              <Text margin={`18px 10px 0px 0px`}>월요일</Text>
+              <Inputlayout />
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+              <Text margin={`18px 10px 0px 0px`}>화요일</Text>
+              <Inputlayout />
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+              <Text margin={`18px 10px 0px 0px`}>수요일</Text>
+              <Inputlayout />
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+              <Text margin={`18px 10px 0px 0px`}>목요일</Text>
+              <Inputlayout />
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+              <Text margin={`18px 10px 0px 0px`}>금요일</Text>
+              <Inputlayout />
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+              <Text margin={`18px 10px 0px 0px`}>토요일</Text>
+              <Inputlayout />
+            </Wrapper>
+            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
+              <Text margin={`18px 10px 0px 0px`}>일요일</Text>
+              <Inputlayout />
+            </Wrapper>
+          </>
+        );
+
+        break;
+      default:
+        null;
+    }
+
+    // return(
+
+    // )
   };
 
   return (
@@ -646,95 +557,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               요일마다 달라요
             </SelectDays>
           </Wrapper>
-          {booking.setBookingTime === SetBookingTime.ALL ? (
-            <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
-              <Text margin={`18px 10px 0px 0px`}>모든 영업일</Text>
-              <BusinessHourInput id="allday" />
-            </Wrapper>
-          ) : (
-            <>
-              {booking.setBookingTime === SetBookingTime.WEEK ? (
-                <>
-                  <Wrapper
-                    dr={`row`}
-                    ju={`flex-start`}
-                    padding={`30px 0px 0px`}
-                  >
-                    <Text margin={`18px 10px 0px 0px`}>평일 영업일</Text>
-                    <BusinessHourInput id="weekday" />
-                  </Wrapper>
-                  <Wrapper
-                    dr={`row`}
-                    ju={`flex-start`}
-                    padding={`30px 0px 0px`}
-                  >
-                    <Text margin={`18px 10px 0px 0px`}>주말 영업일</Text>
-                    <BusinessHourInput id="weekend" />
-                  </Wrapper>
-                </>
-              ) : (
-                <>
-                  <Wrapper
-                    dr={`row`}
-                    ju={`flex-start`}
-                    padding={`30px 0px 0px`}
-                  >
-                    <Text margin={`18px 10px 0px 0px`}>월요일</Text>
-                    <BusinessHourInput id="monday" />
-                  </Wrapper>
-                  <Wrapper
-                    dr={`row`}
-                    ju={`flex-start`}
-                    padding={`30px 0px 0px`}
-                  >
-                    <Text margin={`18px 10px 0px 0px`}>화요일</Text>
-                    <BusinessHourInput id="tuesday" />
-                  </Wrapper>
-                  <Wrapper
-                    dr={`row`}
-                    ju={`flex-start`}
-                    padding={`30px 0px 0px`}
-                  >
-                    <Text margin={`18px 10px 0px 0px`}>수요일</Text>
-                    <BusinessHourInput id="wedensday" />
-                  </Wrapper>
-                  <Wrapper
-                    dr={`row`}
-                    ju={`flex-start`}
-                    padding={`30px 0px 0px`}
-                  >
-                    <Text margin={`18px 10px 0px 0px`}>목요일</Text>
-                    <BusinessHourInput id="thursday" />
-                  </Wrapper>
-                  <Wrapper
-                    dr={`row`}
-                    ju={`flex-start`}
-                    padding={`30px 0px 0px`}
-                  >
-                    <Text margin={`18px 10px 0px 0px`}>금요일</Text>
-                    <BusinessHourInput id="friday" />
-                  </Wrapper>
-                  <Wrapper
-                    dr={`row`}
-                    ju={`flex-start`}
-                    padding={`30px 0px 0px`}
-                  >
-                    <Text margin={`18px 10px 0px 0px`}>토요일</Text>
-                    <BusinessHourInput id="satureday" />
-                  </Wrapper>
-                  <Wrapper
-                    dr={`row`}
-                    ju={`flex-start`}
-                    padding={`30px 0px 0px`}
-                  >
-                    <Text margin={`18px 10px 0px 0px`}>일요일</Text>
-                    <BusinessHourInput id="sunday" />
-                  </Wrapper>
-                </>
-              )}
-            </>
-          )}
         </Wrapper>
+        <BussinessHourInput />
         {modify ? (
           <CommonButtonWrapper ju={`space-around`}>
             <CommonButton

@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { NextPage } from "next";
-import {
-  Wrapper,
-  WholeWrapper,
-  Text,
-} from "src/components/styles/CommonComponents";
-import { useResizeDetector } from "react-resize-detector";
-import { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import { BsDownload, BsUpload } from "react-icons/bs";
+import { BodyWrapper } from "src/components/styles/LayoutComponents";
 
-const TestPage: NextPage<any> = () => {
+import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
+
+const SetReservation: NextPage<any> = () => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
@@ -18,50 +12,7 @@ const TestPage: NextPage<any> = () => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [time, setTime] = useState({
-    MON: {
-      openingHours: "hi",
-      closingHours: "hi",
-      breakTime: "hi",
-      breakEndTime: "hi",
-    },
-    TUE: {
-      openingHours: "hi",
-      closingHours: "hi",
-      breakTime: "hi",
-      breakEndTime: "hi",
-    },
-    WED: {
-      openingHours: "hi",
-      closingHours: "hi",
-      breakTime: "hi",
-      breakEndTime: "hi",
-    },
-    THU: {
-      openingHours: "hi",
-      closingHours: "hi",
-      breakTime: "hi",
-      breakEndTime: "hi",
-    },
-    FRI: {
-      openingHours: "hi",
-      closingHours: "hi",
-      breakTime: "hi",
-      breakEndTime: "hi",
-    },
-    SAT: {
-      openingHours: "hi",
-      closingHours: "hi",
-      breakTime: "hi",
-      breakEndTime: "hi",
-    },
-    SUN: {
-      openingHours: "hi",
-      closingHours: "hi",
-      breakTime: "hi",
-      breakEndTime: "hi",
-    },
-  });
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -70,11 +21,9 @@ const TestPage: NextPage<any> = () => {
    * 4. Props settings
    *********************************************************************/
 
-  const { width, height, ref } = useResizeDetector();
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  return <WholeWrapper></WholeWrapper>;
+  return <BodyWrapper></BodyWrapper>;
 };
-
-export default TestPage;
+export default SetReservation;
