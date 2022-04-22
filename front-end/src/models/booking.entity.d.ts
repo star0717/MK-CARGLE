@@ -20,6 +20,7 @@ export declare class BookingFindOptions {
     regNumber?: string;
     phoneNumber?: string;
     mainHopeDate?: any;
+    bookingState?: BookingState | string;
 }
 export declare class MainHopeTime {
     hour?: string;

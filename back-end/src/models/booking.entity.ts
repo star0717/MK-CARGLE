@@ -112,6 +112,11 @@ export class BookingFindOptions {
   @IsOptional()
   @IsString()
   mainHopeDate?: any;
+
+  @ApiProperty({ description: '예약상태', required: false })
+  @IsOptional()
+  @IsEnum(BookingState)
+  bookingState?: BookingState | string;
 }
 
 export class MainHopeTime {

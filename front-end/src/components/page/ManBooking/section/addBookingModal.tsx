@@ -85,8 +85,8 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   const [mainHopeTime, setMainHopeTime] =
     useState<MainHopeTime>(mainHopeTimeInit); // 예약 희망 시분
   const [mainHopeList, setMainHopeList] = useState<string[]>([]); // 예약 가능 시간 리스트
-  // const [officeHour, setOfficeHour] = useState<any>(); // 선택 날짜의 영업시간
-  // const [bookingTime, setBookingTime] = useState<string>(""); // 정비희망시간
+  // const [officeTime, setOfficeTime] = useState<any>(); // 선택 날짜의 영업시간
+  // const [breakTime, setBreakTime] = useState<any>(); // 선택 날짜의 휴게시간
   const [typingCheck, setTypingCheck] = useState<number>(0); //글자 수 제한
 
   /*********************************************************************

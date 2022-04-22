@@ -98,6 +98,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
               예약상태 :
               <ColorSpan
                 margin={`0px 0px 0px 5px`}
+                fontSize={`20px`}
                 color={bookingStateColor(props.clickDoc.bookingState)}
               >
                 {bookingStateName(props.clickDoc.bookingState)}

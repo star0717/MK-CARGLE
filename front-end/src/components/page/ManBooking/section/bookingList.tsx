@@ -22,6 +22,7 @@ import {
   TableRowLIST,
   TableWrapper,
   Text,
+  TextInput2,
   WholeWrapper,
   Wrapper,
 } from "src/components/styles/CommonComponents";
@@ -222,7 +223,6 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
           >
             <option value="regNumber">차량번호 검색</option>
             <option value="phoneNumber">전화번호 검색</option>
-            <option value="bookingState">예약상태</option>
           </Combo>
           <form onSubmit={onSearchHandler}>
             <SearchInputWrapper
@@ -278,6 +278,62 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
               >
                 +신규예약등록
               </SmallButton>
+            </Wrapper>
+          </Wrapper>
+        </Wrapper>
+
+        <Wrapper dr={`row`} ju={`space-between`} padding={`50px 0px 0px 30px`}>
+          <Wrapper dr={`row`} width={`auto`}>
+            <Wrapper al={`flex-end`} width={`120px`}>
+              <Text>정비희망일시</Text>
+            </Wrapper>
+            <Wrapper ju={`flex-end`} dr={`row`}>
+              <TextInput2
+                type="date"
+                width={`220px`}
+                value={
+                  props.searchList.mainHopeDate
+                    ? dayjs(props.searchList.mainHopeDate).format("YYYY-MM-DD")
+                    : ""
+                }
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  props.setSearchList({
+                    ...props.searchList,
+                    mainHopeDate: e.target.value,
+                  });
+                  props.findDocHandler(1);
+                  props.setReset(props.reset + 1);
+                }}
+              />
+            </Wrapper>
+          </Wrapper>
+
+          <Wrapper dr={`row`} width={`auto`}>
+            <Wrapper al={`flex-end`} width={`80px`}>
+              <Text>예약상태</Text>
+            </Wrapper>
+            <Wrapper ju={`flex-end`} dr={`row`}>
+              <Combo
+                width={`220px`}
+                value={props.searchList.bookingState || ""}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  props.setSearchList({
+                    ...props.searchList,
+                    bookingState: bookingStateInput(e.target.value),
+                  });
+                  props.findDocHandler(1);
+                  props.setReset(props.reset + 1);
+                }}
+              >
+                <option value="">전체</option>
+                {bookingStateList.map((item) => {
+                  return (
+                    <option key={item} value={item}>
+                      {bookingStateName(item)}
+                    </option>
+                  );
+                })}
+              </Combo>
             </Wrapper>
           </Wrapper>
         </Wrapper>

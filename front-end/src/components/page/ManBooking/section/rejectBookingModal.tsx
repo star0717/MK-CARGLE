@@ -60,7 +60,16 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
     setRejectOption({ ...rejectOption, [e.target.name]: e.target.value });
   };
 
+  /**
+   * 거절 handler
+   * @param send
+   */
   const onBookingReject = async (send: boolean) => {
+    if (
+      rejectOption.rejectReason === RejectReason.text &&
+      rejectOption.rejectText === ""
+    )
+      return alert("직접 입력 시 사유를 적어주세요");
     if (send) {
     }
     deleteKeyJson(rejectOption);
@@ -121,39 +130,40 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
             width={`440px`}
             padding={`10px 0px`}
           >
-            <Wrapper
-              width={`210px`}
-              height={`190px`}
-              radius={`4px`}
-              border={
-                rejectOption.rejectReason === RejectReason.hard
-                  ? "1px solid #314fa5"
-                  : "1px solid #c4c4c4"
-              }
-              shadow={
-                rejectOption.rejectReason === RejectReason.hard
-                  ? "0px 10px 15px rgba(220,220,220,1)"
-                  : "none"
-              }
-            >
-              <TextInput2
-                display={`none`}
-                type="radio"
-                name="rejectReason"
-                id={RejectReason.hard}
-                value={RejectReason.hard}
-                onChange={onInputHandler}
-              />
-              <Text
-                color={
+            <Label htmlFor={RejectReason.hard}>
+              <Wrapper
+                width={`210px`}
+                height={`190px`}
+                radius={`4px`}
+                border={
                   rejectOption.rejectReason === RejectReason.hard
-                    ? "#314FA5"
-                    : "#000000"
+                    ? "1px solid #314fa5"
+                    : "1px solid #c4c4c4"
+                }
+                shadow={
+                  rejectOption.rejectReason === RejectReason.hard
+                    ? "0px 10px 15px rgba(220,220,220,1)"
+                    : "none"
                 }
               >
-                "정비가 어려운 차량이에요"
-              </Text>
-              <Label htmlFor={RejectReason.hard}>
+                <TextInput2
+                  display={`none`}
+                  type="radio"
+                  name="rejectReason"
+                  id={RejectReason.hard}
+                  value={RejectReason.hard}
+                  onChange={onInputHandler}
+                />
+                <Text
+                  color={
+                    rejectOption.rejectReason === RejectReason.hard
+                      ? "#314FA5"
+                      : "#000000"
+                  }
+                >
+                  "정비가 어려운 차량이에요"
+                </Text>
+
                 <AiFillCar
                   size="100px"
                   color={
@@ -162,41 +172,42 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
                       : "#000000"
                   }
                 />
-              </Label>
-            </Wrapper>
-            <Wrapper
-              width={`210px`}
-              height={`190px`}
-              radius={`4px`}
-              border={
-                rejectOption.rejectReason === RejectReason.many
-                  ? "1px solid #314fa5"
-                  : "1px solid #c4c4c4"
-              }
-              shadow={
-                rejectOption.rejectReason === RejectReason.many
-                  ? "0px 10px 15px rgba(220,220,220,1)"
-                  : "none"
-              }
-            >
-              <TextInput2
-                display={`none`}
-                type="radio"
-                name="rejectReason"
-                id={RejectReason.many}
-                value={RejectReason.many}
-                onChange={onInputHandler}
-              />
-              <Text
-                color={
+              </Wrapper>
+            </Label>
+            <Label htmlFor={RejectReason.many}>
+              <Wrapper
+                width={`210px`}
+                height={`190px`}
+                radius={`4px`}
+                border={
                   rejectOption.rejectReason === RejectReason.many
-                    ? "#314FA5"
-                    : "#000000"
+                    ? "1px solid #314fa5"
+                    : "1px solid #c4c4c4"
+                }
+                shadow={
+                  rejectOption.rejectReason === RejectReason.many
+                    ? "0px 10px 15px rgba(220,220,220,1)"
+                    : "none"
                 }
               >
-                "수리할 차량이 밀려있어요"
-              </Text>
-              <Label htmlFor={RejectReason.many}>
+                <TextInput2
+                  display={`none`}
+                  type="radio"
+                  name="rejectReason"
+                  id={RejectReason.many}
+                  value={RejectReason.many}
+                  onChange={onInputHandler}
+                />
+                <Text
+                  color={
+                    rejectOption.rejectReason === RejectReason.many
+                      ? "#314FA5"
+                      : "#000000"
+                  }
+                >
+                  "수리할 차량이 밀려있어요"
+                </Text>
+
                 <AiOutlineFieldTime
                   size="100px"
                   color={
@@ -205,8 +216,8 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
                       : "#000000"
                   }
                 />
-              </Label>
-            </Wrapper>
+              </Wrapper>
+            </Label>
           </Wrapper>
           <Wrapper al={`flex-start`} padding={`10px 0px`} width={`440px`}>
             <TextInput2
