@@ -18,11 +18,15 @@
     "build:prod": ["build:build", "build:push"],
     "npm-check:back-end": "npm-check npm-check back-end/",
     "npm-check:front-end": "npm-check npm-check back-end/",
-    "local:up": "docker-compose up -d",
+    "local:up": ["set:hostname:ec2-mode", "docker-compose up -d"],
     "local:down": "docker-compose down",
+    "local:logs": "docker-compose  logs -t -f --tail 100",
     "service:create": "dotenv -- cross-var docker service create --mode global --env-file .env -q --with-registry-auth --name %service_name% -p 80:80 %ecr_base_url%/%service_name%:latest",
     "service:create:ec2-mode": ["set:hostname:ec2-mode", "service:create"],
-    "service:create:domain-mode": ["set:hostname:domain-mode", "service:create"],
+    "service:create:domain-mode": [
+      "set:hostname:domain-mode",
+      "service:create"
+    ],
     "service:rm": "dotenv cross-var docker service rm %service_name%",
     "service:logs": "dotenv -- cross-var docker service logs -n 100 -f %service_name%",
     "service:list": "docker service list",
@@ -36,7 +40,10 @@
     "context:ls": "docker context ls",
     "context:ecs": "docker context use ecs",
     "context:default": "docker context use default",
-    "context:login": ["dotenv cross-var echo %ecs_login_cmd%", "dotenv cross-var %ecs_login_cmd%"]
+    "context:login": [
+      "dotenv cross-var echo %ecs_login_cmd%",
+      "dotenv cross-var %ecs_login_cmd%"
+    ]
   },
   "menu": {
     "description": "action",
@@ -54,6 +61,11 @@
       "logs:서비스 로그 확인": "service:logs",
       "rm:서비스 종료": "service:rm",
       "list:실행중이 서비스 목록 확인": "service:list"
+    },
+    "local-service:로컬에서 실행(테스트용)": {
+      "up: 서비스 생성": "local:up",
+      "down: 서비스 종료": "local:down",
+      "logs: 로그 확인": "local:logs"
     },
     "swarm:도커 스왐 관련": {
       "init:도커 스왐 시작": "swarm:init",
