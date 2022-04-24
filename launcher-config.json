@@ -26,7 +26,7 @@
     "local:up": ["set:env:local", "docker-compose up -d --force-recreate"],
     "local:down": "docker-compose down",
     "local:logs": "docker-compose  logs -t -f --tail 100",
-    "local:exec": "docker-compose exec sh",
+    "local:exec": "docker-compose exec n2server sh",
     "context:create": "docker context create ecs ecs --profile default",
     "context:ls": "docker context ls",
     "context:ecs": "docker context use ecs",

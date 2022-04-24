@@ -35,6 +35,12 @@ RUN npm run build
 # 필요한 구성만으로 도커 이미지 생성
 FROM node:16.13.2-alpine AS runner
 
+# Nginx 설치 및 설정
+# USER root
+RUN apk add nginx
+COPY ./proxy-server/default.conf /etc/nginx/http.d/default.conf
+EXPOSE 80
+
 # 알래에서 끌어 올림
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 n2server
@@ -45,8 +51,16 @@ WORKDIR /back-end
 # RUN adduser --system --uid 1001 n2server
 
 # !!! 전체 복사하지 말자.확인 필요
-COPY --from=builder --chown=n2server:nodejs /back-end ./
-# COPY --from=builder --chown=n2server:nodejs /back-end/dist ./dist
+# - 요건 전체 옮김
+# COPY --from=builder --chown=n2server:nodejs /back-end ./
+# - 이건 필요한거만 옮김(둘 중 하나만)
+# npm install --only=production를 이용하면 dist만으로 동작가능하나
+# dependances 확인 필요
+COPY --from=builder /back-end/.env .
+COPY --from=builder /back-end/public ./public
+COPY --from=builder /back-end/node_modules ./node_modules
+COPY --from=builder --chown=n2server:nodejs /back-end/dist ./dist
+COPY --from=builder /back-end/package.json ./package.json
 
 WORKDIR /front-end
 ENV NODE_ENV production
@@ -59,12 +73,11 @@ COPY --from=builder /front-end/package.json ./package.json
 COPY --from=builder --chown=n2server:nodejs /front-end/.next/standalone ./
 COPY --from=builder --chown=n2server:nodejs /front-end/.next/static ./.next/static
 
-# Nginx 설치 및 설정
-# USER root
-RUN apk add nginx curl
-COPY ./proxy-server/default.conf /etc/nginx/http.d/default.conf
-EXPOSE 80
+# SSH 접속 설정 (개발중)
+# RUN apk add openssh-server
+# EXPOSE 22
 
+# 컨테이너 시작 설정
 WORKDIR /
 # USER n2server
 COPY --chown=n2server:nodejs n2server.sh .
