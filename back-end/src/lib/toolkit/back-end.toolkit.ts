@@ -6,10 +6,8 @@ import * as timezone from 'dayjs/plugin/timezone';
 import * as utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/ko';
 import * as duration from 'dayjs/plugin/duration';
-import { AES, enc } from 'crypto-js';
-import { Car } from 'src/models/car.entity';
+// import { AES, enc } from 'crypto-js';
 import * as dotenv from 'dotenv';
-import { MainCustomer } from 'src/models/maintenance.entity';
 dotenv.config();
 
 /***************************************************
