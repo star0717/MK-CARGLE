@@ -10,7 +10,6 @@ import { AES, enc } from 'crypto-js';
 import { Car } from 'src/models/car.entity';
 import * as dotenv from 'dotenv';
 import { MainCustomer } from 'src/models/maintenance.entity';
-import { doc } from 'prettier';
 dotenv.config();
 
 /***************************************************
