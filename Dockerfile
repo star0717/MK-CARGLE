@@ -5,7 +5,7 @@ FROM node:16.13.2-alpine AS deps
 ## back-end용 npm 패키지 빌드
 WORKDIR /back-end
 COPY ./back-end/package*.json ./
-RUN npm i --legacy-peer-deps
+RUN npm i --legacy-peer-deps --only=production
 
 ## front-end용 npm 패키지 빌드
 WORKDIR /front-end
@@ -42,14 +42,11 @@ COPY ./proxy-server/default.conf /etc/nginx/http.d/default.conf
 EXPOSE 80
 
 # 알래에서 끌어 올림
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 n2server
-
-## back-end 구성
-WORKDIR /back-end
 # RUN addgroup --system --gid 1001 nodejs
 # RUN adduser --system --uid 1001 n2server
 
+## back-end 구성
+WORKDIR /back-end
 # !!! 전체 복사하지 말자.확인 필요
 # - 요건 전체 옮김
 # COPY --from=builder --chown=n2server:nodejs /back-end ./
@@ -59,7 +56,8 @@ WORKDIR /back-end
 COPY --from=builder /back-end/.env .
 COPY --from=builder /back-end/public ./public
 COPY --from=builder /back-end/node_modules ./node_modules
-COPY --from=builder --chown=n2server:nodejs /back-end/dist ./dist
+# COPY --from=builder --chown=n2server:nodejs /back-end/dist ./dist
+COPY --from=builder /back-end/dist ./dist
 COPY --from=builder /back-end/package.json ./package.json
 
 WORKDIR /front-end
@@ -70,8 +68,10 @@ ENV NEXT_TELEMETRY_DISABLED 1
 COPY --from=builder /front-end/next.config.js ./
 COPY --from=builder /front-end/public ./public
 COPY --from=builder /front-end/package.json ./package.json
-COPY --from=builder --chown=n2server:nodejs /front-end/.next/standalone ./
-COPY --from=builder --chown=n2server:nodejs /front-end/.next/static ./.next/static
+# COPY --from=builder --chown=n2server:nodejs /front-end/.next/standalone ./
+# COPY --from=builder --chown=n2server:nodejs /front-end/.next/static ./.next/static
+COPY --from=builder /front-end/.next/standalone ./
+COPY --from=builder /front-end/.next/static ./.next/static
 
 # SSH 접속 설정 (개발중)
 # RUN apk add openssh-server
@@ -80,7 +80,8 @@ COPY --from=builder --chown=n2server:nodejs /front-end/.next/static ./.next/stat
 # 컨테이너 시작 설정
 WORKDIR /
 # USER n2server
-COPY --chown=n2server:nodejs n2server.sh .
+# COPY --chown=n2server:nodejs n2server.sh .
+COPY n2server.sh .
 RUN chmod 700 n2server.sh
 RUN echo hello
 CMD ["./n2server.sh"]
