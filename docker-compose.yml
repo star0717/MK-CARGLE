@@ -2,9 +2,10 @@ version: "3"
 services:
   n2server:
     image: "${ecr_base_url}/${service_name}"
+    container_name: "n2server"
     build: .
     ports:
-      - "80:80"
+      - "${PROXY_PORT}"
     environment:
       - NODE_ENV=production
       - DESTINATION_API=${DESTINATION_API}

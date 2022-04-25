@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from 'axios';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserAuthority } from 'src/constants/model.const';
 import { AuthTokenInfo } from 'src/models/auth.entity';
-import { RequestPayResponse } from 'iamport-typings';
 import {
   CancelData,
   PayData,
