@@ -2099,5 +2099,5 @@ export const SelectDays = styled.button<any>`
 
 export const Hr = styled.hr<any>`
   width: ${(props) => props.width || `100%`};
-  color: ${(props) => props.width || `#000000`};
+  color: ${(props) => props.width || `#c4c4c4`};
 `;
