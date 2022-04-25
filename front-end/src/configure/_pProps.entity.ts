@@ -234,6 +234,7 @@ export interface _pBookingProps extends _pFindDocs<Booking> {
   setFilterValue: React.Dispatch<React.SetStateAction<string>>;
   searchList: BookingFindOptions;
   setSearchList: React.Dispatch<React.SetStateAction<BookingFindOptions>>;
+  searchListInit: BookingFindOptions;
   reset?: number;
   setReset?: React.Dispatch<React.SetStateAction<number>>;
 }

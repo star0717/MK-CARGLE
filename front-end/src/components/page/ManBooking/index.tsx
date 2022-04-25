@@ -16,6 +16,11 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   const dispatch = useDispatch();
 
+  const searchListInit: BookingFindOptions = {
+    mainHopeDate: null,
+    bookingState: "",
+  };
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -23,10 +28,8 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
   const [searchOption, setSearchOption] = useState<string>("regNumber"); // 검색 옵션
   const [filterValue, setFilterValue] = useState<string>(""); // 검색 내용
   const [reset, setReset] = useState<number>(0);
-  const [searchList, setSearchList] = useState<BookingFindOptions>({
-    mainHopeDate: null,
-    bookingState: "",
-  });
+  const [searchList, setSearchList] =
+    useState<BookingFindOptions>(searchListInit);
 
   /*********************************************************************
    * 3. Handlers
@@ -72,6 +75,7 @@ const ManReservationPage: NextPage<_MainProps> = (props) => {
     setFilterValue,
     searchList,
     setSearchList,
+    searchListInit,
     reset,
     setReset,
   };

@@ -336,6 +336,23 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
               </Combo>
             </Wrapper>
           </Wrapper>
+
+          <Wrapper dr={`row`} width={`auto`}>
+            <SmallButton
+              type="button"
+              width={`150px`}
+              fontSize={`16px`}
+              kindOf={`default`}
+              onClick={() => {
+                props.setSearchList(props.searchListInit);
+                props.setSearchOption("regNumber");
+                props.setFilterValue("");
+                props.setReset(props.reset + 1);
+              }}
+            >
+              검색조건 초기화
+            </SmallButton>
+          </Wrapper>
         </Wrapper>
 
         <TableWrapper margin={`50px 0px 0px`}>
