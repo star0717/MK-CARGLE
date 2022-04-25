@@ -39,7 +39,7 @@ FROM node:16.13.2-alpine AS runner
 
 # Nginx 설치 및 설정
 # USER root
-RUN apk add nginx
+RUN apk add nginx curl
 COPY ./proxy-server/default.conf /etc/nginx/http.d/default.conf
 EXPOSE 80
 
