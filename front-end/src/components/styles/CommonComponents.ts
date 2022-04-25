@@ -133,6 +133,12 @@ export const Wrapper = styled.div<any>`
   transform: ${(props) => props.transform};
   line-height: ${(props) => props.lineHeight};
   text-align: ${(props) => props.textAlign};
+  animation: ${(props) =>
+    props.notAnimate
+      ? ``
+      : css`
+          ${appearAnimation} 1s forwards
+        `};
   opacity: ${(props) => props.opacity};
   page-break-after: ${(props) => props.pageBreakAfter};
 
@@ -178,19 +184,8 @@ export const Wrapper = styled.div<any>`
 
   @media (max-width: 700px) {
     font-size: 14px;
-
-    & svg {
-      font-size: 20px;
-    }
   }
 `;
-
-// animation: ${(props) =>
-//   props.notAnimate
-//     ? ``
-//     : css`
-//         ${appearAnimation} 1s forwards
-//       `};
 
 /**text */
 
@@ -300,6 +295,7 @@ export const CommonSmallTitle = styled.h2<any>`
   font-size: 20px;
   font-weight: 500;
   color: ${(props) => props.color};
+  text-align: ${(props) => props.textAlign || `center`};
 `;
 
 export const Text = styled.p<any>`
@@ -933,7 +929,7 @@ export const TextArea = styled.textarea<any>`
   justify-content: ${(props) => props.ju || ``};
   width: ${(props) => props.width};
   height: ${(props) => props.height || `40px`};
-  padding: ${(props) => props.padding || props.theme.inputPadding};
+  padding: ${(props) => props.padding || `8px`};
   border-radius: ${(props) => props.theme.radius};
   transition: ${(props) => props.transition || props.theme.transition};
   margin: ${(props) => props.margin};
@@ -2100,5 +2096,5 @@ export const SelectDays = styled.button<any>`
 
 export const Hr = styled.hr<any>`
   width: ${(props) => props.width || `100%`};
-  color: ${(props) => props.width || `#000000`};
+  color: ${(props) => props.width || `#c4c4c4`};
 `;
