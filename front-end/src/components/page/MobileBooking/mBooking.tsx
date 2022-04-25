@@ -1,12 +1,14 @@
 import React from "react";
 import { NextPage } from "next";
 import {
+  ColorSpan,
   CommonButton,
   CommonSmallTitle,
   Hr,
   MoWrapper,
   RsWrapper,
   Text,
+  TextArea,
   TextInput2,
   WholeWrapper,
   Wrapper,
@@ -69,46 +71,53 @@ const MobileBooking: NextPage<any> = (props) => {
             요청정보입력
           </CommonSmallTitle>
           <Text color={theme.basicTheme_C}>
-            고객님의 차량 정보를 확인하세요.
+            고객님의 정비요청정보를 입력해주세요.
             <br />
-            차량 관리를 위해 정확한 정보가 필요합니다.
+            작성된 내용을 통해 정확한 정비를 진행합니다.
           </Text>
           <Hr />
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
-              차량번호
+          <Wrapper dr={`row`} ju={`center`} margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+              <ColorSpan color={theme.basicTheme_C}>*</ColorSpan>
+              전회번호
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextInput2 width={`75%`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
-              차량명
+          <Wrapper dr={`row`} ju={`center`} margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+              <ColorSpan color={theme.basicTheme_C}>*</ColorSpan>
+              예약일자
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextInput2 width={`75%`} type="date" />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
-              모델명
+          <Wrapper dr={`row`} ju={`center`} margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+              주행거리
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextInput2 width={`75%`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
-              연식
+          <Wrapper
+            dr={`row`}
+            ju={`center`}
+            margin={`0px 0px 10px 0px`}
+            al={`flex-start`}
+          >
+            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+              요청사항
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextArea width={`75%`} height={`100px`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
-              등록일자
+          <Wrapper dr={`row`} ju={`center`} margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+              고객명
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextInput2 width={`75%`} />
           </Wrapper>
           <Hr />
           <Wrapper padding={`20px 0px 0px`}>
             <CommonButton
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                router.push(MobileRoute.m_car_select);
+                router.push(MobileRoute.m_car_info);
               }}
               width={`100%`}
               height={`50px`}
@@ -118,7 +127,7 @@ const MobileBooking: NextPage<any> = (props) => {
             </CommonButton>
             <CommonButton
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                router.push(MobileRoute.m_booking);
+                router.push(MobileRoute.m_complete);
               }}
               width={`100%`}
               height={`50px`}
