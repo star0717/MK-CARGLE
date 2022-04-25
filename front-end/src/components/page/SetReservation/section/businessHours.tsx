@@ -140,7 +140,43 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  const Inputlayout = () => {
+  const Inputlayout = (key: any) => {
+    let value;
+    switch (key) {
+      case "ALLDAY":
+        value = allDay.ALLDAY;
+        break;
+      case "WEEKDAY":
+        value = weekDay.WEEKDAY;
+        break;
+      case "WEEKEND":
+        value = weekDay.WEEKEND;
+        break;
+      case "MON":
+        value = diffDay.MON;
+        break;
+      case "TUE":
+        value = diffDay.TUE;
+        break;
+      case "WED":
+        value = diffDay.WED;
+        break;
+      case "THU":
+        value = diffDay.THU;
+        break;
+      case "FRI":
+        value = diffDay.FRI;
+        break;
+      case "SAT":
+        value = diffDay.SAT;
+        break;
+      case "SUN":
+        value = diffDay.SUN;
+        break;
+
+      default:
+        return;
+    }
     return (
       <>
         <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
@@ -152,13 +188,12 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                // name={`${key.id}_openingHours_true`}
-                // id={key.id}
+                // name={`${key}_openingHours_true`}
                 // value={dayjs(value.openingHours).format("HH")}
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //   console.log(key.id);
-                //   onTimeHandler(e);
-                // }}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  console.log(key.id);
+                  // onTimeHandler(e);
+                }}
               >
                 {HoursOption.map((time) => {
                   return <option value={time}>{time}</option>;
@@ -315,7 +350,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
         return (
           <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
             <Text margin={`18px 10px 0px 0px`}>모든영업일</Text>
-            <Inputlayout />
+            <Inputlayout id="ALLDAY" />
           </Wrapper>
         );
         break;
@@ -324,11 +359,11 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           <>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>평일영업일</Text>
-              <Inputlayout />
+              <Inputlayout id="WEEKDAY" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>주말영업일</Text>
-              <Inputlayout />
+              <Inputlayout id="WEEKEND" />
             </Wrapper>
           </>
         );
@@ -338,31 +373,31 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           <>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>월요일</Text>
-              <Inputlayout />
+              <Inputlayout id="MON" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>화요일</Text>
-              <Inputlayout />
+              <Inputlayout id="TUE" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>수요일</Text>
-              <Inputlayout />
+              <Inputlayout id="WED" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>목요일</Text>
-              <Inputlayout />
+              <Inputlayout id="THU" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>금요일</Text>
-              <Inputlayout />
+              <Inputlayout id="FRI" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>토요일</Text>
-              <Inputlayout />
+              <Inputlayout id="SAT" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>일요일</Text>
-              <Inputlayout />
+              <Inputlayout id="SUN" />
             </Wrapper>
           </>
         );
