@@ -133,12 +133,6 @@ export const Wrapper = styled.div<any>`
   transform: ${(props) => props.transform};
   line-height: ${(props) => props.lineHeight};
   text-align: ${(props) => props.textAlign};
-  animation: ${(props) =>
-    props.notAnimate
-      ? ``
-      : css`
-          ${appearAnimation} 1s forwards
-        `};
   opacity: ${(props) => props.opacity};
   page-break-after: ${(props) => props.pageBreakAfter};
 
@@ -190,6 +184,13 @@ export const Wrapper = styled.div<any>`
     }
   }
 `;
+
+// animation: ${(props) =>
+//   props.notAnimate
+//     ? ``
+//     : css`
+//         ${appearAnimation} 1s forwards
+//       `};
 
 /**text */
 
