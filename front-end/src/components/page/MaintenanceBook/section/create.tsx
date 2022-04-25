@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NextPage } from "next";
 import {
@@ -77,6 +77,10 @@ const MaintenanceCreate: NextPage = () => {
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
+  interface CarSearch extends MainCar {
+    regNumQuery?: string;
+  }
+
   // 차량 조회 초기값
   const carInit: MainCar = {
     name: "",
@@ -110,6 +114,15 @@ const MaintenanceCreate: NextPage = () => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+
+  useEffect(() => {
+    if (router.query.regNumber) {
+      const regNum = router.query.regNumber as string;
+      setSearchCarText(regNum);
+      onSearchCarHandler({ regNumQuery: regNum });
+    }
+  }, [router.query.regNumber]);
+
   /**
    * 차량정보 input
    * @param e
@@ -147,27 +160,36 @@ const MaintenanceCreate: NextPage = () => {
    * 차량 조회 handler
    * @param data
    */
-  const onSearchCarHandler: SubmitHandler<Partial<MainCar>> = async (data) => {
-    const param: FindParameters = {
-      filterKey: "bookingState",
-      filterValue: BookingState.APPROVAL,
-    };
-    const option: BookingFindOptions = {
-      regNumber: searchCarText,
-      mainHopeDate: dayjs().toDate(),
-    };
-    await dispatch(_aGetBooking(param, option)).then(
-      (res: _iBooking) => {
-        if (!res.payload) return alert("차량 예약 조회 에러");
-        if (res.payload.totalDocs === 0) return setBookingInfo(bookingInit);
-        alert("오늘 정비예약한 차량입니다.");
-        setBookingInfo(res.payload.docs[0]);
-      },
-      (err) => {
-        return alert("차량 예약 조회 에러");
-      }
-    );
-    await dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
+  const onSearchCarHandler: SubmitHandler<Partial<CarSearch>> = async (
+    data
+  ) => {
+    if (!data.regNumQuery) {
+      const param: FindParameters = {
+        filterKey: "bookingState",
+        filterValue: BookingState.APPROVAL,
+      };
+      const option: BookingFindOptions = {
+        regNumber: searchCarText,
+        mainHopeDate: dayjs().toDate(),
+      };
+      await dispatch(_aGetBooking(param, option)).then(
+        (res: _iBooking) => {
+          if (!res.payload) return alert("차량 예약 조회 에러");
+          if (res.payload.totalDocs === 0) return setBookingInfo(bookingInit);
+          alert("오늘 정비예약한 차량입니다.");
+          setBookingInfo(res.payload.docs[0]);
+        },
+        (err) => {
+          return alert("차량 예약 조회 에러");
+        }
+      );
+    }
+    let searchText: string;
+    data.regNumQuery
+      ? (searchText = data.regNumQuery)
+      : (searchText = searchCarText);
+
+    await dispatch(_aGetMaintenancesCarInfo(searchText)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
           setCarInfo(Object.assign(carInit, res.payload));
@@ -690,6 +712,15 @@ const MaintenanceCreate: NextPage = () => {
                 </form>
               ) : (
                 <Wrapper padding={`50% 20px`}>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      console.log("수정필요");
+                    }}
+                  >
+                    예약목록 불러오기
+                  </SmallButton>
                   <Text fontSize={`36px`} color={`#c4c4c4`}>
                     <BsPlusCircleFill />
                   </Text>
