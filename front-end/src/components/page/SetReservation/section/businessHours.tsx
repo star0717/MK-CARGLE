@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux";
 import { _aPostSetBooking } from "store/action/user.action";
 import { SetBookingTime } from "src/constants/booking.const";
 import dayjs from "dayjs";
+import { hourList } from "src/modules/commonModule";
 
 const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
@@ -34,17 +35,12 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     id: string;
   }
 
-  const HoursOption = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23, 24,
-  ];
-
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
   const [booking, setBooking] = useState<SetBooking>(props.data);
   const [modify, setModify] = useState<boolean>(false);
-  const [allDay, setAllDay] = useState({
+  const [allDay, setAllDay] = useState<any>({
     ALLDAY: {
       openingHours: booking.officeHour.MON.openingHours,
       closingHours: booking.officeHour.MON.closingHours,
@@ -52,7 +48,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       breakEndTime: booking.officeHour.MON.breakEndTime,
     },
   });
-  const [weekDay, setWeekDay] = useState({
+  const [weekDay, setWeekDay] = useState<any>({
     WEEKDAY: {
       openingHours: booking.officeHour.MON.openingHours,
       closingHours: booking.officeHour.MON.closingHours,
@@ -66,7 +62,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       breakEndTime: booking.officeHour.SAT.breakEndTime,
     },
   });
-  const [diffDay, setDiffDay] = useState<OfficeHours>({
+  const [diffDay, setDiffDay] = useState<any>({
     MON: {
       openingHours: booking.officeHour.MON.openingHours,
       closingHours: booking.officeHour.MON.closingHours,
@@ -133,6 +129,76 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
 
+  const allDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name.split("_")[2] === "hours") {
+      setAllDay({
+        ...allDay,
+        [e.target.name.split("_")[0]]: {
+          ...allDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          ).hour(Number(e.target.value)),
+        },
+      });
+    } else {
+      setAllDay({
+        ...allDay,
+        [e.target.name.split("_")[0]]: {
+          ...allDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          ).minute(Number(e.target.value)),
+        },
+      });
+    }
+  };
+  const weekDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name.split("_")[2] === "hours") {
+      setWeekDay({
+        ...weekDay,
+        [e.target.name.split("_")[0]]: {
+          ...weekDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            weekDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          ).hour(Number(e.target.value)),
+        },
+      });
+    } else {
+      setWeekDay({
+        ...weekDay,
+        [e.target.name.split("_")[0]]: {
+          ...weekDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            weekDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          ).minute(Number(e.target.value)),
+        },
+      });
+    }
+  };
+  const diffDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name.split("_")[2] === "hours") {
+      setDiffDay({
+        ...diffDay,
+        [e.target.name.split("_")[0]]: {
+          ...diffDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            diffDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          ).hour(Number(e.target.value)),
+        },
+      });
+    } else {
+      setDiffDay({
+        ...diffDay,
+        [e.target.name.split("_")[0]]: {
+          ...diffDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            diffDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          ).minute(Number(e.target.value)),
+        },
+      });
+    }
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -140,10 +206,47 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 5. Page configuration
    *********************************************************************/
-  const Inputlayout = () => {
+  const Inputlayout = (key: any) => {
+    console.log("!@#!@#!@#");
+    let value;
+    switch (key.id) {
+      case "ALLDAY":
+        value = allDay.ALLDAY;
+        break;
+      case "WEEKDAY":
+        value = weekDay.WEEKDAY;
+        break;
+      case "WEEKEND":
+        value = weekDay.WEEKEND;
+        break;
+      case "MON":
+        value = diffDay.MON;
+        break;
+      case "TUE":
+        value = diffDay.TUE;
+        break;
+      case "WED":
+        value = diffDay.WED;
+        break;
+      case "THU":
+        value = diffDay.THU;
+        break;
+      case "FRI":
+        value = diffDay.FRI;
+        break;
+      case "SAT":
+        value = diffDay.SAT;
+        break;
+      case "SUN":
+        value = diffDay.SUN;
+        break;
+
+      default:
+        null;
+    }
     return (
       <>
-        <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
+        <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`} notAnimate>
           <Wrapper al={`flex-start`}>
             <Text>영업시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
@@ -152,16 +255,25 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                // name={`${key.id}_openingHours_true`}
-                // id={key.id}
-                // value={dayjs(value.openingHours).format("HH")}
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //   console.log(key.id);
-                //   onTimeHandler(e);
+                name={`${key.id}_openingHours_hours`}
+                value={dayjs(value.openingHours).format("HH")}
+                // onChange={() => {
+                //   console.log("!@#!@#!@#!@#!@#!@#");
                 // }}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  booking.setBookingTime === "all"
+                    ? allDayHandler(e)
+                    : booking.setBookingTime === "week"
+                    ? weekDayHandler(e)
+                    : diffDayHandler(e);
+                }}
               >
-                {HoursOption.map((time) => {
-                  return <option value={time}>{time}</option>;
+                {hourList().map((time) => {
+                  return (
+                    <option key={time.label} value={time.value}>
+                      {time.value}
+                    </option>
+                  );
                 })}
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
@@ -170,13 +282,15 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                // name={`${key.id}_openingHours_false`}
-                // id={key.id}
-                // value={dayjs(value.openingHours).format("mm")}
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //   console.log(key.id);
-                //   onTimeHandler(e);
-                // }}
+                name={`${key.id}_openingHours_min`}
+                value={dayjs(value.openingHours).format("mm")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  booking.setBookingTime === "all"
+                    ? allDayHandler(e)
+                    : booking.setBookingTime === "week"
+                    ? weekDayHandler(e)
+                    : diffDayHandler(e);
+                }}
               >
                 <option value="00">00</option>
                 <option value="30">30</option>
@@ -192,16 +306,22 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                // name={`${key.id}_closingHours_true`}
-                // id={key.id}
-                // value={dayjs(value.closingHours).format("HH")}
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //   console.log(key.id);
-                //   onTimeHandler(e);
-                // }}
+                name={`${key.id}_closingHours_hours`}
+                value={dayjs(value.closingHours).format("HH")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  booking.setBookingTime === "all"
+                    ? allDayHandler(e)
+                    : booking.setBookingTime === "week"
+                    ? weekDayHandler(e)
+                    : diffDayHandler(e);
+                }}
               >
-                {HoursOption.map((time) => {
-                  return <option value={time}>{time}</option>;
+                {hourList().map((time) => {
+                  return (
+                    <option key={time.label} value={time.value}>
+                      {time.value}
+                    </option>
+                  );
                 })}
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
@@ -210,13 +330,15 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                // name={`${key.id}_closingHours_false`}
-                // id={key.id}
-                // value={dayjs(value.closingHours).format("mm")}
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //   console.log(key.id);
-                //   onTimeHandler(e);
-                // }}
+                name={`${key.id}_closingHours_min`}
+                value={dayjs(value.closingHours).format("mm")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  booking.setBookingTime === "all"
+                    ? allDayHandler(e)
+                    : booking.setBookingTime === "week"
+                    ? weekDayHandler(e)
+                    : diffDayHandler(e);
+                }}
               >
                 <option value="00">00</option>
                 <option value="30">30</option>
@@ -233,16 +355,22 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                // name={`${key.id}_breakTime_true`}
-                // id={key.id}
-                // value={dayjs(value.breakTime).format("HH")}
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //   console.log(key.id);
-                //   onTimeHandler(e);
-                // }}
+                name={`${key.id}_breakTime_hours`}
+                value={dayjs(value.breakTime).format("HH")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  booking.setBookingTime === "all"
+                    ? allDayHandler(e)
+                    : booking.setBookingTime === "week"
+                    ? weekDayHandler(e)
+                    : diffDayHandler(e);
+                }}
               >
-                {HoursOption.map((time) => {
-                  return <option value={time}>{time}</option>;
+                {hourList().map((time) => {
+                  return (
+                    <option key={time.label} value={time.value}>
+                      {time.value}
+                    </option>
+                  );
                 })}
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
@@ -251,13 +379,15 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                // name={`${key.id}_breakTime_false`}
-                // id={key.id}
-                // value={dayjs(value.breakTime).format("mm")}
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //   console.log(key.id);
-                //   onTimeHandler(e);
-                // }}
+                name={`${key.id}_breakTime_min`}
+                value={dayjs(value.breakTime).format("mm")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  booking.setBookingTime === "all"
+                    ? allDayHandler(e)
+                    : booking.setBookingTime === "week"
+                    ? weekDayHandler(e)
+                    : diffDayHandler(e);
+                }}
               >
                 <option value="00">00</option>
                 <option value="30">30</option>
@@ -273,16 +403,22 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                // name={`${key.id}_breakEndTime_true`}
-                // id={key.id}
-                // value={dayjs(value.breakEndTime).format("HH")}
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //   console.log(key.id);
-                //   onTimeHandler(e);
-                // }}
+                name={`${key.id}_breakEndTime_hours`}
+                value={dayjs(value.breakEndTime).format("HH")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  booking.setBookingTime === "all"
+                    ? allDayHandler(e)
+                    : booking.setBookingTime === "week"
+                    ? weekDayHandler(e)
+                    : diffDayHandler(e);
+                }}
               >
-                {HoursOption.map((time) => {
-                  return <option value={time}>{time}</option>;
+                {hourList().map((time) => {
+                  return (
+                    <option key={time.label} value={time.value}>
+                      {time.value}
+                    </option>
+                  );
                 })}
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
@@ -291,13 +427,15 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
-                // name={`${key.id}_breakEndTime_false`}
-                // id={key.id}
-                // value={dayjs(value.breakEndTime).format("mm")}
-                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //   console.log(key.id);
-                //   onTimeHandler(e);
-                // }}
+                name={`${key.id}_breakEndTime_min`}
+                value={dayjs(value.breakEndTime).format("mm")}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  booking.setBookingTime === "all"
+                    ? allDayHandler(e)
+                    : booking.setBookingTime === "week"
+                    ? weekDayHandler(e)
+                    : diffDayHandler(e);
+                }}
               >
                 <option value="00">00</option>
                 <option value="30">30</option>
@@ -315,7 +453,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
         return (
           <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
             <Text margin={`18px 10px 0px 0px`}>모든영업일</Text>
-            <Inputlayout />
+            <Inputlayout id="ALLDAY" />
           </Wrapper>
         );
         break;
@@ -324,11 +462,11 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           <>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>평일영업일</Text>
-              <Inputlayout />
+              <Inputlayout id="WEEKDAY" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>주말영업일</Text>
-              <Inputlayout />
+              <Inputlayout id="WEEKEND" />
             </Wrapper>
           </>
         );
@@ -338,31 +476,31 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           <>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>월요일</Text>
-              <Inputlayout />
+              <Inputlayout id="MON" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>화요일</Text>
-              <Inputlayout />
+              <Inputlayout id="TUE" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>수요일</Text>
-              <Inputlayout />
+              <Inputlayout id="WED" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>목요일</Text>
-              <Inputlayout />
+              <Inputlayout id="THU" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>금요일</Text>
-              <Inputlayout />
+              <Inputlayout id="FRI" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>토요일</Text>
-              <Inputlayout />
+              <Inputlayout id="SAT" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>일요일</Text>
-              <Inputlayout />
+              <Inputlayout id="SUN" />
             </Wrapper>
           </>
         );
