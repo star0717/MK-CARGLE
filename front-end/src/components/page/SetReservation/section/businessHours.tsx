@@ -9,7 +9,6 @@ import {
   Wrapper,
   Text,
   SelectDays,
-  TextInput2,
   CommonButton,
   CommonButtonWrapper,
   Combo,
@@ -31,9 +30,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-  interface KeyInput {
-    id: string;
-  }
+  const allArr: string[] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+  const dayArr: string[] = ["MON", "TUE", "WED", "THU", "FRI"];
+  const endArr: string[] = ["SAT", "SUN"];
 
   /*********************************************************************
    * 2. State settings
@@ -128,7 +127,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       });
     }
   };
-
   const allDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name.split("_")[2] === "hours") {
       setAllDay({
@@ -207,17 +205,37 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
    * 5. Page configuration
    *********************************************************************/
   const Inputlayout = (key: any) => {
-    console.log("!@#!@#!@#");
+    const breakDay: string[] = booking.dayOff;
     let value;
+    let readonly: boolean = false;
+    if (breakDay.includes(key.id)) {
+      readonly = true;
+    }
     switch (key.id) {
       case "ALLDAY":
         value = allDay.ALLDAY;
+        if (breakDay.length === 7) {
+          readonly = true;
+        }
         break;
       case "WEEKDAY":
         value = weekDay.WEEKDAY;
+
+        let dayBool: boolean = true;
+        dayArr.map((item) => {
+          if (!breakDay.includes(item)) dayBool = false;
+        });
+        if (dayBool) readonly = true;
+
         break;
       case "WEEKEND":
         value = weekDay.WEEKEND;
+
+        let endBool: boolean = true;
+        endArr.map((item) => {
+          if (!breakDay.includes(item)) endBool = false;
+        });
+        if (endBool) readonly = true;
         break;
       case "MON":
         value = diffDay.MON;
@@ -251,15 +269,12 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Text>영업시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
               <Combo
-                disabled={!modify}
+                disabled={!modify || readonly}
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
                 name={`${key.id}_openingHours_hours`}
                 value={dayjs(value.openingHours).format("HH")}
-                // onChange={() => {
-                //   console.log("!@#!@#!@#!@#!@#!@#");
-                // }}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   booking.setBookingTime === "all"
                     ? allDayHandler(e)
@@ -278,7 +293,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
               <Combo
-                disabled={!modify}
+                disabled={!modify || readonly}
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
@@ -302,7 +317,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Text>영업종료</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
               <Combo
-                disabled={!modify}
+                disabled={!modify || readonly}
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
@@ -326,7 +341,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
               <Combo
-                disabled={!modify}
+                disabled={!modify || readonly}
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
@@ -351,7 +366,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Text>휴게시간 시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
               <Combo
-                disabled={!modify}
+                disabled={!modify || readonly}
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
@@ -375,7 +390,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
               <Combo
-                disabled={!modify}
+                disabled={!modify || readonly}
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
@@ -399,7 +414,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <Text>휴게시간 종료</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
               <Combo
-                disabled={!modify}
+                disabled={!modify || readonly}
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
@@ -423,7 +438,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               </Combo>
               <Text margin={`0px 4px`}>:</Text>
               <Combo
-                disabled={!modify}
+                disabled={!modify || readonly}
                 border={`none`}
                 width={`100px`}
                 textAlign={`center`}
@@ -710,6 +725,34 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             </CommonButton>
             <CommonButton
               onClick={async () => {
+                // {
+                //   if (booking.setBookingTime === "all") {
+                //     allArr.map((item) => {
+                //       setBooking({
+                //         ...booking,
+                //         [booking.officeHour[item]]: allDay.ALLDAY,
+                //       });
+                //     });
+                //   } else if (booking.setBookingTime === "week") {
+                //     dayArr.map((item) => {
+                //       setBooking({
+                //         ...booking,
+                //         [booking.officeHour[item]]: weekDay.WEEKDAY,
+                //       });
+                //     });
+                //     endArr.map((item) => {
+                //       setBooking({
+                //         ...booking,
+                //         [booking.officeHour[item]]: weekDay.WEEKEND,
+                //       });
+                //     });
+                //   } else {
+                //     setBooking({
+                //       ...booking,
+                //       [booking.officeHour]: diffDay,
+                //     });
+                //   }
+                // }
                 await dispatch(_aPostSetBooking(booking)).then((res: any) => {
                   setBooking(res.payload);
                   alert("저장 되었습니다!");
