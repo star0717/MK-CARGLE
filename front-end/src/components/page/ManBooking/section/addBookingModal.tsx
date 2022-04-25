@@ -46,6 +46,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   const {
     register,
     handleSubmit,
+    setError,
     clearErrors,
     setValue,
     formState: { errors },
@@ -175,7 +176,17 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    * 차량 검색 handler
    */
   const onCarSearch = async () => {
-    if (carInfo.regNumber === "") return false;
+    if (carInfo.regNumber === "")
+      return setError("regNumber", {
+        type: "null",
+        message: "차량번호를 입력하세요",
+      });
+    if (!formRegEx.CAR_NUM.test(carInfo.regNumber))
+      return setError("regNumber", {
+        type: "type",
+        message: "형식에 맞게 입력하세요",
+      });
+    clearErrors("regNumber");
     await dispatch(_aGetMaintenancesCarInfo(carInfo.regNumber)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (!res.payload) return alert("신규차량입니다. 직접 입력해주세요.");
@@ -483,7 +494,9 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 )}
               </Wrapper>
               {(errors.regNumber?.type === "required" ||
-                errors.regNumber?.type === "pattern") && (
+                errors.regNumber?.type === "pattern" ||
+                errors.regNumber?.type === "null" ||
+                errors.regNumber?.type === "type") && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}

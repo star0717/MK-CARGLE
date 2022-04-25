@@ -201,14 +201,12 @@ const MaintenanceCreate: NextPage = () => {
       async (res: _iMaintenancesOne) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
         if (bookingInfo.car) {
-          console.log("들어옴");
           const bookingData: Partial<Booking> = {
             bookingState: BookingState.MAINTENANCE,
           };
           await dispatch(_aPatchBooking(bookingInfo._id, bookingData)).then(
             (res: _iBookingOne) => {
               if (!res.payload) return alert("예약 정비상태 에러");
-              console.log("처리함");
             },
             (err) => {
               if (err) return alert("예약 정비상태 에러");
@@ -435,7 +433,7 @@ const MaintenanceCreate: NextPage = () => {
                         </Text>
                         <TextInput2
                           type="text"
-                          value={cusInfo.name}
+                          value={cusInfo.name || ""}
                           {...register("cusName", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -557,7 +555,7 @@ const MaintenanceCreate: NextPage = () => {
                         </Text>
                         <TextInput2
                           type="text"
-                          value={carInfo.model}
+                          value={carInfo.model || ""}
                           {...register("model", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -581,7 +579,7 @@ const MaintenanceCreate: NextPage = () => {
                         </Text>
                         <TextInput2
                           type="text"
-                          value={carInfo.age}
+                          value={carInfo.age || ""}
                           {...register("age", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -605,7 +603,7 @@ const MaintenanceCreate: NextPage = () => {
                         </Text>
                         <TextInput2
                           type="text"
-                          value={carInfo.idNumber}
+                          value={carInfo.idNumber || ""}
                           {...register("idNumber", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -646,7 +644,7 @@ const MaintenanceCreate: NextPage = () => {
                         <TextInput2
                           width={`189px`}
                           type="date"
-                          value={carInfo.regDate}
+                          value={carInfo.regDate || ""}
                           {...register("regDate", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
