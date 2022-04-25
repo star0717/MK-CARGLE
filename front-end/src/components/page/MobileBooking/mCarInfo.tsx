@@ -76,35 +76,35 @@ const MobileCarInfo: NextPage<any> = (props) => {
             차량 관리를 위해 정확한 정보가 필요합니다.
           </Text>
           <Hr />
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`left`} width={`60px`}>
               차량번호
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextInput2 width={`100%`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`left`} width={`60px`}>
               차량명
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextInput2 width={`100%`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`left`} width={`60px`}>
               모델명
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextInput2 width={`100%`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`left`} width={`60px`}>
               연식
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextInput2 width={`100%`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`space-between`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`60px`}>
+          <Wrapper al={`flex-start`} margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`left`} width={`60px`}>
               등록일자
             </Text>
-            <TextInput2 width={`260px`} />
+            <TextInput2 width={`100%`} />
           </Wrapper>
           <Hr />
           <Wrapper padding={`20px 0px 0px`}>

@@ -76,42 +76,37 @@ const MobileBooking: NextPage<any> = (props) => {
             작성된 내용을 통해 정확한 정비를 진행합니다.
           </Text>
           <Hr />
-          <Wrapper dr={`row`} ju={`center`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+          <Wrapper margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`left`} width={`100%`}>
               <ColorSpan color={theme.basicTheme_C}>*</ColorSpan>
               전회번호
             </Text>
-            <TextInput2 width={`75%`} />
+            <TextInput2 width={`100%`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`center`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+          <Wrapper margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`left`} width={`100%`}>
               <ColorSpan color={theme.basicTheme_C}>*</ColorSpan>
               예약일자
             </Text>
-            <TextInput2 width={`75%`} type="date" />
+            <TextInput2 type="date" width={`100%`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`center`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+          <Wrapper margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`left`} width={`100%`}>
               주행거리
             </Text>
-            <TextInput2 width={`75%`} />
+            <TextInput2 width={`100%`} />
           </Wrapper>
-          <Wrapper
-            dr={`row`}
-            ju={`center`}
-            margin={`0px 0px 10px 0px`}
-            al={`flex-start`}
-          >
-            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+          <Wrapper margin={`0px 0px 10px 0px`} al={`flex-start`}>
+            <Text textAlign={`left`} width={`100%`}>
               요청사항
             </Text>
-            <TextArea width={`75%`} height={`100px`} />
+            <TextArea height={`100px`} width={`100%`} />
           </Wrapper>
-          <Wrapper dr={`row`} ju={`center`} margin={`0px 0px 10px 0px`}>
-            <Text textAlign={`right`} width={`25%`} margin={`0px 10px 0px 0px`}>
+          <Wrapper margin={`0px 0px 10px 0px`}>
+            <Text textAlign={`left`} width={`100%`}>
               고객명
             </Text>
-            <TextInput2 width={`75%`} />
+            <TextInput2 width={`100%`} />
           </Wrapper>
           <Hr />
           <Wrapper padding={`20px 0px 0px`}>
