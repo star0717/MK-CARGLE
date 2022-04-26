@@ -70,6 +70,7 @@ const RejectBookingModal: NextPage<_pBookingModalProps> = (props) => {
       rejectOption.rejectText === ""
     )
       return alert("직접 입력 시 사유를 적어주세요");
+    // 알림톡 전송
     if (send) {
     }
     deleteKeyJson(rejectOption);

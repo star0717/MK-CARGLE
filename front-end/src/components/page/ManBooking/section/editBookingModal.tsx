@@ -58,6 +58,9 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
       ...props.clickDoc,
       bookingState: state,
     };
+    // 승인 시 알림톡 전송
+    if (state === BookingState.APPROVAL) {
+    }
     if (state === BookingState.REJECT) return props.setModalOption("reject");
     if (state === BookingState.MAINTENANCE) {
       if (
