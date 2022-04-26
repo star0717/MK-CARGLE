@@ -5,17 +5,15 @@ import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { AuthTokenInfo } from 'src/models/auth.entity';
 import {
-  BaseEntity,
   DeleteObjectIds,
   DeleteResult,
   FindParameters,
   FindResult,
 } from 'src/models/base.entity';
-import { Booking, BookingFindOptions } from 'src/models/booking.entity';
+import { Booking } from 'src/models/booking.entity';
 import { MainCar } from 'src/models/maintenance.entity';
 import { CarsService } from 'src/modules/cars/cars.service';
 import { SetbookingService } from 'src/modules/setbooking/setbooking.service';
-import { FilterQuery } from 'mongoose';
 import { BookingState } from 'src/constants/booking.const';
 import {
   getEndOfDayDateTime,
