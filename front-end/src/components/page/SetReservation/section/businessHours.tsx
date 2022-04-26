@@ -725,34 +725,34 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             </CommonButton>
             <CommonButton
               onClick={async () => {
-                // {
-                //   if (booking.setBookingTime === "all") {
-                //     allArr.map((item) => {
-                //       setBooking({
-                //         ...booking,
-                //         [booking.officeHour[item]]: allDay.ALLDAY,
-                //       });
-                //     });
-                //   } else if (booking.setBookingTime === "week") {
-                //     dayArr.map((item) => {
-                //       setBooking({
-                //         ...booking,
-                //         [booking.officeHour[item]]: weekDay.WEEKDAY,
-                //       });
-                //     });
-                //     endArr.map((item) => {
-                //       setBooking({
-                //         ...booking,
-                //         [booking.officeHour[item]]: weekDay.WEEKEND,
-                //       });
-                //     });
-                //   } else {
-                //     setBooking({
-                //       ...booking,
-                //       [booking.officeHour]: diffDay,
-                //     });
-                //   }
-                // }
+                {
+                  //   if (booking.setBookingTime === "all") {
+                  //     allArr.map((item) => {
+                  //       setBooking({
+                  //         ...booking,
+                  //         [booking.officeHour[item]]: allDay.ALLDAY,
+                  //       });
+                  //     });
+                  //   } else if (booking.setBookingTime === "week") {
+                  //     dayArr.map((item) => {
+                  //       setBooking({
+                  //         ...booking,
+                  //         [booking.officeHour[item]]: weekDay.WEEKDAY,
+                  //       });
+                  //     });
+                  //     endArr.map((item) => {
+                  //       setBooking({
+                  //         ...booking,
+                  //         [booking.officeHour[item]]: weekDay.WEEKEND,
+                  //       });
+                  //     });
+                  //   } else {
+                  //     setBooking({
+                  //       ...booking,
+                  //       [booking.officeHour]: diffDay,
+                  //     });
+                  //   }
+                }
                 await dispatch(_aPostSetBooking(booking)).then((res: any) => {
                   setBooking(res.payload);
                   alert("저장 되었습니다!");
