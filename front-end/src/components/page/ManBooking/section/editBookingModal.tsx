@@ -155,7 +155,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
               width={`400px`}
               type="text"
               name="bookingDate"
-              value={dayjs(props.clickDoc.bookingDate).format("YYYY-MM-DD")}
+              value={dayjs(props.clickDoc.createdAt).format("YYYY-MM-DD")}
               readOnly
             />
           </Wrapper>

@@ -422,7 +422,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
                       </Checkbox>
                     </TableRowLIST>
                     <TableRowLIST width={`20%`}>
-                      {dayjs(list.bookingDate).format("YYYY-MM-DD")}_
+                      {dayjs(list.createdAt).format("YYYY-MM-DD")}_
                       {list.bookingNum}
                     </TableRowLIST>
                     <TableRowLIST width={`24%`}>

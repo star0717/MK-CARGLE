@@ -53,7 +53,6 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   const bookingInit: Partial<Booking> = {
-    bookingDate: null,
     mainHopeDate: null,
     mainReContents: "",
     bookingState: BookingState.NEW,
@@ -278,34 +277,10 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 width={`400px`}
                 type="date"
                 min={dayjs().format("YYYY-MM-DD")}
-                value={
-                  bookingInfo.bookingDate
-                    ? dayjs(bookingInfo.bookingDate).format("YYYY-MM-DD")
-                    : ""
-                }
-                {...register("bookingDate", {
-                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onBookingHandler(e);
-                  },
-                  required: {
-                    value: true,
-                    message: "예약접수일자를 선택하세요",
-                  },
-                })}
+                value={dayjs(new Date(Date.now())).format("YYYY-MM-DD")}
+                readOnly
               />
             </Wrapper>
-            {errors.bookingDate?.type === "required" && (
-              <Text
-                margin={`0px`}
-                width={`100%`}
-                color={`#d6263b`}
-                al={`flex-start`}
-                fontSize={`14px`}
-                textAlign={`left`}
-              >
-                {errors.bookingDate.message}
-              </Text>
-            )}
           </Wrapper>
 
           <Wrapper al={`flex-start`} width={`400px`}>

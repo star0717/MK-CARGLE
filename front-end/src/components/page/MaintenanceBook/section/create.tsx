@@ -101,7 +101,6 @@ const MaintenanceCreate: NextPage = () => {
     phoneNumber: "",
   };
   const bookingInit: Partial<Booking> = {
-    bookingDate: null,
     mainHopeDate: null,
     mainReContents: "",
     bookingState: BookingState.NEW,

@@ -42,9 +42,9 @@ export class BookingService extends SafeService<Booking> {
       page: 1,
       take: 100,
       filter: {
-        bookingDate: {
-          $gte: getStartOfDayDateTime(doc.bookingDate),
-          $lt: getEndOfDayDateTime(doc.bookingDate),
+        createdAt: {
+          $gte: getStartOfDayDateTime(doc.createdAt),
+          $lt: getEndOfDayDateTime(doc.createdAt),
         },
       },
     };
@@ -65,11 +65,11 @@ export class BookingService extends SafeService<Booking> {
     );
     if (!car) throw new BadRequestException();
 
-    if (doc.bookingDate) {
+    if (doc.createdAt) {
       const todayListCount = await this.model.count({
-        bookingDate: {
-          $gte: getStartOfDayDateTime(doc.bookingDate),
-          $lt: getEndOfDayDateTime(doc.bookingDate),
+        createdAt: {
+          $gte: getStartOfDayDateTime(doc.createdAt),
+          $lt: getEndOfDayDateTime(doc.createdAt),
         },
       });
 

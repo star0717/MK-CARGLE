@@ -87,26 +87,26 @@ export const menuList = [
       },
     ],
   },
-  {
-    key: "4",
-    menuName: "커뮤니티",
-    link: "#",
-    auth: UserAuthority.WORKER,
-    subMenu: [
-      {
-        key: "4.1",
-        subMenuName: "연합회 소식",
-        subMenuLink: "#",
-        subMenuAuth: UserAuthority.WORKER,
-      },
-      {
-        key: "4.2",
-        subMenuName: "정비정보 공유",
-        subMenuLink: "#",
-        subMenuAuth: UserAuthority.WORKER,
-      },
-    ],
-  },
+  // {
+  //   key: "4",
+  //   menuName: "커뮤니티",
+  //   link: "#",
+  //   auth: UserAuthority.WORKER,
+  //   subMenu: [
+  //     {
+  //       key: "4.1",
+  //       subMenuName: "연합회 소식",
+  //       subMenuLink: "#",
+  //       subMenuAuth: UserAuthority.WORKER,
+  //     },
+  //     {
+  //       key: "4.2",
+  //       subMenuName: "정비정보 공유",
+  //       subMenuLink: "#",
+  //       subMenuAuth: UserAuthority.WORKER,
+  //     },
+  //   ],
+  // },
   {
     key: "5",
     menuName: "마이페이지",
