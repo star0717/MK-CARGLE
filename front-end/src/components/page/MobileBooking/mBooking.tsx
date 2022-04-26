@@ -78,14 +78,14 @@ const MobileBooking: NextPage<any> = (props) => {
           <Hr />
           <Wrapper margin={`0px 0px 10px 0px`}>
             <Text textAlign={`left`} width={`100%`}>
-              <ColorSpan color={theme.basicTheme_C}>*</ColorSpan>
+              <ColorSpan color={theme.red_C}>*</ColorSpan>
               전회번호
             </Text>
             <TextInput2 width={`100%`} />
           </Wrapper>
           <Wrapper margin={`0px 0px 10px 0px`}>
             <Text textAlign={`left`} width={`100%`}>
-              <ColorSpan color={theme.basicTheme_C}>*</ColorSpan>
+              <ColorSpan color={theme.red_C}>*</ColorSpan>
               예약일자
             </Text>
             <TextInput2 type="date" width={`100%`} />

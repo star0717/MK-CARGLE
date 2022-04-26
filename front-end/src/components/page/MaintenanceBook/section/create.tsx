@@ -5,6 +5,7 @@ import {
   Checkbox,
   CheckInput,
   CheckMark,
+  CloseButton,
   ColorSpan,
   Combo,
   IconButton,
@@ -61,6 +62,8 @@ import { Booking, BookingFindOptions } from "src/models/booking.entity";
 import { BookingState } from "src/constants/booking.const";
 import { FindParameters } from "src/models/base.entity";
 import dayjs from "dayjs";
+import Modal from "react-modal";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const MaintenanceCreate: NextPage = () => {
   /*********************************************************************
@@ -68,6 +71,8 @@ const MaintenanceCreate: NextPage = () => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
 
   // react-hook-form 사용을 위한 선언
   const {
@@ -96,7 +101,6 @@ const MaintenanceCreate: NextPage = () => {
     phoneNumber: "",
   };
   const bookingInit: Partial<Booking> = {
-    bookingDate: null,
     mainHopeDate: null,
     mainReContents: "",
     bookingState: BookingState.NEW,
@@ -114,6 +118,20 @@ const MaintenanceCreate: NextPage = () => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
+
+  /**
+   * modal 창 닫기 기능
+   */
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   useEffect(() => {
     if (router.query.regNumber) {
@@ -716,7 +734,7 @@ const MaintenanceCreate: NextPage = () => {
                     type="button"
                     kindOf={`default`}
                     onClick={() => {
-                      console.log("수정필요");
+                      setModalOpen(true);
                     }}
                   >
                     예약목록 불러오기
@@ -950,6 +968,42 @@ const MaintenanceCreate: NextPage = () => {
         </Wrapper>
         <Wrapper></Wrapper>
       </RsWrapper>
+      <Modal
+        isOpen={modalOpen}
+        style={{
+          overlay: {
+            position: "fixed",
+            zIndex: 9999,
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(71, 71, 71, 0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            background: "white",
+            width: "500px",
+            height: "800px",
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "calc(100vh - 2rem)",
+            overflowY: "auto",
+            position: "relative",
+            border: "1px solid #ccc",
+            borderRadius: "0.3rem",
+            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
+            inset: 0,
+          },
+        }}
+      >
+        <Wrapper fontSize={`28px`} al={`flex-end`}>
+          <CloseButton onClick={closeModal}>
+            <IoIosCloseCircle />
+          </CloseButton>
+        </Wrapper>
+      </Modal>
     </WholeWrapper>
   );
 };

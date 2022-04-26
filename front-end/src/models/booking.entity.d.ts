@@ -8,7 +8,6 @@ export declare class RejectOption {
 }
 export declare class Booking extends BaseEntity {
     bookingNum?: string;
-    bookingDate?: Date;
     mainHopeDate: Date;
     customer?: MainCustomer;
     car?: MainCar;
