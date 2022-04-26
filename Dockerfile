@@ -62,6 +62,17 @@ COPY --from=builder /front-end/package.json ./package.json
 COPY --from=builder /front-end/.next/standalone ./
 COPY --from=builder /front-end/.next/static ./.next/static
 
+# ssh 접속 환경 추가(테스트용)
+RUN set -x \
+&& apk add --no-cache openssh \
+&& sed 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' -i /etc/ssh/sshd_config \
+&& sed 's/#PasswordAuthentication yes/PasswordAuthentication yes/' -i /etc/ssh/sshd_config \
+&& echo 'root:test1234' | chpasswd \
+&& ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa \
+&& ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa \
+&& mkdir -p /var/run/sshd
+EXPOSE 22
+
 # 컨테이너 시작 설정
 WORKDIR /
 COPY n2server.sh .

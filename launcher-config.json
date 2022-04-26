@@ -20,7 +20,7 @@
     "build:build": ["set:env:ecs", "docker-compose build"],
     "build:push": "docker-compose push",
     "build:prod": ["build:build", "build:push"],
-    "build:update": "aws ecs update-service --cluster n2-cluster --service n2-service --force-new-deployment",
+    "build:update": "aws ecs update-service --cluster cluster --service alb-ecs --force-new-deployment",
     "npm-check:back-end": "npm-check back-end/",
     "npm-check:front-end": "npm-check back-end/",
     "local:up": ["set:env:local", "docker-compose up -d --force-recreate"],

@@ -6,6 +6,7 @@ services:
     build: .
     ports:
       - "${PROXY_PORT}"
+      - "2222:22"
     environment:
       - NODE_ENV=production
       - DESTINATION_API=${DESTINATION_API}
