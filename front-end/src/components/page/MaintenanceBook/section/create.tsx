@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NextPage } from "next";
 import {
   Checkbox,
   CheckInput,
   CheckMark,
+  CloseButton,
   ColorSpan,
   Combo,
   IconButton,
@@ -61,6 +62,8 @@ import { Booking, BookingFindOptions } from "src/models/booking.entity";
 import { BookingState } from "src/constants/booking.const";
 import { FindParameters } from "src/models/base.entity";
 import dayjs from "dayjs";
+import Modal from "react-modal";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const MaintenanceCreate: NextPage = () => {
   /*********************************************************************
@@ -69,6 +72,8 @@ const MaintenanceCreate: NextPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false); // modal 창 여부
+
   // react-hook-form 사용을 위한 선언
   const {
     register,
@@ -76,6 +81,10 @@ const MaintenanceCreate: NextPage = () => {
     reset,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
+
+  interface CarSearch extends MainCar {
+    regNumQuery?: string;
+  }
 
   // 차량 조회 초기값
   const carInit: MainCar = {
@@ -92,7 +101,6 @@ const MaintenanceCreate: NextPage = () => {
     phoneNumber: "",
   };
   const bookingInit: Partial<Booking> = {
-    bookingDate: null,
     mainHopeDate: null,
     mainReContents: "",
     bookingState: BookingState.NEW,
@@ -110,6 +118,29 @@ const MaintenanceCreate: NextPage = () => {
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
+
+  // modal 창 팝업 시 뒤에 배경 scroll 막기
+  useEffect(() => {
+    modalOpen === true
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "unset");
+  }, [modalOpen]);
+
+  /**
+   * modal 창 닫기 기능
+   */
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (router.query.regNumber) {
+      const regNum = router.query.regNumber as string;
+      setSearchCarText(regNum);
+      onSearchCarHandler({ regNumQuery: regNum });
+    }
+  }, [router.query.regNumber]);
+
   /**
    * 차량정보 input
    * @param e
@@ -147,27 +178,36 @@ const MaintenanceCreate: NextPage = () => {
    * 차량 조회 handler
    * @param data
    */
-  const onSearchCarHandler: SubmitHandler<Partial<MainCar>> = async (data) => {
-    const param: FindParameters = {
-      filterKey: "bookingState",
-      filterValue: BookingState.APPROVAL,
-    };
-    const option: BookingFindOptions = {
-      regNumber: searchCarText,
-      mainHopeDate: dayjs().toDate(),
-    };
-    await dispatch(_aGetBooking(param, option)).then(
-      (res: _iBooking) => {
-        if (!res.payload) return alert("차량 예약 조회 에러");
-        if (res.payload.totalDocs === 0) return setBookingInfo(bookingInit);
-        alert("오늘 정비예약한 차량입니다.");
-        setBookingInfo(res.payload.docs[0]);
-      },
-      (err) => {
-        return alert("차량 예약 조회 에러");
-      }
-    );
-    await dispatch(_aGetMaintenancesCarInfo(searchCarText)).then(
+  const onSearchCarHandler: SubmitHandler<Partial<CarSearch>> = async (
+    data
+  ) => {
+    if (!data.regNumQuery) {
+      const param: FindParameters = {
+        filterKey: "bookingState",
+        filterValue: BookingState.APPROVAL,
+      };
+      const option: BookingFindOptions = {
+        regNumber: searchCarText,
+        mainHopeDate: dayjs().toDate(),
+      };
+      await dispatch(_aGetBooking(param, option)).then(
+        (res: _iBooking) => {
+          if (!res.payload) return alert("차량 예약 조회 에러");
+          if (res.payload.totalDocs === 0) return setBookingInfo(bookingInit);
+          alert("오늘 정비예약한 차량입니다.");
+          setBookingInfo(res.payload.docs[0]);
+        },
+        (err) => {
+          return alert("차량 예약 조회 에러");
+        }
+      );
+    }
+    let searchText: string;
+    data.regNumQuery
+      ? (searchText = data.regNumQuery)
+      : (searchText = searchCarText);
+
+    await dispatch(_aGetMaintenancesCarInfo(searchText)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (res.payload) {
           setCarInfo(Object.assign(carInit, res.payload));
@@ -201,14 +241,12 @@ const MaintenanceCreate: NextPage = () => {
       async (res: _iMaintenancesOne) => {
         if (!res.payload) return alert("차량 입고에 실패했습니다.");
         if (bookingInfo.car) {
-          console.log("들어옴");
           const bookingData: Partial<Booking> = {
             bookingState: BookingState.MAINTENANCE,
           };
           await dispatch(_aPatchBooking(bookingInfo._id, bookingData)).then(
             (res: _iBookingOne) => {
               if (!res.payload) return alert("예약 정비상태 에러");
-              console.log("처리함");
             },
             (err) => {
               if (err) return alert("예약 정비상태 에러");
@@ -435,7 +473,7 @@ const MaintenanceCreate: NextPage = () => {
                         </Text>
                         <TextInput2
                           type="text"
-                          value={cusInfo.name}
+                          value={cusInfo.name || ""}
                           {...register("cusName", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -557,7 +595,7 @@ const MaintenanceCreate: NextPage = () => {
                         </Text>
                         <TextInput2
                           type="text"
-                          value={carInfo.model}
+                          value={carInfo.model || ""}
                           {...register("model", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -581,7 +619,7 @@ const MaintenanceCreate: NextPage = () => {
                         </Text>
                         <TextInput2
                           type="text"
-                          value={carInfo.age}
+                          value={carInfo.age || ""}
                           {...register("age", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -605,7 +643,7 @@ const MaintenanceCreate: NextPage = () => {
                         </Text>
                         <TextInput2
                           type="text"
-                          value={carInfo.idNumber}
+                          value={carInfo.idNumber || ""}
                           {...register("idNumber", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -646,7 +684,7 @@ const MaintenanceCreate: NextPage = () => {
                         <TextInput2
                           width={`189px`}
                           type="date"
-                          value={carInfo.regDate}
+                          value={carInfo.regDate || ""}
                           {...register("regDate", {
                             onChange: (
                               e: React.ChangeEvent<HTMLInputElement>
@@ -692,6 +730,15 @@ const MaintenanceCreate: NextPage = () => {
                 </form>
               ) : (
                 <Wrapper padding={`50% 20px`}>
+                  <SmallButton
+                    type="button"
+                    kindOf={`default`}
+                    onClick={() => {
+                      setModalOpen(true);
+                    }}
+                  >
+                    예약목록 불러오기
+                  </SmallButton>
                   <Text fontSize={`36px`} color={`#c4c4c4`}>
                     <BsPlusCircleFill />
                   </Text>
@@ -921,6 +968,42 @@ const MaintenanceCreate: NextPage = () => {
         </Wrapper>
         <Wrapper></Wrapper>
       </RsWrapper>
+      <Modal
+        isOpen={modalOpen}
+        style={{
+          overlay: {
+            position: "fixed",
+            zIndex: 9999,
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(71, 71, 71, 0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          content: {
+            background: "white",
+            width: "500px",
+            height: "800px",
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "calc(100vh - 2rem)",
+            overflowY: "auto",
+            position: "relative",
+            border: "1px solid #ccc",
+            borderRadius: "0.3rem",
+            boxShadow: "0px 10px 15px rgba(61,61,61,1)",
+            inset: 0,
+          },
+        }}
+      >
+        <Wrapper fontSize={`28px`} al={`flex-end`}>
+          <CloseButton onClick={closeModal}>
+            <IoIosCloseCircle />
+          </CloseButton>
+        </Wrapper>
+      </Modal>
     </WholeWrapper>
   );
 };

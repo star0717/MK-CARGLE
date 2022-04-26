@@ -122,6 +122,7 @@ const MobileCarSelect: NextPage<any> = (props) => {
           }}
           width={`100%`}
           margin={`20px 0px 0px`}
+          height={`50px`}
         >
           확인
         </CommonButton>

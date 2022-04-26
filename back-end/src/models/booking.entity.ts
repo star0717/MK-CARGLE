@@ -48,12 +48,6 @@ export class Booking extends BaseEntity {
   @prop({ required: true })
   bookingNum?: string;
 
-  @ApiProperty({ description: '예약접수일자' })
-  @IsOptional()
-  @IsString()
-  @prop()
-  bookingDate?: Date;
-
   @ApiProperty({ description: '정비희망일시' })
   @IsString()
   @prop({ required: true })

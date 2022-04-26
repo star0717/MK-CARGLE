@@ -46,13 +46,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   const {
     register,
     handleSubmit,
+    setError,
     clearErrors,
     setValue,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
 
   const bookingInit: Partial<Booking> = {
-    bookingDate: null,
     mainHopeDate: null,
     mainReContents: "",
     bookingState: BookingState.NEW,
@@ -175,7 +175,17 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    * 차량 검색 handler
    */
   const onCarSearch = async () => {
-    if (carInfo.regNumber === "") return false;
+    if (carInfo.regNumber === "")
+      return setError("regNumber", {
+        type: "null",
+        message: "차량번호를 입력하세요",
+      });
+    if (!formRegEx.CAR_NUM.test(carInfo.regNumber))
+      return setError("regNumber", {
+        type: "type",
+        message: "형식에 맞게 입력하세요",
+      });
+    clearErrors("regNumber");
     await dispatch(_aGetMaintenancesCarInfo(carInfo.regNumber)).then(
       (res: _iGetMaintenancesCarInfo) => {
         if (!res.payload) return alert("신규차량입니다. 직접 입력해주세요.");
@@ -267,34 +277,10 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 width={`400px`}
                 type="date"
                 min={dayjs().format("YYYY-MM-DD")}
-                value={
-                  bookingInfo.bookingDate
-                    ? dayjs(bookingInfo.bookingDate).format("YYYY-MM-DD")
-                    : ""
-                }
-                {...register("bookingDate", {
-                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    onBookingHandler(e);
-                  },
-                  required: {
-                    value: true,
-                    message: "예약접수일자를 선택하세요",
-                  },
-                })}
+                value={dayjs(new Date(Date.now())).format("YYYY-MM-DD")}
+                readOnly
               />
             </Wrapper>
-            {errors.bookingDate?.type === "required" && (
-              <Text
-                margin={`0px`}
-                width={`100%`}
-                color={`#d6263b`}
-                al={`flex-start`}
-                fontSize={`14px`}
-                textAlign={`left`}
-              >
-                {errors.bookingDate.message}
-              </Text>
-            )}
           </Wrapper>
 
           <Wrapper al={`flex-start`} width={`400px`}>
@@ -483,7 +469,9 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 )}
               </Wrapper>
               {(errors.regNumber?.type === "required" ||
-                errors.regNumber?.type === "pattern") && (
+                errors.regNumber?.type === "pattern" ||
+                errors.regNumber?.type === "null" ||
+                errors.regNumber?.type === "type") && (
                 <Text
                   margin={`0px 0px 10px 0px`}
                   width={`100%`}

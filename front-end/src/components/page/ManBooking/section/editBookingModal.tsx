@@ -29,6 +29,8 @@ import "dayjs/locale/ko";
 import { useDispatch } from "react-redux";
 import { _aPatchBooking } from "store/action/user.action";
 import { _iBookingOne } from "store/interfaces";
+import { useRouter } from "next/router";
+import { UseLink } from "src/configure/router.entity";
 dayjs.locale("ko");
 
 const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
@@ -36,6 +38,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
    * 1. Init Libs
    *********************************************************************/
   const dispatch = useDispatch();
+  const router = useRouter();
 
   /*********************************************************************
    * 2. State settings
@@ -47,15 +50,39 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
 
   /**
    * 예약 변경 handler
-   * @param e
+   * @param state
+   * @returns
    */
   const onBookingChange = async (state: BookingState) => {
-    if (state === BookingState.REJECT) return props.setModalOption("reject");
-
     const bookingData: Partial<Booking> = {
       ...props.clickDoc,
       bookingState: state,
     };
+    // 승인 시 알림톡 전송
+    if (state === BookingState.APPROVAL) {
+    }
+    if (state === BookingState.REJECT) return props.setModalOption("reject");
+    if (state === BookingState.MAINTENANCE) {
+      if (
+        window.confirm(`'${props.clickDoc.car.regNumber}' 을 정비하시겠습니까?`)
+      ) {
+        delete bookingData.rejectOption;
+        await dispatch(_aPatchBooking(props.clickDoc._id, bookingData)).then(
+          (res: _iBookingOne) => {
+            if (!res.payload) return alert("예약 변경 에러");
+            router.push(
+              `${UseLink.MAINTENANCE_BOOK}?step=c&regNumber=${props.clickDoc.car.regNumber}`
+            );
+          },
+          (err) => {
+            if (err) return alert("예약 변경 에러");
+          }
+        );
+      } else {
+        return false;
+      }
+    }
+
     delete bookingData.rejectOption;
     await dispatch(_aPatchBooking(props.clickDoc._id, bookingData)).then(
       (res: _iBookingOne) => {
@@ -131,7 +158,7 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
               width={`400px`}
               type="text"
               name="bookingDate"
-              value={dayjs(props.clickDoc.bookingDate).format("YYYY-MM-DD")}
+              value={dayjs(props.clickDoc.createdAt).format("YYYY-MM-DD")}
               readOnly
             />
           </Wrapper>
@@ -397,6 +424,17 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
               }}
             >
               승인
+            </CommonButton>
+          )}
+          {props.clickDoc.bookingState === BookingState.APPROVAL && (
+            <CommonButton
+              kindOf={`circleTheme`}
+              type="button"
+              onClick={() => {
+                onBookingChange(BookingState.MAINTENANCE);
+              }}
+            >
+              정비
             </CommonButton>
           )}
         </CommonButtonWrapper>
