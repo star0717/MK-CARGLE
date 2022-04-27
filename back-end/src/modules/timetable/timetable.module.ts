@@ -9,5 +9,6 @@ import { CommonModule } from 'src/lib/common/common.module';
   imports: [TypegooseModule.forFeature([TimeTable]), CommonModule],
   controllers: [TimetableController],
   providers: [TimetableService],
+  exports: [TimetableService],
 })
 export class TimetableModule {}

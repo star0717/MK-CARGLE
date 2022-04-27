@@ -24,6 +24,8 @@ import { CommonService } from '../common/common.service';
 import { CompaniesService } from 'src/modules/companies/companies.service';
 import { UsersService } from 'src/modules/users/users.service';
 import { CompanyApproval, UserAuthority } from 'src/constants/model.const';
+import { TimetableService } from 'src/modules/timetable/timetable.service';
+import { makeTimeArray } from 'src/constants/timetable.const';
 
 @Injectable()
 export class AuthService {
@@ -34,6 +36,7 @@ export class AuthService {
     private companiesService: CompaniesService,
     private readonly httpService: HttpService,
     private readonly commonService: CommonService,
+    private timeTableService: TimetableService,
   ) {}
 
   async signUp(signUpInfo: SignUpInfo): Promise<SignUpInfo> {
@@ -54,7 +57,16 @@ export class AuthService {
         company = await this.companiesService.createForAuth(signUpInfo.company);
 
         /**** 테스트 *****/
-
+        const initRow: number[] = makeTimeArray();
+        const timeTable: number[][] = [];
+        for (let i = 0; i < 7; i++) {
+          timeTable.push(initRow);
+        }
+        await this.timeTableService.createTable(
+          company._cID,
+          company._uID,
+          timeTable,
+        );
         /***************/
 
         // if (!company) {

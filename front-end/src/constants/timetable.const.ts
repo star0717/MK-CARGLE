@@ -12,9 +12,17 @@ export enum BookingCount {
   off = 0,
 }
 
+/**
+ * 업체 업무시간별 예약카운팅 리스트
+ * @param workTo 업무시작시간
+ * @param workFrom 업무종료시간
+ * @param breakTo 휴게시작시간
+ * @param breakFrom 휴게종료시간
+ * @returns
+ */
 export const makeTimeArray = (
-  workTo: Date,
-  workFrom: Date,
+  workTo?: Date,
+  workFrom?: Date,
   breakTo?: Date,
   breakFrom?: Date,
 ) => {
@@ -28,9 +36,6 @@ export const makeTimeArray = (
   let workToIdxArr: number[] = [];
   let workFromIdxArr: number[] = [];
   let breakToIdxArr: number[] = [];
-  let a = 0;
-  let b = 0;
-  let c = 0;
 
   let startTime: dayjs.Dayjs = dayjs().hour(6).minute(0);
   let endTime: dayjs.Dayjs = dayjs().hour(21).minute(0);
@@ -38,6 +43,13 @@ export const makeTimeArray = (
   let workFromDay: dayjs.Dayjs = dayjs(workFrom);
   let breakToDay: dayjs.Dayjs = dayjs(breakTo);
   let breakFromDay: dayjs.Dayjs = dayjs(breakFrom);
+
+  if (!workTo && !workFrom) {
+    for (let i = 0; i < 30; i++) {
+      timeArr.push(BookingCount.init);
+    }
+    return timeArr;
+  }
 
   if (workToDay !== startTime) {
     workToLoop = workToDay.diff(startTime, 'minutes') / 30;
@@ -63,15 +75,6 @@ export const makeTimeArray = (
       breakToIdxArr.push(breakToIdx + i);
     }
   }
-
-  console.log('$$', workFromDay, endTime);
-
-  console.log('@@', workToIdx);
-  console.log('@@', workFromIdx);
-  console.log('@@', breakToIdx);
-  console.log('##', workToLoop);
-  console.log('##', workFromLoop);
-  console.log('##', breakToLoop);
 
   for (let i = 0; i < 30; i++) {
     if (workToIdxArr.includes(i)) {

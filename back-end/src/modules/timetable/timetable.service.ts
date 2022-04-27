@@ -17,7 +17,23 @@ export class TimetableService extends SafeService<TimeTable> {
     super(model, commonService);
   }
 
-  async create(token: AuthTokenInfo, doc: TimeTable): Promise<TimeTable> {
-    return await super.create(token, doc);
+  async createTable(
+    cid: string,
+    uid: string,
+    doc: number[][],
+  ): Promise<TimeTable> {
+    console.log('###########');
+    const timeTable: Partial<TimeTable> = {
+      _cID: cid,
+      _uID: uid,
+      mon: doc[0],
+      tue: doc[1],
+      wed: doc[2],
+      thu: doc[3],
+      fri: doc[4],
+      sat: doc[5],
+      sun: doc[6],
+    };
+    return await this.model.create(timeTable);
   }
 }

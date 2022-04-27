@@ -7,35 +7,35 @@ export class TimeTable extends BaseEntity {
   @ApiProperty({ description: '월요일 예약여부' })
   @IsArray()
   @prop({ required: true })
-  mon: string[];
+  mon: number[];
 
   @ApiProperty({ description: '화요일 예약여부' })
   @IsArray()
   @prop({ required: true })
-  tue: string[];
+  tue: number[];
 
   @ApiProperty({ description: '수요일 예약여부' })
   @IsArray()
   @prop({ required: true })
-  wed: string[];
+  wed: number[];
 
   @ApiProperty({ description: '목요일 예약여부' })
   @IsArray()
   @prop({ required: true })
-  thu: string[];
+  thu: number[];
 
   @ApiProperty({ description: '금요일 예약여부' })
   @IsArray()
   @prop({ required: true })
-  fri: string[];
+  fri: number[];
 
   @ApiProperty({ description: '토요일 예약여부' })
   @IsArray()
   @prop({ required: true })
-  sat: string[];
+  sat: number[];
 
   @ApiProperty({ description: '일요일 예약여부' })
   @IsArray()
   @prop({ required: true })
-  sun: string[];
+  sun: number[];
 }
