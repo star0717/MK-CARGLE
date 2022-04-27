@@ -47,6 +47,7 @@ import { Company } from "src/models/company.entity";
 import { ObjectList } from "aws-sdk/clients/s3";
 import { PromiseResult } from "aws-sdk/lib/request";
 import { s3Folder } from "src/configure/s3.entity";
+import { makeTimeArray } from "src/constants/timetable.const";
 
 const HeoTest: NextPage<_MainProps> = (props) => {
   /*********************************************************************
@@ -268,6 +269,14 @@ const HeoTest: NextPage<_MainProps> = (props) => {
   const imgLoader = ({ src }: ImageProps) => {
     return `${src}`;
   };
+
+  /** 테스트 시간 */
+  let date = dayjs(new Date(Date.now())).hour(10).minute(0).toDate();
+  let date2 = dayjs(new Date(Date.now())).hour(16).minute(0).toDate();
+  let rest = dayjs(new Date(Date.now())).hour(12).minute(0).toDate();
+  let rest2 = dayjs(new Date(Date.now())).hour(13).minute(0).toDate();
+
+  console.log(makeTimeArray(date, date2, rest, rest2));
 
   /*********************************************************************
    * 4. Props settings

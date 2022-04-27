@@ -53,6 +53,10 @@ export class AuthService {
         // 신규 사업자 등록
         company = await this.companiesService.createForAuth(signUpInfo.company);
 
+        /**** 테스트 *****/
+
+        /***************/
+
         // if (!company) {
         //   throw new BadRequestException();
         // }

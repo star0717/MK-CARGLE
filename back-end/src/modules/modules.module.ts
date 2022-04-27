@@ -12,6 +12,7 @@ import { EstimatesModule } from './estimates/estimates.module';
 import { StatementsModule } from './statements/statements.module';
 import { BookingModule } from './booking/booking.module';
 import { SetbookingModule } from './setbooking/setbooking.module';
+import { TimetableModule } from './timetable/timetable.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { SetbookingModule } from './setbooking/setbooking.module';
     StatementsModule,
     BookingModule,
     SetbookingModule,
+    TimetableModule,
   ],
 })
 export class ModulesModule {}
