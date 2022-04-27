@@ -32,7 +32,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [booking, setBooking] = useState<SetBooking>(props.data);
+  const [booking, setBooking] = useState<SetBooking>(props.booking);
   const [modify, setModify] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
@@ -209,6 +209,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
                 onClick={async () => {
                   await dispatch(_aPostSetBooking(booking)).then((res: any) => {
                     setBooking(res.payload);
+                    props.setBooking(res.payload);
                     alert("저장 되었습니다!");
                   });
 

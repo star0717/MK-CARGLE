@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import theme from "styles/theme";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
-import { OfficeHours, SetBooking } from "src/models/setbooking.entity";
+import { Hours, OfficeHours, SetBooking } from "src/models/setbooking.entity";
 import { useDispatch } from "react-redux";
 import { _aPostSetBooking } from "store/action/user.action";
 import { SetBookingTime } from "src/constants/booking.const";
@@ -33,88 +33,155 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   const allArr: string[] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
   const dayArr: string[] = ["MON", "TUE", "WED", "THU", "FRI"];
   const endArr: string[] = ["SAT", "SUN"];
-  interface asd {
-    [diffDay: string]: string;
+
+  interface all_inter {
+    ALLDAY: {
+      openingHours: Date;
+      closingHours: Date;
+      breakTime: Date;
+      breakEndTime: Date;
+    };
+    [allDay: string]: any;
+  }
+  interface week_inter {
+    WEEKDAY: {
+      openingHours: Date;
+      closingHours: Date;
+      breakTime: Date;
+      breakEndTime: Date;
+    };
+    WEEKEND: {
+      openingHours: Date;
+      closingHours: Date;
+      breakTime: Date;
+      breakEndTime: Date;
+    };
+    [weekDay: string]: any;
+  }
+  interface diff_inter extends OfficeHours {
+    [diffDay: string]: any;
   }
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [booking, setBooking] = useState<SetBooking>(props.data);
+  const [booking, setBooking] = useState<SetBooking>(props.booking);
   const [modify, setModify] = useState<boolean>(false);
-  const [hours, setHours] = useState<string>(booking.officeHour);
-  const ho = `{"openingHours" : "13","closingHours":"14"}`;
-  const hi = `{"MON":"asdasd", "ASDASD":"{asdasd}"}`;
-  console.log(JSON.parse(ho));
-  console.log(JSON.parse(hi));
-  console.log(JSON.stringify(JSON.parse(hi)));
-  // console.log("!@#!@#", JSON.parse(hours));
-  // const [allDay, setAllDay] = useState<any>({
-  //   ALLDAY: {
-  //     openingHours: booking.officeHour.MON.openingHours,
-  //     closingHours: booking.officeHour.MON.closingHours,
-  //     breakTime: booking.officeHour.MON.breakTime,
-  //     breakEndTime: booking.officeHour.MON.breakEndTime,
-  //   },
-  // });
-  // const [weekDay, setWeekDay] = useState<any>({
-  //   WEEKDAY: {
-  //     openingHours: booking.officeHour.MON.openingHours,
-  //     closingHours: booking.officeHour.MON.closingHours,
-  //     breakTime: booking.officeHour.MON.breakTime,
-  //     breakEndTime: booking.officeHour.MON.breakEndTime,
-  //   },
-  //   WEEKEND: {
-  //     openingHours: booking.officeHour.SAT.openingHours,
-  //     closingHours: booking.officeHour.SAT.closingHours,
-  //     breakTime: booking.officeHour.SAT.breakTime,
-  //     breakEndTime: booking.officeHour.SAT.breakEndTime,
-  //   },
-  // });
-  // const [diffDay, setDiffDay] = useState<any>({
-  //   MON: {
-  //     openingHours: booking.officeHour.MON.openingHours,
-  //     closingHours: booking.officeHour.MON.closingHours,
-  //     breakTime: booking.officeHour.MON.breakTime,
-  //     breakEndTime: booking.officeHour.MON.breakEndTime,
-  //   },
-  //   TUE: {
-  //     openingHours: booking.officeHour.TUE.openingHours,
-  //     closingHours: booking.officeHour.TUE.closingHours,
-  //     breakTime: booking.officeHour.TUE.breakTime,
-  //     breakEndTime: booking.officeHour.TUE.breakEndTime,
-  //   },
-  //   WED: {
-  //     openingHours: booking.officeHour.WED.openingHours,
-  //     closingHours: booking.officeHour.WED.closingHours,
-  //     breakTime: booking.officeHour.WED.breakTime,
-  //     breakEndTime: booking.officeHour.WED.breakEndTime,
-  //   },
-  //   THU: {
-  //     openingHours: booking.officeHour.THU.openingHours,
-  //     closingHours: booking.officeHour.THU.closingHours,
-  //     breakTime: booking.officeHour.THU.breakTime,
-  //     breakEndTime: booking.officeHour.THU.breakEndTime,
-  //   },
-  //   FRI: {
-  //     openingHours: booking.officeHour.FRI.openingHours,
-  //     closingHours: booking.officeHour.FRI.closingHours,
-  //     breakTime: booking.officeHour.FRI.breakTime,
-  //     breakEndTime: booking.officeHour.FRI.breakEndTime,
-  //   },
-  //   SAT: {
-  //     openingHours: booking.officeHour.SAT.openingHours,
-  //     closingHours: booking.officeHour.SAT.closingHours,
-  //     breakTime: booking.officeHour.SAT.breakTime,
-  //     breakEndTime: booking.officeHour.SAT.breakEndTime,
-  //   },
-  //   SUN: {
-  //     openingHours: booking.officeHour.SUN.openingHours,
-  //     closingHours: booking.officeHour.SUN.closingHours,
-  //     breakTime: booking.officeHour.SUN.breakTime,
-  //     breakEndTime: booking.officeHour.SUN.breakEndTime,
-  //   },
-  // });
+  const [hours, setHours] = useState<OfficeHours>(
+    JSON.parse(booking.officeHour)
+  );
+
+  let hoursData: diff_inter = {
+    MON: {
+      openingHours: hours.MON.openingHours,
+      closingHours: hours.MON.closingHours,
+      breakTime: hours.MON.breakTime,
+      breakEndTime: hours.MON.breakEndTime,
+    },
+    TUE: {
+      openingHours: hours.TUE.openingHours,
+      closingHours: hours.TUE.closingHours,
+      breakTime: hours.TUE.breakTime,
+      breakEndTime: hours.TUE.breakEndTime,
+    },
+    WED: {
+      openingHours: hours.WED.openingHours,
+      closingHours: hours.WED.closingHours,
+      breakTime: hours.WED.breakTime,
+      breakEndTime: hours.WED.breakEndTime,
+    },
+    THU: {
+      openingHours: hours.THU.openingHours,
+      closingHours: hours.THU.closingHours,
+      breakTime: hours.THU.breakTime,
+      breakEndTime: hours.THU.breakEndTime,
+    },
+    FRI: {
+      openingHours: hours.FRI.openingHours,
+      closingHours: hours.FRI.closingHours,
+      breakTime: hours.FRI.breakTime,
+      breakEndTime: hours.FRI.breakEndTime,
+    },
+    SAT: {
+      openingHours: hours.SAT.openingHours,
+      closingHours: hours.SAT.closingHours,
+      breakTime: hours.SAT.breakTime,
+      breakEndTime: hours.SAT.breakEndTime,
+    },
+    SUN: {
+      openingHours: hours.SUN.openingHours,
+      closingHours: hours.SUN.closingHours,
+      breakTime: hours.SUN.breakTime,
+      breakEndTime: hours.SUN.breakEndTime,
+    },
+  };
+
+  const [allDay, setAllDay] = useState<all_inter>({
+    ALLDAY: {
+      openingHours: hours.MON.openingHours,
+      closingHours: hours.MON.closingHours,
+      breakTime: hours.MON.breakTime,
+      breakEndTime: hours.MON.breakEndTime,
+    },
+  });
+  const [weekDay, setWeekDay] = useState<week_inter>({
+    WEEKDAY: {
+      openingHours: hours.MON.openingHours,
+      closingHours: hours.MON.closingHours,
+      breakTime: hours.MON.breakTime,
+      breakEndTime: hours.MON.breakEndTime,
+    },
+    WEEKEND: {
+      openingHours: hours.SAT.openingHours,
+      closingHours: hours.SAT.closingHours,
+      breakTime: hours.SAT.breakTime,
+      breakEndTime: hours.SAT.breakEndTime,
+    },
+  });
+  const [diffDay, setDiffDay] = useState<diff_inter>({
+    MON: {
+      openingHours: hours.MON.openingHours,
+      closingHours: hours.MON.closingHours,
+      breakTime: hours.MON.breakTime,
+      breakEndTime: hours.MON.breakEndTime,
+    },
+    TUE: {
+      openingHours: hours.TUE.openingHours,
+      closingHours: hours.TUE.closingHours,
+      breakTime: hours.TUE.breakTime,
+      breakEndTime: hours.TUE.breakEndTime,
+    },
+    WED: {
+      openingHours: hours.WED.openingHours,
+      closingHours: hours.WED.closingHours,
+      breakTime: hours.WED.breakTime,
+      breakEndTime: hours.WED.breakEndTime,
+    },
+    THU: {
+      openingHours: hours.THU.openingHours,
+      closingHours: hours.THU.closingHours,
+      breakTime: hours.THU.breakTime,
+      breakEndTime: hours.THU.breakEndTime,
+    },
+    FRI: {
+      openingHours: hours.FRI.openingHours,
+      closingHours: hours.FRI.closingHours,
+      breakTime: hours.FRI.breakTime,
+      breakEndTime: hours.FRI.breakEndTime,
+    },
+    SAT: {
+      openingHours: hours.SAT.openingHours,
+      closingHours: hours.SAT.closingHours,
+      breakTime: hours.SAT.breakTime,
+      breakEndTime: hours.SAT.breakEndTime,
+    },
+    SUN: {
+      openingHours: hours.SUN.openingHours,
+      closingHours: hours.SUN.closingHours,
+      breakTime: hours.SUN.breakTime,
+      breakEndTime: hours.SUN.breakEndTime,
+    },
+  });
 
   /*********************************************************************
    * 3. Handlers
@@ -138,75 +205,87 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
   const allDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if (e.target.name.split("_")[2] === "hours") {
-    //   setAllDay({
-    //     ...allDay,
-    //     [e.target.name.split("_")[0]]: {
-    //       ...allDay[e.target.name.split("_")[0]],
-    //       [e.target.name.split("_")[1]]: dayjs(
-    //         allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-    //       ).hour(Number(e.target.value)),
-    //     },
-    //   });
-    // } else {
-    //   setAllDay({
-    //     ...allDay,
-    //     [e.target.name.split("_")[0]]: {
-    //       ...allDay[e.target.name.split("_")[0]],
-    //       [e.target.name.split("_")[1]]: dayjs(
-    //         allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-    //       ).minute(Number(e.target.value)),
-    //     },
-    //   });
-    // }
+    if (e.target.name.split("_")[2] === "hours") {
+      setAllDay({
+        ...allDay,
+        [e.target.name.split("_")[0]]: {
+          ...allDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          )
+            .hour(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
+        },
+      });
+    } else {
+      setAllDay({
+        ...allDay,
+        [e.target.name.split("_")[0]]: {
+          ...allDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          )
+            .minute(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
+        },
+      });
+    }
   };
   const weekDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if (e.target.name.split("_")[2] === "hours") {
-    //   setWeekDay({
-    //     ...weekDay,
-    //     [e.target.name.split("_")[0]]: {
-    //       ...weekDay[e.target.name.split("_")[0]],
-    //       [e.target.name.split("_")[1]]: dayjs(
-    //         weekDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-    //       ).hour(Number(e.target.value)),
-    //     },
-    //   });
-    // } else {
-    //   setWeekDay({
-    //     ...weekDay,
-    //     [e.target.name.split("_")[0]]: {
-    //       ...weekDay[e.target.name.split("_")[0]],
-    //       [e.target.name.split("_")[1]]: dayjs(
-    //         weekDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-    //       ).minute(Number(e.target.value)),
-    //     },
-    //   });
-    // }
+    if (e.target.name.split("_")[2] === "hours") {
+      setWeekDay({
+        ...weekDay,
+        [e.target.name.split("_")[0]]: {
+          ...weekDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            weekDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          )
+            .hour(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
+        },
+      });
+    } else {
+      setWeekDay({
+        ...weekDay,
+        [e.target.name.split("_")[0]]: {
+          ...weekDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            weekDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          )
+            .minute(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
+        },
+      });
+    }
   };
   const diffDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const hi = diffDay as {[key: string]: OfficeHours}
-    // const ho : {[key: string]: OfficeHours} = e.target.name.split("_")[0]
-    // if (e.target.name.split("_")[2] === "hours") {
-    //   setDiffDay({
-    //     ...diffDay,
-    //     [e.target.name.split("_")[0]]: {
-    //       ...diffDay[e.target.name.split("_")[0]],
-    //       [e.target.name.split("_")[1]]: dayjs(
-    //         diffDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-    //       ).hour(Number(e.target.value)),
-    //     },
-    //   });
-    // } else {
-    //   setDiffDay({
-    //     ...diffDay,
-    //     [e.target.name.split("_")[0]]: {
-    //       ...diffDay[e.target.name.split("_")[0]],
-    //       [e.target.name.split("_")[1]]: dayjs(
-    //         diffDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-    //       ).minute(Number(e.target.value)),
-    //     },
-    //   });
-    // }
+    // const hi = diffDay as { [key: string]: OfficeHours };
+    // const ho: { [key: string]: OfficeHours } = e.target.name.split("_")[0];
+    if (e.target.name.split("_")[2] === "hours") {
+      setDiffDay({
+        ...diffDay,
+        [e.target.name.split("_")[0]]: {
+          ...diffDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            diffDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          )
+            .hour(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
+        },
+      });
+    } else {
+      setDiffDay({
+        ...diffDay,
+        [e.target.name.split("_")[0]]: {
+          ...diffDay[e.target.name.split("_")[0]],
+          [e.target.name.split("_")[1]]: dayjs(
+            diffDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
+          )
+            .minute(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
+        },
+      });
+    }
   };
 
   /*********************************************************************
@@ -218,62 +297,62 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
    *********************************************************************/
   const Inputlayout = (key: any) => {
     const breakDay: string[] = booking.dayOff;
-    // let value;
+    let value;
     let readonly: boolean = false;
     if (breakDay.includes(key.id)) {
       readonly = true;
     }
-    // switch (key.id) {
-    //   case "ALLDAY":
-    //     value = allDay.ALLDAY;
-    //     if (breakDay.length === 7) {
-    //       readonly = true;
-    //     }
-    //     break;
-    //   case "WEEKDAY":
-    //     value = weekDay.WEEKDAY;
+    switch (key.id) {
+      case "ALLDAY":
+        value = allDay.ALLDAY;
+        if (breakDay.length === 7) {
+          readonly = true;
+        }
+        break;
+      case "WEEKDAY":
+        value = weekDay.WEEKDAY;
 
-    //     let dayBool: boolean = true;
-    //     dayArr.map((item) => {
-    //       if (!breakDay.includes(item)) dayBool = false;
-    //     });
-    //     if (dayBool) readonly = true;
+        let dayBool: boolean = true;
+        dayArr.map((item) => {
+          if (!breakDay.includes(item)) dayBool = false;
+        });
+        if (dayBool) readonly = true;
 
-    //     break;
-    //   case "WEEKEND":
-    //     value = weekDay.WEEKEND;
+        break;
+      case "WEEKEND":
+        value = weekDay.WEEKEND;
 
-    //     let endBool: boolean = true;
-    //     endArr.map((item) => {
-    //       if (!breakDay.includes(item)) endBool = false;
-    //     });
-    //     if (endBool) readonly = true;
-    //     break;
-    //   case "MON":
-    //     value = diffDay.MON;
-    //     break;
-    //   case "TUE":
-    //     value = diffDay.TUE;
-    //     break;
-    //   case "WED":
-    //     value = diffDay.WED;
-    //     break;
-    //   case "THU":
-    //     value = diffDay.THU;
-    //     break;
-    //   case "FRI":
-    //     value = diffDay.FRI;
-    //     break;
-    //   case "SAT":
-    //     value = diffDay.SAT;
-    //     break;
-    //   case "SUN":
-    //     value = diffDay.SUN;
-    //     break;
+        let endBool: boolean = true;
+        endArr.map((item) => {
+          if (!breakDay.includes(item)) endBool = false;
+        });
+        if (endBool) readonly = true;
+        break;
+      case "MON":
+        value = diffDay.MON;
+        break;
+      case "TUE":
+        value = diffDay.TUE;
+        break;
+      case "WED":
+        value = diffDay.WED;
+        break;
+      case "THU":
+        value = diffDay.THU;
+        break;
+      case "FRI":
+        value = diffDay.FRI;
+        break;
+      case "SAT":
+        value = diffDay.SAT;
+        break;
+      case "SUN":
+        value = diffDay.SUN;
+        break;
 
-    //   default:
-    //     null;
-    // }
+      default:
+        null;
+    }
     return (
       <>
         <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`} notAnimate>
@@ -286,7 +365,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 width={`100px`}
                 textAlign={`center`}
                 name={`${key.id}_openingHours_hours`}
-                // value={dayjs(value.openingHours).format("HH")}
+                value={dayjs(value.openingHours).format("HH")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   booking.setBookingTime === "all"
                     ? allDayHandler(e)
@@ -310,7 +389,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 width={`100px`}
                 textAlign={`center`}
                 name={`${key.id}_openingHours_min`}
-                // value={dayjs(value.openingHours).format("mm")}
+                value={dayjs(value.openingHours).format("mm")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   booking.setBookingTime === "all"
                     ? allDayHandler(e)
@@ -334,7 +413,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 width={`100px`}
                 textAlign={`center`}
                 name={`${key.id}_closingHours_hours`}
-                // value={dayjs(value.closingHours).format("HH")}
+                value={dayjs(value.closingHours).format("HH")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   booking.setBookingTime === "all"
                     ? allDayHandler(e)
@@ -358,7 +437,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 width={`100px`}
                 textAlign={`center`}
                 name={`${key.id}_closingHours_min`}
-                // value={dayjs(value.closingHours).format("mm")}
+                value={dayjs(value.closingHours).format("mm")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   booking.setBookingTime === "all"
                     ? allDayHandler(e)
@@ -383,7 +462,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 width={`100px`}
                 textAlign={`center`}
                 name={`${key.id}_breakTime_hours`}
-                // value={dayjs(value.breakTime).format("HH")}
+                value={dayjs(value.breakTime).format("HH")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   booking.setBookingTime === "all"
                     ? allDayHandler(e)
@@ -407,7 +486,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 width={`100px`}
                 textAlign={`center`}
                 name={`${key.id}_breakTime_min`}
-                // value={dayjs(value.breakTime).format("mm")}
+                value={dayjs(value.breakTime).format("mm")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   booking.setBookingTime === "all"
                     ? allDayHandler(e)
@@ -431,7 +510,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 width={`100px`}
                 textAlign={`center`}
                 name={`${key.id}_breakEndTime_hours`}
-                // value={dayjs(value.breakEndTime).format("HH")}
+                value={dayjs(value.breakEndTime).format("HH")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   booking.setBookingTime === "all"
                     ? allDayHandler(e)
@@ -455,7 +534,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                 width={`100px`}
                 textAlign={`center`}
                 name={`${key.id}_breakEndTime_min`}
-                // value={dayjs(value.breakEndTime).format("mm")}
+                value={dayjs(value.breakEndTime).format("mm")}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   booking.setBookingTime === "all"
                     ? allDayHandler(e)
@@ -536,10 +615,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       default:
         null;
     }
-
-    // return(
-
-    // )
   };
 
   return (
@@ -739,40 +814,29 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               onClick={async () => {
                 {
                   if (booking.setBookingTime === "all") {
-                    // for (const key in booking.officeHour) {
-                    //   setBooking({
-                    //     ...booking,
-                    //     [booking.officeHour[key]]: allDay.ALLDAY,
-                    //   });
-                    // }
-                    // allArr.map((item) => {
-                    //   setBooking({
-                    //     ...booking,
-                    //     [booking.officeHour[item]]: allDay.ALLDAY,
-                    //   });
-                    // });
+                    allArr.map((item) => {
+                      hoursData[item] = allDay.ALLDAY;
+                    });
                   } else if (booking.setBookingTime === "week") {
-                    // dayArr.map((item) => {
-                    //   setBooking({
-                    //     ...booking,
-                    //     [booking.officeHour[item]]: weekDay.WEEKDAY,
-                    //   });
-                    // });
-                    // endArr.map((item) => {
-                    //   setBooking({
-                    //     ...booking,
-                    //     [booking.officeHour[item]]: weekDay.WEEKEND,
-                    //   });
-                    // });
+                    dayArr.map((item) => {
+                      hoursData[item] = weekDay.WEEKDAY;
+                    });
+                    endArr.map((item) => {
+                      hoursData[item] = weekDay.WEEKEND;
+                    });
                   } else {
-                    // setBooking({
-                    //   ...booking,
-                    //   [booking.officeHour]: diffDay,
-                    // });
+                    allArr.map((item) => {
+                      hoursData[item] = diffDay[item];
+                    });
                   }
                 }
-                await dispatch(_aPostSetBooking(booking)).then((res: any) => {
+                const data = {
+                  ...booking,
+                  officeHour: JSON.stringify(hoursData),
+                };
+                await dispatch(_aPostSetBooking(data)).then((res: any) => {
                   setBooking(res.payload);
+                  props.setBooking(res.payload);
                   alert("저장 되었습니다!");
                 });
 

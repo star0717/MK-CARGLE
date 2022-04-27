@@ -116,7 +116,6 @@ export class SetBooking extends BaseEntity {
   setBookingTime?: SetBookingTime;
 
   @ApiProperty({ description: '영업시간' })
-  @ValidateNested()
   @IsString()
   @prop({ required: true, _id: false })
   officeHour: string;
