@@ -64,6 +64,9 @@ import { FindParameters } from "src/models/base.entity";
 import dayjs from "dayjs";
 import Modal from "react-modal";
 import { IoIosCloseCircle } from "react-icons/io";
+import { _pMainBookingModalProps } from "src/configure/_pProps.entity";
+import BookingListModal from "./bookingListModal";
+import { CarSearch } from "src/configure/_props.entity";
 
 const MaintenanceCreate: NextPage = () => {
   /*********************************************************************
@@ -81,10 +84,6 @@ const MaintenanceCreate: NextPage = () => {
     reset,
     formState: { errors },
   } = useForm({ criteriaMode: "all", mode: "onChange" });
-
-  interface CarSearch extends MainCar {
-    regNumQuery?: string;
-  }
 
   // 차량 조회 초기값
   const carInit: MainCar = {
@@ -114,6 +113,7 @@ const MaintenanceCreate: NextPage = () => {
   const [cusInfo, setCusInfo] = useState<MainCustomer>(cusInit); // 고객정보
   const [showCar, setShowCar] = useState<boolean>(false); // 차량검색 후 정보표시
   const [bookingInfo, setBookingInfo] = useState<Partial<Booking>>(bookingInit); // 예약 정보
+  const [bookingList, setBookingList] = useState<Booking[]>([]);
 
   /*********************************************************************
    * 3. Handlers
@@ -133,6 +133,7 @@ const MaintenanceCreate: NextPage = () => {
     setModalOpen(false);
   };
 
+  /** URL 쿼리에 차량번호가 있을 경우(예약관리에서 넘어온 경우) */
   useEffect(() => {
     if (router.query.regNumber) {
       const regNum = router.query.regNumber as string;
@@ -169,6 +170,7 @@ const MaintenanceCreate: NextPage = () => {
     setCarInfo(carInit);
     setCusInfo(cusInit);
     setBookingInfo(bookingInit);
+    setBookingList([]);
     setShowCar(false);
     setSearchCarText("");
     reset();
@@ -263,9 +265,38 @@ const MaintenanceCreate: NextPage = () => {
     );
   };
 
+  /**
+   * 당일 예약 목록 불러오기
+   */
+  const getTodayBooking = async () => {
+    let params: FindParameters = {
+      take: 10,
+      sFrom: dayjs().startOf("day").toDate(),
+      sTo: dayjs().endOf("day").toDate(),
+    };
+    let opt: any = {
+      bookingState: BookingState.APPROVAL,
+    };
+    await dispatch(_aGetBooking(params, opt)).then(
+      (res: _iBooking) => {
+        setBookingList(res.payload.docs);
+        setModalOpen(true);
+      },
+      (err) => {
+        if (err) return alert("당일 예약 목록 에러");
+      }
+    );
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
+  const bookingListModalProps: _pMainBookingModalProps = {
+    setModalOpen,
+    bookingList,
+    onSearchCarHandler,
+    setSearchCarText,
+  };
 
   /*********************************************************************
    * 5. Page configuration
@@ -733,11 +764,9 @@ const MaintenanceCreate: NextPage = () => {
                   <SmallButton
                     type="button"
                     kindOf={`default`}
-                    onClick={() => {
-                      setModalOpen(true);
-                    }}
+                    onClick={getTodayBooking}
                   >
-                    예약목록 불러오기
+                    오늘 예약목록 불러오기
                   </SmallButton>
                   <Text fontSize={`36px`} color={`#c4c4c4`}>
                     <BsPlusCircleFill />
@@ -1003,6 +1032,7 @@ const MaintenanceCreate: NextPage = () => {
             <IoIosCloseCircle />
           </CloseButton>
         </Wrapper>
+        <BookingListModal {...bookingListModalProps} />
       </Modal>
     </WholeWrapper>
   );

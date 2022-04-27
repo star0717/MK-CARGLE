@@ -58,30 +58,8 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
       ...props.clickDoc,
       bookingState: state,
     };
-    // 승인 시 알림톡 전송
-    if (state === BookingState.APPROVAL) {
-    }
+
     if (state === BookingState.REJECT) return props.setModalOption("reject");
-    if (state === BookingState.MAINTENANCE) {
-      if (
-        window.confirm(`'${props.clickDoc.car.regNumber}' 을 정비하시겠습니까?`)
-      ) {
-        delete bookingData.rejectOption;
-        await dispatch(_aPatchBooking(props.clickDoc._id, bookingData)).then(
-          (res: _iBookingOne) => {
-            if (!res.payload) return alert("예약 변경 에러");
-            router.push(
-              `${UseLink.MAINTENANCE_BOOK}?step=c&regNumber=${props.clickDoc.car.regNumber}`
-            );
-          },
-          (err) => {
-            if (err) return alert("예약 변경 에러");
-          }
-        );
-      } else {
-        return false;
-      }
-    }
 
     delete bookingData.rejectOption;
     await dispatch(_aPatchBooking(props.clickDoc._id, bookingData)).then(
@@ -89,6 +67,22 @@ const EditBookingModal: NextPage<_pBookingModalProps> = (props) => {
         if (!res.payload) return alert("예약 변경 에러");
         props.setModalOpen(false);
         props.setReset(props.reset + 1);
+        // 승인 시 알림톡 전송
+        if (res.payload.bookingState === BookingState.APPROVAL) {
+        }
+        if (res.payload.bookingState === BookingState.MAINTENANCE) {
+          if (
+            window.confirm(
+              `'${props.clickDoc.car.regNumber}' 을 정비하시겠습니까?`
+            )
+          ) {
+            router.push(
+              `${UseLink.MAINTENANCE_BOOK}?step=c&regNumber=${props.clickDoc.car.regNumber}`
+            );
+          } else {
+            return false;
+          }
+        }
       },
       (err) => {
         if (err) return alert("예약 변경 에러");

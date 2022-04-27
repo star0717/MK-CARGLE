@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldValues, UseFormSetValue } from "react-hook-form";
+import { FieldValues, SubmitHandler, UseFormSetValue } from "react-hook-form";
 import { AuthTokenInfo, SignUpInfo } from "../models/auth.entity";
 import { FormCheck, FormInput } from "../../store/interfaces";
 import { UserAuthority } from "../constants/model.const";
@@ -7,7 +7,7 @@ import { FindResult } from "../models/base.entity";
 import { Company } from "../models/company.entity";
 import { User } from "../models/user.entity";
 import { _fFileCheck, _fTermData, _fWithdrawal } from "./_fProps.entity";
-import { _MainProps } from "./_props.entity";
+import { CarSearch, _MainProps } from "./_props.entity";
 import { Part } from "../models/part.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Maintenance, MainWork } from "src/models/maintenance.entity";
@@ -15,6 +15,7 @@ import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";
 import { SetBooking } from "src/models/setbooking.entity";
 import { Booking, BookingFindOptions } from "src/models/booking.entity";
+import { TimeTable } from "src/models/timetable.entity";
 
 /***********************************************************************
  * 기본
@@ -136,8 +137,8 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
 
 // 예약 설정용 props
 export interface _pSetBookingDataProps extends _MainProps {
-  // booking: SetBooking;
-  // setBooking: React.Dispatch<React.SetStateAction<SetBooking>>;
+  booking: SetBooking;
+  setBooking: React.Dispatch<React.SetStateAction<SetBooking>>;
   // modify: boolean;
   // setModify: React.Dispatch<React.SetStateAction<boolean>>;
   // businessTime: string;
@@ -226,6 +227,13 @@ export interface _pMaintenanceProps extends _pFindDocs<Maintenance> {
   // setSearchDetails: React.Dispatch<React.SetStateAction<MainFindOptions>>;
 }
 
+export interface _pMainBookingModalProps {
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  bookingList?: Booking[];
+  onSearchCarHandler?: SubmitHandler<Partial<CarSearch>>;
+  setSearchCarText?: React.Dispatch<React.SetStateAction<string>>;
+}
+
 // 예약관리용 props
 export interface _pBookingProps extends _pFindDocs<Booking> {
   searchOption: string;
@@ -244,6 +252,7 @@ export interface _pBookingModalProps extends _pFindDocs<Booking> {
   setModalOption?: React.Dispatch<React.SetStateAction<string>>;
   clickDoc?: Booking;
   setClickDoc?: React.Dispatch<React.SetStateAction<Booking>>;
+  timeTable?: TimeTable;
   style?: {
     height: string;
     width?: string;

@@ -151,3 +151,9 @@ export class BookingApiPath {
   static booking = BookingApiPath.BASE;
   static booking_deletemany = BookingApiPath.BASE + 'deletemany';
 }
+
+// 타임테이블 API
+export class TimeTableApiPath {
+  static BASE = '/timetable/';
+  static timetable = TimeTableApiPath.BASE;
+}

@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import theme from "styles/theme";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
-import { SetBooking } from "src/models/setbooking.entity";
+import { OfficeHours, SetBooking } from "src/models/setbooking.entity";
 import { useDispatch } from "react-redux";
 import { _aPostSetBooking } from "store/action/user.action";
 import { SetBookingTime } from "src/constants/booking.const";
@@ -33,79 +33,197 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   const allArr: string[] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
   const dayArr: string[] = ["MON", "TUE", "WED", "THU", "FRI"];
   const endArr: string[] = ["SAT", "SUN"];
-  interface asd {
-    [diffDay: string]: string;
+
+  interface all_inter {
+    ALLDAY: {
+      openingHours: Date;
+      closingHours: Date;
+      breakTime: Date;
+      breakEndTime: Date;
+    };
+    [allDay: string]: any;
+  }
+  interface week_inter {
+    WEEKDAY: {
+      openingHours: Date;
+      closingHours: Date;
+      breakTime: Date;
+      breakEndTime: Date;
+    };
+    WEEKEND: {
+      openingHours: Date;
+      closingHours: Date;
+      breakTime: Date;
+      breakEndTime: Date;
+    };
+    [weekDay: string]: any;
+  }
+  interface diff_inter extends OfficeHours {
+    [diffDay: string]: any;
   }
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [booking, setBooking] = useState<SetBooking>(props.data);
+  const [booking, setBooking] = useState<SetBooking>(props.booking);
   const [modify, setModify] = useState<boolean>(false);
-  const [allDay, setAllDay] = useState<any>({
-    ALLDAY: {
-      openingHours: booking.officeHour.MON.openingHours,
-      closingHours: booking.officeHour.MON.closingHours,
-      breakTime: booking.officeHour.MON.breakTime,
-      breakEndTime: booking.officeHour.MON.breakEndTime,
-    },
-  });
-  const [weekDay, setWeekDay] = useState<any>({
-    WEEKDAY: {
-      openingHours: booking.officeHour.MON.openingHours,
-      closingHours: booking.officeHour.MON.closingHours,
-      breakTime: booking.officeHour.MON.breakTime,
-      breakEndTime: booking.officeHour.MON.breakEndTime,
-    },
-    WEEKEND: {
-      openingHours: booking.officeHour.SAT.openingHours,
-      closingHours: booking.officeHour.SAT.closingHours,
-      breakTime: booking.officeHour.SAT.breakTime,
-      breakEndTime: booking.officeHour.SAT.breakEndTime,
-    },
-  });
-  const [diffDay, setDiffDay] = useState<any>({
+  const [hours, setHours] = useState<OfficeHours>(
+    booking.officeHour !== ""
+      ? JSON.parse(booking.officeHour)
+      : {
+          MON: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          TUE: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          WED: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          THU: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          FRI: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          SAT: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          SUN: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+        }
+  );
+  let hoursData: diff_inter = {
     MON: {
-      openingHours: booking.officeHour.MON.openingHours,
-      closingHours: booking.officeHour.MON.closingHours,
-      breakTime: booking.officeHour.MON.breakTime,
-      breakEndTime: booking.officeHour.MON.breakEndTime,
+      openingHours: hours.MON.openingHours,
+      closingHours: hours.MON.closingHours,
+      breakTime: hours.MON.breakTime,
+      breakEndTime: hours.MON.breakEndTime,
     },
     TUE: {
-      openingHours: booking.officeHour.TUE.openingHours,
-      closingHours: booking.officeHour.TUE.closingHours,
-      breakTime: booking.officeHour.TUE.breakTime,
-      breakEndTime: booking.officeHour.TUE.breakEndTime,
+      openingHours: hours.TUE.openingHours,
+      closingHours: hours.TUE.closingHours,
+      breakTime: hours.TUE.breakTime,
+      breakEndTime: hours.TUE.breakEndTime,
     },
     WED: {
-      openingHours: booking.officeHour.WED.openingHours,
-      closingHours: booking.officeHour.WED.closingHours,
-      breakTime: booking.officeHour.WED.breakTime,
-      breakEndTime: booking.officeHour.WED.breakEndTime,
+      openingHours: hours.WED.openingHours,
+      closingHours: hours.WED.closingHours,
+      breakTime: hours.WED.breakTime,
+      breakEndTime: hours.WED.breakEndTime,
     },
     THU: {
-      openingHours: booking.officeHour.THU.openingHours,
-      closingHours: booking.officeHour.THU.closingHours,
-      breakTime: booking.officeHour.THU.breakTime,
-      breakEndTime: booking.officeHour.THU.breakEndTime,
+      openingHours: hours.THU.openingHours,
+      closingHours: hours.THU.closingHours,
+      breakTime: hours.THU.breakTime,
+      breakEndTime: hours.THU.breakEndTime,
     },
     FRI: {
-      openingHours: booking.officeHour.FRI.openingHours,
-      closingHours: booking.officeHour.FRI.closingHours,
-      breakTime: booking.officeHour.FRI.breakTime,
-      breakEndTime: booking.officeHour.FRI.breakEndTime,
+      openingHours: hours.FRI.openingHours,
+      closingHours: hours.FRI.closingHours,
+      breakTime: hours.FRI.breakTime,
+      breakEndTime: hours.FRI.breakEndTime,
     },
     SAT: {
-      openingHours: booking.officeHour.SAT.openingHours,
-      closingHours: booking.officeHour.SAT.closingHours,
-      breakTime: booking.officeHour.SAT.breakTime,
-      breakEndTime: booking.officeHour.SAT.breakEndTime,
+      openingHours: hours.SAT.openingHours,
+      closingHours: hours.SAT.closingHours,
+      breakTime: hours.SAT.breakTime,
+      breakEndTime: hours.SAT.breakEndTime,
     },
     SUN: {
-      openingHours: booking.officeHour.SUN.openingHours,
-      closingHours: booking.officeHour.SUN.closingHours,
-      breakTime: booking.officeHour.SUN.breakTime,
-      breakEndTime: booking.officeHour.SUN.breakEndTime,
+      openingHours: hours.SUN.openingHours,
+      closingHours: hours.SUN.closingHours,
+      breakTime: hours.SUN.breakTime,
+      breakEndTime: hours.SUN.breakEndTime,
+    },
+  };
+
+  const [allDay, setAllDay] = useState<all_inter>({
+    ALLDAY: {
+      openingHours: hours.MON.openingHours,
+      closingHours: hours.MON.closingHours,
+      breakTime: hours.MON.breakTime,
+      breakEndTime: hours.MON.breakEndTime,
+    },
+  });
+  const [weekDay, setWeekDay] = useState<week_inter>({
+    WEEKDAY: {
+      openingHours: hours.MON.openingHours,
+      closingHours: hours.MON.closingHours,
+      breakTime: hours.MON.breakTime,
+      breakEndTime: hours.MON.breakEndTime,
+    },
+    WEEKEND: {
+      openingHours: hours.SAT.openingHours,
+      closingHours: hours.SAT.closingHours,
+      breakTime: hours.SAT.breakTime,
+      breakEndTime: hours.SAT.breakEndTime,
+    },
+  });
+  const [diffDay, setDiffDay] = useState<diff_inter>({
+    MON: {
+      openingHours: hours.MON.openingHours,
+      closingHours: hours.MON.closingHours,
+      breakTime: hours.MON.breakTime,
+      breakEndTime: hours.MON.breakEndTime,
+    },
+    TUE: {
+      openingHours: hours.TUE.openingHours,
+      closingHours: hours.TUE.closingHours,
+      breakTime: hours.TUE.breakTime,
+      breakEndTime: hours.TUE.breakEndTime,
+    },
+    WED: {
+      openingHours: hours.WED.openingHours,
+      closingHours: hours.WED.closingHours,
+      breakTime: hours.WED.breakTime,
+      breakEndTime: hours.WED.breakEndTime,
+    },
+    THU: {
+      openingHours: hours.THU.openingHours,
+      closingHours: hours.THU.closingHours,
+      breakTime: hours.THU.breakTime,
+      breakEndTime: hours.THU.breakEndTime,
+    },
+    FRI: {
+      openingHours: hours.FRI.openingHours,
+      closingHours: hours.FRI.closingHours,
+      breakTime: hours.FRI.breakTime,
+      breakEndTime: hours.FRI.breakEndTime,
+    },
+    SAT: {
+      openingHours: hours.SAT.openingHours,
+      closingHours: hours.SAT.closingHours,
+      breakTime: hours.SAT.breakTime,
+      breakEndTime: hours.SAT.breakEndTime,
+    },
+    SUN: {
+      openingHours: hours.SUN.openingHours,
+      closingHours: hours.SUN.closingHours,
+      breakTime: hours.SUN.breakTime,
+      breakEndTime: hours.SUN.breakEndTime,
     },
   });
 
@@ -131,6 +249,15 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
   const allDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.name);
+    console.log(dayjs("HH:mm:ssZ").hour(10).format("YYYY-MM-DDTHH:mm:ssZ"));
+    console.log(
+      dayjs(allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]])
+        .hour(Number(e.target.value))
+        .format("YYYY-MM-DDTHH:mm:ssZ")
+    );
+    console.log(dayjs());
+    console.log(allDay);
     if (e.target.name.split("_")[2] === "hours") {
       setAllDay({
         ...allDay,
@@ -138,7 +265,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           ...allDay[e.target.name.split("_")[0]],
           [e.target.name.split("_")[1]]: dayjs(
             allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-          ).hour(Number(e.target.value)),
+          )
+            .hour(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
         },
       });
     } else {
@@ -148,7 +277,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           ...allDay[e.target.name.split("_")[0]],
           [e.target.name.split("_")[1]]: dayjs(
             allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-          ).minute(Number(e.target.value)),
+          )
+            .minute(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
         },
       });
     }
@@ -161,7 +292,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           ...weekDay[e.target.name.split("_")[0]],
           [e.target.name.split("_")[1]]: dayjs(
             weekDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-          ).hour(Number(e.target.value)),
+          )
+            .hour(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
         },
       });
     } else {
@@ -171,14 +304,14 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           ...weekDay[e.target.name.split("_")[0]],
           [e.target.name.split("_")[1]]: dayjs(
             weekDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-          ).minute(Number(e.target.value)),
+          )
+            .minute(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
         },
       });
     }
   };
   const diffDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const hi = diffDay as {[key: string]: OfficeHours}
-    // const ho : {[key: string]: OfficeHours} = e.target.name.split("_")[0]
     if (e.target.name.split("_")[2] === "hours") {
       setDiffDay({
         ...diffDay,
@@ -186,7 +319,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           ...diffDay[e.target.name.split("_")[0]],
           [e.target.name.split("_")[1]]: dayjs(
             diffDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-          ).hour(Number(e.target.value)),
+          )
+            .hour(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
         },
       });
     } else {
@@ -196,7 +331,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           ...diffDay[e.target.name.split("_")[0]],
           [e.target.name.split("_")[1]]: dayjs(
             diffDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]]
-          ).minute(Number(e.target.value)),
+          )
+            .minute(Number(e.target.value))
+            .format("YYYY-MM-DDTHH:mm:ssZ"),
         },
       });
     }
@@ -269,7 +406,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
     return (
       <>
-        <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`} notAnimate>
+        <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
           <Wrapper al={`flex-start`}>
             <Text>영업시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
@@ -529,10 +666,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       default:
         null;
     }
-
-    // return(
-
-    // )
   };
 
   return (
@@ -732,40 +865,29 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
               onClick={async () => {
                 {
                   if (booking.setBookingTime === "all") {
-                    // for (const key in booking.officeHour) {
-                    //   setBooking({
-                    //     ...booking,
-                    //     [booking.officeHour[key]]: allDay.ALLDAY,
-                    //   });
-                    // }
-                    // allArr.map((item) => {
-                    //   setBooking({
-                    //     ...booking,
-                    //     [booking.officeHour[item]]: allDay.ALLDAY,
-                    //   });
-                    // });
+                    allArr.map((item) => {
+                      hoursData[item] = allDay.ALLDAY;
+                    });
                   } else if (booking.setBookingTime === "week") {
-                    // dayArr.map((item) => {
-                    //   setBooking({
-                    //     ...booking,
-                    //     [booking.officeHour[item]]: weekDay.WEEKDAY,
-                    //   });
-                    // });
-                    // endArr.map((item) => {
-                    //   setBooking({
-                    //     ...booking,
-                    //     [booking.officeHour[item]]: weekDay.WEEKEND,
-                    //   });
-                    // });
+                    dayArr.map((item) => {
+                      hoursData[item] = weekDay.WEEKDAY;
+                    });
+                    endArr.map((item) => {
+                      hoursData[item] = weekDay.WEEKEND;
+                    });
                   } else {
-                    // setBooking({
-                    //   ...booking,
-                    //   [booking.officeHour]: diffDay,
-                    // });
+                    allArr.map((item) => {
+                      hoursData[item] = diffDay[item];
+                    });
                   }
                 }
-                await dispatch(_aPostSetBooking(booking)).then((res: any) => {
+                const data = {
+                  ...booking,
+                  officeHour: JSON.stringify(hoursData),
+                };
+                await dispatch(_aPostSetBooking(data)).then((res: any) => {
                   setBooking(res.payload);
+                  props.setBooking(res.payload);
                   alert("저장 되었습니다!");
                 });
 

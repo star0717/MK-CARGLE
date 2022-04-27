@@ -21,7 +21,3 @@ export declare class BookingFindOptions {
     mainHopeDate?: any;
     bookingState?: BookingState | string;
 }
-export declare class MainHopeTime {
-    hour?: string;
-    minute?: string;
-}

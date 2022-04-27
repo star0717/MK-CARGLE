@@ -10,6 +10,8 @@ import { CommonModule } from '../common/common.module';
 import { UsersModule } from 'src/modules/users/users.module';
 import { CompaniesModule } from 'src/modules/companies/companies.module';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { SetbookingModule } from 'src/modules/setbooking/setbooking.module';
+import { TimetableModule } from 'src/modules/timetable/timetable.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { JwtStrategy } from './strategy/jwt.strategy';
     }),
     HttpModule,
     CommonModule,
+    SetbookingModule,
+    TimetableModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

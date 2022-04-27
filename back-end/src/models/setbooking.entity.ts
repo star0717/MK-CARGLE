@@ -115,11 +115,10 @@ export class SetBooking extends BaseEntity {
   @prop({ enum: SetBookingTime, required: true, default: SetBookingTime.ALL })
   setBookingTime?: SetBookingTime;
 
-  @ApiProperty({ description: '영업시간', type: OfficeHours })
-  @ValidateNested()
-  @Type(() => OfficeHours)
-  @prop({ required: true, type: () => OfficeHours, _id: false })
-  officeHour: OfficeHours;
+  @ApiProperty({ description: '영업시간' })
+  @IsString()
+  @prop({ required: true, _id: false })
+  officeHour: string;
 
   @ApiProperty({ description: '리프트 수량', required: false })
   @IsOptional()
@@ -137,4 +136,10 @@ export class SetBooking extends BaseEntity {
   @Type(() => Mprice)
   @prop({ type: () => Mprice })
   mPrice?: Mprice[];
+
+  @ApiProperty({ description: '타임테이블', required: false })
+  @IsOptional()
+  @IsArray()
+  @prop()
+  weekTime?: [][];
 }

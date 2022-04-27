@@ -440,7 +440,7 @@ export const s3ToUrl = (data: S3.Types.GetObjectOutput) => {
  */
 export const hourList = () => {
   let hourArr: SelectOpt[] = [];
-  for (let i = 0; i < 24; i++) {
+  for (let i = 6; i < 22; i++) {
     const hour: string = i.toString().padStart(2, "0");
     const json: SelectOpt = { value: hour, label: hour };
     hourArr.push(json);
