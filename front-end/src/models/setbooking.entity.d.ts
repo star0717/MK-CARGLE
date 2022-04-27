@@ -23,7 +23,7 @@ export declare class SetBooking extends BaseEntity {
     intro?: string;
     dayOff?: string[];
     setBookingTime?: SetBookingTime;
-    officeHour: OfficeHours;
+    officeHour: string;
     lift?: number;
     mPrice?: Mprice[];
 }
