@@ -51,11 +51,13 @@ import {
 import {
   _aDeleteBookingMany,
   _aDeleteBookingOne,
+  _aGetTimeTableId,
 } from "store/action/user.action";
-import { _iDeleteByUser } from "store/interfaces";
+import { _iDeleteByUser, _iTimeTableOne } from "store/interfaces";
 import RejectBookingModal from "./rejectBookingModal";
 import AddBookingModal from "./addBookingModal";
 import EditBookingModal from "./editBookingModal";
+import { TimeTable } from "src/models/timetable.entity";
 
 const BookingList: NextPage<_pBookingProps> = (props) => {
   /*********************************************************************
@@ -74,6 +76,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
   const [bookingList, setBookingList] = useState<Booking[]>(
     props.findResult.docs
   );
+  const [timeTable, setTimeTable] = useState<TimeTable>(null);
 
   /*********************************************************************
    * 3. Handlers
@@ -183,6 +186,23 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
     }
   };
 
+  /**
+   * 신규 예약 등록
+   */
+  const onAddBooking = async () => {
+    await dispatch(_aGetTimeTableId(props.tokenValue.cID)).then(
+      (res: _iTimeTableOne) => {
+        if (!res.payload) return alert("타임테이블 조회 에러");
+        console.log(res.payload);
+      },
+      (err) => {
+        if (err) return alert("타임테이블 조회 에러");
+      }
+    );
+    // setModalOption("add");
+    // setModalOpen(true);
+  };
+
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -271,10 +291,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
                 width={`150px`}
                 fontSize={`16px`}
                 kindOf={`default`}
-                onClick={() => {
-                  setModalOption("add");
-                  setModalOpen(true);
-                }}
+                onClick={onAddBooking}
               >
                 +신규예약등록
               </SmallButton>

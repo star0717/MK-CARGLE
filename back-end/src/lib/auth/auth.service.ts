@@ -26,6 +26,8 @@ import { UsersService } from 'src/modules/users/users.service';
 import { CompanyApproval, UserAuthority } from 'src/constants/model.const';
 import { TimetableService } from 'src/modules/timetable/timetable.service';
 import { makeTimeArray } from 'src/constants/timetable.const';
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 
 @Injectable()
 export class AuthService {
@@ -48,26 +50,13 @@ export class AuthService {
     }
     signUpInfo.user.approval = false;
 
-    console.log(signUpInfo);
+    // console.log(signUpInfo);
 
     try {
       // 업체 가입인 경우
       if (signUpInfo.user.auth == UserAuthority.OWNER) {
         // 신규 사업자 등록
         company = await this.companiesService.createForAuth(signUpInfo.company);
-
-        /**** 테스트 *****/
-        const initRow: number[] = makeTimeArray();
-        const timeTable: number[][] = [];
-        for (let i = 0; i < 7; i++) {
-          timeTable.push(initRow);
-        }
-        await this.timeTableService.createTable(
-          company._cID,
-          company._uID,
-          timeTable,
-        );
-        /***************/
 
         // if (!company) {
         //   throw new BadRequestException();
@@ -100,6 +89,22 @@ export class AuthService {
             _uID: user._id,
           },
         );
+
+        /**** 테스트 *****/
+        const initRow: number[] = makeTimeArray(
+          dayjs().hour(9).minute(0).toDate(),
+          dayjs().hour(18).minute(0).toDate(),
+        );
+        const timeTable: number[][] = [];
+        for (let i = 0; i < 7; i++) {
+          timeTable.push(initRow);
+        }
+        await this.timeTableService.createTable(
+          company._id,
+          user._id,
+          timeTable,
+        );
+        /***************/
       }
 
       // 사용자 정보에 ID값 주입

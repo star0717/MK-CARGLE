@@ -1,4 +1,5 @@
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 
 /**
  * 타임테이블 예약가능여부
@@ -37,8 +38,8 @@ export const makeTimeArray = (
   let workFromIdxArr: number[] = [];
   let breakToIdxArr: number[] = [];
 
-  let startTime: dayjs.Dayjs = dayjs().hour(6).minute(0);
-  let endTime: dayjs.Dayjs = dayjs().hour(21).minute(0);
+  let startTime: dayjs.Dayjs = dayjs(workTo).hour(6).minute(0);
+  let endTime: dayjs.Dayjs = dayjs(workFrom).hour(21).minute(0);
   let workToDay: dayjs.Dayjs = dayjs(workTo);
   let workFromDay: dayjs.Dayjs = dayjs(workFrom);
   let breakToDay: dayjs.Dayjs = dayjs(breakTo);
@@ -50,15 +51,15 @@ export const makeTimeArray = (
     }
     return timeArr;
   }
-
-  if (workToDay !== startTime) {
+  if (JSON.stringify(workToDay) !== JSON.stringify(startTime)) {
     workToLoop = workToDay.diff(startTime, 'minutes') / 30;
     workToIdx = 0;
+    if (workToDay.format('mm') === '30') workToIdx + 1;
     for (let i = 0; i < workToLoop; i++) {
       workToIdxArr.push(workToIdx + i);
     }
   }
-  if (workFromDay !== endTime) {
+  if (JSON.stringify(workFromDay) !== JSON.stringify(endTime)) {
     workFromLoop = endTime.diff(workFromDay, 'minutes') / 30;
     workFromIdx = (parseInt(workFromDay.format('HH')) - 6) * 2;
     if (workFromDay.format('mm') === '30') workFromIdx + 1;

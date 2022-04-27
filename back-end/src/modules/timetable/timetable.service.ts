@@ -5,7 +5,6 @@ import { InjectModel } from 'nestjs-typegoose';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { TimeTable } from 'src/models/timetable.entity';
-import { AuthTokenInfo } from 'src/models/auth.entity';
 
 @Injectable()
 export class TimetableService extends SafeService<TimeTable> {
@@ -22,7 +21,6 @@ export class TimetableService extends SafeService<TimeTable> {
     uid: string,
     doc: number[][],
   ): Promise<TimeTable> {
-    console.log('###########');
     const timeTable: Partial<TimeTable> = {
       _cID: cid,
       _uID: uid,
@@ -35,5 +33,9 @@ export class TimetableService extends SafeService<TimeTable> {
       sun: doc[6],
     };
     return await this.model.create(timeTable);
+  }
+
+  async findByCid(id: string): Promise<TimeTable> {
+    return await this.model.findOne({ _cID: id });
   }
 }

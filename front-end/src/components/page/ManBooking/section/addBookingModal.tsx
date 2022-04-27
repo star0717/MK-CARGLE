@@ -21,9 +21,14 @@ import { MainCar, MainCustomer } from "src/models/maintenance.entity";
 import { useDispatch } from "react-redux";
 import {
   _aGetMaintenancesCarInfo,
+  _aGetTimeTableId,
   _aPostBooking,
 } from "store/action/user.action";
-import { _iBookingOne, _iGetMaintenancesCarInfo } from "store/interfaces";
+import {
+  _iBookingOne,
+  _iGetMaintenancesCarInfo,
+  _iTimeTableOne,
+} from "store/interfaces";
 import {
   bookingHourList,
   bookingMinuteList,
@@ -168,7 +173,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    * 예약 희망 일자 선택 시 가능시간 리스트 변경
    */
   useEffect(() => {
-    setMainHopeList(bookingTimeList(date, date2, rest, rest2));
+    // setMainHopeList(bookingTimeList(date, date2, rest, rest2));
   }, [bookingInfo.mainHopeDate]);
 
   /**
@@ -237,13 +242,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
     );
   };
 
-  /** 테스트 시간 */
-  let date = dayjs(new Date(Date.now())).minute(0).toDate();
-  let date2 = dayjs(new Date(Date.now())).minute(0).toDate();
-  let rest = dayjs(new Date(Date.now())).minute(0).toDate();
-  let rest2 = dayjs(new Date(Date.now())).minute(0).toDate();
-  date2.setHours(date2.getHours() + 6);
-  rest2.setHours(rest2.getHours() + 1);
+  // /** 테스트 시간 */
+  // let date = dayjs(new Date(Date.now())).minute(0).toDate();
+  // let date2 = dayjs(new Date(Date.now())).minute(0).toDate();
+  // let rest = dayjs(new Date(Date.now())).minute(0).toDate();
+  // let rest2 = dayjs(new Date(Date.now())).minute(0).toDate();
+  // date2.setHours(date2.getHours() + 6);
+  // rest2.setHours(rest2.getHours() + 1);
 
   /*********************************************************************
    * 4. Props settings

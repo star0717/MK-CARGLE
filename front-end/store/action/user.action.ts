@@ -2,6 +2,7 @@ import {
   BookingApiPath,
   SetBookingApiPath,
   SmsApiPath,
+  TimeTableApiPath,
 } from "src/constants/api-path.const";
 import { genMainOptionQuery } from "src/constants/maintenance.const";
 import axios, { AxiosResponse } from "axios";
@@ -61,6 +62,7 @@ import {
   _iSetBooking,
   _iBooking,
   _iBookingOne,
+  _iTimeTableOne,
 } from "../interfaces";
 
 import {
@@ -97,6 +99,7 @@ import { GetMessagesResponse } from "src/models/sms.entity";
 import { SetBooking } from "src/models/setbooking.entity";
 import { Booking, BookingFindOptions } from "src/models/booking.entity";
 import { genBookingOptionQuery } from "src/constants/booking.const";
+import { TimeTable } from "src/models/timetable.entity";
 
 // 로그인 action
 export async function _aPostAuthSignin(dataToSubmit: UserInfo) {
@@ -1678,6 +1681,25 @@ export async function _aDeleteSetBooking(id: string) {
     });
 
   const result: _iDeleteByUser = {
+    type: ActionAPIs.USER_API,
+    payload: req,
+  };
+  return result;
+}
+
+/**
+ * 타임테이블 조회(한개)
+ * @param id _cID
+ * @returns
+ */
+export async function _aGetTimeTableId(id: string) {
+  const req: TimeTable = await axios
+    .get(genApiPath(TimeTableApiPath.timetable, { id: id }))
+    .then((res: AxiosResponse<TimeTable, string>): TimeTable => {
+      return res.data;
+    });
+
+  const result: _iTimeTableOne = {
     type: ActionAPIs.USER_API,
     payload: req,
   };
