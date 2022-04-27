@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
 import theme from "styles/theme";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
-import { Hours, OfficeHours, SetBooking } from "src/models/setbooking.entity";
+import { OfficeHours, SetBooking } from "src/models/setbooking.entity";
 import { useDispatch } from "react-redux";
 import { _aPostSetBooking } from "store/action/user.action";
 import { SetBookingTime } from "src/constants/booking.const";
@@ -68,9 +68,53 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   const [booking, setBooking] = useState<SetBooking>(props.booking);
   const [modify, setModify] = useState<boolean>(false);
   const [hours, setHours] = useState<OfficeHours>(
-    JSON.parse(booking.officeHour)
+    booking.officeHour !== ""
+      ? JSON.parse(booking.officeHour)
+      : {
+          MON: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          TUE: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          WED: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          THU: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          FRI: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          SAT: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+          SUN: {
+            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          },
+        }
   );
-
   let hoursData: diff_inter = {
     MON: {
       openingHours: hours.MON.openingHours,
@@ -205,6 +249,15 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
   const allDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.name);
+    console.log(dayjs("HH:mm:ssZ").hour(10).format("YYYY-MM-DDTHH:mm:ssZ"));
+    console.log(
+      dayjs(allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]])
+        .hour(Number(e.target.value))
+        .format("YYYY-MM-DDTHH:mm:ssZ")
+    );
+    console.log(dayjs());
+    console.log(allDay);
     if (e.target.name.split("_")[2] === "hours") {
       setAllDay({
         ...allDay,
@@ -259,8 +312,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
   const diffDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const hi = diffDay as { [key: string]: OfficeHours };
-    // const ho: { [key: string]: OfficeHours } = e.target.name.split("_")[0];
     if (e.target.name.split("_")[2] === "hours") {
       setDiffDay({
         ...diffDay,
@@ -355,7 +406,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
     return (
       <>
-        <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`} notAnimate>
+        <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
           <Wrapper al={`flex-start`}>
             <Text>영업시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>

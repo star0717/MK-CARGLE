@@ -21,7 +21,7 @@ import { UseLink } from "src/configure/router.entity";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
 import { useDispatch } from "react-redux";
 import { _aPostSetBooking } from "store/action/user.action";
-import { SetBooking } from "src/models/setbooking.entity";
+import { OfficeHours, SetBooking } from "src/models/setbooking.entity";
 
 const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
