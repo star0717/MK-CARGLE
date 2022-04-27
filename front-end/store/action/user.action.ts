@@ -1560,7 +1560,7 @@ export async function _aPatchBooking(id: string, data: Partial<Booking>) {
  */
 export async function _aGetBooking(
   findParams: FindParameters,
-  options: BookingFindOptions
+  options?: BookingFindOptions
 ) {
   const req: FindResult<Booking> = await axios
     .get(

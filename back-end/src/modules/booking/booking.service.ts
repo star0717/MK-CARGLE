@@ -41,12 +41,14 @@ export class BookingService extends SafeService<Booking> {
     const fParams: FindParameters = {
       page: 1,
       take: 100,
-      filter: {
-        createdAt: {
-          $gte: getStartOfDayDateTime(doc.createdAt),
-          $lt: getEndOfDayDateTime(doc.createdAt),
-        },
-      },
+      sFrom: getStartOfDayDateTime(doc.createdAt),
+      sTo: getEndOfDayDateTime(doc.createdAt),
+      // filter: {
+      //   createdAt: {
+      //     $gte: getStartOfDayDateTime(doc.createdAt),
+      //     $lt: getEndOfDayDateTime(doc.createdAt),
+      //   },
+      // },
     };
     const todayList: FindResult<Booking> = await super.findByOptions(
       token,

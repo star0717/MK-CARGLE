@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldValues, UseFormSetValue } from "react-hook-form";
+import { FieldValues, SubmitHandler, UseFormSetValue } from "react-hook-form";
 import { AuthTokenInfo, SignUpInfo } from "../models/auth.entity";
 import { FormCheck, FormInput } from "../../store/interfaces";
 import { UserAuthority } from "../constants/model.const";
@@ -7,7 +7,7 @@ import { FindResult } from "../models/base.entity";
 import { Company } from "../models/company.entity";
 import { User } from "../models/user.entity";
 import { _fFileCheck, _fTermData, _fWithdrawal } from "./_fProps.entity";
-import { _MainProps } from "./_props.entity";
+import { CarSearch, _MainProps } from "./_props.entity";
 import { Part } from "../models/part.entity";
 import { PartsSet } from "src/models/partsset.entity";
 import { Maintenance, MainWork } from "src/models/maintenance.entity";
@@ -224,6 +224,13 @@ export interface _pMaintenanceProps extends _pFindDocs<Maintenance> {
   // setSearchTo: React.Dispatch<React.SetStateAction<string>>;
   // searchDetails: any;
   // setSearchDetails: React.Dispatch<React.SetStateAction<MainFindOptions>>;
+}
+
+export interface _pMainBookingModalProps {
+  setModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  bookingList?: Booking[];
+  onSearchCarHandler?: SubmitHandler<Partial<CarSearch>>;
+  setSearchCarText?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // 예약관리용 props
