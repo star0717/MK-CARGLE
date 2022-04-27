@@ -259,8 +259,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
   const diffDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const hi = diffDay as { [key: string]: OfficeHours };
-    // const ho: { [key: string]: OfficeHours } = e.target.name.split("_")[0];
     if (e.target.name.split("_")[2] === "hours") {
       setDiffDay({
         ...diffDay,
@@ -355,7 +353,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
     return (
       <>
-        <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`} notAnimate>
+        <Wrapper width={`auto`} margin={`0px 10px`} dr={`row`}>
           <Wrapper al={`flex-start`}>
             <Text>영업시작</Text>
             <Wrapper border={`1px solid #ccc`} dr={`row`}>
