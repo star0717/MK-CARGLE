@@ -8,6 +8,8 @@ import BusinessHours from "./section/businessHours";
 import MaintenanceInfo from "./section/maintenanceInfo";
 import { _MainProps } from "src/configure/_props.entity";
 import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
+import { SetBooking } from "src/models/setbooking.entity";
+import { SetBookingTime } from "src/constants/booking.const";
 
 const StepReservation: NextPage<_pSetBookingDataProps> = (props) => {
   const router = useRouter();
@@ -26,7 +28,17 @@ const SetReservation: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
-
+  const bookingInit: Partial<SetBooking> = {
+    intro: "",
+    dayOff: [],
+    setBookingTime: SetBookingTime.ALL,
+    officeHour: "",
+    lift: 0,
+    mPrice: [],
+  };
+  const [booking, setBooking] = useState<SetBooking>(
+    props.data ? props.data : bookingInit
+  );
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
@@ -40,6 +52,8 @@ const SetReservation: NextPage<_MainProps> = (props) => {
    *********************************************************************/
   const reservationProps: _pSetBookingDataProps = {
     ...props,
+    booking,
+    setBooking,
   };
 
   /*********************************************************************
