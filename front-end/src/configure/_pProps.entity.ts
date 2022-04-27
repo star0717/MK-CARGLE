@@ -15,6 +15,7 @@ import { Estimate } from "src/models/estimate.entity";
 import { Statement } from "src/models/statement.entity";
 import { SetBooking } from "src/models/setbooking.entity";
 import { Booking, BookingFindOptions } from "src/models/booking.entity";
+import { TimeTable } from "src/models/timetable.entity";
 
 /***********************************************************************
  * 기본
@@ -251,6 +252,7 @@ export interface _pBookingModalProps extends _pFindDocs<Booking> {
   setModalOption?: React.Dispatch<React.SetStateAction<string>>;
   clickDoc?: Booking;
   setClickDoc?: React.Dispatch<React.SetStateAction<Booking>>;
+  timeTable?: TimeTable;
   style?: {
     height: string;
     width?: string;

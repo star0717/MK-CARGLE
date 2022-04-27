@@ -55,6 +55,8 @@ export class BookingService extends SafeService<Booking> {
       fParams,
     );
 
+    console.log(todayList);
+
     let docNum: number = todayList.totalDocs + 1;
     doc.bookingNum = docNum.toString().padStart(3, '0');
 

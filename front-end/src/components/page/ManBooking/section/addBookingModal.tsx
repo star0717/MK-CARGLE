@@ -16,7 +16,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import theme from "styles/theme";
 import { _pBookingModalProps } from "src/configure/_pProps.entity";
 import { useEffect, useState } from "react";
-import { Booking, MainHopeTime } from "src/models/booking.entity";
+import { Booking } from "src/models/booking.entity";
 import { MainCar, MainCustomer } from "src/models/maintenance.entity";
 import { useDispatch } from "react-redux";
 import {
@@ -29,17 +29,13 @@ import {
   _iGetMaintenancesCarInfo,
   _iTimeTableOne,
 } from "store/interfaces";
-import {
-  bookingHourList,
-  bookingMinuteList,
-  BookingState,
-  bookingTimeList,
-} from "src/constants/booking.const";
+import { BookingState } from "src/constants/booking.const";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
 import { comma, deleteKeyJson, hourList, trim } from "src/modules/commonModule";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
+import { TimeTable } from "src/models/timetable.entity";
 
 const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   /*********************************************************************
@@ -75,10 +71,6 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
     regNumber: "",
     distance: "",
   };
-  const mainHopeTimeInit: MainHopeTime = {
-    hour: "",
-    minute: "",
-  };
 
   /*********************************************************************
    * 2. State settings
@@ -87,11 +79,8 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   const [cusInfo, setCusInfo] = useState<MainCustomer>(cusInit); // 고객 정보
   const [carInfo, setCarInfo] = useState<MainCar>(carInit); // 차량 정보
   const [carExist, setCarExist] = useState<boolean>(false); // 차량 데이터 존재여부
-  const [mainHopeTime, setMainHopeTime] =
-    useState<MainHopeTime>(mainHopeTimeInit); // 예약 희망 시분
-  const [mainHopeList, setMainHopeList] = useState<string[]>([]); // 예약 가능 시간 리스트
-  // const [officeTime, setOfficeTime] = useState<any>(); // 선택 날짜의 영업시간
-  // const [breakTime, setBreakTime] = useState<any>(); // 선택 날짜의 휴게시간
+  const [mainHopeTime, setMainHopeTime] = useState<string>(""); // 예약 희망 시분
+  const [mainHopeList, setMainHopeList] = useState<number[]>(null); // 예약 가능 시간 리스트
   const [typingCheck, setTypingCheck] = useState<number>(0); //글자 수 제한
 
   /*********************************************************************
@@ -162,19 +151,55 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   };
 
   /**
-   * 예약 희망 시분 input handler
-   * @param e
-   */
-  const onMainHopeTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMainHopeTime({ ...mainHopeTime, [e.target.name]: e.target.value });
-  };
-
-  /**
    * 예약 희망 일자 선택 시 가능시간 리스트 변경
    */
   useEffect(() => {
-    // setMainHopeList(bookingTimeList(date, date2, rest, rest2));
+    switch (dayjs(bookingInfo.mainHopeDate).day()) {
+      case 0:
+        return setMainHopeList(props.timeTable.sun);
+      case 1:
+        return setMainHopeList(props.timeTable.mon);
+      case 2:
+        return setMainHopeList(props.timeTable.tue);
+      case 3:
+        return setMainHopeList(props.timeTable.wed);
+      case 4:
+        return setMainHopeList(props.timeTable.thu);
+      case 5:
+        return setMainHopeList(props.timeTable.fri);
+      case 6:
+        return setMainHopeList(props.timeTable.sat);
+      default:
+        return setMainHopeList(null);
+    }
   }, [bookingInfo.mainHopeDate]);
+
+  /**
+   * 예약목록 시간 리스트 html
+   * @param arr
+   * @returns
+   */
+  const bookingTimeList = (arr: number[]) => {
+    const startTime: dayjs.Dayjs = dayjs().hour(6).minute(0);
+    if (arr) {
+      return arr.map((item, idx) => {
+        let time: string = startTime.add(30 * idx, "minutes").format("HH:mm");
+        return (
+          <>
+            {item !== -1 && (
+              <option
+                key={idx}
+                value={time}
+                disabled={item === 0 ? false : true}
+              >
+                {time}
+              </option>
+            )}
+          </>
+        );
+      });
+    }
+  };
 
   /**
    * 차량 검색 handler
@@ -215,8 +240,8 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    */
   const onBookingSubmit: SubmitHandler<Partial<Booking>> = async (data) => {
     const hopeDate: Date = dayjs(bookingInfo.mainHopeDate)
-      .hour(Number(mainHopeTime.hour))
-      .minute(Number(mainHopeTime.minute))
+      .hour(Number(mainHopeTime.split(":")[0]))
+      .minute(Number(mainHopeTime.split(":")[1]))
       .toDate();
 
     const bookingData: Partial<Booking> = {
@@ -242,13 +267,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
     );
   };
 
-  // /** 테스트 시간 */
-  // let date = dayjs(new Date(Date.now())).minute(0).toDate();
-  // let date2 = dayjs(new Date(Date.now())).minute(0).toDate();
-  // let rest = dayjs(new Date(Date.now())).minute(0).toDate();
-  // let rest2 = dayjs(new Date(Date.now())).minute(0).toDate();
-  // date2.setHours(date2.getHours() + 6);
-  // rest2.setHours(rest2.getHours() + 1);
+  console.log(mainHopeTime);
 
   /*********************************************************************
    * 4. Props settings
@@ -315,62 +334,24 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                   required: true,
                 })}
               />
-              <Wrapper
+              <Combo
                 width={`168px`}
-                border={`1px solid #ccc`}
-                radius={theme.radius}
-                dr={`row`}
+                value={mainHopeTime}
+                disabled={mainHopeList ? false : true}
+                {...register("mainHopeTime", {
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    setMainHopeTime(e.target.value);
+                  },
+                  required: true,
+                })}
               >
-                <Combo
-                  width={`80px`}
-                  border={"none"}
-                  value={mainHopeTime.hour}
-                  {...register("hour", {
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onMainHopeTimeHandler(e);
-                    },
-                    required: true,
-                  })}
-                >
-                  <option value="">시간</option>
-                  {bookingHourList(mainHopeList).map((item) => {
-                    return (
-                      <option key={item} value={item}>
-                        {item}
-                      </option>
-                    );
-                  })}
-                </Combo>
-                <Text margin={`0px 4px`}>:</Text>
-                <Combo
-                  width={`80px`}
-                  border={"none"}
-                  value={mainHopeTime.minute}
-                  disabled={mainHopeTime.hour === "" ? true : false}
-                  {...register("minute", {
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      onMainHopeTimeHandler(e);
-                    },
-                    required: true,
-                  })}
-                >
-                  <option value="">분</option>
-                  {bookingMinuteList(mainHopeList, mainHopeTime.hour).map(
-                    (item) => {
-                      return (
-                        <option key={item} value={item}>
-                          {item}
-                        </option>
-                      );
-                    }
-                  )}
-                </Combo>
-              </Wrapper>
+                <option value="">시간</option>
+                {bookingTimeList(mainHopeList)}
+              </Combo>
             </Wrapper>
           </Wrapper>
           {(errors.mainHopeDate?.type === "required" ||
-            errors.hour?.type === "required" ||
-            errors.minute?.type === "required") && (
+            errors.hour?.type === "required") && (
             <Text
               margin={`0px 0px 10px 0px`}
               width={`100%`}

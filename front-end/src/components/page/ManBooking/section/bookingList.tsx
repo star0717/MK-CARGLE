@@ -193,14 +193,14 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
     await dispatch(_aGetTimeTableId(props.tokenValue.cID)).then(
       (res: _iTimeTableOne) => {
         if (!res.payload) return alert("타임테이블 조회 에러");
-        console.log(res.payload);
+        setTimeTable(res.payload);
+        setModalOption("add");
+        setModalOpen(true);
       },
       (err) => {
         if (err) return alert("타임테이블 조회 에러");
       }
     );
-    // setModalOption("add");
-    // setModalOpen(true);
   };
 
   /*********************************************************************
@@ -212,6 +212,7 @@ const BookingList: NextPage<_pBookingProps> = (props) => {
     setModalOption,
     clickDoc,
     setClickDoc,
+    timeTable,
     style: { height: "800px" },
   };
 

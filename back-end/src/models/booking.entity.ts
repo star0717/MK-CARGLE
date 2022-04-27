@@ -112,13 +112,3 @@ export class BookingFindOptions {
   @IsEnum(BookingState)
   bookingState?: BookingState | string;
 }
-
-export class MainHopeTime {
-  @ApiProperty({ description: '정비희망시간', required: true })
-  @IsString()
-  hour?: string;
-
-  @ApiProperty({ description: '정비희망분', required: true })
-  @IsString()
-  minute?: string;
-}
