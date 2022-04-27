@@ -35,14 +35,15 @@ const SetReservation: NextPage<_MainProps> = (props) => {
     officeHour: "",
     lift: 0,
     mPrice: [],
+    weekTime: [[], [], [], [], [], [], []],
   };
-  const [booking, setBooking] = useState<SetBooking>(
-    props.data ? props.data : bookingInit
-  );
+
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-
+  const [booking, setBooking] = useState<SetBooking>(
+    props.data ? props.data : bookingInit
+  );
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/

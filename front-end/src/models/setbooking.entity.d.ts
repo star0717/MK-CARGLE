@@ -26,4 +26,5 @@ export declare class SetBooking extends BaseEntity {
     officeHour: string;
     lift?: number;
     mPrice?: Mprice[];
+    weekTime?: [][];
 }

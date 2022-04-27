@@ -136,4 +136,10 @@ export class SetBooking extends BaseEntity {
   @Type(() => Mprice)
   @prop({ type: () => Mprice })
   mPrice?: Mprice[];
+
+  @ApiProperty({ description: '타임테이블', required: false })
+  @IsOptional()
+  @IsArray()
+  @prop()
+  weekTime?: [][];
 }
