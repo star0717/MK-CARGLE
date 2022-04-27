@@ -93,7 +93,6 @@ export class BookingController {
         delete fOptions.phoneNumber;
       }
       if (fOptions.mainHopeDate) {
-        console.log('##', fOptions);
         fOptions['mainHopeDate'] = {
           $gte: getStartOfDayDateTime(fOptions.mainHopeDate),
           $lt: getEndOfDayDateTime(fOptions.mainHopeDate),
