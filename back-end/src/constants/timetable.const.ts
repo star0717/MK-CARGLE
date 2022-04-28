@@ -13,6 +13,13 @@ export enum BookingCount {
   off = 0,
 }
 
+export enum WorkTime {
+  start = 6,
+  end = 21,
+  interval = 30,
+  intervalType = 'minutes',
+}
+
 /**
  * 업체 업무시간별 예약카운팅 리스트
  * @param workTo 업무시작시간
@@ -38,8 +45,8 @@ export const makeTimeArray = (
   let workFromIdxArr: number[] = [];
   let breakToIdxArr: number[] = [];
 
-  let startTime: dayjs.Dayjs = dayjs(workTo).hour(6).minute(0);
-  let endTime: dayjs.Dayjs = dayjs(workFrom).hour(21).minute(0);
+  let startTime: dayjs.Dayjs = dayjs(workTo).hour(WorkTime.start).minute(0);
+  let endTime: dayjs.Dayjs = dayjs(workFrom).hour(WorkTime.end).minute(0);
   let workToDay: dayjs.Dayjs = dayjs(workTo);
   let workFromDay: dayjs.Dayjs = dayjs(workFrom);
   let breakToDay: dayjs.Dayjs = dayjs(breakTo);
@@ -52,26 +59,29 @@ export const makeTimeArray = (
     return timeArr;
   }
   if (JSON.stringify(workToDay) !== JSON.stringify(startTime)) {
-    workToLoop = workToDay.diff(startTime, 'minutes') / 30;
+    workToLoop =
+      workToDay.diff(startTime, WorkTime.intervalType) / WorkTime.interval;
     workToIdx = 0;
-    if (workToDay.format('mm') === '30') workToIdx + 1;
+    if (workToDay.format('mm') === `${WorkTime.interval}`) workToIdx + 1;
     for (let i = 0; i < workToLoop; i++) {
       workToIdxArr.push(workToIdx + i);
     }
   }
   if (JSON.stringify(workFromDay) !== JSON.stringify(endTime)) {
-    workFromLoop = endTime.diff(workFromDay, 'minutes') / 30;
-    workFromIdx = (parseInt(workFromDay.format('HH')) - 6) * 2;
-    if (workFromDay.format('mm') === '30') workFromIdx + 1;
+    workFromLoop =
+      endTime.diff(workFromDay, WorkTime.intervalType) / WorkTime.interval;
+    workFromIdx = (parseInt(workFromDay.format('HH')) - WorkTime.start) * 2;
+    if (workFromDay.format('mm') === `${WorkTime.interval}`) workFromIdx + 1;
     for (let i = 0; i < workFromLoop; i++) {
       workFromIdxArr.push(workFromIdx + i);
     }
   }
 
   if (breakTo && breakFrom) {
-    breakToLoop = breakFromDay.diff(breakToDay, 'minutes') / 30;
-    breakToIdx = (parseInt(breakToDay.format('HH')) - 6) * 2;
-    if (breakToDay.format('mm') === '30') breakToIdx + 1;
+    breakToLoop =
+      breakFromDay.diff(breakToDay, WorkTime.intervalType) / WorkTime.interval;
+    breakToIdx = (parseInt(breakToDay.format('HH')) - WorkTime.start) * 2;
+    if (breakToDay.format('mm') === `${WorkTime.interval}`) breakToIdx + 1;
     for (let i = 0; i < breakToLoop; i++) {
       breakToIdxArr.push(breakToIdx + i);
     }
@@ -90,4 +100,44 @@ export const makeTimeArray = (
   }
 
   return timeArr;
+};
+
+/**
+ * 일자에 해당하는 타임테이블 idx 구하기
+ * @param date
+ * @returns
+ */
+export const dateToTableIdx = (date: Date) => {
+  let idx: number;
+
+  idx = (Number(dayjs(date).format('HH')) - WorkTime.start) * 2;
+  if (dayjs(date).format('mm') === `${WorkTime.interval}`) idx = idx + 1;
+
+  return idx;
+};
+
+/**
+ * 일자에 해당하는 요일명 구하기
+ * @param date
+ * @returns
+ */
+export const dateGetWeekDay = (date: Date) => {
+  switch (dayjs(date).day()) {
+    case 0:
+      return 'sun';
+    case 1:
+      return 'mon';
+    case 2:
+      return 'tue';
+    case 3:
+      return 'wed';
+    case 4:
+      return 'thu';
+    case 5:
+      return 'fri';
+    case 6:
+      return 'sat';
+    default:
+      return null;
+  }
 };

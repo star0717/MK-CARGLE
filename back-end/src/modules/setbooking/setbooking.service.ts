@@ -35,6 +35,19 @@ export class SetbookingService extends SafeService<SetBooking> {
     });
   }
 
+  async createWithSignUp(
+    cid: string,
+    uid: string,
+    doc: number[][],
+  ): Promise<SetBooking> {
+    const setBooking: Partial<SetBooking> = {
+      _cID: cid,
+      _uID: uid,
+      weekTime: doc,
+    };
+    return await this.model.create(setBooking);
+  }
+
   async findBySetBookingId(id: string): Promise<SetBooking> {
     return await this.model.findOne({ _cID: id });
   }

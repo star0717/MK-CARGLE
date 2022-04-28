@@ -36,6 +36,7 @@ dayjs.locale("ko");
 import { comma, deleteKeyJson, hourList, trim } from "src/modules/commonModule";
 import { basicRegEx, formRegEx } from "src/validation/regEx";
 import { TimeTable } from "src/models/timetable.entity";
+import { dateGetWeekDay, WorkTime } from "src/constants/timetable.const";
 
 const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
   /*********************************************************************
@@ -154,24 +155,8 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    * 예약 희망 일자 선택 시 가능시간 리스트 변경
    */
   useEffect(() => {
-    switch (dayjs(bookingInfo.mainHopeDate).day()) {
-      case 0:
-        return setMainHopeList(props.timeTable.sun);
-      case 1:
-        return setMainHopeList(props.timeTable.mon);
-      case 2:
-        return setMainHopeList(props.timeTable.tue);
-      case 3:
-        return setMainHopeList(props.timeTable.wed);
-      case 4:
-        return setMainHopeList(props.timeTable.thu);
-      case 5:
-        return setMainHopeList(props.timeTable.fri);
-      case 6:
-        return setMainHopeList(props.timeTable.sat);
-      default:
-        return setMainHopeList(null);
-    }
+    const weekDay = dateGetWeekDay(bookingInfo.mainHopeDate);
+    setMainHopeList(props.timeTable[weekDay]);
   }, [bookingInfo.mainHopeDate]);
 
   /**
@@ -180,23 +165,19 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
    * @returns
    */
   const bookingTimeList = (arr: number[]) => {
-    const startTime: dayjs.Dayjs = dayjs().hour(6).minute(0);
+    const startTime: dayjs.Dayjs = dayjs().hour(WorkTime.start).minute(0);
     if (arr) {
       return arr.map((item, idx) => {
-        let time: string = startTime.add(30 * idx, "minutes").format("HH:mm");
-        return (
-          <>
-            {item !== -1 && (
-              <option
-                key={idx}
-                value={time}
-                disabled={item === 0 ? false : true}
-              >
-                {time}
-              </option>
-            )}
-          </>
-        );
+        let time: string = startTime
+          .add(WorkTime.interval * idx, WorkTime.intervalType)
+          .format("HH:mm");
+        if (item !== -1) {
+          return (
+            <option key={idx} value={time} disabled={item === 0 ? false : true}>
+              {time}
+            </option>
+          );
+        }
       });
     }
   };
@@ -267,8 +248,6 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
     );
   };
 
-  console.log(mainHopeTime);
-
   /*********************************************************************
    * 4. Props settings
    *********************************************************************/
@@ -300,7 +279,6 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
               <TextInput2
                 width={`400px`}
                 type="date"
-                min={dayjs().format("YYYY-MM-DD")}
                 value={dayjs(new Date(Date.now())).format("YYYY-MM-DD")}
                 readOnly
               />
@@ -322,6 +300,7 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
                 width={`212px`}
                 type="date"
                 min={dayjs().format("YYYY-MM-DD")}
+                max={dayjs().add(7, "day").format("YYYY-MM-DD")}
                 value={
                   bookingInfo.mainHopeDate
                     ? dayjs(bookingInfo.mainHopeDate).format("YYYY-MM-DD")
