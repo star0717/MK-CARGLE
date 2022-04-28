@@ -1,5 +1,5 @@
-import * as dayjs from 'dayjs';
-import 'dayjs/locale/ko';
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 
 /**
  * 타임테이블 예약가능여부
@@ -25,7 +25,7 @@ export const makeTimeArray = (
   workTo?: Date,
   workFrom?: Date,
   breakTo?: Date,
-  breakFrom?: Date,
+  breakFrom?: Date
 ) => {
   let timeArr: number[] = [];
   let workToIdx: number;
@@ -52,26 +52,26 @@ export const makeTimeArray = (
     return timeArr;
   }
   if (JSON.stringify(workToDay) !== JSON.stringify(startTime)) {
-    workToLoop = workToDay.diff(startTime, 'minutes') / 30;
+    workToLoop = workToDay.diff(startTime, "minutes") / 30;
     workToIdx = 0;
-    if (workToDay.format('mm') === '30') workToIdx + 1;
+    if (workToDay.format("mm") === "30") workToIdx + 1;
     for (let i = 0; i < workToLoop; i++) {
       workToIdxArr.push(workToIdx + i);
     }
   }
   if (JSON.stringify(workFromDay) !== JSON.stringify(endTime)) {
-    workFromLoop = endTime.diff(workFromDay, 'minutes') / 30;
-    workFromIdx = (parseInt(workFromDay.format('HH')) - 6) * 2;
-    if (workFromDay.format('mm') === '30') workFromIdx + 1;
+    workFromLoop = endTime.diff(workFromDay, "minutes") / 30;
+    workFromIdx = (parseInt(workFromDay.format("HH")) - 6) * 2;
+    if (workFromDay.format("mm") === "30") workFromIdx + 1;
     for (let i = 0; i < workFromLoop; i++) {
       workFromIdxArr.push(workFromIdx + i);
     }
   }
 
   if (breakTo && breakFrom) {
-    breakToLoop = breakFromDay.diff(breakToDay, 'minutes') / 30;
-    breakToIdx = (parseInt(breakToDay.format('HH')) - 6) * 2;
-    if (breakToDay.format('mm') === '30') breakToIdx + 1;
+    breakToLoop = breakFromDay.diff(breakToDay, "minutes") / 30;
+    breakToIdx = (parseInt(breakToDay.format("HH")) - 6) * 2;
+    if (breakToDay.format("mm") === "30") breakToIdx + 1;
     for (let i = 0; i < breakToLoop; i++) {
       breakToIdxArr.push(breakToIdx + i);
     }
