@@ -184,19 +184,13 @@ const AddBookingModal: NextPage<_pBookingModalProps> = (props) => {
     if (arr) {
       return arr.map((item, idx) => {
         let time: string = startTime.add(30 * idx, "minutes").format("HH:mm");
-        return (
-          <>
-            {item !== -1 && (
-              <option
-                key={idx}
-                value={time}
-                disabled={item === 0 ? false : true}
-              >
-                {time}
-              </option>
-            )}
-          </>
-        );
+        if (item !== -1) {
+          return (
+            <option key={idx} value={time} disabled={item === 0 ? false : true}>
+              {time}
+            </option>
+          );
+        }
       });
     }
   };
