@@ -72,46 +72,102 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       ? JSON.parse(booking.officeHour)
       : {
           MON: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
           TUE: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
           WED: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
           THU: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
           FRI: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
           SAT: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
           SUN: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
         }
   );
@@ -249,15 +305,19 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
   const allDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name);
-    console.log(dayjs("HH:mm:ssZ").hour(10).format("YYYY-MM-DDTHH:mm:ssZ"));
-    console.log(
-      dayjs(allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]])
-        .hour(Number(e.target.value))
-        .format("YYYY-MM-DDTHH:mm:ssZ")
-    );
-    console.log(dayjs());
-    console.log(allDay);
+    if (e.target.name.split("_")[1] === "closingHours") {
+      console.log("opening IN");
+      console.log(dayjs(allDay.ALLDAY.openingHours));
+      // if (dayjs(allDay.ALLDAY.openingHours).diff(e.target.value) < 0) {
+      //   console.log("opening error!!");
+      // }
+    } else if (e.target.name.split("_")[1] === "breakEndTime") {
+      console.log("break IN");
+      // if (dayjs(allDay.ALLDAY.breakTime).diff(e.target.value) < 0) {
+      //   console.log("break error!!");
+      // }
+    }
+
     if (e.target.name.split("_")[2] === "hours") {
       setAllDay({
         ...allDay,
