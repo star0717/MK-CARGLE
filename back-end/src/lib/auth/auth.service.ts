@@ -91,10 +91,7 @@ export class AuthService {
         );
 
         /**** 테스트 *****/
-        const initRow: number[] = makeTimeArray(
-          dayjs().hour(9).minute(0).toDate(),
-          dayjs().hour(18).minute(0).toDate(),
-        );
+        const initRow: number[] = makeTimeArray();
         const timeTable: number[][] = [];
         for (let i = 0; i < 7; i++) {
           timeTable.push(initRow);
@@ -179,6 +176,9 @@ export class AuthService {
       // 모든 직원을 포함한 업주의 정보까지 삭제
       await this.usersService.deleteAllByComID(token, user._cID);
       await this.companiesService.findByIdAndRemove(token, user._cID);
+      /** 테스트 */
+      await this.timeTableService.findByCidAndRemove(user._cID);
+      /*********/
     }
   }
 
