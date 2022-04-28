@@ -116,9 +116,10 @@ export class SetBooking extends BaseEntity {
   setBookingTime?: SetBookingTime;
 
   @ApiProperty({ description: '영업시간' })
+  @IsOptional()
   @IsString()
-  @prop({ required: true, _id: false })
-  officeHour: string;
+  @prop({ _id: false })
+  officeHour?: string;
 
   @ApiProperty({ description: '리프트 수량', required: false })
   @IsOptional()
@@ -141,5 +142,5 @@ export class SetBooking extends BaseEntity {
   @IsOptional()
   @IsArray()
   @prop()
-  weekTime?: [][];
+  weekTime?: number[][];
 }

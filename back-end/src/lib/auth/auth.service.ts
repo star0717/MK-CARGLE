@@ -28,6 +28,8 @@ import { TimetableService } from 'src/modules/timetable/timetable.service';
 import { makeTimeArray } from 'src/constants/timetable.const';
 import * as dayjs from 'dayjs';
 import 'dayjs/locale/ko';
+import { SetbookingService } from 'src/modules/setbooking/setbooking.service';
+import { SetBooking } from 'src/models/setbooking.entity';
 
 @Injectable()
 export class AuthService {
@@ -39,6 +41,7 @@ export class AuthService {
     private readonly httpService: HttpService,
     private readonly commonService: CommonService,
     private timeTableService: TimetableService,
+    private setBookingService: SetbookingService,
   ) {}
 
   async signUp(signUpInfo: SignUpInfo): Promise<SignUpInfo> {
@@ -97,6 +100,11 @@ export class AuthService {
           timeTable.push(initRow);
         }
         await this.timeTableService.createTable(
+          company._id,
+          user._id,
+          timeTable,
+        );
+        await this.setBookingService.createWithSignUp(
           company._id,
           user._id,
           timeTable,
@@ -178,6 +186,7 @@ export class AuthService {
       await this.companiesService.findByIdAndRemove(token, user._cID);
       /** 테스트 */
       await this.timeTableService.findByCidAndRemove(user._cID);
+      await this.setBookingService.DeleteSetBooking(user._cID);
       /*********/
     }
   }
