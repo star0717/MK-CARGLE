@@ -63,7 +63,7 @@ import NavbarMenu from "src/components/layout/NavbarMenu";
 import BlackWrapper from "src/components/layout/BlackWrapper";
 import { Maintenance } from "src/models/maintenance.entity";
 import dayjs from "dayjs";
-import SetReservation from "src/components/page/SetReservation";
+import SetReservation from "src/components/page/SetBooking";
 import { s3Folder } from "src/configure/s3.entity";
 import { S3 } from "aws-sdk";
 import { SetBooking } from "src/models/setbooking.entity";

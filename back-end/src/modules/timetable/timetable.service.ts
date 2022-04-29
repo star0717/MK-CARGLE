@@ -48,6 +48,14 @@ export class TimetableService extends SafeService<TimeTable> {
     return await super.findByIdAndUpdate(token, id, doc);
   }
 
+  async findByCidAndUpdate(
+    token: AuthTokenInfo,
+    cid: string,
+    doc: Partial<TimeTable>,
+  ): Promise<TimeTable> {
+    return await this.model.findOneAndUpdate({ _cID: cid }, doc);
+  }
+
   async findByCidAndRemove(id: string): Promise<TimeTable> {
     return await this.model.remove({ _cID: id });
   }

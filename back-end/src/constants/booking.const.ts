@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { BookingFindOptions } from 'src/models/booking.entity';
 
 /** 예약 상태 */

@@ -13,7 +13,6 @@ import {
 import { Booking } from 'src/models/booking.entity';
 import { MainCar } from 'src/models/maintenance.entity';
 import { CarsService } from 'src/modules/cars/cars.service';
-import { SetbookingService } from 'src/modules/setbooking/setbooking.service';
 import { BookingState } from 'src/constants/booking.const';
 import {
   getEndOfDayDateTime,
@@ -29,7 +28,6 @@ export class BookingService extends SafeService<Booking> {
     @InjectModel(Booking)
     readonly model: ReturnModelType<typeof Booking>,
     readonly commonService: CommonService,
-    readonly setBookingService: SetbookingService,
     readonly carsService: CarsService,
     readonly timeTableService: TimetableService,
   ) {
@@ -102,6 +100,10 @@ export class BookingService extends SafeService<Booking> {
 
   async findById(token: AuthTokenInfo, id: string): Promise<Booking> {
     return await super.findById(token, id);
+  }
+
+  async findByCid(cid: string): Promise<Booking> {
+    return await this.model.findOne({ _cID: cid });
   }
 
   async findByIdAndUpdate(
