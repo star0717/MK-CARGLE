@@ -13,12 +13,14 @@ import {
 import { Booking } from 'src/models/booking.entity';
 import { MainCar } from 'src/models/maintenance.entity';
 import { CarsService } from 'src/modules/cars/cars.service';
-import { SetbookingService } from 'src/modules/setbooking/setbooking.service';
 import { BookingState } from 'src/constants/booking.const';
 import {
   getEndOfDayDateTime,
   getStartOfDayDateTime,
 } from 'src/lib/toolkit/back-end.toolkit';
+import { TimetableService } from 'src/modules/timetable/timetable.service';
+import { dateGetWeekDay, dateToTableIdx } from 'src/constants/timetable.const';
+import { TimeTable } from 'src/models/timetable.entity';
 
 @Injectable()
 export class BookingService extends SafeService<Booking> {
@@ -26,8 +28,8 @@ export class BookingService extends SafeService<Booking> {
     @InjectModel(Booking)
     readonly model: ReturnModelType<typeof Booking>,
     readonly commonService: CommonService,
-    readonly setBookingService: SetbookingService,
     readonly carsService: CarsService,
+    readonly timeTableService: TimetableService,
   ) {
     super(model, commonService);
   }
@@ -41,24 +43,36 @@ export class BookingService extends SafeService<Booking> {
     const fParams: FindParameters = {
       page: 1,
       take: 100,
+      useDurationSearch: true,
       sFrom: getStartOfDayDateTime(doc.createdAt),
       sTo: getEndOfDayDateTime(doc.createdAt),
-      // filter: {
-      //   createdAt: {
-      //     $gte: getStartOfDayDateTime(doc.createdAt),
-      //     $lt: getEndOfDayDateTime(doc.createdAt),
-      //   },
-      // },
     };
     const todayList: FindResult<Booking> = await super.findByOptions(
       token,
       fParams,
     );
 
-    console.log(todayList);
-
     let docNum: number = todayList.totalDocs + 1;
     doc.bookingNum = docNum.toString().padStart(3, '0');
+
+    const timeTable: TimeTable = await this.timeTableService.findByCid(
+      token.cID,
+    );
+    if (!timeTable) throw new BadRequestException();
+
+    const weekDay: string = dateGetWeekDay(doc.mainHopeDate);
+    const idx: number = dateToTableIdx(doc.mainHopeDate);
+    const row: number[] = timeTable[weekDay];
+    row.splice(idx, 1, 1);
+    const updateDoc: Partial<TimeTable> = {
+      [weekDay]: row,
+    };
+
+    await this.timeTableService.findByIdAndUpdate(
+      token,
+      timeTable._id,
+      updateDoc,
+    );
 
     return await super.create(token, doc);
   }
@@ -86,6 +100,10 @@ export class BookingService extends SafeService<Booking> {
 
   async findById(token: AuthTokenInfo, id: string): Promise<Booking> {
     return await super.findById(token, id);
+  }
+
+  async findByCid(cid: string): Promise<Booking> {
+    return await this.model.findOne({ _cID: cid });
   }
 
   async findByIdAndUpdate(

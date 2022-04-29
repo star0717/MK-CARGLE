@@ -2,17 +2,24 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { DeleteResult } from 'mongodb';
 import { InjectModel } from 'nestjs-typegoose';
+import { SetBookingTime } from 'src/constants/booking.const';
+import { makeTimeArray } from 'src/constants/timetable.const';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { AuthTokenInfo } from 'src/models/auth.entity';
+import { Booking } from 'src/models/booking.entity';
 import { Company } from 'src/models/company.entity';
-import { SetBooking } from 'src/models/setbooking.entity';
+import { OfficeHours, SetBooking } from 'src/models/setbooking.entity';
+import { BookingService } from '../booking/booking.service';
+import { TimetableService } from '../timetable/timetable.service';
 
 @Injectable()
 export class SetbookingService extends SafeService<SetBooking> {
   constructor(
-    @InjectModel(SetBooking) readonly model: ReturnModelType<typeof SetBooking>,
+    @InjectModel(SetBooking)
+    readonly model: ReturnModelType<typeof SetBooking>,
     readonly commonService: CommonService,
+    readonly timetableService: TimetableService, // readonly bookingService: BookingService,
   ) {
     super(model, commonService);
   }
@@ -29,10 +36,56 @@ export class SetbookingService extends SafeService<SetBooking> {
     doc._cID = token.cID;
     doc._uID = token.uID;
 
+    if (doc.officeHour) {
+      const office: OfficeHours = JSON.parse(doc.officeHour);
+      const officeKey: string[] = Object.keys(office).map((e) => e);
+      let timeTable: number[][] = [];
+
+      officeKey.map((day) => {
+        if (office[day]['breakTime']) {
+          timeTable.push(
+            makeTimeArray(
+              office[day]['openingHours'],
+              office[day]['closingHours'],
+              office[day]['breakTime'],
+              office[day]['breakEndTime'],
+            ),
+          );
+        } else {
+          timeTable.push(
+            makeTimeArray(
+              office[day]['openingHours'],
+              office[day]['closingHours'],
+            ),
+          );
+        }
+      });
+
+      doc.weekTime = timeTable;
+
+      // const booking: Booking = await this.bookingService.findByCid(token.cID);
+      // if (booking) {
+      //   // await this.
+      // }
+    }
+
     return await this.model.findOneAndUpdate({ _cID: token.cID }, doc, {
       upsert: true,
       new: true,
     });
+  }
+
+  async createWithSignUp(
+    cid: string,
+    uid: string,
+    doc: number[][],
+  ): Promise<SetBooking> {
+    const setBooking: Partial<SetBooking> = {
+      _cID: cid,
+      _uID: uid,
+      weekTime: doc,
+    };
+    return await this.model.create(setBooking);
   }
 
   async findBySetBookingId(id: string): Promise<SetBooking> {

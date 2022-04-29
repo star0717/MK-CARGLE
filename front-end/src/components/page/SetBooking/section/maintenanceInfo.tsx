@@ -58,6 +58,8 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
         ),
       });
     } else {
+      if (e.target.value.includes(","))
+        e.target.value = e.target.value.replaceAll(",", "");
       setBooking({
         ...booking,
         mPrice: booking.mPrice.map((item, index) =>
@@ -68,7 +70,6 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
       });
     }
   };
-
   /**
    * 객체형 배열 삭제 핸들러
    */
@@ -197,6 +198,7 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
                   <Wrapper al={`flex-start`}>
                     <Text>가격</Text>
                     <TextInput2
+                      type="text"
                       id={idx}
                       name="mainPrice"
                       readOnly={!modify}

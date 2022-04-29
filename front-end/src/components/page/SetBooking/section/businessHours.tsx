@@ -30,9 +30,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
    *********************************************************************/
   const router = useRouter();
   const dispatch = useDispatch();
-  const allArr: string[] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-  const dayArr: string[] = ["MON", "TUE", "WED", "THU", "FRI"];
-  const endArr: string[] = ["SAT", "SUN"];
+  const allArr: string[] = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+  const dayArr: string[] = ["mon", "tue", "wed", "thu", "fri"];
+  const endArr: string[] = ["sat", "sun"];
 
   interface all_inter {
     ALLDAY: {
@@ -71,159 +71,215 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     booking.officeHour !== ""
       ? JSON.parse(booking.officeHour)
       : {
-          MON: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          mon: {
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
-          TUE: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          tue: {
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
-          WED: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          wed: {
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
-          THU: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          thu: {
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
-          FRI: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          fri: {
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
-          SAT: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          sat: {
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
-          SUN: {
-            openingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            closingHours: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
-            breakEndTime: dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),
+          sun: {
+            openingHours: dayjs("2022-01-01 09:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            closingHours: dayjs("2022-01-01 18:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakTime: dayjs("2022-01-01 12:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
+            breakEndTime: dayjs("2022-01-01 13:00:00").format(
+              "YYYY-MM-DDTHH:mm:ssZ"
+            ),
           },
         }
   );
   let hoursData: diff_inter = {
-    MON: {
-      openingHours: hours.MON.openingHours,
-      closingHours: hours.MON.closingHours,
-      breakTime: hours.MON.breakTime,
-      breakEndTime: hours.MON.breakEndTime,
+    mon: {
+      openingHours: hours.mon.openingHours,
+      closingHours: hours.mon.closingHours,
+      breakTime: hours.mon.breakTime,
+      breakEndTime: hours.mon.breakEndTime,
     },
-    TUE: {
-      openingHours: hours.TUE.openingHours,
-      closingHours: hours.TUE.closingHours,
-      breakTime: hours.TUE.breakTime,
-      breakEndTime: hours.TUE.breakEndTime,
+    tue: {
+      openingHours: hours.tue.openingHours,
+      closingHours: hours.tue.closingHours,
+      breakTime: hours.tue.breakTime,
+      breakEndTime: hours.tue.breakEndTime,
     },
-    WED: {
-      openingHours: hours.WED.openingHours,
-      closingHours: hours.WED.closingHours,
-      breakTime: hours.WED.breakTime,
-      breakEndTime: hours.WED.breakEndTime,
+    wed: {
+      openingHours: hours.wed.openingHours,
+      closingHours: hours.wed.closingHours,
+      breakTime: hours.wed.breakTime,
+      breakEndTime: hours.wed.breakEndTime,
     },
-    THU: {
-      openingHours: hours.THU.openingHours,
-      closingHours: hours.THU.closingHours,
-      breakTime: hours.THU.breakTime,
-      breakEndTime: hours.THU.breakEndTime,
+    thu: {
+      openingHours: hours.thu.openingHours,
+      closingHours: hours.thu.closingHours,
+      breakTime: hours.thu.breakTime,
+      breakEndTime: hours.thu.breakEndTime,
     },
-    FRI: {
-      openingHours: hours.FRI.openingHours,
-      closingHours: hours.FRI.closingHours,
-      breakTime: hours.FRI.breakTime,
-      breakEndTime: hours.FRI.breakEndTime,
+    fri: {
+      openingHours: hours.fri.openingHours,
+      closingHours: hours.fri.closingHours,
+      breakTime: hours.fri.breakTime,
+      breakEndTime: hours.fri.breakEndTime,
     },
-    SAT: {
-      openingHours: hours.SAT.openingHours,
-      closingHours: hours.SAT.closingHours,
-      breakTime: hours.SAT.breakTime,
-      breakEndTime: hours.SAT.breakEndTime,
+    sat: {
+      openingHours: hours.sat.openingHours,
+      closingHours: hours.sat.closingHours,
+      breakTime: hours.sat.breakTime,
+      breakEndTime: hours.sat.breakEndTime,
     },
-    SUN: {
-      openingHours: hours.SUN.openingHours,
-      closingHours: hours.SUN.closingHours,
-      breakTime: hours.SUN.breakTime,
-      breakEndTime: hours.SUN.breakEndTime,
+    sun: {
+      openingHours: hours.sun.openingHours,
+      closingHours: hours.sun.closingHours,
+      breakTime: hours.sun.breakTime,
+      breakEndTime: hours.sun.breakEndTime,
     },
   };
 
   const [allDay, setAllDay] = useState<all_inter>({
     ALLDAY: {
-      openingHours: hours.MON.openingHours,
-      closingHours: hours.MON.closingHours,
-      breakTime: hours.MON.breakTime,
-      breakEndTime: hours.MON.breakEndTime,
+      openingHours: hours.mon.openingHours,
+      closingHours: hours.mon.closingHours,
+      breakTime: hours.mon.breakTime,
+      breakEndTime: hours.mon.breakEndTime,
     },
   });
   const [weekDay, setWeekDay] = useState<week_inter>({
     WEEKDAY: {
-      openingHours: hours.MON.openingHours,
-      closingHours: hours.MON.closingHours,
-      breakTime: hours.MON.breakTime,
-      breakEndTime: hours.MON.breakEndTime,
+      openingHours: hours.mon.openingHours,
+      closingHours: hours.mon.closingHours,
+      breakTime: hours.mon.breakTime,
+      breakEndTime: hours.mon.breakEndTime,
     },
     WEEKEND: {
-      openingHours: hours.SAT.openingHours,
-      closingHours: hours.SAT.closingHours,
-      breakTime: hours.SAT.breakTime,
-      breakEndTime: hours.SAT.breakEndTime,
+      openingHours: hours.sat.openingHours,
+      closingHours: hours.sat.closingHours,
+      breakTime: hours.sat.breakTime,
+      breakEndTime: hours.sat.breakEndTime,
     },
   });
   const [diffDay, setDiffDay] = useState<diff_inter>({
-    MON: {
-      openingHours: hours.MON.openingHours,
-      closingHours: hours.MON.closingHours,
-      breakTime: hours.MON.breakTime,
-      breakEndTime: hours.MON.breakEndTime,
+    mon: {
+      openingHours: hours.mon.openingHours,
+      closingHours: hours.mon.closingHours,
+      breakTime: hours.mon.breakTime,
+      breakEndTime: hours.mon.breakEndTime,
     },
-    TUE: {
-      openingHours: hours.TUE.openingHours,
-      closingHours: hours.TUE.closingHours,
-      breakTime: hours.TUE.breakTime,
-      breakEndTime: hours.TUE.breakEndTime,
+    tue: {
+      openingHours: hours.tue.openingHours,
+      closingHours: hours.tue.closingHours,
+      breakTime: hours.tue.breakTime,
+      breakEndTime: hours.tue.breakEndTime,
     },
-    WED: {
-      openingHours: hours.WED.openingHours,
-      closingHours: hours.WED.closingHours,
-      breakTime: hours.WED.breakTime,
-      breakEndTime: hours.WED.breakEndTime,
+    wed: {
+      openingHours: hours.wed.openingHours,
+      closingHours: hours.wed.closingHours,
+      breakTime: hours.wed.breakTime,
+      breakEndTime: hours.wed.breakEndTime,
     },
-    THU: {
-      openingHours: hours.THU.openingHours,
-      closingHours: hours.THU.closingHours,
-      breakTime: hours.THU.breakTime,
-      breakEndTime: hours.THU.breakEndTime,
+    thu: {
+      openingHours: hours.thu.openingHours,
+      closingHours: hours.thu.closingHours,
+      breakTime: hours.thu.breakTime,
+      breakEndTime: hours.thu.breakEndTime,
     },
-    FRI: {
-      openingHours: hours.FRI.openingHours,
-      closingHours: hours.FRI.closingHours,
-      breakTime: hours.FRI.breakTime,
-      breakEndTime: hours.FRI.breakEndTime,
+    fri: {
+      openingHours: hours.fri.openingHours,
+      closingHours: hours.fri.closingHours,
+      breakTime: hours.fri.breakTime,
+      breakEndTime: hours.fri.breakEndTime,
     },
-    SAT: {
-      openingHours: hours.SAT.openingHours,
-      closingHours: hours.SAT.closingHours,
-      breakTime: hours.SAT.breakTime,
-      breakEndTime: hours.SAT.breakEndTime,
+    sat: {
+      openingHours: hours.sat.openingHours,
+      closingHours: hours.sat.closingHours,
+      breakTime: hours.sat.breakTime,
+      breakEndTime: hours.sat.breakEndTime,
     },
-    SUN: {
-      openingHours: hours.SUN.openingHours,
-      closingHours: hours.SUN.closingHours,
-      breakTime: hours.SUN.breakTime,
-      breakEndTime: hours.SUN.breakEndTime,
+    sun: {
+      openingHours: hours.sun.openingHours,
+      closingHours: hours.sun.closingHours,
+      breakTime: hours.sun.breakTime,
+      breakEndTime: hours.sun.breakEndTime,
     },
   });
 
@@ -249,15 +305,19 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
   const allDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name);
-    console.log(dayjs("HH:mm:ssZ").hour(10).format("YYYY-MM-DDTHH:mm:ssZ"));
-    console.log(
-      dayjs(allDay[e.target.name.split("_")[0]][e.target.name.split("_")[1]])
-        .hour(Number(e.target.value))
-        .format("YYYY-MM-DDTHH:mm:ssZ")
-    );
-    console.log(dayjs());
-    console.log(allDay);
+    if (e.target.name.split("_")[1] === "closingHours") {
+      console.log("opening IN");
+      console.log(dayjs(allDay.ALLDAY.openingHours));
+      // if (dayjs(allDay.ALLDAY.openingHours).diff(e.target.value) < 0) {
+      //   console.log("opening error!!");
+      // }
+    } else if (e.target.name.split("_")[1] === "breakEndTime") {
+      console.log("break IN");
+      // if (dayjs(allDay.ALLDAY.breakTime).diff(e.target.value) < 0) {
+      //   console.log("break error!!");
+      // }
+    }
+
     if (e.target.name.split("_")[2] === "hours") {
       setAllDay({
         ...allDay,
@@ -379,26 +439,26 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
         });
         if (endBool) readonly = true;
         break;
-      case "MON":
-        value = diffDay.MON;
+      case "mon":
+        value = diffDay.mon;
         break;
-      case "TUE":
-        value = diffDay.TUE;
+      case "tue":
+        value = diffDay.tue;
         break;
-      case "WED":
-        value = diffDay.WED;
+      case "wed":
+        value = diffDay.wed;
         break;
-      case "THU":
-        value = diffDay.THU;
+      case "thu":
+        value = diffDay.thu;
         break;
-      case "FRI":
-        value = diffDay.FRI;
+      case "fri":
+        value = diffDay.fri;
         break;
-      case "SAT":
-        value = diffDay.SAT;
+      case "sat":
+        value = diffDay.sat;
         break;
-      case "SUN":
-        value = diffDay.SUN;
+      case "sun":
+        value = diffDay.sun;
         break;
 
       default:
@@ -633,31 +693,31 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           <>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>월요일</Text>
-              <Inputlayout id="MON" />
+              <Inputlayout id="mon" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>화요일</Text>
-              <Inputlayout id="TUE" />
+              <Inputlayout id="tue" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>수요일</Text>
-              <Inputlayout id="WED" />
+              <Inputlayout id="wed" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>목요일</Text>
-              <Inputlayout id="THU" />
+              <Inputlayout id="thu" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>금요일</Text>
-              <Inputlayout id="FRI" />
+              <Inputlayout id="fri" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>토요일</Text>
-              <Inputlayout id="SAT" />
+              <Inputlayout id="sat" />
             </Wrapper>
             <Wrapper dr={`row`} ju={`flex-start`} padding={`30px 0px 0px`}>
               <Text margin={`18px 10px 0px 0px`}>일요일</Text>
-              <Inputlayout id="SUN" />
+              <Inputlayout id="sun" />
             </Wrapper>
           </>
         );
@@ -720,9 +780,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
           <Wrapper dr={`row`} ju={`flex-start`}>
             <SelectDays
               disabled={!modify}
-              name="MON"
-              checked={booking.dayOff.includes("MON")}
-              kindOf={booking.dayOff.includes("MON") ? `hollyDay` : `ghost`}
+              name="mon"
+              checked={booking.dayOff.includes("mon")}
+              kindOf={booking.dayOff.includes("mon") ? `hollyDay` : `ghost`}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -731,9 +791,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             </SelectDays>
             <SelectDays
               disabled={!modify}
-              name="TUE"
-              checked={booking.dayOff.includes("TUE")}
-              kindOf={booking.dayOff.includes("TUE") ? `hollyDay` : `ghost`}
+              name="tue"
+              checked={booking.dayOff.includes("tue")}
+              kindOf={booking.dayOff.includes("tue") ? `hollyDay` : `ghost`}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -742,9 +802,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             </SelectDays>
             <SelectDays
               disabled={!modify}
-              name="WED"
-              checked={booking.dayOff.includes("WED")}
-              kindOf={booking.dayOff.includes("WED") ? `hollyDay` : `ghost`}
+              name="wed"
+              checked={booking.dayOff.includes("wed")}
+              kindOf={booking.dayOff.includes("wed") ? `hollyDay` : `ghost`}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -753,9 +813,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             </SelectDays>
             <SelectDays
               disabled={!modify}
-              name="THU"
-              checked={booking.dayOff.includes("THU")}
-              kindOf={booking.dayOff.includes("THU") ? `hollyDay` : `ghost`}
+              name="thu"
+              checked={booking.dayOff.includes("thu")}
+              kindOf={booking.dayOff.includes("thu") ? `hollyDay` : `ghost`}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -764,9 +824,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             </SelectDays>
             <SelectDays
               disabled={!modify}
-              name="FRI"
-              checked={booking.dayOff.includes("FRI")}
-              kindOf={booking.dayOff.includes("FRI") ? `hollyDay` : `ghost`}
+              name="fri"
+              checked={booking.dayOff.includes("fri")}
+              kindOf={booking.dayOff.includes("fri") ? `hollyDay` : `ghost`}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -775,9 +835,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             </SelectDays>
             <SelectDays
               disabled={!modify}
-              name="SAT"
-              checked={booking.dayOff.includes("SAT")}
-              kindOf={booking.dayOff.includes("SAT") ? `hollyDay` : `ghost`}
+              name="sat"
+              checked={booking.dayOff.includes("sat")}
+              kindOf={booking.dayOff.includes("sat") ? `hollyDay` : `ghost`}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}
@@ -786,9 +846,9 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             </SelectDays>
             <SelectDays
               disabled={!modify}
-              name="SUN"
-              checked={booking.dayOff.includes("SUN")}
-              kindOf={booking.dayOff.includes("SUN") ? `hollyDay` : `ghost`}
+              name="sun"
+              checked={booking.dayOff.includes("sun")}
+              kindOf={booking.dayOff.includes("sun") ? `hollyDay` : `ghost`}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 dayOffHandler(e);
               }}

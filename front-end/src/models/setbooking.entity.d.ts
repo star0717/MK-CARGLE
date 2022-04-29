@@ -7,13 +7,13 @@ export declare class Hours {
     breakEndTime: Date;
 }
 export declare class OfficeHours {
-    MON: Hours;
-    TUE: Hours;
-    WED: Hours;
-    THU: Hours;
-    FRI: Hours;
-    SAT: Hours;
-    SUN: Hours;
+    mon: Hours;
+    tue: Hours;
+    wed: Hours;
+    thu: Hours;
+    fri: Hours;
+    sat: Hours;
+    sun: Hours;
 }
 export declare class Mprice {
     mainItems?: string;
@@ -23,8 +23,8 @@ export declare class SetBooking extends BaseEntity {
     intro?: string;
     dayOff?: string[];
     setBookingTime?: SetBookingTime;
-    officeHour: string;
+    officeHour?: string;
     lift?: number;
     mPrice?: Mprice[];
-    weekTime?: [][];
+    weekTime?: number[][];
 }

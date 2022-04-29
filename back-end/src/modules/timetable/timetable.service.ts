@@ -5,6 +5,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { TimeTable } from 'src/models/timetable.entity';
+import { AuthTokenInfo } from 'src/models/auth.entity';
 
 @Injectable()
 export class TimetableService extends SafeService<TimeTable> {
@@ -37,5 +38,25 @@ export class TimetableService extends SafeService<TimeTable> {
 
   async findByCid(id: string): Promise<TimeTable> {
     return await this.model.findOne({ _cID: id });
+  }
+
+  async findByIdAndUpdate(
+    token: AuthTokenInfo,
+    id: string,
+    doc: Partial<TimeTable>,
+  ): Promise<TimeTable> {
+    return await super.findByIdAndUpdate(token, id, doc);
+  }
+
+  async findByCidAndUpdate(
+    token: AuthTokenInfo,
+    cid: string,
+    doc: Partial<TimeTable>,
+  ): Promise<TimeTable> {
+    return await this.model.findOneAndUpdate({ _cID: cid }, doc);
+  }
+
+  async findByCidAndRemove(id: string): Promise<TimeTable> {
+    return await this.model.remove({ _cID: id });
   }
 }
