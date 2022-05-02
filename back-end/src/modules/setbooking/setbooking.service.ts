@@ -3,7 +3,7 @@ import { ReturnModelType } from '@typegoose/typegoose';
 import { DeleteResult } from 'mongodb';
 import { InjectModel } from 'nestjs-typegoose';
 import { SetBookingTime } from 'src/constants/booking.const';
-import { makeTimeArray } from 'src/constants/timetable.const';
+import { makeTimeArray, weekDayArr } from 'src/constants/timetable.const';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { AuthTokenInfo } from 'src/models/auth.entity';
@@ -40,6 +40,10 @@ export class SetbookingService extends SafeService<SetBooking> {
       let timeTable: number[][] = [];
 
       officeKey.map((day) => {
+        if (!weekDayArr.includes(day)) {
+          console.log(makeTimeArray());
+          timeTable.push(makeTimeArray());
+        }
         if (office[day]['breakTime']) {
           timeTable.push(
             makeTimeArray(

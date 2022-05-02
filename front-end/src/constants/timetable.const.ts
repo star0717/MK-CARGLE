@@ -20,6 +20,16 @@ export enum WorkTime {
   intervalType = "minutes",
 }
 
+export const weekDayArr: string[] = [
+  "mon",
+  "tue",
+  "wed",
+  "thu",
+  "fri",
+  "sat",
+  "sun",
+];
+
 /**
  * 업체 업무시간별 예약카운팅 리스트
  * @param workTo 업무시작시간
