@@ -74,7 +74,9 @@ export class BookingController {
     @Query() fOptions: BookingFindOptions,
     @AuthToken() token: AuthTokenInfo,
   ): Promise<FindResult<Booking>> {
-    fParams.useDurationSearch = true;
+    fParams.useDurationSearch = false;
+    delete fParams.sFrom;
+    delete fParams.sTo;
 
     if (fOptions) {
       fParams.filter = fOptions;

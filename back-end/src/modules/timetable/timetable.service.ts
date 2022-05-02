@@ -1,11 +1,12 @@
-import { AuthToken } from './../../lib/decorators/decorators';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { CommonService } from 'src/lib/common/common.service';
 import { SafeService } from 'src/lib/safe-crud/safe-crud.service';
 import { TimeTable } from 'src/models/timetable.entity';
 import { AuthTokenInfo } from 'src/models/auth.entity';
+import * as dayjs from 'dayjs';
+import { dateGetWeekDay, weekDayGetIdx } from 'src/constants/timetable.const';
 
 @Injectable()
 export class TimetableService extends SafeService<TimeTable> {
@@ -54,6 +55,43 @@ export class TimetableService extends SafeService<TimeTable> {
     doc: Partial<TimeTable>,
   ): Promise<TimeTable> {
     return await this.model.findOneAndUpdate({ _cID: cid }, doc);
+  }
+
+  async findByCidAndInitUpdate(
+    token: AuthTokenInfo,
+    cid: string,
+    timeTableInit: number[][],
+  ): Promise<TimeTable> {
+    let doc: Partial<TimeTable>;
+    const timeTable: TimeTable = await this.findByCid(cid);
+    if (!timeTable) throw new BadRequestException();
+    if (timeTable.updatedAt) {
+      const today: dayjs.Dayjs = dayjs();
+      const diffDay: number = today.diff(timeTable.updatedAt, 'day');
+      let dateArr: Date[] = [];
+      let weekJson: Partial<TimeTable> = {};
+      let weekArr: string[] = [];
+      if (diffDay >= 1) {
+        for (let i = 1; i < diffDay + 1; i++) {
+          dateArr.push(today.subtract(i, 'day').toDate());
+        }
+        dateArr.map((date) => {
+          if (!weekArr.includes(dateGetWeekDay(date)))
+            weekArr.push(dateGetWeekDay(date));
+        });
+        // for (let j = 0; j < dateArr.length; j++) {
+        //   if (!weekArr.includes(dateGetWeekDay(dateArr[j])))
+        //     weekArr.push(dateGetWeekDay(dateArr[j]));
+        // }
+        weekArr.map((day) => {
+          weekJson[day] = timeTable[weekDayGetIdx(day)];
+        });
+        console.log('@@@', weekJson);
+        // doc = Object.assign(doc, weekJson);
+        // console.log('####', doc);
+      }
+    }
+    return null;
   }
 
   async findByCidAndRemove(id: string): Promise<TimeTable> {

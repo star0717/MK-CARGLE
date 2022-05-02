@@ -141,3 +141,30 @@ export const dateGetWeekDay = (date: Date) => {
       return null;
   }
 };
+
+/**
+ * 요일명에 해당하는 setbooking weekTime idx 구하기
+ * @param day
+ * @returns
+ */
+export const weekDayGetIdx = (day: string) => {
+  switch (day) {
+    case 'mon':
+      return 0;
+    case 'tue':
+      return 1;
+    case 'wed':
+      return 2;
+    case 'thu':
+      return 3;
+    case 'fri':
+      return 4;
+    case 'sat':
+      return 5;
+    case 'sun':
+      return 6;
+
+    default:
+      return null;
+  }
+};

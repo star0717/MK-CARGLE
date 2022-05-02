@@ -43,6 +43,7 @@ import {
   PartsSetsApiPath,
   SetBookingApiPath,
   SettingsApiPath,
+  TimeTableApiPath,
 } from "src/constants/api-path.const";
 import AdminUsersPage from "src/components/page/admin/users";
 import AdminManPartsPage from "src/components/page/admin/man_parts";
@@ -68,6 +69,7 @@ import { s3Folder } from "src/configure/s3.entity";
 import { S3 } from "aws-sdk";
 import { SetBooking } from "src/models/setbooking.entity";
 import { Booking } from "src/models/booking.entity";
+import { TimeTable } from "src/models/timetable.entity";
 
 /**
  * 메인: cApproval에 따른 메인 컴포넌트
@@ -367,6 +369,26 @@ export const getServerSideProps: GetServerSideProps = async (
 
       // 예약 관리
       case UseLink.MAN_BOOKING: {
+        const timeTableInit: number[][] = await axios
+          .get(
+            genApiPath(SetBookingApiPath.BASE, {
+              id: tokenValue.cID,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<SetBooking, string>) => res.data.weekTime);
+        if (timeTableInit.length === 0) return failResult;
+        await axios
+          .patch(
+            genApiPath(TimeTableApiPath.timetable_init, {
+              id: tokenValue.cID,
+              isServerSide: true,
+            }),
+            timeTableInit,
+            authConfig
+          )
+          .then((res: AxiosResponse<TimeTable, string>) => res.data);
         successResult.props.data = await axios
           .get(
             genApiPath(BookingApiPath.BASE, {

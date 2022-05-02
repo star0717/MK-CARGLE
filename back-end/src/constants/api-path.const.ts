@@ -156,4 +156,5 @@ export class BookingApiPath {
 export class TimeTableApiPath {
   static BASE = '/timetable/';
   static timetable = TimeTableApiPath.BASE;
+  static timetable_init = TimeTableApiPath.BASE + 'init';
 }

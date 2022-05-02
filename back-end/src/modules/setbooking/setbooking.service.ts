@@ -21,7 +21,7 @@ export class SetbookingService extends SafeService<SetBooking> {
     readonly model: ReturnModelType<typeof SetBooking>,
     readonly commonService: CommonService,
     readonly bookingService: BookingService,
-    readonly timetableService: TimetableService, // readonly bookingService: BookingService,
+    readonly timetableService: TimetableService,
   ) {
     super(model, commonService);
   }
