@@ -22,6 +22,7 @@ import { _pSetBookingDataProps } from "src/configure/_pProps.entity";
 import { useDispatch } from "react-redux";
 import { _aPostSetBooking } from "store/action/user.action";
 import { OfficeHours, SetBooking } from "src/models/setbooking.entity";
+import { deleteKeyJson } from "src/modules/commonModule";
 
 const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
@@ -32,7 +33,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [booking, setBooking] = useState<SetBooking>(props.booking);
+  const [booking, setBooking] = useState<Partial<SetBooking>>(props.booking);
   const [modify, setModify] = useState<boolean>(false);
   /*********************************************************************
    * 3. Handlers
@@ -207,7 +208,12 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
               </CommonButton>
               <CommonButton
                 onClick={async () => {
-                  await dispatch(_aPostSetBooking(booking)).then((res: any) => {
+                  let data: Partial<SetBooking> = booking;
+                  deleteKeyJson(data);
+
+                  console.log("!!!", data);
+
+                  await dispatch(_aPostSetBooking(data)).then((res: any) => {
                     setBooking(res.payload);
                     props.setBooking(res.payload);
                     alert("저장 되었습니다!");

@@ -1634,7 +1634,8 @@ export async function _aDeleteBookingMany(ids: string[]) {
  * @param data
  * @returns
  */
-export async function _aPostSetBooking(data: SetBooking) {
+export async function _aPostSetBooking(data: Partial<SetBooking>) {
+  console.log("@@@@", data);
   const req: SetBooking = await axios
     .post(genApiPath(SetBookingApiPath.set_booking), data)
     .then((res: AxiosResponse<SetBooking, SetBooking>): SetBooking => {

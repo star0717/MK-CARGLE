@@ -69,10 +69,12 @@ export class SetbookingService extends SafeService<SetBooking> {
       // }
     }
 
-    return await this.model.findOneAndUpdate({ _cID: token.cID }, doc, {
-      upsert: true,
+    const test = await this.model.findOneAndUpdate({ _cID: token.cID }, doc, {
+      // upsert: true,
       new: true,
     });
+
+    return test;
   }
 
   async createWithSignUp(

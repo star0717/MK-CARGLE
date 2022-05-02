@@ -168,7 +168,15 @@ export const comma = (str: string) => {
  */
 export const deleteKeyJson = (obj: any) => {
   Object.keys(obj).map((key) => {
+    console.log("IN", key);
     if (obj[key] === "" || obj[key] === undefined) {
+      console.log("del", key);
+      delete obj[key];
+    }
+    console.log("NEXT");
+    console.log(Array.isArray(key) && key.length === 0);
+    if (Array.isArray(obj[key]) && obj[key].length === 0) {
+      console.log("Array", key);
       delete obj[key];
     }
   });
