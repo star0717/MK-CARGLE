@@ -38,13 +38,17 @@ export class SetbookingService extends SafeService<SetBooking> {
       const office: OfficeHours = JSON.parse(doc.officeHour);
       const officeKey: string[] = Object.keys(office).map((e) => e);
       let timeTable: number[][] = [];
+      console.log('@@@', officeKey);
 
-      officeKey.map((day) => {
-        if (!weekDayArr.includes(day)) {
+      weekDayArr.map((day) => {
+        console.log('!!!!', officeKey.includes(day));
+        if (!officeKey.includes(day)) {
+          console.log('들어옴');
           console.log(makeTimeArray());
           timeTable.push(makeTimeArray());
         }
         if (office[day]['breakTime']) {
+          console.log('222');
           timeTable.push(
             makeTimeArray(
               office[day]['openingHours'],
@@ -54,6 +58,7 @@ export class SetbookingService extends SafeService<SetBooking> {
             ),
           );
         } else {
+          console.log('333');
           timeTable.push(
             makeTimeArray(
               office[day]['openingHours'],
