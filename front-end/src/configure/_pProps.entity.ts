@@ -137,8 +137,9 @@ export interface _pWorkerDataProps extends _pFindDocs<User> {
 
 // 예약 설정용 props
 export interface _pSetBookingDataProps extends _MainProps {
-  booking: SetBooking;
-  setBooking: React.Dispatch<React.SetStateAction<SetBooking>>;
+  booking: Partial<SetBooking>;
+  setBooking: React.Dispatch<React.SetStateAction<Partial<SetBooking>>>;
+  bookingInit: Partial<SetBooking>;
   // modify: boolean;
   // setModify: React.Dispatch<React.SetStateAction<boolean>>;
   // businessTime: string;

@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
-import "dayjs/locale/ko";
+import * as dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 
 /**
  * 타임테이블 예약가능여부
@@ -17,7 +17,7 @@ export enum WorkTime {
   start = 6,
   end = 21,
   interval = 30,
-  intervalType = "minutes",
+  intervalType = 'minutes',
 }
 
 /**
@@ -32,7 +32,7 @@ export const makeTimeArray = (
   workTo?: Date,
   workFrom?: Date,
   breakTo?: Date,
-  breakFrom?: Date
+  breakFrom?: Date,
 ) => {
   let timeArr: number[] = [];
   let workToIdx: number;
@@ -62,7 +62,7 @@ export const makeTimeArray = (
     workToLoop =
       workToDay.diff(startTime, WorkTime.intervalType) / WorkTime.interval;
     workToIdx = 0;
-    if (workToDay.format("mm") === `${WorkTime.interval}`) workToIdx + 1;
+    if (workToDay.format('mm') === `${WorkTime.interval}`) workToIdx + 1;
     for (let i = 0; i < workToLoop; i++) {
       workToIdxArr.push(workToIdx + i);
     }
@@ -70,8 +70,8 @@ export const makeTimeArray = (
   if (JSON.stringify(workFromDay) !== JSON.stringify(endTime)) {
     workFromLoop =
       endTime.diff(workFromDay, WorkTime.intervalType) / WorkTime.interval;
-    workFromIdx = (parseInt(workFromDay.format("HH")) - WorkTime.start) * 2;
-    if (workFromDay.format("mm") === `${WorkTime.interval}`) workFromIdx + 1;
+    workFromIdx = (parseInt(workFromDay.format('HH')) - WorkTime.start) * 2;
+    if (workFromDay.format('mm') === `${WorkTime.interval}`) workFromIdx + 1;
     for (let i = 0; i < workFromLoop; i++) {
       workFromIdxArr.push(workFromIdx + i);
     }
@@ -80,8 +80,8 @@ export const makeTimeArray = (
   if (breakTo && breakFrom) {
     breakToLoop =
       breakFromDay.diff(breakToDay, WorkTime.intervalType) / WorkTime.interval;
-    breakToIdx = (parseInt(breakToDay.format("HH")) - WorkTime.start) * 2;
-    if (breakToDay.format("mm") === `${WorkTime.interval}`) breakToIdx + 1;
+    breakToIdx = (parseInt(breakToDay.format('HH')) - WorkTime.start) * 2;
+    if (breakToDay.format('mm') === `${WorkTime.interval}`) breakToIdx + 1;
     for (let i = 0; i < breakToLoop; i++) {
       breakToIdxArr.push(breakToIdx + i);
     }
@@ -110,8 +110,8 @@ export const makeTimeArray = (
 export const dateToTableIdx = (date: Date) => {
   let idx: number;
 
-  idx = (Number(dayjs(date).format("HH")) - WorkTime.start) * 2;
-  if (dayjs(date).format("mm") === `${WorkTime.interval}`) idx = idx + 1;
+  idx = (Number(dayjs(date).format('HH')) - WorkTime.start) * 2;
+  if (dayjs(date).format('mm') === `${WorkTime.interval}`) idx = idx + 1;
 
   return idx;
 };
@@ -124,19 +124,19 @@ export const dateToTableIdx = (date: Date) => {
 export const dateGetWeekDay = (date: Date) => {
   switch (dayjs(date).day()) {
     case 0:
-      return "sun";
+      return 'sun';
     case 1:
-      return "mon";
+      return 'mon';
     case 2:
-      return "tue";
+      return 'tue';
     case 3:
-      return "wed";
+      return 'wed';
     case 4:
-      return "thu";
+      return 'thu';
     case 5:
-      return "fri";
+      return 'fri';
     case 6:
-      return "sat";
+      return 'sat';
     default:
       return null;
   }

@@ -23,6 +23,7 @@ import { _aPostSetBooking } from "store/action/user.action";
 import { SetBookingTime } from "src/constants/booking.const";
 import dayjs from "dayjs";
 import { hourList } from "src/modules/commonModule";
+import { deleteKeyJson } from "src/modules/commonModule";
 
 const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
@@ -65,7 +66,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [booking, setBooking] = useState<SetBooking>(props.booking);
+  const [booking, setBooking] = useState<Partial<SetBooking>>(props.booking);
   const [modify, setModify] = useState<boolean>(false);
   const [hours, setHours] = useState<OfficeHours>(
     booking.officeHour !== ""
@@ -941,10 +942,14 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                     });
                   }
                 }
-                const data = {
+                let data = {
                   ...booking,
                   officeHour: JSON.stringify(hoursData),
                 };
+                deleteKeyJson(data);
+
+                console.log("###", data);
+
                 await dispatch(_aPostSetBooking(data)).then((res: any) => {
                   setBooking(res.payload);
                   props.setBooking(res.payload);

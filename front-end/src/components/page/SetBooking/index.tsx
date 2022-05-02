@@ -28,6 +28,7 @@ const SetReservation: NextPage<_MainProps> = (props) => {
   /*********************************************************************
    * 1. Init Libs
    *********************************************************************/
+
   const bookingInit: Partial<SetBooking> = {
     intro: "",
     dayOff: [],
@@ -35,15 +36,22 @@ const SetReservation: NextPage<_MainProps> = (props) => {
     officeHour: "",
     lift: 0,
     mPrice: [],
-    weekTime: [[], [], [], [], [], [], []],
   };
 
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [booking, setBooking] = useState<SetBooking>(
-    props.data ? props.data : bookingInit
-  );
+  const [booking, setBooking] = useState<Partial<SetBooking>>({
+    intro: props.data.intro ? props.data.intro : "",
+    dayOff: props.data.dayOff ? props.data.dayOff : [],
+    setBookingTime: props.data.setBookingTime
+      ? props.data.setBookingTime
+      : SetBookingTime.ALL,
+    officeHour: props.data.officeHour ? props.data.officeHour : "",
+    lift: props.data.lift ? props.data.lift : 0,
+    mPrice: props.data.mPrice ? props.data.mPrice : [],
+  });
+
   /*********************************************************************
    * 3. Handlers
    *********************************************************************/
@@ -55,7 +63,9 @@ const SetReservation: NextPage<_MainProps> = (props) => {
     ...props,
     booking,
     setBooking,
+    bookingInit,
   };
+  console.log(booking);
 
   /*********************************************************************
    * 5. Page configuration
