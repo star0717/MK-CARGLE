@@ -10,6 +10,7 @@ import { AuthTokenInfo } from 'src/models/auth.entity';
 import { Booking } from 'src/models/booking.entity';
 import { Company } from 'src/models/company.entity';
 import { OfficeHours, SetBooking } from 'src/models/setbooking.entity';
+import { TimeTable } from 'src/models/timetable.entity';
 import { BookingService } from '../booking/booking.service';
 import { TimetableService } from '../timetable/timetable.service';
 
@@ -19,6 +20,7 @@ export class SetbookingService extends SafeService<SetBooking> {
     @InjectModel(SetBooking)
     readonly model: ReturnModelType<typeof SetBooking>,
     readonly commonService: CommonService,
+    readonly bookingService: BookingService,
     readonly timetableService: TimetableService, // readonly bookingService: BookingService,
   ) {
     super(model, commonService);
@@ -28,14 +30,10 @@ export class SetbookingService extends SafeService<SetBooking> {
     token: AuthTokenInfo,
     doc: SetBooking,
   ): Promise<SetBooking> {
-    // let setBooking: SetBooking = {
-    //   ...doc,
-    //   _cID: token.cID,
-    //   _uID: token.uID,
-    // };
     doc._cID = token.cID;
     doc._uID = token.uID;
 
+    // 업무시간을 설정한 경우, 타임테이블 기본값 설정
     if (doc.officeHour) {
       const office: OfficeHours = JSON.parse(doc.officeHour);
       const officeKey: string[] = Object.keys(office).map((e) => e);
@@ -63,10 +61,24 @@ export class SetbookingService extends SafeService<SetBooking> {
 
       doc.weekTime = timeTable;
 
-      // const booking: Booking = await this.bookingService.findByCid(token.cID);
-      // if (booking) {
-      //   // await this.
-      // }
+      // 예약이 없을 경우, 설정한 타임 테이블 바로 적용
+      const booking: Booking = await this.bookingService.findByCid(token.cID);
+      if (!booking) {
+        const timeTableData: Partial<TimeTable> = {
+          mon: timeTable[0],
+          tue: timeTable[1],
+          wed: timeTable[2],
+          thu: timeTable[3],
+          fri: timeTable[4],
+          sat: timeTable[5],
+          sun: timeTable[6],
+        };
+        await this.timetableService.findByCidAndUpdate(
+          token,
+          token.cID,
+          timeTableData,
+        );
+      }
     }
 
     return await this.model.findOneAndUpdate({ _cID: token.cID }, doc, {

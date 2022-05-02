@@ -284,7 +284,10 @@ export const getServerSideProps: GetServerSideProps = async (
   try {
     switch (pagePath) {
       case UseLink.MAIN:
-        if (tokenValue.cApproval === CompanyApproval.DONE) {
+        if (
+          tokenValue.cApproval === CompanyApproval.DONE &&
+          tokenValue.uApproval
+        ) {
           let Today = dayjs().toDate();
           let LastMonth = dayjs().subtract(1, "month").toDate();
 
