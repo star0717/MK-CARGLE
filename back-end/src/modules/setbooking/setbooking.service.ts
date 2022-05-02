@@ -72,6 +72,7 @@ export class SetbookingService extends SafeService<SetBooking> {
           fri: timeTable[4],
           sat: timeTable[5],
           sun: timeTable[6],
+          updatedAt: new Date(Date.now()),
         };
         await this.timetableService.findByCidAndUpdate(
           token,

@@ -378,8 +378,11 @@ export const getServerSideProps: GetServerSideProps = async (
             authConfig
           )
           .then((res: AxiosResponse<SetBooking, string>) => res.data.weekTime);
-        if (timeTableInit.length === 0) return failResult;
-        await axios
+        if (timeTableInit.length === 0) {
+          console.log("타임테이블 초기값 없음");
+          return failResult;
+        }
+        const timeTable: TimeTable = await axios
           .patch(
             genApiPath(TimeTableApiPath.timetable_init, {
               id: tokenValue.cID,
@@ -389,6 +392,10 @@ export const getServerSideProps: GetServerSideProps = async (
             authConfig
           )
           .then((res: AxiosResponse<TimeTable, string>) => res.data);
+        if (!timeTable) {
+          console.log("타임테이블 업데이트 에러");
+          return failResult;
+        }
         successResult.props.data = await axios
           .get(
             genApiPath(BookingApiPath.BASE, {

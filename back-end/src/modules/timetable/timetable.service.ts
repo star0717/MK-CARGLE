@@ -79,19 +79,16 @@ export class TimetableService extends SafeService<TimeTable> {
           if (!weekArr.includes(dateGetWeekDay(date)))
             weekArr.push(dateGetWeekDay(date));
         });
-        // for (let j = 0; j < dateArr.length; j++) {
-        //   if (!weekArr.includes(dateGetWeekDay(dateArr[j])))
-        //     weekArr.push(dateGetWeekDay(dateArr[j]));
-        // }
         weekArr.map((day) => {
-          weekJson[day] = timeTable[weekDayGetIdx(day)];
+          weekJson[day] = timeTableInit[weekDayGetIdx(day)];
         });
-        console.log('@@@', weekJson);
-        // doc = Object.assign(doc, weekJson);
-        // console.log('####', doc);
+
+        doc = Object.assign(timeTable, weekJson);
+        doc.updatedAt = new Date(Date.now());
       }
+      return this.model.findOneAndUpdate({ _cID: cid }, doc);
     }
-    return null;
+    return timeTable;
   }
 
   async findByCidAndRemove(id: string): Promise<TimeTable> {
