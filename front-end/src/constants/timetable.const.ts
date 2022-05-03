@@ -13,6 +13,9 @@ export enum BookingCount {
   off = 0,
 }
 
+/**
+ * 업무시간 기본값 설정
+ */
 export enum WorkTime {
   start = 6,
   end = 21,
@@ -20,6 +23,9 @@ export enum WorkTime {
   intervalType = "minutes",
 }
 
+/**
+ * 일주일 string 배열
+ */
 export const weekDayArr: string[] = [
   "mon",
   "tue",
