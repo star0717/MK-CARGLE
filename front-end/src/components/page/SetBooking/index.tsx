@@ -42,14 +42,16 @@ const SetReservation: NextPage<_MainProps> = (props) => {
    * 2. State settings
    *********************************************************************/
   const [booking, setBooking] = useState<Partial<SetBooking>>({
-    intro: props.data.intro ? props.data.intro : "",
-    dayOff: props.data.dayOff ? props.data.dayOff : [],
-    setBookingTime: props.data.setBookingTime
-      ? props.data.setBookingTime
+    intro: props.data.setBooking.intro ? props.data.setBooking.intro : "",
+    dayOff: props.data.setBooking.dayOff ? props.data.setBooking.dayOff : [],
+    setBookingTime: props.data.setBooking.setBookingTime
+      ? props.data.setBooking.setBookingTime
       : SetBookingTime.ALL,
-    officeHour: props.data.officeHour ? props.data.officeHour : "",
-    lift: props.data.lift ? props.data.lift : 0,
-    mPrice: props.data.mPrice ? props.data.mPrice : [],
+    officeHour: props.data.setBooking.officeHour
+      ? props.data.setBooking.officeHour
+      : "",
+    lift: props.data.setBooking.lift ? props.data.setBooking.lift : 0,
+    mPrice: props.data.setBooking.mPrice ? props.data.setBooking.mPrice : [],
   });
 
   /*********************************************************************

@@ -426,6 +426,7 @@ export const s3DeleteFile = async (fileName: string, fold?: string) => {
  * @returns
  */
 export const s3ToUrl = (data: S3.Types.GetObjectOutput) => {
+  if (!data) return null;
   // const str: string = data.Body.toString("base64");
   const str: string = encodeURI(data.Body.toString("base64"));
   const url: string = `data:${data.ContentType};base64,${str}`;

@@ -445,7 +445,26 @@ export const getServerSideProps: GetServerSideProps = async (
       }
 
       case UseLink.MYPAGE_SET_BOOKING: {
-        successResult.props.data = await axios
+        let imgJson: string[] = [];
+        const companyone: Company = await axios
+          .get(
+            genApiPath(AuthApiPath.companyId, {
+              id: tokenValue.cID,
+              isServerSide: true,
+            }),
+            authConfig
+          )
+          .then((res: AxiosResponse<Company, string>) => res.data);
+        for (let i = 0; i < 4; i++) {
+          const s3Data: S3.Types.GetObjectOutput = await s3GetFileData(
+            `${companyone.comRegNum}_${i + 1}`,
+            s3Folder.company
+          );
+          const s3Url: string = s3ToUrl(s3Data);
+          imgJson.push(s3Url);
+        }
+
+        const setBooking: SetBooking = await axios
           .get(
             genApiPath(SetBookingApiPath.set_booking, {
               id: tokenValue.cID,
@@ -455,6 +474,10 @@ export const getServerSideProps: GetServerSideProps = async (
           )
           .then((res: AxiosResponse<SetBooking>) => res.data);
 
+        successResult.props.data = {
+          imgJson: imgJson,
+          setBooking: setBooking,
+        };
         return successResult;
       }
 
