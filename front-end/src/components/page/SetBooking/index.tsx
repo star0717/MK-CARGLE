@@ -65,7 +65,6 @@ const SetReservation: NextPage<_MainProps> = (props) => {
     setBooking,
     bookingInit,
   };
-  console.log(booking);
 
   /*********************************************************************
    * 5. Page configuration

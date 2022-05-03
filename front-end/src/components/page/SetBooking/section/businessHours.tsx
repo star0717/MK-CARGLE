@@ -66,7 +66,10 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   /*********************************************************************
    * 2. State settings
    *********************************************************************/
-  const [booking, setBooking] = useState<Partial<SetBooking>>(props.booking);
+  const [booking, setBooking] = useState<Partial<SetBooking>>({
+    ...props.booking,
+    officeHour: props.data.officeHour ? props.data.officeHour : "",
+  });
   const [modify, setModify] = useState<boolean>(false);
   const [hours, setHours] = useState<OfficeHours>(
     booking.officeHour !== ""
