@@ -260,9 +260,6 @@ const MaintenanceInfo: NextPage<_pSetBookingDataProps> = (props) => {
               onClick={async () => {
                 let data: Partial<SetBooking> = booking;
                 deleteKeyJson(data);
-
-                console.log("@@@", data);
-
                 await dispatch(_aPostSetBooking(data)).then((res: any) => {
                   setBooking(res.payload);
                   props.setBooking(res.payload);

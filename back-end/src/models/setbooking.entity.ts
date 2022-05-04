@@ -115,7 +115,7 @@ export class SetBooking extends BaseEntity {
   @prop({ enum: SetBookingTime, required: true, default: SetBookingTime.ALL })
   setBookingTime?: SetBookingTime;
 
-  @ApiProperty({ description: '영업시간' })
+  @ApiProperty({ description: '영업시간', required: false })
   @IsOptional()
   @IsString()
   @prop({ _id: false })

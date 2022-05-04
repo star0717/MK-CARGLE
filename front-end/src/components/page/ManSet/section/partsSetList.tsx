@@ -156,7 +156,6 @@ const PartsSetList: NextPage<_pPartsSetProps> = (props) => {
         dispatch(_aGetPartssets()).then(
           (res: _iPartssets) => {
             props.setPartSetClass(res.payload.docs);
-            console.log(res.payload.docs[0].name);
             alert("저장되었습니다.");
           },
           (err) => {

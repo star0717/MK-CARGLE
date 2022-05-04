@@ -46,25 +46,26 @@ export class SetbookingService extends SafeService<SetBooking> {
           console.log('들어옴');
           console.log(makeTimeArray());
           timeTable.push(makeTimeArray());
-        }
-        if (office[day]['breakTime']) {
-          console.log('222');
-          timeTable.push(
-            makeTimeArray(
-              office[day]['openingHours'],
-              office[day]['closingHours'],
-              office[day]['breakTime'],
-              office[day]['breakEndTime'],
-            ),
-          );
         } else {
-          console.log('333');
-          timeTable.push(
-            makeTimeArray(
-              office[day]['openingHours'],
-              office[day]['closingHours'],
-            ),
-          );
+          if (office[day]['breakTime']) {
+            console.log('222');
+            timeTable.push(
+              makeTimeArray(
+                office[day]['openingHours'],
+                office[day]['closingHours'],
+                office[day]['breakTime'],
+                office[day]['breakEndTime'],
+              ),
+            );
+          } else {
+            console.log('333');
+            timeTable.push(
+              makeTimeArray(
+                office[day]['openingHours'],
+                office[day]['closingHours'],
+              ),
+            );
+          }
         }
       });
 

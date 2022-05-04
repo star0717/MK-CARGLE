@@ -372,7 +372,6 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       type="button"
                       kindOf={edit ? `default` : `ghost`}
                       onClick={() => {
-                        console.log("cash!");
                         setTotalName("cash");
                       }}
                       disabled={
@@ -414,7 +413,6 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       type="button"
                       kindOf={edit ? `default` : `ghost`}
                       onClick={() => {
-                        console.log("credit!!");
                         setTotalName("credit");
                       }}
                       disabled={
@@ -456,7 +454,6 @@ const PaymentModal: NextPage<_pPartsSetProps> = (props) => {
                       type="button"
                       kindOf={edit ? `default` : `ghost`}
                       onClick={() => {
-                        console.log("insurance!!");
                         setTotalName("insurance");
                       }}
                       disabled={
