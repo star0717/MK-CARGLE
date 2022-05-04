@@ -58,6 +58,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBooking({ ...booking, [e.target.name]: e.target.value });
   };
+  console.log(booking.intro);
 
   const imgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name: string = e.target.name;
@@ -316,7 +317,7 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
               <CommonButton
                 kindOf={`white`}
                 onClick={() => {
-                  setBooking(props.data);
+                  setBooking(props.data.setBooking);
                   setModify(false);
                 }}
               >
@@ -326,8 +327,6 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
                 onClick={async () => {
                   let data: Partial<SetBooking> = booking;
                   deleteKeyJson(data);
-
-                  console.log("!!!", data);
 
                   await dispatch(_aPostSetBooking(data)).then((res: any) => {
                     setBooking(res.payload);

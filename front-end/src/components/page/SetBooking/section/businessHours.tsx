@@ -119,57 +119,25 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
       breakEndTime: dayjs("2022-01-01 13:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
     },
   };
-
+  /**
+   * (코드에러 수정요망)
+   * Object.assign 부분의 오류로 예상
+   * hours데이터 안에 반복적으로 hours 데이터가 쌓이는 현상
+   */
   const [modify, setModify] = useState<boolean>(false);
   const [hours, setHours] = useState<diff_inter>(
     Object.assign(copy, JSON.parse(booking.officeHour))
   );
 
   let hoursData: diff_inter = {
-    mon: {
-      openingHours: hours.mon.openingHours,
-      closingHours: hours.mon.closingHours,
-      breakTime: hours.mon.breakTime,
-      breakEndTime: hours.mon.breakEndTime,
-    },
-    tue: {
-      openingHours: hours.tue.openingHours,
-      closingHours: hours.tue.closingHours,
-      breakTime: hours.tue.breakTime,
-      breakEndTime: hours.tue.breakEndTime,
-    },
-    wed: {
-      openingHours: hours.wed.openingHours,
-      closingHours: hours.wed.closingHours,
-      breakTime: hours.wed.breakTime,
-      breakEndTime: hours.wed.breakEndTime,
-    },
-    thu: {
-      openingHours: hours.thu.openingHours,
-      closingHours: hours.thu.closingHours,
-      breakTime: hours.thu.breakTime,
-      breakEndTime: hours.thu.breakEndTime,
-    },
-    fri: {
-      openingHours: hours.fri.openingHours,
-      closingHours: hours.fri.closingHours,
-      breakTime: hours.fri.breakTime,
-      breakEndTime: hours.fri.breakEndTime,
-    },
-    sat: {
-      openingHours: hours.sat.openingHours,
-      closingHours: hours.sat.closingHours,
-      breakTime: hours.sat.breakTime,
-      breakEndTime: hours.sat.breakEndTime,
-    },
-    sun: {
-      openingHours: hours.sun.openingHours,
-      closingHours: hours.sun.closingHours,
-      breakTime: hours.sun.breakTime,
-      breakEndTime: hours.sun.breakEndTime,
-    },
+    ...hours,
   };
 
+  /**
+   * (코드에러 수정요망)
+   * 만약 hours에 mon가 없을경우??? 기본값이 입력됨.
+   * 그래서, 공휴일이 월요일일때, 다른 요일의 값을 대입해줘야함.
+   */
   const [allDay, setAllDay] = useState<all_inter>({
     ALLDAY: {
       openingHours: hours.mon.openingHours,
@@ -218,19 +186,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
     }
   };
   const allDayHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // if (e.target.name.split("_")[1] === "closingHours") {
-    //   console.log("opening IN");
-    //   console.log(dayjs(allDay.ALLDAY.openingHours));
-    //   // if (dayjs(allDay.ALLDAY.openingHours).diff(e.target.value) < 0) {
-    //   //   console.log("opening error!!");
-    //   // }
-    // } else if (e.target.name.split("_")[1] === "breakEndTime") {
-    //   console.log("break IN");
-    //   // if (dayjs(allDay.ALLDAY.breakTime).diff(e.target.value) < 0) {
-    //   //   console.log("break error!!");
-    //   // }
-    // }
-
     if (e.target.name.split("_")[2] === "hours") {
       setAllDay({
         ...allDay,
@@ -829,7 +784,13 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
             <CommonButton
               kindOf={`white`}
               onClick={() => {
-                setBooking(props.data);
+                setBooking({
+                  ...props.booking,
+                  officeHour:
+                    props.booking.officeHour !== ""
+                      ? props.booking.officeHour
+                      : "",
+                });
                 setModify(false);
               }}
             >
@@ -864,7 +825,7 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   officeHour: JSON.stringify(hoursData),
                 };
                 deleteKeyJson(data);
-
+                console.log(data.officeHour);
                 await dispatch(_aPostSetBooking(data)).then((res: any) => {
                   setBooking(res.payload);
                   props.setBooking(res.payload);
