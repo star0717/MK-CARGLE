@@ -62,10 +62,8 @@ export const RsWrapper = styled.div<any>`
   @media (max-width: 1200px) {
     width: 100%;
   }
-}
 
-${(props) => props.kindOf === `short` && `padding:0px 0px 120px 0px`}
-
+  ${(props) => props.kindOf === `short` && `padding:0px 0px 120px 0px`}
 `;
 
 export const MoWrapper = styled.div<any>`
@@ -749,11 +747,9 @@ export const IconButton = styled.button<any>`
   ${(props) => props.kindOf === `hover` && `border : 1px solid #314fa5;`}
 
   &:hover {
-    background-color: ;
-    ${(props) => props.kindOf === `hover` && `background-color : #314FA5;`}
-
-    color:;
-    ${(props) => props.kindOf === `hover` && `color : #fff;`}
+    background-color: ${(props) =>
+      props.kindOf === `hover` && `background-color : #314FA5;`};
+    color: ${(props) => props.kindOf === `hover` && `color : #fff;`};
   }
 `;
 
