@@ -119,6 +119,8 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
    * (코드에러 수정요망)
    * 만약 hours에 mon가 없을경우??? 기본값이 입력됨.
    * 그래서, 공휴일이 월요일일때, 다른 요일의 값을 대입해줘야함.
+   *
+   * 결론 : 백엔드의 스키마 수정
    **/
   const [allDay, setAllDay] = useState<all_inter>({
     ALLDAY: {
