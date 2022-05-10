@@ -111,9 +111,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   let hoursData: diff_inter = {
     ...hours,
   };
-  for (const k in JSON.parse(booking.officeHour)) {
-    console.log(hours[k]);
-  }
 
   /**
    * (코드에러 수정요망)
