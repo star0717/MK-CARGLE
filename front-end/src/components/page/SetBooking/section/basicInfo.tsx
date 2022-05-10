@@ -58,7 +58,6 @@ const BasicInfo: NextPage<_pSetBookingDataProps> = (props) => {
   const onInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBooking({ ...booking, [e.target.name]: e.target.value });
   };
-  console.log(booking.intro);
 
   const imgHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name: string = e.target.name;

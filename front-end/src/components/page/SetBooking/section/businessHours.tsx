@@ -807,7 +807,6 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
                   officeHour: JSON.stringify(hoursData),
                 };
                 deleteKeyJson(data);
-                console.log(data.officeHour);
                 await dispatch(_aPostSetBooking(data)).then((res: any) => {
                   setBooking(res.payload);
                   props.setBooking(res.payload);
