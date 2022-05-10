@@ -12,7 +12,6 @@ import {
   JoinStepBarWrapper,
   RsWrapper,
   SmallButton,
-  SpeechBubbleLeft,
   TableBody,
   TableHead,
   TableHeadLIST,
@@ -26,7 +25,7 @@ import {
 } from "src/components/styles/CommonComponents";
 import { useRouter } from "next/router";
 import { UseLink } from "src/configure/router.entity";
-import { AiFillCloseCircle, AiFillMinusSquare } from "react-icons/ai";
+import { AiFillMinusSquare } from "react-icons/ai";
 import {
   _pMaintenanceProps,
   _pPartsSetProps,
@@ -46,7 +45,6 @@ import {
 } from "store/interfaces";
 import {
   getStrMainCustomerType,
-  getStrMainPartsType,
   mainCustomerTypeList,
   MainPartsType,
   mainPartsTypeList,
