@@ -34,6 +34,12 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
   const allArr: string[] = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
   const dayArr: string[] = ["mon", "tue", "wed", "thu", "fri"];
   const endArr: string[] = ["sat", "sun"];
+  const defaultData = {
+    openingHours: dayjs("2022-01-01 09:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+    closingHours: dayjs("2022-01-01 18:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+    breakTime: dayjs("2022-01-01 12:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+    breakEndTime: dayjs("2022-01-01 13:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+  };
 
   interface all_inter {
     ALLDAY: {
@@ -77,73 +83,50 @@ const BusinessHours: NextPage<_pSetBookingDataProps> = (props) => {
 
   const copy = {
     mon: {
-      openingHours: dayjs("2022-01-01 09:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      closingHours: dayjs("2022-01-01 18:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakTime: dayjs("2022-01-01 12:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakEndTime: dayjs("2022-01-01 13:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+      ...defaultData,
     },
     tue: {
-      openingHours: dayjs("2022-01-01 09:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      closingHours: dayjs("2022-01-01 18:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakTime: dayjs("2022-01-01 12:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakEndTime: dayjs("2022-01-01 13:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+      ...defaultData,
     },
     wed: {
-      openingHours: dayjs("2022-01-01 09:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      closingHours: dayjs("2022-01-01 18:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakTime: dayjs("2022-01-01 12:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakEndTime: dayjs("2022-01-01 13:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+      ...defaultData,
     },
     thu: {
-      openingHours: dayjs("2022-01-01 09:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      closingHours: dayjs("2022-01-01 18:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakTime: dayjs("2022-01-01 12:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakEndTime: dayjs("2022-01-01 13:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+      ...defaultData,
     },
     fri: {
-      openingHours: dayjs("2022-01-01 09:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      closingHours: dayjs("2022-01-01 18:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakTime: dayjs("2022-01-01 12:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakEndTime: dayjs("2022-01-01 13:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+      ...defaultData,
     },
     sat: {
-      openingHours: dayjs("2022-01-01 09:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      closingHours: dayjs("2022-01-01 18:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakTime: dayjs("2022-01-01 12:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakEndTime: dayjs("2022-01-01 13:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+      ...defaultData,
     },
     sun: {
-      openingHours: dayjs("2022-01-01 09:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      closingHours: dayjs("2022-01-01 18:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakTime: dayjs("2022-01-01 12:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
-      breakEndTime: dayjs("2022-01-01 13:00:00").format("YYYY-MM-DDTHH:mm:ssZ"),
+      ...defaultData,
     },
   };
-  /**
-   * (코드에러 수정요망)
-   * Object.assign 부분의 오류로 예상
-   * hours데이터 안에 반복적으로 hours 데이터가 쌓이는 현상
-   */
   const [modify, setModify] = useState<boolean>(false);
   const [hours, setHours] = useState<diff_inter>(
     Object.assign(copy, JSON.parse(booking.officeHour))
   );
-
   let hoursData: diff_inter = {
     ...hours,
   };
+  for (const k in JSON.parse(booking.officeHour)) {
+    console.log(hours[k]);
+  }
 
   /**
    * (코드에러 수정요망)
    * 만약 hours에 mon가 없을경우??? 기본값이 입력됨.
    * 그래서, 공휴일이 월요일일때, 다른 요일의 값을 대입해줘야함.
-   */
+   **/
   const [allDay, setAllDay] = useState<all_inter>({
     ALLDAY: {
-      openingHours: hours.mon.openingHours,
-      closingHours: hours.mon.closingHours,
-      breakTime: hours.mon.breakTime,
-      breakEndTime: hours.mon.breakEndTime,
+      ...hours.mon,
+      // openingHours: hours.mon.openingHours,
+      // closingHours: hours.mon.closingHours,
+      // breakTime: hours.mon.breakTime,
+      // breakEndTime: hours.mon.breakEndTime,
     },
   });
   const [weekDay, setWeekDay] = useState<week_inter>({
