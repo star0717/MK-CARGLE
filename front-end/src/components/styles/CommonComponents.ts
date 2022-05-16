@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { asdasd, css } from "styled-components";
 import { appearAnimation } from "./AnimationCommon";
 
 interface Propsinterface {
@@ -6,6 +6,11 @@ interface Propsinterface {
 }
 
 /** Wrapper */
+export const Wwrapper = styled.div<asdasd>`
+  width: ${(props) => props.Width || `100%`};
+  height: ${(props) => props.Height || `100%`};
+  color: ${(props) => props.Color || `red`};
+`;
 
 export const WholeWrapper = styled.div<any>`
   width: ${(props) => props.width || `100%`};

@@ -1,7 +1,11 @@
 import React from "react";
 import { NextPage } from "next";
 import StatementFile from "src/components/page/FileHTML/statementFile";
-import { Wrapper, Text } from "src/components/styles/CommonComponents";
+import {
+  Wrapper,
+  Text,
+  Wwrapper,
+} from "src/components/styles/CommonComponents";
 
 /**
  * 테스트 페이지
@@ -30,6 +34,9 @@ const ByeolTest: NextPage = () => {
   return (
     <>
       <Wrapper padding={`0px`}>
+        <Wwrapper Width="100px" Height="100">
+          fl;sdkfl;asdl
+        </Wwrapper>
         <Wrapper
           width={`49.58333em`}
           height={`70.08334em`}
